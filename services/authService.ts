@@ -1,35 +1,54 @@
+import { getSupabase } from '../lib/supabase';
 import { User } from '../types';
+import type { AuthChangeEvent, Session } from 'https://esm.sh/@supabase/supabase-js@2.45.5?bundle';
+import { log } from '../lib/log';
 
-const USER_KEY = 'drut-user';
 
-export const getCurrentUser = (): User | null => {
-  if (typeof window === 'undefined') return null;
-  const userJson = localStorage.getItem(USER_KEY);
-  return userJson ? JSON.parse(userJson) : null;
+export const getCurrentUser = async (): Promise<User | null> => {
+    const supabase = getSupabase();
+    if (!supabase) return null;
+    const { data: { session } } = await supabase.auth.getSession();
+    return session?.user ?? null;
 };
 
-export const login = (email: string): User => {
-  const user: User = { email };
-  if (typeof window !== 'undefined') {
-    localStorage.setItem(USER_KEY, JSON.stringify(user));
-  }
-  return user;
+export const login = async (email: string, password: string):Promise<{user: User | null}> => {
+    const supabase = getSupabase();
+    if (!supabase) throw new Error("Supabase client is not available.");
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    if (error) throw new Error(error.message);
+    return { user: data.user };
 };
 
-// For simulation, signup is the same as login
-export const signup = (email: string): User => {
-  return login(email);
+export const signup = async (email: string, password: string):Promise<{user: User | null}> => {
+    const supabase = getSupabase();
+    if (!supabase) throw new Error("Supabase client is not available.");
+    const { data, error } = await supabase.auth.signUp({ email, password });
+    if (error) throw new Error(error.message);
+    return { user: data.user };
 };
 
-export const loginWithGoogle = (): User => {
-    // Simulate logging in with a Google account
-    const googleUserEmail = 'signed.in.with.google@drut.app';
-    return login(googleUserEmail);
-}
+export const loginWithGoogle = async () => {
+    const supabase = getSupabase();
+    if (!supabase) throw new Error("Supabase client is not available.");
+    const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+    });
+    if (error) throw new Error(error.message);
+};
 
+export const logout = async (): Promise<void> => {
+    const supabase = getSupabase();
+    if (!supabase) throw new Error("Supabase client is not available.");
+    const { error } = await supabase.auth.signOut();
+    if (error) throw new Error(error.message);
+};
 
-export const logout = (): void => {
-  if (typeof window !== 'undefined') {
-    localStorage.removeItem(USER_KEY);
-  }
+export const onAuthStateChange = (callback: (event: AuthChangeEvent, session: Session | null) => void) => {
+    const supabase = getSupabase();
+    if (!supabase) {
+        log.warn("Supabase not initialized, cannot listen for auth changes.");
+        // Return a dummy subscription object that does nothing.
+        return { data: { subscription: { unsubscribe: () => {} } } };
+    }
+    return supabase.auth.onAuthStateChange(callback);
 };

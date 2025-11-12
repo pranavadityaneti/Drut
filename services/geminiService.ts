@@ -1,11 +1,17 @@
+
+
 import { GoogleGenAI, Type } from "@google/genai";
 import { QuestionData } from '../types';
+import { log } from '../lib/log';
 
-if (!process.env.API_KEY) {
-  throw new Error("API_KEY environment variable not set");
+const getAiClient = () => {
+    const apiKey = process.env.API_KEY;
+    if (!apiKey) {
+        // This specific error message can be caught by the UI
+        throw new Error("Gemini API key is missing. Please set it to use the Practice feature.");
+    }
+    return new GoogleGenAI({ apiKey });
 }
-
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
 const responseSchema = {
   type: Type.OBJECT,
@@ -67,6 +73,11 @@ Generate a practice question for the main topic "${topic}", focusing specificall
 
 export const generateQuestionAndSolutions = async (topic: string, subTopic: string, examProfile: string): Promise<QuestionData> => {
   try {
+    // NOTE: In a production app, the API key MUST be on a server.
+    // This client-side call is a security risk as the key can be exposed.
+    // The correct architecture is to call a backend endpoint from here,
+    // which then securely calls the Gemini API.
+    const ai = getAiClient();
     const response = await ai.models.generateContent({
       model: 'gemini-2.5-flash',
       contents: getPrompt(topic, subTopic, examProfile),
@@ -86,8 +97,12 @@ export const generateQuestionAndSolutions = async (topic: string, subTopic: stri
 
     return parsedData as QuestionData;
 
-  } catch (error) {
-    console.error("Error generating question with Gemini:", error);
-    throw new Error("Failed to generate question. The API key might be invalid or the service is temporarily down.");
+  } catch (error: any) {
+    log.error("Error generating question with Gemini:", error);
+    // Re-throw the specific API key error or a generic one
+    if (error.message.includes("API key is missing")) {
+        throw error;
+    }
+    throw new Error("Failed to generate question. The API service may be temporarily down.");
   }
 };

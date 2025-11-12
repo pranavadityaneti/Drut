@@ -1,6 +1,7 @@
 import { generateQuestionAndSolutions } from './geminiService';
 import { QuestionData } from '../types';
 import { EXAM_SPECIFIC_TOPICS } from '../constants';
+import { log } from '../lib/log';
 
 interface PreloadedData {
   key: string;
@@ -31,7 +32,7 @@ export const preloadFirstQuestion = async (): Promise<void> => {
       }
     }
   } catch (error) {
-    console.error("Failed to preload question:", error);
+    log.error("Failed to preload question:", error);
     // Fail silently, this is a background optimization
   }
 };

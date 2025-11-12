@@ -17,7 +17,7 @@ export const SignupForm: React.FC<SignupFormProps> = ({ onLoginSuccess, onSwitch
   const [isLoading, setIsLoading] = useState(false);
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
 
-  const handleEmailSubmit = (e: React.FormEvent) => {
+  const handleEmailSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email || !password) {
       setError('Please fill in all fields.');
@@ -30,31 +30,30 @@ export const SignupForm: React.FC<SignupFormProps> = ({ onLoginSuccess, onSwitch
     setError('');
     setIsLoading(true);
 
-    setTimeout(() => {
-      try {
-        const user = signup(email);
-        onLoginSuccess(user);
-      } catch (err) {
-        setError('An unexpected error occurred.');
-      } finally {
+    try {
+        const { user } = await signup(email, password);
+        if (user) {
+            onLoginSuccess(user);
+        } else {
+            setError('Could not create account.');
+        }
+    } catch (err: any) {
+        setError(err.message || 'Failed to create account.');
+    } finally {
         setIsLoading(false);
-      }
-    }, 500);
+    }
   };
   
-  const handleGoogleSubmit = () => {
+  const handleGoogleSubmit = async () => {
     setError('');
     setIsGoogleLoading(true);
-    setTimeout(() => {
-      try {
-        const user = loginWithGoogle();
-        onLoginSuccess(user);
-      } catch (err) {
-        setError('An unexpected error occurred.');
-      } finally {
-        setIsGoogleLoading(false);
-      }
-    }, 500);
+    try {
+      await loginWithGoogle();
+      // On success, the onAuthStateChange listener in App.tsx will handle the login.
+    } catch (err: any) {
+      setError(err.message || 'Failed to sign up with Google.');
+      setIsGoogleLoading(false);
+    }
   };
 
   return (

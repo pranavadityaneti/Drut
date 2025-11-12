@@ -1,3 +1,5 @@
+
+
 import React, { useState, useCallback, useEffect, useRef, useMemo } from 'react';
 import { QuestionData } from '../types';
 import { generateQuestionAndSolutions } from '../services/geminiService';
@@ -10,6 +12,8 @@ import { SolutionView } from './SolutionView';
 import { EXAM_SPECIFIC_TOPICS } from '../constants';
 import { Select } from './ui/Select';
 import { PersonalizedTopic } from '../App';
+import { PracticeErrorBoundary } from './PracticeErrorBoundary';
+import { log } from '../lib/log';
 
 interface PracticeProps {
     personalizedTopics: PersonalizedTopic[] | null;
@@ -111,7 +115,7 @@ export const Practice: React.FC<PracticeProps> = ({ personalizedTopics, onEndPer
         return newCache;
       });
     } catch (error) {
-      console.error(`Failed to prefetch question for ${cacheKey}:`, error);
+      log.error(`Failed to prefetch question for ${cacheKey}:`, error);
     } finally {
       delete prefetchState.current[cacheKey];
     }
@@ -131,7 +135,11 @@ export const Practice: React.FC<PracticeProps> = ({ personalizedTopics, onEndPer
       const preloaded = getPreloadedQuestion(examProfile, currentTopic, currentSubTopic);
       if (preloaded) {
         setQuestionData(preloaded);
-        setQuestionCache(prev => ({ ...prev, [currentSubTopic]: { ...(prev[currentSubTopic] || {}), 0: preloaded } }));
+        setQuestionCache(prev => {
+            const newSubTopicCache = [...(prev[currentSubTopic] || [])];
+            newSubTopicCache[0] = preloaded;
+            return { ...prev, [currentSubTopic]: newSubTopicCache };
+        });
         startTimer();
         return;
       }
@@ -190,21 +198,26 @@ export const Practice: React.FC<PracticeProps> = ({ personalizedTopics, onEndPer
     }
   }, [questionData, examProfile]);
 
-  const handleAnswerSubmit = () => {
+  const handleAnswerSubmit = async () => {
     const { topic: currentTopic, subTopic: currentSubTopic } = currentTopicInfo;
     if (selectedOption === null || !questionData || !examProfile || !currentTopic || !currentSubTopic) return;
     stopTimer();
     setIsAnswered(true);
 
-    savePerformanceRecord({
-        questionText: questionData.questionText,
-        examProfile: examProfile,
-        topic: currentTopic,
-        subTopic: currentSubTopic,
-        isCorrect: selectedOption === questionData.correctOptionIndex,
-        timeTaken,
-        targetTime,
-    });
+    try {
+        await savePerformanceRecord({
+            questionText: questionData.questionText,
+            examProfile: examProfile,
+            topic: currentTopic,
+            subTopic: currentSubTopic,
+            isCorrect: selectedOption === questionData.correctOptionIndex,
+            timeTaken,
+            targetTime,
+        });
+    } catch (error) {
+        log.error("Failed to save performance record:", error);
+        // Optionally, show a toast or message to the user
+    }
   };
 
   const handleNextQuestion = () => {
@@ -305,36 +318,38 @@ export const Practice: React.FC<PracticeProps> = ({ personalizedTopics, onEndPer
         </aside>
       )}
       <main className={`flex-1 space-y-6 ${isPersonalizedSession ? 'w-full' : ''}`}>
-        {isPersonalizedSession && (
+        <PracticeErrorBoundary>
+            {isPersonalizedSession && (
+                <Card>
+                    <CardContent className="p-4 flex flex-col sm:flex-row justify-between items-center gap-2">
+                        <div className="flex items-center">
+                            <BrainCircuitIcon />
+                            <h3 className="ml-3 font-semibold text-center sm:text-left">Personalized Practice Session</h3>
+                        </div>
+                        <Button onClick={onEndPersonalizedSession} className="bg-destructive/10 text-destructive hover:bg-destructive/20 w-full sm:w-auto">
+                            End Session
+                        </Button>
+                    </CardContent>
+                </Card>
+            )}
             <Card>
-                <CardContent className="p-4 flex flex-col sm:flex-row justify-between items-center gap-2">
-                    <div className="flex items-center">
-                        <BrainCircuitIcon />
-                        <h3 className="ml-3 font-semibold text-center sm:text-left">Personalized Practice Session</h3>
-                    </div>
-                    <Button onClick={onEndPersonalizedSession} className="bg-destructive/10 text-destructive hover:bg-destructive/20 w-full sm:w-auto">
-                        End Session
-                    </Button>
-                </CardContent>
+            <CardContent className="p-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+                <p className="text-sm text-muted-foreground font-medium self-start sm:self-center">
+                    Question {currentQuestionIndex + 1}
+                    {isPersonalizedSession && ` of ${personalizedTopics?.length}`}
+                </p>
+                <div className="flex space-x-2 w-full sm:w-auto">
+                <Button onClick={handlePrevQuestion} disabled={currentQuestionIndex === 0 || isLoading || isPersonalizedSession} className="flex-1 sm:flex-auto">
+                    Previous
+                </Button>
+                <Button onClick={handleNextQuestion} disabled={isLoading} className="flex-1 sm:flex-auto">
+                    Next Question
+                </Button>
+                </div>
+            </CardContent>
             </Card>
-        )}
-        <Card>
-          <CardContent className="p-4 flex flex-col sm:flex-row justify-between items-center gap-4">
-            <p className="text-sm text-muted-foreground font-medium self-start sm:self-center">
-                Question {currentQuestionIndex + 1}
-                {isPersonalizedSession && ` of ${personalizedTopics?.length}`}
-            </p>
-            <div className="flex space-x-2 w-full sm:w-auto">
-              <Button onClick={handlePrevQuestion} disabled={currentQuestionIndex === 0 || isLoading || isPersonalizedSession} className="flex-1 sm:flex-auto">
-                Previous
-              </Button>
-              <Button onClick={handleNextQuestion} disabled={isLoading} className="flex-1 sm:flex-auto">
-                Next Question
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-        <QuestionArea />
+            <QuestionArea />
+        </PracticeErrorBoundary>
       </main>
     </div>
   );

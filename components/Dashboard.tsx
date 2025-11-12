@@ -3,21 +3,18 @@ import { EXAM_SPECIFIC_TOPICS, EXAM_PROFILES } from '../constants';
 import { Button } from './ui/Button';
 import { Select } from './ui/Select';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from './ui/Card';
-import { getPerformanceHistory, clearPerformanceHistory } from '../services/performanceService';
-import { PerformanceRecord } from '../types';
+import { clearPerformanceHistory } from '../services/performanceService';
+// FIX: Import SubTopicAnalytics to use for strong typing.
+import { getAnalytics, AnalyticsData, SubTopicAnalytics } from '../services/analyticsService';
 import { PersonalizedTopic } from '../App';
 
-interface SubTopicStats {
+// FIX: Define a type for the aggregated topic data to ensure type safety.
+interface TopicData {
   total: number;
   correct: number;
   totalTime: number;
-}
-
-interface TopicStats {
-  total: number;
-  correct: number;
-  totalTime: number;
-  subTopics: { [key: string]: SubTopicStats };
+  // FIX: Use a specific type for subTopics instead of any.
+  subTopics: { [key: string]: SubTopicAnalytics };
 }
 
 interface DashboardProps {
@@ -29,6 +26,7 @@ const ClockIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" heigh
 const TargetIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4 text-muted-foreground"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>;
 const TrashIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4 mr-2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>;
 const BrainCircuitIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-8 w-8 text-primary mx-auto"><path d="M12 5V2M12 22v-3"/><path d="M17 9a5 5 0 0 1-10 0"/><path d="M5 14a2.5 2.5 0 0 1 5 0"/><path d="M14 14a2.5 2.5 0 0 1 5 0"/><path d="M2 14h1.5"/><path d="M20.5 14H22"/><path d="M9 14h6"/><path d="M5 18a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z"/><path d="M15 18a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z"/></svg>;
+const RefreshCwIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4 mr-2 animate-spin"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M3 21v-5h5"/></svg>
 
 const StatCard: React.FC<{title: string, value: string | number, icon: React.ReactNode}> = ({ title, value, icon }) => (
     <Card>
@@ -57,10 +55,27 @@ export const Dashboard: React.FC<DashboardProps> = ({ onStartPersonalizedSession
   const [topic, setTopic] = useState<string>('');
   const [availableTopics, setAvailableTopics] = useState<{ value: string; label: string }[]>([]);
   const [isSaved, setIsSaved] = useState(false);
-  const [history, setHistory] = useState<PerformanceRecord[]>([]);
+  
+  const [analytics, setAnalytics] = useState<AnalyticsData | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchAnalytics = async () => {
+    setIsLoading(true);
+    setError(null);
+    try {
+        const data = await getAnalytics();
+        setAnalytics(data);
+    } catch (err) {
+        setError("Failed to load analytics data.");
+        console.error(err);
+    } finally {
+        setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
-    setHistory(getPerformanceHistory());
+    fetchAnalytics();
   }, []);
 
   useEffect(() => {
@@ -86,81 +101,101 @@ export const Dashboard: React.FC<DashboardProps> = ({ onStartPersonalizedSession
     setTimeout(() => setIsSaved(false), 2000);
   };
   
-  const handleResetStats = () => {
+  const handleResetStats = async () => {
     if (typeof window !== 'undefined' && window.confirm("Are you sure you want to delete all your performance history? This action cannot be undone.")) {
-      clearPerformanceHistory();
-      setHistory([]);
+      await clearPerformanceHistory();
+      fetchAnalytics();
     }
   };
 
-  const stats = useMemo(() => {
-    if (history.length === 0) {
-      return null;
-    }
+  // FIX: Explicitly type the useMemo hook to prevent 'data' from being inferred as 'unknown'.
+  const topicBreakdown = useMemo((): Record<string, TopicData> => {
+    if (!analytics?.bySubTopic) return {};
+    const breakdown: Record<string, TopicData> = {};
 
-    const totalQuestions = history.length;
-    const correctAnswers = history.filter(r => r.isCorrect).length;
-    const totalTime = history.reduce((sum, r) => sum + r.timeTaken, 0);
-
-    const topicBreakdown: { [key: string]: TopicStats } = {};
-    
-    for (const record of history) {
-        if (!topicBreakdown[record.topic]) {
-            topicBreakdown[record.topic] = { total: 0, correct: 0, totalTime: 0, subTopics: {} };
+    analytics.bySubTopic.forEach(sub => {
+        if (!breakdown[sub.topic]) {
+            breakdown[sub.topic] = { total: 0, correct: 0, totalTime: 0, subTopics: {} };
         }
-        if (!topicBreakdown[record.topic].subTopics[record.subTopic]) {
-            topicBreakdown[record.topic].subTopics[record.subTopic] = { total: 0, correct: 0, totalTime: 0 };
-        }
-        
-        topicBreakdown[record.topic].total++;
-        topicBreakdown[record.topic].subTopics[record.subTopic].total++;
-        topicBreakdown[record.topic].totalTime += record.timeTaken;
-        topicBreakdown[record.topic].subTopics[record.subTopic].totalTime += record.timeTaken;
-        
-        if (record.isCorrect) {
-            topicBreakdown[record.topic].correct++;
-            topicBreakdown[record.topic].subTopics[record.subTopic].correct++;
-        }
-    }
-
-    return {
-      totalQuestions,
-      accuracy: totalQuestions > 0 ? (correctAnswers / totalQuestions) * 100 : 0,
-      avgTime: totalQuestions > 0 ? totalTime / totalQuestions : 0,
-      topicBreakdown,
-    };
-  }, [history]);
-
-  const personalizedSuggestions = useMemo(() => {
-    if (!stats) return [];
-    
-    const MIN_QUESTIONS = 3;
-    const MAX_ACCURACY = 60; // Suggest topics with accuracy below this
-    
-    const weakSubTopics: { topic: string; subTopic: string; accuracy: number; total: number }[] = [];
-    
-    Object.entries(stats.topicBreakdown).forEach(([topicName, topicData]) => {
-      const typedTopicData = topicData as TopicStats;
-      Object.entries(typedTopicData.subTopics).forEach(([subTopicName, subTopicData]) => {
-        const typedSubTopicData = subTopicData as SubTopicStats;
-        if (typedSubTopicData.total >= MIN_QUESTIONS) {
-          const accuracy = (typedSubTopicData.correct / typedSubTopicData.total) * 100;
-          if (accuracy < MAX_ACCURACY) {
-            weakSubTopics.push({
-              topic: topicName,
-              subTopic: subTopicName,
-              accuracy: accuracy,
-              total: typedSubTopicData.total,
-            });
-          }
-        }
-      });
+        breakdown[sub.topic].total += sub.total;
+        breakdown[sub.topic].correct += sub.correct;
+        // FIX: Calculate totalTime correctly from avgTime and total to avoid type errors.
+        breakdown[sub.topic].totalTime += sub.avgTime * sub.total;
+        breakdown[sub.topic].subTopics[sub.subTopic] = sub;
     });
-    
-    // Sort by lowest accuracy first
-    return weakSubTopics.sort((a, b) => a.accuracy - b.accuracy).slice(0, 3);
-  }, [stats]);
 
+    return breakdown;
+  }, [analytics]);
+
+  // FIX: Use the imported SubTopicAnalytics type and remove the `as any` cast.
+  const personalizedSuggestions = useMemo((): SubTopicAnalytics[] => {
+    if (!analytics?.weakestSubTopics) return [];
+    return analytics.weakestSubTopics;
+  }, [analytics]);
+
+
+  const renderAnalytics = () => {
+      if (isLoading) {
+          return <div className="text-center py-8"><RefreshCwIcon /> Loading analytics...</div>
+      }
+      if (error) {
+          return <div className="text-center py-8 text-destructive">{error}</div>
+      }
+      if (!analytics || analytics.totalQuestions === 0) {
+          return <div className="text-center py-8"><p className="text-muted-foreground">No practice data yet. Go to the 'Practice' tab to answer some questions!</p></div>
+      }
+
+      return (
+        <div className="space-y-8 pt-4">
+            <div className="grid gap-4 md:grid-cols-3">
+                <StatCard title="Overall Accuracy" value={`${analytics.overallAccuracy.toFixed(1)}%`} icon={<TargetIcon />} />
+                <StatCard title="Average Time" value={`${analytics.averageTime.toFixed(1)}s`} icon={<ClockIcon />} />
+                <StatCard title="Questions Answered" value={analytics.totalQuestions} icon={<ChartBarIcon />} />
+            </div>
+            <div>
+                <h3 className="text-lg font-semibold mb-4 text-primary">Breakdown by Topic</h3>
+                <div className="space-y-4">
+                    {/* FIX: Switched from Object.entries to Object.keys to fix type inference issues where `data` was inferred as `unknown`. */}
+                    {Object.keys(topicBreakdown).map((topicName) => {
+                        const data = topicBreakdown[topicName];
+                        const topicAccuracy = data.total > 0 ? (data.correct / data.total) * 100 : 0;
+                        const avgTime = data.total > 0 ? data.totalTime / data.total : 0;
+                        return (
+                        <Card key={topicName} className="overflow-hidden">
+                            <CardHeader>
+                                <CardTitle className="text-base">{topicName}</CardTitle>
+                                <div className="flex items-center space-x-4 text-sm text-muted-foreground">
+                                    <span>{data.total} Qs</span>
+                                    <span>|</span>
+                                    <span>{topicAccuracy.toFixed(1)}% Acc.</span>
+                                    <span>|</span>
+                                    <span>{avgTime.toFixed(1)}s Avg.</span>
+                                </div>
+                            </CardHeader>
+                            <CardContent className="pt-0">
+                                <ul className="space-y-3">
+                                    {/* FIX: Explicitly type subTopicData to resolve type inference issue with Object.values. */}
+                                    {Object.values(data.subTopics).map((subTopicData: SubTopicAnalytics) => {
+                                        return (
+                                        <li key={subTopicData.subTopic} className="p-3 bg-secondary/50 rounded-md">
+                                            <div className="flex justify-between items-center text-sm">
+                                                <span className="font-medium text-secondary-foreground">{subTopicData.subTopic}</span>
+                                                <span className="text-xs font-mono text-muted-foreground">{subTopicData.correct}/{subTopicData.total}</span>
+                                            </div>
+                                            <ProgressBar value={subTopicData.accuracy} />
+                                        </li>
+                                        )
+                                    })}
+                                </ul>
+                            </CardContent>
+                        </Card>
+                        )
+                    })}
+                </div>
+            </div>
+        </div>
+      )
+  }
 
   return (
     <div className="space-y-8">
@@ -242,62 +277,10 @@ export const Dashboard: React.FC<DashboardProps> = ({ onStartPersonalizedSession
               <CardTitle>Performance Analytics</CardTitle>
               <CardDescription>Your performance across all practice sessions.</CardDescription>
             </div>
-            {stats && <Button onClick={handleResetStats} className="bg-destructive/10 text-destructive hover:bg-destructive/20"><TrashIcon/>Reset Stats</Button>}
+            {analytics && analytics.totalQuestions > 0 && <Button onClick={handleResetStats} className="bg-destructive/10 text-destructive hover:bg-destructive/20"><TrashIcon/>Reset Stats</Button>}
         </CardHeader>
         <CardContent>
-            {!stats ? (
-                <div className="text-center py-8">
-                    <p className="text-muted-foreground">No practice data yet. Go to the 'Practice' tab to answer some questions!</p>
-                </div>
-            ) : (
-                <div className="space-y-8 pt-4">
-                    <div className="grid gap-4 md:grid-cols-3">
-                        <StatCard title="Overall Accuracy" value={`${stats.accuracy.toFixed(1)}%`} icon={<TargetIcon />} />
-                        <StatCard title="Average Time" value={`${stats.avgTime.toFixed(1)}s`} icon={<ClockIcon />} />
-                        <StatCard title="Questions Answered" value={stats.totalQuestions} icon={<ChartBarIcon />} />
-                    </div>
-                    <div>
-                        <h3 className="text-lg font-semibold mb-4 text-primary">Breakdown by Topic</h3>
-                        <div className="space-y-4">
-                            {Object.entries(stats.topicBreakdown).map(([topicName, data]) => {
-                                const topicData = data as TopicStats;
-                                const topicAccuracy = topicData.total > 0 ? (topicData.correct / topicData.total) * 100 : 0;
-                                return (
-                                <Card key={topicName} className="overflow-hidden">
-                                    <CardHeader>
-                                        <CardTitle className="text-base">{topicName}</CardTitle>
-                                        <div className="flex items-center space-x-4 text-sm text-muted-foreground">
-                                            <span>{topicData.total} Qs</span>
-                                            <span>|</span>
-                                            <span>{topicAccuracy.toFixed(1)}% Acc.</span>
-                                            <span>|</span>
-                                            <span>{(topicData.totalTime / topicData.total).toFixed(1)}s Avg.</span>
-                                        </div>
-                                    </CardHeader>
-                                    <CardContent className="pt-0">
-                                        <ul className="space-y-3">
-                                            {Object.entries(topicData.subTopics).map(([subTopicName, subData]) => {
-                                                const subTopicData = subData as SubTopicStats;
-                                                const subTopicAccuracy = subTopicData.total > 0 ? (subTopicData.correct / subTopicData.total) * 100 : 0;
-                                                return (
-                                                <li key={subTopicName} className="p-3 bg-secondary/50 rounded-md">
-                                                    <div className="flex justify-between items-center text-sm">
-                                                        <span className="font-medium text-secondary-foreground">{subTopicName}</span>
-                                                        <span className="text-xs font-mono text-muted-foreground">{subTopicData.correct}/{subTopicData.total}</span>
-                                                    </div>
-                                                    <ProgressBar value={subTopicAccuracy} />
-                                                </li>
-                                                )
-                                            })}
-                                        </ul>
-                                    </CardContent>
-                                </Card>
-                                )
-                            })}
-                        </div>
-                    </div>
-                </div>
-            )}
+            {renderAnalytics()}
         </CardContent>
       </Card>
     </div>

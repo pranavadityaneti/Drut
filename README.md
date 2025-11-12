@@ -1,20 +1,19 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Drut - AI Learning App
 
-# Run and deploy your AI Studio app
+This document provides the necessary setup instructions for the Drut application's database.
 
-This contains everything you need to run your app locally.
+## Supabase Database Setup
 
-View your app in AI Studio: https://ai.studio/apps/drive/1NG7j0ZJbmZ_0dxO4JyhS3UDtCmz0dwtl
+The application requires a specific database schema to handle user accounts, persist practice attempts, and calculate analytics. The following SQL script will set up all necessary tables, security policies, and server-side functions.
 
-## Run Locally
+**IMPORTANT:** You must run this script in your Supabase project's SQL Editor to fix the application's persistence and analytics errors.
 
-**Prerequisites:**  Node.js
+### How to Apply the Schema:
 
+1.  Navigate to your Supabase project dashboard.
+2.  In the left-hand menu, click on the **SQL Editor** icon.
+3.  Click **+ New query**.
+4.  Copy the entire content of the `supabase/migrations/0001_initial_schema.sql` file and paste it into the query window.
+5.  Click the **RUN** button.
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+This will correctly initialize your database. After running the script, the application should function as expected.
