@@ -21,6 +21,12 @@ export const signup = (email: string): User => {
   return login(email);
 };
 
+export const loginWithGoogle = (): User => {
+    // Simulate logging in with a Google account
+    const googleUserEmail = 'signed.in.with.google@drut.app';
+    return login(googleUserEmail);
+}
+
 
 export const logout = (): void => {
   if (typeof window !== 'undefined') {
