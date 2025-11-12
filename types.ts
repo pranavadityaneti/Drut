@@ -28,3 +28,19 @@ export interface QuestionData {
   fastestSafeMethod: FastestSafeMethod;
   fullStepByStep: FullStepByStep;
 }
+
+export interface PerformanceRecord {
+  id: string; // Unique ID, e.g., hash of questionText + timestamp
+  timestamp: number;
+  examProfile: string;
+  topic: string;
+  subTopic: string;
+  isCorrect: boolean;
+  timeTaken: number;
+  targetTime: number;
+  questionText: string;
+}
+
+export interface User {
+  email: string;
+}

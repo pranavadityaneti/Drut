@@ -5,12 +5,12 @@ import { Button } from './ui/Button';
 
 interface QuestionCardProps {
   data: QuestionData;
-  examProfile: string;
   isAnswered: boolean;
   selectedOption: number | null;
   onOptionChange: (index: number) => void;
   onAnswerSubmit: () => void;
   timeTaken: number;
+  targetTime: number;
 }
 
 const TimerIcon = () => (
@@ -19,23 +19,14 @@ const TimerIcon = () => (
 
 export const QuestionCard: React.FC<QuestionCardProps> = ({ 
   data, 
-  examProfile,
   isAnswered,
   selectedOption,
   onOptionChange,
   onAnswerSubmit,
-  timeTaken
+  timeTaken,
+  targetTime
 }) => {
 
-  const getTargetTime = () => {
-      switch (examProfile) {
-          case 'jee_main': return data.timeTargets.jee_main;
-          case 'cat': return data.timeTargets.cat;
-          case 'eamcet': return data.timeTargets.eamcet;
-          default: return 0;
-      }
-  }
-  
   const getOptionClassName = (index: number) => {
     let baseClasses = "flex items-center p-4 border rounded-md transition-all cursor-pointer";
     if (!isAnswered) {
@@ -66,7 +57,7 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
             <div className="flex items-center space-x-4">
                 <div className="flex items-center bg-secondary text-secondary-foreground text-sm font-medium px-3 py-1.5 rounded-md">
                     <TimerIcon />
-                    <span>Target: {getTargetTime()}s</span>
+                    <span>Target: {targetTime}s</span>
                 </div>
                 <div className="flex items-center bg-secondary text-secondary-foreground text-sm font-medium px-3 py-1.5 rounded-md">
                     <TimerIcon />

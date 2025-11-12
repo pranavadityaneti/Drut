@@ -21,9 +21,10 @@ interface SidebarProps {
   setCurrentPage: (page: string) => void;
   isCollapsed: boolean;
   onToggle: () => void;
+  isPersonalizedSessionActive: boolean;
 }
 
-export const Sidebar: React.FC<SidebarProps> = ({ currentPage, setCurrentPage, isCollapsed, onToggle }) => {
+export const Sidebar: React.FC<SidebarProps> = ({ currentPage, setCurrentPage, isCollapsed, onToggle, isPersonalizedSessionActive }) => {
   const navItems = [
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboardIcon },
     { id: 'practice', label: 'Practice', icon: PenSquareIcon },
@@ -37,14 +38,15 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentPage, setCurrentPage, i
           return (
             <button
               key={item.id}
-              onClick={() => setCurrentPage(item.id)}
+              onClick={() => !isPersonalizedSessionActive && setCurrentPage(item.id)}
+              disabled={isPersonalizedSessionActive}
               className={`flex items-center py-2 rounded-md text-sm font-medium transition-colors ${
                 isCollapsed ? 'justify-center px-2' : 'px-3'
               } ${
                 isActive
                   ? 'bg-primary text-primary-foreground'
                   : 'text-muted-foreground hover:bg-accent hover:text-accent-foreground'
-              }`}
+              } ${ isPersonalizedSessionActive ? 'cursor-not-allowed opacity-50' : '' }`}
             >
               <item.icon />
               {!isCollapsed && <span className="ml-3">{item.label}</span>}
