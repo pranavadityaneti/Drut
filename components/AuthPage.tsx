@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { User } from '../types';
 import { LoginForm } from './LoginForm';
 import { SignupForm } from './SignupForm';
-import { PayMeIcon } from './icons/Icons';
+import { DrutIcon } from './icons/Icons';
 
 
 interface AuthPageProps {
@@ -18,9 +18,9 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onLoginSuccess }) => {
       <div className="flex w-full max-w-sm flex-col gap-6">
         <a href="#" className="flex items-center gap-2 self-center font-medium">
           <div className="bg-pay-green-dark text-white flex size-8 items-center justify-center rounded-md">
-            <PayMeIcon className="size-5" />
+            <DrutIcon className="size-5" />
           </div>
-          <span className="text-xl font-semibold">PayMe App</span>
+          <span className="text-xl font-semibold">Drut</span>
         </a>
         {view === 'login' ? (
             <LoginForm 

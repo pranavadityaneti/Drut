@@ -6,7 +6,7 @@ import { Button } from './ui/Button';
 import { Avatar } from './ui/Avatar';
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator } from './ui/DropdownMenu';
 import { Separator } from './ui/Separator';
-import { PayMeIcon, MoreHorizontalIcon, UserIcon, LayoutDashboardIcon, PracticeIcon, LogoutIcon } from './icons/Icons';
+import { DrutIcon, MoreHorizontalIcon, UserIcon, LayoutDashboardIcon, PracticeIcon, LogoutIcon } from './icons/Icons';
 
 interface SidebarProps {
   currentPage: string;
@@ -50,8 +50,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentPage, setCurrentPage, u
     >
       <div className="flex h-16 items-center border-b px-6">
          <a href="#" className="flex items-center gap-2 font-semibold">
-            <PayMeIcon className="h-6 w-6" />
-            {!isCollapsed && <span>PayMe App</span>}
+            <DrutIcon className="h-6 w-6" />
+            {!isCollapsed && <span>Drut</span>}
         </a>
       </div>
       <nav className="flex-1 flex flex-col space-y-2 p-4">

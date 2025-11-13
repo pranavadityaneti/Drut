@@ -1,12 +1,10 @@
 
 import React from 'react';
 
-// An abstract icon representing a payment or app logo.
-export const PayMeIcon: React.FC<{className?: string}> = ({className}) => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-      <path d="M18 8L22 12L18 16" />
-      <path d="M6 8L2 12L6 16" />
-      <path d="M12 2V22" />
+// An abstract icon representing the app logo.
+export const DrutIcon: React.FC<{className?: string}> = ({className}) => (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className}>
+      <path d="M15.5,2H8.5C4.91,2,2,4.91,2,8.5v7C2,19.09,4.91,22,8.5,22h7C19.09,22,22,19.09,22,15.5v-7 C22,4.91,19.09,2,15.5,2z M10,19H8.5C6.02,19,4,16.98,4,14.5v-5C4,6.02,6.02,4,8.5,4H10V19z"/>
     </svg>
 );
 

@@ -1,5 +1,5 @@
 
-# PayMe App - AI Learning App
+# Drut - AI Learning App
 
 This document provides the necessary setup instructions for the Drut application's database and storage.
 

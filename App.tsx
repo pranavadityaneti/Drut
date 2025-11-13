@@ -131,7 +131,7 @@ function App() {
                     </div>
                 </main>
                 <footer className="py-4 text-center text-sm text-muted-foreground border-t bg-card">
-                    © {new Date().getFullYear()} PayMe App. All rights reserved.
+                    © {new Date().getFullYear()} Drut. All rights reserved.
                 </footer>
             </SidebarInset>
         </div>

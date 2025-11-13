@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Button } from './ui/Button';
-import { AppleIcon, BoltIcon, BrainCircuitIcon, PayMeIcon, PlayCircleIcon, PlayStoreIcon, ShieldCheckIcon, StarIcon } from './icons/Icons';
+import { AppleIcon, BoltIcon, BrainCircuitIcon, DrutIcon, PlayCircleIcon, PlayStoreIcon, ShieldCheckIcon, StarIcon } from './icons/Icons';
 
 interface LandingPageProps {
   onGetStarted: () => void;
@@ -11,8 +11,8 @@ const LandingHeader: React.FC<LandingPageProps> = ({ onGetStarted }) => (
   <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-sm border-b border-gray-200">
     <div className="container mx-auto px-6 py-4 flex justify-between items-center">
       <div className="flex items-center gap-2">
-        <PayMeIcon className="h-8 w-8 text-pay-green-dark" />
-        <span className="font-bold text-xl text-pay-black">PayMe App</span>
+        <DrutIcon className="h-8 w-8 text-pay-green-dark" />
+        <span className="font-bold text-xl text-pay-black">Drut</span>
       </div>
       <nav className="hidden md:flex items-center gap-8 text-pay-gray font-medium">
         <a href="#" className="hover:text-pay-black transition-colors">Home</a>
@@ -299,8 +299,8 @@ const LandingFooter: React.FC = () => (
             <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
                 <div className="lg:col-span-2 mb-8 sm:mb-0">
                     <div className="flex items-center gap-2">
-                        <PayMeIcon className="h-8 w-8 text-pay-green-dark" />
-                        <span className="font-bold text-xl text-pay-black">PayMe App</span>
+                        <DrutIcon className="h-8 w-8 text-pay-green-dark" />
+                        <span className="font-bold text-xl text-pay-black">Drut</span>
                     </div>
                     <p className="mt-4 text-sm max-w-xs">
                        Making your complicated exam prep more simple.
@@ -333,7 +333,7 @@ const LandingFooter: React.FC = () => (
                 </div>
             </div>
              <div className="mt-16 border-t pt-8 text-center text-sm">
-                <p>&copy; {new Date().getFullYear()} PayMe App. All Rights Reserved.</p>
+                <p>&copy; {new Date().getFullYear()} Drut. All Rights Reserved.</p>
             </div>
         </div>
     </footer>

@@ -82,7 +82,7 @@ export const Dashboard: React.FC<{}> = () => {
     <div className="space-y-8">
       <Card>
         <CardHeader>
-          <CardTitle>Welcome to PayMe App</CardTitle>
+          <CardTitle>Welcome to Drut</CardTitle>
           <CardDescription>
             Your AI-powered learning dashboard. Your performance from the 'Practice' tab will appear here.
           </CardDescription>
