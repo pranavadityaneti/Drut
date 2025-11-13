@@ -1,20 +1,36 @@
 
 import React from 'react';
 
-// FIX: Add optional `variant` prop to the ButtonProps interface to allow for different button styles.
-// This resolves type errors in components that use this prop, such as LoginForm and SignupForm.
+const variants = {
+  default: 'bg-primary text-primary-foreground hover:bg-primary/90',
+  ghost: 'hover:bg-accent hover:text-accent-foreground',
+  outline: 'border border-input bg-background hover:bg-accent hover:text-accent-foreground',
+};
+
+const sizes = {
+  default: 'h-10 px-4 py-2',
+  sm: 'h-9 rounded-md px-3',
+  icon: 'h-10 w-10',
+};
+
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
   isLoading?: boolean;
-  variant?: string;
+  variant?: keyof typeof variants;
+  size?: keyof typeof sizes;
 }
 
-// FIX: Destructure the `variant` prop so it's not passed down to the underlying <button> element,
-// which would cause a React warning about unknown DOM properties.
-export const Button: React.FC<ButtonProps> = ({ children, className = '', isLoading = false, variant, ...props }) => {
+export const Button: React.FC<ButtonProps> = ({ 
+  children, 
+  className = '', 
+  isLoading = false, 
+  variant = 'default', 
+  size = 'default', 
+  ...props 
+}) => {
   return (
     <button
-      className={`inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 bg-primary text-primary-foreground hover:bg-primary/90 ${className}`}
+      className={`inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 ${variants[variant]} ${sizes[size]} ${className}`}
       disabled={isLoading || props.disabled}
       {...props}
     >

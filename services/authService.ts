@@ -1,6 +1,6 @@
 import { getSupabase } from '../lib/supabase';
 import { User } from '../types';
-import type { AuthChangeEvent, Session } from 'https://esm.sh/@supabase/supabase-js@2.45.5?bundle';
+import type { AuthChangeEvent, Session, UserAttributes } from 'https://esm.sh/@supabase/supabase-js@2.45.5?bundle';
 import { log } from '../lib/log';
 
 
@@ -51,4 +51,12 @@ export const onAuthStateChange = (callback: (event: AuthChangeEvent, session: Se
         return { data: { subscription: { unsubscribe: () => {} } } };
     }
     return supabase.auth.onAuthStateChange(callback);
+};
+
+export const updateUser = async (attributes: UserAttributes): Promise<{ user: User | null }> => {
+    const supabase = getSupabase();
+    if (!supabase) throw new Error("Supabase client is not available.");
+    const { data, error } = await supabase.auth.updateUser(attributes);
+    if (error) throw new Error(error.message);
+    return { user: data.user };
 };

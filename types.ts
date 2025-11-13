@@ -1,3 +1,5 @@
+
+
 export interface TimeTargets {
   jee_main: number;
   cat: number;
@@ -28,17 +30,21 @@ export interface QuestionData {
   fullStepByStep: FullStepByStep;
 }
 
-export interface PerformanceRecord {
-  id: string; // From database
-  timestamp: number; // created_at from database
-  examProfile: string;
-  topic: string;
-  subTopic: string;
-  isCorrect: boolean;
-  timeTaken: number;
-  targetTime: number;
-  questionText: string;
+// This is the data shape returned by our server-side analytics RPC.
+export type AnalyticsRow = {
+  total_attempts: number;
+  accuracy: number;
+  avg_time_ms: number;
+};
+
+export interface UserMetadata {
+    full_name?: string;
+    phone?: string;
+    avatar_url?: string;
+    exam_profile?: string;
+    [key: string]: any;
 }
+
 
 // Updated to match Supabase User object
 export type User = {
@@ -47,9 +53,7 @@ export type User = {
     provider?: string;
     [key: string]: any;
   };
-  user_metadata: {
-    [key: string]: any;
-  };
+  user_metadata: UserMetadata;
   aud: string;
   confirmation_sent_at?: string;
   recovery_sent_at?: string;

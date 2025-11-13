@@ -1,5 +1,3 @@
-
-
 import React, { useState, useCallback, useEffect, useRef, useMemo } from 'react';
 import { QuestionData } from '../types';
 import { generateQuestionAndSolutions } from '../services/geminiService';
@@ -9,21 +7,27 @@ import { Button } from './ui/Button';
 import { Card, CardContent } from './ui/Card';
 import { QuestionCard } from './QuestionCard';
 import { SolutionView } from './SolutionView';
-import { EXAM_SPECIFIC_TOPICS } from '../constants';
+import { EXAM_SPECIFIC_TOPICS, EXAM_PROFILES } from '../constants';
 import { Select } from './ui/Select';
-import { PersonalizedTopic } from '../App';
 import { PracticeErrorBoundary } from './PracticeErrorBoundary';
 import { log } from '../lib/log';
 
-interface PracticeProps {
-    personalizedTopics: PersonalizedTopic[] | null;
-    onEndPersonalizedSession: () => void;
-}
-
 const BrainCircuitIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6 text-primary"><path d="M12 5V2M12 22v-3"/><path d="M17 9a5 5 0 0 1-10 0"/><path d="M5 14a2.5 2.5 0 0 1 5 0"/><path d="M14 14a2.5 2.5 0 0 1 5 0"/><path d="M2 14h1.5"/><path d="M20.5 14H22"/><path d="M9 14h6"/><path d="M5 18a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z"/><path d="M15 18a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z"/></svg>;
 
+// A simple hash function to create a consistent ID from the question text.
+// This is needed because the Gemini response doesn't include a unique ID.
+const createQuestionId = (text: string): string => {
+  let hash = 0;
+  for (let i = 0; i < text.length; i++) {
+    const char = text.charCodeAt(i);
+    hash = (hash << 5) - hash + char;
+    hash |= 0; // Convert to 32bit integer
+  }
+  return 'qid_' + Math.abs(hash).toString(16);
+};
 
-export const Practice: React.FC<PracticeProps> = ({ personalizedTopics, onEndPersonalizedSession }) => {
+
+export const Practice: React.FC<{}> = () => {
   const [examProfile, setExamProfile] = useState<string | null>(null);
   const [topic, setTopic] = useState<string | null>(null);
   const [currentSubTopics, setCurrentSubTopics] = useState<string[]>([]);
@@ -41,46 +45,36 @@ export const Practice: React.FC<PracticeProps> = ({ personalizedTopics, onEndPer
   const [isAnswered, setIsAnswered] = useState<boolean>(false);
   const [timeTaken, setTimeTaken] = useState<number>(0);
   const timerRef = useRef<number | null>(null);
-  const prefetchState = useRef<{ [key: string]: boolean }>({});
 
-  const [isPersonalizedSession, setIsPersonalizedSession] = useState(false);
-
-  useEffect(() => {
-    setIsPersonalizedSession(!!personalizedTopics && personalizedTopics.length > 0);
-    // When session mode changes, reset question state
-    setCurrentQuestionIndex(0);
-    setQuestionCache({});
-  }, [personalizedTopics]);
+  const startTimeRef = useRef<number | null>(null);
 
   const currentTopicInfo = useMemo(() => {
-    if (isPersonalizedSession && personalizedTopics) {
-      return personalizedTopics[currentQuestionIndex % personalizedTopics.length];
-    }
     return { topic, subTopic: selectedSubTopic };
-  }, [isPersonalizedSession, personalizedTopics, currentQuestionIndex, topic, selectedSubTopic]);
+  }, [topic, selectedSubTopic]);
 
 
   useEffect(() => {
-    const savedProfile = localStorage.getItem('examProfile');
-    const savedTopic = localStorage.getItem('topic');
+    // Load preferences from localStorage on component mount
+    const savedProfile = localStorage.getItem('examProfile') || EXAM_PROFILES[0].value;
     setExamProfile(savedProfile);
+
+    const topicsForExam = EXAM_SPECIFIC_TOPICS[savedProfile] || [];
+    const savedTopic = localStorage.getItem('topic') || (topicsForExam.length > 0 ? topicsForExam[0].value : '');
     setTopic(savedTopic);
 
-    if (savedProfile && savedTopic) {
-      const topicsForExam = EXAM_SPECIFIC_TOPICS[savedProfile] || [];
-      const currentTopicObject = topicsForExam.find(t => t.value === savedTopic);
-      const subs = currentTopicObject?.subTopics || [];
-      setCurrentSubTopics(subs);
+    const currentTopicObject = topicsForExam.find(t => t.value === savedTopic);
+    const subs = currentTopicObject?.subTopics || [];
+    setCurrentSubTopics(subs);
       
-      if (subs.length > 0 && !isPersonalizedSession) {
+    if (subs.length > 0) {
         setSelectedSubTopic(subs[0]);
-      }
     }
-  }, [isPersonalizedSession]);
+  }, []);
 
   const startTimer = () => {
     stopTimer();
     const startTime = Date.now();
+    startTimeRef.current = startTime;
     timerRef.current = window.setInterval(() => {
       setTimeTaken(Math.round((Date.now() - startTime) / 1000));
     }, 1000);
@@ -92,34 +86,6 @@ export const Practice: React.FC<PracticeProps> = ({ personalizedTopics, onEndPer
       timerRef.current = null;
     }
   };
-
-  const prefetchNextQuestion = useCallback(async () => {
-    const { topic: currentTopic, subTopic: currentSubTopic } = currentTopicInfo;
-    if (!currentSubTopic || !currentTopic || !examProfile || isPersonalizedSession) return;
-
-    const nextIndex = currentQuestionIndex + 1;
-    const cacheKey = `${currentSubTopic}-${nextIndex}`;
-    
-    const isAlreadyCached = questionCache[currentSubTopic]?.[nextIndex];
-    const isBeingPrefetched = prefetchState.current[cacheKey];
-
-    if (isAlreadyCached || isBeingPrefetched) return;
-
-    try {
-      prefetchState.current[cacheKey] = true;
-      const data = await generateQuestionAndSolutions(currentTopic, currentSubTopic, examProfile);
-      setQuestionCache(prevCache => {
-        const newCache = { ...prevCache };
-        if (!newCache[currentSubTopic]) newCache[currentSubTopic] = [];
-        newCache[currentSubTopic][nextIndex] = data;
-        return newCache;
-      });
-    } catch (error) {
-      log.error(`Failed to prefetch question for ${cacheKey}:`, error);
-    } finally {
-      delete prefetchState.current[cacheKey];
-    }
-  }, [currentQuestionIndex, currentTopicInfo, examProfile, questionCache, isPersonalizedSession]);
   
   const loadQuestion = useCallback(async (index: number) => {
     setQuestionData(null);
@@ -128,18 +94,15 @@ export const Practice: React.FC<PracticeProps> = ({ personalizedTopics, onEndPer
     setTimeTaken(0);
     stopTimer();
 
-    const { topic: currentTopic, subTopic: currentSubTopic } = currentTopicInfo;
+    const { subTopic: currentSubTopic, topic: currentTopic } = currentTopicInfo;
     if (!currentSubTopic || !currentTopic || !examProfile) return;
 
-    if (index === 0 && !isPersonalizedSession) {
+    // Check for preloaded question first (for initial load)
+    if (index === 0) {
       const preloaded = getPreloadedQuestion(examProfile, currentTopic, currentSubTopic);
       if (preloaded) {
         setQuestionData(preloaded);
-        setQuestionCache(prev => {
-            const newSubTopicCache = [...(prev[currentSubTopic] || [])];
-            newSubTopicCache[0] = preloaded;
-            return { ...prev, [currentSubTopic]: newSubTopicCache };
-        });
+        setQuestionCache(prev => ({ ...prev, [currentSubTopic]: [preloaded] }));
         startTimer();
         return;
       }
@@ -168,19 +131,13 @@ export const Practice: React.FC<PracticeProps> = ({ personalizedTopics, onEndPer
     } finally {
       setIsLoading(false);
     }
-  }, [currentTopicInfo, examProfile, questionCache, isPersonalizedSession]);
+  }, [currentTopicInfo, examProfile, questionCache]);
 
   useEffect(() => {
     if (currentTopicInfo.subTopic) {
       loadQuestion(currentQuestionIndex);
     }
   }, [currentTopicInfo, currentQuestionIndex, loadQuestion]);
-
-  useEffect(() => {
-    if (questionData) {
-      prefetchNextQuestion();
-    }
-  }, [questionData, prefetchNextQuestion]);
 
   const handleSubTopicSelect = (subTopic: string) => {
     if (subTopic === selectedSubTopic) return;
@@ -197,26 +154,28 @@ export const Practice: React.FC<PracticeProps> = ({ personalizedTopics, onEndPer
       default: return 0;
     }
   }, [questionData, examProfile]);
+  
+  const handleOptionChange = (index: number) => {
+    setSelectedOption(index);
+  };
 
   const handleAnswerSubmit = async () => {
-    const { topic: currentTopic, subTopic: currentSubTopic } = currentTopicInfo;
-    if (selectedOption === null || !questionData || !examProfile || !currentTopic || !currentSubTopic) return;
+    if (selectedOption === null || !questionData) return;
     stopTimer();
     setIsAnswered(true);
 
+    // The `firstActionMs` metric has been removed from the backend schema for simplification.
+    // We no longer need to calculate or send it.
+
     try {
         await savePerformanceRecord({
-            questionText: questionData.questionText,
-            examProfile: examProfile,
-            topic: currentTopic,
-            subTopic: currentSubTopic,
+            questionId: createQuestionId(questionData.questionText),
             isCorrect: selectedOption === questionData.correctOptionIndex,
-            timeTaken,
-            targetTime,
+            timeMs: timeTaken * 1000, // Service expects milliseconds
         });
     } catch (error) {
-        log.error("Failed to save performance record:", error);
-        // Optionally, show a toast or message to the user
+        // Error is already logged in the service
+        alert("Could not save your progress. Please check the console for details.");
     }
   };
 
@@ -225,7 +184,7 @@ export const Practice: React.FC<PracticeProps> = ({ personalizedTopics, onEndPer
   };
 
   const handlePrevQuestion = () => {
-    if (currentQuestionIndex > 0 && !isPersonalizedSession) {
+    if (currentQuestionIndex > 0) {
       setCurrentQuestionIndex(prev => prev - 1);
     }
   };
@@ -270,7 +229,7 @@ export const Practice: React.FC<PracticeProps> = ({ personalizedTopics, onEndPer
               data={questionData} 
               isAnswered={isAnswered}
               selectedOption={selectedOption}
-              onOptionChange={setSelectedOption}
+              onOptionChange={handleOptionChange}
               onAnswerSubmit={handleAnswerSubmit}
               timeTaken={timeTaken}
               targetTime={targetTime}
@@ -284,8 +243,7 @@ export const Practice: React.FC<PracticeProps> = ({ personalizedTopics, onEndPer
 
   return (
     <div className="flex flex-col lg:flex-row gap-8">
-      {!isPersonalizedSession && (
-        <aside className="w-full lg:w-1/4 xl:w-1/5">
+      <aside className="w-full lg:w-1/4 xl:w-1/5">
             {/* Desktop Sidebar */}
             <div className="hidden lg:block">
                 <h3 className="text-lg font-semibold mb-4 text-primary">Sub-topics</h3>
@@ -316,30 +274,15 @@ export const Practice: React.FC<PracticeProps> = ({ personalizedTopics, onEndPer
                 />
             </div>
         </aside>
-      )}
-      <main className={`flex-1 space-y-6 ${isPersonalizedSession ? 'w-full' : ''}`}>
+      <main className={`flex-1 space-y-6`}>
         <PracticeErrorBoundary>
-            {isPersonalizedSession && (
-                <Card>
-                    <CardContent className="p-4 flex flex-col sm:flex-row justify-between items-center gap-2">
-                        <div className="flex items-center">
-                            <BrainCircuitIcon />
-                            <h3 className="ml-3 font-semibold text-center sm:text-left">Personalized Practice Session</h3>
-                        </div>
-                        <Button onClick={onEndPersonalizedSession} className="bg-destructive/10 text-destructive hover:bg-destructive/20 w-full sm:w-auto">
-                            End Session
-                        </Button>
-                    </CardContent>
-                </Card>
-            )}
             <Card>
             <CardContent className="p-4 flex flex-col sm:flex-row justify-between items-center gap-4">
                 <p className="text-sm text-muted-foreground font-medium self-start sm:self-center">
                     Question {currentQuestionIndex + 1}
-                    {isPersonalizedSession && ` of ${personalizedTopics?.length}`}
                 </p>
                 <div className="flex space-x-2 w-full sm:w-auto">
-                <Button onClick={handlePrevQuestion} disabled={currentQuestionIndex === 0 || isLoading || isPersonalizedSession} className="flex-1 sm:flex-auto">
+                <Button onClick={handlePrevQuestion} disabled={currentQuestionIndex === 0 || isLoading} className="flex-1 sm:flex-auto">
                     Previous
                 </Button>
                 <Button onClick={handleNextQuestion} disabled={isLoading} className="flex-1 sm:flex-auto">

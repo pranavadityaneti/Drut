@@ -1,4 +1,7 @@
-import React, { useState, useEffect } from 'react';
+
+
+import React from 'react';
+import { useState, useEffect } from 'react';
 import { Header } from './components/Header';
 import { Dashboard } from './components/Dashboard';
 import { Practice } from './components/Practice';
@@ -9,11 +12,9 @@ import { getCurrentUser, onAuthStateChange, logout as authLogout } from './servi
 import { AuthPage } from './components/AuthPage';
 import { HealthStatus, runtimeHealth } from './lib/health';
 import { log } from './lib/log';
+import { SidebarProvider, SidebarInset } from './components/ui/AppShell';
+import { Profile } from './components/Profile';
 
-export interface PersonalizedTopic {
-    topic: string;
-    subTopic: string;
-}
 
 // In a real Next.js app, this would be process.env.NEXT_PUBLIC_DEBUG
 const IS_DEBUG_MODE = true; // Set to true to see the debug chip
@@ -36,9 +37,6 @@ function App() {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState('dashboard');
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 1024);
-  const [personalizedSessionTopics, setPersonalizedSessionTopics] = useState<PersonalizedTopic[] | null>(null);
   const [healthStatus, setHealthStatus] = useState<HealthStatus | null>(null);
 
   useEffect(() => {
@@ -78,33 +76,6 @@ function App() {
     }
   }, [user]);
 
-  useEffect(() => {
-    const handleResize = () => {
-      const mobile = window.innerWidth < 1024;
-      setIsMobile(mobile);
-      if (mobile) {
-        setIsSidebarCollapsed(true);
-      }
-    };
-    window.addEventListener('resize', handleResize);
-    handleResize(); // Initial check
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  useEffect(() => {
-    // Automatically collapse on practice page, expand on dashboard for desktop
-    if (!isMobile) {
-      if (currentPage === 'practice') {
-        setIsSidebarCollapsed(true);
-      } else {
-        setIsSidebarCollapsed(false);
-      }
-    }
-  }, [currentPage, isMobile]);
-
-  const toggleSidebar = () => {
-    setIsSidebarCollapsed(prev => !prev);
-  };
 
   const handleLoginSuccess = (newUser: User) => {
     setUser(newUser);
@@ -114,16 +85,6 @@ function App() {
     await authLogout();
     setUser(null);
     setCurrentPage('dashboard'); // Reset to dashboard after logout
-  };
-  
-  const handleStartPersonalizedSession = (topics: PersonalizedTopic[]) => {
-      setPersonalizedSessionTopics(topics);
-      setCurrentPage('practice');
-  };
-  
-  const handleEndPersonalizedSession = () => {
-      setPersonalizedSessionTopics(null);
-      setCurrentPage('dashboard');
   };
 
   if (loading) {
@@ -142,33 +103,30 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-secondary/50">
-      <Header user={user} onLogout={handleLogout} />
-      <div className="flex flex-1">
-        <Sidebar 
-          currentPage={currentPage} 
-          setCurrentPage={setCurrentPage}
-          isCollapsed={isSidebarCollapsed}
-          onToggle={toggleSidebar}
-          isPersonalizedSessionActive={!!personalizedSessionTopics}
-        />
-        <main className="flex-1 p-6 md:p-8 overflow-y-auto">
-          <div className="container mx-auto px-0">
-            {currentPage === 'dashboard' && <Dashboard onStartPersonalizedSession={handleStartPersonalizedSession} />}
-            {currentPage === 'practice' && (
-                <Practice 
-                    personalizedTopics={personalizedSessionTopics}
-                    onEndPersonalizedSession={handleEndPersonalizedSession}
-                />
-            )}
-          </div>
-        </main>
-      </div>
-      <footer className="py-4 text-center text-sm text-muted-foreground border-t bg-card">
-        © {new Date().getFullYear()} Drut. All rights reserved.
-      </footer>
-      {IS_DEBUG_MODE && healthStatus && <HealthChip status={healthStatus} />}
-    </div>
+    <SidebarProvider>
+        <div className="bg-muted/40">
+            <Sidebar 
+              currentPage={currentPage} 
+              setCurrentPage={setCurrentPage}
+              user={user}
+              onLogout={handleLogout}
+            />
+            <SidebarInset>
+                <Header />
+                <main className="flex-1 p-6 md:p-8 overflow-y-auto">
+                    <div className="container mx-auto px-0">
+                        {currentPage === 'dashboard' && <Dashboard />}
+                        {currentPage === 'practice' && <Practice />}
+                        {currentPage === 'profile' && <Profile />}
+                    </div>
+                </main>
+                <footer className="py-4 text-center text-sm text-muted-foreground border-t bg-card">
+                    © {new Date().getFullYear()} Drut. All rights reserved.
+                </footer>
+            </SidebarInset>
+        </div>
+        {IS_DEBUG_MODE && healthStatus && <HealthChip status={healthStatus} />}
+    </SidebarProvider>
   );
 }
 

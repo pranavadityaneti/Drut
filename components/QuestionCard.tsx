@@ -67,7 +67,7 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
         </div>
       </CardHeader>
       <CardContent>
-        <p className="mb-6 text-base leading-relaxed">{data.questionText}</p>
+        <p className="mb-6 text-base leading-relaxed break-words">{data.questionText}</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {data.options.map((option, index) => (
             <label key={index} className={getOptionClassName(index)}>
@@ -80,7 +80,7 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
                 disabled={isAnswered}
               />
               <span className="font-bold mr-4 text-primary">({String.fromCharCode(65 + index)})</span>
-              <span>{option.text}</span>
+              <span className="break-words">{option.text}</span>
             </label>
           ))}
         </div>

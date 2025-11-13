@@ -1,5 +1,6 @@
 
-import React, { Component, ErrorInfo, ReactNode } from "react";
+
+import React, { ErrorInfo, ReactNode } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from './ui/Card';
 
 interface Props {
@@ -10,9 +11,9 @@ interface State {
   hasError: boolean;
 }
 
-// Fix: Switched to extending the named import `Component` from React.
-// This resolves an issue where TypeScript was not correctly inheriting `props` and `setState` from the base component.
-export class ErrorBoundary extends Component<Props, State> {
+// FIX: Extend React.Component to make this a valid Error Boundary. This provides `this.setState` and `this.props`.
+// FIX: Extended React.Component to make ErrorBoundary a valid class component, providing access to `this.setState` and `this.props`.
+export class ErrorBoundary extends React.Component<Props, State> {
   public state: State = {
     hasError: false
   };

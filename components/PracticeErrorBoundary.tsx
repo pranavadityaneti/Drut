@@ -1,4 +1,6 @@
-import React, { Component, ErrorInfo, ReactNode } from "react";
+
+
+import React, { ErrorInfo, ReactNode } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from './ui/Card';
 import { log } from '../lib/log';
 
@@ -12,7 +14,9 @@ interface State {
   errorInfo: ErrorInfo | null;
 }
 
-export class PracticeErrorBoundary extends Component<Props, State> {
+// FIX: Extend React.Component to make this a valid Error Boundary. This provides `this.setState` and `this.props`.
+// FIX: Extended React.Component to make PracticeErrorBoundary a valid class component, providing access to `this.setState` and `this.props`.
+export class PracticeErrorBoundary extends React.Component<Props, State> {
   public state: State = {
     hasError: false,
     error: null,
