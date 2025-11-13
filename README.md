@@ -1,39 +1,43 @@
-# Drut - AI Learning App
+
+# PayMe App - AI Learning App
 
 This document provides the necessary setup instructions for the Drut application's database and storage.
+
+## ⚠️ Critical Setup Instructions
+
+To ensure the application functions correctly, you **must** configure your Supabase backend by running the SQL script provided below. Failure to do so will result in errors related to saving progress and loading analytics.
 
 ## Supabase Database Setup
 
 The application requires a specific database schema to handle user accounts, persist practice attempts, and calculate analytics. The following SQL script will set up all necessary tables, security policies, and server-side functions. It is **idempotent**, meaning it is safe to run multiple times.
-
-**IMPORTANT:** You must run this script in your Supabase project's SQL Editor to fix the application's persistence and analytics errors.
 
 ### How to Apply the Schema:
 
 1.  Navigate to your Supabase project dashboard.
 2.  In the left-hand menu, click on the **SQL Editor** icon.
 3.  Click **+ New query**.
-4.  Copy the entire SQL script below and paste it into the query window.
+4.  Copy the entire **"Full SQL Schema"** script below and paste it into the query window.
 5.  Click the **RUN** button.
-6.  Finally, go to **Settings** -> **API** and click **Reload** under "Schema Cache" to ensure the changes are visible to the API.
+6.  **This step is crucial:** Go to **Settings** -> **API** and click the **Reload** button under "Schema Cache" to ensure your changes are visible to the application's API.
 
-This will correctly initialize your database. After running the script, the application should function as expected.
+This will correctly initialize your database. After running the script and reloading the cache, the application should function as expected.
 
 ### Troubleshooting Common Errors
 
 #### Error: "Could not find the table 'public.performance_records' in the schema cache" (Code: PGRST205)
 
-This error means the application's API cannot see the `performance_records` table. This is **always** a backend configuration issue, most often caused by missing permissions.
+**Why this happens:** This error occurs when the Supabase API layer (PostgREST) does not have permission to access the `performance_records` table. Even if the table exists in your database, the API cannot "see" it without the correct privileges being granted.
 
-**Solution:** The "Full SQL Schema" script below is designed to fix this. It contains `GRANT` statements that explicitly give the necessary permissions to the API.
-1.  Run the **entire** "Full SQL Schema" script below.
-2.  **Crucially**, go to **Settings -> API** in your Supabase dashboard and click **Reload** to refresh the schema cache. This makes your changes live.
+**Solution:** The "Full SQL Schema" script below is the definitive fix. It contains `GRANT` statements that explicitly give the necessary permissions to the API.
+1.  Carefully follow the "How to Apply the Schema" steps above.
+2.  Ensure you have run the **entire** script successfully.
+3.  **Do not skip step #6 (Reloading the schema cache).** This is the most common reason the fix doesn't appear to work.
 
 #### Error: "Could not find the function public.log_performance_v1(...) in the schema cache" (Code: PGRST202)
 
-This error means the API cannot find the server-side function for saving progress. This is caused by a mismatch in function parameters or missing permissions.
+**Why this happens:** This is a similar issue, but for a server-side function instead of a table. It can be caused by missing execute permissions or a mismatch between the function signature in the database and what the application is calling.
 
-**Solution:** The script below also fixes this by recreating the function with the correct parameter order and granting execute permissions. Follow the same steps as above.
+**Solution:** The script below also fixes this by recreating the function with the correct parameter order and granting the necessary execute permissions. The solution is the same: run the full script and reload the schema cache.
 
 
 ### Full SQL Schema

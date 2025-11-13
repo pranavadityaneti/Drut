@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useMemo } from 'react';
 import { Button } from './ui/Button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from './ui/Card';
@@ -81,7 +82,7 @@ export const Dashboard: React.FC<{}> = () => {
     <div className="space-y-8">
       <Card>
         <CardHeader>
-          <CardTitle>Welcome to Drut</CardTitle>
+          <CardTitle>Welcome to PayMe App</CardTitle>
           <CardDescription>
             Your AI-powered learning dashboard. Your performance from the 'Practice' tab will appear here.
           </CardDescription>

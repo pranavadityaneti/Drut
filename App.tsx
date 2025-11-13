@@ -1,5 +1,4 @@
 
-
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { Header } from './components/Header';
@@ -14,6 +13,7 @@ import { HealthStatus, runtimeHealth } from './lib/health';
 import { log } from './lib/log';
 import { SidebarProvider, SidebarInset } from './components/ui/AppShell';
 import { Profile } from './components/Profile';
+import { LandingPage } from './components/LandingPage';
 
 
 // In a real Next.js app, this would be process.env.NEXT_PUBLIC_DEBUG
@@ -38,6 +38,7 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState('dashboard');
   const [healthStatus, setHealthStatus] = useState<HealthStatus | null>(null);
+  const [showAuth, setShowAuth] = useState(false);
 
   useEffect(() => {
     if (IS_DEBUG_MODE) {
@@ -60,7 +61,11 @@ function App() {
     checkUser();
 
     const { data: authListener } = onAuthStateChange((_event, session) => {
-        setUser(session?.user ?? null);
+        const sessionUser = session?.user ?? null;
+        setUser(sessionUser);
+        if (!sessionUser) {
+            setShowAuth(false);
+        }
     });
 
     return () => {
@@ -79,12 +84,14 @@ function App() {
 
   const handleLoginSuccess = (newUser: User) => {
     setUser(newUser);
+    setShowAuth(false);
   };
 
   const handleLogout = async () => {
     await authLogout();
     setUser(null);
     setCurrentPage('dashboard'); // Reset to dashboard after logout
+    setShowAuth(false);
   };
 
   if (loading) {
@@ -99,7 +106,10 @@ function App() {
   }
 
   if (!user) {
-    return <AuthPage onLoginSuccess={handleLoginSuccess} />;
+    if (showAuth) {
+        return <AuthPage onLoginSuccess={handleLoginSuccess} />;
+    }
+    return <LandingPage onGetStarted={() => setShowAuth(true)} />;
   }
 
   return (
@@ -121,7 +131,7 @@ function App() {
                     </div>
                 </main>
                 <footer className="py-4 text-center text-sm text-muted-foreground border-t bg-card">
-                    © {new Date().getFullYear()} Drut. All rights reserved.
+                    © {new Date().getFullYear()} PayMe App. All rights reserved.
                 </footer>
             </SidebarInset>
         </div>
