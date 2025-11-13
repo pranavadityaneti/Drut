@@ -1,5 +1,3 @@
-
-
 import React, { ErrorInfo, ReactNode } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from './ui/Card';
 
@@ -11,8 +9,6 @@ interface State {
   hasError: boolean;
 }
 
-// FIX: Extend React.Component to make this a valid Error Boundary. This provides `this.setState` and `this.props`.
-// FIX: Extended React.Component to make ErrorBoundary a valid class component, providing access to `this.setState` and `this.props`.
 export class ErrorBoundary extends React.Component<Props, State> {
   public state: State = {
     hasError: false

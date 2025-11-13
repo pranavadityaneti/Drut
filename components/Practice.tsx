@@ -12,7 +12,7 @@ import { Select } from './ui/Select';
 import { PracticeErrorBoundary } from './PracticeErrorBoundary';
 import { log } from '../lib/log';
 
-const BrainCircuitIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6 text-primary"><path d="M12 5V2M12 22v-3"/><path d="M17 9a5 5 0 0 1-10 0"/><path d="M5 14a2.5 2.5 0 0 1 5 0"/><path d="M14 14a2.5 2.5 0 0 1 5 0"/><path d="M2 14h1.5"/><path d="M20.5 14H22"/><path d="M9 14h6"/><path d="M5 18a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z"/><path d="M15 18a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z"/></svg>;
+const BrainCircuitIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6 text-primary"><path d="M12 5V2M12 22v-3"/><path d="M17 9a5 5 0 0 1-10 0"/><path d="M5 14a2.5 2.5 0 0 1 5 0"/><path d="M14 14a2.5 2.5 0 0 1 5 0"/><path d="M2 14h1.5"/><path d="M20.5 14H22"/><path d="M9 14h6"/><path d="M5 18a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z"/><path d="M15 18a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z"/></svg>;
 
 // A simple hash function to create a consistent ID from the question text.
 // This is needed because the Gemini response doesn't include a unique ID.
@@ -173,9 +173,10 @@ export const Practice: React.FC<{}> = () => {
             isCorrect: selectedOption === questionData.correctOptionIndex,
             timeMs: timeTaken * 1000, // Service expects milliseconds
         });
-    } catch (error) {
-        // Error is already logged in the service
-        alert("Could not save your progress. Please check the console for details.");
+    } catch (error: any) {
+        // The service now throws a detailed error. We display it to aid debugging.
+        alert(`Could not save your progress.\n\nDetails:\n${error.message}`);
+        log.error('save error', error);
     }
   };
 
