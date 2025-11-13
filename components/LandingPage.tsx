@@ -14,12 +14,6 @@ const LandingHeader: React.FC<LandingPageProps> = ({ onGetStarted }) => (
         <DrutIcon className="h-8 w-8 text-pay-green-dark" />
         <span className="font-bold text-xl text-pay-black">Drut</span>
       </div>
-      <nav className="hidden md:flex items-center gap-8 text-pay-gray font-medium">
-        <a href="#" className="hover:text-pay-black transition-colors">Home</a>
-        <a href="#" className="hover:text-pay-black transition-colors">About</a>
-        <a href="#" className="hover:text-pay-black transition-colors">Features</a>
-        <a href="#" className="hover:text-pay-black transition-colors">Pricing</a>
-      </nav>
       <div className='hidden md:flex items-center gap-2'>
         <Button onClick={onGetStarted} variant='ghost' className="text-pay-gray font-bold">
             Sign In
