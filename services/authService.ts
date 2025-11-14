@@ -60,3 +60,12 @@ export const updateUser = async (attributes: UserAttributes): Promise<{ user: Us
     if (error) throw new Error(error.message);
     return { user: data.user };
 };
+
+export const resetPasswordForEmail = async (email: string): Promise<void> => {
+    const supabase = getSupabase();
+    if (!supabase) throw new Error("Supabase client is not available.");
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: window.location.origin, // Redirect user back to the app after reset
+    });
+    if (error) throw new Error(error.message);
+};

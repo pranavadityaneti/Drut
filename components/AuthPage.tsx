@@ -1,8 +1,8 @@
-
 import React, { useState } from 'react';
 import { User } from '../types';
 import { LoginForm } from './LoginForm';
 import { SignupForm } from './SignupForm';
+import { ForgotPasswordForm } from './ForgotPasswordForm';
 import { DrutIcon } from './icons/Icons';
 
 
@@ -11,7 +11,7 @@ interface AuthPageProps {
 }
 
 export const AuthPage: React.FC<AuthPageProps> = ({ onLoginSuccess }) => {
-  const [view, setView] = useState<'login' | 'signup'>('login');
+  const [view, setView] = useState<'login' | 'signup' | 'forgot-password'>('login');
 
   return (
     <div className="bg-muted flex min-h-screen flex-col items-center justify-center gap-6 p-6 md:p-10">
@@ -22,14 +22,21 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onLoginSuccess }) => {
           </div>
           <span className="text-xl font-semibold">Drut</span>
         </a>
-        {view === 'login' ? (
+        {view === 'login' && (
             <LoginForm 
                 onLoginSuccess={onLoginSuccess} 
                 onSwitchToSignup={() => setView('signup')}
+                onSwitchToForgotPassword={() => setView('forgot-password')}
             />
-        ) : (
+        )}
+        {view === 'signup' && (
             <SignupForm 
                 onLoginSuccess={onLoginSuccess}
+                onSwitchToLogin={() => setView('login')}
+            />
+        )}
+        {view === 'forgot-password' && (
+            <ForgotPasswordForm
                 onSwitchToLogin={() => setView('login')}
             />
         )}

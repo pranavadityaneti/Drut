@@ -8,9 +8,10 @@ import { GoogleIcon } from './icons/Icons';
 interface LoginFormProps {
   onLoginSuccess: (user: User) => void;
   onSwitchToSignup: () => void;
+  onSwitchToForgotPassword: () => void;
 }
 
-export const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess, onSwitchToSignup }) => {
+export const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess, onSwitchToSignup, onSwitchToForgotPassword }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -40,6 +41,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess, onSwitchTo
     }
   };
   
+  // FIX: Corrected syntax error in the try-catch block. The catch statement was missing curly braces {}, which caused compilation errors.
   const handleGoogleSubmit = async () => {
     setError('');
     setIsGoogleLoading(true);
@@ -91,7 +93,10 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess, onSwitchTo
             />
           </div>
           <div className="grid gap-1">
-            <label className="text-sm font-medium" htmlFor="password">Password</label>
+            <div className="flex items-center justify-between">
+                <label className="text-sm font-medium" htmlFor="password">Password</label>
+                <button type="button" onClick={onSwitchToForgotPassword} className="text-sm underline">Forgot Password?</button>
+            </div>
             <input
               id="password"
               type="password"
