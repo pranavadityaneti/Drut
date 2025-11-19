@@ -57,7 +57,7 @@ The question should be conceptual, challenging, and appropriate for the selected
 function tryExtractJson(text: string): string | null {
   const fence = text.match(/```json([\s\S]*?)```/i);
   if (fence) return fence[1].trim();
-  
+
   const first = text.indexOf("{");
   const last = text.lastIndexOf("}");
   if (first !== -1 && last !== -1 && last > first) {
@@ -107,76 +107,69 @@ export async function generateOneQuestion(topic: string, subTopic: string, examP
 
   for (let attempt = 1; attempt <= maxRetries; attempt++) {
     try {
-        const ai = getAiClient();
-        const res = await ai.models.generateContent({
-            model: 'gemini-2.5-flash',
-            contents: user, // User prompt
-            config: {
-              systemInstruction: SYSTEM_INSTRUCTION, // System prompt as proper config
-              responseMimeType: "application/json",
-              temperature: 0.3,
-            },
-        });
+      const ai = getAiClient();
+      const res = await ai.models.generateContent({
+        model: 'gemini-1.5-flash-8b',  // Faster, lighter model (3-5x speed improvement)
+        contents: user, // User prompt
+        config: {
+          systemInstruction: SYSTEM_INSTRUCTION, // System prompt as proper config
+          responseMimeType: "application/json",
+          temperature: 0.2,  // Lower = faster generation
+        },
+      });
 
-        const raw = res.text || "";
-        let jsonStr = tryExtractJson(raw) ?? raw;
-        
-        try {
-            const parsed = JSON.parse(jsonStr);
-            const checked = QuestionSchema.parse(parsed);
-            return checked;
-        } catch (e) {
-            log.warn(`[drut][ai] JSON parse/validate failed on attempt ${attempt}. Attempting repair.`);
-            try {
-                 const repaired = await repairToJson(raw);
-                 const fixed = JSON.parse(repaired);
-                 const checked = QuestionSchema.parse(fixed);
-                 return checked;
-            } catch (repairErr) {
-                log.warn(`[drut][ai] Repair failed:`, repairErr);
-                throw e; 
-            }
-        }
+      const raw = res.text || "";
+      let jsonStr = tryExtractJson(raw) ?? raw;
+
+      try {
+        const parsed = JSON.parse(jsonStr);
+        const checked = QuestionSchema.parse(parsed);
+        return checked;
+      } catch (e) {
+        log.warn(`[drut][ai] JSON parse/validate failed on attempt ${attempt}. Retrying...`);
+        // Skip repair to save time - just retry with a new generation
+        throw e;
+      }
 
     } catch (error: any) {
-        lastError = error;
-        log.warn(`Attempt ${attempt} failed:`, error.message);
-        
-        if (error.message && error.message.includes("API key is missing")) throw error;
-        
-        if (attempt < maxRetries) {
-          await delay(1000 * Math.pow(2, attempt - 1)); 
-        }
+      lastError = error;
+      log.warn(`Attempt ${attempt} failed:`, error.message);
+
+      if (error.message && error.message.includes("API key is missing")) throw error;
+
+      if (attempt < maxRetries) {
+        await delay(500); // Fixed 500ms delay instead of exponential backoff
+      }
     }
   }
-  
+
   throw new Error(`Failed to generate question after ${maxRetries} attempts: ${lastError?.message}`);
 }
 
-const limit = pLimit(3); 
+const limit = pLimit(3);
 
 export async function generateBatch(
-    topic: string, 
-    subTopic: string, 
-    examProfile: string, 
-    count: number
+  topic: string,
+  subTopic: string,
+  examProfile: string,
+  count: number
 ): Promise<{ success: QuestionItem[], failed: number }> {
-    const promises = Array.from({ length: count }).map(() => 
-        limit(() => generateOneQuestion(topic, subTopic, examProfile)
-            .catch(err => {
-                log.warn('[batch] Individual generation failed:', err.message);
-                return null;
-            })
-        )
-    );
+  const promises = Array.from({ length: count }).map(() =>
+    limit(() => generateOneQuestion(topic, subTopic, examProfile)
+      .catch(err => {
+        log.warn('[batch] Individual generation failed:', err.message);
+        return null;
+      })
+    )
+  );
 
-    const results = await Promise.all(promises);
-    const success = results.filter((r): r is QuestionItem => r !== null);
-    
-    return {
-        success,
-        failed: count - success.length
-    };
+  const results = await Promise.all(promises);
+  const success = results.filter((r): r is QuestionItem => r !== null);
+
+  return {
+    success,
+    failed: count - success.length
+  };
 }
 
 export const generateQuestionAndSolutions = generateOneQuestion;
