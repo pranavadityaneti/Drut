@@ -15,9 +15,6 @@ export const getAiClient = () => {
     throw new Error("Gemini API key is missing.");
   }
 
-  client = new GoogleGenAI({
-    apiKey,
-    apiVersion: 'v1', // Use stable v1 API (default is v1beta)
-  });
+  client = new GoogleGenAI({ apiKey });
   return client;
 };
