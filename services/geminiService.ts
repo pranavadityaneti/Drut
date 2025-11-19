@@ -85,7 +85,7 @@ ${invalidText}
 
   const ai = getAiClient();
   const res = await ai.models.generateContent({
-    model: 'gemini-2.5-flash',
+    model: 'gemini-1.5-flash',
     contents: repairPrompt,
     config: {
       responseMimeType: "application/json",
@@ -109,7 +109,7 @@ export async function generateOneQuestion(topic: string, subTopic: string, examP
     try {
       const ai = getAiClient();
       const res = await ai.models.generateContent({
-        model: 'gemini-1.5-flash-8b',  // Faster, lighter model (3-5x speed improvement)
+        model: 'gemini-1.5-flash',  // Faster, lighter model
         contents: user, // User prompt
         config: {
           systemInstruction: SYSTEM_INSTRUCTION, // System prompt as proper config
