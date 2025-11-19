@@ -1,9 +1,9 @@
-import React, { ErrorInfo, ReactNode } from "react";
+import React, { Component, ErrorInfo, ReactNode } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from './ui/Card';
 import { log } from '../lib/log';
 
 interface Props {
-  children: ReactNode;
+  children?: ReactNode;
 }
 
 interface State {
@@ -12,7 +12,7 @@ interface State {
   errorInfo: ErrorInfo | null;
 }
 
-export class PracticeErrorBoundary extends React.Component<Props, State> {
+export class PracticeErrorBoundary extends Component<Props, State> {
   public state: State = {
     hasError: false,
     error: null,
@@ -39,7 +39,6 @@ export class PracticeErrorBoundary extends React.Component<Props, State> {
     log.error("--- ISSUE REPORT ---", JSON.stringify(report, null, 2));
     alert("Issue has been logged to the console. Please copy the details and share them with the development team.");
   }
-
 
   public render() {
     if (this.state.hasError) {

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { User } from '../types';
 import { useSidebar } from './ui/AppShell';
@@ -41,6 +40,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentPage, setCurrentPage, u
   const navItems = [
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboardIcon },
     { id: 'practice', label: 'Practice', icon: PracticeIcon },
+    { id: 'profile', label: 'Profile', icon: UserIcon },
   ];
 
   return (
@@ -82,11 +82,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentPage, setCurrentPage, u
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent side="top" align="start" className="w-56 mb-2">
-                <DropdownMenuItem onClick={() => setCurrentPage('profile')}>
-                    <UserIcon className="mr-2 h-4 w-4" />
-                    Profile
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={onLogout}>
                     <LogoutIcon className="mr-2 h-4 w-4" />
                     Logout

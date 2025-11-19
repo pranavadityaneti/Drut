@@ -1,108 +1,182 @@
 
-
-import { GoogleGenAI, Type } from "@google/genai";
-import { QuestionData } from '../types';
+import { QuestionSchema, type QuestionItem } from "../lib/ai/schema";
+import { getAiClient } from "../lib/ai/gemini";
 import { log } from '../lib/log';
+import pLimit from 'p-limit';
 
-const getAiClient = () => {
-    const apiKey = process.env.API_KEY;
-    if (!apiKey) {
-        // This specific error message can be caught by the UI
-        throw new Error("Gemini API key is missing. Please set it to use the Practice feature.");
-    }
-    return new GoogleGenAI({ apiKey });
+// 1. Define the exact JSON shape as a hint string to pass to the AI.
+const SCHEMA_HINT = `
+{
+  "questionText": string,
+  "options": [
+    { "text": string },
+    { "text": string },
+    { "text": string },
+    { "text": string }
+  ],
+  "correctOptionIndex": 0 | 1 | 2 | 3,
+  "timeTargets": { "jee_main": number, "cat": number, "eamcet": number },
+  "fastestSafeMethod": {
+    "exists": boolean,
+    "preconditions": string,
+    "steps": string[],
+    "sanityCheck": string
+  },
+  "fullStepByStep": { "steps": string[] }
+}
+`.trim();
+
+const SYSTEM_INSTRUCTION = `
+You are an expert exam question generator for competitive exams like CAT, JEE Main, and EAMCET.
+
+Your goal is to generate ONE practice question that strictly matches the following JSON schema:
+${SCHEMA_HINT}
+
+IMPORTANT RULES:
+- Output ONLY valid JSON.
+- Do NOT output Markdown code fences (e.g., \`\`\`json).
+- "options" array MUST have exactly 4 items.
+- "correctOptionIndex" MUST be an integer 0..3.
+- "fastestSafeMethod" steps should be short and actionable.
+- "fullStepByStep" should be detailed and didactic.
+`.trim();
+
+function buildUserPrompt(spec: {
+  exam: string; topic: string; subtopic: string;
+}) {
+  return `
+Generate one practice question for:
+- Exam Profile: ${spec.exam}
+- Topic: ${spec.topic}
+- Subtopic: ${spec.subtopic}
+
+The question should be conceptual, challenging, and appropriate for the selected exam profile.
+`;
 }
 
-const responseSchema = {
-  type: Type.OBJECT,
-  properties: {
-    questionText: { type: Type.STRING },
-    options: {
-      type: Type.ARRAY,
-      items: {
-        type: Type.OBJECT,
-        properties: { text: { type: Type.STRING } },
-        required: ['text']
-      }
-    },
-    correctOptionIndex: { type: Type.INTEGER },
-    timeTargets: {
-      type: Type.OBJECT,
-      properties: {
-        jee_main: { type: Type.INTEGER },
-        cat: { type: Type.INTEGER },
-        eamcet: { type: Type.INTEGER }
-      },
-      required: ['jee_main', 'cat', 'eamcet']
-    },
-    fastestSafeMethod: {
-      type: Type.OBJECT,
-      properties: {
-        exists: { type: Type.BOOLEAN },
-        preconditions: { type: Type.STRING },
-        steps: { type: Type.ARRAY, items: { type: Type.STRING } },
-        sanityCheck: { type: Type.STRING }
-      },
-      required: ['exists', 'preconditions', 'steps', 'sanityCheck']
-    },
-    fullStepByStep: {
-      type: Type.OBJECT,
-      properties: {
-        steps: { type: Type.ARRAY, items: { type: Type.STRING } }
-      },
-      required: ['steps']
-    }
-  },
-  required: ['questionText', 'options', 'correctOptionIndex', 'timeTargets', 'fastestSafeMethod', 'fullStepByStep']
-};
-
-const getPrompt = (topic: string, subTopic: string, examProfile: string) => `
-You are an expert AI tutor for competitive exams like JEE, CAT, and EAMCET.
-Generate a practice question for the main topic "${topic}", focusing specifically on the sub-topic "${subTopic}", with difficulty relevant to the "${examProfile}" exam.
-
-**CRITICAL INSTRUCTIONS:**
-1.  **JSON ONLY:** Your entire response MUST be a single, valid JSON object matching the provided schema. Do not include any text before or after the JSON object.
-2.  **Fastest Safe Method (FSM):**
-    - If a valid, safe shortcut exists, set \`exists\` to \`true\`. The method must be concise (under 120 words or 3-5 steps).
-    - **Preconditions are mandatory:** Clearly state when the shortcut applies (e.g., "Works for consecutive percentage changes").
-    - **Sanity Check is mandatory:** Include a quick mental check (e.g., "The final value should be slightly lower").
-    - If no reliable shortcut exists, you MUST set \`exists\` to \`false\` to build user trust.
-3.  **Full Step-by-Step:** Provide a clear, conventional, and detailed solution. Where it enhances clarity, use simple Markdown for tables.
-4.  **Options:** Provide 4 plausible multiple-choice options.
-`;
-
-export const generateQuestionAndSolutions = async (topic: string, subTopic: string, examProfile: string): Promise<QuestionData> => {
-  try {
-    // NOTE: In a production app, the API key MUST be on a server.
-    // This client-side call is a security risk as the key can be exposed.
-    // The correct architecture is to call a backend endpoint from here,
-    // which then securely calls the Gemini API.
-    const ai = getAiClient();
-    const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash',
-      contents: getPrompt(topic, subTopic, examProfile),
-      config: {
-        responseMimeType: 'application/json',
-        responseSchema: responseSchema,
-      },
-    });
-
-    const jsonText = response.text.trim();
-    const parsedData = JSON.parse(jsonText);
-    
-    // Basic validation
-    if (!parsedData.questionText || !parsedData.options || parsedData.options.length !== 4) {
-      throw new Error("Invalid data structure received from API.");
-    }
-
-    return parsedData as QuestionData;
-
-  } catch (error: any) {
-    log.error("Error generating question with Gemini:", error);
-    // Re-throw the specific API key error or a generic one
-    if (error.message.includes("API key is missing")) {
-        throw error;
-    }
-    throw new Error("Failed to generate question. The API service may be temporarily down.");
+function tryExtractJson(text: string): string | null {
+  const fence = text.match(/```json([\s\S]*?)```/i);
+  if (fence) return fence[1].trim();
+  
+  const first = text.indexOf("{");
+  const last = text.lastIndexOf("}");
+  if (first !== -1 && last !== -1 && last > first) {
+    return text.slice(first, last + 1);
   }
-};
+  return null;
+}
+
+async function repairToJson(invalidText: string) {
+  const repairPrompt = `
+You are a JSON fixer. The INPUT text contains data that should be valid JSON matching this schema:
+
+${SCHEMA_HINT}
+
+YOUR TASK:
+- Convert INPUT to valid JSON.
+- Fix syntax errors (missing commas, quotes).
+- Ensure "options" has exactly 4 items.
+- Ensure "correctOptionIndex" is 0..3.
+- Remove any code fences or prose.
+
+INPUT:
+${invalidText}
+`.trim();
+
+  const ai = getAiClient();
+  const res = await ai.models.generateContent({
+    model: 'gemini-2.5-flash',
+    contents: repairPrompt,
+    config: {
+      responseMimeType: "application/json",
+      temperature: 0.1,
+    },
+  });
+
+  return res.text || "{}";
+}
+
+const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+export async function generateOneQuestion(topic: string, subTopic: string, examProfile: string): Promise<QuestionItem> {
+  const spec = { exam: examProfile, topic, subtopic: subTopic };
+  const user = buildUserPrompt(spec);
+  const maxRetries = 3;
+
+  let lastError: any;
+
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+        const ai = getAiClient();
+        const res = await ai.models.generateContent({
+            model: 'gemini-2.5-flash',
+            contents: user, // User prompt
+            config: {
+              systemInstruction: SYSTEM_INSTRUCTION, // System prompt as proper config
+              responseMimeType: "application/json",
+              temperature: 0.3,
+            },
+        });
+
+        const raw = res.text || "";
+        let jsonStr = tryExtractJson(raw) ?? raw;
+        
+        try {
+            const parsed = JSON.parse(jsonStr);
+            const checked = QuestionSchema.parse(parsed);
+            return checked;
+        } catch (e) {
+            log.warn(`[drut][ai] JSON parse/validate failed on attempt ${attempt}. Attempting repair.`);
+            try {
+                 const repaired = await repairToJson(raw);
+                 const fixed = JSON.parse(repaired);
+                 const checked = QuestionSchema.parse(fixed);
+                 return checked;
+            } catch (repairErr) {
+                log.warn(`[drut][ai] Repair failed:`, repairErr);
+                throw e; 
+            }
+        }
+
+    } catch (error: any) {
+        lastError = error;
+        log.warn(`Attempt ${attempt} failed:`, error.message);
+        
+        if (error.message && error.message.includes("API key is missing")) throw error;
+        
+        if (attempt < maxRetries) {
+          await delay(1000 * Math.pow(2, attempt - 1)); 
+        }
+    }
+  }
+  
+  throw new Error(`Failed to generate question after ${maxRetries} attempts: ${lastError?.message}`);
+}
+
+const limit = pLimit(3); 
+
+export async function generateBatch(
+    topic: string, 
+    subTopic: string, 
+    examProfile: string, 
+    count: number
+): Promise<{ success: QuestionItem[], failed: number }> {
+    const promises = Array.from({ length: count }).map(() => 
+        limit(() => generateOneQuestion(topic, subTopic, examProfile)
+            .catch(err => {
+                log.warn('[batch] Individual generation failed:', err.message);
+                return null;
+            })
+        )
+    );
+
+    const results = await Promise.all(promises);
+    const success = results.filter((r): r is QuestionItem => r !== null);
+    
+    return {
+        success,
+        failed: count - success.length
+    };
+}
+
+export const generateQuestionAndSolutions = generateOneQuestion;

@@ -19,7 +19,7 @@ interface CardContentProps {
 }
 
 export const CardContent: React.FC<CardContentProps> = ({ children, className = '' }) => {
-  return <div className={`p-6 ${className}`}>{children}</div>;
+  return <div className={`p-8 ${className}`}>{children}</div>;
 };
 
 interface CardHeaderProps {
@@ -28,7 +28,7 @@ interface CardHeaderProps {
 }
 
 export const CardHeader: React.FC<CardHeaderProps> = ({ children, className = '' }) => {
-  return <div className={`flex flex-col space-y-1.5 p-6 ${className}`}>{children}</div>;
+  return <div className={`flex flex-col space-y-1.5 p-8 ${className}`}>{children}</div>;
 };
 
 interface CardTitleProps {
@@ -55,5 +55,5 @@ interface CardFooterProps {
 }
 
 export const CardFooter: React.FC<CardFooterProps> = ({ children, className = '' }) => {
-    return <div className={`flex items-center p-6 pt-0 ${className}`}>{children}</div>;
+    return <div className={`flex items-center p-8 pt-0 ${className}`}>{children}</div>;
 };

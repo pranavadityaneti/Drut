@@ -1,4 +1,5 @@
 
+
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { Header } from './components/Header';
@@ -14,6 +15,7 @@ import { log } from './lib/log';
 import { SidebarProvider, SidebarInset } from './components/ui/AppShell';
 import { Profile } from './components/Profile';
 import { LandingPage } from './components/LandingPage';
+import { ModalProvider } from './components/ui/Modal';
 
 
 // In a real Next.js app, this would be process.env.NEXT_PUBLIC_DEBUG
@@ -69,7 +71,9 @@ function App() {
     });
 
     return () => {
-        authListener?.unsubscribe();
+        // The 'authListener' object contains the subscription.
+        // The correct way to unsubscribe is by calling unsubscribe() on the subscription object.
+        authListener?.subscription?.unsubscribe();
     };
   }, []);
 
@@ -94,50 +98,58 @@ function App() {
     setShowAuth(false);
   };
 
-  if (loading) {
-    return (
-        <div className="flex h-screen items-center justify-center">
-            <svg className="animate-spin h-10 w-10 text-primary" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-            </svg>
-        </div>
-    );
-  }
+  const AppContent = () => {
+      if (loading) {
+        return (
+            <div className="flex h-screen items-center justify-center">
+                <svg className="animate-spin h-10 w-10 text-primary" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+            </div>
+        );
+      }
 
-  if (!user) {
-    if (showAuth) {
-        return <AuthPage onLoginSuccess={handleLoginSuccess} />;
-    }
-    return <LandingPage onGetStarted={() => setShowAuth(true)} />;
+      if (!user) {
+        if (showAuth) {
+            return <AuthPage onLoginSuccess={handleLoginSuccess} />;
+        }
+        return <LandingPage onGetStarted={() => setShowAuth(true)} />;
+      }
+
+      return (
+        <SidebarProvider>
+            <div className="bg-muted/40">
+                <Sidebar 
+                  currentPage={currentPage} 
+                  setCurrentPage={setCurrentPage}
+                  user={user}
+                  onLogout={handleLogout}
+                />
+                <SidebarInset>
+                    <Header />
+                    <main className="flex-1 p-6 md:p-8 overflow-y-auto">
+                        <div className="container mx-auto px-0">
+                            {currentPage === 'dashboard' && <Dashboard />}
+                            {currentPage === 'practice' && <Practice />}
+                            {currentPage === 'profile' && <Profile />}
+                        </div>
+                    </main>
+                    <footer className="py-4 text-center text-sm text-muted-foreground border-t bg-card">
+                        © {new Date().getFullYear()} Drut. All rights reserved.
+                    </footer>
+                </SidebarInset>
+            </div>
+            {IS_DEBUG_MODE && healthStatus && <HealthChip status={healthStatus} />}
+        </SidebarProvider>
+      );
   }
 
   return (
-    <SidebarProvider>
-        <div className="bg-muted/40">
-            <Sidebar 
-              currentPage={currentPage} 
-              setCurrentPage={setCurrentPage}
-              user={user}
-              onLogout={handleLogout}
-            />
-            <SidebarInset>
-                <Header />
-                <main className="flex-1 p-6 md:p-8 overflow-y-auto">
-                    <div className="container mx-auto px-0">
-                        {currentPage === 'dashboard' && <Dashboard />}
-                        {currentPage === 'practice' && <Practice />}
-                        {currentPage === 'profile' && <Profile />}
-                    </div>
-                </main>
-                <footer className="py-4 text-center text-sm text-muted-foreground border-t bg-card">
-                    © {new Date().getFullYear()} Drut. All rights reserved.
-                </footer>
-            </SidebarInset>
-        </div>
-        {IS_DEBUG_MODE && healthStatus && <HealthChip status={healthStatus} />}
-    </SidebarProvider>
-  );
+    <ModalProvider>
+        <AppContent />
+    </ModalProvider>
+  )
 }
 
 export default App;

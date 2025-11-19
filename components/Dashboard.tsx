@@ -1,12 +1,12 @@
 
+
 import React, { useState, useEffect, useMemo } from 'react';
 import { Button } from './ui/Button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from './ui/Card';
 import { fetchUserAnalytics } from '../services/analyticsService';
-import { AnalyticsRow } from '../types';
-
-// NOTE: Topic/sub-topic analytics have been removed to align with the new, simpler server-side RPC.
-// This can be added back when a topic-specific RPC is created.
+import { AnalyticsRow } from '../services/analyticsService';
+import { useModal } from './ui/Modal';
+import { classifySupabaseError } from '../lib/supabaseError';
 
 const ChartBarIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4 text-muted-foreground"><path d="M3 3v18h18"/><path d="M18 17.5v-11a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v11a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z"/><path d="M13 17.5v-5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v5a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z"/><path d="M8 17.5v-8a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z"/></svg>;
 const ClockIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4 text-muted-foreground"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>;
@@ -26,12 +26,11 @@ const StatCard: React.FC<{title: string, value: string | number, icon: React.Rea
     </Card>
 );
 
-// Personalized learning path and topic breakdowns have been temporarily removed
-// as they require a more complex, topic-specific analytics RPC.
 export const Dashboard: React.FC<{}> = () => {
   const [analytics, setAnalytics] = useState<AnalyticsRow | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const { openModal } = useModal();
 
   const loadAnalytics = async () => {
     setIsLoading(true);
@@ -40,8 +39,21 @@ export const Dashboard: React.FC<{}> = () => {
         const stats = await fetchUserAnalytics();
         setAnalytics(stats);
     } catch (err: any) {
-        // Display the specific error message from the service.
-        setError(err.message ?? "Failed to load analytics data.");
+        const errorKind = classifySupabaseError(err);
+        if (errorKind === 'MISSING_RPC') {
+             openModal({
+                title: "Database Setup Required",
+                body: (
+                    <div className="text-sm">
+                        <p className="font-semibold text-destructive">Could not load analytics.</p>
+                        <p className="mt-2">The database function `get_user_analytics` is missing. Please run the full SQL schema from the README file in your Supabase project.</p>
+                    </div>
+                )
+            });
+            setError("Analytics function is not set up in the database.");
+        } else {
+            setError(err.message ?? "Failed to load analytics data.");
+        }
     } finally {
         setIsLoading(false);
     }
@@ -62,24 +74,22 @@ export const Dashboard: React.FC<{}> = () => {
           return <div className="text-center py-8"><p className="text-muted-foreground">No practice data yet. Go to the 'Practice' tab to answer some questions!</p></div>
       }
 
-      // The new service returns accuracy as a raw decimal (e.g., 0.66), so multiply by 100.
-      const overallAccuracy = (analytics.accuracy * 100).toFixed(1);
+      const overallAccuracy = analytics.accuracy_pct.toFixed(1);
       const averageTime = (analytics.avg_time_ms / 1000).toFixed(1);
 
       return (
         <div className="space-y-8 pt-4">
-            <div className="grid gap-4 md:grid-cols-3">
+            <div className="grid gap-6 md:grid-cols-3">
                 <StatCard title="Overall Accuracy" value={`${overallAccuracy}%`} icon={<TargetIcon />} />
                 <StatCard title="Average Time" value={`${averageTime}s`} icon={<ClockIcon />} />
                 <StatCard title="Questions Answered" value={analytics.total_attempts} icon={<ChartBarIcon />} />
             </div>
-            {/* Topic breakdown can be re-added here once a topic-specific RPC is available */}
         </div>
       )
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-12">
       <Card>
         <CardHeader>
           <CardTitle>Welcome to Drut</CardTitle>

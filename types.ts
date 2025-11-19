@@ -1,5 +1,6 @@
 
 
+
 export interface TimeTargets {
   jee_main: number;
   cat: number;
@@ -8,9 +9,9 @@ export interface TimeTargets {
 
 export interface FastestSafeMethod {
   exists: boolean;
-  preconditions: string;
+  preconditions?: string;
   steps: string[];
-  sanityCheck: string;
+  sanityCheck?: string;
 }
 
 export interface FullStepByStep {
@@ -31,9 +32,11 @@ export interface QuestionData {
 }
 
 // This is the data shape returned by our server-side analytics RPC.
+// It is also defined in `services/analyticsService.ts`
 export type AnalyticsRow = {
   total_attempts: number;
-  accuracy: number;
+  correct_attempts: number;
+  accuracy_pct: number;
   avg_time_ms: number;
 };
 

@@ -1,7 +1,7 @@
-
 import React from 'react';
 import { Button } from './ui/Button';
 import { AppleIcon, BoltIcon, BrainCircuitIcon, DrutIcon, PlayCircleIcon, PlayStoreIcon, ShieldCheckIcon, StarIcon } from './icons/Icons';
+import { EXAM_PROFILES } from '../constants';
 
 interface LandingPageProps {
   onGetStarted: () => void;
@@ -110,12 +110,9 @@ const PartnersSection: React.FC = () => (
                 SUPPORTING TOP EXAMS
             </h3>
             <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-6">
-                <div className="text-2xl font-bold text-gray-400 tracking-wider">CAT</div>
-                <div className="text-2xl font-bold text-gray-400 tracking-wider">JEE MAIN</div>
-                <div className="text-2xl font-bold text-gray-400 tracking-wider">EAMCET</div>
-                <div className="text-2xl font-bold text-gray-400 tracking-wider">BITSAT</div>
-                <div className="text-2xl font-bold text-gray-400 tracking-wider">NEET</div>
-                <div className="text-2xl font-bold text-gray-400 tracking-wider">UPSC</div>
+                {EXAM_PROFILES.map(exam => (
+                    <div key={exam.value} className="text-xl font-bold text-gray-400 tracking-wider">{exam.label.toUpperCase()}</div>
+                ))}
             </div>
         </div>
     </section>

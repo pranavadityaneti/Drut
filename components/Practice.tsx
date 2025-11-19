@@ -1,8 +1,9 @@
+
 import React, { useState, useCallback, useEffect, useRef, useMemo } from 'react';
 import { QuestionData } from '../types';
-import { generateQuestionAndSolutions } from '../services/geminiService';
+// SWITCHED BACK TO GEMINI SERVICE
+import { generateOneQuestion, generateBatch } from '../services/geminiService';
 import { getPreloadedQuestion } from '../services/preloaderService';
-import { savePerformanceRecord } from '../services/performanceService';
 import { Button } from './ui/Button';
 import { Card, CardContent } from './ui/Card';
 import { QuestionCard } from './QuestionCard';
@@ -11,19 +12,74 @@ import { EXAM_SPECIFIC_TOPICS, EXAM_PROFILES } from '../constants';
 import { Select } from './ui/Select';
 import { PracticeErrorBoundary } from './PracticeErrorBoundary';
 import { log } from '../lib/log';
+import { usePrefetchExplanations } from '../hooks/usePrefetchExplanations';
+import { Explanation, upsertExplanationCache } from '../lib/explCache';
+import { savePerformance } from '../services/performanceService';
+import { createQuestionId } from '../lib/questionUtils';
+import { useModal } from './ui/Modal';
+import { classifySupabaseError, SupaKind } from '../lib/supabaseError';
 
-const BrainCircuitIcon = () => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-6 w-6 text-primary"><path d="M12 5V2M12 22v-3"/><path d="M17 9a5 5 0 0 1-10 0"/><path d="M5 14a2.5 2.5 0 0 1 5 0"/><path d="M14 14a2.5 2.5 0 0 1 5 0"/><path d="M2 14h1.5"/><path d="M20.5 14H22"/><path d="M9 14h6"/><path d="M5 18a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z"/><path d="M15 18a2 2 0 1 0 0 4 2 2 0 0 0 0-4Z"/></svg>;
 
-// A simple hash function to create a consistent ID from the question text.
-// This is needed because the Gemini response doesn't include a unique ID.
-const createQuestionId = (text: string): string => {
-  let hash = 0;
-  for (let i = 0; i < text.length; i++) {
-    const char = text.charCodeAt(i);
-    hash = (hash << 5) - hash + char;
-    hash |= 0; // Convert to 32bit integer
-  }
-  return 'qid_' + Math.abs(hash).toString(16);
+const DatabaseSetupModalBody: React.FC<{ errorKind: SupaKind }> = ({ errorKind }) => {
+    const openReadme = () => {
+        window.open('about:blank#readme-db-setup', '_blank');
+    };
+
+    const errorDetails = {
+        MISSING_RPC: 'The required database function `log_performance_v1` was not found.',
+        MISSING_TABLE: 'The required database table `performance_records` was not found.'
+    };
+    
+    const message = errorDetails[errorKind as keyof typeof errorDetails] || 'A required database component is missing.';
+
+    return (
+        <div className="space-y-4 text-sm">
+            <p className="text-destructive font-semibold">
+                Error: {message}
+            </p>
+            <p>
+                This is a common setup issue. Please follow these steps in your Supabase project:
+            </p>
+            <ol className="list-decimal list-inside space-y-2 bg-muted p-4 rounded-md">
+                <li>Go to the <strong>SQL Editor</strong>.</li>
+                <li>Copy the entire SQL script from the <strong>`README.md`</strong> file.</li>
+                <li>Paste the script and click <strong>RUN</strong>.</li>
+                <li>
+                  <strong>(Crucial):</strong> Go to <strong>API</strong> settings and <strong>Reload</strong> the schema cache.
+                </li>
+            </ol>
+            <p>
+                After completing these steps, the performance tracking will work correctly.
+            </p>
+            <Button onClick={openReadme} variant="outline" className="w-full">
+                Open README with Full SQL Script
+            </Button>
+        </div>
+    );
+};
+
+// Helper to convert structured question data into the Markdown format expected by SolutionView
+const formatExplanation = (q: QuestionData): Explanation => {
+    // Format Fastest Safe Method
+    const steps = q.fastestSafeMethod.steps.map(s => `- ${s}`).join('\n');
+    const preconditions = q.fastestSafeMethod.preconditions 
+        ? `**Preconditions:** ${q.fastestSafeMethod.preconditions}\n\n` 
+        : '';
+    const sanity = q.fastestSafeMethod.sanityCheck 
+        ? `\n\n**Sanity Check:** ${q.fastestSafeMethod.sanityCheck}` 
+        : '';
+    
+    const fastMd = `${preconditions}**Steps:**\n${steps}${sanity}`;
+
+    // Format Full Solution
+    const fullMd = q.fullStepByStep.steps.map((s, i) => `${i + 1}. ${s}`).join('\n\n');
+
+    return {
+        fast_md: fastMd,
+        full_md: fullMd,
+        fast_safe: q.fastestSafeMethod.exists,
+        risk_shortcut: 0
+    };
 };
 
 
@@ -38,38 +94,172 @@ export const Practice: React.FC<{}> = () => {
   
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const { openModal } = useModal();
   
   const [questionData, setQuestionData] = useState<QuestionData | null>(null);
+  const [explanationData, setExplanationData] = useState<Explanation | null>(null);
   
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [isAnswered, setIsAnswered] = useState<boolean>(false);
+  
   const [timeTaken, setTimeTaken] = useState<number>(0);
   const timerRef = useRef<number | null>(null);
-
   const startTimeRef = useRef<number | null>(null);
+  const fetchingRef = useRef<boolean>(false);
 
   const currentTopicInfo = useMemo(() => {
     return { topic, subTopic: selectedSubTopic };
   }, [topic, selectedSubTopic]);
+  
+  const currentQuestionWithId = useMemo(() => {
+      if (!questionData) return null;
+      return { ...questionData, id: createQuestionId(questionData.questionText) };
+  }, [questionData]);
+
+  const nextQuestionsWithId = useMemo(() => {
+    const { subTopic } = currentTopicInfo;
+    if (!subTopic || !questionCache[subTopic] || questionCache[subTopic].length <= currentQuestionIndex + 1) {
+        return [];
+    }
+    return questionCache[subTopic]
+        .slice(currentQuestionIndex + 1)
+        .map(q => ({...q, id: createQuestionId(q.questionText) }));
+  }, [questionCache, currentTopicInfo, currentQuestionIndex]);
+
+  usePrefetchExplanations(currentQuestionWithId, nextQuestionsWithId);
+
+  // Ensure we always have a buffer of questions
+  const ensureQuestionBuffer = useCallback(async (startIndex: number) => {
+    const { subTopic: currentSubTopic, topic: currentTopic } = currentTopicInfo;
+    if (!currentSubTopic || !currentTopic || !examProfile || fetchingRef.current) return;
+
+    const currentCount = questionCache[currentSubTopic]?.length || 0;
+    const needed = (startIndex + 2) - currentCount; // Aim to have current + 2 more
+
+    if (needed <= 0) return;
+
+    fetchingRef.current = true;
+    try {
+        // Fetch a batch of questions to fill the buffer
+        const batchSize = Math.max(needed, 2); // Fetch at least 2 at a time
+        const { success } = await generateBatch(currentTopic, currentSubTopic, examProfile, batchSize);
+        
+        if (success.length > 0) {
+             // Adapt types if necessary (Zod types usually match QuestionData closely)
+            const adaptedQuestions = success as QuestionData[];
+            
+            setQuestionCache(prevCache => {
+                const newCache = { ...prevCache };
+                const existing = newCache[currentSubTopic] || [];
+                newCache[currentSubTopic] = [...existing, ...adaptedQuestions];
+                return newCache;
+            });
+        }
+    } catch (err: any) {
+        log.error(`Buffer fetch failed:`, err.message);
+    } finally {
+        fetchingRef.current = false;
+    }
+  }, [currentTopicInfo, examProfile, questionCache]);
 
 
-  useEffect(() => {
-    // Load preferences from localStorage on component mount
-    const savedProfile = localStorage.getItem('examProfile') || EXAM_PROFILES[0].value;
-    setExamProfile(savedProfile);
+  const loadQuestion = useCallback(async (index: number) => {
+    setQuestionData(null);
+    setExplanationData(null);
+    setSelectedOption(null);
+    setIsAnswered(false);
+    setTimeTaken(0);
+    stopTimer();
 
-    const topicsForExam = EXAM_SPECIFIC_TOPICS[savedProfile] || [];
-    const savedTopic = localStorage.getItem('topic') || (topicsForExam.length > 0 ? topicsForExam[0].value : '');
-    setTopic(savedTopic);
+    const { subTopic: currentSubTopic, topic: currentTopic } = currentTopicInfo;
+    if (!currentSubTopic || !currentTopic || !examProfile) return;
 
-    const currentTopicObject = topicsForExam.find(t => t.value === savedTopic);
+    // Trigger buffer check
+    ensureQuestionBuffer(index);
+
+    // 1. Check Preloader (only for index 0)
+    if (index === 0) {
+      const preloaded = getPreloadedQuestion(examProfile, currentTopic, currentSubTopic);
+      if (preloaded) {
+        setQuestionData(preloaded);
+        setQuestionCache(prev => ({ ...prev, [currentSubTopic]: [preloaded] }));
+        startTimer();
+        return;
+      }
+    }
+
+    // 2. Check Cache
+    if (questionCache[currentSubTopic]?.[index]) {
+      setQuestionData(questionCache[currentSubTopic][index]);
+      startTimer();
+      return;
+    }
+
+    // 3. Fallback: Fetch Immediately if cache miss
+    setIsLoading(true);
+    setError(null);
+    try {
+      // If we are here, the buffer wasn't ready. Fetch one immediately.
+      const data = await generateOneQuestion(currentTopic, currentSubTopic, examProfile);
+      
+      setQuestionData(data as QuestionData);
+      setQuestionCache(prevCache => {
+        const newCache = { ...prevCache };
+        if (!newCache[currentSubTopic]) newCache[currentSubTopic] = [];
+        newCache[currentSubTopic][index] = data as QuestionData;
+        return newCache;
+      });
+
+      startTimer();
+      // Refill buffer after immediate fetch
+      ensureQuestionBuffer(index + 1); 
+    } catch (err: any) {
+      setError(err.message || 'An unknown error occurred.');
+    } finally {
+      setIsLoading(false);
+    }
+  }, [currentTopicInfo, questionCache, ensureQuestionBuffer, examProfile]);
+  
+
+  const loadProfileSettings = useCallback((profile: string | null) => {
+    const profileToLoad = profile || EXAM_PROFILES[0].value;
+    setExamProfile(profileToLoad);
+
+    const topicsForExam = EXAM_SPECIFIC_TOPICS[profileToLoad] || [];
+    const savedTopic = localStorage.getItem('topic');
+    
+    const isTopicValid = topicsForExam.some(t => t.value === savedTopic);
+    const topicToLoad = isTopicValid ? savedTopic : (topicsForExam.length > 0 ? topicsForExam[0].value : '');
+    
+    setTopic(topicToLoad);
+    
+    const currentTopicObject = topicsForExam.find(t => t.value === topicToLoad);
     const subs = currentTopicObject?.subTopics || [];
     setCurrentSubTopics(subs);
-      
+
     if (subs.length > 0) {
         setSelectedSubTopic(subs[0]);
+    } else {
+        setSelectedSubTopic(null);
     }
+    setCurrentQuestionIndex(0);
   }, []);
+
+  useEffect(() => {
+    const savedProfile = localStorage.getItem('examProfile');
+    loadProfileSettings(savedProfile);
+  }, [loadProfileSettings]);
+
+  useEffect(() => {
+    const handleSettingsChange = () => {
+        const savedProfile = localStorage.getItem('examProfile');
+        if (savedProfile && savedProfile !== examProfile) {
+            loadProfileSettings(savedProfile);
+        }
+    };
+    window.addEventListener('storage', handleSettingsChange);
+    return () => window.removeEventListener('storage', handleSettingsChange);
+  }, [examProfile, loadProfileSettings]);
 
   const startTimer = () => {
     stopTimer();
@@ -86,52 +276,6 @@ export const Practice: React.FC<{}> = () => {
       timerRef.current = null;
     }
   };
-  
-  const loadQuestion = useCallback(async (index: number) => {
-    setQuestionData(null);
-    setSelectedOption(null);
-    setIsAnswered(false);
-    setTimeTaken(0);
-    stopTimer();
-
-    const { subTopic: currentSubTopic, topic: currentTopic } = currentTopicInfo;
-    if (!currentSubTopic || !currentTopic || !examProfile) return;
-
-    // Check for preloaded question first (for initial load)
-    if (index === 0) {
-      const preloaded = getPreloadedQuestion(examProfile, currentTopic, currentSubTopic);
-      if (preloaded) {
-        setQuestionData(preloaded);
-        setQuestionCache(prev => ({ ...prev, [currentSubTopic]: [preloaded] }));
-        startTimer();
-        return;
-      }
-    }
-
-    if (questionCache[currentSubTopic]?.[index]) {
-      setQuestionData(questionCache[currentSubTopic][index]);
-      startTimer();
-      return;
-    }
-
-    setIsLoading(true);
-    setError(null);
-    try {
-      const data = await generateQuestionAndSolutions(currentTopic, currentSubTopic, examProfile);
-      setQuestionCache(prevCache => {
-        const newCache = { ...prevCache };
-        if (!newCache[currentSubTopic]) newCache[currentSubTopic] = [];
-        newCache[currentSubTopic][index] = data;
-        return newCache;
-      });
-      setQuestionData(data);
-      startTimer();
-    } catch (err: any) {
-      setError(err.message || 'An unknown error occurred.');
-    } finally {
-      setIsLoading(false);
-    }
-  }, [currentTopicInfo, examProfile, questionCache]);
 
   useEffect(() => {
     if (currentTopicInfo.subTopic) {
@@ -143,6 +287,7 @@ export const Practice: React.FC<{}> = () => {
     if (subTopic === selectedSubTopic) return;
     setSelectedSubTopic(subTopic);
     setCurrentQuestionIndex(0);
+    setQuestionCache({}); // Clear cache for new sub-topic
   };
   
   const targetTime = useMemo(() => {
@@ -155,28 +300,48 @@ export const Practice: React.FC<{}> = () => {
     }
   }, [questionData, examProfile]);
   
-  const handleOptionChange = (index: number) => {
-    setSelectedOption(index);
-  };
-
   const handleAnswerSubmit = async () => {
-    if (selectedOption === null || !questionData) return;
+    if (selectedOption === null || !questionData || !currentQuestionWithId) return;
     stopTimer();
     setIsAnswered(true);
 
-    // The `firstActionMs` metric has been removed from the backend schema for simplification.
-    // We no longer need to calculate or send it.
+    // 1. Show solution immediately (we already have the data)
+    const explanation = formatExplanation(questionData);
+    setExplanationData(explanation);
+    
+    // Cache for potential future revisits
+    upsertExplanationCache(currentQuestionWithId.id, explanation);
 
+    // 2. Save performance in background
     try {
-        await savePerformanceRecord({
-            questionId: createQuestionId(questionData.questionText),
-            isCorrect: selectedOption === questionData.correctOptionIndex,
-            timeMs: timeTaken * 1000, // Service expects milliseconds
-        });
+        await savePerformance(
+            selectedOption === questionData.correctOptionIndex,
+            currentQuestionWithId.id,
+            timeTaken * 1000
+        );
     } catch (error: any) {
-        // The service now throws a detailed error. We display it to aid debugging.
-        alert(`Could not save your progress.\n\nDetails:\n${error.message}`);
-        log.error('save error', error);
+        log.error('Save performance error:', JSON.stringify(error, null, 2));
+        const errorKind = classifySupabaseError(error);
+
+        switch (errorKind) {
+            case 'MISSING_RPC':
+            case 'MISSING_TABLE':
+                openModal({
+                    title: "Database Setup Required",
+                    body: <DatabaseSetupModalBody errorKind={errorKind} />,
+                });
+                break;
+            case 'RLS_BLOCK':
+                alert("Could not save progress: Action blocked by security policy.");
+                break;
+            case 'AUTH':
+                alert("Could not save progress: You are not authenticated. Please log in again.");
+                break;
+            default:
+                // Non-critical error, just log it to console, don't block user.
+                log.warn("Performance save failed (non-critical):", error.message);
+                break;
+        }
     }
   };
 
@@ -196,7 +361,7 @@ export const Practice: React.FC<{}> = () => {
             <CardContent className="p-6 text-center">
                 <h3 className="text-lg font-medium">Set Your Preferences</h3>
                 <p className="text-muted-foreground mt-2">
-                    Please go to the 'Dashboard' to select your exam profile and topic before you start practicing.
+                    Please go to your Profile to select an exam before you start practicing.
                 </p>
             </CardContent>
         </Card>
@@ -218,8 +383,12 @@ export const Practice: React.FC<{}> = () => {
     }
     if (error) {
       return (
-        <div className="p-4 bg-red-50 border border-red-200 text-red-800 rounded-md">
-          <strong>Error:</strong> {error}
+        <div className="p-6 bg-red-50 border border-red-200 text-red-800 rounded-lg text-center">
+          <h4 className="font-bold text-lg mb-2">Generation Failed</h4>
+          <p>{error}</p>
+          <Button variant="outline" onClick={() => loadQuestion(currentQuestionIndex)} className="mt-4 bg-white">
+            Retry
+          </Button>
         </div>
       );
     }
@@ -230,22 +399,21 @@ export const Practice: React.FC<{}> = () => {
               data={questionData} 
               isAnswered={isAnswered}
               selectedOption={selectedOption}
-              onOptionChange={handleOptionChange}
+              onOptionChange={setSelectedOption}
               onAnswerSubmit={handleAnswerSubmit}
               timeTaken={timeTaken}
               targetTime={targetTime}
           />
-          {isAnswered && <SolutionView data={questionData} />}
+          {isAnswered && explanationData && <SolutionView question={questionData} explanation={explanationData} />}
         </div>
       );
     }
-    return <div className="min-h-[300px]" />; // Placeholder for initial state
+    return <div className="min-h-[300px]" />;
   }
 
   return (
     <div className="flex flex-col lg:flex-row gap-8">
       <aside className="w-full lg:w-1/4 xl:w-1/5">
-            {/* Desktop Sidebar */}
             <div className="hidden lg:block">
                 <h3 className="text-lg font-semibold mb-4 text-primary">Sub-topics</h3>
                 <div className="flex flex-col space-y-2">
@@ -264,7 +432,6 @@ export const Practice: React.FC<{}> = () => {
                 ))}
                 </div>
             </div>
-            {/* Mobile Dropdown */}
             <div className="lg:hidden">
                 <label htmlFor="subtopic-select" className="text-sm font-medium text-muted-foreground mb-1 block">Sub-topic</label>
                 <Select

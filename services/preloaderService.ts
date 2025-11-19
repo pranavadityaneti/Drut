@@ -1,3 +1,5 @@
+
+// SWITCHED TO GEMINI SERVICE
 import { generateQuestionAndSolutions } from './geminiService';
 import { QuestionData } from '../types';
 import { EXAM_SPECIFIC_TOPICS } from '../constants';
