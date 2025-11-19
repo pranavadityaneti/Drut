@@ -5,7 +5,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import { Button } from './Button';
 
 const ChevronsLeftIcon = ({ className = '' }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`h-5 w-5 ${className}`}><path d="m11 17-5-5 5-5"/><path d="m18 17-5-5 5-5"/></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`h-5 w-5 ${className}`}><path d="m11 17-5-5 5-5" /><path d="m18 17-5-5 5-5" /></svg>
 );
 
 interface SidebarContextType {
@@ -56,19 +56,19 @@ export const useSidebar = () => {
 };
 
 export const SidebarInset: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const { isCollapsed } = useSidebar();
-    return (
-        <div className={`flex flex-col min-h-screen transition-all duration-300 ease-in-out ${isCollapsed ? 'ml-20' : 'ml-64'}`}>
-            {children}
-        </div>
-    );
+  const { isCollapsed } = useSidebar();
+  return (
+    <div className={`flex flex-col min-h-screen transition-all duration-300 ease-in-out ${isCollapsed ? 'lg:ml-24' : 'lg:ml-72'} ml-0`}>
+      {children}
+    </div>
+  );
 };
 
-export const SidebarTrigger: React.FC<{className?: string}> = ({ className }) => {
-    const { toggleSidebar } = useSidebar();
-    return (
-        <Button onClick={toggleSidebar} variant="ghost" size="icon" className={`shrink-0 hidden lg:flex ${className}`} aria-label="Toggle sidebar">
-            <ChevronsLeftIcon className="h-5 w-5" />
-        </Button>
-    );
+export const SidebarTrigger: React.FC<{ className?: string }> = ({ className }) => {
+  const { toggleSidebar } = useSidebar();
+  return (
+    <Button onClick={toggleSidebar} variant="ghost" size="icon" className={`shrink-0 hidden lg:flex ${className}`} aria-label="Toggle sidebar">
+      <ChevronsLeftIcon className="h-5 w-5" />
+    </Button>
+  );
 }
