@@ -31,7 +31,8 @@ export async function getQuestionsForUser(
   examProfile: string,
   topic: string,
   subtopic: string,
-  count: number = 5
+  count: number = 5,
+  difficulty: 'Easy' | 'Medium' | 'Hard' = 'Medium'
 ): Promise<{ questions: QuestionItem[]; metadata: { cached: number; generated: number } }> {
   console.log('[DEBUG] getQuestionsForUser called:', { userId, examProfile, topic, subtopic, count });
   const metadata = { cached: 0, generated: 0 };
@@ -46,6 +47,7 @@ export async function getQuestionsForUser(
         p_exam: examProfile,
         p_topic: topic,
         p_subtopic: subtopic,
+        p_difficulty: difficulty,
         p_count: count,
       });
 
@@ -80,7 +82,7 @@ export async function getQuestionsForUser(
           console.log(`[DEBUG] Generating question ${i + 1}/${needed}...`);
 
           // Generate new question
-          const newQuestion = await generateOneQuestion(topic, subtopic, examProfile);
+          const newQuestion = await generateOneQuestion(topic, subtopic, examProfile, difficulty);
           console.log(`[DEBUG] Question ${i + 1} generated successfully`);
 
           // Save to cache
@@ -89,7 +91,8 @@ export async function getQuestionsForUser(
             examProfile,
             topic,
             subtopic,
-            newQuestion
+            newQuestion,
+            difficulty
           );
 
           // Add to results
@@ -143,7 +146,8 @@ async function cacheQuestion(
   examProfile: string,
   topic: string,
   subtopic: string,
-  question: QuestionItem
+  question: QuestionItem,
+  difficulty: 'Easy' | 'Medium' | 'Hard'
 ): Promise<string | null> {
   const questionId = `${examProfile}_${topic}_${subtopic}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
 
@@ -156,6 +160,7 @@ async function cacheQuestion(
         topic: topic,
         subtopic: subtopic,
         question_data: question,
+        difficulty: difficulty,
         created_by: userId,
       })
       .select('id')
@@ -201,13 +206,15 @@ async function markQuestionsSeen(userId: string, questionIds: string[]): Promise
 export async function getCacheStats(
   examProfile: string,
   topic: string,
-  subtopic: string
+  subtopic: string,
+  difficulty: 'Easy' | 'Medium' | 'Hard' = 'Medium'
 ): Promise<CacheStats | null> {
   try {
     const { data, error } = await supabase.rpc('get_cache_stats', {
       p_exam: examProfile,
       p_topic: topic,
       p_subtopic: subtopic,
+      p_difficulty: difficulty,
     });
 
     if (error || !data || data.length === 0) {
@@ -252,7 +259,8 @@ export async function getUnseenQuestionCount(
   userId: string,
   examProfile: string,
   topic: string,
-  subtopic: string
+  subtopic: string,
+  difficulty: 'Easy' | 'Medium' | 'Hard' = 'Medium'
 ): Promise<number> {
   try {
     const { data, error } = await supabase
@@ -261,6 +269,7 @@ export async function getUnseenQuestionCount(
         p_exam: examProfile,
         p_topic: topic,
         p_subtopic: subtopic,
+        p_difficulty: difficulty,
         p_count: 1000, // Large number to get count
       });
 

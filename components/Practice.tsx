@@ -89,6 +89,7 @@ export const Practice: React.FC<{}> = () => {
   const [topic, setTopic] = useState<string | null>(null);
   const [currentSubTopics, setCurrentSubTopics] = useState<string[]>([]);
   const [selectedSubTopic, setSelectedSubTopic] = useState<string | null>(null);
+  const [difficulty, setDifficulty] = useState<'Easy' | 'Medium' | 'Hard'>('Medium');
 
   const [questionCache, setQuestionCache] = useState<{ [key: string]: QuestionData[] }>({});
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -155,7 +156,8 @@ export const Practice: React.FC<{}> = () => {
         examProfile,
         currentTopic,
         currentSubTopic,
-        batchSize
+        batchSize,
+        difficulty
       );
 
       if (questions.length > 0) {
@@ -229,7 +231,8 @@ export const Practice: React.FC<{}> = () => {
         examProfile,
         currentTopic,
         currentSubTopic,
-        1 // Just one question needed
+        1, // Just one question needed
+        difficulty
       );
 
       if (questions.length === 0) {
@@ -328,6 +331,13 @@ export const Practice: React.FC<{}> = () => {
     setSelectedSubTopic(subTopic);
     setCurrentQuestionIndex(0);
     setQuestionCache({}); // Clear cache for new sub-topic
+  };
+
+  const handleDifficultyChange = (newDifficulty: 'Easy' | 'Medium' | 'Hard') => {
+    if (newDifficulty === difficulty) return;
+    setDifficulty(newDifficulty);
+    setCurrentQuestionIndex(0);
+    setQuestionCache({}); // Clear cache for new difficulty
   };
 
   const targetTime = useMemo(() => {
@@ -491,10 +501,29 @@ export const Practice: React.FC<{}> = () => {
       <main className={`flex-1 space-y-6`}>
         <PracticeErrorBoundary>
           <Card>
-            <CardContent className="p-4 flex flex-col sm:flex-row justify-between items-center gap-4">
-              <p className="text-sm text-muted-foreground font-medium self-start sm:self-center">
+            <CardContent className="p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+              <p className="text-sm text-muted-foreground font-medium">
                 Question {currentQuestionIndex + 1}
               </p>
+
+              {/* Difficulty Dropdown */}
+              <div className="flex items-center gap-2">
+                <label htmlFor="difficulty-select" className="text-sm font-medium text-muted-foreground">
+                  Difficulty:
+                </label>
+                <Select
+                  id="difficulty-select"
+                  options={[
+                    { value: 'Easy', label: 'Easy' },
+                    { value: 'Medium', label: 'Medium' },
+                    { value: 'Hard', label: 'Hard' }
+                  ]}
+                  value={difficulty}
+                  onChange={(e) => handleDifficultyChange(e.target.value as 'Easy' | 'Medium' | 'Hard')}
+                  className="w-32"
+                />
+              </div>
+
               <div className="flex space-x-2 w-full sm:w-auto">
                 <Button onClick={handlePrevQuestion} disabled={currentQuestionIndex === 0 || isLoading} className="flex-1 sm:flex-auto">
                   Previous

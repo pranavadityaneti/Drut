@@ -42,15 +42,24 @@ IMPORTANT RULES:
 `.trim();
 
 function buildUserPrompt(spec: {
-  exam: string; topic: string; subtopic: string;
+  exam: string; topic: string; subtopic: string; difficulty: 'Easy' | 'Medium' | 'Hard';
 }) {
+  const difficultyGuidance = {
+    Easy: 'The question should be straightforward, testing basic concepts and fundamental understanding. Avoid complex calculations or multi-step reasoning. Focus on direct application of simple formulas or definitions.',
+    Medium: 'The question should require moderate problem-solving skills, involving standard techniques and concepts. May include some calculations or 2-3 step reasoning. Test understanding and application of concepts.',
+    Hard: 'The question should be challenging, requiring advanced problem-solving, deep conceptual understanding, or multi-step reasoning. May involve complex calculations, edge cases, or integration of multiple concepts. Test mastery and analytical thinking.'
+  };
+
   return `
 Generate one practice question for:
 - Exam Profile: ${spec.exam}
 - Topic: ${spec.topic}
 - Subtopic: ${spec.subtopic}
+- Difficulty Level: ${spec.difficulty}
 
-The question should be conceptual, challenging, and appropriate for the selected exam profile.
+${difficultyGuidance[spec.difficulty]}
+
+The question should be conceptual, appropriate for the selected exam profile and difficulty level.
 `;
 }
 
@@ -98,8 +107,8 @@ ${invalidText}
 
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
-export async function generateOneQuestion(topic: string, subTopic: string, examProfile: string): Promise<QuestionItem> {
-  const spec = { exam: examProfile, topic, subtopic: subTopic };
+export async function generateOneQuestion(topic: string, subTopic: string, examProfile: string, difficulty: 'Easy' | 'Medium' | 'Hard' = 'Medium'): Promise<QuestionItem> {
+  const spec = { exam: examProfile, topic, subtopic: subTopic, difficulty };
   const user = buildUserPrompt(spec);
   const maxRetries = 3;
 
@@ -152,10 +161,11 @@ export async function generateBatch(
   topic: string,
   subTopic: string,
   examProfile: string,
-  count: number
+  count: number,
+  difficulty: 'Easy' | 'Medium' | 'Hard' = 'Medium'
 ): Promise<{ success: QuestionItem[], failed: number }> {
   const promises = Array.from({ length: count }).map(() =>
-    limit(() => generateOneQuestion(topic, subTopic, examProfile)
+    limit(() => generateOneQuestion(topic, subTopic, examProfile, difficulty)
       .catch(err => {
         log.warn('[batch] Individual generation failed:', err.message);
         return null;
