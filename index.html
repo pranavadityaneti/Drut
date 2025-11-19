@@ -13,53 +13,57 @@
         theme: {
           extend: {
             colors: {
-              border: 'hsl(214.3 31.8% 91.4%)',
-              input: 'hsl(214.3 31.8% 91.4%)',
-              ring: 'hsl(222.2 84% 4.9%)',
-              background: 'hsl(0 0% 100%)',
-              foreground: 'hsl(222.2 84% 4.9%)',
+              border: '#E4E4E4',
+              input: '#F0F0F0',
+              ring: '#6C5DD3',
+              background: '#F5F6FA', // Light gray background
+              foreground: '#11142D', // Dark text
               primary: {
-                DEFAULT: 'hsl(222.2 47.4% 11.2%)',
-                foreground: 'hsl(210 40% 98%)',
+                DEFAULT: '#6C5DD3', // Vibrant Purple
+                foreground: '#FFFFFF',
               },
               secondary: {
-                DEFAULT: 'hsl(210 40% 96.1%)',
-                foreground: 'hsl(222.2 47.4% 11.2%)',
+                DEFAULT: '#808191', // Gray text
+                foreground: '#FFFFFF',
               },
               destructive: {
-                DEFAULT: 'hsl(0 84.2% 60.2%)',
-                foreground: 'hsl(210 40% 98%)',
+                DEFAULT: '#FF754C',
+                foreground: '#FFFFFF',
               },
               muted: {
-                DEFAULT: 'hsl(210 40% 96.1%)',
-                foreground: 'hsl(215.4 16.3% 46.9%)',
+                DEFAULT: '#E4E4E4',
+                foreground: '#808191',
               },
               accent: {
-                DEFAULT: 'hsl(210 40% 96.1%)',
-                foreground: 'hsl(222.2 47.4% 11.2%)',
+                DEFAULT: '#CF6DDB', // Pink/Purple accent
+                foreground: '#FFFFFF',
               },
               popover: {
-                DEFAULT: 'hsl(0 0% 100%)',
-                foreground: 'hsl(222.2 84% 4.9%)',
+                DEFAULT: '#FFFFFF',
+                foreground: '#11142D',
               },
               card: {
-                DEFAULT: 'hsl(0 0% 100%)',
-                foreground: 'hsl(222.2 84% 4.9%)',
+                DEFAULT: '#FFFFFF',
+                foreground: '#11142D',
               },
-              'pay-green-light': '#D9F9E5',
-              'pay-green-medium': '#A0E6BB',
-              'pay-green-dark': '#1A4D2E',
-              'pay-black': '#0C0A09',
-              'pay-gray': '#78716C',
+              // Custom accents from design
+              'purple-light': '#CABDFF',
+              'blue-light': '#B5E4CA',
+              'orange-light': '#FFBC99',
             },
              borderRadius: {
-              '3xl': '1.5rem',
-              '2xl': '1rem',
-              xl: '0.75rem',
-              lg: `0.5rem`,
-              md: `calc(0.5rem - 2px)`,
-              sm: 'calc(0.5rem - 4px)',
+              '3xl': '24px',
+              '2xl': '20px',
+              xl: '16px',
+              lg: '12px',
+              md: '8px',
+              sm: '4px',
+              full: '9999px',
             },
+            boxShadow: {
+              'soft': '0px 10px 40px rgba(29, 22, 23, 0.07)',
+              'card': '0px 4px 10px rgba(0, 0, 0, 0.03)',
+            }
           }
         }
       }
