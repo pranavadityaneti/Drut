@@ -20,16 +20,16 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentPage, setCurrentPage, u
   ];
 
   return (
-    <aside className="fixed inset-y-0 left-0 z-40 flex flex-col w-20 bg-surface border-r border-border transition-all duration-300 ease-in-out">
+    <aside className="fixed inset-y-0 left-0 z-40 flex flex-col w-20 bg-white border-r border-border/40 transition-all duration-300 ease-in-out">
       {/* Logo Section */}
-      <div className="flex h-20 items-center justify-center">
-        <div className="bg-primary-container text-on-primary-container p-3 rounded-xl">
-          <DrutIcon className="h-6 w-6" />
+      <div className="flex h-24 items-center justify-center">
+        <div className="text-primary">
+          <DrutIcon className="h-8 w-8" />
         </div>
       </div>
 
       {/* Navigation Rail */}
-      <div className="flex-1 flex flex-col items-center space-y-4 py-8">
+      <div className="flex-1 flex flex-col items-center space-y-8 py-8">
         {navItems.map(item => (
           <NavItem
             key={item.id}
@@ -41,19 +41,19 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentPage, setCurrentPage, u
       </div>
 
       {/* User Profile */}
-      <div className="p-4 mt-auto flex justify-center">
+      <div className="p-4 mt-auto flex justify-center mb-4">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <button className="rounded-full hover:bg-surface-variant p-1 transition-colors">
+            <button className="rounded-full hover:ring-2 hover:ring-primary/20 transition-all">
               <Avatar email={user?.email || 'User'} src={user?.user_metadata?.avatar_url} className="h-10 w-10 rounded-full border border-border" />
             </button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent side="right" align="end" className="w-56 ml-2 rounded-xl shadow-elevation-2 border-none p-2 bg-surface">
-            <div className="px-3 py-2 border-b border-border mb-2">
-              <p className="text-sm font-bold text-on-surface truncate">{user?.user_metadata?.full_name || user?.email?.split('@')[0]}</p>
-              <p className="text-xs text-on-surface-variant truncate">{user?.email}</p>
+          <DropdownMenuContent side="right" align="end" className="w-56 ml-2 rounded-2xl shadow-soft border-none p-2 bg-white">
+            <div className="px-3 py-2 border-b border-gray-100 mb-2">
+              <p className="text-sm font-bold text-foreground truncate">{user?.user_metadata?.full_name || user?.email?.split('@')[0]}</p>
+              <p className="text-xs text-gray-400 truncate">{user?.email}</p>
             </div>
-            <DropdownMenuItem onClick={onLogout} className="rounded-lg cursor-pointer text-error hover:bg-error-container hover:text-on-error-container p-3 transition-colors">
+            <DropdownMenuItem onClick={onLogout} className="rounded-xl cursor-pointer text-red-500 hover:bg-red-50 p-3 transition-colors">
               <LogoutIcon className="mr-3 h-5 w-5" />
               <span className="font-medium">Logout</span>
             </DropdownMenuItem>
@@ -73,17 +73,12 @@ const NavItem: React.FC<{
 }> = ({ label, icon: Icon, isActive, onClick }) => (
   <button
     onClick={onClick}
-    className="group flex flex-col items-center gap-1 w-full"
+    className="group relative flex items-center justify-center w-12 h-12 rounded-xl transition-all duration-200"
     title={label}
   >
-    <div className={`
-      flex items-center justify-center w-14 h-8 rounded-full transition-all duration-200
-      ${isActive ? 'bg-secondary-container text-on-secondary-container' : 'text-on-surface-variant group-hover:bg-surface-variant'}
-    `}>
-      <Icon className="h-6 w-6" />
-    </div>
-    <span className={`text-[11px] font-medium tracking-wide ${isActive ? 'text-on-surface' : 'text-on-surface-variant'}`}>
-      {label}
-    </span>
+    <Icon className={`h-6 w-6 transition-colors ${isActive ? 'text-primary' : 'text-gray-400 group-hover:text-primary/70'}`} />
+    {isActive && (
+      <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-primary rounded-l-full" />
+    )}
   </button>
 );

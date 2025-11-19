@@ -6,10 +6,6 @@ import { SprintScatter } from './analytics/SprintScatter';
 import { WeakestLinkCard } from './analytics/WeakestLinkCard';
 import { ActivityHeatmapGrid } from './analytics/ActivityHeatmapGrid';
 
-// Icons
-const ChevronRightIcon = () => <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="h-4 w-4"><path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>;
-const MoreVerticalIcon = () => <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="h-5 w-5 text-on-surface-variant"><path strokeLinecap="round" strokeLinejoin="round" d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" /></svg>;
-
 export const Dashboard: React.FC<{}> = () => {
   const [analytics, setAnalytics] = useState<AnalyticsRow | null>(null);
   const [topicData, setTopicData] = useState<TopicProficiency[]>([]);
@@ -47,136 +43,165 @@ export const Dashboard: React.FC<{}> = () => {
   }, []);
 
   return (
-    <div className="grid grid-cols-12 gap-6 pb-10 px-6">
-      {/* Main Content Area (Left) */}
-      <div className="col-span-12 lg:col-span-8 space-y-6">
+    <div className="p-8 max-w-[1600px] mx-auto">
 
-        {/* Hero Banner - Filled Card */}
-        <div className="relative overflow-hidden rounded-3xl bg-primary-container text-on-primary-container p-8 md:p-10">
-          <div className="relative z-10 max-w-lg">
-            <div className="inline-block px-3 py-1 mb-4 text-label-medium font-medium tracking-wider uppercase bg-white/40 rounded-full backdrop-blur-sm text-on-primary-container">
-              Analytics Dashboard
-            </div>
-            <h1 className="text-display-small md:text-display-medium font-normal leading-tight mb-6">
-              Track Your Progress & <br /> Master Every Topic
-            </h1>
-            <button className="flex items-center gap-2 bg-primary text-on-primary px-6 py-3 rounded-full font-medium hover:shadow-elevation-2 transition-shadow">
-              Start Practice
-              <div className="bg-on-primary/20 rounded-full p-1">
-                <ChevronRightIcon />
-              </div>
-            </button>
-          </div>
-
-          {/* Decorative Background Elements */}
-          <div className="absolute top-0 right-0 w-64 h-64 bg-white/20 rounded-full blur-3xl -mr-16 -mt-16"></div>
-          <div className="absolute bottom-0 right-20 w-32 h-32 bg-secondary-container/50 rounded-full blur-2xl"></div>
+      {/* Header Section: Greeting & Primary Action */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between mb-10 gap-4">
+        <div>
+          <h1 className="text-3xl font-bold text-foreground tracking-tight">Good Morning, Royal</h1>
+          <p className="text-gray-400 mt-1">Here is your daily progress overview</p>
         </div>
-
-        {/* Key Metrics Row */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <StatCard
-            title="Total Questions"
-            value={analytics?.total_attempts || 0}
-            icon={<div className="p-3 bg-tertiary-container text-on-tertiary-container rounded-full"><svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg></div>}
-          />
-          <StatCard
-            title="Accuracy Rate"
-            value={`${analytics?.accuracy_pct || 0}%`}
-            icon={<div className="p-3 bg-secondary-container text-on-secondary-container rounded-full"><svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg></div>}
-          />
-          <StatCard
-            title="Avg Time"
-            value={`${((analytics?.avg_time_ms || 0) / 1000).toFixed(1)}s`}
-            icon={<div className="p-3 bg-primary-container text-on-primary-container rounded-full"><svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></div>}
-          />
-        </div>
-
-        {/* Charts Row 1: Velocity & Radar */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-surface p-6 rounded-3xl shadow-elevation-1 border border-border/20">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-title-medium font-medium text-on-surface">Learning Velocity</h3>
-              <button className="p-2 hover:bg-surface-variant rounded-full transition-colors"><MoreVerticalIcon /></button>
-            </div>
-            <VelocityChart data={velocityData} />
-          </div>
-          <div className="bg-surface p-6 rounded-3xl shadow-elevation-1 border border-border/20">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-title-medium font-medium text-on-surface">Topic Proficiency</h3>
-              <button className="p-2 hover:bg-surface-variant rounded-full transition-colors"><MoreVerticalIcon /></button>
-            </div>
-            <ProficiencyRadar data={topicData} />
-          </div>
-        </div>
-
-        {/* Activity Heatmap */}
-        <ActivityHeatmapGrid data={heatmapData} />
-
+        <button className="bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-xl font-medium shadow-lg shadow-primary/20 transition-all flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+          </svg>
+          Start New Sprint
+        </button>
       </div>
 
-      {/* Right Sidebar */}
-      <div className="col-span-12 lg:col-span-4 space-y-6">
+      <div className="grid grid-cols-12 gap-8">
 
-        {/* Weakest Link Alert */}
-        <WeakestLinkCard data={weakestData} />
+        {/* Left Column: Stats & Main Charts */}
+        <div className="col-span-12 lg:col-span-8 space-y-8">
 
-        {/* Sprint Performance Scatter */}
-        <div className="bg-surface p-6 rounded-3xl shadow-elevation-1 border border-border/20">
-          <div className="flex items-center justify-between mb-6">
-            <h3 className="text-title-medium font-medium text-on-surface">Sprint Performance</h3>
-            <button className="p-2 hover:bg-surface-variant rounded-full transition-colors"><MoreVerticalIcon /></button>
+          {/* Pastel Stat Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Card 1: Total Questions (Purple) */}
+            <div className="bg-purple-soft p-8 rounded-3xl relative overflow-hidden group hover:shadow-soft transition-all">
+              <div className="relative z-10">
+                <div className="flex items-center gap-2 mb-6">
+                  <span className="text-xs font-bold uppercase tracking-wider text-primary/60">Total Practice</span>
+                  <span className="w-1 h-1 rounded-full bg-primary/40"></span>
+                  <span className="text-xs font-medium text-primary/60">All Time</span>
+                </div>
+                <h3 className="text-lg font-bold text-foreground mb-1">Questions Attempted</h3>
+                <p className="text-sm text-gray-500 mb-6">Keep pushing your limits!</p>
+
+                <div className="flex items-end gap-4 mb-6">
+                  <span className="text-5xl font-bold text-foreground">{analytics?.total_attempts || 0}</span>
+                  <span className="text-sm font-medium text-green-500 mb-2 flex items-center">
+                    <svg className="w-3 h-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 10l7-7m0 0l7 7m-7-7v18" /></svg>
+                    12%
+                  </span>
+                </div>
+
+                <button className="bg-white text-primary px-6 py-3 rounded-full text-sm font-bold shadow-sm hover:shadow-md transition-all">
+                  View Details
+                </button>
+              </div>
+              {/* Decorative Blob */}
+              <div className="absolute -right-10 -bottom-10 w-40 h-40 bg-primary/5 rounded-full blur-2xl group-hover:bg-primary/10 transition-all"></div>
+            </div>
+
+            {/* Card 2: Accuracy (Blue) */}
+            <div className="bg-blue-soft p-8 rounded-3xl relative overflow-hidden group hover:shadow-soft transition-all">
+              <div className="relative z-10">
+                <div className="flex items-center gap-2 mb-6">
+                  <span className="text-xs font-bold uppercase tracking-wider text-blue-500/60">Performance</span>
+                  <span className="w-1 h-1 rounded-full bg-blue-500/40"></span>
+                  <span className="text-xs font-medium text-blue-500/60">Average</span>
+                </div>
+                <h3 className="text-lg font-bold text-foreground mb-1">Accuracy Rate</h3>
+                <p className="text-sm text-gray-500 mb-6">Quality over quantity.</p>
+
+                <div className="flex items-end gap-4 mb-6">
+                  <span className="text-5xl font-bold text-foreground">{analytics?.accuracy_pct || 0}%</span>
+                  <span className="text-sm font-medium text-green-500 mb-2 flex items-center">
+                    <svg className="w-3 h-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 10l7-7m0 0l7 7m-7-7v18" /></svg>
+                    5%
+                  </span>
+                </div>
+
+                <button className="bg-white text-blue-600 px-6 py-3 rounded-full text-sm font-bold shadow-sm hover:shadow-md transition-all">
+                  View Analytics
+                </button>
+              </div>
+              {/* Decorative Blob */}
+              <div className="absolute -right-10 -bottom-10 w-40 h-40 bg-blue-500/5 rounded-full blur-2xl group-hover:bg-blue-500/10 transition-all"></div>
+            </div>
           </div>
-          <p className="text-body-small text-on-surface-variant mb-4">Speed vs. Accuracy in recent sessions</p>
-          <SprintScatter data={sprintData} />
+
+          {/* Main Chart Section */}
+          <div className="bg-white p-8 rounded-3xl shadow-card border border-gray-100">
+            <div className="flex items-center justify-between mb-8">
+              <div className="flex items-center gap-4">
+                <h3 className="font-bold text-lg text-foreground">Learning Velocity</h3>
+                <div className="flex items-center gap-2 text-xs font-medium">
+                  <span className="flex items-center gap-1 text-primary"><span className="w-2 h-2 rounded-full bg-primary"></span> Accuracy</span>
+                  <span className="flex items-center gap-1 text-gray-400"><span className="w-2 h-2 rounded-full bg-gray-300"></span> Volume</span>
+                </div>
+              </div>
+              <select className="bg-gray-50 border-none text-xs font-medium text-gray-500 rounded-lg py-2 px-3 outline-none cursor-pointer hover:bg-gray-100">
+                <option>Last 30 Days</option>
+                <option>Last 7 Days</option>
+                <option>All Time</option>
+              </select>
+            </div>
+            <div className="h-[300px] w-full">
+              <VelocityChart data={velocityData} />
+            </div>
+          </div>
+
+          {/* Secondary Charts Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="bg-white p-6 rounded-3xl shadow-card border border-gray-100">
+              <h3 className="font-bold text-lg text-foreground mb-4">Topic Proficiency</h3>
+              <ProficiencyRadar data={topicData} />
+            </div>
+            <div className="bg-white p-6 rounded-3xl shadow-card border border-gray-100">
+              <h3 className="font-bold text-lg text-foreground mb-4">Activity Heatmap</h3>
+              <ActivityHeatmapGrid data={heatmapData} />
+            </div>
+          </div>
+
         </div>
 
-        {/* Mentor List (Static for now) */}
-        <div className="bg-surface p-6 rounded-3xl shadow-elevation-1 border border-border/20">
-          <div className="flex items-center justify-between mb-6">
-            <h3 className="text-title-medium font-medium text-on-surface">Top Mentors</h3>
-            <button className="p-2 rounded-full hover:bg-surface-variant transition-colors"><svg className="w-5 h-5 text-on-surface-variant" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" /></svg></button>
-          </div>
-          <div className="space-y-6">
-            <MentorRow name="Padhang Satrio" role="Math Expert" seed="Padhang" />
-            <MentorRow name="Zakir Horizontal" role="Physics Lead" seed="Zakir" />
-          </div>
-          <button className="w-full mt-6 py-3 bg-secondary-container text-on-secondary-container font-medium rounded-full hover:shadow-elevation-1 transition-all text-label-large">
-            See All
-          </button>
-        </div>
+        {/* Right Column: Lists & Secondary Info */}
+        <div className="col-span-12 lg:col-span-4 space-y-8">
 
+          {/* Weakest Link (Refactored in separate file, but container here) */}
+          <WeakestLinkCard data={weakestData} />
+
+          {/* Sprint Performance */}
+          <div className="bg-white p-6 rounded-3xl shadow-card border border-gray-100">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="font-bold text-lg text-foreground">Sprint Speed</h3>
+              <button className="text-gray-400 hover:text-foreground"><svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" /></svg></button>
+            </div>
+            <SprintScatter data={sprintData} />
+          </div>
+
+          {/* Mentors List */}
+          <div className="bg-white p-6 rounded-3xl shadow-card border border-gray-100">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="font-bold text-lg text-foreground">Your Mentors</h3>
+              <a href="#" className="text-xs font-bold text-primary hover:underline">View All</a>
+            </div>
+            <div className="space-y-5">
+              <MentorRow name="Padhang Satrio" role="Mathematics" seed="Padhang" time="10:00 AM" />
+              <MentorRow name="Zakir Horizontal" role="Physics" seed="Zakir" time="11:30 AM" />
+              <MentorRow name="Moinul Hasan" role="Chemistry" seed="Moinul" time="02:00 PM" />
+            </div>
+          </div>
+
+        </div>
       </div>
     </div>
   );
 };
 
-const StatCard: React.FC<{ title: string, value: string | number, icon: React.ReactNode }> = ({ title, value, icon }) => (
-  <div className="bg-surface p-4 rounded-2xl shadow-elevation-1 border border-border/20 flex items-center gap-4 transition-transform hover:-translate-y-1">
-    {icon}
-    <div>
-      <p className="text-label-medium text-on-surface-variant mb-1">{title}</p>
-      <h4 className="text-headline-small font-normal text-on-surface">{value}</h4>
-    </div>
-  </div>
-);
-
-const MentorRow: React.FC<{ name: string, role: string, seed: string }> = ({ name, role, seed }) => (
-  <div className="flex items-center justify-between">
+const MentorRow: React.FC<{ name: string, role: string, seed: string, time: string }> = ({ name, role, seed, time }) => (
+  <div className="flex items-center justify-between group cursor-pointer">
     <div className="flex items-center gap-3">
-      <div className="relative">
-        <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${seed}`} className="w-10 h-10 rounded-full bg-surface-variant" alt={name} />
-        <div className="absolute bottom-0 right-0 w-3 h-3 bg-primary rounded-full border-2 border-surface flex items-center justify-center">
-          <span className="text-[6px] text-on-primary font-bold">+</span>
-        </div>
-      </div>
+      <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${seed}`} className="w-10 h-10 rounded-full bg-gray-50 border border-gray-100" alt={name} />
       <div>
-        <h5 className="text-title-small font-medium text-on-surface">{name}</h5>
-        <p className="text-body-small text-on-surface-variant">{role}</p>
+        <h5 className="font-bold text-sm text-foreground group-hover:text-primary transition-colors">{name}</h5>
+        <p className="text-xs text-gray-400">{role}</p>
       </div>
     </div>
-    <button className="text-label-small font-medium text-primary hover:text-primary/80 flex items-center gap-1">
-      + Follow
-    </button>
+    <div className="text-right">
+      <span className="block text-xs font-bold text-foreground">{time}</span>
+      <span className="text-[10px] text-gray-400">Today</span>
+    </div>
   </div>
 );

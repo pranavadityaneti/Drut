@@ -13,70 +13,53 @@
       theme: {
         extend: {
           colors: {
-            border: '#79747E', // Outline
-            input: '#E7E0EC', // Surface Variant
-            ring: '#6750A4', // Primary
-            background: '#FEF7FF', // Surface
-            foreground: '#1D1B20', // On Surface
+            border: '#E4E4E4', // Light border
+            input: '#F4F5F7', // Very light gray input
+            ring: '#6C5DD3', // Primary Purple
+            background: '#F7F8FA', // Very light cool gray background
+            foreground: '#11142D', // Dark text
             primary: {
-              DEFAULT: '#6750A4', // Primary (Purple 40)
-              foreground: '#FFFFFF', // On Primary
-              container: '#EADDFF', // Primary Container
-              'on-container': '#21005D', // On Primary Container
+              DEFAULT: '#6C5DD3', // Vibrant Purple
+              foreground: '#FFFFFF',
             },
             secondary: {
-              DEFAULT: '#625B71', // Secondary
-              foreground: '#FFFFFF', // On Secondary
-              container: '#E8DEF8', // Secondary Container
-              'on-container': '#1D192B', // On Secondary Container
-            },
-            tertiary: {
-              DEFAULT: '#7D5260', // Tertiary
+              DEFAULT: '#808191', // Gray text
               foreground: '#FFFFFF',
-              container: '#FFD8E4',
-              'on-container': '#31111D',
             },
+            // Pastel Colors for Cards
+            'purple-soft': '#F3F0FF',
+            'blue-soft': '#F0F9FF',
+            'green-soft': '#F0FDF4',
+            'orange-soft': '#FFF4E5',
+
             destructive: {
-              DEFAULT: '#B3261E', // Error
+              DEFAULT: '#FF754C',
               foreground: '#FFFFFF',
-              container: '#F9DEDC',
-              'on-container': '#410E0B',
             },
             muted: {
-              DEFAULT: '#E7E0EC', // Surface Variant
-              foreground: '#49454F', // On Surface Variant
-            },
-            accent: {
-              DEFAULT: '#EADDFF', // Primary Container
-              foreground: '#21005D',
-            },
-            popover: {
-              DEFAULT: '#FEF7FF', // Surface
-              foreground: '#1D1B20',
+              DEFAULT: '#F4F5F7',
+              foreground: '#808191',
             },
             card: {
-              DEFAULT: '#FEF7FF', // Surface (Elevated cards use surface color + shadow)
-              foreground: '#1D1B20',
-            },
-            surface: {
-              DEFAULT: '#FEF7FF',
-              variant: '#E7E0EC',
-              'on-variant': '#49454F',
+              DEFAULT: '#FFFFFF',
+              foreground: '#11142D',
             },
           },
           borderRadius: {
-            '3xl': '28px', // Large
-            '2xl': '24px',
-            xl: '16px', // Medium
-            lg: '12px', // Small
+            '3xl': '24px',
+            '2xl': '20px',
+            xl: '16px',
+            lg: '12px',
             md: '8px',
-            sm: '4px', // Extra Small
-            full: '9999px', // Full
+            sm: '4px',
+            full: '9999px',
           },
           boxShadow: {
-            'elevation-1': '0px 1px 2px rgba(0, 0, 0, 0.3), 0px 1px 3px 1px rgba(0, 0, 0, 0.15)',
-            'elevation-2': '0px 1px 2px rgba(0, 0, 0, 0.3), 0px 2px 6px 2px rgba(0, 0, 0, 0.15)',
-            'elevation-3': '0px 1px 3px rgba(0, 0, 0, 0.3), 0px 4px 8px 3px rgba(0, 0, 0, 0.15)',
+            'soft': '0px 4px 20px rgba(0, 0, 0, 0.02)', // Very subtle shadow
+            'card': '0px 4px 10px rgba(0, 0, 0, 0.03)',
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'], // Assuming Inter is available or default sans
           }
         }
       }
