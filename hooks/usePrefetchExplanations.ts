@@ -13,7 +13,13 @@ export function usePrefetchExplanations(current: Q | null, next: Q[]) {
   useEffect(() => {
     if (!current) return;
 
-    const targets = [current, ...next.slice(0, 2)].filter(q => q && q.id);
+    // Helper to check if ID is a valid UUID format (not a hash-based ID like "qid_...")
+    const isValidUUID = (id: string): boolean => {
+      const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+      return uuidRegex.test(id);
+    };
+
+    const targets = [current, ...next.slice(0, 2)].filter(q => q && q.id && isValidUUID(q.id));
     targets.forEach(t => {
       // Fire-and-forget RPC call, handling potential errors silently in the background.
       // The Supabase v2 client returns a promise-like object that should be awaited,

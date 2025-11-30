@@ -108,6 +108,7 @@ export const Practice: React.FC<{}> = () => {
   const timerRef = useRef<number | null>(null);
   const startTimeRef = useRef<number | null>(null);
   const fetchingRef = useRef<boolean>(false);
+  const questionCacheRef = useRef<{ [key: string]: QuestionData[] }>({});
 
   const currentTopicInfo = useMemo(() => {
     return { topic, subTopic: selectedSubTopic };
@@ -135,7 +136,8 @@ export const Practice: React.FC<{}> = () => {
     const { subTopic: currentSubTopic, topic: currentTopic } = currentTopicInfo;
     if (!currentSubTopic || !currentTopic || !examProfile || fetchingRef.current) return;
 
-    const currentCount = questionCache[currentSubTopic]?.length || 0;
+    // Use ref to avoid dependency on questionCache (prevents refresh loop)
+    const currentCount = questionCacheRef.current[currentSubTopic]?.length || 0;
     const needed = (startIndex + 1) - currentCount; // Aim to have current + 1 more
 
     if (needed <= 0) return;
@@ -167,6 +169,8 @@ export const Practice: React.FC<{}> = () => {
           const newCache = { ...prevCache };
           const existing = newCache[currentSubTopic] || [];
           newCache[currentSubTopic] = [...existing, ...(questions as QuestionData[])];
+          // Update ref to keep it in sync
+          questionCacheRef.current = newCache;
           return newCache;
         });
       }
@@ -180,7 +184,7 @@ export const Practice: React.FC<{}> = () => {
     } finally {
       fetchingRef.current = false;
     }
-  }, [currentTopicInfo, examProfile, questionCache]);
+  }, [currentTopicInfo, examProfile, difficulty]);
 
 
   const loadQuestion = useCallback(async (index: number) => {
@@ -202,7 +206,12 @@ export const Practice: React.FC<{}> = () => {
       const preloaded = getPreloadedQuestion(examProfile, currentTopic, currentSubTopic);
       if (preloaded) {
         setQuestionData(preloaded);
-        setQuestionCache(prev => ({ ...prev, [currentSubTopic]: [preloaded] }));
+        setQuestionCache(prev => {
+          const newCache = { ...prev, [currentSubTopic]: [preloaded] };
+          // Update ref to keep it in sync
+          questionCacheRef.current = newCache;
+          return newCache;
+        });
         startTimer();
         return;
       }
@@ -241,12 +250,14 @@ export const Practice: React.FC<{}> = () => {
 
       const data = questions[0];
       setQuestionData(data as QuestionData);
-      setQuestionCache(prevCache => {
-        const newCache = { ...prevCache };
-        if (!newCache[currentSubTopic]) newCache[currentSubTopic] = [];
-        newCache[currentSubTopic][index] = data as QuestionData;
-        return newCache;
-      });
+        setQuestionCache(prevCache => {
+          const newCache = { ...prevCache };
+          if (!newCache[currentSubTopic]) newCache[currentSubTopic] = [];
+          newCache[currentSubTopic][index] = data as QuestionData;
+          // Update ref to keep it in sync
+          questionCacheRef.current = newCache;
+          return newCache;
+        });
 
       startTimer();
       // Refill buffer after immediate fetch
@@ -287,6 +298,11 @@ export const Practice: React.FC<{}> = () => {
     }
     setCurrentQuestionIndex(0);
   }, []);
+
+  // Sync ref with state on mount and when cache changes
+  useEffect(() => {
+    questionCacheRef.current = questionCache;
+  }, [questionCache]);
 
   useEffect(() => {
     const savedProfile = localStorage.getItem('examProfile');
@@ -331,6 +347,7 @@ export const Practice: React.FC<{}> = () => {
     setSelectedSubTopic(subTopic);
     setCurrentQuestionIndex(0);
     setQuestionCache({}); // Clear cache for new sub-topic
+    questionCacheRef.current = {}; // Update ref
   };
 
   const handleDifficultyChange = (newDifficulty: 'Easy' | 'Medium' | 'Hard') => {
@@ -338,6 +355,7 @@ export const Practice: React.FC<{}> = () => {
     setDifficulty(newDifficulty);
     setCurrentQuestionIndex(0);
     setQuestionCache({}); // Clear cache for new difficulty
+    questionCacheRef.current = {}; // Update ref
   };
 
   const targetTime = useMemo(() => {

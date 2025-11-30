@@ -17,12 +17,14 @@ const SCHEMA_HINT = `
   "correctOptionIndex": 0 | 1 | 2 | 3,
   "timeTargets": { "jee_main": number, "cat": number, "eamcet": number },
   "fastestSafeMethod": {
-    "exists": boolean,
-    "preconditions": string,
-    "steps": string[],
-    "sanityCheck": string
+    "exists": boolean,  // true if a genuinely faster alternative method exists (not just shortened steps)
+    "preconditions": string,  // What the student needs to know/recognize to use this fast method
+    "steps": string[],  // Steps using speed-optimized techniques (mental math, pattern recognition, option elimination, back-solving, exam tricks)
+    "sanityCheck": string  // Quick verification that the fast method gives correct answer
   },
-  "fullStepByStep": { "steps": string[] }
+  "fullStepByStep": { 
+    "steps": string[]  // Traditional educational approach - detailed, didactic, teaches the concept properly
+  }
 }
 `.trim();
 
@@ -37,8 +39,30 @@ IMPORTANT RULES:
 - Do NOT output Markdown code fences (e.g., \`\`\`json).
 - "options" array MUST have exactly 4 items.
 - "correctOptionIndex" MUST be an integer 0..3.
-- "fastestSafeMethod" steps should be short and actionable.
-- "fullStepByStep" should be detailed and didactic.
+
+CRITICAL: "fastestSafeMethod" and "fullStepByStep" must be FUNDAMENTALLY DIFFERENT approaches, not just shortened vs detailed versions.
+
+FASTEST SAFE METHOD ("fastestSafeMethod"):
+- Must use a DIFFERENT problem-solving approach optimized for speed, not just fewer steps.
+- Should employ speed-optimized techniques such as:
+  * Mental math shortcuts and quick calculations
+  * Pattern recognition (spotting familiar structures, formulas, or symmetries)
+  * Option elimination (quickly ruling out obviously wrong answers)
+  * Back-solving (working backwards from answer choices)
+  * Exam-specific tricks and shortcuts (CAT/JEE/EAMCET specific strategies)
+  * Visual/spatial reasoning when applicable
+- Focus on "how to solve this FASTEST while being correct" - prioritize time efficiency.
+- Steps should be concise but emphasize the speed technique used.
+- If a fast method doesn't exist safely, set "exists": false.
+
+FULL STEP-BY-STEP ("fullStepByStep"):
+- Should use the traditional, educational approach that teaches the concept properly.
+- Focus on "how to solve this CORRECTLY and UNDERSTANDABLY" - prioritize learning.
+- Should be detailed, didactic, and show all logical steps clearly.
+- This is the method students should learn to understand the underlying concept.
+- Even if slower, this method should demonstrate proper mathematical reasoning.
+
+Remember: These are TWO DIFFERENT SOLUTION PATHS, not the same path with different detail levels.
 `.trim();
 
 function buildUserPrompt(spec: {
@@ -50,6 +74,15 @@ function buildUserPrompt(spec: {
     Hard: 'The question should be challenging, requiring advanced problem-solving, deep conceptual understanding, or multi-step reasoning. May involve complex calculations, edge cases, or integration of multiple concepts. Test mastery and analytical thinking.'
   };
 
+  const examSpeedStrategies = {
+    cat: 'For CAT: Fastest Safe Method should leverage quick mental calculations, option elimination, pattern recognition in numbers/sequences, and time-saving tricks. CAT emphasizes speed and accuracy under time pressure.',
+    jee_main: 'For JEE Main: Fastest Safe Method should use formula shortcuts, symmetry/pattern recognition, dimensional analysis, and elimination techniques. JEE Main rewards quick problem identification and efficient solving.',
+    eamcet: 'For EAMCET: Fastest Safe Method should focus on direct formula application, quick substitution techniques, and recognizing standard problem types. EAMCET values speed in applying learned concepts.'
+  };
+
+  const speedStrategyHint = examSpeedStrategies[spec.exam as keyof typeof examSpeedStrategies] || 
+    'Fastest Safe Method should use speed-optimized techniques appropriate for competitive exams: mental math, pattern recognition, option elimination, back-solving, or exam-specific shortcuts.';
+
   return `
 Generate one practice question for:
 - Exam Profile: ${spec.exam}
@@ -58,6 +91,13 @@ Generate one practice question for:
 - Difficulty Level: ${spec.difficulty}
 
 ${difficultyGuidance[spec.difficulty]}
+
+${speedStrategyHint}
+
+IMPORTANT FOR SOLUTION GENERATION:
+- Generate TWO FUNDAMENTALLY DIFFERENT solution approaches:
+  1. "fastestSafeMethod": Use a speed-optimized technique (mental shortcuts, pattern recognition, option elimination, back-solving, exam tricks). This should be a DIFFERENT approach, not just fewer steps.
+  2. "fullStepByStep": Use the traditional educational method that teaches the concept properly with all logical steps shown clearly.
 
 The question should be conceptual, appropriate for the selected exam profile and difficulty level.
 `;
@@ -94,7 +134,7 @@ ${invalidText}
 
   const ai = getAiClient();
   const res = await ai.models.generateContent({
-    model: 'gemini-1.5-flash-001',
+    model: 'gemini-2.5-flash',
     contents: repairPrompt,
     config: {
       responseMimeType: "application/json",
@@ -110,7 +150,7 @@ const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 export async function generateOneQuestion(topic: string, subTopic: string, examProfile: string, difficulty: 'Easy' | 'Medium' | 'Hard' = 'Medium'): Promise<QuestionItem> {
   const spec = { exam: examProfile, topic, subtopic: subTopic, difficulty };
   const user = buildUserPrompt(spec);
-  const maxRetries = 3;
+  const maxRetries = 2; // Reduced from 3 to 2 for faster failure
 
   let lastError: any;
 
@@ -118,7 +158,7 @@ export async function generateOneQuestion(topic: string, subTopic: string, examP
     try {
       const ai = getAiClient();
       const res = await ai.models.generateContent({
-        model: 'gemini-1.5-flash-001',  // Faster, lighter model
+        model: 'gemini-2.5-flash',  // Faster, lighter model
         contents: user, // User prompt
         config: {
           systemInstruction: SYSTEM_INSTRUCTION, // System prompt as proper config
@@ -147,7 +187,7 @@ export async function generateOneQuestion(topic: string, subTopic: string, examP
       if (error.message && error.message.includes("API key is missing")) throw error;
 
       if (attempt < maxRetries) {
-        await delay(500); // Fixed 500ms delay instead of exponential backoff
+        await delay(300); // Reduced from 500ms to 300ms for faster retries
       }
     }
   }
