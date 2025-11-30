@@ -11,7 +11,8 @@ function resolveGeminiApiKey(): string | undefined {
     process.env.GEMINI_API_KEY ||                        // Node/server env
     process.env.API_KEY;                                 // Fallback for compatibility
 
-  return apiKey;
+  // Trim whitespace in case .env file has trailing spaces/newlines
+  return apiKey?.trim();
 }
 
 export const getAiClient = () => {
@@ -22,6 +23,9 @@ export const getAiClient = () => {
   if (!apiKey) {
     throw new Error("Gemini API key is missing. Please set GEMINI_API_KEY in your .env file.");
   }
+
+  // Debug: Log first 10 chars to verify key is being read (remove after debugging)
+  console.log('[DEBUG] API Key loaded:', apiKey.substring(0, 10) + '...', 'Length:', apiKey.length);
 
   client = new GoogleGenAI({ apiKey });
   return client;
