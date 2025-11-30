@@ -3,7 +3,7 @@ import { GoogleGenAI } from "@google/genai";
 
 let client: GoogleGenAI | null = null;
 
-const GEMINI_API_KEY = "AIzaSyCHnuDsLKsVIIKhCz7s2IUzdIj-MKGsMAg";
+const GEMINI_API_KEY = "AIzaSyCc7M6obtnA8Iy3MgEvMp7kW2R_1gUA1Tk";
 
 export const getAiClient = () => {
   if (client) return client;
