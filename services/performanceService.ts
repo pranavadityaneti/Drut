@@ -3,7 +3,8 @@ import { supabase } from '../lib/supabase';
 export async function savePerformance(
   isCorrect: boolean,
   qid: string,
-  timeMs: number
+  timeMs: number,
+  selectedOptionIndex?: number
 ) {
   const { data: { session } } = await supabase.auth.getSession();
   if (!session?.user) throw new Error('Not authenticated');
@@ -12,6 +13,7 @@ export async function savePerformance(
     is_correct: isCorrect,
     question_id: qid,
     time_ms: timeMs,
+    selected_option_index: selectedOptionIndex,
   };
 
   const { data, error } = await supabase.rpc('log_performance_v1', {

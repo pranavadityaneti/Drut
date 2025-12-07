@@ -1,7 +1,35 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { SidebarTrigger } from './ui/AppShell';
+import { supabase } from '../lib/supabase';
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from './ui/DropdownMenu';
+import { User } from '../types';
 
-export const Header: React.FC<{}> = () => {
+interface HeaderProps {
+  currentPage: string;
+  setCurrentPage: (page: string) => void;
+  onLogout: () => void;
+}
+
+export const Header: React.FC<HeaderProps> = ({ currentPage, setCurrentPage, onLogout }) => {
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    const loadUser = async () => {
+      const { data: { user: authUser } } = await supabase.auth.getUser();
+      if (authUser) {
+        setUser({
+          id: authUser.id,
+          email: authUser.email || '',
+          user_metadata: authUser.user_metadata || {}
+        });
+      }
+    };
+    loadUser();
+  }, []);
+
+  const userName = user?.user_metadata?.full_name || user?.user_metadata?.name || user?.email?.split('@')[0] || 'User';
+  const avatarUrl = user?.user_metadata?.avatar_url || `https://api.dicebear.com/7.x/avataaars/svg?seed=${user?.email || 'user'}`;
+
   return (
     <header className="sticky top-0 z-30 flex h-20 items-center bg-background/80 backdrop-blur-md px-8 transition-all duration-200">
       <div className="flex w-full items-center justify-between">
@@ -21,26 +49,47 @@ export const Header: React.FC<{}> = () => {
           </div>
         </div>
 
-        {/* Right: Actions */}
+        {/* Right: User Profile with Dropdown */}
         <div className="flex items-center gap-6">
-          <button className="relative p-2 text-gray-400 hover:text-primary transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-            </svg>
-            <span className="absolute top-2 right-2 h-2 w-2 bg-primary rounded-full border-2 border-white"></span>
-          </button>
-
-          <div className="flex items-center gap-3 pl-6 border-l border-gray-200">
-            <img
-              src="https://api.dicebear.com/7.x/avataaars/svg?seed=Royal"
-              alt="Profile"
-              className="h-10 w-10 rounded-full border-2 border-white shadow-sm bg-gray-100"
-            />
-            <div className="hidden md:block">
-              <p className="text-sm font-bold text-foreground leading-none">Royal Parvej</p>
-              <p className="text-xs text-gray-400 mt-1 leading-none">Admin</p>
-            </div>
-          </div>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button className="flex items-center gap-3 pl-6 border-l border-gray-200 hover:opacity-80 transition-opacity">
+                <img
+                  src={avatarUrl}
+                  alt="Profile"
+                  className="h-10 w-10 rounded-full border-2 border-white shadow-sm bg-gray-100"
+                />
+                <div className="hidden md:block text-left">
+                  <p className="text-sm font-bold text-foreground leading-none">{userName}</p>
+                  <p className="text-xs text-gray-400 mt-1 leading-none">{user?.email || 'Loading...'}</p>
+                </div>
+                <svg className="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-48 rounded-2xl shadow-soft border-none p-2 bg-white">
+              <DropdownMenuItem
+                onClick={() => setCurrentPage('profile')}
+                className="rounded-xl cursor-pointer hover:bg-gray-100 p-3 transition-colors flex items-center gap-3"
+              >
+                <svg className="w-5 h-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+                <span className="font-medium text-gray-700">My Profile</span>
+              </DropdownMenuItem>
+              <div className="h-px bg-gray-100 my-1" />
+              <DropdownMenuItem
+                onClick={onLogout}
+                className="rounded-xl cursor-pointer text-red-500 hover:bg-red-50 p-3 transition-colors flex items-center gap-3"
+              >
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                </svg>
+                <span className="font-medium">Sign out</span>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
     </header>

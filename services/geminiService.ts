@@ -1,6 +1,6 @@
 
 import { QuestionSchema, type QuestionItem } from "../lib/ai/schema";
-import { getAiClient } from "../lib/ai/gemini";
+import { getAiClient } from "../lib/ai/vertexAiClient";
 import { log } from '../lib/log';
 import pLimit from 'p-limit';
 
@@ -17,14 +17,12 @@ const SCHEMA_HINT = `
   "correctOptionIndex": 0 | 1 | 2 | 3,
   "timeTargets": { "jee_main": number, "cat": number, "eamcet": number },
   "fastestSafeMethod": {
-    "exists": boolean,  // true if a genuinely faster alternative method exists (not just shortened steps)
-    "preconditions": string,  // What the student needs to know/recognize to use this fast method
-    "steps": string[],  // Steps using speed-optimized techniques (mental math, pattern recognition, option elimination, back-solving, exam tricks)
-    "sanityCheck": string  // Quick verification that the fast method gives correct answer
+    "exists": boolean,
+    "preconditions": string,
+    "steps": string[],
+    "sanityCheck": string
   },
-  "fullStepByStep": { 
-    "steps": string[]  // Traditional educational approach - detailed, didactic, teaches the concept properly
-  }
+  "fullStepByStep": { "steps": string[] }
 }
 `.trim();
 
@@ -39,30 +37,8 @@ IMPORTANT RULES:
 - Do NOT output Markdown code fences (e.g., \`\`\`json).
 - "options" array MUST have exactly 4 items.
 - "correctOptionIndex" MUST be an integer 0..3.
-
-CRITICAL: "fastestSafeMethod" and "fullStepByStep" must be FUNDAMENTALLY DIFFERENT approaches, not just shortened vs detailed versions.
-
-FASTEST SAFE METHOD ("fastestSafeMethod"):
-- Must use a DIFFERENT problem-solving approach optimized for speed, not just fewer steps.
-- Should employ speed-optimized techniques such as:
-  * Mental math shortcuts and quick calculations
-  * Pattern recognition (spotting familiar structures, formulas, or symmetries)
-  * Option elimination (quickly ruling out obviously wrong answers)
-  * Back-solving (working backwards from answer choices)
-  * Exam-specific tricks and shortcuts (CAT/JEE/EAMCET specific strategies)
-  * Visual/spatial reasoning when applicable
-- Focus on "how to solve this FASTEST while being correct" - prioritize time efficiency.
-- Steps should be concise but emphasize the speed technique used.
-- If a fast method doesn't exist safely, set "exists": false.
-
-FULL STEP-BY-STEP ("fullStepByStep"):
-- Should use the traditional, educational approach that teaches the concept properly.
-- Focus on "how to solve this CORRECTLY and UNDERSTANDABLY" - prioritize learning.
-- Should be detailed, didactic, and show all logical steps clearly.
-- This is the method students should learn to understand the underlying concept.
-- Even if slower, this method should demonstrate proper mathematical reasoning.
-
-Remember: These are TWO DIFFERENT SOLUTION PATHS, not the same path with different detail levels.
+- "fastestSafeMethod" steps should be short and actionable.
+- "fullStepByStep" should be detailed and didactic.
 `.trim();
 
 function buildUserPrompt(spec: {
@@ -74,15 +50,6 @@ function buildUserPrompt(spec: {
     Hard: 'The question should be challenging, requiring advanced problem-solving, deep conceptual understanding, or multi-step reasoning. May involve complex calculations, edge cases, or integration of multiple concepts. Test mastery and analytical thinking.'
   };
 
-  const examSpeedStrategies = {
-    cat: 'For CAT: Fastest Safe Method should leverage quick mental calculations, option elimination, pattern recognition in numbers/sequences, and time-saving tricks. CAT emphasizes speed and accuracy under time pressure.',
-    jee_main: 'For JEE Main: Fastest Safe Method should use formula shortcuts, symmetry/pattern recognition, dimensional analysis, and elimination techniques. JEE Main rewards quick problem identification and efficient solving.',
-    eamcet: 'For EAMCET: Fastest Safe Method should focus on direct formula application, quick substitution techniques, and recognizing standard problem types. EAMCET values speed in applying learned concepts.'
-  };
-
-  const speedStrategyHint = examSpeedStrategies[spec.exam as keyof typeof examSpeedStrategies] || 
-    'Fastest Safe Method should use speed-optimized techniques appropriate for competitive exams: mental math, pattern recognition, option elimination, back-solving, or exam-specific shortcuts.';
-
   return `
 Generate one practice question for:
 - Exam Profile: ${spec.exam}
@@ -91,13 +58,6 @@ Generate one practice question for:
 - Difficulty Level: ${spec.difficulty}
 
 ${difficultyGuidance[spec.difficulty]}
-
-${speedStrategyHint}
-
-IMPORTANT FOR SOLUTION GENERATION:
-- Generate TWO FUNDAMENTALLY DIFFERENT solution approaches:
-  1. "fastestSafeMethod": Use a speed-optimized technique (mental shortcuts, pattern recognition, option elimination, back-solving, exam tricks). This should be a DIFFERENT approach, not just fewer steps.
-  2. "fullStepByStep": Use the traditional educational method that teaches the concept properly with all logical steps shown clearly.
 
 The question should be conceptual, appropriate for the selected exam profile and difficulty level.
 `;
@@ -132,9 +92,9 @@ INPUT:
 ${invalidText}
 `.trim();
 
-  const ai = getAiClient();
-  const res = await ai.models.generateContent({
-    model: 'gemini-2.5-flash',
+  const model = getAiClient();
+  const result = await model.models.generateContent({
+    model: 'gemini-2.0-flash-exp',
     contents: repairPrompt,
     config: {
       responseMimeType: "application/json",
@@ -142,7 +102,7 @@ ${invalidText}
     },
   });
 
-  return res.text || "{}";
+  return result.text || "{}";
 }
 
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
@@ -150,7 +110,7 @@ const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 export async function generateOneQuestion(topic: string, subTopic: string, examProfile: string, difficulty: 'Easy' | 'Medium' | 'Hard' = 'Medium'): Promise<QuestionItem> {
   const spec = { exam: examProfile, topic, subtopic: subTopic, difficulty };
   const user = buildUserPrompt(spec);
-  const maxRetries = 2; // Reduced from 3 to 2 for faster failure
+  const maxRetries = 3;
 
   let lastError: any;
 
@@ -158,12 +118,12 @@ export async function generateOneQuestion(topic: string, subTopic: string, examP
     try {
       const ai = getAiClient();
       const res = await ai.models.generateContent({
-        model: 'gemini-2.5-flash',  // Faster, lighter model
-        contents: user, // User prompt
+        model: 'gemini-2.0-flash-exp',
+        contents: user,
         config: {
-          systemInstruction: SYSTEM_INSTRUCTION, // System prompt as proper config
+          systemInstruction: SYSTEM_INSTRUCTION,
           responseMimeType: "application/json",
-          temperature: 0.2,  // Lower = faster generation
+          temperature: 0.2,
         },
       });
 
@@ -176,7 +136,6 @@ export async function generateOneQuestion(topic: string, subTopic: string, examP
         return checked;
       } catch (e) {
         log.warn(`[drut][ai] JSON parse/validate failed on attempt ${attempt}. Retrying...`);
-        // Skip repair to save time - just retry with a new generation
         throw e;
       }
 
@@ -187,7 +146,7 @@ export async function generateOneQuestion(topic: string, subTopic: string, examP
       if (error.message && error.message.includes("API key is missing")) throw error;
 
       if (attempt < maxRetries) {
-        await delay(300); // Reduced from 500ms to 300ms for faster retries
+        await delay(1000); // Increased delay for experimental model
       }
     }
   }
@@ -195,8 +154,128 @@ export async function generateOneQuestion(topic: string, subTopic: string, examP
   throw new Error(`Failed to generate question after ${maxRetries} attempts: ${lastError?.message}`);
 }
 
-const limit = pLimit(3);
+export async function generateQuestionsBatch(
+  topic: string,
+  subTopic: string,
+  examProfile: string,
+  count: number,
+  difficulty: 'Easy' | 'Medium' | 'Hard' = 'Medium'
+): Promise<QuestionItem[]> {
+  const spec = { exam: examProfile, topic, subtopic: subTopic, difficulty };
 
+  const batchPrompt = `
+Generate EXACTLY ${count} unique practice questions for:
+- Exam Profile: ${spec.exam}
+- Topic: ${spec.topic}
+- Subtopic: ${spec.subtopic}
+- Difficulty Level: ${spec.difficulty}
+
+CRITICAL: You must return a JSON ARRAY containing ${count} question objects.
+Format: [question1, question2, question3, ...]
+
+DO NOT return a single object. DO NOT wrap in any other structure.
+`;
+
+  const BATCH_SYSTEM_INSTRUCTION = `
+You are an expert exam question generator.
+Your task is to generate EXACTLY ${count} practice questions and return them as a JSON ARRAY.
+
+Each item in the array must match this schema:
+${SCHEMA_HINT}
+
+CRITICAL REQUIREMENTS:
+- Output MUST be a JSON Array: [item1, item2, item3, ...]
+- Array MUST contain EXACTLY ${count} question objects
+- DO NOT return a single object
+- DO NOT wrap the array in any other structure
+- Make each question unique and different from the others
+`.trim();
+
+  const maxRetries = 3;
+  let lastError: any;
+
+  console.log("[DEBUG] Batch generation request:", { count, topic, subTopic, examProfile, difficulty });
+
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      const ai = getAiClient();
+      const res = await ai.models.generateContent({
+        model: 'gemini-2.0-flash-exp',
+        contents: batchPrompt,
+        config: {
+          systemInstruction: BATCH_SYSTEM_INSTRUCTION,
+          responseMimeType: "application/json",
+          temperature: 0.4,
+        },
+      });
+
+      const raw = res.text || "[]";
+      console.log("[DEBUG] Raw Gemini Response (first 500 chars):", raw.substring(0, 500));
+
+      const jsonStr = tryExtractJson(raw) ?? raw;
+      let parsed = JSON.parse(jsonStr);
+
+      // Fallback: Handle various response formats
+      if (!Array.isArray(parsed)) {
+        console.log("[DEBUG] Response is not an array. Type:", typeof parsed);
+        console.log("[DEBUG] Response keys:", Object.keys(parsed || {}));
+
+        // Check if it's wrapped in a 'questions' key
+        if (parsed && typeof parsed === 'object' && Array.isArray(parsed.questions)) {
+          console.log("[DEBUG] Found 'questions' array in response, extracting it");
+          parsed = parsed.questions;
+        }
+        // Check if it's a single question object - wrap it in array
+        else if (parsed && typeof parsed === 'object' &&
+          parsed.questionText && parsed.options &&
+          typeof parsed.correctOptionIndex === 'number') {
+          console.log("[DEBUG] Response is a single question object, wrapping in array");
+          parsed = [parsed];
+        } else {
+          console.error("[DEBUG] Parsed response structure:", JSON.stringify(parsed).substring(0, 200));
+          throw new Error("AI returned non-array response for batch generation");
+        }
+      }
+
+      console.log("[DEBUG] Successfully parsed array with", parsed.length, "items");
+
+      // Validate all items
+      const validQuestions: QuestionItem[] = [];
+      for (const item of parsed) {
+        try {
+          const checked = QuestionSchema.parse(item);
+          validQuestions.push(checked);
+        } catch (e) {
+          log.warn('[batch] Skipping invalid question in batch:', e);
+        }
+      }
+
+      if (validQuestions.length === 0) {
+        throw new Error("No valid questions found in batch response");
+      }
+
+      return validQuestions;
+
+    } catch (error: any) {
+      lastError = error;
+      log.warn(`[gemini] Batch generation attempt ${attempt} failed:`, error.message);
+
+      // If it's a quota error, wait longer
+      const isQuota = error.message?.includes('429') || error.message?.includes('RESOURCE_EXHAUSTED');
+      const waitTime = isQuota ? attempt * 2000 : 1000; // 2s, 4s, 6s for quota
+
+      if (attempt < maxRetries) {
+        console.log(`[gemini] Retrying in ${waitTime}ms...`);
+        await delay(waitTime);
+      }
+    }
+  }
+
+  log.error('[gemini] Batch generation failed after retries:', lastError?.message);
+  throw lastError;
+}
+
+// Deprecated: Use generateQuestionsBatch for multiple
 export async function generateBatch(
   topic: string,
   subTopic: string,
@@ -204,22 +283,115 @@ export async function generateBatch(
   count: number,
   difficulty: 'Easy' | 'Medium' | 'Hard' = 'Medium'
 ): Promise<{ success: QuestionItem[], failed: number }> {
-  const promises = Array.from({ length: count }).map(() =>
-    limit(() => generateOneQuestion(topic, subTopic, examProfile, difficulty)
-      .catch(err => {
-        log.warn('[batch] Individual generation failed:', err.message);
-        return null;
-      })
-    )
-  );
-
-  const results = await Promise.all(promises);
-  const success = results.filter((r): r is QuestionItem => r !== null);
-
-  return {
-    success,
-    failed: count - success.length
-  };
+  try {
+    const questions = await generateQuestionsBatch(topic, subTopic, examProfile, count, difficulty);
+    return { success: questions, failed: count - questions.length };
+  } catch (error) {
+    return { success: [], failed: count };
+  }
 }
 
 export const generateQuestionAndSolutions = generateOneQuestion;
+
+/**
+ * Generate AI-powered study tips based on user performance data
+ */
+export async function generateAITips(performanceData: {
+  totalAttempts: number;
+  accuracy: number;
+  avgTimeMs: number;
+  weakestSubtopics: Array<{ subtopic: string; accuracy: number }>;
+  distractors: Array<{ subtopic: string; wrong_answer_text: string; choice_count: number }>;
+}): Promise<string[]> {
+
+  // Analyze patterns for better tips
+  const isLowAccuracy = performanceData.accuracy < 70;
+  const isSlow = performanceData.avgTimeMs > 60000; // > 60 seconds
+  const isFast = performanceData.avgTimeMs < 20000; // < 20 seconds
+  const hasWeakAreas = performanceData.weakestSubtopics.length > 0;
+  const hasManyAttempts = performanceData.totalAttempts > 50;
+
+  const prompt = `
+You are an expert learning coach analyzing a student's performance data to provide highly specific, actionable study tips.
+
+PERFORMANCE METRICS:
+- Total Questions: ${performanceData.totalAttempts}
+- Overall Accuracy: ${performanceData.accuracy.toFixed(1)}%
+- Average Response Time: ${Math.round(performanceData.avgTimeMs / 1000)}s per question
+
+WEAK AREAS (Lowest Accuracy):
+${performanceData.weakestSubtopics.length > 0
+      ? performanceData.weakestSubtopics.map(w => `- ${w.subtopic}: ${w.accuracy.toFixed(1)}% accuracy`).join('\n')
+      : '- No weak areas identified yet'}
+
+COMMON TRAPS (Most Clicked Wrong Answers):
+${performanceData.distractors.length > 0
+      ? performanceData.distractors.slice(0, 3).map(d => `- "${d.wrong_answer_text}" in ${d.subtopic} (clicked ${d.choice_count}x)`).join('\n')
+      : '- No distractor patterns identified yet'}
+
+BEHAVIORAL PATTERNS DETECTED:
+${isLowAccuracy ? '⚠️ Accuracy below 70% - focus on concept clarity before speed' : ''}
+${isSlow ? '⚠️ Slow response time - may indicate overthinking or weak fundamentals' : ''}
+${isFast && isLowAccuracy ? '⚠️ Fast but inaccurate - rushing through questions' : ''}
+${hasManyAttempts && !hasWeakAreas ? '✅ Consistent performance across topics' : ''}
+
+YOUR TASK:
+Generate 4-5 HIGHLY SPECIFIC, ACTIONABLE study tips tailored to THIS student's exact performance patterns.
+
+REQUIREMENTS:
+1. Be SPECIFIC - reference actual subtopics, accuracy percentages, or patterns from the data
+2. Be ACTIONABLE - tell them exactly what to DO (e.g., "Practice 10 more X questions", "Review Y concept")
+3. Be CONCISE - max 20 words per tip
+4. PRIORITIZE based on what will have the biggest impact
+5. If they're doing well in an area, acknowledge it briefly
+
+BAD EXAMPLE (too generic):
+- "Keep practicing"
+- "Review your mistakes"
+
+GOOD EXAMPLES (specific & actionable):
+- "Focus on ${performanceData.weakestSubtopics[0]?.subtopic || 'weak topics'} - do 15 targeted practice problems"
+${performanceData.distractors[0] ? `- "You keep picking '${performanceData.distractors[0].wrong_answer_text.substring(0, 30)}...' - review why this is wrong"` : ''}
+${isSlow ? '- "Reduce thinking time to 45s - practice mental math shortcuts"' : ''}
+${isFast && isLowAccuracy ? '- "Slow down and read each option carefully before answering"' : ''}
+
+Return ONLY a JSON array of tip strings, no other text.
+Example: ["Tip 1", "Tip 2", "Tip 3", "Tip 4"]
+`;
+
+  try {
+    const ai = getAiClient();
+    const res = await ai.models.generateContent({
+      model: 'gemini-2.0-flash-exp',
+      contents: prompt,
+      config: {
+        responseMimeType: "application/json",
+        temperature: 0.8,
+      },
+    });
+
+    const raw = res.text || "[]";
+    const parsed = JSON.parse(raw);
+
+    if (Array.isArray(parsed) && parsed.length > 0) {
+      return parsed.slice(0, 5); // Max 5 tips
+    }
+
+    // Fallback with some context
+    return [
+      `Focus on ${performanceData.weakestSubtopics[0]?.subtopic || 'your weak areas'} - practice more`,
+      `Current accuracy: ${performanceData.accuracy.toFixed(0)}% - aim for 80%+`,
+      "Review explanations carefully after each wrong answer",
+      performanceData.totalAttempts < 20 ? "Keep practicing to build momentum!" : "Great progress! Stay consistent"
+    ];
+  } catch (error: any) {
+    log.error('[gemini] Failed to generate tips:', error.message);
+    // Context-aware fallbacks
+    return [
+      performanceData.accuracy < 70 ? "Focus on understanding concepts before speed" : "Maintain your strong accuracy!",
+      performanceData.weakestSubtopics[0] ? `Practice more ${performanceData.weakestSubtopics[0].subtopic} questions` : "Review your mistakes",
+      performanceData.avgTimeMs > 60000 ? "Work on faster problem-solving" : "Keep up your good pace!",
+      "Take notes on concepts you get wrong"
+    ];
+  }
+}

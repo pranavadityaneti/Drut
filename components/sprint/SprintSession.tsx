@@ -6,6 +6,7 @@ import { createSprintSession, saveSprintAttempt, finalizeSprintSession, calculat
 import { Button } from '../ui/Button';
 import { Card, CardContent } from '../ui/Card';
 import { log } from '../../lib/log';
+import { EXAM_SPECIFIC_TOPICS } from '../../constants';
 
 interface SprintSessionProps {
     config: {
@@ -77,12 +78,37 @@ export const SprintSession: React.FC<SprintSessionProps> = ({ config, onExit }) 
         fetchingRef.current = true;
 
         try {
+            let targetTopic = config.topic;
+            let targetSubtopic = config.subtopic;
+
+            // Handle Mixed mode: Pick a random topic/subtopic
+            if (config.topic === 'Mixed') {
+                // Normalize profile key to lowercase to match constants
+                const profileKey = config.examProfile.toLowerCase();
+                const examTopics = EXAM_SPECIFIC_TOPICS[profileKey];
+
+                if (examTopics && examTopics.length > 0) {
+                    const randomTopicObj = examTopics[Math.floor(Math.random() * examTopics.length)];
+                    targetTopic = randomTopicObj.value;
+                    const subtopics = randomTopicObj.subTopics;
+                    if (subtopics && subtopics.length > 0) {
+                        targetSubtopic = subtopics[Math.floor(Math.random() * subtopics.length)];
+                    }
+                    console.log(`[Sprint] Selected random topic: ${targetTopic}, subtopic: ${targetSubtopic}`);
+                } else {
+                    console.warn(`[Sprint] No topics found for profile: ${config.examProfile} (key: ${profileKey})`);
+                    // Fallback to a generic topic if possible, or keep 'Mixed' which might fail generation
+                }
+            }
+
+            console.log(`[Sprint] Loading questions for: ${config.examProfile}, ${targetTopic}, ${targetSubtopic}`);
+
             const { questions: newQuestions } = await getQuestionsForUser(
                 userId,
                 config.examProfile,
-                config.topic,
-                config.subtopic,
-                10, // Load 10 at a time
+                targetTopic,
+                targetSubtopic,
+                5, // Load fewer to mix more often
                 'Medium'
             );
 
@@ -157,6 +183,7 @@ export const SprintSession: React.FC<SprintSessionProps> = ({ config, onExit }) 
             scoreEarned: score,
             inputMethod: 'click',
             questionData: question,
+            selectedOptionIndex: optionIndex,
         };
 
         if (sessionData.sessionId) {
@@ -199,6 +226,7 @@ export const SprintSession: React.FC<SprintSessionProps> = ({ config, onExit }) 
             scoreEarned: 0,
             inputMethod: method === 'timeout' ? 'timeout' : 'click',
             questionData: question,
+            selectedOptionIndex: undefined,
         };
 
         if (sessionData.sessionId) {
@@ -308,12 +336,12 @@ export const SprintSession: React.FC<SprintSessionProps> = ({ config, onExit }) 
                                 onClick={() => handleAnswer(idx)}
                                 disabled={showFeedback}
                                 className={`p-4 text-left border-2 rounded-lg transition-all ${showFeedback && selectedOption === idx
-                                        ? feedbackType === 'correct'
-                                            ? 'border-green-500 bg-green-50'
-                                            : 'border-red-500 bg-red-50'
-                                        : showFeedback && idx === currentQuestion.correctOptionIndex
-                                            ? 'border-green-500 bg-green-50'
-                                            : 'border-gray-300 hover:border-primary hover:bg-accent'
+                                    ? feedbackType === 'correct'
+                                        ? 'border-green-500 bg-green-50'
+                                        : 'border-red-500 bg-red-50'
+                                    : showFeedback && idx === currentQuestion.correctOptionIndex
+                                        ? 'border-green-500 bg-green-50'
+                                        : 'border-gray-300 hover:border-primary hover:bg-accent'
                                     } ${showFeedback ? 'cursor-not-allowed' : 'cursor-pointer'}`}
                             >
                                 <span className="font-medium mr-2">{String.fromCharCode(65 + idx)}.</span>

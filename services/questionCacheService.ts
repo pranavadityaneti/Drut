@@ -1,6 +1,6 @@
 import { supabase } from '../lib/supabase';
 import { QuestionItem } from '../lib/ai/schema';
-import { generateOneQuestion } from './geminiService';
+import { generateOneQuestion, generateQuestionsBatch } from './vertexBackendService';
 import { log } from '../lib/log';
 
 export interface CachedQuestion {
@@ -74,17 +74,26 @@ export async function getQuestionsForUser(
     const needed = count - questions.length;
     console.log(`[DEBUG] Need to generate ${needed} questions`);
 
+    let generationError: Error | null = null;
+
     if (needed > 0) {
       log.info(`[cache] Need to generate ${needed} new questions`);
 
-      for (let i = 0; i < needed; i++) {
-        try {
-          console.log(`[DEBUG] Generating question ${i + 1}/${needed}...`);
+      try {
+        console.log(`[DEBUG] Generating batch of ${needed} questions...`);
 
-          // Generate new question
-          const newQuestion = await generateOneQuestion(topic, subtopic, examProfile, difficulty);
-          console.log(`[DEBUG] Question ${i + 1} generated successfully`);
+        // Generate batch - 1 API call
+        const generatedBatch = await generateQuestionsBatch(
+          topic,
+          subtopic,
+          examProfile,
+          needed,
+          difficulty
+        );
 
+        console.log(`[DEBUG] Batch generation successful. Got ${generatedBatch.length} questions.`);
+
+        for (const newQuestion of generatedBatch) {
           // Save to cache
           const cachedId = await cacheQuestion(
             userId,
@@ -103,32 +112,31 @@ export async function getQuestionsForUser(
           if (cachedId) {
             await markQuestionsSeen(userId, [cachedId]);
           }
+        }
 
-          // Rate limiting: small delay between generations
-          if (i < needed - 1) {
-            await delay(1000); // 1 second between questions
-          }
-        } catch (err: any) {
-          console.error(`[DEBUG] Generation ${i + 1} failed:`, err);
-          log.error('[cache] Generation failed:', err.message);
+      } catch (err: any) {
+        generationError = err;
+        console.error(`[DEBUG] Batch generation failed:`, err);
+        log.error('[cache] Batch generation failed:', err.message);
 
-          // If quota exceeded, stop trying and return what we have
-          if (err.message?.includes('QUOTA_EXCEEDED') ||
-            err.message?.includes('429') ||
-            err.message?.includes('RESOURCE_EXHAUSTED')) {
-            console.warn('[DEBUG] Quota exceeded, stopping generation');
-            log.warn('[cache] Quota exceeded, returning partial results');
-            break;
-          }
-
-          // Re-throw other errors to stop the loop
-          throw err;
+        // If quota exceeded, we can't do much else
+        if (err.message?.includes('QUOTA_EXCEEDED') ||
+          err.message?.includes('429') ||
+          err.message?.includes('RESOURCE_EXHAUSTED')) {
+          console.warn('[DEBUG] Quota exceeded during batch generation');
         }
       }
     }
 
     console.log(`[DEBUG] Returning ${questions.length} total questions`);
     log.info(`[cache] Returning ${questions.length} questions (${metadata.cached} cached, ${metadata.generated} generated)`);
+
+    if (questions.length === 0) {
+      log.error('[cache] Failed to load any questions');
+      const msg = generationError ? generationError.message : 'No questions available. Please try again later.';
+      throw new Error(msg);
+    }
+
     return { questions, metadata };
 
   } catch (error: any) {
@@ -167,13 +175,16 @@ async function cacheQuestion(
       .single();
 
     if (error) {
+      console.error('[DEBUG] Failed to cache question:', error);
       log.warn('[cache] Failed to cache question:', error);
       return null;
     }
 
+    console.log(`[DEBUG] Cached question ${questionId} with DB ID ${data?.id}`);
     log.info(`[cache] Cached question ${questionId}`);
     return data?.id || null;
   } catch (error) {
+    console.error('[DEBUG] Exception caching question:', error);
     log.warn('[cache] Exception caching question:', error);
     return null;
   }
@@ -183,6 +194,9 @@ async function cacheQuestion(
  * Mark questions as seen by a user
  */
 async function markQuestionsSeen(userId: string, questionIds: string[]): Promise<void> {
+  if (!questionIds || questionIds.length === 0) return;
+
+  console.log(`[DEBUG] Marking ${questionIds.length} questions as seen for user ${userId}`);
   try {
     const { data, error } = await supabase.rpc('mark_questions_seen', {
       p_user_id: userId,
@@ -190,12 +204,15 @@ async function markQuestionsSeen(userId: string, questionIds: string[]): Promise
     });
 
     if (error) {
+      console.error('[DEBUG] Failed to mark questions as seen:', error);
       log.warn('[cache] Failed to mark questions as seen:', error);
       return;
     }
 
+    console.log(`[DEBUG] Successfully marked ${data} questions as seen`);
     log.info(`[cache] Marked ${data || questionIds.length} questions as seen for user`);
   } catch (error) {
+    console.error('[DEBUG] Exception marking questions seen:', error);
     log.warn('[cache] Exception marking questions seen:', error);
   }
 }

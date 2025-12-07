@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Drut — Train to answer fast. Win time on exam day. Practice real exam questions with proven, repeatable speed methods.">
+    <title>Drut — Train to answer fast. Win time on exam day.</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <img src="assets/logo.png" alt="Drut" class="logo">
+                <div class="nav-links">
+                    <a href="#how-it-works" class="nav-link">How It Works</a>
+                    <a href="#sprint-mode" class="nav-link">Features</a>
+                    <a href="#waitlist-1" class="nav-link">Join Waitlist</a>
+                </div>
+                <button class="btn btn-primary btn-header" onclick="scrollToWaitlist()">Join for Free →</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Drut — Train to answer fast. Win time on exam day.</h1>
+                    <p class="subheadline">Practice real exam questions. Learn the fastest safe method for each problem
+                        — proven, repeatable, and measurable.</p>
+                    <div class="cta-group">
+                        <button class="btn btn-primary" onclick="scrollToWaitlist()">Join the waitlist — free</button>
+                        <a href="#sprint-mode" class="btn btn-secondary">See Sprint Mode →</a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="assets/hero.png" alt="Person studying for exams">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why This Section -->
+    <section class="why-this">
+        <div class="container">
+            <div class="benefits">
+                <div class="benefit">
+                    <div class="benefit-icon">⚡</div>
+                    <p>Reduce time-per-question by practicing exam-style speed patterns.</p>
+                </div>
+                <div class="benefit">
+                    <div class="benefit-icon">🎯</div>
+                    <p>Fastest Safe Method cards: crisp, vetted shortcuts (no unsafe tricks).</p>
+                </div>
+                <div class="benefit">
+                    <div class="benefit-icon">📊</div>
+                    <p>Data-backed analytics to track your speed gains.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Waitlist Form #1 -->
+    <section class="waitlist-section" id="waitlist-1">
+        <div class="container">
+            <div class="waitlist-card">
+                <h2>Join the Waitlist</h2>
+                <p class="waitlist-description">We'll email first 500 for private beta. No spam.</p>
+                <form class="waitlist-form" id="waitlistForm1">
+                    <div class="form-row">
+                        <input type="text" name="name" placeholder="Name (optional)" class="form-input">
+                        <input type="email" name="email" placeholder="Email *" class="form-input" required>
+                    </div>
+                    <div class="form-row">
+                        <select name="exam" class="form-input" required>
+                            <option value="">Select exam of interest *</option>
+                            <option value="SAT">SAT</option>
+                            <option value="ACT">ACT</option>
+                            <option value="GMAT">GMAT</option>
+                            <option value="GRE">GRE</option>
+                            <option value="NEET">NEET</option>
+                            <option value="JEE">JEE</option>
+                            <option value="Eamcet">Eamcet</option>
+                            <option value="AIEEE">AIEEE</option>
+                        </select>
+                    </div>
+                    <div class="form-checkbox">
+                        <input type="checkbox" name="beta_access" id="betaAccess1">
+                        <label for="betaAccess1">I want beta access</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Join Waitlist</button>
+                    <div class="form-message"></div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works">
+        <div class="container">
+            <h2>How it works</h2>
+            <p class="section-subtitle">Get started in 3 simple steps</p>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <img src="assets/step-1.png" alt="Pick an exam & topic" class="step-image">
+                    <h3>Pick an exam & topic →</h3>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <img src="assets/step-2.png" alt="Answer questions in Sprint or Practice mode" class="step-image">
+                    <h3>Answer questions in Sprint or Practice mode →</h3>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <img src="assets/step-3.png" alt="Get the Fastest Safe Method & track speed gains"
+                        class="step-image">
+                    <h3>Get the Fastest Safe Method + deep solution; track speed gains.</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Core Features Section -->
+    <section class="features" id="sprint-mode">
+        <div class="container">
+            <h2>Core Features</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Fastest Safe Method</h3>
+                    <p>Master the quickest, safest approach to solve each problem type.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📖</div>
+                    <h3>Full Explanation</h3>
+                    <p>Step-by-step, teachable solution for deep understanding.</p>
+                </div>
+                <div class="feature-card highlight">
+                    <div class="feature-icon">🏃</div>
+                    <h3>Sprint Mode</h3>
+                    <p>Timed streak practice (45s default) to build exam-day speed.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📈</div>
+                    <h3>Progress Analytics</h3>
+                    <p>See speed & accuracy improve with data-backed insights.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Validation / Trust Section -->
+    <section class="trust">
+        <div class="container">
+            <p class="trust-statement">We seed with content curated from past exam papers.</p>
+            <div class="trust-badges">
+                <div class="badge">✓ SME-Reviewed</div>
+                <div class="badge">✓ No unsafe shortcuts</div>
+                <div class="badge">✓ Privacy-friendly</div>
+            </div>
+            <div class="testimonials">
+                <div class="testimonial">
+                    <p class="testimonial-text">"Coming soon — real user testimonials"</p>
+                    <p class="testimonial-author">— Early Beta User</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Waitlist Form #2 -->
+    <section class="waitlist-section" id="waitlist-2">
+        <div class="container">
+            <div class="waitlist-card">
+                <h2>Ready to get started?</h2>
+                <p class="waitlist-description">We'll email first 500 for private beta. No spam.</p>
+                <form class="waitlist-form" id="waitlistForm2">
+                    <div class="form-row">
+                        <input type="text" name="name" placeholder="Name (optional)" class="form-input">
+                        <input type="email" name="email" placeholder="Email *" class="form-input" required>
+                    </div>
+                    <div class="form-row">
+                        <select name="exam" class="form-input" required>
+                            <option value="">Select exam of interest *</option>
+                            <option value="SAT">SAT</option>
+                            <option value="ACT">ACT</option>
+                            <option value="GMAT">GMAT</option>
+                            <option value="GRE">GRE</option>
+                            <option value="NEET">NEET</option>
+                            <option value="JEE">JEE</option>
+                            <option value="Eamcet">Eamcet</option>
+                            <option value="AIEEE">AIEEE</option>
+                        </select>
+                    </div>
+                    <div class="form-checkbox">
+                        <input type="checkbox" name="beta_access" id="betaAccess2">
+                        <label for="betaAccess2">I want beta access</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-full">Join Waitlist</button>
+                    <div class="form-message"></div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p class="privacy-note">We store emails to invite to beta. You can unsubscribe anytime.</p>
+            <div class="footer-links">
+                <a href="#privacy">Privacy</a>
+                <a href="mailto:contact@drut.com">Contact</a>
+                <a href="https://github.com/drut" target="_blank">GitHub</a>
+            </div>
+            <p class="copyright">© 2025 Drut. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script type="module" src="script.js"></script>
+</body>
+
+</html>

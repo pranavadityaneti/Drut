@@ -9,6 +9,7 @@ export interface SprintAttempt {
     scoreEarned: number;
     inputMethod: 'tap' | 'click' | 'swipe' | 'keyboard_s' | 'timeout';
     questionData: QuestionData;
+    selectedOptionIndex?: number;
 }
 
 export interface SprintSessionData {
@@ -99,6 +100,7 @@ export async function saveSprintAttempt(
                 score_earned: attempt.scoreEarned,
                 input_method: attempt.inputMethod,
                 question_data: attempt.questionData,
+                selected_option_index: attempt.selectedOptionIndex,
             });
 
         if (error) throw error;

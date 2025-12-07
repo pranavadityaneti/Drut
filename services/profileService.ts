@@ -16,6 +16,16 @@ export const uploadAvatar = async (file: File): Promise<string> => {
         throw new Error("User not authenticated");
     }
 
+    // Validate file size (max 1MB)
+    if (file.size > 1024 * 1024) {
+        throw new Error("File size must be less than 1MB");
+    }
+
+    // Validate file type
+    if (!file.type.match(/^image\/(png|jpeg|jpg)$/)) {
+        throw new Error("Only PNG and JPG images are allowed");
+    }
+
     const fileExt = file.name.split('.').pop();
     const filePath = `${user.id}.${fileExt}`;
 
@@ -25,12 +35,23 @@ export const uploadAvatar = async (file: File): Promise<string> => {
 
     if (uploadError) {
         log.error('[profile] avatar upload failed', uploadError);
-        // The user-facing error message from Supabase storage can be cryptic.
-        // We can check for a common setup issue and provide a more helpful message.
-        if (uploadError.message === 'Bucket not found') {
-             throw new Error("Could not upload avatar. The 'avatars' storage bucket is missing. Please check the setup instructions in README.md.");
+
+        // Provide helpful error messages based on error type
+        if (uploadError.message === 'Bucket not found' || uploadError.message.includes('not found')) {
+            throw new Error(
+                "Could not upload avatar. The 'avatars' storage bucket needs to be created in Supabase. " +
+                "Please go to Supabase Dashboard → Storage → Create bucket named 'avatars' (public)."
+            );
         }
-        throw new Error("Could not upload avatar.");
+
+        if (uploadError.message.includes('policy')) {
+            throw new Error(
+                "Upload permission denied. Please check that storage policies allow authenticated users to upload avatars."
+            );
+        }
+
+        // Generic error
+        throw new Error(`Could not upload avatar: ${uploadError.message}`);
     }
 
     const { data } = supabase.storage

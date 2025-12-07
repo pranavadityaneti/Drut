@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@google-cloud/vertexai": "^1.10.0",
     "@google/genai": "^1.30.0",
     "@monaco-editor/react": "^4.6.0",
     "@playwright/test": "^1.56.1",

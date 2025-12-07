@@ -392,7 +392,8 @@ export const Practice: React.FC<{}> = () => {
       await savePerformance(
         selectedOption === questionData.correctOptionIndex,
         currentQuestionWithId.id,
-        timeTaken * 1000
+        timeTaken * 1000,
+        selectedOption
       );
     } catch (error: any) {
       log.error('Save performance error:', JSON.stringify(error, null, 2));

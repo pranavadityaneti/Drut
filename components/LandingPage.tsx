@@ -1,243 +1,247 @@
 import React from 'react';
 import { Button } from './ui/Button';
-import { AppleIcon, BoltIcon, BrainCircuitIcon, DrutIcon, PlayCircleIcon, PlayStoreIcon, ShieldCheckIcon, StarIcon } from './icons/Icons';
+import { AppleIcon, BoltIcon, BrainCircuitIcon, DrutIcon, PlayCircleIcon, ShieldCheckIcon, StarIcon } from './icons/Icons';
 import { EXAM_PROFILES } from '../constants';
 
 interface LandingPageProps {
   onGetStarted: () => void;
 }
 
+// --- Components ---
+
+const Badge: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+  <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-700 mb-6">
+    {children}
+  </span>
+);
+
+const GradientText: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+  <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-500">
+    {children}
+  </span>
+);
+
+// --- Sections ---
+
 const LandingHeader: React.FC<LandingPageProps> = ({ onGetStarted }) => (
-  <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-sm border-b border-gray-200">
-    <div className="container mx-auto px-6 py-4 flex justify-between items-center">
+  <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
+    <div className="container mx-auto px-6 h-20 flex justify-between items-center">
       <div className="flex items-center gap-2">
-        <DrutIcon className="h-8 w-8 text-pay-green-dark" />
-        <span className="font-bold text-xl text-pay-black">Drut</span>
+        <div className="bg-purple-600 p-1.5 rounded-lg">
+          <DrutIcon className="h-6 w-6 text-white" />
+        </div>
+        <span className="font-bold text-xl text-gray-900 tracking-tight">Drut</span>
       </div>
-      <div className='hidden md:flex items-center gap-2'>
-        <Button onClick={onGetStarted} variant='ghost' className="text-pay-gray font-bold">
-            Sign In
+
+      <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-600">
+        <a href="#features" className="hover:text-purple-600 transition-colors">Features</a>
+        <a href="#exams" className="hover:text-purple-600 transition-colors">Exams</a>
+        <a href="#pricing" className="hover:text-purple-600 transition-colors">Pricing</a>
+        <a href="#blog" className="hover:text-purple-600 transition-colors">Blog</a>
+      </nav>
+
+      <div className="flex items-center gap-4">
+        <Button onClick={onGetStarted} variant='ghost' className="hidden md:flex text-gray-600 font-semibold hover:text-purple-600">
+          Sign In
         </Button>
-        <Button onClick={onGetStarted} className="bg-pay-black text-white hover:bg-pay-black/90 items-center gap-2 px-5 py-2.5 rounded-full">
-            <span>Get Started</span>
+        <Button onClick={onGetStarted} className="bg-purple-600 text-white hover:bg-purple-700 px-6 py-2.5 rounded-full font-semibold shadow-lg shadow-purple-200 transition-all hover:scale-105">
+          Get Started
         </Button>
       </div>
-       <Button onClick={onGetStarted} variant="ghost" size="sm" className="md:hidden">
-        Sign In
-      </Button>
     </div>
   </header>
 );
 
 const HeroSection: React.FC<LandingPageProps> = ({ onGetStarted }) => (
-  <section className="relative container mx-auto px-6 pt-24 pb-12 md:pt-32 md:pb-20 text-center overflow-hidden">
-     <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[120%] bg-white"
-        style={{
-            backgroundImage: 'radial-gradient(rgb(229 231 235 / 0.5) 1px, transparent 1px)',
-            backgroundSize: '20px 20px',
-            zIndex: -1,
-        }}>
-    </div>
-    <div className="inline-block bg-pay-green-light text-pay-green-dark font-semibold px-4 py-1 rounded-full text-sm mb-4">
-      AI-POWERED, PERSONALIZED, EFFECTIVE
-    </div>
-    <h1 className="text-4xl md:text-6xl font-extrabold text-pay-black max-w-4xl mx-auto leading-tight">
-      Master Your Competitive Exams with AI-Powered Practice
-    </h1>
-    <p className="max-w-2xl mx-auto mt-6 text-lg text-pay-gray">
-      The smartest way to prepare for CAT, JEE Main, and EAMCET. Get personalized questions, detailed solutions, and performance analytics to conquer your goals.
-    </p>
-    <div className="mt-8 flex justify-center items-center gap-4">
-      <Button onClick={onGetStarted} size="default" className="bg-pay-green-medium text-pay-green-dark font-bold hover:bg-pay-green-medium/90 items-center gap-2 px-6 h-12 rounded-full text-base">
-        <span>Get Started Free</span>
-      </Button>
-      <Button variant="ghost" className="items-center gap-2 text-pay-gray font-bold h-12 rounded-full text-base">
-        <PlayCircleIcon className="h-6 w-6" />
-        <span>Watch Demo</span>
-      </Button>
-    </div>
-    <div className="mt-6 flex justify-center items-center gap-2">
-        <div className="flex -space-x-2">
-            <img className="inline-block h-8 w-8 rounded-full ring-2 ring-white" src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
-            <img className="inline-block h-8 w-8 rounded-full ring-2 ring-white" src="https://images.unsplash.com/photo-1550525811-e586910b323f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
-            <img className="inline-block h-8 w-8 rounded-full ring-2 ring-white" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
+  <section className="relative pt-20 pb-32 overflow-hidden">
+    {/* Background Blobs */}
+    <div className="absolute top-0 right-0 -translate-y-1/4 translate-x-1/4 w-[800px] h-[800px] bg-purple-100/50 rounded-full blur-3xl -z-10" />
+    <div className="absolute bottom-0 left-0 translate-y-1/4 -translate-x-1/4 w-[600px] h-[600px] bg-pink-100/50 rounded-full blur-3xl -z-10" />
+
+    <div className="container mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center">
+      {/* Left Content */}
+      <div className="max-w-2xl">
+        <Badge>#1 AI Exam Prep</Badge>
+        <h1 className="text-5xl md:text-7xl font-extrabold text-gray-900 leading-[1.1] mb-6">
+          Grow your <GradientText>exam score</GradientText> with AI.
+        </h1>
+        <p className="text-lg text-gray-600 mb-8 leading-relaxed max-w-lg">
+          The right tool to help you reach your dream college. Personalized practice, smart analytics, and instant feedback for CAT, JEE, and EAMCET.
+        </p>
+        <div className="flex flex-wrap items-center gap-4">
+          <Button onClick={onGetStarted} className="h-14 px-8 rounded-full bg-purple-600 text-white font-bold text-lg shadow-xl shadow-purple-200 hover:bg-purple-700 transition-transform hover:-translate-y-1">
+            Get Started - Free Try
+          </Button>
+          <Button variant="ghost" className="h-14 px-8 rounded-full text-gray-600 font-semibold hover:bg-purple-50">
+            <PlayCircleIcon className="h-5 w-5 mr-2" />
+            Watch Demo
+          </Button>
         </div>
-        <span className="text-sm text-pay-gray font-medium">Trusted by 3k+ Aspirants Globally</span>
-    </div>
-    <div className="relative mt-12 h-[400px] md:h-[500px]">
-        <div className="absolute inset-0 flex items-center justify-center">
-            <svg viewBox="0 0 500 500" className="w-full h-full">
-                <circle cx="250" cy="250" r="240" fill="#D9F9E5" />
-                <path d="M250 150 a 50 50 0 1 1 0 100 a 50 50 0 1 1 0 -100" fill="#A0E6BB" />
-                <path d="M200 250 a 100 150 0 0 1 100 0 l 20 150 h -140 z" fill="#F3F4F6" />
-                <path d="M230 400 l -10 20 a 10 10 0 0 0 10 10 h 40 a 10 10 0 0 0 10 -10 l -10 -20 z" fill="#E5E7EB" />
-                 <path d="M300 300 a 30 50 0 0 1 20 40 l -10 50 h -15 l 10 -60 z" fill="#D1D5DB" />
-            </svg>
+
+        <div className="mt-12 flex items-center gap-4 text-sm font-medium text-gray-500">
+          <div className="flex -space-x-2">
+            {[1, 2, 3, 4].map(i => (
+              <div key={i} className="h-8 w-8 rounded-full bg-gray-200 border-2 border-white flex items-center justify-center text-xs overflow-hidden">
+                <img src={`https://i.pravatar.cc/100?img=${10 + i}`} alt="User" />
+              </div>
+            ))}
+          </div>
+          <p>Trusted by 10,000+ students</p>
         </div>
-        <div className="absolute top-1/2 left-[10%] md:left-[20%] -translate-y-[80%] bg-white p-3 rounded-xl shadow-lg flex items-center gap-2">
-            <BrainCircuitIcon className="h-6 w-6 text-pay-green-dark" />
-            <div>
-                <p className="text-xs text-pay-gray">Powered by</p>
-                <p className="font-bold text-sm text-pay-black">Advanced AI Engine</p>
+      </div>
+
+      {/* Right Visual (Mockup) */}
+      <div className="relative lg:h-[600px] flex items-center justify-center">
+        {/* Floating Cards Composition */}
+        <div className="relative w-full max-w-lg aspect-square">
+          {/* Main Card */}
+          <div className="absolute inset-0 bg-white rounded-3xl shadow-2xl shadow-purple-100 border border-gray-100 p-6 flex flex-col">
+            <div className="flex justify-between items-center mb-8">
+              <div>
+                <p className="text-sm text-gray-500">Total Questions</p>
+                <p className="text-3xl font-bold text-gray-900">1,248</p>
+              </div>
+              <div className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-bold">+24%</div>
             </div>
-        </div>
-        <div className="absolute top-1/2 right-[10%] md:right-[20%] translate-y-1/2 bg-white p-3 rounded-xl shadow-lg flex items-center gap-2">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-            </svg>
-            <div>
-                <p className="text-xs text-yellow-400">★★★★★</p>
-                <p className="font-bold text-sm text-pay-black">Top-rated by students</p>
+            {/* Mock Chart */}
+            <div className="flex-grow flex items-end justify-between gap-2 px-2">
+              {[40, 65, 45, 80, 55, 90, 70].map((h, i) => (
+                <div key={i} className="w-full bg-purple-100 rounded-t-lg relative group">
+                  <div className="absolute bottom-0 left-0 right-0 bg-purple-500 rounded-t-lg transition-all duration-1000" style={{ height: `${h}%` }}></div>
+                </div>
+              ))}
             </div>
-        </div>
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 bg-white p-3 rounded-xl shadow-lg w-56">
-            <p className="text-xs text-pay-gray">Daily Progress</p>
-            <p className="text-xl font-bold text-pay-black">85% Accuracy</p>
-            <div className="flex justify-between mt-2 text-xs font-medium">
-                <a href="#" className="text-blue-600">→ Practice More</a>
-                <a href="#" className="text-blue-600">⤸ View Analytics</a>
+          </div>
+
+          {/* Floating Card 1 (Top Right) */}
+          <div className="absolute -top-12 -right-12 bg-white p-4 rounded-2xl shadow-xl shadow-purple-100 border border-gray-100 w-48 animate-bounce-slow">
+            <div className="flex items-center gap-3 mb-2">
+              <div className="h-10 w-10 rounded-full bg-pink-100 flex items-center justify-center">
+                <BoltIcon className="h-5 w-5 text-pink-500" />
+              </div>
+              <div>
+                <p className="text-xs text-gray-500">Daily Streak</p>
+                <p className="text-lg font-bold text-gray-900">12 Days</p>
+              </div>
             </div>
+            <div className="h-1.5 w-full bg-gray-100 rounded-full overflow-hidden">
+              <div className="h-full bg-pink-500 w-[80%]"></div>
+            </div>
+          </div>
+
+          {/* Floating Card 2 (Bottom Left) */}
+          <div className="absolute -bottom-8 -left-8 bg-white p-4 rounded-2xl shadow-xl shadow-purple-100 border border-gray-100 w-56 animate-pulse-slow">
+            <div className="flex justify-between items-center mb-2">
+              <p className="text-xs font-bold text-gray-500">Accuracy</p>
+              <p className="text-xs font-bold text-purple-600">85%</p>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="h-2 w-full bg-gray-100 rounded-full overflow-hidden">
+                <div className="h-full bg-purple-600 w-[85%]"></div>
+              </div>
+            </div>
+            <p className="text-[10px] text-gray-400 mt-2">Top 5% of students</p>
+          </div>
         </div>
+      </div>
     </div>
   </section>
-);
-
-
-const PartnersSection: React.FC = () => (
-    <section className="py-12 bg-white">
-        <div className="container mx-auto px-6">
-            <h3 className="text-center text-sm font-bold text-pay-gray tracking-widest mb-8">
-                SUPPORTING TOP EXAMS
-            </h3>
-            <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-6">
-                {EXAM_PROFILES.map(exam => (
-                    <div key={exam.value} className="text-xl font-bold text-gray-400 tracking-wider">{exam.label.toUpperCase()}</div>
-                ))}
-            </div>
-        </div>
-    </section>
-);
-
-const FeatureCard: React.FC<{icon: React.ReactNode, title: string, description: string, onGetStarted: () => void}> = ({ icon, title, description, onGetStarted }) => (
-    <div className="bg-white p-8 rounded-3xl shadow-lg flex flex-col items-start">
-        <div className="bg-pay-green-light p-3 rounded-full mb-4">
-            {icon}
-        </div>
-        <h3 className="text-xl font-bold text-pay-black mb-2">{title}</h3>
-        <p className="text-pay-gray mb-6 flex-grow">{description}</p>
-        <Button onClick={onGetStarted} variant="ghost" className="bg-pay-green-light text-pay-green-dark font-bold hover:bg-pay-green-medium/50 items-center gap-2 px-5 py-2 rounded-full">
-            <span>Start Practicing</span>
-            <AppleIcon className="h-5 w-5" />
-        </Button>
-    </div>
 );
 
 const FeaturesSection: React.FC<LandingPageProps> = ({ onGetStarted }) => (
-  <section className="relative py-20 md:py-32 bg-[#F0FDF4]">
-      <div className="container mx-auto px-6">
-        <div className="text-center">
-            <div className="inline-block bg-pay-green-light text-pay-green-dark font-semibold px-4 py-1 rounded-full text-sm mb-4">
-                OUR METHOD
-            </div>
-            <h2 className="text-4xl md:text-5xl font-extrabold text-pay-black">
-                A Smarter Way to Prepare
-            </h2>
-        </div>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-16 max-w-6xl mx-auto">
-            <FeatureCard 
-                icon={<BrainCircuitIcon className="h-8 w-8 text-pay-green-dark" />}
-                title="Personalized Learning Path"
-                description="Our AI understands your strengths and weaknesses. Get a tailored question bank that adapts to your performance, ensuring you focus on what matters most."
-                onGetStarted={onGetStarted}
-            />
-            <FeatureCard 
-                icon={<BoltIcon className="h-8 w-8 text-pay-green-dark" />}
-                title="Instant, Detailed Solutions"
-                description="Don't just solve—understand. Get instant, step-by-step solutions and discover the 'Fastest Safe Method' to tackle complex problems efficiently."
-                onGetStarted={onGetStarted}
-            />
-            <FeatureCard 
-                icon={<ShieldCheckIcon className="h-8 w-8 text-pay-green-dark" />}
-                title="Track Your Performance"
-                description="Monitor your progress with our in-depth analytics dashboard. Track your accuracy, speed, and topic-wise performance to stay ahead of the competition."
-                onGetStarted={onGetStarted}
-            />
-        </div>
-      </div>
-  </section>
-);
-
-const WhyUsSection: React.FC = () => (
-  <section className="py-20 md:py-32 bg-gray-50">
+  <section id="features" className="py-24 bg-gray-50/50">
     <div className="container mx-auto px-6">
-      <div className="grid lg:grid-cols-2 gap-8 items-center mb-16">
-        <div>
-          <span className="text-sm font-bold bg-red-100 text-red-600 px-3 py-1.5 rounded-md">MISSION</span>
-          <h2 className="mt-4 text-4xl md:text-5xl font-bold leading-tight">
-            <span className="text-gray-500 font-medium">Our focus is simple.</span><br/>
-            <span className="text-pay-black">Learn to succeed.</span>
-          </h2>
-        </div>
-        <p className="text-lg text-pay-gray max-w-sm justify-self-start lg:justify-self-end">
-          We promise to deliver a learning experience that goes beyond your expectations.
+      <div className="text-center max-w-2xl mx-auto mb-20">
+        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          Tracking <GradientText>progress</GradientText> made simple.
+        </h2>
+        <p className="text-gray-600 text-lg">
+          Track your content's performance from one, intuitive analytics dashboard.
         </p>
       </div>
-      
-      <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
-        <div className="lg:col-span-3 grid grid-cols-1 sm:grid-cols-2 gap-6">
-          <div className="bg-white p-6 rounded-2xl shadow-sm flex items-center gap-4">
-              <div className="flex -space-x-4">
-                  <img className="inline-block h-10 w-10 rounded-full ring-2 ring-white" src="https://images.unsplash.com/photo-1550525811-e586910b323f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="Student avatar 1" />
-                  <img className="inline-block h-10 w-10 rounded-full ring-2 ring-white" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="Student avatar 2" />
-                  <img className="inline-block h-10 w-10 rounded-full ring-2 ring-white" src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="Student avatar 3" />
-              </div>
-              <p className="font-semibold text-sm text-pay-gray tracking-wider">10,000+ STUDENTS</p>
+
+      <div className="grid md:grid-cols-2 gap-8">
+        {/* Feature 1 */}
+        <div className="bg-white rounded-[2rem] p-8 shadow-xl shadow-purple-100/50 border border-gray-100 hover:shadow-2xl hover:shadow-purple-100 transition-all duration-300 group">
+          <div className="h-12 w-12 bg-purple-100 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+            <BrainCircuitIcon className="h-6 w-6 text-purple-600" />
           </div>
-          
-          <div className="bg-white p-6 rounded-2xl shadow-sm">
-              <p className="font-semibold text-pay-black">Through our custom-tailored learning paths</p>
-          </div>
-          
-          <div className="bg-white p-6 rounded-2xl shadow-sm">
-              <p className="text-pay-gray mb-4">Improve your score by at least 30 points</p>
-              <p className="text-6xl font-bold text-pay-black">90%</p>
-              <p className="text-pay-gray mt-2">Success rate in score improvement</p>
-          </div>
-          
-          <div className="bg-white p-6 rounded-2xl shadow-sm flex flex-col">
-              <div className="flex-grow">
-                <p className="text-6xl font-bold text-pay-black">1M+</p>
-                <p className="text-pay-gray mt-2">Questions Answered</p>
-              </div>
-              <div className="flex items-center gap-2 mt-4">
-                <span className="h-2 w-2 rounded-full bg-green-500"></span>
-                <p className="text-sm text-pay-gray font-medium">NEW TOPICS ADDED MONTHLY</p>
-              </div>
-          </div>
-        </div>
-        
-        <div className="lg:col-span-2 bg-pay-black text-white p-8 rounded-3xl shadow-lg flex flex-col justify-between relative overflow-hidden min-h-[400px]">
-          <svg className="absolute bottom-0 right-0 w-2/3 h-auto text-gray-700 opacity-20" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <path d="M10 80 Q 30 20, 50 50 T 90 20" stroke="currentColor" strokeWidth="5" />
-            <path d="M80 30 L 90 20 L 80 10" stroke="currentColor" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-          
-          <p className="text-lg text-gray-300 relative z-10">
-            We've helped students worldwide achieve top ranks and secure admission to elite institutions.
+          <h3 className="text-2xl font-bold text-gray-900 mb-3">Smart Question Bank</h3>
+          <p className="text-gray-600 mb-8">
+            See how well you perform against similar students. Our AI adapts to your learning style.
           </p>
-          
-          <div className="relative z-10 mt-8">
-              <p className="text-7xl font-bold">4.8<span className="text-4xl text-gray-400">/5</span></p>
-              <div className="flex items-center gap-4 mt-4">
-                  <div className="flex text-yellow-400">
-                      <StarIcon className="h-5 w-5"/>
-                      <StarIcon className="h-5 w-5"/>
-                      <StarIcon className="h-5 w-5"/>
-                      <StarIcon className="h-5 w-5"/>
-                      <StarIcon className="h-5 w-5"/>
-                  </div>
-                  <p className="text-xs font-semibold tracking-wider text-gray-400">RATING FROM OUR STUDENTS</p>
+          {/* Mockup */}
+          <div className="bg-gray-50 rounded-xl p-6 border border-gray-100">
+            <div className="flex items-center gap-4 mb-4">
+              <div className="h-8 w-8 rounded-full bg-white border border-gray-200"></div>
+              <div className="h-2 w-24 bg-gray-200 rounded-full"></div>
+            </div>
+            <div className="space-y-2">
+              <div className="h-2 w-full bg-gray-200 rounded-full"></div>
+              <div className="h-2 w-[80%] bg-gray-200 rounded-full"></div>
+            </div>
+            <div className="mt-4 flex gap-2">
+              <div className="h-8 w-20 bg-purple-600 rounded-lg"></div>
+              <div className="h-8 w-20 bg-white border border-gray-200 rounded-lg"></div>
+            </div>
+          </div>
+        </div>
+
+        {/* Feature 2 */}
+        <div className="bg-white rounded-[2rem] p-8 shadow-xl shadow-purple-100/50 border border-gray-100 hover:shadow-2xl hover:shadow-purple-100 transition-all duration-300 group">
+          <div className="h-12 w-12 bg-pink-100 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+            <ShieldCheckIcon className="h-6 w-6 text-pink-500" />
+          </div>
+          <h3 className="text-2xl font-bold text-gray-900 mb-3">Weakness Detection</h3>
+          <p className="text-gray-600 mb-8">
+            Identify your weak areas instantly. We analyze every answer to find gaps in your knowledge.
+          </p>
+          {/* Mockup */}
+          <div className="bg-gray-50 rounded-xl p-6 border border-gray-100 flex items-end justify-around h-40">
+            {[30, 50, 20, 60, 40].map((h, i) => (
+              <div key={i} className="w-8 bg-pink-200 rounded-t-md relative">
+                <div className="absolute bottom-0 w-full bg-pink-500 rounded-t-md" style={{ height: `${h}%` }}></div>
               </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Full Width Feature */}
+      <div className="mt-8 bg-white rounded-[2rem] p-8 md:p-12 shadow-xl shadow-purple-100/50 border border-gray-100 grid md:grid-cols-2 gap-12 items-center">
+        <div>
+          <div className="h-12 w-12 bg-indigo-100 rounded-xl flex items-center justify-center mb-6">
+            <BoltIcon className="h-6 w-6 text-indigo-600" />
+          </div>
+          <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
+            Surface results in <span className="text-indigo-600">real-time</span>
+          </h3>
+          <p className="text-gray-600 mb-8 text-lg">
+            Is your preparation getting better or worse? Track and manage your performance in one-click!
+          </p>
+          <Button onClick={onGetStarted} variant="ghost" className="text-indigo-600 font-bold hover:bg-indigo-50 px-6 py-3 rounded-full">
+            Explore all features →
+          </Button>
+        </div>
+        <div className="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+          <div className="flex justify-between items-center mb-6">
+            <div>
+              <p className="text-xs text-gray-500">Current Session</p>
+              <p className="text-xl font-bold text-gray-900">Sprint Mode</p>
+            </div>
+            <div className="h-8 w-8 rounded-full bg-indigo-100 flex items-center justify-center">
+              <BoltIcon className="h-4 w-4 text-indigo-600" />
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="bg-white p-4 rounded-xl shadow-sm">
+              <p className="text-xs text-gray-500">Speed</p>
+              <p className="text-lg font-bold text-gray-900">45s<span className="text-xs text-gray-400 font-normal">/q</span></p>
+            </div>
+            <div className="bg-white p-4 rounded-xl shadow-sm">
+              <p className="text-xs text-gray-500">Accuracy</p>
+              <p className="text-lg font-bold text-green-600">92%</p>
+            </div>
           </div>
         </div>
       </div>
@@ -245,104 +249,147 @@ const WhyUsSection: React.FC = () => (
   </section>
 );
 
-const CtaSection: React.FC<LandingPageProps> = ({ onGetStarted }) => (
-  <section className="bg-gray-50">
-    <div className="container mx-auto px-6 py-16">
-      <div className="bg-pay-green-dark rounded-3xl p-8 md:p-16 text-white">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div>
-            <h2 className="text-3xl md:text-4xl font-bold">Start preparing for success</h2>
-            <p className="mt-4 text-gray-300 max-w-md">
-              Sign up to get access to our AI-powered platform and receive tips, updates, and insights to help you ace your exams.
-            </p>
-          </div>
-          <form onSubmit={(e) => { e.preventDefault(); onGetStarted(); }}>
-            <label htmlFor="email-subscribe" className="block text-sm font-medium text-gray-200 mb-2">Stay up to date</label>
-            <div className="flex flex-col sm:flex-row gap-3">
-              <input 
-                type="email" 
-                id="email-subscribe"
-                placeholder="Enter your email" 
-                className="flex-grow h-12 px-4 rounded-full bg-white/10 text-white placeholder-gray-400 focus:ring-2 focus:ring-pay-green-medium focus:outline-none transition"
-                aria-label="Email for signup"
-              />
-              <Button 
-                type="submit"
-                className="bg-pay-green-medium text-pay-green-dark font-bold hover:bg-pay-green-light h-12 px-8 rounded-full text-base"
-              >
-                Get Started
-              </Button>
+const DashboardPreviewSection: React.FC = () => (
+  <section className="py-24 overflow-hidden">
+    <div className="container mx-auto px-6 text-center">
+      <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-6">
+        One <GradientText>dashboard</GradientText> for all your exams
+      </h2>
+      <p className="text-gray-600 max-w-2xl mx-auto mb-16 text-lg">
+        CAT, JEE, EAMCET — track performance for all your competitive exams from one, intuitive analytics dashboard.
+      </p>
+
+      <div className="relative max-w-5xl mx-auto">
+        {/* Dashboard Mockup Container */}
+        <div className="bg-white rounded-3xl shadow-2xl shadow-purple-200/50 border border-gray-200 p-2 md:p-4">
+          <div className="bg-gray-50 rounded-2xl overflow-hidden aspect-[16/9] relative flex">
+            {/* Sidebar Mock */}
+            <div className="w-16 md:w-64 bg-white border-r border-gray-200 hidden md:flex flex-col p-6 gap-6">
+              <div className="h-8 w-24 bg-gray-200 rounded-md mb-4"></div>
+              <div className="space-y-3">
+                <div className="h-4 w-full bg-purple-100 rounded-md"></div>
+                <div className="h-4 w-[80%] bg-gray-100 rounded-md"></div>
+                <div className="h-4 w-[90%] bg-gray-100 rounded-md"></div>
+              </div>
             </div>
-            <p className="text-xs text-gray-400 mt-3">
-              By signing up you agree to our <a href="#" className="underline hover:text-white">Privacy Policy</a>.
-            </p>
-          </form>
+            {/* Main Content Mock */}
+            <div className="flex-grow p-6 md:p-8">
+              <div className="flex justify-between items-center mb-8">
+                <div className="h-8 w-48 bg-gray-200 rounded-md"></div>
+                <div className="h-10 w-10 rounded-full bg-gray-200"></div>
+              </div>
+              <div className="grid grid-cols-3 gap-6 mb-8">
+                <div className="h-32 bg-white rounded-xl shadow-sm border border-gray-100"></div>
+                <div className="h-32 bg-white rounded-xl shadow-sm border border-gray-100"></div>
+                <div className="h-32 bg-white rounded-xl shadow-sm border border-gray-100"></div>
+              </div>
+              <div className="h-64 bg-white rounded-xl shadow-sm border border-gray-100 flex items-end justify-between p-6 gap-4">
+                {[...Array(12)].map((_, i) => (
+                  <div key={i} className="w-full bg-purple-100 rounded-t-md" style={{ height: `${Math.random() * 80 + 20}%` }}></div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Floating Elements for Depth */}
+        <div className="absolute -left-12 bottom-20 bg-white p-4 rounded-2xl shadow-xl shadow-pink-100 border border-gray-100 hidden lg:block animate-bounce-slow">
+          <div className="flex items-center gap-3">
+            <div className="h-10 w-10 bg-pink-100 rounded-full flex items-center justify-center">
+              <StarIcon className="h-5 w-5 text-pink-500" />
+            </div>
+            <div>
+              <p className="text-xs text-gray-500">New Achievement</p>
+              <p className="font-bold text-gray-900">Algebra Master</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 );
 
-
-const LandingFooter: React.FC = () => (
-    <footer className="bg-white text-pay-gray pt-16 pb-8">
-        <div className="container mx-auto px-6">
-            <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
-                <div className="lg:col-span-2 mb-8 sm:mb-0">
-                    <div className="flex items-center gap-2">
-                        <DrutIcon className="h-8 w-8 text-pay-green-dark" />
-                        <span className="font-bold text-xl text-pay-black">Drut</span>
-                    </div>
-                    <p className="mt-4 text-sm max-w-xs">
-                       Making your complicated exam prep more simple.
-                    </p>
-                </div>
-                <div>
-                    <h4 className="font-semibold text-pay-black mb-4">Features</h4>
-                    <ul className="space-y-3 text-sm">
-                        <li><a href="#" className="hover:text-pay-black">Personalized Learning</a></li>
-                        <li><a href="#" className="hover:text-pay-black">Instant Solutions</a></li>
-                        <li><a href="#" className="hover:text-pay-black">Analytics</a></li>
-                        <li><a href="#" className="hover:text-pay-black">Pricing</a></li>
-                    </ul>
-                </div>
-                 <div>
-                    <h4 className="font-semibold text-pay-black mb-4">Support</h4>
-                    <ul className="space-y-3 text-sm">
-                        <li><a href="#" className="hover:text-pay-black">Help</a></li>
-                        <li><a href="#" className="hover:text-pay-black">FAQ</a></li>
-                        <li><a href="#" className="hover:text-pay-black">Contact</a></li>
-                    </ul>
-                </div>
-                 <div>
-                    <h4 className="font-semibold text-pay-black mb-4">Legal</h4>
-                    <ul className="space-y-3 text-sm">
-                        <li><a href="#" className="hover:text-pay-black">Privacy Policy</a></li>
-                        <li><a href="#" className="hover:text-pay-black">Terms of Services</a></li>
-                        <li><a href="#" className="hover:text-pay-black">Cookies</a></li>
-                    </ul>
-                </div>
+const Footer: React.FC = () => (
+  <footer className="bg-white border-t border-gray-100 pt-20 pb-10">
+    <div className="container mx-auto px-6">
+      <div className="grid md:grid-cols-4 gap-12 mb-16">
+        <div className="col-span-1 md:col-span-1">
+          <div className="flex items-center gap-2 mb-6">
+            <div className="bg-purple-600 p-1.5 rounded-lg">
+              <DrutIcon className="h-5 w-5 text-white" />
             </div>
-             <div className="mt-16 border-t pt-8 text-center text-sm">
-                <p>&copy; {new Date().getFullYear()} Drut. All Rights Reserved.</p>
-            </div>
+            <span className="font-bold text-xl text-gray-900">Drut</span>
+          </div>
+          <p className="text-gray-500 text-sm leading-relaxed">
+            Empowering students with AI-driven tools to conquer competitive exams.
+          </p>
         </div>
-    </footer>
-);
 
+        <div>
+          <h4 className="font-bold text-gray-900 mb-6">Product</h4>
+          <ul className="space-y-4 text-sm text-gray-500">
+            <li><a href="#" className="hover:text-purple-600">Features</a></li>
+            <li><a href="#" className="hover:text-purple-600">Pricing</a></li>
+            <li><a href="#" className="hover:text-purple-600">Sprint Mode</a></li>
+            <li><a href="#" className="hover:text-purple-600">Analytics</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 className="font-bold text-gray-900 mb-6">Resources</h4>
+          <ul className="space-y-4 text-sm text-gray-500">
+            <li><a href="#" className="hover:text-purple-600">Blog</a></li>
+            <li><a href="#" className="hover:text-purple-600">Study Guides</a></li>
+            <li><a href="#" className="hover:text-purple-600">Exam Updates</a></li>
+            <li><a href="#" className="hover:text-purple-600">Community</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 className="font-bold text-gray-900 mb-6">Company</h4>
+          <ul className="space-y-4 text-sm text-gray-500">
+            <li><a href="#" className="hover:text-purple-600">About Us</a></li>
+            <li><a href="#" className="hover:text-purple-600">Careers</a></li>
+            <li><a href="#" className="hover:text-purple-600">Contact</a></li>
+            <li><a href="#" className="hover:text-purple-600">Privacy</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div className="border-t border-gray-100 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+        <p className="text-sm text-gray-400">© {new Date().getFullYear()} Drut Inc. All rights reserved.</p>
+        <div className="flex gap-6">
+          {/* Social Icons Placeholders */}
+          <div className="h-5 w-5 bg-gray-200 rounded-full hover:bg-purple-600 transition-colors cursor-pointer"></div>
+          <div className="h-5 w-5 bg-gray-200 rounded-full hover:bg-purple-600 transition-colors cursor-pointer"></div>
+          <div className="h-5 w-5 bg-gray-200 rounded-full hover:bg-purple-600 transition-colors cursor-pointer"></div>
+        </div>
+      </div>
+    </div>
+  </footer>
+);
 
 export const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
   return (
-    <div className="bg-white font-sans antialiased">
+    <div className="bg-white font-sans text-slate-900 selection:bg-purple-100 selection:text-purple-900">
       <LandingHeader onGetStarted={onGetStarted} />
       <main>
         <HeroSection onGetStarted={onGetStarted} />
-        <PartnersSection />
         <FeaturesSection onGetStarted={onGetStarted} />
-        <WhyUsSection />
-        <CtaSection onGetStarted={onGetStarted} />
+        <DashboardPreviewSection />
+        <section className="py-24 bg-purple-600 text-white text-center">
+          <div className="container mx-auto px-6">
+            <h2 className="text-3xl md:text-5xl font-bold mb-8">Ready to ace your exams?</h2>
+            <p className="text-purple-100 text-lg mb-10 max-w-2xl mx-auto">
+              Join thousands of students who are improving their scores with Drut.
+            </p>
+            <Button onClick={onGetStarted} className="bg-white text-purple-600 hover:bg-gray-100 px-10 py-4 rounded-full font-bold text-lg shadow-xl transition-transform hover:-translate-y-1">
+              Get Started Now
+            </Button>
+          </div>
+        </section>
       </main>
-      <LandingFooter />
+      <Footer />
     </div>
   );
 };

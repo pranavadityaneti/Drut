@@ -38,6 +38,18 @@ export type ActivityHeatmap = {
   count: number;
 };
 
+export type DistractorData = {
+  subtopic: string;
+  wrong_answer_text: string;
+  choice_count: number;
+};
+
+export type StaminaPoint = {
+  question_index: number;
+  time_taken_ms: number;
+  is_correct: boolean;
+};
+
 export async function fetchUserAnalytics(): Promise<AnalyticsRow> {
   const { data: { session } } = await supabase.auth.getSession();
   if (!session?.user) throw new Error('Not authenticated');
@@ -93,5 +105,21 @@ export async function fetchActivityHeatmap(): Promise<ActivityHeatmap[]> {
   if (!session?.user) return [];
   const { data, error } = await supabase.rpc('get_activity_heatmap', { p_user_id: session.user.id });
   if (error) { console.error("fetchActivityHeatmap error", error); return []; }
+  return data || [];
+}
+
+export async function fetchDistractorAnalysis(): Promise<DistractorData[]> {
+  const { data: { session } } = await supabase.auth.getSession();
+  if (!session?.user) return [];
+  const { data, error } = await supabase.rpc('get_distractor_analysis', { p_user_id: session.user.id });
+  if (error) { console.error("fetchDistractorAnalysis error", error); return []; }
+  return data || [];
+}
+
+export async function fetchStaminaCurve(): Promise<StaminaPoint[]> {
+  const { data: { session } } = await supabase.auth.getSession();
+  if (!session?.user) return [];
+  const { data, error } = await supabase.rpc('get_stamina_curve', { p_user_id: session.user.id });
+  if (error) { console.error("fetchStaminaCurve error", error); return []; }
   return data || [];
 }

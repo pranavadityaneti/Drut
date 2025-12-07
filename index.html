@@ -7,6 +7,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Drut</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@6..144,1..1000&display=swap"
+    rel="stylesheet">
   <script>
     tailwind.config = {
       darkMode: 'class',
@@ -55,11 +59,15 @@
             full: '9999px',
           },
           boxShadow: {
-            'soft': '0px 4px 20px rgba(0, 0, 0, 0.02)', // Very subtle shadow
-            'card': '0px 4px 10px rgba(0, 0, 0, 0.03)',
+            'soft': '0px 4px 20px rgba(0, 0, 0, 0.08)', // Subtle grey shadow
+            'card': '0px 4px 10px rgba(0, 0, 0, 0.06)',
           },
           fontFamily: {
-            sans: ['Inter', 'sans-serif'], // Assuming Inter is available or default sans
+            sans: ['"Google Sans Flex"', 'sans-serif'],
+          },
+          animation: {
+            'bounce-slow': 'bounce 3s infinite',
+            'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
           }
         }
       }
