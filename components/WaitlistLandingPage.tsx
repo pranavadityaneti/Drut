@@ -29,9 +29,8 @@ export const WaitlistLandingPage: React.FC<WaitlistLandingPageProps> = ({ onGetS
             <div className="floating-header-container">
                 <nav className="floating-pill">
                     <div className="logo-area">
-                        {/* Use the SVG Icon or the CSS placeholder */}
-                        <DrutIcon className="h-6 w-6 text-orange-500" />
-                        <span>Drut</span>
+                        {/* Logo Image */}
+                        <img src="/logo.png" alt="Drut" className="h-16 header-logo" />
                     </div>
 
                     <div className="nav-links">
@@ -43,8 +42,15 @@ export const WaitlistLandingPage: React.FC<WaitlistLandingPageProps> = ({ onGetS
                         </button>
                     </div>
 
-                    <button className="login-btn" onClick={scrollToWaitlist}>
+                    <button className="login-btn desktop-only" onClick={scrollToWaitlist}>
                         Get Started
+                    </button>
+
+                    {/* Hamburger Menu - Mobile Only */}
+                    <button className="hamburger-btn mobile-only" onClick={scrollToWaitlist} aria-label="Menu">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                            <path d="M3 12h18M3 6h18M3 18h18" />
+                        </svg>
                     </button>
                 </nav>
             </div>
@@ -91,7 +97,7 @@ export const WaitlistLandingPage: React.FC<WaitlistLandingPageProps> = ({ onGetS
                                 {/* Mock Sidebar */}
                                 <div className="mock-sidebar">
                                     <div className="mock-brand">
-                                        <DrutIcon className="h-6 w-6 text-orange-500" />
+                                        <img src="/favicon.png" alt="Drut" className="h-6 w-6" style={{ borderRadius: '4px' }} />
                                         <span>Drut</span>
                                     </div>
                                     <div className="mock-nav-items">
@@ -197,18 +203,17 @@ export const WaitlistLandingPage: React.FC<WaitlistLandingPageProps> = ({ onGetS
                                                 </div>
                                             </div>
                                         </div>
-
                                         {/* Stats Column */}
                                         <div className="mock-col-right">
-                                            <div className="mock-card bg-purple-50 border-purple-100">
-                                                <div className="mock-card-title text-purple-900">Total Practice</div>
+                                            <div className="mock-card bg-green-50 border-green-100">
+                                                <div className="mock-card-title text-green-900">Total Practice</div>
                                                 <div className="flex items-end gap-2">
-                                                    <div className="mock-stat-value text-purple-700">1,248</div>
+                                                    <div className="mock-stat-value text-green-700">1,248</div>
                                                     <div className="mock-stat-trend trend-up mb-2">
                                                         <span>↗</span> 12%
                                                     </div>
                                                 </div>
-                                                <div className="text-xs text-purple-400 mt-1">Questions Attempted</div>
+                                                <div className="text-xs text-green-500 mt-1">Questions Attempted</div>
                                             </div>
 
                                             {/* New Mock Card: Recent Sprints */}
@@ -279,6 +284,140 @@ export const WaitlistLandingPage: React.FC<WaitlistLandingPageProps> = ({ onGetS
                             </div>
                         </div>
                     </div>
+
+                    {/* Mobile Dashboard Preview - Realistic Phone Mockup */}
+                    <div className="mobile-dashboard-preview mobile-only">
+                        <div className="css-phone-device">
+                            <div className="phone-buttons-left"></div>
+                            <div className="phone-button-right"></div>
+                            <div className="phone-bezel">
+                                <div className="phone-screen">
+                                    <div className="dynamic-island"></div>
+
+                                    {/* Screen Content */}
+                                    <div className="phone-content-scroll custom-dashboard">
+                                        {/* 1. Header */}
+                                        <div className="dash-header">
+                                            <div className="dash-user">
+                                                <div className="dash-avatar">
+                                                    <img src="/logo.png" alt="User" /> {/* Temporarily using logo as avatar placeholder if external fails */}
+                                                </div>
+                                                <div className="dash-greeting">
+                                                    <span className="text-gray-500 text-xs">Hello</span>
+                                                    <span className="font-bold text-sm text-gray-800">Samantha</span>
+                                                </div>
+                                            </div>
+                                            <div className="dash-notif">
+                                                <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                                            </div>
+                                        </div>
+
+                                        {/* 2. Headline */}
+                                        <h3 className="dash-headline">
+                                            Here's your prep<br />at a glance
+                                        </h3>
+
+                                        {/* 3. Two Column Stats */}
+                                        <div className="dash-grid-row">
+                                            {/* Card 1: Questions (Blue/Cyan theme) */}
+                                            <div className="dash-card dash-card-blue">
+                                                <div className="dash-card-header">
+                                                    <div className="dash-icon-circle">
+                                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path></svg>
+                                                    </div>
+                                                    <div className="dash-stat-text">
+                                                        <span className="dash-stat-val">1,248</span>
+                                                        <span className="dash-stat-label">Questions</span>
+                                                    </div>
+                                                </div>
+                                                {/* Mock Bar Chart Visual */}
+                                                <div className="dash-visual-bars">
+                                                    <div className="d-bar h-40"></div>
+                                                    <div className="d-bar h-60"></div>
+                                                    <div className="d-bar h-30"></div>
+                                                    <div className="d-bar h-80"></div>
+                                                    <div className="d-bar h-50"></div>
+                                                    <div className="d-bar h-20"></div>
+                                                </div>
+                                            </div>
+
+                                            {/* Card 2: Accuracy (Purple theme) */}
+                                            <div className="dash-card dash-card-purple">
+                                                <div className="dash-card-header">
+                                                    <div className="dash-icon-circle">
+                                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"></circle></svg>
+                                                    </div>
+                                                    <div className="dash-stat-text">
+                                                        <span className="dash-stat-val">92%</span>
+                                                        <span className="dash-stat-label">Accuracy</span>
+                                                    </div>
+                                                </div>
+                                                {/* Mock Wave Visual */}
+                                                <div className="dash-visual-wave">
+                                                    <svg viewBox="0 0 100 40" preserveAspectRatio="none">
+                                                        <path d="M0,30 Q25,10 50,25 T100,15 V40 H0 Z" fill="rgba(255,255,255,0.3)" />
+                                                        <path d="M0,35 Q25,20 50,30 T100,25 V40 H0 Z" fill="rgba(255,255,255,0.5)" />
+                                                    </svg>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {/* 4. Wide Card: Time/Activity (Green theme) */}
+                                        <div className="dash-card dash-card-green">
+                                            <div className="dash-card-header mb-2">
+                                                <div className="dash-icon-circle">
+                                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                                </div>
+                                                <div className="dash-stat-text">
+                                                    <span className="dash-stat-val">9h 30m</span>
+                                                    <span className="dash-stat-label">Total Practice</span>
+                                                </div>
+                                            </div>
+                                            {/* Mock Histogram */}
+                                            <div className="dash-visual-histogram">
+                                                <div className="h-bar bg-green-200 h-30"></div>
+                                                <div className="h-bar bg-green-300 h-40"></div>
+                                                <div className="h-bar bg-green-200 h-35"></div>
+                                                <div className="h-bar bg-green-400 h-60"></div>
+                                                <div className="h-bar bg-gray-800 h-80"></div> {/* Active/Current */}
+                                                <div className="h-bar bg-green-300 h-50"></div>
+                                                <div className="h-bar bg-green-200 h-40"></div>
+                                            </div>
+                                            <div className="dash-histogram-labels">
+                                                <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+                                            </div>
+                                        </div>
+
+                                        {/* 5. Recommendation List */}
+                                        <div className="dash-section-title">
+                                            <span>Daily recommendations</span>
+                                            <span className="text-gray-400 text-xs cursor-pointer">See all</span>
+                                        </div>
+                                        <div className="dash-list-card">
+                                            <div className="dash-list-icon">
+                                                💧
+                                            </div>
+                                            <div className="dash-list-content">
+                                                <div className="font-bold text-sm text-gray-900">Rotational Motion</div>
+                                                <div className="text-xs text-gray-500">Physics • High Importance</div>
+                                            </div>
+                                            <div className="dash-list-arrow">›</div>
+                                        </div>
+
+                                        {/* 6. Bottom Nav Bar */}
+                                        <div className="dash-bottom-nav">
+                                            <div className="nav-item active">
+                                                <div className="nav-icon-bg">Home</div>
+                                            </div>
+                                            <div className="nav-item">Stats</div>
+                                            <div className="nav-item">Tests</div>
+                                            <div className="nav-item">Profile</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </section>
 
                 {/* Trust Section - Floating Glass Cards */}
@@ -335,7 +474,7 @@ export const WaitlistLandingPage: React.FC<WaitlistLandingPageProps> = ({ onGetS
                     {/* Bottom: White Footer Dock - Simplified (Brand Only) */}
                     <div className="nietzsche-footer">
                         <div className="footer-content">
-                            <div className="footer-logo">Drut.</div>
+                            <img src="/logo.png" alt="Drut" style={{ height: '120px' }} />
                             <div className="footer-copyright">© 2025 Drut Learning Technologies.</div>
                         </div>
                     </div>
@@ -510,9 +649,9 @@ const BentoSection = () => {
                     </div>
 
                     {/* Card 2: AI Analysis (Top Middle) */}
-                    <div className="bento-card bg-purple">
+                    <div className="bento-card bg-green">
                         <div className="flex flex-col h-full">
-                            <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center mb-4 text-purple-600 shadow-sm">
+                            <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center mb-4 text-green-600 shadow-sm">
                                 <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
                             </div>
                             <h4 className="text-xl font-bold mb-2">Instant AI Analysis</h4>
