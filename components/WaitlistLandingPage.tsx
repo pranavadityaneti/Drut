@@ -25,34 +25,9 @@ export const WaitlistLandingPage: React.FC<WaitlistLandingPageProps> = ({ onGetS
             {/* Ambient Gradient Background */}
             <div className="gradient-bg" />
 
-            {/* Floating Header */}
-            <div className="floating-header-container">
-                <nav className="floating-pill">
-                    <div className="logo-area">
-                        {/* Logo Image */}
-                        <img src="/logo.png" alt="Drut" className="h-16 header-logo" />
-                    </div>
-
-                    <div className="nav-links">
-                        <a href="#">Home</a>
-                        <a href="#features">Features</a>
-                        <a href="#about">About</a>
-                        <button onClick={onGetStarted} style={{ background: 'transparent', border: 'none', color: 'inherit', cursor: 'pointer', fontWeight: 500 }}>
-                            Member Login
-                        </button>
-                    </div>
-
-                    <button className="login-btn desktop-only" onClick={scrollToWaitlist}>
-                        Get Started
-                    </button>
-
-                    {/* Hamburger Menu - Mobile Only */}
-                    <button className="hamburger-btn mobile-only" onClick={scrollToWaitlist} aria-label="Menu">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                            <path d="M3 12h18M3 6h18M3 18h18" />
-                        </svg>
-                    </button>
-                </nav>
+            {/* Centered Logo Header */}
+            <div className="centered-header">
+                <img src="/logo.png" alt="Drut" className="centered-logo" />
             </div>
 
             {/* Hero Content */}
@@ -467,10 +442,15 @@ export const WaitlistLandingPage: React.FC<WaitlistLandingPageProps> = ({ onGetS
                         </div>
                     </div>
 
-                    {/* Bottom: White Footer Dock - Simplified (Brand Only) */}
+                    {/* Bottom: White Footer Dock */}
                     <div className="nietzsche-footer">
                         <div className="footer-content">
                             <img src="/logo.png" alt="Drut" style={{ height: '150px' }} />
+                            <div className="footer-contact">
+                                <a href="mailto:pranav.n@drut.club">pranav.n@drut.club</a>
+                                <span className="footer-divider">|</span>
+                                <a href="tel:+919100117027">+91 9100117027</a>
+                            </div>
                             <div className="footer-copyright">© 2025 Drut Learning Technologies.</div>
                         </div>
                     </div>
