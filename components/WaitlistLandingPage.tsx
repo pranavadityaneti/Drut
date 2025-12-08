@@ -72,12 +72,8 @@ export const WaitlistLandingPage: React.FC<WaitlistLandingPageProps> = ({ onGetS
                         innovative dashboard solution. Train faster, answer better.
                     </p>
 
-                    {/* Inline Hero Form -> CTA Button */}
-                    <div className="hero-cta-wrapper">
-                        <button className="hero-submit-btn hero-submit-btn-narrow" onClick={scrollToWaitlist}>
-                            Join the Waitlist
-                        </button>
-                    </div>
+                    {/* Inline Hero Form -> Email Input + CTA Button */}
+                    <HeroEmailForm />
 
                     {/* Dashboard Mockup */}
                     <div className="dashboard-preview-container">
@@ -422,7 +418,7 @@ export const WaitlistLandingPage: React.FC<WaitlistLandingPageProps> = ({ onGetS
 
                 {/* Trust Section - Floating Glass Cards */}
                 <div className="trust-section">
-                    <span className="trust-title">Built with India's Brightest Minds</span>
+                    <span className="trust-title">Built After Discussing with India's Brightest Minds</span>
                     <div className="trust-cards-container">
                         <div className="trust-card">
                             <div className="trust-icon-wrapper">
@@ -474,7 +470,7 @@ export const WaitlistLandingPage: React.FC<WaitlistLandingPageProps> = ({ onGetS
                     {/* Bottom: White Footer Dock - Simplified (Brand Only) */}
                     <div className="nietzsche-footer">
                         <div className="footer-content">
-                            <img src="/logo.png" alt="Drut" style={{ height: '120px' }} />
+                            <img src="/logo.png" alt="Drut" style={{ height: '150px' }} />
                             <div className="footer-copyright">© 2025 Drut Learning Technologies.</div>
                         </div>
                     </div>
@@ -709,6 +705,67 @@ const BentoSection = () => {
                 </div>
             </div>
         </section>
+    );
+};
+
+/* --- Hero Email Form (Quick Waitlist) --- */
+const HeroEmailForm = () => {
+    const [email, setEmail] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [success, setSuccess] = useState(false);
+    const [error, setError] = useState('');
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!email) return;
+        setLoading(true);
+        setError('');
+        try {
+            // Insert into waitlist table
+            const { error: insertError } = await supabase
+                .from('waitlist')
+                .insert([{ email, source: 'hero_quick' }]);
+
+            if (insertError) {
+                console.error('Supabase insert error:', insertError);
+                setError('Failed to join. Please try again.');
+            } else {
+                setSuccess(true);
+                setEmail('');
+            }
+        } catch (err) {
+            console.error(err);
+            setError('An unexpected error occurred.');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    if (success) {
+        return (
+            <div className="hero-cta-wrapper">
+                <div className="hero-success-badge">
+                    ✓ You're on the list!
+                </div>
+            </div>
+        );
+    }
+
+    return (
+        <form onSubmit={handleSubmit} className="hero-cta-wrapper hero-inline-form">
+            <input
+                type="email"
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                className="hero-email-input"
+            />
+            <button type="submit" className="hero-submit-btn" disabled={loading}>
+                {loading ? '...' : 'Join Waitlist'}
+            </button>
+            {error && <span className="hero-error-msg">{error}</span>}
+        </form>
     );
 };
 

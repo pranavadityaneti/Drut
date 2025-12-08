@@ -148,6 +148,17 @@
     display: none;
 }
 
+/* Hide hamburger and nav on mobile */
+@media (max-width: 768px) {
+    .hamburger-btn {
+        display: none !important;
+    }
+
+    .nav-links {
+        display: none !important;
+    }
+}
+
 @media (max-width: 768px) {
     .desktop-only {
         display: none !important;
@@ -164,16 +175,16 @@
     }
 
     .header-logo {
-        height: 32px !important;
+        height: 48px !important;
+        /* Increased from 32px */
     }
 }
 
 /* --- Hero Section --- */
 .hero-section {
-    padding-top: 140px;
-    /* Reduced from 180px */
+    padding-top: 160px;
+    /* Increased from 140px */
     padding-bottom: 2rem;
-    /* Reduced from 4rem */
     text-align: center;
     max-width: 1200px;
     margin: 0 auto;
@@ -265,6 +276,66 @@
     border-radius: 9999px;
     background-color: #d1d5db;
     border: 2px solid #fff;
+}
+
+/* Hero Inline Email Form */
+.hero-cta-wrapper.hero-inline-form {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 99px;
+    padding: 0.4rem;
+    max-width: 420px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.hero-email-input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    padding: 0.75rem 1rem;
+    font-size: 0.95rem;
+    outline: none;
+    color: #111;
+}
+
+.hero-email-input::placeholder {
+    color: #9ca3af;
+}
+
+.hero-success-badge {
+    background: linear-gradient(135deg, var(--color-primary-1), var(--color-primary-2));
+    color: #fff;
+    padding: 0.75rem 2rem;
+    border-radius: 99px;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.hero-error-msg {
+    color: #ef4444;
+    font-size: 0.75rem;
+    margin-left: 0.5rem;
+}
+
+@media (max-width: 768px) {
+    .hero-cta-wrapper.hero-inline-form {
+        flex-direction: column;
+        border-radius: 16px;
+        padding: 0.75rem;
+        gap: 0.75rem;
+    }
+
+    .hero-email-input {
+        width: 100%;
+        text-align: center;
+    }
+
+    .hero-submit-btn {
+        width: 100%;
+    }
 }
 
 /* --- Dashboard Preview (Glassmorphism) --- */
@@ -1686,9 +1757,9 @@
 /* --- Nietzsche Footer Panel --- */
 .nietzsche-footer {
     background: #fff;
-    padding: 4rem 4rem 2rem;
+    padding: 2rem 2rem 1.5rem;
+    /* Reduced from 4rem */
     margin: 0 1.5rem 1.5rem;
-    /* The "Docked" look */
     border-radius: 30px;
 }
 
@@ -2151,6 +2222,25 @@
         flex-direction: row;
         align-items: stretch;
         gap: 3rem;
+    }
+}
+
+/* Mobile: Reorder form sections so message comes before button */
+@media (max-width: 767px) {
+    .wide-form-grid {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .wide-form-left {
+        order: 2;
+        /* Inputs and button second */
+    }
+
+    .wide-form-right {
+        order: 1;
+        /* Message textarea first */
+        margin-bottom: 1rem;
     }
 }
 
