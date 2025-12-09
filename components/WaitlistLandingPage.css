@@ -70,11 +70,22 @@
 
 @media (max-width: 768px) {
     .centered-header {
-        top: 1.5rem;
+        position: relative;
+        top: 0;
+        padding-top: 1.5rem;
+        padding-bottom: 1.5rem;
     }
 
     .centered-logo {
-        height: 56px;
+        height: 50px;
+    }
+
+    .hero-section {
+        padding-top: 2rem;
+    }
+
+    .badge-pill {
+        margin-top: 0;
     }
 }
 
@@ -227,24 +238,25 @@
     .hero-cta-wrapper.hero-inline-form {
         flex-direction: row;
         border-radius: 99px;
-        padding: 0.35rem;
+        padding: 0.3rem;
         gap: 0.25rem;
         max-width: 100%;
         margin: 0 auto;
     }
 
     .hero-email-input {
-        flex: 1;
+        flex: 2;
         min-width: 0;
-        padding: 0.6rem 0.75rem;
-        font-size: 0.85rem;
+        padding: 0.65rem 0.85rem;
+        font-size: 0.9rem;
         text-align: left;
     }
 
     .hero-submit-btn {
+        flex: 1;
         flex-shrink: 0;
-        padding: 0.6rem 1rem;
-        font-size: 0.8rem;
+        padding: 0.65rem 0.75rem;
+        font-size: 0.75rem;
         white-space: nowrap;
     }
 }
@@ -2587,24 +2599,19 @@
     /* Ensure phone sits above trust section if close */
 }
 
-/* Device Container */
+/* Device Container - iPhone 15 Pro Max proportions */
 .css-phone-device {
-    width: 365px;
-    /* Increased from 320px to Standard Mobile Width */
-    height: 700px;
-    /* Proportional height increase */
-    background: #000;
-    /* Pure Black Bezel */
-    border-radius: 56px;
-    /* Smoother curve */
-    padding: 12px;
-    /* Bezel Thickness */
+    width: 320px;
+    height: 693px;
+    /* iPhone 15 Pro aspect ratio (393:852) scaled proportionally */
+    background: linear-gradient(145deg, #1a1a1a 0%, #0d0d0d 100%);
+    border-radius: 52px;
+    padding: 10px;
     box-shadow:
-        0 0 0 5px #3a3a3a,
-        /* Outer Frame Titanium */
-        0 25px 50px -12px rgba(0, 0, 0, 0.5),
-        /* Deep consistent shadow */
-        0 0 0 1px #000 inset;
+        0 0 0 3px #4a4a4a,
+        inset 0 0 0 1px rgba(255, 255, 255, 0.1),
+        0 30px 60px -15px rgba(0, 0, 0, 0.5),
+        0 15px 30px -10px rgba(0, 0, 0, 0.3);
     position: relative;
     box-sizing: border-box;
 }
@@ -2641,53 +2648,61 @@
     width: 100%;
     height: 100%;
     position: relative;
-    border-radius: 46px;
-    /* Match internal curve */
+    border-radius: 42px;
     overflow: hidden;
-    /* CRITICAL: Ensure clipping happens here too */
     z-index: 10;
+    background: #000;
 }
 
 /* Screen Area */
 .phone-screen {
-    background: #fff;
     width: 100%;
     height: 100%;
-    border-radius: 46px;
-    /* Match device curve */
+    border-radius: 42px;
     overflow: hidden;
-    /* CRITICAL: Crop everything */
     position: relative;
-    background: linear-gradient(180deg, #ffffff 0%, #f9fafb 100%);
+    background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
     box-sizing: border-box;
+}
+
+/* Phone Screen Fade Mask - Creates easing effect at bottom */
+.phone-screen::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40%;
+    background: linear-gradient(to bottom,
+            rgba(248, 250, 252, 0) 0%,
+            rgba(248, 250, 252, 0.7) 60%,
+            rgba(248, 250, 252, 1) 100%);
+    pointer-events: none;
+    z-index: 15;
+    border-radius: 0 0 42px 42px;
 }
 
 /* Dynamic Island */
 .dynamic-island {
     position: absolute;
-    top: 11px;
+    top: 12px;
     left: 50%;
     transform: translateX(-50%);
-    width: 90px;
-    /* Smaller width */
-    height: 24px;
-    /* Smaller height */
+    width: 100px;
+    height: 28px;
     background: #000;
-    border-radius: 20px;
+    border-radius: 16px;
     z-index: 20;
 }
 
-/* Safe Area & Content Scroll */
+/* Safe Area & Content Scroll - Apple-style spacing */
 .phone-content-scroll {
     width: 100%;
     height: 100%;
     overflow-y: hidden;
-    /* Prevent scrollbar uglyness, content should fit */
-    padding: 60px 20px 90px;
-    /* Top: Safe Area; Side: Breathing room; Bottom: Nav */
+    padding: 52px 16px 80px;
     scrollbar-width: none;
     box-sizing: border-box;
-    /* Force padding inside */
     display: flex;
     flex-direction: column;
 }
@@ -2697,16 +2712,15 @@
 }
 
 /* ============================================
-   INTERNAL DASHBOARD UI
+   INTERNAL DASHBOARD UI - Apple-style spacing
    ============================================ */
 .custom-dashboard {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 16px;
     text-align: left;
     width: 100%;
-    /* Force width */
     max-width: 100%;
 }
 
@@ -2716,242 +2730,312 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    padding: 4px 0;
 }
 
 .dash-user {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
 }
 
 .dash-avatar img {
-    width: 44px;
-    /* Tuned size */
-    height: 44px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
-    object-fit: cover;
-    border: 1px solid rgba(0, 0, 0, 0.05);
-    /* Subtle border */
-    margin-left: 2px;
-    /* Pull away from bezel slightly */
+    object-fit: contain;
+    background: linear-gradient(135deg, #e8f5e0 0%, #d4edda 100%);
+    padding: 5px;
+    border: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
-.dash-heading-span {
-    font-size: 0.8rem;
+.dash-greeting {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+/* Inline greeting: "Hello User" on one line */
+.greeting-line {
+    font-size: 14px;
     color: #6b7280;
-    letter-spacing: 0.01em;
 }
 
-.dash-name-span {
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: #111827;
+.greeting-name {
+    font-weight: 700;
+    margin-left: 4px;
+    color: #1f2937;
 }
 
 .dash-notif {
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
     background: #fff;
-    border: 1px solid #e5e7eb;
+    border: 1px solid #f3f4f6;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #374151;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+    color: #6b7280;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
 }
 
 /* 2. Headline */
 .dash-headline {
-    font-size: 1.5rem;
-    /* Reduced from 1.75rem */
+    font-size: 20px;
     font-weight: 700;
-    line-height: 1.2;
+    line-height: 1.25;
     color: #111827;
-    margin-top: 0;
-    letter-spacing: -0.01em;
-    width: 100%;
+    margin: 4px 0 0 0;
+    letter-spacing: -0.02em;
 }
 
 /* 3. Grid Row */
 .dash-grid-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
+    display: flex;
+    gap: 10px;
     width: 100%;
 }
 
-.dash-card {
-    border-radius: 20px;
-    padding: 16px;
+/* New Stat Card with Sparkline Background */
+.stat-card {
     position: relative;
+    flex: 1;
+    min-height: 88px;
+    border-radius: 16px;
     overflow: hidden;
-    /* Hide internal overflow */
-    min-height: 140px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.8));
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+}
+
+.stat-card-blue {
+    background: linear-gradient(180deg, #eff6ff 0%, #dbeafe 100%);
+}
+
+.stat-card-purple {
+    background: linear-gradient(180deg, #faf5ff 0%, #f3e8ff 100%);
+}
+
+.stat-card-green {
+    background: linear-gradient(180deg, #ecfdf5 0%, #d1fae5 100%);
+}
+
+/* Sparkline as background layer */
+.card-spark {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* Card content on top */
+.card-content {
+    position: relative;
+    z-index: 2;
+    padding: 12px;
     display: flex;
     flex-direction: column;
-    width: 100%;
-    /* Fix width */
-    box-sizing: border-box;
+    gap: 4px;
 }
 
-.dash-card-blue {
-    background: #e0f2fe;
-}
-
-.dash-card-purple {
-    background: #f3e8ff;
-}
-
-.dash-card-green {
-    background: #dcfce7;
-    min-height: 120px;
-    /* Fix: Ensure padding isn't cutting off bars */
-    padding-bottom: 25px;
-    /* Add padding for labels */
-    justify-content: space-between;
-}
-
-.dash-card-header {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-}
-
-.dash-icon-circle {
-    width: 28px;
-    height: 28px;
-    background: #fff;
-    border-radius: 50%;
+.card-icon-box {
+    width: 26px;
+    height: 26px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.9);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #111;
-    font-size: 0.8rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+    color: #374151;
+    margin-bottom: 4px;
 }
 
-.dash-stat-text {
+.card-number {
+    font-weight: 800;
+    font-size: 22px;
+    color: #111827;
+    line-height: 1;
+}
+
+.card-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: #6b7280;
+}
+
+/* Big Card (Full width) - Green card with bottom chart */
+.big-card {
+    width: 100%;
+    min-height: 140px;
+    padding: 14px;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
 }
 
-.dash-stat-val {
-    font-size: 1.25rem;
-    font-weight: 800;
-    color: #111;
-    line-height: 1;
-    margin-bottom: 2px;
-}
-
-/* Visuals */
-.dash-visual-bars {
+/* Top content area */
+.card-top {
+    z-index: 2;
     display: flex;
-    align-items: flex-end;
+    flex-direction: column;
     gap: 4px;
-    /* Tighter bars */
-    height: 50px;
-    width: 100%;
-    margin-top: auto;
-    /* Push to bottom */
 }
 
-.d-bar {
+/* Bottom chart area - anchors to bottom */
+.card-chart-area {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-end;
+    min-height: 68px;
+    padding-top: 8px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Mini bar chart container */
+.mini-bar-chart {
+    display: flex;
+    gap: 8px;
+    align-items: flex-end;
+    height: 50px;
+    width: 65%;
+}
+
+/* Individual mini bar */
+.mini-bar {
     flex: 1;
-    background: rgba(255, 255, 255, 0.7);
-    border-radius: 3px;
-    max-width: 8px;
+    border-radius: 6px;
+    background: linear-gradient(180deg, #86efac 0%, #4ade80 100%);
+    align-self: flex-end;
+    transition: height 0.22s ease;
+    box-shadow: 0 2px 6px rgba(34, 100, 40, 0.08);
 }
 
-.dash-visual-wave {
-    height: 50px;
-    width: 100%;
-    margin-bottom: -5px;
-    margin-top: auto;
-    /* Push to bottom */
+.mini-bar-active {
+    background: linear-gradient(180deg, #22c55e 0%, #16a34a 100%);
 }
 
-/* Wide Card */
-.dash-visual-histogram {
-    margin-top: auto;
-    /* Push to bottom */
-    padding-bottom: 0;
-    /* Remove padding here */
-    padding-left: 2px;
-    /* Fix padding */
-    padding-right: 2px;
-    width: 100%;
-    /* Force width */
+/* Day labels below chart */
+.mini-bar-labels {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: 6px;
+    color: rgba(0, 0, 0, 0.25);
+    font-size: 10px;
+    width: 65%;
 }
 
-.h-bar {
-    width: 8px;
-    /* Thicker bars */
-    border-radius: 4px;
+/* Section Title */
+.dash-section-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 600;
+    color: #374151;
+    margin-top: 4px;
+}
+
+.see-all {
+    font-size: 12px;
+    color: #9ca3af;
+    font-weight: 400;
 }
 
 /* 5. List Item */
-.dash-bottom-section {
-    position: relative;
-    padding-bottom: 40px;
-    /* Ensure space for nav */
-    width: 100%;
-}
-
 .dash-list-card {
     background: #fff;
     border: 1px solid #f3f4f6;
-    border-radius: 18px;
-    padding: 14px;
+    border-radius: 14px;
+    padding: 12px;
     display: flex;
     align-items: center;
-    gap: 14px;
-    box-shadow: 0 4px 12px -4px rgba(0, 0, 0, 0.05);
+    gap: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
     width: 100%;
 }
 
 .dash-list-icon {
-    width: 38px;
-    height: 38px;
+    width: 36px;
+    height: 36px;
     background: #eff6ff;
-    border-radius: 50%;
+    border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.1rem;
+    font-size: 16px;
     flex-shrink: 0;
 }
 
 .dash-list-content {
     flex: 1;
     min-width: 0;
-    /* Text truncation fix */
 }
 
-.dash-item-title {
+.list-title {
     font-weight: 600;
-    color: #111;
-    font-size: 0.9rem;
+    color: #111827;
+    font-size: 13px;
 }
 
-/* 6. Bottom Nav */
+.list-subtitle {
+    font-size: 11px;
+    color: #9ca3af;
+}
+
+.dash-list-arrow {
+    color: #d1d5db;
+    font-size: 18px;
+    font-weight: 300;
+}
+
+/* 6. Bottom Nav - Icon-based */
 .dash-bottom-nav {
     position: absolute;
-    bottom: 20px;
-    left: 20px;
-    width: calc(100% - 40px);
-    /* Strict math width */
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    border-radius: 99px;
+    bottom: 16px;
+    left: 16px;
+    width: calc(100% - 32px);
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 22px;
     padding: 10px 16px;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
-    box-shadow: 0 8px 20px -5px rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
     z-index: 30;
     box-sizing: border-box;
-    /* Crucial */
+}
+
+.nav-btn {
+    background: transparent;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #9ca3af;
+    transition: all 0.2s ease;
+}
+
+.nav-btn.active {
+    background: #111827;
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(17, 24, 39, 0.2);
+}
+
+.nav-btn svg {
+    display: block;
 }
 
 /* DESKTOP/TABLET VISIBILITY CONTROL */
@@ -2962,21 +3046,186 @@
 }
 
 .nav-item {
-    font-size: 0.7rem;
+    font-size: 12px;
     color: #9ca3af;
     cursor: pointer;
     font-weight: 500;
-    padding: 4px 8px;
+    padding: 6px 10px;
+    transition: color 0.2s ease;
 }
 
 .nav-item.active {
-    color: #111;
+    color: #111827;
 }
 
 .nav-icon-bg {
-    background: #111;
+    background: #111827;
     color: #fff;
-    padding: 6px 14px;
-    border-radius: 99px;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 12px;
     font-weight: 600;
+}
+
+/* --- Why Speed Matters Section --- */
+.why-speed-section {
+    padding: 6rem 1rem;
+    background: #fafafa;
+}
+
+.why-speed-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.why-speed-header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.why-speed-label {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-primary-1);
+    margin-bottom: 1rem;
+}
+
+.why-speed-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--color-text-primary);
+    margin-bottom: 1rem;
+    line-height: 1.2;
+}
+
+.why-speed-subtitle {
+    font-size: 1.1rem;
+    color: var(--color-text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+.why-speed-cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+}
+
+.why-speed-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 2rem;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.why-speed-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.06);
+}
+
+.why-speed-card-number {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--color-primary-2);
+    margin-bottom: 1rem;
+    line-height: 1;
+}
+
+.why-speed-card:nth-child(1) .why-speed-card-number {
+    color: #cbe856;
+}
+
+.why-speed-card:nth-child(2) .why-speed-card-number {
+    color: #f8b4b4;
+}
+
+.why-speed-card:nth-child(3) .why-speed-card-number {
+    color: #93c5fd;
+}
+
+.why-speed-card:nth-child(4) .why-speed-card-number {
+    color: #c4b5fd;
+}
+
+.why-speed-card-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: 0.75rem;
+    line-height: 1.3;
+}
+
+.why-speed-card-desc {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    flex: 1;
+    margin-bottom: 1.5rem;
+}
+
+.why-speed-card-arrow {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.why-speed-card-arrow:hover {
+    color: var(--color-primary-1);
+}
+
+/* Responsive - Tablet */
+@media (max-width: 1024px) {
+    .why-speed-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .why-speed-title {
+        font-size: 2rem;
+    }
+}
+
+/* Responsive - Mobile */
+@media (max-width: 768px) {
+    .why-speed-section {
+        padding: 4rem 1rem;
+    }
+
+    .why-speed-header {
+        margin-bottom: 2.5rem;
+    }
+
+    .why-speed-title {
+        font-size: 1.75rem;
+    }
+
+    .why-speed-subtitle {
+        font-size: 1rem;
+    }
+
+    .why-speed-cards {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .why-speed-card {
+        padding: 1.5rem;
+    }
+
+    .why-speed-card-number {
+        font-size: 1.5rem;
+    }
+
+    .why-speed-card-title {
+        font-size: 1rem;
+    }
 }

@@ -1,4 +1,4 @@
-import { createClient, SupabaseClient } from 'https://esm.sh/@supabase/supabase-js@2.45.5?bundle';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
 let client: SupabaseClient | null = null;
 
@@ -27,7 +27,7 @@ export function getSupabase(): SupabaseClient {
   } catch (error) {
     // This provides a more helpful message for the specific "Invalid URL" error.
     if (error instanceof TypeError && error.message.includes('Invalid URL')) {
-        throw new TypeError(`The Supabase URL provided ("${SUPABASE_URL}") is not a valid URL. Please check for typos and ensure it follows the format: https://<your-project-ref>.supabase.co`);
+      throw new TypeError(`The Supabase URL provided ("${SUPABASE_URL}") is not a valid URL. Please check for typos and ensure it follows the format: https://<your-project-ref>.supabase.co`);
     }
     // Re-throw any other unexpected errors.
     throw error;

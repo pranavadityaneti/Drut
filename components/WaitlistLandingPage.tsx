@@ -271,15 +271,14 @@ export const WaitlistLandingPage: React.FC<WaitlistLandingPageProps> = ({ onGetS
                                         <div className="dash-header">
                                             <div className="dash-user">
                                                 <div className="dash-avatar">
-                                                    <img src="/logo.png" alt="User" /> {/* Temporarily using logo as avatar placeholder if external fails */}
+                                                    <img src="/favicon.png" alt="User" />
                                                 </div>
-                                                <div className="dash-greeting">
-                                                    <span className="text-gray-500 text-xs">Hello</span>
-                                                    <span className="font-bold text-sm text-gray-800">Samantha</span>
+                                                <div className="greeting-line">
+                                                    Hello <span className="greeting-name">User</span>
                                                 </div>
                                             </div>
                                             <div className="dash-notif">
-                                                <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                                                <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
                                             </div>
                                         </div>
 
@@ -288,102 +287,107 @@ export const WaitlistLandingPage: React.FC<WaitlistLandingPageProps> = ({ onGetS
                                             Here's your prep<br />at a glance
                                         </h3>
 
-                                        {/* 3. Two Column Stats */}
+                                        {/* 3. Two Column Stats with Sparklines */}
                                         <div className="dash-grid-row">
-                                            {/* Card 1: Questions (Blue/Cyan theme) */}
-                                            <div className="dash-card dash-card-blue">
-                                                <div className="dash-card-header">
-                                                    <div className="dash-icon-circle">
-                                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path></svg>
+                                            {/* Card 1: Questions with sparkline background */}
+                                            <div className="stat-card stat-card-blue">
+                                                <svg className="card-spark" viewBox="0 0 120 50" preserveAspectRatio="none">
+                                                    <path d="M 8 35 L 26 28 L 44 38 L 62 20 L 80 14 L 98 22 L 112 18"
+                                                        fill="none" stroke="#bfdbfe" strokeWidth="12" strokeLinecap="round" strokeLinejoin="round" opacity="0.7" />
+                                                </svg>
+                                                <div className="card-content">
+                                                    <div className="card-icon-box">
+                                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path></svg>
                                                     </div>
-                                                    <div className="dash-stat-text">
-                                                        <span className="dash-stat-val">1,248</span>
-                                                        <span className="dash-stat-label">Questions</span>
-                                                    </div>
-                                                </div>
-                                                {/* Mock Bar Chart Visual */}
-                                                <div className="dash-visual-bars">
-                                                    <div className="d-bar h-40"></div>
-                                                    <div className="d-bar h-60"></div>
-                                                    <div className="d-bar h-30"></div>
-                                                    <div className="d-bar h-80"></div>
-                                                    <div className="d-bar h-50"></div>
-                                                    <div className="d-bar h-20"></div>
+                                                    <div className="card-number">1,248</div>
+                                                    <div className="card-label">Questions</div>
                                                 </div>
                                             </div>
 
-                                            {/* Card 2: Accuracy (Purple theme) */}
-                                            <div className="dash-card dash-card-purple">
-                                                <div className="dash-card-header">
-                                                    <div className="dash-icon-circle">
-                                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"></circle></svg>
+                                            {/* Card 2: Accuracy with sparkline background */}
+                                            <div className="stat-card stat-card-purple">
+                                                <svg className="card-spark" viewBox="0 0 120 50" preserveAspectRatio="none">
+                                                    <path d="M 8 38 L 26 32 L 44 34 L 62 22 L 80 24 L 98 18 L 112 16"
+                                                        fill="none" stroke="#e9d5ff" strokeWidth="12" strokeLinecap="round" strokeLinejoin="round" opacity="0.8" />
+                                                </svg>
+                                                <div className="card-content">
+                                                    <div className="card-icon-box">
+                                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="8"></circle></svg>
                                                     </div>
-                                                    <div className="dash-stat-text">
-                                                        <span className="dash-stat-val">92%</span>
-                                                        <span className="dash-stat-label">Accuracy</span>
-                                                    </div>
-                                                </div>
-                                                {/* Mock Wave Visual */}
-                                                <div className="dash-visual-wave">
-                                                    <svg viewBox="0 0 100 40" preserveAspectRatio="none">
-                                                        <path d="M0,30 Q25,10 50,25 T100,15 V40 H0 Z" fill="rgba(255,255,255,0.3)" />
-                                                        <path d="M0,35 Q25,20 50,30 T100,25 V40 H0 Z" fill="rgba(255,255,255,0.5)" />
-                                                    </svg>
+                                                    <div className="card-number">92%</div>
+                                                    <div className="card-label">Accuracy</div>
                                                 </div>
                                             </div>
                                         </div>
 
-                                        {/* 4. Wide Card: Time/Activity (Green theme) */}
-                                        <div className="dash-card dash-card-green">
-                                            <div className="dash-card-header mb-2">
-                                                <div className="dash-icon-circle">
-                                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                        {/* 4. Wide Card: Total Practice with multi-bar */}
+                                        <div className="stat-card stat-card-green big-card">
+                                            <div className="card-top">
+                                                <div className="card-icon-box">
+                                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="8"></circle></svg>
                                                 </div>
-                                                <div className="dash-stat-text">
-                                                    <span className="dash-stat-val">9h 30m</span>
-                                                    <span className="dash-stat-label">Total Practice</span>
+                                                <div className="card-number">9h 30m</div>
+                                                <div className="card-label">Total Practice</div>
+                                            </div>
+                                            <div className="card-chart-area">
+                                                <div className="mini-bar-chart">
+                                                    <div className="mini-bar" style={{ height: '30%' }}></div>
+                                                    <div className="mini-bar" style={{ height: '55%' }}></div>
+                                                    <div className="mini-bar" style={{ height: '45%' }}></div>
+                                                    <div className="mini-bar" style={{ height: '75%' }}></div>
+                                                    <div className="mini-bar mini-bar-active" style={{ height: '100%' }}></div>
+                                                    <div className="mini-bar" style={{ height: '60%' }}></div>
+                                                    <div className="mini-bar" style={{ height: '40%' }}></div>
                                                 </div>
-                                            </div>
-                                            {/* Mock Histogram */}
-                                            <div className="dash-visual-histogram">
-                                                <div className="h-bar bg-green-200 h-30"></div>
-                                                <div className="h-bar bg-green-300 h-40"></div>
-                                                <div className="h-bar bg-green-200 h-35"></div>
-                                                <div className="h-bar bg-green-400 h-60"></div>
-                                                <div className="h-bar bg-gray-800 h-80"></div> {/* Active/Current */}
-                                                <div className="h-bar bg-green-300 h-50"></div>
-                                                <div className="h-bar bg-green-200 h-40"></div>
-                                            </div>
-                                            <div className="dash-histogram-labels">
-                                                <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+                                                <div className="mini-bar-labels">
+                                                    <span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span>
+                                                </div>
                                             </div>
                                         </div>
 
-                                        {/* 5. Recommendation List */}
+                                        {/* 5. Recommendation */}
                                         <div className="dash-section-title">
                                             <span>Daily recommendations</span>
-                                            <span className="text-gray-400 text-xs cursor-pointer">See all</span>
+                                            <span className="see-all">See all</span>
                                         </div>
                                         <div className="dash-list-card">
-                                            <div className="dash-list-icon">
-                                                💧
-                                            </div>
+                                            <div className="dash-list-icon">💧</div>
                                             <div className="dash-list-content">
-                                                <div className="font-bold text-sm text-gray-900">Rotational Motion</div>
-                                                <div className="text-xs text-gray-500">Physics • High Importance</div>
+                                                <div className="list-title">Rotational Motion</div>
+                                                <div className="list-subtitle">Physics • High Importance</div>
                                             </div>
                                             <div className="dash-list-arrow">›</div>
                                         </div>
 
-                                        {/* 6. Bottom Nav Bar */}
-                                        <div className="dash-bottom-nav">
-                                            <div className="nav-item active">
-                                                <div className="nav-icon-bg">Home</div>
-                                            </div>
-                                            <div className="nav-item">Stats</div>
-                                            <div className="nav-item">Tests</div>
-                                            <div className="nav-item">Profile</div>
-                                        </div>
+                                        {/* 6. Bottom Nav with Icons */}
+                                        <nav className="dash-bottom-nav">
+                                            <button className="nav-btn active" title="Dashboard">
+                                                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                                                    <rect x="3" y="3" width="7" height="7" rx="2" />
+                                                    <rect x="14" y="3" width="7" height="7" rx="2" />
+                                                    <rect x="3" y="14" width="7" height="7" rx="2" />
+                                                    <rect x="14" y="14" width="7" height="7" rx="2" />
+                                                </svg>
+                                            </button>
+                                            <button className="nav-btn" title="Sprint">
+                                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                                    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" strokeLinecap="round" strokeLinejoin="round" />
+                                                </svg>
+                                            </button>
+                                            <button className="nav-btn" title="Practice">
+                                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                                    <circle cx="12" cy="12" r="9" />
+                                                    <path d="M12 6v6l4 2" />
+                                                </svg>
+                                            </button>
+                                            <button className="nav-btn" title="Analytics">
+                                                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                                                    <rect x="4" y="12" width="4" height="8" rx="1" />
+                                                    <rect x="10" y="8" width="4" height="12" rx="1" />
+                                                    <rect x="16" y="4" width="4" height="16" rx="1" />
+                                                </svg>
+                                            </button>
+                                        </nav>
                                     </div>
                                 </div>
                             </div>
@@ -420,6 +424,9 @@ export const WaitlistLandingPage: React.FC<WaitlistLandingPageProps> = ({ onGetS
                 </div>
             </div>
 
+            {/* Why Speed Matters Section */}
+            <WhySpeedMattersSection />
+
             {/* Mindmap Narrative Section */}
             <MindmapSection />
 
@@ -445,7 +452,7 @@ export const WaitlistLandingPage: React.FC<WaitlistLandingPageProps> = ({ onGetS
                     {/* Bottom: White Footer Dock */}
                     <div className="nietzsche-footer">
                         <div className="footer-content">
-                            <img src="/logo.png" alt="Drut" style={{ height: '150px' }} />
+                            <img src="/logo.png" alt="Drut" style={{ height: '200px' }} />
                             <div className="footer-contact">
                                 <a href="mailto:pranav.n@drut.club">pranav.n@drut.club</a>
                                 <span className="footer-divider">|</span>
@@ -593,6 +600,56 @@ const MindmapSection = () => {
     );
 };
 
+/* --- Why Speed Matters Section --- */
+const WhySpeedMattersSection = () => {
+    const speedCards = [
+        {
+            number: '01',
+            title: 'CAT: 5 Questions = 20-30 Percentile Jump',
+            description: 'In CAT, solving just 5 extra questions can increase your percentile by 20–30 points. Speed is the difference between IIM-A and rejection.',
+        },
+        {
+            number: '02',
+            title: 'JEE: Seconds Saved = Higher Accuracy',
+            description: 'In JEE, seconds saved per question translates to higher accuracy under pressure. Every second counts in a 3-hour battle.',
+        },
+        {
+            number: '03',
+            title: 'Toppers Solve Faster, Not Better',
+            description: 'Toppers don\'t solve better — they solve faster. Their secret isn\'t more knowledge, it\'s trained reflexes and pattern recognition.',
+        },
+        {
+            number: '04',
+            title: 'Speed is Trainable, Not Talent',
+            description: 'Speed is scientifically trainable, not talent. With the right system, anyone can reduce their time-to-solve by 20-40% in 30 days.',
+        },
+    ];
+
+    return (
+        <section className="why-speed-section">
+            <div className="why-speed-container">
+                <div className="why-speed-header">
+                    <span className="why-speed-label">THE TRUTH</span>
+                    <h2 className="why-speed-title">Why Speed Matters</h2>
+                    <p className="why-speed-subtitle">
+                        Most students fail not because they don't know the answers, but because they run out of time. Here's the brutal truth about competitive exams.
+                    </p>
+                </div>
+
+                <div className="why-speed-cards">
+                    {speedCards.map((card, index) => (
+                        <div key={index} className="why-speed-card">
+                            <div className="why-speed-card-number">{card.number}</div>
+                            <h3 className="why-speed-card-title">{card.title}</h3>
+                            <p className="why-speed-card-desc">{card.description}</p>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </section>
+    );
+};
+
 const BentoSection = () => {
     const scrollToWaitlist = () => {
         document.getElementById('waitlist-form-area')?.scrollIntoView({ behavior: 'smooth' });
@@ -704,11 +761,17 @@ const HeroEmailForm = () => {
             // Insert into waitlist table
             const { error: insertError } = await supabase
                 .from('waitlist')
-                .insert([{ email, source: 'hero_quick' }]);
+                .insert([{ email, exam_interest: 'Quick Signup' }]);
 
             if (insertError) {
                 console.error('Supabase insert error:', insertError);
-                setError('Failed to join. Please try again.');
+                // Check if it's a duplicate email error
+                if (insertError.code === '23505' || insertError.message?.includes('duplicate') || insertError.message?.includes('unique')) {
+                    setSuccess(true); // Treat as success - they're already on the list!
+                    setEmail('');
+                } else {
+                    setError('Failed to join. Please try again.');
+                }
             } else {
                 setSuccess(true);
                 setEmail('');
@@ -812,7 +875,7 @@ const DetailedWaitlistForm = () => {
             </div>
 
             <form onSubmit={handleSubmit} className="wide-form-grid">
-                {/* Left Column: Inputs */}
+                {/* Single Column Layout */}
                 <div className="wide-form-left">
                     <div className="form-group">
                         <label>Your name</label>
@@ -860,23 +923,21 @@ const DetailedWaitlistForm = () => {
                         </select>
                     </div>
 
-                    <button type="submit" className="wide-black-btn" disabled={loading}>
-                        {loading ? 'Sending...' : 'Just Send ↗'}
-                    </button>
-                </div>
-
-                {/* Right Column: Message */}
-                <div className="wide-form-right">
-                    <div className="form-group full-height">
+                    <div className="form-group">
                         <label>Message</label>
                         <textarea
                             name="painPoint"
                             placeholder="Let us know your project about (or what slows you down)..."
                             value={formData.painPoint}
                             onChange={handleChange}
-                            className="minimal-input full-textarea"
+                            className="minimal-input"
+                            rows={4}
                         ></textarea>
                     </div>
+
+                    <button type="submit" className="wide-black-btn" disabled={loading}>
+                        {loading ? 'Sending...' : 'Just Send ↗'}
+                    </button>
                 </div>
             </form>
         </div>

@@ -19,68 +19,267 @@ serve(async (req) => {
 
     const firstName = name ? name.split(' ')[0] : 'there';
 
-    // Headspace-style Template
+    // Polished Waitlist Confirmation Email Template
     const emailHtml = `
       <!DOCTYPE html>
       <html>
       <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Welcome to Drut</title>
         <style>
-          body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; margin: 0; padding: 0; background-color: #fceecb; }
-          .container { max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 16px; overflow: hidden; margin-top: 40px; margin-bottom: 40px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
-          .header { background-color: #ffd600; padding: 40px 20px; text-align: center; position: relative; }
+          body { 
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; 
+            margin: 0; 
+            padding: 0; 
+            background-color: #f5f9f5; 
+            -webkit-font-smoothing: antialiased;
+          }
+          .container { 
+            max-width: 600px; 
+            margin: 0 auto; 
+            background: #ffffff; 
+            border-radius: 16px; 
+            overflow: hidden; 
+            margin-top: 40px; 
+            margin-bottom: 40px; 
+            box-shadow: 0 4px 24px rgba(0,0,0,0.06); 
+          }
           
-          /* The "Headspace" Sun Graphic */
-          .sun-graphic {
-            width: 120px;
-            height: 60px;
-            background: #ff9d00;
-            border-radius: 120px 120px 0 0;
-            margin: 20px auto 0;
+          /* Header Section */
+          .header { 
+            background: linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 100%);
+            padding: 48px 32px 32px; 
+            text-align: center; 
+          }
+          .header-tagline {
+            font-size: 13px;
+            font-weight: 600;
+            color: #4CAF50;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+          }
+          .header-title { 
+            font-size: 32px; 
+            font-weight: 800; 
+            color: #1a1a1a; 
+            line-height: 1.2;
+            margin: 0;
+          }
+          
+          /* Hero Image Section */
+          .hero-image-container {
+            background: linear-gradient(180deg, #f1f8e9 0%, #ffffff 100%);
+            padding: 24px 32px 32px;
+            text-align: center;
+          }
+          .hero-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+          }
+          
+          /* Sub-headline Section */
+          .sub-headline {
+            padding: 32px 40px;
+            text-align: center;
+            border-bottom: 1px solid #e8f5e9;
+          }
+          .sub-headline p {
+            color: #333;
+            font-size: 16px;
+            line-height: 1.7;
+            margin: 0;
+          }
+          .sub-headline .greeting {
+            color: #4CAF50;
+            font-weight: 600;
+            margin-bottom: 12px;
+          }
+          
+          /* Body Content Section */
+          .content { 
+            padding: 32px 40px; 
+            color: #4a4a4a; 
+            font-size: 15px; 
+            line-height: 1.7; 
+          }
+          .content .intro-text {
+            text-align: center;
+            font-style: italic;
+            color: #666;
+            margin-bottom: 24px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid #e8f5e9;
+          }
+          .content .features-intro {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 16px;
+          }
+          .feature-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 24px 0;
+          }
+          .feature-list li {
+            padding: 12px 0;
+            padding-left: 32px;
             position: relative;
+            border-bottom: 1px solid #f5f5f5;
           }
-          .sun-graphic::after {
-             content: '';
-             position: absolute;
-             bottom: 10px;
-             left: 50%;
-             transform: translateX(-50%);
-             width: 40px;
-             height: 20px;
-             border-bottom: 3px solid #333;
-             border-radius: 0 0 20px 20px;
+          .feature-list li:last-child {
+            border-bottom: none;
           }
-
-          .logo { font-size: 24px; font-weight: bold; color: #333; margin-bottom: 10px; }
-          .hero-text { font-size: 28px; font-weight: 800; color: #1a1a1a; margin-top: 10px; line-height: 1.2; }
+          .feature-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #4CAF50;
+            font-weight: bold;
+            font-size: 16px;
+          }
+          .feature-list .feature-title {
+            font-weight: 600;
+            color: #333;
+          }
+          .feature-list .feature-desc {
+            color: #666;
+            font-size: 14px;
+          }
+          .waitlist-confirmation {
+            text-align: center;
+            background: linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 100%);
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 24px;
+          }
+          .waitlist-confirmation p {
+            margin: 0;
+            color: #2e7d32;
+            font-weight: 500;
+          }
           
-          .content { padding: 40px 30px; text-align: center; color: #4a4a4a; font-size: 16px; line-height: 1.6; }
-          .unique-id-box { background: #fff8e1; border: 1px dashed #ffd600; padding: 15px; border-radius: 8px; display: inline-block; margin: 20px 0; font-family: monospace; font-size: 18px; color: #333; letter-spacing: 1px; font-weight: bold; }
+          /* CTA Section */
+          .cta-section {
+            padding: 32px 40px;
+            text-align: center;
+            background: #fafafa;
+            border-top: 1px solid #e8f5e9;
+          }
+          .cta-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 12px;
+          }
+          .cta-description {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 24px;
+          }
+          .btn { 
+            display: inline-block; 
+            background: linear-gradient(135deg, #4CAF50 0%, #43A047 100%);
+            color: #ffffff; 
+            text-decoration: none; 
+            padding: 16px 40px; 
+            border-radius: 50px; 
+            font-weight: 700;
+            font-size: 15px;
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+            transition: all 0.3s ease;
+          }
           
-          .btn { display: inline-block; background-color: #ff9d00; color: #ffffff; text-decoration: none; padding: 14px 32px; border-radius: 50px; font-weight: bold; margin-top: 20px; }
-          .btn:hover { background-color: #e68a00; }
+          /* Footer Section */
+          .footer { 
+            padding: 32px 40px; 
+            text-align: center; 
+            background: #ffffff;
+            border-top: 1px solid #e8f5e9;
+          }
+          .footer-logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: #4CAF50;
+            margin-bottom: 8px;
+          }
+          .footer-logo span {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background: #4CAF50;
+            border-radius: 50%;
+            margin-right: 6px;
+          }
           
-          .footer { padding: 20px; text-align: center; font-size: 12px; color: #999; border-top: 1px solid #eee; }
+          /* Responsive */
+          @media only screen and (max-width: 600px) {
+            .container { margin: 20px 16px; border-radius: 12px; }
+            .header { padding: 32px 24px 24px; }
+            .header-title { font-size: 26px; }
+            .sub-headline, .content, .cta-section, .footer { padding: 24px; }
+            .btn { padding: 14px 32px; }
+          }
         </style>
       </head>
       <body>
         <div class="container">
+          <!-- Header -->
           <div class="header">
-            <div class="logo">● Drut.</div>
-            <div class="hero-text">Welcome to the<br>Speed-First Era.</div>
-            <div class="sun-graphic"></div>
+            <div class="header-tagline">Small Improvements. Big Results</div>
+            <h1 class="header-title">Your Speed Journey Starts Now.</h1>
           </div>
+          
+          <!-- Hero Image -->
+          <div class="hero-image-container">
+            <img src="https://drut.club/assets/hero-email.png" alt="Drut Speed Training" class="hero-image" />
+          </div>
+          
+          <!-- Sub-headline -->
+          <div class="sub-headline">
+            <p class="greeting">Thank you for joining the Drut waitlist.</p>
+            <p>Drut helps you improve your problem-solving speed with adaptive practice and AI-guided feedback — so you get faster, confidently and consistently.</p>
+          </div>
+          
+          <!-- Body Content -->
           <div class="content">
-            <p>Hi ${firstName},</p>
-            <p>Studies have shown that reflexes beat memorization in competitive exams. You've taken the first step to mastering your speed.</p>
+            <p class="intro-text">Timed practice with immediate feedback is scientifically proven to increase both speed and accuracy in competitive exams.</p>
             
-            <div class="unique-id-box">#${customerId}</div>
+            <p class="features-intro">Drut builds on this principle with:</p>
             
-            <p>You are now on the official waitlist. We will notify you when your cohort opens.</p>
+            <ul class="feature-list">
+              <li>
+                <span class="feature-title">Adaptive Sprints</span>
+                <div class="feature-desc">that train and refine your pace</div>
+              </li>
+              <li>
+                <span class="feature-title">Weak-spot Detection</span>
+                <div class="feature-desc">that highlights exactly where you lose time</div>
+              </li>
+              <li>
+                <span class="feature-title">Instant AI Feedback</span>
+                <div class="feature-desc">that helps you improve with every session</div>
+              </li>
+            </ul>
             
-            <a href="#" class="btn">Check Your Position</a>
+            <div class="waitlist-confirmation">
+              <p>🎉 You're officially on the waitlist — we'll notify you as soon as early access opens.</p>
+            </div>
           </div>
+          
+          <!-- CTA Section -->
+          <div class="cta-section">
+            <div class="cta-title">Share Your Feedback</div>
+            <p class="cta-description">Schedule a 15-min LIVE demo with the founder to explore Drut, understand how it works, and share your feedback directly.</p>
+            <a href="https://drut.zohobookings.in/#/LivePreview" class="btn">Book a 15-min Call</a>
+          </div>
+          
+          <!-- Footer -->
           <div class="footer">
-            <p>© 2025 Drut Learning Technologies.<br>Sent with love from our Speed Labs.</p>
+            <div class="footer-logo"><span></span>Drut</div>
           </div>
         </div>
       </body>
@@ -97,9 +296,9 @@ serve(async (req) => {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          from: 'Drut <onboarding@resend.dev>', // Default Resend input, user should configure domain
+          from: 'Drut <admin@drut.club>',
           to: email,
-          subject: 'Welcome to the Speed-First Era',
+          subject: 'Your Speed Journey Starts Now — Welcome to Drut',
           html: emailHtml
         })
       });
