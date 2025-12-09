@@ -759,9 +759,11 @@ const HeroEmailForm = () => {
         setError('');
         try {
             // Insert into waitlist table
-            const { error: insertError } = await supabase
+            const { data: insertData, error: insertError } = await supabase
                 .from('waitlist')
-                .insert([{ email, exam_interest: 'Quick Signup' }]);
+                .insert([{ email, exam_interest: 'Quick Signup' }])
+                .select('id')
+                .single();
 
             if (insertError) {
                 console.error('Supabase insert error:', JSON.stringify(insertError, null, 2));
@@ -775,6 +777,21 @@ const HeroEmailForm = () => {
                     setError(`Failed to join: ${insertError.message || 'Unknown error'}`);
                 }
             } else {
+                // Send confirmation email via Edge Function
+                try {
+                    await fetch('https://ukrtaerwaxekonislnpw.supabase.co/functions/v1/send-waitlist-email', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            email,
+                            customerId: insertData?.id || 'unknown',
+                            name: 'there',
+                            exam: 'Quick Signup'
+                        })
+                    });
+                } catch (emailErr) {
+                    console.warn('Email send failed (non-blocking):', emailErr);
+                }
                 setSuccess(true);
                 setEmail('');
             }
