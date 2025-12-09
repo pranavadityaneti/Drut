@@ -758,12 +758,10 @@ const HeroEmailForm = () => {
         setLoading(true);
         setError('');
         try {
-            // Insert into waitlist table
-            const { data: insertData, error: insertError } = await supabase
+            // Insert into waitlist table (no .select() to avoid RLS issues)
+            const { error: insertError } = await supabase
                 .from('waitlist')
-                .insert([{ email, exam_interest: 'Quick Signup' }])
-                .select('id')
-                .single();
+                .insert([{ email, exam_interest: 'Quick Signup' }]);
 
             if (insertError) {
                 console.error('Supabase insert error:', JSON.stringify(insertError, null, 2));
@@ -779,12 +777,17 @@ const HeroEmailForm = () => {
             } else {
                 // Send confirmation email via Edge Function
                 try {
+                    const ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVrcnRhZXJ3YXhla29uaXNsbnB3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI3NjQyOTcsImV4cCI6MjA3ODM0MDI5N30.kSp_OfqOl9F3cfXRp9W_-HfQ4eO9tFKt3kBbU6yvxv8';
                     await fetch('https://ukrtaerwaxekonislnpw.supabase.co/functions/v1/send-waitlist-email', {
                         method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${ANON_KEY}`,
+                            'apikey': ANON_KEY
+                        },
                         body: JSON.stringify({
                             email,
-                            customerId: insertData?.id || 'unknown',
+                            customerId: email,
                             name: 'there',
                             exam: 'Quick Signup'
                         })
