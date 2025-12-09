@@ -22,7 +22,11 @@ export function getSupabase(): SupabaseClient {
   try {
     client = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
       realtime: { params: { eventsPerSecond: 2 } },
-      auth: { persistSession: true, autoRefreshToken: true },
+      auth: {
+        persistSession: false,      // Disable localStorage to avoid storage access errors
+        detectSessionInUrl: false,  // Don't parse session from URL
+        autoRefreshToken: false     // No auto-refresh needed for anon key
+      },
     });
   } catch (error) {
     // This provides a more helpful message for the specific "Invalid URL" error.

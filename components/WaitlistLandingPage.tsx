@@ -764,13 +764,15 @@ const HeroEmailForm = () => {
                 .insert([{ email, exam_interest: 'Quick Signup' }]);
 
             if (insertError) {
-                console.error('Supabase insert error:', insertError);
+                console.error('Supabase insert error:', JSON.stringify(insertError, null, 2));
                 // Check if it's a duplicate email error
                 if (insertError.code === '23505' || insertError.message?.includes('duplicate') || insertError.message?.includes('unique')) {
                     setSuccess(true); // Treat as success - they're already on the list!
                     setEmail('');
+                } else if (insertError.code === 'PGRST301' || insertError.message?.includes('permission')) {
+                    setError('Server configuration issue. Please try again later.');
                 } else {
-                    setError('Failed to join. Please try again.');
+                    setError(`Failed to join: ${insertError.message || 'Unknown error'}`);
                 }
             } else {
                 setSuccess(true);
