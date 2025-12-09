@@ -235,7 +235,7 @@ serve(async (req) => {
           
           <!-- Hero Image -->
           <div class="hero-image-container">
-            <img src="https://drut.club/assets/hero-email.png" alt="Drut Speed Training" class="hero-image" />
+            <img src="https://www.drut.club/assets/hero-email.png" alt="Drut Speed Training" class="hero-image" />
           </div>
           
           <!-- Sub-headline -->
