@@ -26,6 +26,7 @@ interface LeaderboardEntry {
 interface ArenaWidgetProps {
     currentUserRank?: number;
     currentUserScore?: number;
+    className?: string;
 }
 
 // Mock leaderboard data - TODO: Replace with real data from Supabase
@@ -40,6 +41,7 @@ const MOCK_LEADERBOARD: LeaderboardEntry[] = [
 export const ArenaWidget: React.FC<ArenaWidgetProps> = ({
     currentUserRank = 4,
     currentUserScore = 450,
+    className,
 }) => {
     // Update mock data with current user values
     const leaderboard = MOCK_LEADERBOARD.map(entry =>
@@ -49,7 +51,7 @@ export const ArenaWidget: React.FC<ArenaWidgetProps> = ({
     ).sort((a, b) => a.rank - b.rank);
 
     return (
-        <Card className="min-h-[280px]">
+        <Card className={cn("min-h-[280px]", className)}>
             <CardHeader className="pb-2">
                 <CardTitle className="flex items-center gap-2 text-base">
                     <Trophy className="w-4 h-4 text-amber-500" />

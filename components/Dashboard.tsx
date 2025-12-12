@@ -14,11 +14,9 @@ import { ArenaWidget } from './dashboard/ArenaWidget';
 import { StaminaCurve } from './analytics/StaminaCurve';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/Card';
 import { Loader2, Activity } from 'lucide-react';
-import { useSidebar } from './ui/AppShell';
 
 export const Dashboard: React.FC = () => {
   const { data, loading, error, refetch } = useDashboardData();
-  const { open: sidebarOpen } = useSidebar();
 
   // Handle debt clearing (placeholder)
   const handleClearDebt = () => {
@@ -69,72 +67,65 @@ export const Dashboard: React.FC = () => {
   const topicStats = data?.topicStats ?? [];
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 pb-12">
       {/* 
-              Main grid layout - responsive
-              Mobile: 1 column
-              Tablet: 2 columns (Content + Debt)
-              Desktop: 3 columns (Arena | Content | Debt)
-              
-              When sidebar collapses, the layout adjusts automatically via flex-1 in parent
-            */}
-      <div className="grid grid-cols-1 md:grid-cols-[1fr_280px] xl:grid-cols-[280px_1fr_280px] gap-8">
-
-        {/* Left Column - Arena (Desktop only) */}
-        <div className="hidden xl:block">
-          <ArenaWidget
-            currentUserRank={4}
-            currentUserScore={speedScore * 5}
-          />
-        </div>
-
-        {/* Center Column - Main Content */}
-        <div className="space-y-8">
-          {/* Hero: Speed Pulse */}
-          <SpeedPulse
-            score={speedScore}
-            rating={speedRating}
-            trend={speedTrend}
-            verifiedCount={verifiedPatterns}
-            totalCount={totalPatterns}
-          />
-
-          {/* Mastery Grid */}
-          <MasteryGrid
-            topicStats={topicStats}
-            onTopicClick={handleTopicClick}
-          />
-
-          {/* Stamina Curve */}
-          <Card>
-            <CardHeader className="pb-2">
-              <CardTitle className="flex items-center gap-2 text-base">
-                <Activity className="w-4 h-4 text-blue-600" />
-                Stamina Curve
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <StaminaCurve />
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Right Column - Debt Collector */}
-        <div className="md:sticky md:top-4 md:h-fit order-first md:order-last">
-          <DebtCollector
-            patterns={debtPatterns}
-            onClearDebt={handleClearDebt}
-          />
-        </div>
-
-      </div>
-
-      {/* Tablet/Mobile: Show Arena below main content */}
-      <div className="xl:hidden">
+        ROW 1: Stats & Widgets
+        Desktop: 3 columns, equal height (widgets are direct children)
+        Tablet: 2 columns top (Arena + Speed), 1 full width bottom (Debt) or vice versa
+        Mobile: 1 column stack
+      */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
         <ArenaWidget
           currentUserRank={4}
           currentUserScore={speedScore * 5}
+          className="h-full"
         />
+        <SpeedPulse
+          score={speedScore}
+          rating={speedRating}
+          trend={speedTrend}
+          verifiedCount={verifiedPatterns}
+          totalCount={totalPatterns}
+          className="h-full"
+        />
+        <DebtCollector
+          patterns={debtPatterns}
+          onClearDebt={handleClearDebt}
+          className="md:col-span-2 lg:col-span-1 h-full"
+        />
+      </div>
+
+      {/* 
+        ROW 2: Mastery Grid
+        Full width
+      */}
+      <div className="w-full">
+        <MasteryGrid
+          topicStats={topicStats}
+          onTopicClick={handleTopicClick}
+        />
+      </div>
+
+      {/* 
+        ROW 3: Stamina Curve
+        Right aligned (occupies right half on desktop)
+      */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {/* Empty left column placeholder for future card */}
+        <div className="hidden lg:block"></div>
+
+        {/* Stamina Curve - Right Side */}
+        <Card className="h-full">
+          <CardHeader className="pb-2">
+            <CardTitle className="flex items-center gap-2 text-base">
+              <Activity className="w-4 h-4 text-blue-600" />
+              Stamina Curve
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <StaminaCurve data={[]} />
+          </CardContent>
+        </Card>
       </div>
     </div>
   );

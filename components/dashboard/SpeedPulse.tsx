@@ -16,6 +16,7 @@ interface SpeedPulseProps {
     trend?: number; // +/- percentage
     verifiedCount: number;
     totalCount: number;
+    className?: string;
 }
 
 export const SpeedPulse: React.FC<SpeedPulseProps> = ({
@@ -24,6 +25,7 @@ export const SpeedPulse: React.FC<SpeedPulseProps> = ({
     trend = 0,
     verifiedCount,
     totalCount,
+    className,
 }) => {
     // Rating colors (Emerald-based)
     const ratingConfig: Record<string, { color: string; bg: string }> = {
@@ -36,7 +38,7 @@ export const SpeedPulse: React.FC<SpeedPulseProps> = ({
     const config = ratingConfig[rating];
 
     return (
-        <Card>
+        <Card className={className}>
             <CardHeader className="pb-2">
                 <CardTitle className="flex items-center gap-2 text-base">
                     <Zap className="w-5 h-5 text-emerald-600" />

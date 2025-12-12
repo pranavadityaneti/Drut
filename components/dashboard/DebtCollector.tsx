@@ -22,11 +22,13 @@ interface DebtPattern {
 interface DebtCollectorProps {
     patterns: DebtPattern[];
     onClearDebt?: () => void;
+    className?: string;
 }
 
 export const DebtCollector: React.FC<DebtCollectorProps> = ({
     patterns,
     onClearDebt,
+    className,
 }) => {
     const hasDebt = patterns.length > 0;
 
@@ -49,7 +51,8 @@ export const DebtCollector: React.FC<DebtCollectorProps> = ({
     return (
         <Card className={cn(
             "min-h-[280px]", // Match SpeedPulse height
-            hasDebt && "border-amber-200 bg-amber-50/50"
+            hasDebt && "border-amber-200 bg-amber-50/50",
+            className
         )}>
             <CardHeader className="pb-3">
                 <div className="flex items-center justify-between">
