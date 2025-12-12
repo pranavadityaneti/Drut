@@ -722,31 +722,30 @@ export const NewPractice: React.FC = () => {
             </aside>
 
             {/* Right Workspace Area */}
-            <main className="flex-1 space-y-6">
-                <Card>
-                    <CardContent className="p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-                        <p className="text-sm text-muted-foreground font-medium">
-                            Question {currentQuestionIndex + 1}
-                        </p>
+            <main className="flex-1 space-y-4">
+                {/* Header row: Question number on left, Difficulty on right */}
+                <div className="flex items-center justify-between">
+                    <p className="text-sm text-muted-foreground font-medium">
+                        Question {currentQuestionIndex + 1}
+                    </p>
 
-                        <div className="flex items-center gap-2">
-                            <label htmlFor="difficulty-select" className="text-sm font-medium text-muted-foreground">
-                                Difficulty:
-                            </label>
-                            <Select
-                                id="difficulty-select"
-                                options={[
-                                    { value: 'Easy', label: 'Easy' },
-                                    { value: 'Medium', label: 'Medium' },
-                                    { value: 'Hard', label: 'Hard' },
-                                ]}
-                                value={difficulty}
-                                onChange={(e) => handleDifficultyChange(e.target.value as 'Easy' | 'Medium' | 'Hard')}
-                                className="w-32"
-                            />
-                        </div>
-                    </CardContent>
-                </Card>
+                    <div className="flex items-center gap-2">
+                        <label htmlFor="difficulty-select" className="text-sm font-medium text-muted-foreground">
+                            Difficulty:
+                        </label>
+                        <Select
+                            id="difficulty-select"
+                            options={[
+                                { value: 'Easy', label: 'Easy' },
+                                { value: 'Medium', label: 'Medium' },
+                                { value: 'Hard', label: 'Hard' },
+                            ]}
+                            value={difficulty}
+                            onChange={(e) => handleDifficultyChange(e.target.value as 'Easy' | 'Medium' | 'Hard')}
+                            className="w-32"
+                        />
+                    </div>
+                </div>
 
                 <WorkspaceArea />
             </main>
