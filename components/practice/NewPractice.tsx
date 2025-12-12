@@ -624,6 +624,19 @@ export const NewPractice: React.FC = () => {
                         </button>
                     </div>
                 )}
+
+                {/* Intervention Panel - Inline below question */}
+                {practiceState === 'intervention' && questionData && (
+                    <InterventionModal
+                        questionData={questionData}
+                        isCorrect={lastAnswerCorrect}
+                        isFast={lastAnswerFast}
+                        timeTaken={timeTaken}
+                        targetTime={targetTime || 45}
+                        onProveIt={handleProveIt}
+                        onSkip={handleSkipIntervention}
+                    />
+                )}
             </div>
         );
     };
@@ -713,18 +726,7 @@ export const NewPractice: React.FC = () => {
                 />
             )}
 
-            {/* Intervention Modal - Fixed position overlay */}
-            {practiceState === 'intervention' && questionData && (
-                <InterventionModal
-                    questionData={questionData}
-                    isCorrect={lastAnswerCorrect}
-                    isFast={lastAnswerFast}
-                    timeTaken={timeTaken}
-                    targetTime={targetTime || 45}
-                    onProveIt={handleProveIt}
-                    onSkip={handleSkipIntervention}
-                />
-            )}
+
 
             {/* Toast Notifications */}
             <ToastContainer toasts={toasts} onDismiss={dismissToast} />
