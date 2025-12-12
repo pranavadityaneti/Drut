@@ -1,4 +1,5 @@
 import './client-bootstrap'; // MUST be the first import.
+import './global.css'; // Tailwind + Theme
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';

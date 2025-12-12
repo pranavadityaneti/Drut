@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { cn } from '@/lib/utils';
 import { getCurrentUser, updateUser } from '../services/authService';
 import { uploadAvatar } from '../services/profileService';
 import { fetchUserAnalytics } from '../services/analyticsService';
 import { User } from '../types';
-import { EXAM_PROFILES } from '../constants';
+import { EXAM_TAXONOMY, getExamOptions } from '../lib/taxonomy';
 import { log } from '../lib/log';
 import { supabase } from '../lib/supabase';
 
@@ -40,7 +41,7 @@ export const Profile: React.FC<{}> = () => {
           const metadata = currentUser.user_metadata;
           setFullName(metadata.full_name || '');
           setPhone(metadata.phone || '');
-          setExamProfile(metadata.exam_profile || EXAM_PROFILES[0].value);
+          setExamProfile(metadata.exam_profile || EXAM_TAXONOMY[0].value);
           setAvatarUrl(metadata.avatar_url);
           setAvatarPreview(metadata.avatar_url);
           setTargetScore(metadata.target_score || '');
@@ -119,7 +120,7 @@ export const Profile: React.FC<{}> = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
-        <svg className="animate-spin h-10 w-10 text-primary" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <svg className="animate-spin h-10 w-10 text-emerald-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
           <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
           <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
         </svg>
@@ -178,7 +179,7 @@ export const Profile: React.FC<{}> = () => {
                   <button
                     type="button"
                     onClick={() => fileInputRef.current?.click()}
-                    className="absolute bottom-0 right-0 bg-primary text-white p-1.5 rounded-full hover:bg-primary/90 transition-colors"
+                    className="absolute bottom-0 right-0 bg-emerald-500 text-white p-1.5 rounded-full hover:bg-emerald-600 transition-colors"
                   >
                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
@@ -206,7 +207,7 @@ export const Profile: React.FC<{}> = () => {
                   type="text"
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
-                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 outline-none transition-all"
                   placeholder="Your Name"
                 />
               </div>
@@ -229,7 +230,7 @@ export const Profile: React.FC<{}> = () => {
                   type="tel"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 outline-none transition-all"
                   placeholder="(123) 456-7890"
                 />
               </div>
@@ -259,9 +260,9 @@ export const Profile: React.FC<{}> = () => {
                 <select
                   value={examProfile}
                   onChange={(e) => setExamProfile(e.target.value)}
-                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all bg-white"
+                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 outline-none transition-all bg-white"
                 >
-                  {EXAM_PROFILES.map(profile => (
+                  {getExamOptions().map(profile => (
                     <option key={profile.value} value={profile.value}>{profile.label}</option>
                   ))}
                 </select>
@@ -274,7 +275,7 @@ export const Profile: React.FC<{}> = () => {
                   type="text"
                   value={targetScore}
                   onChange={(e) => setTargetScore(e.target.value)}
-                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 outline-none transition-all"
                   placeholder="e.g., JEE Main 250+, CAT 99%ile"
                 />
               </div>
@@ -288,7 +289,7 @@ export const Profile: React.FC<{}> = () => {
                   max="16"
                   value={studyHours}
                   onChange={(e) => setStudyHours(e.target.value)}
-                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 outline-none transition-all"
                 />
               </div>
 
@@ -301,7 +302,7 @@ export const Profile: React.FC<{}> = () => {
                   max="200"
                   value={dailyGoal}
                   onChange={(e) => setDailyGoal(e.target.value)}
-                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all"
+                  className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 outline-none transition-all"
                 />
                 <p className="text-xs text-gray-500 mt-1">Number of questions you aim to solve daily</p>
               </div>
@@ -319,7 +320,7 @@ export const Profile: React.FC<{}> = () => {
                   <p className="text-xs text-gray-600">Total Questions</p>
                   <p className="text-2xl font-bold text-foreground mt-1">{analytics?.total_attempts || 0}</p>
                 </div>
-                <svg className="w-10 h-10 text-primary/20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="w-10 h-10 text-emerald-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
               </div>
@@ -407,7 +408,7 @@ export const Profile: React.FC<{}> = () => {
           <button
             type="submit"
             disabled={saving}
-            className="px-8 py-3 bg-primary text-white rounded-xl font-medium hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+            className="px-8 py-3 bg-emerald-500 text-white rounded-xl font-medium hover:bg-emerald-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
           >
             {saving ? (
               <>

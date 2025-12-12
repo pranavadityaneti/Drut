@@ -1,0 +1,133 @@
+/**
+ * SpeedPulse Component
+ * 
+ * Hero component with semi-circle gauge showing Speed Rating (0-100)
+ * Light theme with Emerald accents
+ */
+
+import React from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '../ui/Card';
+import { cn } from '@/lib/utils';
+import { Zap, TrendingUp } from 'lucide-react';
+
+interface SpeedPulseProps {
+    score: number; // 0-100
+    rating: 'Rookie' | 'Learner' | 'Pro' | 'Elite';
+    trend?: number; // +/- percentage
+    verifiedCount: number;
+    totalCount: number;
+}
+
+export const SpeedPulse: React.FC<SpeedPulseProps> = ({
+    score,
+    rating,
+    trend = 0,
+    verifiedCount,
+    totalCount,
+}) => {
+    // Rating colors (Emerald-based)
+    const ratingConfig: Record<string, { color: string; bg: string }> = {
+        Rookie: { color: 'text-muted-foreground', bg: 'bg-muted' },
+        Learner: { color: 'text-blue-600', bg: 'bg-blue-100' },
+        Pro: { color: 'text-emerald-600', bg: 'bg-emerald-100' },
+        Elite: { color: 'text-amber-600', bg: 'bg-amber-100' },
+    };
+
+    const config = ratingConfig[rating];
+
+    return (
+        <Card>
+            <CardHeader className="pb-2">
+                <CardTitle className="flex items-center gap-2 text-base">
+                    <Zap className="w-5 h-5 text-emerald-600" />
+                    Speed Pulse
+                </CardTitle>
+            </CardHeader>
+
+            <CardContent>
+                <div className="flex flex-col items-center">
+                    {/* Semi-circle Gauge */}
+                    <div className="relative w-48 h-24 mb-4">
+                        <svg viewBox="0 0 200 100" className="w-full h-full">
+                            {/* Background arc */}
+                            <path
+                                d="M 20 95 A 80 80 0 0 1 180 95"
+                                fill="none"
+                                stroke="#e5e7eb"
+                                strokeWidth="12"
+                                strokeLinecap="round"
+                            />
+
+                            {/* Progress arc - Emerald */}
+                            <path
+                                d="M 20 95 A 80 80 0 0 1 180 95"
+                                fill="none"
+                                stroke="#10b981"
+                                strokeWidth="12"
+                                strokeLinecap="round"
+                                strokeDasharray={`${(score / 100) * 251.2} 251.2`}
+                                className="transition-all duration-1000"
+                            />
+                        </svg>
+
+                        {/* Center score */}
+                        <div className="absolute inset-0 flex flex-col items-center justify-end pb-1">
+                            <span className="text-4xl font-bold text-foreground">
+                                {score}
+                            </span>
+                        </div>
+                    </div>
+
+                    {/* Rating badge */}
+                    <span className={cn(
+                        "px-4 py-1.5 rounded-full text-sm font-medium mb-4",
+                        config.bg,
+                        config.color
+                    )}>
+                        {rating}
+                    </span>
+
+                    {/* Stats row */}
+                    <div className="flex items-center gap-6 text-sm">
+                        <div className="text-center">
+                            <div className="text-xl font-semibold text-foreground">{verifiedCount}</div>
+                            <div className="text-muted-foreground text-xs">Verified</div>
+                        </div>
+                        <div className="w-px h-8 bg-border" />
+                        <div className="text-center">
+                            <div className="text-xl font-semibold text-foreground">{totalCount}</div>
+                            <div className="text-muted-foreground text-xs">Total Seen</div>
+                        </div>
+                        {trend !== 0 && (
+                            <>
+                                <div className="w-px h-8 bg-border" />
+                                <div className="flex items-center gap-1">
+                                    <TrendingUp className={cn(
+                                        "w-4 h-4",
+                                        trend > 0 ? "text-emerald-600" : "text-red-500"
+                                    )} />
+                                    <span className={cn(
+                                        "font-medium",
+                                        trend > 0 ? "text-emerald-600" : "text-red-500"
+                                    )}>
+                                        {trend > 0 ? '+' : ''}{trend}%
+                                    </span>
+                                </div>
+                            </>
+                        )}
+                    </div>
+
+                    {/* Motivational text */}
+                    <p className="mt-3 text-center text-muted-foreground text-xs">
+                        {score < 30 && "Keep practicing! Every pattern mastered is a step forward."}
+                        {score >= 30 && score < 60 && "Great progress! You're building momentum."}
+                        {score >= 60 && score < 85 && "Impressive! You're approaching mastery."}
+                        {score >= 85 && "Elite status! You're a speed demon!"}
+                    </p>
+                </div>
+            </CardContent>
+        </Card>
+    );
+};
+
+export default SpeedPulse;

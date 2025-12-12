@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { cn } from '@/lib/utils';
 import { fetchSprintPerformance } from '../../services/analyticsService';
-import { BoltIcon } from '../icons/Icons';
+import { Card, CardContent, CardHeader, CardTitle } from '../ui/Card';
+import { Button } from '../ui/Button';
+import { Badge } from '../ui/badge';
+import { Zap, Trophy, Target, Flame, Play, Loader2, Info, Timer, ArrowRight, StopCircle } from 'lucide-react';
 
 interface SprintStartScreenProps {
     onStart: (config: { topic: string; subtopic: string; examProfile: string }) => void;
@@ -60,8 +64,8 @@ export const SprintStartScreen: React.FC<SprintStartScreenProps> = ({ onStart })
         <div className="max-w-7xl mx-auto space-y-8">
             {/* Hero Section */}
             <div className="bg-gradient-to-br from-primary/10 via-blue-50 to-purple-50 rounded-3xl p-12 text-center shadow-card">
-                <div className="inline-flex items-center justify-center w-20 h-20 bg-primary/10 rounded-full mb-4">
-                    <BoltIcon className="w-12 h-12 text-primary" />
+                <div className="inline-flex items-center justify-center w-20 h-20 bg-emerald-50 rounded-full mb-4">
+                    <Zap className="w-12 h-12 text-emerald-600" />
                 </div>
                 <h1 className="text-4xl font-bold text-foreground mb-2">Ready to Sprint?</h1>
                 <p className="text-gray-600 max-w-2xl mx-auto">
@@ -81,7 +85,7 @@ export const SprintStartScreen: React.FC<SprintStartScreenProps> = ({ onStart })
                             <div className="space-y-3">
                                 <div className="flex items-center justify-between p-3 bg-purple-50 rounded-xl">
                                     <span className="text-sm text-gray-600">Best Score</span>
-                                    <span className="text-xl font-bold text-primary">{sprintStats.bestScore} pts</span>
+                                    <span className="text-xl font-bold text-emerald-600">{sprintStats.bestScore} pts</span>
                                 </div>
                                 <div className="flex items-center justify-between p-3 bg-blue-50 rounded-xl">
                                     <span className="text-sm text-gray-600">Total Sprints</span>
@@ -110,11 +114,11 @@ export const SprintStartScreen: React.FC<SprintStartScreenProps> = ({ onStart })
                     {/* Sprint Info Card */}
                     <div className="bg-white p-8 rounded-3xl shadow-card border border-gray-100">
                         <div className="text-center mb-8">
-                            <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/5 rounded-full border border-primary/20 mb-4">
-                                <svg className="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <div className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-50 rounded-full border border-emerald-200 mb-4">
+                                <svg className="w-5 h-5 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
-                                <span className="text-sm font-medium text-primary">
+                                <span className="text-sm font-medium text-emerald-600">
                                     {examProfile || 'Exam profile not set'}
                                 </span>
                             </div>
@@ -143,7 +147,7 @@ export const SprintStartScreen: React.FC<SprintStartScreenProps> = ({ onStart })
                                 </div>
                             ) : (
                                 <div className="flex items-center justify-center gap-3">
-                                    <BoltIcon className="w-7 h-7" />
+                                    <Zap className="w-7 h-7" />
                                     <span>Start Sprint Challenge</span>
                                     <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />

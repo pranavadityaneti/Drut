@@ -22,6 +22,11 @@ export const QuestionSchema = z.object({
   fullStepByStep: z.object({
     steps: z.array(z.string())
   }),
+  // FSM Tag: kebab-case pattern identifier for grouping similar problems
+  fsmTag: z.string().regex(
+    /^[a-z0-9]+(-[a-z0-9]+)*$/,
+    { message: "fsmTag must be lowercase kebab-case (e.g., 'ratio-inverse-prop')" }
+  ),
 });
 
 export type QuestionItem = z.infer<typeof QuestionSchema>;

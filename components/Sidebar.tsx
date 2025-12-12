@@ -1,6 +1,17 @@
 import React, { useState } from 'react';
+import { cn } from '@/lib/utils';
 import { User } from '../types';
-import { UserIcon, LayoutDashboardIcon, PracticeIcon, BoltIcon } from './icons/Icons';
+import {
+  LayoutDashboard,
+  Dumbbell,
+  Zap,
+  User as UserIcon,
+  Upload,
+  ChevronLeft,
+  LogOut
+} from 'lucide-react';
+import { Button } from './ui/Button';
+import { Separator } from './ui/separator-new';
 
 interface SidebarProps {
   currentPage: string;
@@ -9,40 +20,68 @@ interface SidebarProps {
   onLogout: () => void;
 }
 
+interface NavItem {
+  id: string;
+  label: string;
+  icon: React.ElementType;
+}
+
 export const Sidebar: React.FC<SidebarProps> = ({ currentPage, setCurrentPage, user, onLogout }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
 
-  const navItems = [
-    { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboardIcon },
-    { id: 'practice', label: 'Practice', icon: PracticeIcon },
-    { id: 'sprint', label: 'Sprint', icon: BoltIcon },
+  const navItems: NavItem[] = [
+    { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
+    { id: 'practice', label: 'Practice', icon: Dumbbell },
+    { id: 'sprint', label: 'Sprint', icon: Zap },
     { id: 'profile', label: 'Profile', icon: UserIcon },
   ];
 
+  // Admin users get extra nav items
+  const isAdmin = user?.email === 'pranav.n@ideaye.in';
+  const adminItems: NavItem[] = isAdmin ? [
+    { id: 'admin/ingest', label: 'Admin Ingest', icon: Upload },
+    { id: 'admin/bulk', label: 'Bulk Ingest', icon: Upload },
+  ] : [];
+
+  const allNavItems = [...navItems, ...adminItems];
+
   return (
-    <aside className={`fixed inset-y-0 left-0 z-40 flex flex-col bg-white border-r border-border/40 transition-all duration-300 ease-in-out ${isCollapsed ? 'w-20' : 'w-64'}`}>
+    <aside
+      className={cn(
+        "fixed inset-y-0 left-0 z-40 flex flex-col bg-card border-r border-border transition-all duration-300 ease-in-out",
+        isCollapsed ? 'w-[72px]' : 'w-64'
+      )}
+    >
       {/* Logo Section */}
-      <div className="flex h-24 items-center px-6">
+      <div className="flex h-16 items-center justify-between px-4 border-b border-border">
         <div className="flex items-center gap-3">
-          <img src="/logo.png" alt="Drut" className="h-8" />
+          {!isCollapsed && (
+            <span className="font-bold text-xl text-emerald-600">Drut</span>
+          )}
+          {isCollapsed && (
+            <span className="font-bold text-xl text-emerald-600 mx-auto">D</span>
+          )}
         </div>
 
         {/* Collapse Toggle */}
-        <button
+        <Button
+          variant="ghost"
+          size="icon"
           onClick={() => setIsCollapsed(!isCollapsed)}
-          className="ml-auto p-2 hover:bg-gray-100 rounded-lg transition-colors"
+          className={cn(
+            "h-8 w-8 transition-transform",
+            isCollapsed && "mx-auto rotate-180"
+          )}
           title={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
         >
-          <svg className={`w-5 h-5 text-gray-500 transition-transform ${isCollapsed ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
-          </svg>
-        </button>
+          <ChevronLeft className="h-4 w-4" />
+        </Button>
       </div>
 
-      {/* Navigation Rail */}
-      <div className="flex-1 flex flex-col space-y-2 py-4 px-3">
-        {navItems.map(item => (
-          <NavItem
+      {/* Navigation */}
+      <nav className="flex-1 flex flex-col gap-1 p-3">
+        {allNavItems.map(item => (
+          <NavItemComponent
             key={item.id}
             {...item}
             isActive={currentPage === item.id}
@@ -50,12 +89,42 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentPage, setCurrentPage, u
             isCollapsed={isCollapsed}
           />
         ))}
+      </nav>
+
+      {/* Footer */}
+      <div className="p-3 border-t border-border">
+        {!isCollapsed && user && (
+          <div className="flex items-center gap-3 px-3 py-2 mb-2">
+            <div className="h-8 w-8 rounded-full bg-emerald-50 flex items-center justify-center">
+              <span className="text-sm font-medium text-emerald-600">
+                {user.user_metadata?.full_name?.charAt(0) || user.email?.charAt(0) || '?'}
+              </span>
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-medium truncate">{user.user_metadata?.full_name || 'User'}</p>
+              <p className="text-xs text-muted-foreground truncate">{user.email}</p>
+            </div>
+          </div>
+        )}
+
+        <Button
+          variant="ghost"
+          size={isCollapsed ? "icon" : "default"}
+          onClick={onLogout}
+          className={cn(
+            "w-full text-muted-foreground hover:text-foreground hover:bg-destructive/10",
+            isCollapsed && "mx-auto"
+          )}
+        >
+          <LogOut className="h-4 w-4" />
+          {!isCollapsed && <span className="ml-2">Sign out</span>}
+        </Button>
       </div>
     </aside>
   );
 };
 
-const NavItem: React.FC<{
+const NavItemComponent: React.FC<{
   id: string;
   label: string;
   icon: React.ElementType;
@@ -65,14 +134,19 @@ const NavItem: React.FC<{
 }> = ({ label, icon: Icon, isActive, onClick, isCollapsed }) => (
   <button
     onClick={onClick}
-    className={`group relative flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${isActive ? 'bg-primary/10 text-primary' : 'text-gray-600 hover:bg-gray-100'
-      } ${isCollapsed ? 'justify-center' : ''}`}
-    title={isCollapsed ? label : ''}
-  >
-    <Icon className={`h-6 w-6 flex-shrink-0 transition-colors ${isActive ? 'text-primary' : 'text-gray-400 group-hover:text-primary/70'}`} />
-    {!isCollapsed && <span className={`font-medium text-sm ${isActive ? 'text-primary' : ''}`}>{label}</span>}
-    {isActive && (
-      <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-primary rounded-l-full" />
+    className={cn(
+      "group relative flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200",
+      isActive
+        ? "bg-emerald-500 text-white shadow-sm"
+        : "text-muted-foreground hover:bg-accent hover:text-accent-foreground",
+      isCollapsed && "justify-center px-2"
     )}
+    title={isCollapsed ? label : undefined}
+  >
+    <Icon className={cn(
+      "h-5 w-5 flex-shrink-0 transition-colors",
+      isActive ? "text-white" : "group-hover:text-emerald-700"
+    )} />
+    {!isCollapsed && <span>{label}</span>}
   </button>
 );

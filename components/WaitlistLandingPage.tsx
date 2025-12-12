@@ -433,37 +433,21 @@ export const WaitlistLandingPage: React.FC<WaitlistLandingPageProps> = ({ onGetS
             {/* Bento Grid Features Section */}
             <BentoSection />
 
-            {/* Final Unified Section (Nietzsche Style) */}
-            <section className="nietzsche-section" id="waitlist-form-area">
-                <div className="nietzsche-container">
+            {/* Research Panel Section */}
+            <ResearchPanelSection />
 
-                    {/* Top: Gradient CTA */}
-                    <div className="nietzsche-cta">
-                        <h2 className="nietzsche-title">Ready to Take Control<br />of Your Rank?</h2>
-                        <p className="nietzsche-subtitle">
-                            Get expert speed training, weakness detection, and pattern recognition — all from the comfort of home, no coaching factory needed.
-                        </p>
-                        <div className="nietzsche-actions">
-                            {/* Form with full width allowed */}
-                            <DetailedWaitlistForm />
-                        </div>
+            {/* Footer */}
+            <footer className="landing-footer-section">
+                <div className="footer-content">
+                    <img src="/logo.png" alt="Drut" style={{ height: '120px' }} />
+                    <div className="footer-contact">
+                        <a href="mailto:pranav.n@drut.club">pranav.n@drut.club</a>
+                        <span className="footer-divider">|</span>
+                        <a href="tel:+919100117027">+91 9100117027</a>
                     </div>
-
-                    {/* Bottom: White Footer Dock */}
-                    <div className="nietzsche-footer">
-                        <div className="footer-content">
-                            <img src="/logo.png" alt="Drut" style={{ height: '200px' }} />
-                            <div className="footer-contact">
-                                <a href="mailto:pranav.n@drut.club">pranav.n@drut.club</a>
-                                <span className="footer-divider">|</span>
-                                <a href="tel:+919100117027">+91 9100117027</a>
-                            </div>
-                            <div className="footer-copyright">© 2025 Drut Learning Technologies.</div>
-                        </div>
-                    </div>
-
+                    <div className="footer-copyright">© 2025 Drut Learning Technologies.</div>
                 </div>
-            </section>
+            </footer>
         </div>
     );
 };
@@ -834,13 +818,13 @@ const HeroEmailForm = () => {
     );
 };
 
-// Detailed Form Component - Wide Layout
-const DetailedWaitlistForm = () => {
+// Research Panel Form - New Design with Split Layout
+const ResearchPanelForm = () => {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
-        role: 'Student',
-        exam: 'JEE',
+        role: '',
+        exam: '',
         painPoint: ''
     });
     const [submitted, setSubmitted] = useState(false);
@@ -857,23 +841,42 @@ const DetailedWaitlistForm = () => {
         e.preventDefault();
         setLoading(true);
         try {
-            const newId = generateCustomerId();
+            // Map form data to DB columns
+            const dbData = {
+                name: formData.name,
+                email: formData.email,
+                user_type: formData.role,
+                exam_interest: formData.exam,
+                pain_point: formData.painPoint,
+                created_at: new Date().toISOString()
+            };
 
-            // Trigger Edge Function
-            const { error } = await supabase.functions.invoke('send-waitlist-email', {
-                body: { ...formData, customerId: newId }
-            });
+            // Insert into Supabase
+            const { data, error } = await supabase
+                .from('waitlist')
+                .insert([dbData])
+                .select()
+                .single();
 
             if (!error) {
+                // Determine ID (either real DB ID or fallback)
+                const newId = data?.id ? `DRUT-${data.id}` : generateCustomerId();
                 setCustomerId(newId);
                 setSubmitted(true);
             } else {
-                console.error("Function error:", error);
-                setCustomerId(newId);
-                setSubmitted(true);
+                console.error("Supabase error:", error);
+
+                // Handle duplicate email gracefully
+                if (error.code === '23505') {
+                    setCustomerId('ALREADY-REGISTERED');
+                    setSubmitted(true);
+                } else {
+                    alert('Something went wrong. Please try again.');
+                }
             }
         } catch (e) {
             console.error(e);
+            alert('An unexpected error occurred.');
         } finally {
             setLoading(false);
         }
@@ -881,87 +884,189 @@ const DetailedWaitlistForm = () => {
 
     if (submitted) {
         return (
-            <div className="wide-success-container">
+            <div className="research-success-container">
                 <div className="success-icon">🎉</div>
-                <h3>Message Received!</h3>
-                <p>Thanks <strong>{formData.name}</strong>. We'll be in touch shortly.</p>
-                <div className="id-badge">ID: {customerId}</div>
+                <h3>You're In!</h3>
+                <p>Thanks <strong>{formData.name}</strong>. We'll reach out soon to schedule your research session.</p>
+                <div className="id-badge">Your ID: {customerId}</div>
             </div>
         );
     }
 
     return (
-        <div className="wide-form-container">
-            <div className="wide-form-header">
-                <h3>Love to hear from you,<br />Get in touch <span style={{ fontSize: '1.2em' }}>👋</span></h3>
-            </div>
+        <div className="research-form-content">
+            <h2 className="research-form-title">Help Us Build the Future of Fast Thinking</h2>
+            <p className="research-form-subtitle">
+                We're interviewing students preparing for CAT, JEE, SSC, and Banking exams to understand how they think under time pressure. Your insights, patterns, and feedback help us directly shape Drut.
+            </p>
 
-            <form onSubmit={handleSubmit} className="wide-form-grid">
-                {/* Single Column Layout */}
-                <div className="wide-form-left">
-                    <div className="form-group">
-                        <label>Your name</label>
-                        <input
-                            name="name"
-                            type="text"
-                            placeholder="Edward Snowden"
-                            required
-                            value={formData.name}
-                            onChange={handleChange}
-                            className="minimal-input"
-                        />
-                    </div>
-
-                    <div className="form-group">
-                        <label>Your email</label>
-                        <input
-                            name="email"
-                            type="email"
-                            placeholder="example@gmail.com"
-                            required
-                            value={formData.email}
-                            onChange={handleChange}
-                            className="minimal-input"
-                        />
-                    </div>
-
-                    <div className="form-group">
-                        <label>I am a...</label>
-                        <select name="role" value={formData.role} onChange={handleChange} className="minimal-input">
-                            <option value="Student">Student</option>
-                            <option value="Parent">Parent</option>
-                            <option value="Educator">Educator</option>
-                        </select>
-                    </div>
-
-                    <div className="form-group">
-                        <label>Target Exam</label>
-                        <select name="exam" value={formData.exam} onChange={handleChange} className="minimal-input">
-                            <option value="JEE">JEE Mains/Adv</option>
-                            <option value="NEET">NEET</option>
-                            <option value="CAT">CAT / MBA</option>
-                            <option value="UPSC">UPSC / Govt</option>
-                            <option value="Other">Other</option>
-                        </select>
-                    </div>
-
-                    <div className="form-group">
-                        <label>Message</label>
-                        <textarea
-                            name="painPoint"
-                            placeholder="Let us know your project about (or what slows you down)..."
-                            value={formData.painPoint}
-                            onChange={handleChange}
-                            className="minimal-input"
-                            rows={4}
-                        ></textarea>
-                    </div>
-
-                    <button type="submit" className="wide-black-btn" disabled={loading}>
-                        {loading ? 'Sending...' : 'Just Send ↗'}
-                    </button>
+            <form onSubmit={handleSubmit} className="research-form">
+                <div className="research-form-group">
+                    <label>Name</label>
+                    <input
+                        name="name"
+                        type="text"
+                        placeholder="Your full name"
+                        required
+                        value={formData.name}
+                        onChange={handleChange}
+                        className="research-input"
+                    />
                 </div>
+
+                <div className="research-form-group">
+                    <label>Email</label>
+                    <input
+                        name="email"
+                        type="email"
+                        placeholder="example@gmail.com"
+                        required
+                        value={formData.email}
+                        onChange={handleChange}
+                        className="research-input"
+                    />
+                </div>
+
+                <div className="research-form-group">
+                    <label>You are a…</label>
+                    <select name="role" value={formData.role} onChange={handleChange} className="research-input" required>
+                        <option value="" disabled>Select your role</option>
+                        <option value="Student">Student</option>
+                        <option value="Parent">Parent</option>
+                        <option value="Working Professional">Working Professional</option>
+                        <option value="Teacher">Teacher</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div className="research-form-group">
+                    <label>Target Exam</label>
+                    <select name="exam" value={formData.exam} onChange={handleChange} className="research-input" required>
+                        <option value="" disabled>Select your target exam</option>
+                        <option value="CAT">CAT</option>
+                        <option value="JEE Mains">JEE Mains</option>
+                        <option value="JEE Advanced">JEE Advanced</option>
+                        <option value="SSC/CGL">SSC/CGL</option>
+                        <option value="Banking Exams">Banking Exams</option>
+                        <option value="UPSC CSAT">UPSC CSAT</option>
+                        <option value="State PSC">State PSC</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div className="research-form-group">
+                    <label>What slows you down the most?</label>
+                    <textarea
+                        name="painPoint"
+                        placeholder="Example: I take too long identifying the right method, I panic under time, calculation mistakes, weak fundamentals…"
+                        value={formData.painPoint}
+                        onChange={handleChange}
+                        className="research-input research-textarea"
+                        rows={4}
+                    ></textarea>
+                </div>
+
+                <button type="submit" className="research-submit-btn" disabled={loading}>
+                    {loading ? 'Submitting...' : 'Join the Research Panel →'}
+                </button>
             </form>
         </div>
+    );
+};
+
+// Auto-Scrolling Stat Cards Component
+const ScrollingStatCards = () => {
+    const statCards = [
+        { label: 'SPEED IMPROVEMENT', stat: '+35%', desc: 'Avg time saved per question', chartType: 'bar' },
+        { label: 'ACCURACY BOOST', stat: '92.4%', desc: 'After 30-day training', chartType: 'line' },
+        { label: 'QUESTIONS SOLVED', stat: '1,248', desc: 'By beta users this week', chartType: 'bar' },
+        { label: 'TIME SAVED WEEKLY', stat: '2.5 hrs', desc: 'Average study time reduction', chartType: 'progress' },
+        { label: 'PATTERN RECOGNITION', stat: '+78%', desc: 'Improvement in 30 days', chartType: 'line' },
+        { label: 'STAMINA INDEX', stat: '8.7/10', desc: 'Peak performance score', chartType: 'gauge' },
+        { label: 'DISTRACTOR ANALYSIS', stat: '4.2s', desc: 'Reduced trap ID time', chartType: 'bar' },
+        { label: 'RANK IMPROVEMENT', stat: '+420', desc: 'Average rank jump', chartType: 'line' },
+        { label: 'CONCEPTS MASTERED', stat: '156', desc: 'Topics with 90%+ accuracy', chartType: 'bar' },
+        { label: 'WEEKLY SPRINTS', stat: '47', desc: 'Avg sprints completed', chartType: 'progress' },
+        { label: 'REFLEX TIME', stat: '0.8s', desc: 'Question start response', chartType: 'line' },
+        { label: 'CONFIDENCE SCORE', stat: '94%', desc: 'Test readiness indicator', chartType: 'gauge' },
+    ];
+
+    const renderMiniChart = (type: string, index: number) => {
+        switch (type) {
+            case 'bar':
+                return (
+                    <div className="mini-chart bar-chart">
+                        {[40, 65, 45, 80, 55, 70, 90].map((h, i) => (
+                            <div key={i} className="bar" style={{ height: `${h}%`, animationDelay: `${i * 0.1}s` }} />
+                        ))}
+                    </div>
+                );
+            case 'line':
+                return (
+                    <svg className="mini-chart line-chart" viewBox="0 0 100 40" preserveAspectRatio="none">
+                        <defs>
+                            <linearGradient id={`lineGrad${index}`} x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stopColor="#5cbb21" stopOpacity="0.3" />
+                                <stop offset="100%" stopColor="#5cbb21" stopOpacity="0" />
+                            </linearGradient>
+                        </defs>
+                        <path d="M0,35 L15,28 L30,32 L50,18 L70,22 L85,12 L100,8" fill="none" stroke="#5cbb21" strokeWidth="2" strokeLinecap="round" />
+                        <path d="M0,35 L15,28 L30,32 L50,18 L70,22 L85,12 L100,8 L100,40 L0,40 Z" fill={`url(#lineGrad${index})`} />
+                    </svg>
+                );
+            case 'progress':
+                return (
+                    <div className="mini-chart progress-chart">
+                        <div className="progress-bar" style={{ width: '75%' }} />
+                    </div>
+                );
+            case 'gauge':
+                return (
+                    <svg className="mini-chart gauge-chart" viewBox="0 0 60 35">
+                        <path d="M5,30 A25,25 0 0,1 55,30" fill="none" stroke="#e5e7eb" strokeWidth="4" strokeLinecap="round" />
+                        <path d="M5,30 A25,25 0 0,1 50,12" fill="none" stroke="#5cbb21" strokeWidth="4" strokeLinecap="round" />
+                        <circle cx="50" cy="12" r="3" fill="#5cbb21" />
+                    </svg>
+                );
+            default:
+                return null;
+        }
+    };
+
+    return (
+        <div className="scrolling-cards-container">
+            <div className="scrolling-cards-track">
+                {/* Duplicate cards for seamless infinite scroll */}
+                {[...statCards, ...statCards].map((card, index) => (
+                    <div key={index} className="stat-card-item">
+                        <div className="stat-card-label">{card.label}</div>
+                        <div className="stat-card-number">{card.stat}</div>
+                        <div className="stat-card-desc">{card.desc}</div>
+                        {renderMiniChart(card.chartType, index)}
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
+};
+
+// Research Panel Section - Main Component
+const ResearchPanelSection = () => {
+    return (
+        <section className="research-panel-section" id="waitlist-form-area">
+            <div className="research-panel-container">
+                {/* Left Side - Form */}
+                <div className="research-panel-left">
+                    <ResearchPanelForm />
+                </div>
+
+                {/* Right Side - Gradient + Scrolling Cards */}
+                <div className="research-panel-right">
+                    <div className="research-gradient-bg">
+                        <ScrollingStatCards />
+                    </div>
+                </div>
+            </div>
+        </section>
     );
 };

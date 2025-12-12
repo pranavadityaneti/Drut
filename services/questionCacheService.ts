@@ -1,6 +1,7 @@
 import { supabase } from '../lib/supabase';
 import { QuestionItem } from '../lib/ai/schema';
-import { generateOneQuestion, generateQuestionsBatch } from './vertexBackendService';
+import { QuestionData } from '../types';
+import { generateQuestionsBatch } from './vertexBackendService';
 import { log } from '../lib/log';
 
 export interface CachedQuestion {
@@ -10,6 +11,7 @@ export interface CachedQuestion {
   topic: string;
   subtopic: string;
   question_data: QuestionItem;
+  fsm_tag: string | null;
   generated_at: string;
   times_served: number;
   last_served_at?: string;
@@ -33,10 +35,10 @@ export async function getQuestionsForUser(
   subtopic: string,
   count: number = 5,
   difficulty: 'Easy' | 'Medium' | 'Hard' = 'Medium'
-): Promise<{ questions: QuestionItem[]; metadata: { cached: number; generated: number } }> {
+): Promise<{ questions: QuestionData[]; metadata: { cached: number; generated: number } }> {
   console.log('[DEBUG] getQuestionsForUser called:', { userId, examProfile, topic, subtopic, count });
   const metadata = { cached: 0, generated: 0 };
-  const questions: QuestionItem[] = [];
+  const questions: QuestionData[] = [];
 
   try {
     console.log('[DEBUG] Step 1: Checking cache...');
@@ -44,11 +46,11 @@ export async function getQuestionsForUser(
     const { data: unseenQuestions, error: cacheError } = await supabase
       .rpc('get_unseen_questions', {
         p_user_id: userId,
-        p_exam: examProfile,
+        p_exam_profile: examProfile,
         p_topic: topic,
         p_subtopic: subtopic,
         p_difficulty: difficulty,
-        p_count: count,
+        p_limit: count,
       });
 
     if (cacheError) {
@@ -62,7 +64,20 @@ export async function getQuestionsForUser(
       log.info(`[cache] Found ${unseenQuestions.length} unseen cached questions`);
       metadata.cached = unseenQuestions.length;
 
-      const cachedQs = unseenQuestions.map((cq: CachedQuestion) => cq.question_data);
+      // Map cached questions to QuestionData with uuid and fsmTag
+      const cachedQs = unseenQuestions.map((cq: CachedQuestion): QuestionData => {
+        const qd = cq.question_data as unknown as QuestionData;
+        return {
+          uuid: cq.id,
+          fsmTag: cq.fsm_tag || `${subtopic}-legacy`,
+          questionText: qd.questionText,
+          options: qd.options,
+          correctOptionIndex: qd.correctOptionIndex,
+          timeTargets: qd.timeTargets,
+          fastestSafeMethod: qd.fastestSafeMethod,
+          fullStepByStep: qd.fullStepByStep,
+        };
+      });
       questions.push(...cachedQs);
 
       // Mark these questions as seen by this user
@@ -94,7 +109,7 @@ export async function getQuestionsForUser(
         console.log(`[DEBUG] Batch generation successful. Got ${generatedBatch.length} questions.`);
 
         for (const newQuestion of generatedBatch) {
-          // Save to cache
+          // Save to cache and get the UUID back
           const cachedId = await cacheQuestion(
             userId,
             examProfile,
@@ -104,8 +119,19 @@ export async function getQuestionsForUser(
             difficulty
           );
 
-          // Add to results
-          questions.push(newQuestion);
+          // Add to results with uuid and fsmTag
+          const nq = newQuestion as unknown as QuestionData;
+          const questionWithMeta: QuestionData = {
+            uuid: cachedId || `temp-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+            fsmTag: (newQuestion as any).fsmTag || `${subtopic}-generated`,
+            questionText: nq.questionText,
+            options: nq.options,
+            correctOptionIndex: nq.correctOptionIndex,
+            timeTargets: nq.timeTargets,
+            fastestSafeMethod: nq.fastestSafeMethod,
+            fullStepByStep: nq.fullStepByStep,
+          };
+          questions.push(questionWithMeta);
           metadata.generated++;
 
           // Mark as seen by this user immediately
@@ -168,6 +194,7 @@ async function cacheQuestion(
         topic: topic,
         subtopic: subtopic,
         question_data: question,
+        fsm_tag: question.fsmTag || null,
         difficulty: difficulty,
         created_by: userId,
       })

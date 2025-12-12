@@ -1,7 +1,7 @@
 
-
 import React from 'react';
 import { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import { Header } from './components/Header';
 import { Dashboard } from './components/Dashboard';
 import { Practice } from './components/Practice';
@@ -16,6 +16,8 @@ import { log } from './lib/log';
 import { SidebarProvider, SidebarInset } from './components/ui/AppShell';
 import { Profile } from './components/Profile';
 import { WaitlistLandingPage } from './components/WaitlistLandingPage';
+import { AdminIngestion } from './components/AdminIngestion';
+import { BulkIngest } from './components/BulkIngest';
 import { ModalProvider } from './components/ui/Modal';
 
 
@@ -39,9 +41,7 @@ const HealthChip: React.FC<{ status: HealthStatus }> = ({ status }) => (
 function App() {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
-  const [currentPage, setCurrentPage] = useState('dashboard');
   const [healthStatus, setHealthStatus] = useState<HealthStatus | null>(null);
-  const [showAuth, setShowAuth] = useState(false);
 
   useEffect(() => {
     if (IS_DEBUG_MODE) {
@@ -66,14 +66,9 @@ function App() {
     const { data: authListener } = onAuthStateChange((_event, session) => {
       const sessionUser = session?.user ?? null;
       setUser(sessionUser);
-      if (!sessionUser) {
-        setShowAuth(false);
-      }
     });
 
     return () => {
-      // The 'authListener' object contains the subscription.
-      // The correct way to unsubscribe is by calling unsubscribe() on the subscription object.
       authListener?.subscription?.unsubscribe();
     };
   }, []);
@@ -89,69 +84,112 @@ function App() {
 
   const handleLoginSuccess = (newUser: User) => {
     setUser(newUser);
-    setShowAuth(false);
   };
 
   const handleLogout = async () => {
     await authLogout();
     setUser(null);
-    setCurrentPage('dashboard'); // Reset to dashboard after logout
-    setShowAuth(false);
   };
 
-  const AppContent = () => {
-    if (loading) {
-      return (
-        <div className="flex h-screen items-center justify-center">
-          <svg className="animate-spin h-10 w-10 text-primary" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-          </svg>
-        </div>
-      );
-    }
-
-    if (!user) {
-      if (showAuth) {
-        return <AuthPage onLoginSuccess={handleLoginSuccess} />;
-      }
-      return <WaitlistLandingPage onGetStarted={() => setShowAuth(true)} />;
-    }
-
+  if (loading) {
     return (
-      <SidebarProvider>
-        <div className="bg-muted/40">
-          <Sidebar
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
-            user={user}
-            onLogout={handleLogout}
-          />
-          <SidebarInset>
-            <Header currentPage={currentPage} setCurrentPage={setCurrentPage} onLogout={handleLogout} />
-            <main className="flex-1 p-6 md:p-8 overflow-y-auto">
-              <div className="container mx-auto px-0">
-                {currentPage === 'dashboard' && <Dashboard />}
-                {currentPage === 'practice' && <Practice />}
-                {currentPage === 'sprint' && <Sprint />}
-                {currentPage === 'profile' && <Profile />}
-              </div>
-            </main>
-            <footer className="py-4 text-center text-sm text-muted-foreground border-t bg-card">
-              © {new Date().getFullYear()} Drut. All rights reserved.
-            </footer>
-          </SidebarInset>
-        </div>
-        {IS_DEBUG_MODE && healthStatus && <HealthChip status={healthStatus} />}
-      </SidebarProvider>
+      <div className="flex h-screen items-center justify-center">
+        <svg className="animate-spin h-10 w-10 text-primary" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+      </div>
     );
   }
 
   return (
     <ModalProvider>
-      <AppContent />
+      <Router>
+        <Routes>
+          {/* Public routes */}
+          <Route path="/" element={
+            user ? <Navigate to="/dashboard" replace /> : <WaitlistLandingPage onGetStarted={() => window.location.href = '/login'} />
+          } />
+          <Route path="/login" element={
+            user ? <Navigate to="/dashboard" replace /> : <AuthPage onLoginSuccess={handleLoginSuccess} defaultMode="login" />
+          } />
+          <Route path="/signup" element={
+            user ? <Navigate to="/dashboard" replace /> : <AuthPage onLoginSuccess={handleLoginSuccess} defaultMode="signup" />
+          } />
+
+          {/* Protected routes */}
+          <Route path="/dashboard" element={
+            user ? <AuthenticatedLayout user={user} onLogout={handleLogout} page="dashboard" /> : <Navigate to="/login" replace />
+          } />
+          <Route path="/practice" element={
+            user ? <AuthenticatedLayout user={user} onLogout={handleLogout} page="practice" /> : <Navigate to="/login" replace />
+          } />
+          <Route path="/sprint" element={
+            user ? <AuthenticatedLayout user={user} onLogout={handleLogout} page="sprint" /> : <Navigate to="/login" replace />
+          } />
+          <Route path="/profile" element={
+            user ? <AuthenticatedLayout user={user} onLogout={handleLogout} page="profile" /> : <Navigate to="/login" replace />
+          } />
+          <Route path="/admin/ingest" element={
+            user ? <AuthenticatedLayout user={user} onLogout={handleLogout} page="admin-ingest" /> : <Navigate to="/login" replace />
+          } />
+          <Route path="/admin/bulk" element={
+            user ? <AuthenticatedLayout user={user} onLogout={handleLogout} page="admin-bulk" /> : <Navigate to="/login" replace />
+          } />
+
+          {/* Catch all - redirect to home */}
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+        {IS_DEBUG_MODE && healthStatus && <HealthChip status={healthStatus} />}
+      </Router>
     </ModalProvider>
   )
 }
 
+const AuthenticatedLayout: React.FC<{
+  user: User;
+  onLogout: () => void;
+  page: 'dashboard' | 'practice' | 'sprint' | 'profile' | 'admin-ingest' | 'admin-bulk';
+}> = ({ user, onLogout, page }) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const setCurrentPage = (newPage: string) => {
+    navigate(`/${newPage}`);
+  };
+
+  // Determine current page from URL
+  const currentPage = location.pathname.substring(1) || 'dashboard';
+
+  return (
+    <SidebarProvider>
+      <div className="bg-muted/40">
+        <Sidebar
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          user={user}
+          onLogout={onLogout}
+        />
+        <SidebarInset>
+          <Header currentPage={currentPage} setCurrentPage={setCurrentPage} onLogout={onLogout} />
+          <main className="flex-1 p-6 md:p-8 overflow-y-auto">
+            <div className="container mx-auto px-0">
+              {page === 'dashboard' && <Dashboard />}
+              {page === 'practice' && <Practice />}
+              {page === 'sprint' && <Sprint />}
+              {page === 'profile' && <Profile />}
+              {page === 'admin-ingest' && <AdminIngestion />}
+              {page === 'admin-bulk' && <BulkIngest />}
+            </div>
+          </main>
+          <footer className="py-4 text-center text-sm text-muted-foreground border-t bg-card">
+            © {new Date().getFullYear()} Drut. All rights reserved.
+          </footer>
+        </SidebarInset>
+      </div>
+    </SidebarProvider>
+  );
+};
+
 export default App;
+

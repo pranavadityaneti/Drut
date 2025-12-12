@@ -27,6 +27,8 @@ async function handleFormSubmit(event) {
         name: formData.get('name') || null,
         email: formData.get('email'),
         exam_interest: formData.get('exam'),
+        user_type: formData.get('user_type') || null,
+        pain_point: formData.get('pain_point') || null,
         beta_access: formData.get('beta_access') === 'on',
         created_at: new Date().toISOString()
     };
@@ -43,6 +45,7 @@ async function handleFormSubmit(event) {
     }
 
     // Disable submit button
+    const originalBtnText = submitButton.textContent;
     submitButton.disabled = true;
     submitButton.textContent = 'Joining...';
 
@@ -55,12 +58,15 @@ async function handleFormSubmit(event) {
         if (error) {
             // Check if email already exists
             if (error.code === '23505') {
-                showMessage(messageDiv, 'This email is already on the waitlist!', 'success');
+                showMessage(messageDiv, 'This email is already on the list!', 'success');
             } else {
                 throw error;
             }
         } else {
-            showMessage(messageDiv, '🎉 Success! You\'re on the waitlist. Check your email soon!', 'success');
+            const successMsg = form.id === 'researchForm'
+                ? '🎉 Thanks! You\'re on the panel. We\'ll be in touch.'
+                : '🎉 Success! You\'re on the waitlist. Check your email soon!';
+            showMessage(messageDiv, successMsg, 'success');
             form.reset();
         }
     } catch (error) {
@@ -68,7 +74,7 @@ async function handleFormSubmit(event) {
         showMessage(messageDiv, 'Something went wrong. Please try again.', 'error');
     } finally {
         submitButton.disabled = false;
-        submitButton.textContent = 'Join Waitlist';
+        submitButton.textContent = originalBtnText;
     }
 }
 
@@ -94,13 +100,13 @@ function showMessage(messageDiv, text, type) {
 // Attach form handlers
 document.addEventListener('DOMContentLoaded', () => {
     const form1 = document.getElementById('waitlistForm1');
-    const form2 = document.getElementById('waitlistForm2');
+    const researchForm = document.getElementById('researchForm');
 
     if (form1) {
         form1.addEventListener('submit', handleFormSubmit);
     }
 
-    if (form2) {
-        form2.addEventListener('submit', handleFormSubmit);
+    if (researchForm) {
+        researchForm.addEventListener('submit', handleFormSubmit);
     }
 });

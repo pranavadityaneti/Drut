@@ -607,3 +607,190 @@ body {
 html {
     scroll-behavior: smooth;
 }
+
+/* Research Panel Section */
+/* Research Panel Section */
+.research-panel {
+    padding: var(--spacing-xl) 0;
+    background-color: var(--color-bg);
+    overflow: hidden;
+}
+
+.research-layout {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: var(--spacing-2xl);
+    align-items: center;
+    background-color: white;
+    border: 1px solid var(--color-border);
+    border-radius: 24px;
+    padding: var(--spacing-xl);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+}
+
+.research-form-container {
+    padding: 0;
+}
+
+.research-header {
+    margin-bottom: var(--spacing-lg);
+}
+
+.research-header h2 {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: var(--color-secondary);
+    margin-bottom: var(--spacing-sm);
+    line-height: 1.2;
+}
+
+.research-subtitle {
+    font-size: 1.125rem;
+    color: var(--color-text-light);
+    line-height: 1.6;
+}
+
+.form-textarea {
+    width: 100%;
+    resize: vertical;
+    min-height: 100px;
+    margin-bottom: var(--spacing-sm);
+    font-family: var(--font-family);
+}
+
+.form-group {
+    margin-bottom: var(--spacing-sm);
+}
+
+/* Right Column: Visuals & Scrolling Cards */
+.research-visuals {
+    position: relative;
+    height: 600px;
+    background: linear-gradient(135deg, rgba(0, 208, 132, 0.05) 0%, rgba(44, 62, 80, 0.05) 100%);
+    border-radius: 16px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.scrolling-cards-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.scrolling-cards-track {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    /* Increased spacing */
+    animation: scroll-vertical 25s linear infinite;
+    /* Slower, smoother scroll */
+    padding: 3rem;
+    width: 80%;
+}
+
+.stat-card {
+    background: white;
+    padding: var(--spacing-lg);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    /* More premium shadow */
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 180px;
+    /* Increased height */
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+}
+
+.stat-number {
+    font-size: 3rem;
+    /* Larger font */
+    font-weight: 800;
+    color: var(--color-primary);
+    margin-bottom: var(--spacing-sm);
+}
+
+.stat-label {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    line-height: 1.4;
+}
+
+.stat-chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+    height: 80px;
+    /* Taller chart */
+    margin-bottom: var(--spacing-md);
+}
+
+.bar {
+    width: 16px;
+    background-color: var(--color-primary);
+    border-radius: 4px 4px 0 0;
+    opacity: 0.8;
+}
+
+.bar:nth-child(2) {
+    opacity: 0.6;
+}
+
+.bar:nth-child(3) {
+    opacity: 0.4;
+}
+
+.bar:nth-child(4) {
+    opacity: 1;
+}
+
+@keyframes scroll-vertical {
+    0% {
+        transform: translateY(0);
+    }
+
+    100% {
+        /* Adjust logic if duplicated content changes size, but -50% assumes perfectly duplicated sets */
+        transform: translateY(-50%);
+    }
+}
+
+/* Responsive adjustments for Research Panel */
+@media (max-width: 900px) {
+    .research-layout {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-lg);
+        padding: var(--spacing-md);
+    }
+
+    .research-visuals {
+        height: 500px;
+        order: 1;
+    }
+
+    .scrolling-cards-track {
+        width: 100%;
+        padding: 0 var(--spacing-md);
+        gap: 2rem;
+    }
+
+    .stat-card {
+        min-height: 160px;
+    }
+}

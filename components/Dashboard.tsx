@@ -1,175 +1,143 @@
-import React, { useState, useEffect } from 'react';
-import { fetchUserAnalytics, fetchTopicProficiency, fetchLearningVelocity, fetchSprintPerformance, fetchWeakestSubtopics, fetchActivityHeatmap, fetchDistractorAnalysis, fetchStaminaCurve, AnalyticsRow, TopicProficiency, LearningVelocity, SprintPerformance, WeakestSubtopic, ActivityHeatmap, DistractorData, StaminaPoint } from '../services/analyticsService';
-import { ProficiencyRadar } from './analytics/ProficiencyRadar';
-import { VelocityChart } from './analytics/VelocityChart';
-import { SprintScatter } from './analytics/SprintScatter';
-import { WeakestLinkCard } from './analytics/WeakestLinkCard';
-import { ActivityHeatmapGrid } from './analytics/ActivityHeatmapGrid';
-import { DistractorAnalysis } from './analytics/DistractorAnalysis';
+/**
+ * Command Center Dashboard
+ * 
+ * 3-column responsive layout
+ * Left: Arena | Center: Content | Right: Debt Collector
+ */
+
+import React from 'react';
+import { useDashboardData } from '../hooks/useDashboardData';
+import { SpeedPulse } from './dashboard/SpeedPulse';
+import { DebtCollector } from './dashboard/DebtCollector';
+import { MasteryGrid } from './dashboard/MasteryGrid';
+import { ArenaWidget } from './dashboard/ArenaWidget';
 import { StaminaCurve } from './analytics/StaminaCurve';
-import { AITipsPanel } from './analytics/AITipsPanel';
-import { supabase } from '../lib/supabase';
+import { Card, CardContent, CardHeader, CardTitle } from './ui/Card';
+import { Loader2, Activity } from 'lucide-react';
+import { useSidebar } from './ui/AppShell';
 
-export const Dashboard: React.FC<{}> = () => {
-  const [analytics, setAnalytics] = useState<AnalyticsRow | null>(null);
-  const [topicData, setTopicData] = useState<TopicProficiency[]>([]);
-  const [velocityData, setVelocityData] = useState<LearningVelocity[]>([]);
-  const [sprintData, setSprintData] = useState<SprintPerformance[]>([]);
-  const [weakestData, setWeakestData] = useState<WeakestSubtopic[]>([]);
-  const [heatmapData, setHeatmapData] = useState<ActivityHeatmap[]>([]);
-  const [distractorData, setDistractorData] = useState<DistractorData[]>([]);
-  const [staminaData, setStaminaData] = useState<StaminaPoint[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [userName, setUserName] = useState<string>('User');
+export const Dashboard: React.FC = () => {
+  const { data, loading, error, refetch } = useDashboardData();
+  const { open: sidebarOpen } = useSidebar();
 
-  useEffect(() => {
-    const loadUserName = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (user) {
-        // Try to get name from user metadata, fallback to email
-        const name = user.user_metadata?.full_name ||
-          user.user_metadata?.name ||
-          user.email?.split('@')[0] ||
-          'User';
-        setUserName(name);
-      }
-    };
-    loadUserName();
-  }, []);
+  // Handle debt clearing (placeholder)
+  const handleClearDebt = () => {
+    console.log('Starting Debt Session...');
+    // TODO: Navigate to debt-focused practice session
+  };
 
-  useEffect(() => {
-    const loadAllData = async () => {
-      try {
-        const [stats, topics, velocity, sprint, weakest, heatmap, distractors, stamina] = await Promise.all([
-          fetchUserAnalytics(),
-          fetchTopicProficiency(),
-          fetchLearningVelocity(),
-          fetchSprintPerformance(),
-          fetchWeakestSubtopics(),
-          fetchActivityHeatmap(),
-          fetchDistractorAnalysis(),
-          fetchStaminaCurve()
-        ]);
+  // Handle topic click
+  const handleTopicClick = (topicValue: string) => {
+    console.log('Opening topic:', topicValue);
+    // TODO: Navigate to topic-focused practice
+  };
 
-        setAnalytics(stats);
-        setTopicData(topics);
-        setVelocityData(velocity);
-        setSprintData(sprint);
-        setWeakestData(weakest);
-        setHeatmapData(heatmap);
-        setDistractorData(distractors);
-        setStaminaData(stamina);
-      } catch (err) {
-        console.error("Failed to load dashboard data", err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    loadAllData();
-  }, []);
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-96">
+        <div className="flex flex-col items-center gap-4">
+          <Loader2 className="w-8 h-8 animate-spin text-emerald-600" />
+          <p className="text-muted-foreground">Loading dashboard...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex items-center justify-center h-96">
+        <div className="text-center">
+          <p className="text-destructive mb-4">Error loading dashboard</p>
+          <button
+            onClick={refetch}
+            className="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700"
+          >
+            Retry
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // Default values if no data
+  const speedScore = data?.speedScore ?? 0;
+  const speedRating = data?.speedRating ?? 'Rookie';
+  const speedTrend = data?.speedTrend ?? 0;
+  const verifiedPatterns = data?.verifiedPatterns ?? 0;
+  const totalPatterns = data?.totalPatternsSeen ?? 0;
+  const debtPatterns = data?.debtPatterns ?? [];
+  const topicStats = data?.topicStats ?? [];
 
   return (
-    <div className="p-8 max-w-[1800px] mx-auto">
+    <div className="space-y-8">
+      {/* 
+              Main grid layout - responsive
+              Mobile: 1 column
+              Tablet: 2 columns (Content + Debt)
+              Desktop: 3 columns (Arena | Content | Debt)
+              
+              When sidebar collapses, the layout adjusts automatically via flex-1 in parent
+            */}
+      <div className="grid grid-cols-1 md:grid-cols-[1fr_280px] xl:grid-cols-[280px_1fr_280px] gap-8">
 
-      {/* Header Section: Greeting */}
-      <div className="mb-10">
-        <h1 className="text-3xl font-bold text-foreground tracking-tight">Good Morning, {userName}</h1>
-        <p className="text-gray-400 mt-1">Here is your daily progress overview</p>
-      </div>
+        {/* Left Column - Arena (Desktop only) */}
+        <div className="hidden xl:block">
+          <ArenaWidget
+            currentUserRank={4}
+            currentUserScore={speedScore * 5}
+          />
+        </div>
 
-      {/* 2-Column Layout */}
-      <div className="grid grid-cols-12 gap-6">
+        {/* Center Column - Main Content */}
+        <div className="space-y-8">
+          {/* Hero: Speed Pulse */}
+          <SpeedPulse
+            score={speedScore}
+            rating={speedRating}
+            trend={speedTrend}
+            verifiedCount={verifiedPatterns}
+            totalCount={totalPatterns}
+          />
 
-        {/* LEFT COLUMN: Charts */}
-        <div className="col-span-12 lg:col-span-8 space-y-6">
+          {/* Mastery Grid */}
+          <MasteryGrid
+            topicStats={topicStats}
+            onTopicClick={handleTopicClick}
+          />
 
           {/* Stamina Curve */}
-          <div className="bg-white p-6 rounded-3xl shadow-card border border-gray-100">
-            <h3 className="font-bold text-lg text-foreground mb-4">Stamina Curve</h3>
-            <p className="text-xs text-gray-500 mb-4">Performance across your latest sprint session</p>
-            <StaminaCurve data={staminaData} />
-          </div>
-
-          {/* Row: Reaction Time + Distractor Analysis */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Reaction Time (using avg time from analytics) */}
-            <div className="bg-white p-6 rounded-3xl shadow-card border border-gray-100">
-              <h3 className="font-bold text-lg text-foreground mb-4">Reaction Time</h3>
-              <div className="h-32 flex flex-col items-center justify-center">
-                <span className="text-6xl font-bold text-primary">{analytics ? Math.round(analytics.avg_time_ms / 1000) : 0}s</span>
-                <p className="text-sm text-gray-500 mt-2">Average per question</p>
-              </div>
-            </div>
-
-            {/* Distractor Analysis */}
-            <div className="bg-white p-6 rounded-3xl shadow-card border border-gray-100">
-              <h3 className="font-bold text-lg text-foreground mb-4">Distractor Analysis</h3>
-              <p className="text-xs text-gray-500 mb-4">Most tempting wrong answers</p>
-              <div className="max-h-64 overflow-y-auto">
-                <DistractorAnalysis data={distractorData} />
-              </div>
-            </div>
-          </div>
-
+          <Card>
+            <CardHeader className="pb-2">
+              <CardTitle className="flex items-center gap-2 text-base">
+                <Activity className="w-4 h-4 text-blue-600" />
+                Stamina Curve
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <StaminaCurve />
+            </CardContent>
+          </Card>
         </div>
 
-        {/* RIGHT COLUMN: Stat Cards + AI Tips */}
-        <div className="col-span-12 lg:col-span-4 space-y-6">
-
-          {/* Card 1: Total Questions (Purple) */}
-          <div className="bg-purple-soft p-6 rounded-3xl relative overflow-hidden group hover:shadow-soft transition-all">
-            <div className="relative z-10">
-              <div className="flex items-center gap-2 mb-3">
-                <span className="text-xs font-bold uppercase tracking-wider text-primary/60">Total Practice</span>
-              </div>
-              <h3 className="text-sm font-bold text-foreground mb-1">Questions Attempted</h3>
-              <div className="flex items-end gap-2 mt-4">
-                <span className="text-4xl font-bold text-foreground">{analytics?.total_attempts || 0}</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Card 2: Accuracy (Blue) */}
-          <div className="bg-blue-soft p-6 rounded-3xl relative overflow-hidden group hover:shadow-soft transition-all">
-            <div className="relative z-10">
-              <div className="flex items-center gap-2 mb-3">
-                <span className="text-xs font-bold uppercase tracking-wider text-blue-500/60">Performance</span>
-              </div>
-              <h3 className="text-sm font-bold text-foreground mb-1">Accuracy Rate</h3>
-              <div className="flex items-end gap-2 mt-4">
-                <span className="text-4xl font-bold text-foreground">{analytics?.accuracy_pct || 0}%</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Card 3: Skips/Timeout (Orange) */}
-          <div className="bg-orange-50 p-6 rounded-3xl relative overflow-hidden group hover:shadow-soft transition-all">
-            <div className="relative z-10">
-              <div className="flex items-center gap-2 mb-3">
-                <span className="text-xs font-bold uppercase tracking-wider text-orange-500/60">Sprint Stats</span>
-              </div>
-              <h3 className="text-sm font-bold text-foreground mb-1">Skips/Timeout</h3>
-              <div className="flex items-end gap-2 mt-4">
-                <span className="text-4xl font-bold text-foreground">
-                  {sprintData.length > 0 ? Math.round(sprintData[0].total_questions - sprintData[0].accuracy * sprintData[0].total_questions / 100) : 0}
-                </span>
-              </div>
-            </div>
-          </div>
-
-          {/* AI Tips Panel */}
-          <div className="bg-white p-6 rounded-3xl shadow-card border border-gray-100">
-            <div className="flex items-center gap-2 mb-4">
-              <svg className="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-              </svg>
-              <h3 className="font-bold text-lg text-foreground">AI Tips</h3>
-            </div>
-            <AITipsPanel />
-          </div>
-
+        {/* Right Column - Debt Collector */}
+        <div className="md:sticky md:top-4 md:h-fit order-first md:order-last">
+          <DebtCollector
+            patterns={debtPatterns}
+            onClearDebt={handleClearDebt}
+          />
         </div>
+
+      </div>
+
+      {/* Tablet/Mobile: Show Arena below main content */}
+      <div className="xl:hidden">
+        <ArenaWidget
+          currentUserRank={4}
+          currentUserScore={speedScore * 5}
+        />
       </div>
     </div>
   );
 };
+
+export default Dashboard;

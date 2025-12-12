@@ -3,7 +3,9 @@ CREATE TABLE IF NOT EXISTS waitlist (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   name TEXT,
   email TEXT NOT NULL,
-  exam_interest TEXT NOT NULL,
+  exam_interest TEXT,
+  user_type TEXT,
+  pain_point TEXT,
   beta_access BOOLEAN DEFAULT false,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );

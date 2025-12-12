@@ -15,7 +15,7 @@ const TabButton: React.FC<{ active: boolean; onClick: () => void; children: Reac
         <button
             onClick={onClick}
             className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${
-                active ? 'bg-primary text-primary-foreground' : 'hover:bg-accent'
+                active ? 'bg-emerald-500 text-white' : 'hover:bg-accent'
             }`}
         >
             {children}

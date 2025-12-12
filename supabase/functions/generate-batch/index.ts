@@ -50,6 +50,12 @@ CRITICAL REQUIREMENTS:
 - DO NOT return a single object
 - DO NOT wrap the array in any other structure
 - Make each question unique and different from the others
+
+FSM TAG REQUIREMENT:
+- Each question MUST include "fsmTag": a lowercase kebab-case string
+- fsmTag represents the underlying heuristic/pattern (e.g., "ratio-inverse-prop", "time-work-lcm-method", "quadratic-vieta-relations")
+- Questions with similar solving techniques should have the SAME fsmTag
+- Use consistent tags across similar problems for pattern grouping
 `.trim();
 
         // Generate content using Vertex AI

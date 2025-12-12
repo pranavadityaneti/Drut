@@ -34,7 +34,7 @@ export class ErrorBoundary extends Component<Props, State> {
                     <p className="text-muted-foreground">Sorry, something went wrong. Please try refreshing the page.</p>
                     <button 
                         onClick={() => this.setState({ hasError: false })}
-                        className="mt-4 w-full h-10 px-4 py-2 bg-primary text-primary-foreground hover:bg-primary/90 inline-flex items-center justify-center rounded-md text-sm font-medium"
+                        className="mt-4 w-full h-10 px-4 py-2 bg-emerald-500 text-white hover:bg-emerald-600 inline-flex items-center justify-center rounded-md text-sm font-medium"
                     >
                         Try again
                     </button>

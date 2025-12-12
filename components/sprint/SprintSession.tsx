@@ -286,7 +286,7 @@ export const SprintSession: React.FC<SprintSessionProps> = ({ config, onExit }) 
                 <Card>
                     <CardContent className="p-8 text-center space-y-4">
                         <p className="text-lg">Loading questions...</p>
-                        <div className="animate-spin h-8 w-8 border-4 border-primary border-t-transparent rounded-full mx-auto" />
+                        <div className="animate-spin h-8 w-8 border-4 border-emerald-500 border-t-transparent rounded-full mx-auto" />
                     </CardContent>
                 </Card>
             </div>
@@ -311,13 +311,13 @@ export const SprintSession: React.FC<SprintSessionProps> = ({ config, onExit }) 
                 <CardContent className="p-4">
                     <div className="flex items-center justify-between">
                         <span className="text-sm font-medium">Time Remaining:</span>
-                        <span className={`text-2xl font-bold ${timer <= 10 ? 'text-red-500' : 'text-primary'}`}>
+                        <span className={`text-2xl font-bold ${timer <= 10 ? 'text-red-500' : 'text-emerald-600'}`}>
                             {timer}s
                         </span>
                     </div>
                     <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
                         <div
-                            className={`h-2 rounded-full transition-all ${timer <= 10 ? 'bg-red-500' : 'bg-primary'}`}
+                            className={`h-2 rounded-full transition-all ${timer <= 10 ? 'bg-red-500' : 'bg-emerald-500'}`}
                             style={{ width: `${(timer / 45) * 100}%` }}
                         />
                     </div>
@@ -341,7 +341,7 @@ export const SprintSession: React.FC<SprintSessionProps> = ({ config, onExit }) 
                                         : 'border-red-500 bg-red-50'
                                     : showFeedback && idx === currentQuestion.correctOptionIndex
                                         ? 'border-green-500 bg-green-50'
-                                        : 'border-gray-300 hover:border-primary hover:bg-accent'
+                                        : 'border-gray-300 hover:border-emerald-500 hover:bg-accent'
                                     } ${showFeedback ? 'cursor-not-allowed' : 'cursor-pointer'}`}
                             >
                                 <span className="font-medium mr-2">{String.fromCharCode(65 + idx)}.</span>

@@ -177,37 +177,127 @@
         </div>
     </section>
 
-    <!-- Waitlist Form #2 -->
-    <section class="waitlist-section" id="waitlist-2">
+    <!-- Research Panel Section -->
+    <section class="research-panel" id="research-panel">
         <div class="container">
-            <div class="waitlist-card">
-                <h2>Ready to get started?</h2>
-                <p class="waitlist-description">We'll email first 500 for private beta. No spam.</p>
-                <form class="waitlist-form" id="waitlistForm2">
-                    <div class="form-row">
-                        <input type="text" name="name" placeholder="Name (optional)" class="form-input">
-                        <input type="email" name="email" placeholder="Email *" class="form-input" required>
+            <div class="research-layout">
+                <!-- Left Column: Form -->
+                <div class="research-form-container">
+                    <div class="research-header">
+                        <h2>Help Us Build the Future of Fast Thinking</h2>
+                        <p class="research-subtitle">We’re interviewing students preparing for CAT, JEE, SSC, and
+                            Banking exams to understand how they think under time pressure. Your insights, patterns, and
+                            feedback help us build directly shape Drut.</p>
                     </div>
-                    <div class="form-row">
-                        <select name="exam" class="form-input" required>
-                            <option value="">Select exam of interest *</option>
-                            <option value="SAT">SAT</option>
-                            <option value="ACT">ACT</option>
-                            <option value="GMAT">GMAT</option>
-                            <option value="GRE">GRE</option>
-                            <option value="NEET">NEET</option>
-                            <option value="JEE">JEE</option>
-                            <option value="Eamcet">Eamcet</option>
-                            <option value="AIEEE">AIEEE</option>
-                        </select>
+
+                    <form class="waitlist-form" id="researchForm">
+                        <div class="form-row">
+                            <input type="text" name="name" placeholder="Your full name" class="form-input">
+                            <input type="email" name="email" placeholder="example@gmail.com" class="form-input"
+                                required>
+                        </div>
+
+                        <div class="form-row">
+                            <select name="user_type" class="form-input" required>
+                                <option value="">You are a…</option>
+                                <option value="Student">Student</option>
+                                <option value="Parent">Parent</option>
+                                <option value="Working Professional">Working Professional</option>
+                                <option value="Teacher">Teacher</option>
+                                <option value="Other">Other</option>
+                            </select>
+
+                            <select name="exam" class="form-input" required>
+                                <option value="">Target Exam</option>
+                                <option value="CAT">CAT</option>
+                                <option value="JEE Mains">JEE Mains</option>
+                                <option value="JEE Advanced">JEE Advanced</option>
+                                <option value="SSC/CGL">SSC/CGL</option>
+                                <option value="Banking Exams">Banking Exams</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <textarea name="pain_point" placeholder="What slows you down the most?"
+                                class="form-input form-textarea" rows="3"></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-full">Join the Research Panel</button>
+                        <div class="form-message"></div>
+                    </form>
+                </div>
+
+                <!-- Right Column: Scrolling Cards -->
+                <div class="research-visuals">
+                    <div class="scrolling-cards-container">
+                        <div class="scrolling-cards-track">
+                            <!-- Duplicate cards for seamless loop -->
+                            <div class="stat-card">
+                                <div class="stat-number">45s</div>
+                                <div class="stat-label">Average time per question</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number">85%</div>
+                                <div class="stat-label">Accuracy improvement</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-chart">
+                                    <div class="bar" style="height: 40%"></div>
+                                    <div class="bar" style="height: 70%"></div>
+                                    <div class="bar" style="height: 55%"></div>
+                                    <div class="bar" style="height: 90%"></div>
+                                </div>
+                                <div class="stat-label">Speed Progression</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number">2x</div>
+                                <div class="stat-label">Faster calculation speed</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number">10k+</div>
+                                <div class="stat-label">Questions practiced</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number">Top 1%</div>
+                                <div class="stat-label">Percentile Goal</div>
+                            </div>
+
+                            <!-- Repeat for smooth scroll -->
+                            <div class="stat-card">
+                                <div class="stat-number">45s</div>
+                                <div class="stat-label">Average time per question</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number">85%</div>
+                                <div class="stat-label">Accuracy improvement</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-chart">
+                                    <div class="bar" style="height: 40%"></div>
+                                    <div class="bar" style="height: 70%"></div>
+                                    <div class="bar" style="height: 55%"></div>
+                                    <div class="bar" style="height: 90%"></div>
+                                </div>
+                                <div class="stat-label">Speed Progression</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number">2x</div>
+                                <div class="stat-label">Faster calculation speed</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number">10k+</div>
+                                <div class="stat-label">Questions practiced</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number">Top 1%</div>
+                                <div class="stat-label">Percentile Goal</div>
+                            </div>
+                        </div>
+                        <div class="overlay-gradient-top"></div>
+                        <div class="overlay-gradient-bottom"></div>
                     </div>
-                    <div class="form-checkbox">
-                        <input type="checkbox" name="beta_access" id="betaAccess2">
-                        <label for="betaAccess2">I want beta access</label>
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-full">Join Waitlist</button>
-                    <div class="form-message"></div>
-                </form>
+                </div>
             </div>
         </div>
     </section>

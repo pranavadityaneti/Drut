@@ -11,16 +11,62 @@ serve(async (req) => {
   }
 
   try {
-    const { email, customerId, name, role, exam, phone, painPoint } = await req.json();
+    const { email, customerId, name, role, exam, phone, painPoint, email_type } = await req.json();
 
-    console.log(`NEW LEAD: ${email} (ID: ${customerId})`);
+    console.log(`NEW LEAD (${email_type}): ${email} (ID: ${customerId})`);
     console.log(`Details: ${name}, ${role}, ${exam}, ${phone}`);
     console.log(`Pain Point: ${painPoint}`);
 
     const firstName = name ? name.split(' ')[0] : 'there';
 
-    // Polished Waitlist Confirmation Email Template
-    const emailHtml = `
+    let subject = 'Your Speed Journey Starts Now — Welcome to Drut';
+    let emailHtml = '';
+
+    if (email_type === 'research') {
+      subject = 'Welcome to the Drut Research Panel';
+      emailHtml = `
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <style>
+              body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; margin: 0; padding: 0; background-color: #f9f9f9; color: #333; }
+              .container { max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 12px; overflow: hidden; margin-top: 40px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+              .header { background: linear-gradient(90deg, #e8f5e9 0%, #c8e6c9 100%); padding: 24px; text-align: center; }
+              .header h1 { margin: 0; color: #2e7d32; font-size: 24px; }
+              .content { padding: 32px; line-height: 1.6; }
+              .cta-box { margin-top: 24px; padding: 20px; background: #f1f8e9; border-left: 4px solid #4caf50; border-radius: 4px; }
+              .footer { padding: 24px; text-align: center; color: #888; font-size: 12px; border-top: 1px solid #eee; }
+            </style>
+          </head>
+          <body>
+            <div class="container">
+              <div class="header">
+                <h1>Drut Research Panel</h1>
+              </div>
+              <div class="content">
+                <p>Hi ${firstName},</p>
+                <p>Thanks for joining the Drut Research Panel.</p>
+                <p>We are building the future of fast thinking for exams like <strong>${exam || 'competitive exams'}</strong>, and your insights are critical to us.</p>
+                
+                <div class="cta-box">
+                  <h3 style="margin-top: 0; color: #2e7d32;">WHAT NEXT?</h3>
+                  <p style="margin-bottom: 0;">Our founders will reach out to you on the communication details provided to personally schedule a 15-min discussion.</p>
+                </div>
+                
+                <p>Cheers,<br>The Drut Team</p>
+              </div>
+              <div class="footer">
+                <p>&copy; 2025 Drut. All rights reserved.<br>admin@drut.club</p>
+              </div>
+            </div>
+          </body>
+          </html>
+        `;
+    } else {
+      // ... (Existing Waitlist Template) ...
+      emailHtml = `
       <!DOCTYPE html>
       <html>
       <head>
@@ -45,7 +91,7 @@ serve(async (req) => {
             margin-bottom: 40px; 
             box-shadow: 0 4px 24px rgba(0,0,0,0.06); 
           }
-          
+          /* ... (Waitlist styles kept same for brevity in verification, user wants research mostly) */
           /* Header Section */
           .header { 
             background: linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 100%);
@@ -285,6 +331,7 @@ serve(async (req) => {
       </body>
       </html>
     `;
+    }
 
     // Try sending with Resend if Key exists
     const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY');
@@ -298,7 +345,7 @@ serve(async (req) => {
         body: JSON.stringify({
           from: 'Drut <admin@drut.club>',
           to: email,
-          subject: 'Your Speed Journey Starts Now — Welcome to Drut',
+          subject: subject,
           html: emailHtml
         })
       });

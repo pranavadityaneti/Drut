@@ -48,7 +48,7 @@ export const SprintResultsScreen: React.FC<SprintResultsScreenProps> = ({
                 <Card>
                     <CardContent className="p-8 text-center space-y-4">
                         <p className="text-lg">Loading results...</p>
-                        <div className="animate-spin h-8 w-8 border-4 border-primary border-t-transparent rounded-full mx-auto" />
+                        <div className="animate-spin h-8 w-8 border-4 border-emerald-500 border-t-transparent rounded-full mx-auto" />
                     </CardContent>
                 </Card>
             </div>
@@ -65,7 +65,7 @@ export const SprintResultsScreen: React.FC<SprintResultsScreenProps> = ({
         <div className="max-w-4xl mx-auto mt-8 space-y-6">
             {/* Header */}
             <div className="text-center space-y-2">
-                <h1 className="text-4xl font-bold text-primary">Sprint Complete!</h1>
+                <h1 className="text-4xl font-bold text-emerald-600">Sprint Complete!</h1>
                 <p className="text-lg text-muted-foreground">
                     {sessionData.topic} → {sessionData.subtopic}
                 </p>
@@ -76,7 +76,7 @@ export const SprintResultsScreen: React.FC<SprintResultsScreenProps> = ({
                 <Card>
                     <CardContent className="p-6 text-center">
                         <p className="text-sm text-muted-foreground mb-1">Total Score</p>
-                        <p className="text-3xl font-bold text-primary">{sessionData.totalScore}</p>
+                        <p className="text-3xl font-bold text-emerald-600">{sessionData.totalScore}</p>
                     </CardContent>
                 </Card>
 

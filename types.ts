@@ -19,16 +19,20 @@ export interface FullStepByStep {
 }
 
 export interface QuestionOption {
-    text: string;
+  text: string;
 }
 
 export interface QuestionData {
+  // Supabase UUID from cached_questions table
+  uuid: string;
   questionText: string;
   options: QuestionOption[];
   correctOptionIndex: number;
   timeTargets: TimeTargets;
   fastestSafeMethod: FastestSafeMethod;
   fullStepByStep: FullStepByStep;
+  // FSM tag for pattern grouping
+  fsmTag: string;
 }
 
 // This is the data shape returned by our server-side analytics RPC.
@@ -41,11 +45,11 @@ export type AnalyticsRow = {
 };
 
 export interface UserMetadata {
-    full_name?: string;
-    phone?: string;
-    avatar_url?: string;
-    exam_profile?: string;
-    [key: string]: any;
+  full_name?: string;
+  phone?: string;
+  avatar_url?: string;
+  exam_profile?: string;
+  [key: string]: any;
 }
 
 

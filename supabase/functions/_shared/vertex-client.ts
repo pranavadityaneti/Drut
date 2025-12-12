@@ -1,5 +1,5 @@
-// Shared Vertex AI client for Edge Functions
-import { GoogleAuth } from 'npm:google-auth-library@9';
+// Shared Gemini AI client for Edge Functions
+// Uses Google GenAI API (API key based) instead of Vertex AI (service account based)
 
 const SCHEMA_HINT = `
 {
@@ -18,56 +18,24 @@ const SCHEMA_HINT = `
     "steps": string[],
     "sanityCheck": string
   },
-  "fullStepByStep": { "steps": string[] }
+  "fullStepByStep": { "steps": string[] },
+  "fsmTag": string // REQUIRED: lowercase kebab-case pattern tag (e.g., "ratio-inverse-prop", "time-work-lcm-method")
 }
 `.trim();
 
-/**
- * Get authenticated Vertex AI client using service account
- */
-export async function getVertexAIClient() {
-    const projectId = Deno.env.get('VERTEX_AI_PROJECT_ID');
-    const location = Deno.env.get('VERTEX_AI_LOCATION') || 'us-central1';
-    const serviceAccountKey = Deno.env.get('GOOGLE_SERVICE_ACCOUNT_KEY');
-
-    if (!projectId || !serviceAccountKey) {
-        throw new Error('Missing required environment variables');
-    }
-
-    // Parse service account JSON
-    const credentials = JSON.parse(serviceAccountKey);
-
-    // Create auth client
-    const auth = new GoogleAuth({
-        credentials,
-        scopes: ['https://www.googleapis.com/auth/cloud-platform'],
-    });
-
-    const client = await auth.getClient();
-    const accessToken = await client.getAccessToken();
-
-    if (!accessToken.token) {
-        throw new Error('Failed to get access token');
-    }
-
-    return {
-        projectId,
-        location,
-        accessToken: accessToken.token,
-    };
-}
+// Google GenAI API key - same as used in frontend
+const GEMINI_API_KEY = Deno.env.get('GEMINI_API_KEY') || 'AIzaSyAEeKi8yNY9yf0OptQq46RAUNZeKUDFNmY';
 
 /**
- * Call Vertex AI Gemini API
+ * Call Google GenAI API (simpler than Vertex AI, uses API key)
  */
 export async function generateContent(
     prompt: string,
     systemInstruction?: string,
     temperature = 0.3
 ): Promise<string> {
-    const { projectId, location, accessToken } = await getVertexAIClient();
-
-    const endpoint = `https://${location}-aiplatform.googleapis.com/v1beta1/projects/${projectId}/locations/${location}/publishers/google/models/gemini-experimental:generateContent`;
+    const model = 'gemini-2.0-flash-exp';
+    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${GEMINI_API_KEY}`;
 
     const contents = [
         {
@@ -93,7 +61,6 @@ export async function generateContent(
     const response = await fetch(endpoint, {
         method: 'POST',
         headers: {
-            'Authorization': `Bearer ${accessToken}`,
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(requestBody),
@@ -101,7 +68,8 @@ export async function generateContent(
 
     if (!response.ok) {
         const error = await response.text();
-        throw new Error(`Vertex AI API error: ${error}`);
+        console.error('Gemini API error:', error);
+        throw new Error(`Gemini API error: ${response.status}`);
     }
 
     const data = await response.json();
@@ -113,14 +81,24 @@ export async function generateContent(
  * Extract JSON from response (handles code fences)
  */
 export function extractJSON(text: string): string {
+    // Try markdown code fence first
     const fence = text.match(/```json([\s\S]*?)```/i);
     if (fence) return fence[1].trim();
 
+    // Try to find array
+    const firstBracket = text.indexOf('[');
+    const lastBracket = text.lastIndexOf(']');
+    if (firstBracket !== -1 && lastBracket !== -1 && lastBracket > firstBracket) {
+        return text.slice(firstBracket, lastBracket + 1);
+    }
+
+    // Try to find object
     const first = text.indexOf('{');
     const last = text.lastIndexOf('}');
     if (first !== -1 && last !== -1 && last > first) {
         return text.slice(first, last + 1);
     }
+
     return text;
 }
 
