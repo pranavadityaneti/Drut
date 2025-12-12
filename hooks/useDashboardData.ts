@@ -51,11 +51,39 @@ export interface DashboardData {
     patterns: PatternMastery[];
 }
 
+// Mock Data for Dashboard
+const MOCK_DATA: DashboardData = {
+    speedScore: 78,
+    speedRating: 'Pro',
+    speedTrend: 12,
+    totalPatternsSeen: 145,
+    verifiedPatterns: 89,
+    learningPatterns: 56,
+    debtPatterns: [
+        { id: '1', fsm_tag: 'algebra-logarithms-basic', mastery_level: 'learning', streak: 2, is_in_debt: true, last_practiced_at: new Date().toISOString() },
+        { id: '2', fsm_tag: 'geometry-triangles-properties', mastery_level: 'learning', streak: 1, is_in_debt: true, last_practiced_at: new Date(Date.now() - 86400000).toISOString() },
+        { id: '3', fsm_tag: 'arithmetic-percentages-advanced', mastery_level: 'learning', streak: 0, is_in_debt: true, last_practiced_at: new Date(Date.now() - 172800000).toISOString() },
+    ],
+    debtCount: 3,
+    topicStats: [
+        {
+            topic: { id: 'quant', label: 'Quantitative Aptitude', value: 'quant', subtopics: ['Arithmetic', 'Algebra', 'Geometry'] },
+            totalPatterns: 50, verifiedPatterns: 30, learningPatterns: 20, progressPercent: 60
+        },
+        {
+            topic: { id: 'varc', label: 'Verbal Ability', value: 'varc', subtopics: ['RC', 'Parajumbles'] },
+            totalPatterns: 40, verifiedPatterns: 20, learningPatterns: 15, progressPercent: 50
+        }
+    ],
+    patterns: []
+};
+
+
 // ============================================================
 // Hook
 // ============================================================
 
-export function useDashboardData() {
+export function useDashboardData(useMockData: boolean = false) {
     const [data, setData] = useState<DashboardData | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -65,6 +93,15 @@ export function useDashboardData() {
         try {
             setLoading(true);
             setError(null);
+
+            if (useMockData) {
+                // Return Mock Data immediately
+                // Simulate small delay for UI effect
+                await new Promise(resolve => setTimeout(resolve, 500));
+                setData(MOCK_DATA);
+                setLoading(false);
+                return;
+            }
 
             // Get current user
             const { data: { user } } = await supabase.auth.getUser();
@@ -155,7 +192,7 @@ export function useDashboardData() {
         } finally {
             setLoading(false);
         }
-    }, []);
+    }, [useMockData]);
 
     useEffect(() => {
         fetchData();

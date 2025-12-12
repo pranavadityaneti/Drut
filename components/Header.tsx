@@ -4,13 +4,23 @@ import { supabase } from '../lib/supabase';
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from './ui/DropdownMenu';
 import { User } from '../types';
 
+import { Switch } from './ui/switch-new';
+
 interface HeaderProps {
   currentPage: string;
   setCurrentPage: (page: string) => void;
   onLogout: () => void;
+  useMockData?: boolean;
+  setUseMockData?: (useMock: boolean) => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({ currentPage, setCurrentPage, onLogout }) => {
+export const Header: React.FC<HeaderProps> = ({
+  currentPage,
+  setCurrentPage,
+  onLogout,
+  useMockData = false,
+  setUseMockData
+}) => {
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
@@ -48,15 +58,18 @@ export const Header: React.FC<HeaderProps> = ({ currentPage, setCurrentPage, onL
         {/* Right: User Profile with Dropdown */}
         <div className="flex items-center gap-6">
           {/* Mock Data Toggle */}
-          <div className="flex items-center gap-3">
-            <span className="text-sm font-medium text-muted-foreground hidden md:block">Real Data</span>
-            <button
-              className="w-11 h-6 flex items-center bg-emerald-500 rounded-full p-1 cursor-default"
-              title="Toggle Data Mode"
-            >
-              <div className="bg-white w-4 h-4 rounded-full shadow-md transform translate-x-5" />
-            </button>
-          </div>
+          {setUseMockData && (
+            <div className="flex items-center gap-3">
+              <span className="text-sm font-medium text-muted-foreground hidden md:block">
+                {useMockData ? 'Mock Data' : 'Real Data'}
+              </span>
+              <Switch
+                checked={useMockData}
+                onCheckedChange={setUseMockData}
+                title="Toggle Data Mode"
+              />
+            </div>
+          )}
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
