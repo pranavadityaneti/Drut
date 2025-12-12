@@ -602,7 +602,7 @@ export const NewPractice: React.FC = () => {
                             errorCategory={selectedOption === questionData.correctOptionIndex ? null : 'method'}
                             baselineTime={targetTime}
                         />
-                        <div className="flex justify-center">
+                        <div className="flex justify-end">
                             <button
                                 onClick={handleNextAfterFeedback}
                                 className="px-6 py-3 bg-emerald-500 text-white rounded-lg font-medium hover:bg-emerald-600 transition-colors"
@@ -615,7 +615,7 @@ export const NewPractice: React.FC = () => {
 
                 {/* Show Reinforce Menu after FSM is shown */}
                 {practiceState === 'fsm' && (
-                    <div className="flex justify-center pt-4">
+                    <div className="flex justify-end pt-4">
                         <button
                             onClick={() => setPracticeState('reinforce')}
                             className="px-6 py-3 bg-emerald-500 text-white rounded-lg font-medium hover:bg-emerald-600 transition-colors"
@@ -629,59 +629,14 @@ export const NewPractice: React.FC = () => {
     };
 
     return (
-        <div className="flex flex-col lg:flex-row gap-8">
-            {/* Left Navigation Pane */}
-            <aside className="w-full lg:w-1/4 xl:w-1/5">
-                <div className="hidden lg:block sticky top-6 space-y-6">
-                    {/* Topic Selector */}
-                    <div>
-                        <h3 className="text-lg font-semibold mb-3 text-emerald-600">Topic</h3>
-                        <Select
-                            value={topic || ''}
-                            onChange={(e) => {
-                                const newTopic = e.target.value;
-                                setTopic(newTopic);
-                                localStorage.setItem('topic', newTopic);
-                                // Update subtopics for new topic
-                                const topicDef = getTopic(examProfile || '', newTopic);
-                                const subs = topicDef?.subtopics.map(s => s.label) || [];
-                                setCurrentSubTopics(subs);
-                                if (subs.length > 0) {
-                                    setSelectedSubTopic(subs[0]);
-                                }
-                                setCurrentQuestionIndex(0);
-                            }}
-                            options={getTopicOptions(examProfile || '').map(t => ({
-                                value: t.value,
-                                label: t.label
-                            }))}
-                        />
-                    </div>
-
-                    {/* Subtopic Selector */}
-                    <div>
-                        <h3 className="text-lg font-semibold mb-3 text-emerald-600">Sub-topics</h3>
-                        <div className="flex flex-col space-y-2">
-                            {currentSubTopics.map((sub) => (
-                                <button
-                                    key={sub}
-                                    onClick={() => handleSubTopicSelect(sub)}
-                                    className={`px-3 py-2 text-left text-sm font-medium rounded-md transition-colors ${selectedSubTopic === sub
-                                        ? 'bg-emerald-500 text-white'
-                                        : 'hover:bg-accent text-muted-foreground'
-                                        }`}
-                                >
-                                    {sub}
-                                </button>
-                            ))}
-                        </div>
-                    </div>
-                </div>
-                <div className="lg:hidden space-y-4">
-                    {/* Mobile Topic Selector */}
-                    <div>
-                        <label className="text-sm font-medium text-muted-foreground mb-1 block">
-                            Topic
+        <div className="space-y-6">
+            {/* Top Navigation Bar */}
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 pb-4 border-b">
+                {/* Left: Topic & Subtopic */}
+                <div className="flex flex-wrap items-center gap-4">
+                    <div className="flex items-center gap-2">
+                        <label className="text-sm font-medium text-muted-foreground whitespace-nowrap">
+                            Topic:
                         </label>
                         <Select
                             value={topic || ''}
@@ -696,45 +651,39 @@ export const NewPractice: React.FC = () => {
                                     setSelectedSubTopic(subs[0]);
                                 }
                                 setCurrentQuestionIndex(0);
+                                setQuestionCache({});
+                                questionCacheRef.current = {};
                             }}
                             options={getTopicOptions(examProfile || '').map(t => ({
                                 value: t.value,
                                 label: t.label
                             }))}
+                            className="w-48"
                         />
                     </div>
-                    {/* Mobile Subtopic Selector */}
-                    <div>
-                        <label
-                            htmlFor="subtopic-select"
-                            className="text-sm font-medium text-muted-foreground mb-1 block"
-                        >
-                            Sub-topic
+                    <div className="flex items-center gap-2">
+                        <label className="text-sm font-medium text-muted-foreground whitespace-nowrap">
+                            Sub-topic:
                         </label>
                         <Select
-                            id="subtopic-select"
-                            options={currentSubTopics.map((sub) => ({ value: sub, label: sub }))}
                             value={selectedSubTopic || ''}
                             onChange={(e) => handleSubTopicSelect(e.target.value)}
+                            options={currentSubTopics.map((sub) => ({ value: sub, label: sub }))}
+                            className="w-56"
                         />
                     </div>
                 </div>
-            </aside>
 
-            {/* Right Workspace Area */}
-            <main className="flex-1 space-y-4">
-                {/* Header row: Question number on left, Difficulty on right */}
-                <div className="flex items-center justify-between">
+                {/* Right: Question Number & Difficulty */}
+                <div className="flex items-center gap-6">
                     <p className="text-sm text-muted-foreground font-medium">
                         Question {currentQuestionIndex + 1}
                     </p>
-
                     <div className="flex items-center gap-2">
-                        <label htmlFor="difficulty-select" className="text-sm font-medium text-muted-foreground">
+                        <label className="text-sm font-medium text-muted-foreground">
                             Difficulty:
                         </label>
                         <Select
-                            id="difficulty-select"
                             options={[
                                 { value: 'Easy', label: 'Easy' },
                                 { value: 'Medium', label: 'Medium' },
@@ -742,13 +691,14 @@ export const NewPractice: React.FC = () => {
                             ]}
                             value={difficulty}
                             onChange={(e) => handleDifficultyChange(e.target.value as 'Easy' | 'Medium' | 'Hard')}
-                            className="w-32"
+                            className="w-28"
                         />
                     </div>
                 </div>
+            </div>
 
-                <WorkspaceArea />
-            </main>
+            {/* Question Workspace Area - Full Width */}
+            <WorkspaceArea />
 
             {/* Prescription Chip - only show after feedback */}
             {practiceState === 'feedback' && questionData && selectedSubTopic && (
