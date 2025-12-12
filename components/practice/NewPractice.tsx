@@ -630,14 +630,14 @@ export const NewPractice: React.FC = () => {
 
     return (
         <div className="space-y-6">
-            {/* Top Navigation Bar - Single row on desktop */}
-            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 pb-4 border-b">
+            {/* Top Navigation Bar - Always flex-row, wraps on small screens */}
+            <div className="flex flex-wrap justify-between items-center gap-x-8 gap-y-3 pb-4 border-b">
                 {/* Left: Topic & Subtopic */}
-                <div className="flex flex-wrap items-center gap-4 flex-shrink-0">
+                <div className="flex items-center gap-4">
                     <div className="flex items-center gap-2">
-                        <label className="text-sm font-medium text-muted-foreground whitespace-nowrap">
+                        <span className="text-sm font-medium text-muted-foreground">
                             Topic:
-                        </label>
+                        </span>
                         <Select
                             value={topic || ''}
                             onChange={(e) => {
@@ -658,31 +658,29 @@ export const NewPractice: React.FC = () => {
                                 value: t.value,
                                 label: t.label
                             }))}
-                            className="min-w-[180px]"
                         />
                     </div>
                     <div className="flex items-center gap-2">
-                        <label className="text-sm font-medium text-muted-foreground whitespace-nowrap">
+                        <span className="text-sm font-medium text-muted-foreground whitespace-nowrap">
                             Sub-topic:
-                        </label>
+                        </span>
                         <Select
                             value={selectedSubTopic || ''}
                             onChange={(e) => handleSubTopicSelect(e.target.value)}
                             options={currentSubTopics.map((sub) => ({ value: sub, label: sub }))}
-                            className="min-w-[200px]"
                         />
                     </div>
                 </div>
 
                 {/* Right: Question Number & Difficulty */}
-                <div className="flex items-center gap-4 lg:gap-6 flex-shrink-0">
-                    <p className="text-sm text-muted-foreground font-medium whitespace-nowrap">
+                <div className="flex items-center gap-4">
+                    <span className="text-sm text-muted-foreground font-medium">
                         Question {currentQuestionIndex + 1}
-                    </p>
+                    </span>
                     <div className="flex items-center gap-2">
-                        <label className="text-sm font-medium text-muted-foreground whitespace-nowrap">
+                        <span className="text-sm font-medium text-muted-foreground">
                             Difficulty:
-                        </label>
+                        </span>
                         <Select
                             options={[
                                 { value: 'Easy', label: 'Easy' },
@@ -691,7 +689,6 @@ export const NewPractice: React.FC = () => {
                             ]}
                             value={difficulty}
                             onChange={(e) => handleDifficultyChange(e.target.value as 'Easy' | 'Medium' | 'Hard')}
-                            className="w-28"
                         />
                     </div>
                 </div>
