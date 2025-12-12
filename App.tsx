@@ -22,7 +22,7 @@ import { ModalProvider } from './components/ui/Modal';
 
 
 // In a real Next.js app, this would be process.env.NEXT_PUBLIC_DEBUG
-const IS_DEBUG_MODE = true; // Set to true to see the debug chip
+const IS_DEBUG_MODE = false; // Set to true to see the debug chip
 
 const HealthChip: React.FC<{ status: HealthStatus }> = ({ status }) => (
   <div className="fixed bottom-4 right-4 bg-primary text-primary-foreground text-xs rounded-full px-3 py-1.5 shadow-lg z-50">
