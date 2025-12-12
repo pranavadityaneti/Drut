@@ -74,11 +74,17 @@ export const Dashboard: React.FC = () => {
         Tablet: 2 columns top (Arena + Speed), 1 full width bottom (Debt) or vice versa
         Mobile: 1 column stack
       */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
+      {/* 
+        ROW 1: Stats & Widgets
+        Desktop: 12-column Grid (3-6-3 split) to make Speed Pulse wider
+        Tablet: 2 columns top (Arena + Speed), 1 full width bottom (Debt) or vice versa
+        Mobile: 1 column stack
+      */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 items-stretch">
         <ArenaWidget
           currentUserRank={4}
           currentUserScore={speedScore * 5}
-          className="h-full"
+          className="h-full lg:col-span-3"
         />
         <SpeedPulse
           score={speedScore}
@@ -86,12 +92,12 @@ export const Dashboard: React.FC = () => {
           trend={speedTrend}
           verifiedCount={verifiedPatterns}
           totalCount={totalPatterns}
-          className="h-full"
+          className="h-full lg:col-span-6"
         />
         <DebtCollector
           patterns={debtPatterns}
           onClearDebt={handleClearDebt}
-          className="md:col-span-2 lg:col-span-1 h-full"
+          className="md:col-span-2 lg:col-span-3 h-full"
         />
       </div>
 

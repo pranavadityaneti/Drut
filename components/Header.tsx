@@ -17,11 +17,7 @@ export const Header: React.FC<HeaderProps> = ({ currentPage, setCurrentPage, onL
     const loadUser = async () => {
       const { data: { user: authUser } } = await supabase.auth.getUser();
       if (authUser) {
-        setUser({
-          id: authUser.id,
-          email: authUser.email || '',
-          user_metadata: authUser.user_metadata || {}
-        });
+        setUser(authUser as unknown as User);
       }
     };
     loadUser();
@@ -51,6 +47,17 @@ export const Header: React.FC<HeaderProps> = ({ currentPage, setCurrentPage, onL
 
         {/* Right: User Profile with Dropdown */}
         <div className="flex items-center gap-6">
+          {/* Mock Data Toggle */}
+          <div className="flex items-center gap-3">
+            <span className="text-sm font-medium text-muted-foreground hidden md:block">Real Data</span>
+            <button
+              className="w-11 h-6 flex items-center bg-emerald-500 rounded-full p-1 cursor-default"
+              title="Toggle Data Mode"
+            >
+              <div className="bg-white w-4 h-4 rounded-full shadow-md transform translate-x-5" />
+            </button>
+          </div>
+
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button className="flex items-center gap-3 pl-6 border-l border-gray-200 hover:opacity-80 transition-opacity">

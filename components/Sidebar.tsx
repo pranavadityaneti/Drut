@@ -33,7 +33,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentPage, setCurrentPage, u
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
     { id: 'practice', label: 'Practice', icon: Dumbbell },
     { id: 'sprint', label: 'Sprint', icon: Zap },
-    { id: 'profile', label: 'Profile', icon: UserIcon },
   ];
 
   // Admin users get extra nav items
@@ -49,17 +48,17 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentPage, setCurrentPage, u
     <aside
       className={cn(
         "fixed inset-y-0 left-0 z-40 flex flex-col bg-card border-r border-border transition-all duration-300 ease-in-out",
-        isCollapsed ? 'w-[72px]' : 'w-64'
+        isCollapsed ? 'w-[72px]' : 'w-80'
       )}
     >
       {/* Logo Section */}
-      <div className="flex h-16 items-center justify-between px-4 border-b border-border">
+      <div className="flex h-16 items-center justify-between px-6 border-b border-border">
         <div className="flex items-center gap-3">
           {!isCollapsed && (
-            <span className="font-bold text-xl text-emerald-600">Drut</span>
+            <span className="font-bold text-2xl text-emerald-600">Drut</span>
           )}
           {isCollapsed && (
-            <span className="font-bold text-xl text-emerald-600 mx-auto">D</span>
+            <span className="font-bold text-2xl text-emerald-600 mx-auto">D</span>
           )}
         </div>
 
@@ -79,7 +78,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentPage, setCurrentPage, u
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 flex flex-col gap-1 p-3">
+      <nav className="flex-1 flex flex-col gap-2 p-4">
         {allNavItems.map(item => (
           <NavItemComponent
             key={item.id}
@@ -91,35 +90,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentPage, setCurrentPage, u
         ))}
       </nav>
 
-      {/* Footer */}
-      <div className="p-3 border-t border-border">
-        {!isCollapsed && user && (
-          <div className="flex items-center gap-3 px-3 py-2 mb-2">
-            <div className="h-8 w-8 rounded-full bg-emerald-50 flex items-center justify-center">
-              <span className="text-sm font-medium text-emerald-600">
-                {user.user_metadata?.full_name?.charAt(0) || user.email?.charAt(0) || '?'}
-              </span>
-            </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium truncate">{user.user_metadata?.full_name || 'User'}</p>
-              <p className="text-xs text-muted-foreground truncate">{user.email}</p>
-            </div>
-          </div>
-        )}
-
-        <Button
-          variant="ghost"
-          size={isCollapsed ? "icon" : "default"}
-          onClick={onLogout}
-          className={cn(
-            "w-full text-muted-foreground hover:text-foreground hover:bg-destructive/10",
-            isCollapsed && "mx-auto"
-          )}
-        >
-          <LogOut className="h-4 w-4" />
-          {!isCollapsed && <span className="ml-2">Sign out</span>}
-        </Button>
-      </div>
+      {/* Footer Removed as requested */}
     </aside>
   );
 };
@@ -135,7 +106,7 @@ const NavItemComponent: React.FC<{
   <button
     onClick={onClick}
     className={cn(
-      "group relative flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200",
+      "group relative flex items-center gap-4 px-4 py-3.5 rounded-lg text-base font-medium transition-all duration-200",
       isActive
         ? "bg-emerald-500 text-white shadow-sm"
         : "text-muted-foreground hover:bg-accent hover:text-accent-foreground",
@@ -144,7 +115,7 @@ const NavItemComponent: React.FC<{
     title={isCollapsed ? label : undefined}
   >
     <Icon className={cn(
-      "h-5 w-5 flex-shrink-0 transition-colors",
+      "h-6 w-6 flex-shrink-0 transition-colors",
       isActive ? "text-white" : "group-hover:text-emerald-700"
     )} />
     {!isCollapsed && <span>{label}</span>}

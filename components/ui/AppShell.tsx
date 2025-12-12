@@ -20,7 +20,7 @@ export const useSidebar = () => {
 
 export const SidebarInset: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
-    <div className="flex flex-col min-h-screen transition-all duration-300 ease-in-out lg:ml-64 ml-0 bg-background">
+    <div className="flex flex-col min-h-screen transition-all duration-300 ease-in-out lg:ml-80 ml-0 bg-background">
       {children}
     </div>
   );
