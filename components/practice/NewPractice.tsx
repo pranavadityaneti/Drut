@@ -44,6 +44,7 @@ export const NewPractice: React.FC = () => {
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [isProcessing, setIsProcessing] = useState<boolean>(false); // Action 1: Rage Click Guard
     const [error, setError] = useState<string | null>(null);
 
     const [questionData, setQuestionData] = useState<QuestionData | null>(null);
@@ -64,9 +65,10 @@ export const NewPractice: React.FC = () => {
     const { toasts, addToast, dismissToast } = useToast();
 
     const timerRef = useRef<number | null>(null);
-    const startTimeRef = useRef<number | null>(null);
+    const startTimeRef = useRef<number | null>(null); // Action 3: Precision Timer
     const fetchingRef = useRef<boolean>(false);
     const questionCacheRef = useRef<{ [key: string]: QuestionData[] }>({});
+    const currentRequestId = useRef<string | null>(null); // Action 2: Taxonomy Race Condition
 
     // Get topic LABEL from taxonomy (for database matching)
     const topicLabel = useMemo(() => {
@@ -138,11 +140,16 @@ export const NewPractice: React.FC = () => {
 
     const loadQuestion = useCallback(
         async (index: number) => {
+            // Action 2: Generate Request ID
+            const requestId = Math.random().toString(36).substring(7);
+            currentRequestId.current = requestId;
+
             setQuestionData(null);
             setSelectedOption(null);
             setTimeTaken(0);
             setReflectionChoice(null);
             setPracticeState('question');
+            setIsProcessing(false); // Reset processing state
             stopTimer();
 
             const { subTopic: currentSubTopic, topic: currentTopic } = currentTopicInfo;
@@ -153,6 +160,9 @@ export const NewPractice: React.FC = () => {
             if (index === 0) {
                 const preloaded = getPreloadedQuestion(examProfile, currentTopic, currentSubTopic);
                 if (preloaded) {
+                    // Check for race condition before applying state
+                    if (currentRequestId.current !== requestId) return;
+
                     setQuestionData(preloaded);
                     setCurrentQuestionUuid(preloaded.uuid);
                     setCurrentFsmTag(preloaded.fsmTag);
@@ -168,6 +178,10 @@ export const NewPractice: React.FC = () => {
 
             if (questionCache[currentSubTopic]?.[index]) {
                 const cachedQuestion = questionCache[currentSubTopic][index];
+
+                // Check for race condition
+                if (currentRequestId.current !== requestId) return;
+
                 setQuestionData(cachedQuestion);
                 setCurrentQuestionUuid(cachedQuestion.uuid);
                 setCurrentFsmTag(cachedQuestion.fsmTag);
@@ -192,6 +206,9 @@ export const NewPractice: React.FC = () => {
                     difficulty
                 );
 
+                // Check for race condition after async call
+                if (currentRequestId.current !== requestId) return;
+
                 if (questions.length === 0) {
                     throw new Error('No questions available. Please try again later.');
                 }
@@ -211,6 +228,9 @@ export const NewPractice: React.FC = () => {
                 startTimer();
                 ensureQuestionBuffer(index + 1);
             } catch (err: any) {
+                // Ignore errors if request is stale
+                if (currentRequestId.current !== requestId) return;
+
                 if (err.message?.includes('QUOTA_EXCEEDED') || err.message?.includes('429')) {
                     setError(
                         "⚠️ API quota limit reached. We're showing you questions from cache. New questions will be available soon."
@@ -219,7 +239,10 @@ export const NewPractice: React.FC = () => {
                     setError(err.message || 'An unknown error occurred.');
                 }
             } finally {
-                setIsLoading(false);
+                // Only turn off loading if request is still fresh
+                if (currentRequestId.current === requestId) {
+                    setIsLoading(false);
+                }
             }
         },
         [currentTopicInfo, questionCache, ensureQuestionBuffer, examProfile]
@@ -272,6 +295,7 @@ export const NewPractice: React.FC = () => {
         stopTimer();
         const startTime = Date.now();
         startTimeRef.current = startTime;
+        // Update UI timer
         timerRef.current = window.setInterval(() => {
             setTimeTaken(Math.round((Date.now() - startTime) / 1000));
         }, 1000);
@@ -329,13 +353,25 @@ export const NewPractice: React.FC = () => {
     }, [questionData, examProfile]);
 
     const handleAnswerSubmit = async () => {
+        // Action 1: Rage Click Guard
+        if (isProcessing) return;
         if (selectedOption === null || !questionData || !currentQuestionUuid) return;
 
+        setIsProcessing(true);
         stopTimer();
+
+        // Action 3: Precise Timer Calculation
+        const endTime = Date.now();
+        const startTime = startTimeRef.current || endTime;
+        const preciseTimeMs = endTime - startTime;
+        const preciseTimeSec = preciseTimeMs / 1000;
+
+        // Update state with precise time for UI
+        setTimeTaken(Math.round(preciseTimeSec));
 
         const isCorrect = selectedOption === questionData.correctOptionIndex;
         const fsmTargetTime = targetTime || 45; // Default 45s if no target
-        const isFast = timeTaken <= fsmTargetTime;
+        const isFast = preciseTimeSec <= fsmTargetTime;
         const fsmTag = currentFsmTag || `${selectedSubTopic}-default`;
 
         setLastAnswerCorrect(isCorrect);
@@ -347,7 +383,7 @@ export const NewPractice: React.FC = () => {
                 questionUuid: currentQuestionUuid,
                 fsmTag: fsmTag,
                 isCorrect: isCorrect,
-                timeMs: timeTaken * 1000,
+                timeMs: preciseTimeMs, // Send precise ms
                 targetTimeMs: fsmTargetTime * 1000,
                 selectedOptionIndex: selectedOption,
                 skipDrill: false,
@@ -357,15 +393,17 @@ export const NewPractice: React.FC = () => {
             log.info(`Mastery updated: streak=${result.new_streak}, level=${result.new_mastery_level}`);
         } catch (error: any) {
             log.error('Save mastery error:', error.message);
-        }
-
-        // Branch based on performance
-        if (isCorrect && isFast) {
-            // Branch A: Success - show toast and auto-advance
-            setPracticeState('success-toast');
-        } else {
-            // Branch B: Intervention - show modal with FSM
-            setPracticeState('intervention');
+        } finally {
+            // Branch based on performance
+            if (isCorrect && isFast) {
+                // Branch A: Success - show toast and auto-advance
+                setPracticeState('success-toast');
+                setIsProcessing(false); // Enable for next interactions
+            } else {
+                // Branch B: Intervention - show modal with FSM
+                setPracticeState('intervention');
+                setIsProcessing(false); // Enable inputs within modal if any (or waiting for Prove It)
+            }
         }
     };
 
@@ -414,15 +452,26 @@ export const NewPractice: React.FC = () => {
                 setPracticeState('question');
                 startTimer();
             } else {
-                // No similar question found, fall back to normal flow
-                log.warn('No similar question found for Prove It, loading next');
-                loadQuestion(currentQuestionIndex + 1);
-                setCurrentQuestionIndex((prev) => prev + 1);
+                // Action 4: Handle Empty State specifically
+                log.warn('No similar question found for Prove It');
+                addToast(
+                    "No drill variants available for this pattern yet.",
+                    "error",
+                    3000
+                );
+                // Do NOT advance significantly, just stay or maybe close modal?
+                // User requirement: "Do not transition state. Keep them on the Intervention Modal..."
+                setIsLoading(false);
+                return;
             }
         } catch (error: any) {
             log.error('Prove It error:', error.message);
-            loadQuestion(currentQuestionIndex + 1);
-            setCurrentQuestionIndex((prev) => prev + 1);
+            // Fallback: If error, notify user but don't crash
+            addToast(
+                "Failed to load drill question. Please try again.",
+                "error",
+                3000
+            );
         } finally {
             setIsLoading(false);
         }
@@ -558,6 +607,7 @@ export const NewPractice: React.FC = () => {
                     onAnswerSubmit={handleAnswerSubmit}
                     timeTaken={timeTaken}
                     targetTime={targetTime}
+                    isDisabled={isProcessing} // Action 1: UI Block
                 />
 
                 {/* Reflection Panel */}

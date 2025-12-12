@@ -11,6 +11,7 @@ interface QuestionCardProps {
   onAnswerSubmit: () => void;
   timeTaken: number;
   targetTime: number;
+  isDisabled?: boolean;
 }
 
 const TimerIcon = () => (
@@ -24,11 +25,15 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
   onOptionChange,
   onAnswerSubmit,
   timeTaken,
-  targetTime
+  targetTime,
+  isDisabled = false
 }) => {
 
   const getOptionClassName = (index: number) => {
     let baseClasses = "flex items-center p-4 border rounded-md transition-all cursor-pointer";
+    if (isDisabled) {
+      return `${baseClasses} bg-muted/30 border-gray-200 opacity-60 cursor-not-allowed`;
+    }
     if (!isAnswered) {
       return `${baseClasses} ${selectedOption === index ? 'bg-blue-100 border-blue-400 ring-2 ring-blue-300' : 'bg-muted/50 hover:bg-accent'}`;
     }
@@ -76,8 +81,8 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
                 name="questionOption"
                 className="sr-only"
                 checked={selectedOption === index}
-                onChange={() => onOptionChange?.(index)}
-                disabled={isAnswered}
+                onChange={() => !isDisabled && onOptionChange?.(index)}
+                disabled={isAnswered || isDisabled}
               />
               <span className="font-bold mr-4 text-emerald-600">({String.fromCharCode(65 + index)})</span>
               <span className="break-words">{option.text}</span>
@@ -86,8 +91,8 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
         </div>
         {!isAnswered && (
           <div className="mt-6 flex justify-end">
-            <Button onClick={onAnswerSubmit} disabled={selectedOption === null}>
-              Submit Answer
+            <Button onClick={onAnswerSubmit} disabled={selectedOption === null || isDisabled}>
+              {isDisabled ? 'Processing...' : 'Submit Answer'}
             </Button>
           </div>
         )}
