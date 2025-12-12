@@ -630,10 +630,10 @@ export const NewPractice: React.FC = () => {
 
     return (
         <div className="space-y-6">
-            {/* Top Navigation Bar */}
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 pb-4 border-b">
+            {/* Top Navigation Bar - Single row on desktop */}
+            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 pb-4 border-b">
                 {/* Left: Topic & Subtopic */}
-                <div className="flex flex-wrap items-center gap-4">
+                <div className="flex flex-wrap items-center gap-4 flex-shrink-0">
                     <div className="flex items-center gap-2">
                         <label className="text-sm font-medium text-muted-foreground whitespace-nowrap">
                             Topic:
@@ -658,7 +658,7 @@ export const NewPractice: React.FC = () => {
                                 value: t.value,
                                 label: t.label
                             }))}
-                            className="w-48"
+                            className="min-w-[180px]"
                         />
                     </div>
                     <div className="flex items-center gap-2">
@@ -669,18 +669,18 @@ export const NewPractice: React.FC = () => {
                             value={selectedSubTopic || ''}
                             onChange={(e) => handleSubTopicSelect(e.target.value)}
                             options={currentSubTopics.map((sub) => ({ value: sub, label: sub }))}
-                            className="w-56"
+                            className="min-w-[200px]"
                         />
                     </div>
                 </div>
 
                 {/* Right: Question Number & Difficulty */}
-                <div className="flex items-center gap-6">
-                    <p className="text-sm text-muted-foreground font-medium">
+                <div className="flex items-center gap-4 lg:gap-6 flex-shrink-0">
+                    <p className="text-sm text-muted-foreground font-medium whitespace-nowrap">
                         Question {currentQuestionIndex + 1}
                     </p>
                     <div className="flex items-center gap-2">
-                        <label className="text-sm font-medium text-muted-foreground">
+                        <label className="text-sm font-medium text-muted-foreground whitespace-nowrap">
                             Difficulty:
                         </label>
                         <Select
