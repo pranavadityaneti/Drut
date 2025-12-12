@@ -20,6 +20,7 @@ import { FeedbackSummary } from './FeedbackSummary';
 import { PrescriptionChip } from './PrescriptionChip';
 import { SuccessToast } from './SuccessToast';
 import { InterventionModal } from './InterventionModal';
+import { ToastContainer, useToast } from '../ui/toast';
 
 type PracticeState =
     | 'question'
@@ -58,6 +59,9 @@ export const NewPractice: React.FC = () => {
     const [lastAnswerCorrect, setLastAnswerCorrect] = useState<boolean>(false);
     const [lastAnswerFast, setLastAnswerFast] = useState<boolean>(false);
     const [currentStreak, setCurrentStreak] = useState<number>(0);
+
+    // Toast notifications
+    const { toasts, addToast, dismissToast } = useToast();
 
     const timerRef = useRef<number | null>(null);
     const startTimeRef = useRef<number | null>(null);
@@ -300,6 +304,14 @@ export const NewPractice: React.FC = () => {
         setCurrentQuestionIndex(0);
         setQuestionCache({});
         questionCacheRef.current = {};
+
+        // Show toast notification
+        const difficultyEmoji = { Easy: '🌱', Medium: '⚡', Hard: '🔥' };
+        addToast(
+            `${difficultyEmoji[newDifficulty]} Difficulty set to ${newDifficulty}`,
+            'info',
+            2500
+        );
     };
 
     const targetTime = useMemo(() => {
@@ -767,6 +779,9 @@ export const NewPractice: React.FC = () => {
                     onSkip={handleSkipIntervention}
                 />
             )}
+
+            {/* Toast Notifications */}
+            <ToastContainer toasts={toasts} onDismiss={dismissToast} />
         </div>
     );
 };
