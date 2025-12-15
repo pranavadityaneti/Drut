@@ -15,7 +15,8 @@ import { HealthStatus, runtimeHealth } from './lib/health';
 import { log } from './lib/log';
 import { SidebarProvider, SidebarInset } from './components/ui/AppShell';
 import { Profile } from './components/Profile';
-import { WaitlistLandingPage } from './components/WaitlistLandingPage';
+import { WaitlistModern } from './components/WaitlistModern';
+import { WaitlistClassic } from './components/WaitlistClassic';
 import { AdminIngestion } from './components/AdminIngestion';
 import { BulkIngest } from './components/BulkIngest';
 import { ModalProvider } from './components/ui/Modal';
@@ -108,7 +109,10 @@ function App() {
         <Routes>
           {/* Public routes */}
           <Route path="/" element={
-            user ? <Navigate to="/dashboard" replace /> : <WaitlistLandingPage onGetStarted={() => window.location.href = '/login'} />
+            user ? <Navigate to="/dashboard" replace /> : <WaitlistClassic onGetStarted={() => window.location.href = '/login'} />
+          } />
+          <Route path="/classic" element={
+            user ? <Navigate to="/dashboard" replace /> : <WaitlistClassic onGetStarted={() => window.location.href = '/login'} />
           } />
           <Route path="/login" element={
             user ? <Navigate to="/dashboard" replace /> : <AuthPage onLoginSuccess={handleLoginSuccess} defaultMode="login" />
@@ -181,7 +185,7 @@ const AuthenticatedLayout: React.FC<{
           />
           <main className="flex-1 p-6 md:p-8 overflow-y-auto w-full min-w-0">
             <div className="container mx-auto px-0 max-w-full">
-              {page === 'dashboard' && <Dashboard useMockData={useMockData} />}
+              {page === 'dashboard' && <Dashboard />}
               {page === 'practice' && <Practice />}
               {page === 'sprint' && <Sprint />}
               {page === 'profile' && <Profile />}

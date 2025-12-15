@@ -1,18 +1,17 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { QuestionData } from '../../types';
-import { getQuestionsForUser } from '../../services/questionCacheService';
 import { getCurrentUser } from '../../services/authService';
-import { createSprintSession, saveSprintAttempt, finalizeSprintSession, calculateSprintScore } from '../../services/sprintService';
+import { startSession, saveSprintAttempt, finalizeSprintSession, calculateSprintScore, createRetrySession } from '../../services/sprintService';
 import { Button } from '../ui/Button';
 import { Card, CardContent } from '../ui/Card';
 import { log } from '../../lib/log';
-import { EXAM_SPECIFIC_TOPICS } from '../../constants';
 
 interface SprintSessionProps {
     config: {
         topic: string;
         subtopic: string;
         examProfile: string;
+        questionCount: number;
         retryQuestions?: QuestionData[];
     };
     onExit: (sessionId: string) => void;
@@ -21,23 +20,21 @@ interface SprintSessionProps {
 export const SprintSession: React.FC<SprintSessionProps> = ({ config, onExit }) => {
     const [questions, setQuestions] = useState<QuestionData[]>([]);
     const [currentIndex, setCurrentIndex] = useState(0);
-    const [timer, setTimer] = useState(45);
-    const [showFeedback, setShowFeedback] = useState(false);
-    const [feedbackType, setFeedbackType] = useState<'correct' | 'wrong' | 'skip' | null>(null);
-    const [selectedOption, setSelectedOption] = useState<number | null>(null);
+    const [timeLeft, setTimeLeft] = useState(45); // Display time
+    const [sessionReady, setSessionReady] = useState(false);
 
-    const [sessionData, setSessionData] = useState({
+    // Use refs for mutable state to avoid closure staleness in timer
+    const stateRef = useRef({
         sessionId: null as string | null,
+        startTime: 0, // Time when current question started
+        timerId: null as number | null, // requestAnimationFrame ID
+        answers: [] as any[], // Local buffer of answers
+        pendingAttempts: [] as any[], // Queue for attempts made before session ID is ready
         score: 0,
         correct: 0,
         wrong: 0,
-        skipped: 0,
-        attempts: [] as any[],
-        totalTime: 0,
+        skipped: 0
     });
-
-    const timerRef = useRef<any>(null);
-    const fetchingRef = useRef(false);
 
     // Initialize session
     useEffect(() => {
@@ -46,332 +43,251 @@ export const SprintSession: React.FC<SprintSessionProps> = ({ config, onExit }) 
                 const user = await getCurrentUser();
                 if (!user) throw new Error('Not authenticated');
 
-                // Create session
-                const sessionId = await createSprintSession(
-                    user.id,
-                    config.examProfile,
-                    config.topic,
-                    config.subtopic,
-                    !!config.retryQuestions
-                );
-
-                setSessionData(prev => ({ ...prev, sessionId }));
-
-                // Load initial questions
                 if (config.retryQuestions) {
+                    // === INSTANT RETRY MODE ===
+                    // 1. Start UI immediately using provided questions
                     setQuestions(config.retryQuestions);
+                    setSessionReady(true);
+                    startQuestionTimer();
+
+                    // 2. Create Session in Background
+                    // We don't await this blocking the UI.
+                    createRetrySession(
+                        user.id,
+                        config.topic,
+                        config.subtopic, // subtopic
+                        config.examProfile
+                    ).then(sid => {
+                        stateRef.current.sessionId = sid;
+                        // Flush any pending attempts that happened while creating session
+                        if (stateRef.current.pendingAttempts.length > 0) {
+                            stateRef.current.pendingAttempts.forEach(attempt => {
+                                saveSprintAttempt(sid, user.id, attempt);
+                            });
+                            stateRef.current.pendingAttempts = [];
+                        }
+                    }).catch(err => {
+                        log.error('[sprint] Background retry session creation failed:', err);
+                        // We might want to show a toast or error, but let them play.
+                        // Attempts won't be saved until session ID exists (which won't happen here).
+                        // Maybe alerting the user is safer if persistence is critical.
+                    });
+
                 } else {
-                    await loadQuestions(user.id);
+                    // === REGULAR MODE ===
+                    // Fetch questions and create session first (blocking)
+                    const { sessionId, questions } = await startSession(
+                        user.id,
+                        config.topic,
+                        config.questionCount,
+                        config.examProfile,
+                        config.subtopic
+                    );
+                    stateRef.current.sessionId = sessionId;
+                    setQuestions(questions);
+                    setSessionReady(true);
+                    startQuestionTimer();
                 }
             } catch (error: any) {
                 log.error('[sprint] Init failed:', error);
-                alert('Failed to start Sprint session');
+                alert('Failed to start Sprint session. Please check your connection.');
+                onExit('error');
             }
         };
 
         init();
+
+        return () => stopTimer();
     }, []);
 
-    // Load questions
-    const loadQuestions = async (userId: string) => {
-        if (fetchingRef.current) return;
-        fetchingRef.current = true;
-
-        try {
-            let targetTopic = config.topic;
-            let targetSubtopic = config.subtopic;
-
-            // Handle Mixed mode: Pick a random topic/subtopic
-            if (config.topic === 'Mixed') {
-                // Normalize profile key to lowercase to match constants
-                const profileKey = config.examProfile.toLowerCase();
-                const examTopics = EXAM_SPECIFIC_TOPICS[profileKey];
-
-                if (examTopics && examTopics.length > 0) {
-                    const randomTopicObj = examTopics[Math.floor(Math.random() * examTopics.length)];
-                    targetTopic = randomTopicObj.value;
-                    const subtopics = randomTopicObj.subTopics;
-                    if (subtopics && subtopics.length > 0) {
-                        targetSubtopic = subtopics[Math.floor(Math.random() * subtopics.length)];
-                    }
-                    console.log(`[Sprint] Selected random topic: ${targetTopic}, subtopic: ${targetSubtopic}`);
-                } else {
-                    console.warn(`[Sprint] No topics found for profile: ${config.examProfile} (key: ${profileKey})`);
-                    // Fallback to a generic topic if possible, or keep 'Mixed' which might fail generation
-                }
-            }
-
-            console.log(`[Sprint] Loading questions for: ${config.examProfile}, ${targetTopic}, ${targetSubtopic}`);
-
-            const { questions: newQuestions } = await getQuestionsForUser(
-                userId,
-                config.examProfile,
-                targetTopic,
-                targetSubtopic,
-                5, // Load fewer to mix more often
-                'Medium'
-            );
-
-            setQuestions(prev => [...prev, ...newQuestions]);
-        } catch (error: any) {
-            log.error('[sprint] Failed to load questions:', error);
-        } finally {
-            fetchingRef.current = false;
+    const stopTimer = () => {
+        if (stateRef.current.timerId) {
+            cancelAnimationFrame(stateRef.current.timerId);
+            stateRef.current.timerId = null;
         }
     };
 
-    // Buffer more questions when running low
-    useEffect(() => {
-        const loadMore = async () => {
-            if (config.retryQuestions) return; // Don't load more for retry
+    const startQuestionTimer = () => {
+        stopTimer();
+        stateRef.current.startTime = Date.now();
 
-            const remaining = questions.length - currentIndex;
-            if (remaining < 5 && !fetchingRef.current) {
-                const user = await getCurrentUser();
-                if (user) await loadQuestions(user.id);
+        const loop = () => {
+            const now = Date.now();
+            const elapsed = (now - stateRef.current.startTime) / 1000;
+            const remaining = Math.max(0, 45 - elapsed);
+
+            setTimeLeft(remaining);
+
+            if (remaining <= 0) {
+                handleAnswer(null, true); // Auto-submit on timeout
+            } else {
+                stateRef.current.timerId = requestAnimationFrame(loop);
             }
         };
 
-        loadMore();
-    }, [currentIndex, questions.length]);
-
-    // Timer countdown
-    useEffect(() => {
-        if (showFeedback) return; // Pause during feedback
-
-        timerRef.current = setInterval(() => {
-            setTimer(prev => {
-                if (prev <= 1) {
-                    handleTimeout();
-                    return 45;
-                }
-                return prev - 1;
-            });
-        }, 1000);
-
-        return () => {
-            if (timerRef.current) clearInterval(timerRef.current);
-        };
-    }, [currentIndex, showFeedback]);
-
-    // Handle timeout (auto-skip)
-    const handleTimeout = () => {
-        handleSkip('timeout');
+        stateRef.current.timerId = requestAnimationFrame(loop);
     };
 
-    // Handle answer
-    const handleAnswer = async (optionIndex: number) => {
-        if (showFeedback) return; // Prevent double-click
+    const handleAnswer = async (optionIndex: number | null, isTimeout = false) => {
+        stopTimer();
 
         const question = questions[currentIndex];
         if (!question) return;
 
-        const isCorrect = optionIndex === question.correctOptionIndex;
-        const timeTaken = (45 - timer) * 1000; // Convert to ms
-        const score = calculateSprintScore(isCorrect, timeTaken);
+        // Calculate stats
+        const timeTakenMs = isTimeout ? 45000 : Math.min(45000, Date.now() - stateRef.current.startTime);
 
-        // Show feedback
-        setSelectedOption(optionIndex);
-        setFeedbackType(isCorrect ? 'correct' : 'wrong');
-        setShowFeedback(true);
+        let isCorrect = false;
+        let result: 'correct' | 'wrong' | 'skipped' = 'skipped';
 
-        // Save attempt
+        if (isTimeout) {
+            result = 'wrong'; // Treating timeout as wrong 
+        } else if (optionIndex !== null) {
+            isCorrect = optionIndex === question.correctOptionIndex;
+            result = isCorrect ? 'correct' : 'wrong';
+        }
+
+        const score = calculateSprintScore(isCorrect, timeTakenMs);
+
+        // Update local state refs
+        stateRef.current.score += score;
+        if (isCorrect) stateRef.current.correct++;
+        else if (result === 'wrong') stateRef.current.wrong++;
+        else stateRef.current.skipped++;
+
+        // Prepare attempt object
         const attempt = {
-            questionId: question.questionText, // Using text as ID for now
-            result: isCorrect ? 'correct' : 'wrong',
-            timeTaken,
+            questionId: question.uuid, // Using UUID as required
+            result,
+            timeTaken: timeTakenMs,
             scoreEarned: score,
-            inputMethod: 'click',
+            inputMethod: isTimeout ? 'timeout' : 'click',
             questionData: question,
             selectedOptionIndex: optionIndex,
         };
+        stateRef.current.answers.push(attempt);
 
-        if (sessionData.sessionId) {
-            const user = await getCurrentUser();
+        // Async save
+        // QUEUE LOGIC: If session ID is not ready, queue it.
+        getCurrentUser().then(user => {
             if (user) {
-                await saveSprintAttempt(sessionData.sessionId, user.id, attempt as any);
+                if (stateRef.current.sessionId) {
+                    // Session ready, save immediately
+                    saveSprintAttempt(stateRef.current.sessionId, user.id, attempt as any);
+                } else {
+                    // Session creating in background, queue it
+                    stateRef.current.pendingAttempts.push(attempt);
+                }
             }
-        }
+        });
 
-        // Update session data
-        setSessionData(prev => ({
-            ...prev,
-            score: prev.score + score,
-            [isCorrect ? 'correct' : 'wrong']: prev[isCorrect ? 'correct' : 'wrong'] + 1,
-            attempts: [...prev.attempts, attempt],
-            totalTime: prev.totalTime + timeTaken,
-        }));
-
-        // Auto-advance after 600ms
-        setTimeout(() => {
-            setShowFeedback(false);
-            setSelectedOption(null);
-            setFeedbackType(null);
-            setCurrentIndex(prev => prev + 1);
-            setTimer(45);
-        }, 600);
-    };
-
-    // Handle skip
-    const handleSkip = async (method: 'click' | 'timeout') => {
-        const question = questions[currentIndex];
-        if (!question) return;
-
-        const timeTaken = (45 - timer) * 1000;
-
-        const attempt = {
-            questionId: question.questionText,
-            result: 'skipped',
-            timeTaken,
-            scoreEarned: 0,
-            inputMethod: method === 'timeout' ? 'timeout' : 'click',
-            questionData: question,
-            selectedOptionIndex: undefined,
-        };
-
-        if (sessionData.sessionId) {
-            const user = await getCurrentUser();
-            if (user) {
-                await saveSprintAttempt(sessionData.sessionId, user.id, attempt as any);
-            }
-        }
-
-        setSessionData(prev => ({
-            ...prev,
-            skipped: prev.skipped + 1,
-            attempts: [...prev.attempts, attempt],
-            totalTime: prev.totalTime + timeTaken,
-        }));
-
-        if (method === 'timeout') {
-            // Show skip feedback briefly
-            setFeedbackType('skip');
-            setShowFeedback(true);
-            setTimeout(() => {
-                setShowFeedback(false);
-                setFeedbackType(null);
-                setCurrentIndex(prev => prev + 1);
-                setTimer(45);
-            }, 600);
+        // Transition
+        const nextIndex = currentIndex + 1;
+        if (nextIndex < questions.length) {
+            setCurrentIndex(nextIndex);
+            startQuestionTimer();
         } else {
-            setCurrentIndex(prev => prev + 1);
-            setTimer(45);
+            finishSession();
         }
     };
 
-    // Handle exit
-    const handleExit = async () => {
-        if (!sessionData.sessionId) return;
+    const finishSession = async () => {
+        if (!stateRef.current.sessionId) return;
 
-        const totalQuestions = sessionData.attempts.length;
-        const avgTime = totalQuestions > 0 ? sessionData.totalTime / totalQuestions : 0;
+        // Calculate final stats
+        const totalQuestions = stateRef.current.answers.length; // or questions.length
+        const totalTime = stateRef.current.answers.reduce((acc, a) => acc + a.timeTaken, 0);
+        const avgTime = totalQuestions > 0 ? totalTime / totalQuestions : 0;
 
-        await finalizeSprintSession(sessionData.sessionId, {
+        await finalizeSprintSession(stateRef.current.sessionId, {
             totalQuestions,
-            correctCount: sessionData.correct,
-            wrongCount: sessionData.wrong,
-            skippedCount: sessionData.skipped,
-            totalScore: sessionData.score,
+            correctCount: stateRef.current.correct,
+            wrongCount: stateRef.current.wrong,
+            skippedCount: stateRef.current.skipped,
+            totalScore: stateRef.current.score,
             avgTimeMs: Math.round(avgTime),
         });
 
-        onExit(sessionData.sessionId);
+        onExit(stateRef.current.sessionId);
     };
 
-    const currentQuestion = questions[currentIndex];
-
-    if (!currentQuestion) {
+    if (!sessionReady) {
         return (
-            <div className="flex items-center justify-center min-h-screen">
-                <Card>
-                    <CardContent className="p-8 text-center space-y-4">
-                        <p className="text-lg">Loading questions...</p>
-                        <div className="animate-spin h-8 w-8 border-4 border-emerald-500 border-t-transparent rounded-full mx-auto" />
-                    </CardContent>
-                </Card>
+            <div className="flex items-center justify-center min-h-[60vh]">
+                <div className="text-center space-y-4">
+                    <div className="animate-spin h-10 w-10 border-4 border-emerald-500 border-t-transparent rounded-full mx-auto" />
+                    <p className="text-lg font-medium text-slate-600">Preparing your Sprint...</p>
+                </div>
             </div>
         );
     }
 
+    const currentQuestion = questions[currentIndex];
+    const progress = (currentIndex / questions.length) * 100;
+    const isUrgent = timeLeft <= 10;
+
     return (
-        <div className="max-w-4xl mx-auto mt-8 space-y-4">
-            {/* Header */}
-            <div className="flex justify-between items-center">
-                <div className="space-y-1">
-                    <p className="text-sm text-muted-foreground">Question {currentIndex + 1}</p>
-                    <p className="text-xl font-bold">Score: {sessionData.score}</p>
+        <div className="max-w-4xl mx-auto mt-6 space-y-6">
+            {/* Header / StatusBar */}
+            <div className="flex justify-between items-end px-2">
+                <div>
+                    <p className="text-sm font-bold text-slate-400 uppercase tracking-widest">Question {currentIndex + 1} / {questions.length}</p>
+                    <div className="h-1.5 w-64 bg-slate-100 rounded-full mt-2 overflow-hidden">
+                        <div className="h-full bg-slate-900 transition-all duration-300" style={{ width: `${progress}%` }} />
+                    </div>
                 </div>
-                <Button variant="outline" onClick={handleExit}>
-                    Exit Results
-                </Button>
+                <div className="text-right">
+                    <p className="text-sm font-bold text-slate-400 uppercase tracking-widest">Score</p>
+                    <p className="text-3xl font-black text-emerald-600">{stateRef.current.score}</p>
+                </div>
             </div>
 
-            {/* Timer */}
-            <Card className={timer <= 10 ? 'border-red-500' : ''}>
-                <CardContent className="p-4">
-                    <div className="flex items-center justify-between">
-                        <span className="text-sm font-medium">Time Remaining:</span>
-                        <span className={`text-2xl font-bold ${timer <= 10 ? 'text-red-500' : 'text-emerald-600'}`}>
-                            {timer}s
+            {/* Timer Bar */}
+            <Card className={`border-2 transition-colors duration-300 ${isUrgent ? 'border-red-500 shadow-red-100' : 'border-emerald-500 shadow-emerald-50'} shadow-lg`}>
+                <CardContent className="p-0">
+                    <div
+                        className={`h-2 transition-all duration-75 ease-linear ${isUrgent ? 'bg-red-500' : 'bg-emerald-500'}`}
+                        style={{ width: `${Math.min(100, (timeLeft / 45) * 100)}%` }}
+                    />
+                    <div className="p-4 flex justify-between items-center">
+                        <span className={`text-2xl font-mono font-bold ${isUrgent ? 'text-red-600 animate-pulse' : 'text-emerald-700'}`}>
+                            {timeLeft.toFixed(1)}s
                         </span>
-                    </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
-                        <div
-                            className={`h-2 rounded-full transition-all ${timer <= 10 ? 'bg-red-500' : 'bg-emerald-500'}`}
-                            style={{ width: `${(timer / 45) * 100}%` }}
-                        />
+                        <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Time Remaining</span>
                     </div>
                 </CardContent>
             </Card>
 
-            {/* Question Card */}
-            <Card className={showFeedback ? (feedbackType === 'correct' ? 'border-green-500' : 'border-red-500') : ''}>
-                <CardContent className="p-6 space-y-6">
-                    <div className="text-lg font-medium">{currentQuestion.questionText}</div>
+            {/* Question Area */}
+            <div className="space-y-6 animate-in slide-in-from-right-4 duration-300" key={currentIndex}>
+                <h2 className="text-2xl font-medium text-slate-800 leading-relaxed p-2">
+                    {currentQuestion.questionText}
+                </h2>
 
-                    <div className="grid grid-cols-1 gap-3">
-                        {currentQuestion.options.map((option, idx) => (
-                            <button
-                                key={idx}
-                                onClick={() => handleAnswer(idx)}
-                                disabled={showFeedback}
-                                className={`p-4 text-left border-2 rounded-lg transition-all ${showFeedback && selectedOption === idx
-                                    ? feedbackType === 'correct'
-                                        ? 'border-green-500 bg-green-50'
-                                        : 'border-red-500 bg-red-50'
-                                    : showFeedback && idx === currentQuestion.correctOptionIndex
-                                        ? 'border-green-500 bg-green-50'
-                                        : 'border-gray-300 hover:border-emerald-500 hover:bg-accent'
-                                    } ${showFeedback ? 'cursor-not-allowed' : 'cursor-pointer'}`}
-                            >
-                                <span className="font-medium mr-2">{String.fromCharCode(65 + idx)}.</span>
-                                {option.text}
-                            </button>
-                        ))}
-                    </div>
-
-                    {/* Skip Button */}
-                    <Button
-                        variant="outline"
-                        onClick={() => handleSkip('click')}
-                        disabled={showFeedback}
-                        className="w-full"
-                    >
-                        Skip
-                    </Button>
-                </CardContent>
-            </Card>
-
-            {/* Feedback Overlay */}
-            {showFeedback && (
-                <div className="fixed inset-0 flex items-center justify-center pointer-events-none">
-                    <div className="text-6xl">
-                        {feedbackType === 'correct' && <span className="text-green-500">✓</span>}
-                        {feedbackType === 'wrong' && <span className="text-red-500">✗</span>}
-                        {feedbackType === 'skip' && <span className="text-gray-500">⏭</span>}
-                    </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {currentQuestion.options.map((option, idx) => (
+                        <button
+                            key={idx}
+                            onClick={() => handleAnswer(idx)}
+                            className="group relative p-6 text-left bg-white border-2 border-slate-100 rounded-2xl hover:border-blue-500 hover:shadow-lg hover:-translate-y-0.5 transition-all active:scale-[0.98]"
+                        >
+                            <div className="flex items-start gap-4">
+                                <span className="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-lg bg-slate-50 text-slate-500 font-bold group-hover:bg-blue-50 group-hover:text-blue-600 transition-colors">
+                                    {String.fromCharCode(65 + idx)}
+                                </span>
+                                <span className="text-lg text-slate-700 font-medium group-hover:text-slate-900">
+                                    {option.text}
+                                </span>
+                            </div>
+                        </button>
+                    ))}
                 </div>
-            )}
+            </div>
+
+            {/* Debug/Dev Skip - Remove in prod if needed, but useful for testing */}
+            {/* <div className="text-center pt-8 opacity-20 hover:opacity-100 transition-opacity">
+                <button onClick={() => handleAnswer(null)} className="text-sm underline">Skip (0 pts)</button>
+            </div> */}
         </div>
     );
 };

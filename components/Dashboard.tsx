@@ -15,11 +15,7 @@ import { StaminaCurve } from './analytics/StaminaCurve';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/Card';
 import { Loader2, Activity } from 'lucide-react';
 
-interface DashboardProps {
-  useMockData?: boolean;
-}
-
-export const Dashboard: React.FC<DashboardProps> = ({ useMockData = false }) => {
+export const Dashboard: React.FC = () => {
   const { data, loading, error, refetch } = useDashboardData();
 
   // Handle debt clearing (placeholder)

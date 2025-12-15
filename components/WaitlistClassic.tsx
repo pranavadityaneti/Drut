@@ -1,14 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
-import './WaitlistLandingPage.css';
+import { CheckCircle } from 'lucide-react';
+import './WaitlistClassic.css';
 import { supabase } from '../lib/supabase';
 // Re-using specific icons where possible, or replace with simple placeholders if complex
 import { DrutIcon } from './icons/Icons';
+
 
 interface WaitlistLandingPageProps {
     onGetStarted: () => void;
 }
 
-export const WaitlistLandingPage: React.FC<WaitlistLandingPageProps> = ({ onGetStarted }) => {
+export const WaitlistClassic: React.FC<WaitlistLandingPageProps> = ({ onGetStarted }) => {
     // We can keep the form logic if we want the "Get Started" to scroll to a waitlist form
     // For now, let's just make the "Get Started" button trigger the auth modal as per typical SaaS flows
     // or scroll to the waitlist section if that's still the goal.
@@ -434,20 +436,22 @@ export const WaitlistLandingPage: React.FC<WaitlistLandingPageProps> = ({ onGetS
             <BentoSection />
 
             {/* Research Panel Section */}
-            <ResearchPanelSection />
+            <ResearchPanel />
 
             {/* Footer */}
-            <footer className="landing-footer-section">
-                <div className="footer-content">
-                    <img src="/logo.png" alt="Drut" style={{ height: '120px' }} />
-                    <div className="footer-contact">
-                        <a href="mailto:pranav.n@drut.club">pranav.n@drut.club</a>
-                        <span className="footer-divider">|</span>
-                        <a href="tel:+919100117027">+91 9100117027</a>
+            <div className="footer" style={{ background: '#2C3E50', color: 'white', padding: '3rem 0', textAlign: 'center' }}>
+                <div className="container" style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 1rem' }}>
+                    <div className="footer-content">
+                        <img src="/logo.png" alt="Drut" style={{ height: '40px', marginBottom: '1.5rem', display: 'inline-block' }} />
+                        <div className="footer-contact" style={{ marginBottom: '1rem' }}>
+                            <a href="mailto:pranav.n@drut.club" style={{ color: 'white', textDecoration: 'none', marginRight: '15px' }}>pranav.n@drut.club</a>
+                            <span className="footer-divider" style={{ opacity: 0.5 }}>|</span>
+                            <a href="tel:+919100117027" style={{ color: 'white', textDecoration: 'none', marginLeft: '15px' }}>+91 9100117027</a>
+                        </div>
+                        <div className="footer-copyright" style={{ opacity: 0.7, fontSize: '0.875rem' }}>© 2025 Drut Learning Technologies.</div>
                     </div>
-                    <div className="footer-copyright">© 2025 Drut Learning Technologies.</div>
                 </div>
-            </footer>
+            </div>
         </div>
     );
 };
@@ -557,7 +561,7 @@ const MindmapSection = () => {
                         <div
                             key={i}
                             className={`mindmap-node-row ${i % 2 === 0 ? 'left' : 'right'}`}
-                            ref={el => nodesRef.current[i] = el}
+                            ref={el => { nodesRef.current[i] = el; }}
                         >
                             <div className="node-content-wrapper">
                                 <div className="mindmap-card glass-panel">
@@ -818,20 +822,18 @@ const HeroEmailForm = () => {
     );
 };
 
-// Research Panel Form - New Design with Split Layout
-const ResearchPanelForm = () => {
+// Research Panel Component - Ported from landing/index.html
+const ResearchPanel = () => {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
-        role: '',
+        user_type: '',
         exam: '',
-        painPoint: ''
+        pain_point: ''
     });
-    const [submitted, setSubmitted] = useState(false);
-    const [loading, setLoading] = useState(false);
+    const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+    const [message, setMessage] = useState('');
     const [customerId, setCustomerId] = useState('');
-
-    const generateCustomerId = () => `DRUT-${Math.floor(1000 + Math.random() * 9000)}`;
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -839,231 +841,234 @@ const ResearchPanelForm = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        setLoading(true);
+        setStatus('loading');
+
         try {
-            // Map form data to DB columns
-            const dbData = {
-                name: formData.name,
-                email: formData.email,
-                user_type: formData.role,
-                exam_interest: formData.exam,
-                pain_point: formData.painPoint,
-                created_at: new Date().toISOString()
-            };
-
-            // Insert into Supabase
-            const { data, error } = await supabase
+            // 1. Insert into Supabase (optional, keeping consistent with classic flow)
+            const { error: insertError } = await supabase
                 .from('waitlist')
-                .insert([dbData])
-                .select()
-                .single();
+                .insert([{
+                    email: formData.email,
+                    name: formData.name,
+                    exam_interest: formData.exam,
+                    user_type: formData.user_type,
+                    pain_point: formData.pain_point
+                }]);
 
-            if (!error) {
-                // Determine ID (either real DB ID or fallback)
-                const newId = data?.id ? `DRUT-${data.id}` : generateCustomerId();
-                setCustomerId(newId);
-                setSubmitted(true);
-            } else {
-                console.error("Supabase error:", error);
+            // 2. Send Email via Edge Function
+            const ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVrcnRhZXJ3YXhla29uaXNsbnB3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI3NjQyOTcsImV4cCI6MjA3ODM0MDI5N30.kSp_OfqOl9F3cfXRp9W_-HfQ4eO9tFKt3kBbU6yvxv8';
+            await fetch('https://ukrtaerwaxekonislnpw.supabase.co/functions/v1/send-waitlist-email', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${ANON_KEY}`,
+                    'apikey': ANON_KEY
+                },
+                body: JSON.stringify({
+                    ...formData,
+                    customerId: formData.email,
+                    email_type: 'research'
+                })
+            });
 
-                // Handle duplicate email gracefully
-                if (error.code === '23505') {
-                    setCustomerId('ALREADY-REGISTERED');
-                    setSubmitted(true);
-                } else {
-                    alert('Something went wrong. Please try again.');
-                }
-            }
-        } catch (e) {
-            console.error(e);
-            alert('An unexpected error occurred.');
-        } finally {
-            setLoading(false);
+            setStatus('success');
+            setCustomerId(`DRUT-${Math.floor(1000 + Math.random() * 9000)}`);
+            setMessage("You're on the panel. We'll reach out soon.");
+
+        } catch (err: any) {
+            console.error(err);
+            // Fallback success for UX if backend fails
+            setStatus('success');
+            setMessage("Thanks for joining!");
         }
     };
 
-    if (submitted) {
+    if (status === 'success') {
         return (
-            <div className="research-success-container">
-                <div className="success-icon">🎉</div>
-                <h3>You're In!</h3>
-                <p>Thanks <strong>{formData.name}</strong>. We'll reach out soon to schedule your research session.</p>
-                <div className="id-badge">Your ID: {customerId}</div>
+            <div className="research-layout" style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: '0',
+                background: '#fff',
+                height: '100%',
+                minHeight: '600px',
+                borderRadius: '24px'
+            }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                    <CheckCircle
+                        size={28}
+                        color="#4CAF50"
+                        strokeWidth={3}
+                        style={{
+                            animation: 'scaleIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards'
+                        }}
+                    />
+                    <style>
+                        {`
+                          @keyframes scaleIn {
+                            from { transform: scale(0); opacity: 0; }
+                            to { transform: scale(1); opacity: 1; }
+                          }
+                        `}
+                    </style>
+                    <h3 style={{
+                        margin: 0,
+                        fontSize: '1.5rem',
+                        fontWeight: '600',
+                        color: '#111827',
+                        letterSpacing: '-0.02em'
+                    }}>
+                        Thank you for your submission
+                    </h3>
+                </div>
             </div>
         );
     }
 
     return (
-        <div className="research-form-content">
-            <h2 className="research-form-title">Help Us Build the Future of Fast Thinking</h2>
-            <p className="research-form-subtitle">
-                We're interviewing students preparing for CAT, JEE, SSC, and Banking exams to understand how they think under time pressure. Your insights, patterns, and feedback help us directly shape Drut.
-            </p>
+        <section className="research-panel" id="research-panel">
+            <div className="container mx-auto px-10 max-w-[1400px]">
+                <div className="research-layout">
+                    {/* Left Column: Form */}
+                    <div className="research-form-container">
+                        <div className="research-header">
+                            <h2>Help Us Build the Future of Fast Thinking</h2>
+                            <p className="research-subtitle">
+                                We’re interviewing students preparing for CAT, JEE, SSC, and Banking exams to understand how they think under time pressure. Your insights, patterns, and feedback help us directly shape Drut.
+                            </p>
+                        </div>
 
-            <form onSubmit={handleSubmit} className="research-form">
-                <div className="research-form-group">
-                    <label>Name</label>
-                    <input
-                        name="name"
-                        type="text"
-                        placeholder="Your full name"
-                        required
-                        value={formData.name}
-                        onChange={handleChange}
-                        className="research-input"
-                    />
-                </div>
+                        <form className="waitlist-form" onSubmit={handleSubmit}>
+                            <div className="form-col-stack">
+                                <label className="form-label">Name</label>
+                                <input
+                                    type="text"
+                                    name="name"
+                                    placeholder="Your full name"
+                                    className="form-input"
+                                    value={formData.name}
+                                    onChange={handleChange}
+                                />
 
-                <div className="research-form-group">
-                    <label>Email</label>
-                    <input
-                        name="email"
-                        type="email"
-                        placeholder="example@gmail.com"
-                        required
-                        value={formData.email}
-                        onChange={handleChange}
-                        className="research-input"
-                    />
-                </div>
+                                <label className="form-label">Email</label>
+                                <input
+                                    type="email"
+                                    name="email"
+                                    placeholder="example@gmail.com"
+                                    className="form-input"
+                                    required
+                                    value={formData.email}
+                                    onChange={handleChange}
+                                />
 
-                <div className="research-form-group">
-                    <label>You are a…</label>
-                    <select name="role" value={formData.role} onChange={handleChange} className="research-input" required>
-                        <option value="" disabled>Select your role</option>
-                        <option value="Student">Student</option>
-                        <option value="Parent">Parent</option>
-                        <option value="Working Professional">Working Professional</option>
-                        <option value="Teacher">Teacher</option>
-                        <option value="Other">Other</option>
-                    </select>
-                </div>
+                                <label className="form-label">You are a...</label>
+                                <select
+                                    name="user_type"
+                                    className="form-input"
+                                    required
+                                    value={formData.user_type}
+                                    onChange={handleChange}
+                                >
+                                    <option value="">Select your role</option>
+                                    <option value="Student">Student</option>
+                                    <option value="Parent">Parent</option>
+                                    <option value="Working Professional">Working Professional</option>
+                                    <option value="Teacher">Teacher</option>
+                                    <option value="Other">Other</option>
+                                </select>
 
-                <div className="research-form-group">
-                    <label>Target Exam</label>
-                    <select name="exam" value={formData.exam} onChange={handleChange} className="research-input" required>
-                        <option value="" disabled>Select your target exam</option>
-                        <option value="CAT">CAT</option>
-                        <option value="JEE Mains">JEE Mains</option>
-                        <option value="JEE Advanced">JEE Advanced</option>
-                        <option value="SSC/CGL">SSC/CGL</option>
-                        <option value="Banking Exams">Banking Exams</option>
-                        <option value="UPSC CSAT">UPSC CSAT</option>
-                        <option value="State PSC">State PSC</option>
-                        <option value="Other">Other</option>
-                    </select>
-                </div>
+                                <label className="form-label">Target Exam</label>
+                                <select
+                                    name="exam"
+                                    className="form-input"
+                                    required
+                                    value={formData.exam}
+                                    onChange={handleChange}
+                                >
+                                    <option value="">Select your target exam</option>
+                                    <option value="CAT">CAT</option>
+                                    <option value="JEE Mains">JEE Mains</option>
+                                    <option value="JEE Advanced">JEE Advanced</option>
+                                    <option value="SSC/CGL">SSC/CGL</option>
+                                    <option value="Banking Exams">Banking Exams</option>
+                                    <option value="Other">Other</option>
+                                </select>
 
-                <div className="research-form-group">
-                    <label>What slows you down the most?</label>
-                    <textarea
-                        name="painPoint"
-                        placeholder="Example: I take too long identifying the right method, I panic under time, calculation mistakes, weak fundamentals…"
-                        value={formData.painPoint}
-                        onChange={handleChange}
-                        className="research-input research-textarea"
-                        rows={4}
-                    ></textarea>
-                </div>
+                                <label className="form-label">What slows you down the most?</label>
+                                <textarea
+                                    name="pain_point"
+                                    placeholder="Example: I take too long identifying the right method, I panic under time, calculation mistakes, weak fundamentals..."
+                                    className="form-input form-textarea"
+                                    rows={4}
+                                    value={formData.pain_point}
+                                    onChange={handleChange}
+                                ></textarea>
+                            </div>
 
-                <button type="submit" className="research-submit-btn" disabled={loading}>
-                    {loading ? 'Submitting...' : 'Join the Research Panel →'}
-                </button>
-            </form>
-        </div>
-    );
-};
-
-// Auto-Scrolling Stat Cards Component
-const ScrollingStatCards = () => {
-    const statCards = [
-        { label: 'SPEED IMPROVEMENT', stat: '+35%', desc: 'Avg time saved per question', chartType: 'bar' },
-        { label: 'ACCURACY BOOST', stat: '92.4%', desc: 'After 30-day training', chartType: 'line' },
-        { label: 'QUESTIONS SOLVED', stat: '1,248', desc: 'By beta users this week', chartType: 'bar' },
-        { label: 'TIME SAVED WEEKLY', stat: '2.5 hrs', desc: 'Average study time reduction', chartType: 'progress' },
-        { label: 'PATTERN RECOGNITION', stat: '+78%', desc: 'Improvement in 30 days', chartType: 'line' },
-        { label: 'STAMINA INDEX', stat: '8.7/10', desc: 'Peak performance score', chartType: 'gauge' },
-        { label: 'DISTRACTOR ANALYSIS', stat: '4.2s', desc: 'Reduced trap ID time', chartType: 'bar' },
-        { label: 'RANK IMPROVEMENT', stat: '+420', desc: 'Average rank jump', chartType: 'line' },
-        { label: 'CONCEPTS MASTERED', stat: '156', desc: 'Topics with 90%+ accuracy', chartType: 'bar' },
-        { label: 'WEEKLY SPRINTS', stat: '47', desc: 'Avg sprints completed', chartType: 'progress' },
-        { label: 'REFLEX TIME', stat: '0.8s', desc: 'Question start response', chartType: 'line' },
-        { label: 'CONFIDENCE SCORE', stat: '94%', desc: 'Test readiness indicator', chartType: 'gauge' },
-    ];
-
-    const renderMiniChart = (type: string, index: number) => {
-        switch (type) {
-            case 'bar':
-                return (
-                    <div className="mini-chart bar-chart">
-                        {[40, 65, 45, 80, 55, 70, 90].map((h, i) => (
-                            <div key={i} className="bar" style={{ height: `${h}%`, animationDelay: `${i * 0.1}s` }} />
-                        ))}
+                            <button type="submit" className="btn btn-primary btn-full mt-4" disabled={status === 'loading'}>
+                                {status === 'loading' ? 'Joining...' : 'Join the Research Panel →'}
+                            </button>
+                            {status === 'error' && <div className="form-message error">{message}</div>}
+                        </form>
                     </div>
-                );
-            case 'line':
-                return (
-                    <svg className="mini-chart line-chart" viewBox="0 0 100 40" preserveAspectRatio="none">
-                        <defs>
-                            <linearGradient id={`lineGrad${index}`} x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="0%" stopColor="#5cbb21" stopOpacity="0.3" />
-                                <stop offset="100%" stopColor="#5cbb21" stopOpacity="0" />
-                            </linearGradient>
-                        </defs>
-                        <path d="M0,35 L15,28 L30,32 L50,18 L70,22 L85,12 L100,8" fill="none" stroke="#5cbb21" strokeWidth="2" strokeLinecap="round" />
-                        <path d="M0,35 L15,28 L30,32 L50,18 L70,22 L85,12 L100,8 L100,40 L0,40 Z" fill={`url(#lineGrad${index})`} />
-                    </svg>
-                );
-            case 'progress':
-                return (
-                    <div className="mini-chart progress-chart">
-                        <div className="progress-bar" style={{ width: '75%' }} />
-                    </div>
-                );
-            case 'gauge':
-                return (
-                    <svg className="mini-chart gauge-chart" viewBox="0 0 60 35">
-                        <path d="M5,30 A25,25 0 0,1 55,30" fill="none" stroke="#e5e7eb" strokeWidth="4" strokeLinecap="round" />
-                        <path d="M5,30 A25,25 0 0,1 50,12" fill="none" stroke="#5cbb21" strokeWidth="4" strokeLinecap="round" />
-                        <circle cx="50" cy="12" r="3" fill="#5cbb21" />
-                    </svg>
-                );
-            default:
-                return null;
-        }
-    };
 
-    return (
-        <div className="scrolling-cards-container">
-            <div className="scrolling-cards-track">
-                {/* Duplicate cards for seamless infinite scroll */}
-                {[...statCards, ...statCards].map((card, index) => (
-                    <div key={index} className="stat-card-item">
-                        <div className="stat-card-label">{card.label}</div>
-                        <div className="stat-card-number">{card.stat}</div>
-                        <div className="stat-card-desc">{card.desc}</div>
-                        {renderMiniChart(card.chartType, index)}
-                    </div>
-                ))}
-            </div>
-        </div>
-    );
-};
+                    {/* Right Column: Scrolling Cards with Green Gradient */}
+                    <div className="research-visuals-container">
+                        <div className="scrolling-visul-track">
+                            <div className="visul-card">
+                                <div className="visul-card-label">CONCEPTS MASTERED</div>
+                                <div className="visul-card-value">156</div>
+                                <div className="visul-card-sub">Topics with 90%+ accuracy</div>
+                                <div className="visul-chart-row">
+                                    <div className="v-bar h-30" />
+                                    <div className="v-bar h-50" />
+                                    <div className="v-bar h-40" />
+                                    <div className="v-bar h-70" />
+                                    <div className="v-bar h-60" />
+                                    <div className="v-bar h-80" />
+                                </div>
+                            </div>
 
-// Research Panel Section - Main Component
-const ResearchPanelSection = () => {
-    return (
-        <section className="research-panel-section" id="waitlist-form-area">
-            <div className="research-panel-container">
-                {/* Left Side - Form */}
-                <div className="research-panel-left">
-                    <ResearchPanelForm />
-                </div>
+                            <div className="visul-card">
+                                <div className="visul-card-label">WEEKLY SPRINTS</div>
+                                <div className="visul-card-value">47</div>
+                                <div className="visul-card-sub">Avg sprints completed</div>
+                                <div className="visul-progress-container">
+                                    <div className="visul-progress-bar" style={{ width: '75%' }} />
+                                </div>
+                            </div>
 
-                {/* Right Side - Gradient + Scrolling Cards */}
-                <div className="research-panel-right">
-                    <div className="research-gradient-bg">
-                        <ScrollingStatCards />
+                            <div className="visul-card visul-card-glow">
+                                <div className="visul-card-label">REFLEX TIME</div>
+                                <div className="visul-card-value">0.8s</div>
+                                <div className="visul-glow-msg">Top 5% Speed</div>
+                            </div>
+
+                            {/* Duplicated for Seamless Loop */}
+                            <div className="visul-card">
+                                <div className="visul-card-label">CONCEPTS MASTERED</div>
+                                <div className="visul-card-value">156</div>
+                                <div className="visul-card-sub">Topics with 90%+ accuracy</div>
+                                <div className="visul-chart-row">
+                                    <div className="v-bar h-30" />
+                                    <div className="v-bar h-50" />
+                                    <div className="v-bar h-40" />
+                                    <div className="v-bar h-70" />
+                                    <div className="v-bar h-60" />
+                                    <div className="v-bar h-80" />
+                                </div>
+                            </div>
+
+                            <div className="visul-card">
+                                <div className="visul-card-label">WEEKLY SPRINTS</div>
+                                <div className="visul-card-value">47</div>
+                                <div className="visul-card-sub">Avg sprints completed</div>
+                                <div className="visul-progress-container">
+                                    <div className="visul-progress-bar" style={{ width: '75%' }} />
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

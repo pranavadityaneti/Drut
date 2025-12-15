@@ -51,39 +51,13 @@ export interface DashboardData {
     patterns: PatternMastery[];
 }
 
-// Mock Data for Dashboard
-const MOCK_DATA: DashboardData = {
-    speedScore: 78,
-    speedRating: 'Pro',
-    speedTrend: 12,
-    totalPatternsSeen: 145,
-    verifiedPatterns: 89,
-    learningPatterns: 56,
-    debtPatterns: [
-        { id: '1', fsm_tag: 'algebra-logarithms-basic', mastery_level: 'learning', streak: 2, is_in_debt: true, last_practiced_at: new Date().toISOString() },
-        { id: '2', fsm_tag: 'geometry-triangles-properties', mastery_level: 'learning', streak: 1, is_in_debt: true, last_practiced_at: new Date(Date.now() - 86400000).toISOString() },
-        { id: '3', fsm_tag: 'arithmetic-percentages-advanced', mastery_level: 'learning', streak: 0, is_in_debt: true, last_practiced_at: new Date(Date.now() - 172800000).toISOString() },
-    ],
-    debtCount: 3,
-    topicStats: [
-        {
-            topic: { id: 'quant', label: 'Quantitative Aptitude', value: 'quant', subtopics: ['Arithmetic', 'Algebra', 'Geometry'] },
-            totalPatterns: 50, verifiedPatterns: 30, learningPatterns: 20, progressPercent: 60
-        },
-        {
-            topic: { id: 'varc', label: 'Verbal Ability', value: 'varc', subtopics: ['RC', 'Parajumbles'] },
-            totalPatterns: 40, verifiedPatterns: 20, learningPatterns: 15, progressPercent: 50
-        }
-    ],
-    patterns: []
-};
 
 
 // ============================================================
 // Hook
 // ============================================================
 
-export function useDashboardData(useMockData: boolean = false) {
+export function useDashboardData() {
     const [data, setData] = useState<DashboardData | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -91,17 +65,9 @@ export function useDashboardData(useMockData: boolean = false) {
 
     const fetchData = useCallback(async () => {
         try {
-            setLoading(true);
+            // Don't set loading to true on refetch to avoid flicker
+            if (!data) setLoading(true);
             setError(null);
-
-            if (useMockData) {
-                // Return Mock Data immediately
-                // Simulate small delay for UI effect
-                await new Promise(resolve => setTimeout(resolve, 500));
-                setData(MOCK_DATA);
-                setLoading(false);
-                return;
-            }
 
             // Get current user
             const { data: { user } } = await supabase.auth.getUser();
@@ -110,7 +76,7 @@ export function useDashboardData(useMockData: boolean = false) {
                 return;
             }
 
-            // Fetch user profile for exam preference
+            // 1. Fetch User Profile
             const { data: profile } = await supabase
                 .from('user_profiles')
                 .select('exam_profile')
@@ -120,26 +86,32 @@ export function useDashboardData(useMockData: boolean = false) {
             const exam = profile?.exam_profile || 'cat';
             setExamProfile(exam);
 
-            // Fetch all pattern mastery data
+            // 2. Fetch Pattern Mastery
             const { data: patterns, error: patternsError } = await supabase
                 .from('user_pattern_mastery')
                 .select('*')
                 .eq('user_id', user.id)
                 .order('last_practiced_at', { ascending: false });
 
-            if (patternsError) {
-                throw new Error(patternsError.message);
-            }
-
+            if (patternsError) throw patternsError;
             const patternData = (patterns || []) as PatternMastery[];
 
-            // Compute stats
+            // 3. Fetch Realtime Stats (Trend & Counts)
+            // Note: These use the RPC functions defined in migration 015
+            const { data: trendData } = await supabase.rpc('get_user_accuracy_trend', { p_user_id: user.id });
+            const { data: topicCounts } = await supabase.rpc('get_topic_pattern_counts');
+
+            // --- Compute Stats ---
+
+            // Patterns
             const verifiedPatterns = patternData.filter(p => p.mastery_level === 'verified').length;
             const learningPatterns = patternData.filter(p => p.mastery_level === 'learning').length;
             const totalPatternsSeen = patternData.length;
             const debtPatterns = patternData.filter(p => p.is_in_debt);
 
-            // Speed Score: verified / total seen * 100
+            // Speed Score (0-100)
+            // Simple formula: verified ratio * accuracy trend factor
+            // For now, stick to verification ratio until we have complex formula
             const speedScore = totalPatternsSeen > 0
                 ? Math.round((verifiedPatterns / totalPatternsSeen) * 100)
                 : 0;
@@ -150,33 +122,41 @@ export function useDashboardData(useMockData: boolean = false) {
             else if (speedScore >= 61) speedRating = 'Pro';
             else if (speedScore >= 31) speedRating = 'Learner';
 
-            // Topic stats from taxonomy
+            // Trend
+            const speedTrend = trendData && trendData.length > 0 ? Number(trendData[0].trend_percentage) : 0;
+
+            // Topic Stats
             const examDef = getExam(exam);
             const topicStats: TopicStats[] = (examDef?.topics || []).map(topic => {
-                // Count patterns in this topic (by fsm_tag containing topic keywords)
-                const topicPatterns = patternData.filter(p => {
-                    // Simple heuristic: check if fsm_tag relates to topic
+                // Find total patterns for this topic from DB counts
+                const dbTopicCount = topicCounts?.find((tc: any) => tc.topic === topic.value)?.total_patterns || 0;
+
+                // If DB count is 0, fall back to subtopic length as naive estimate
+                const totalAvailable = dbTopicCount > 0 ? dbTopicCount : topic.subtopics.length * 5;
+
+                // Patterns user has practiced in this topic
+                const userTopicPatterns = patternData.filter(p => {
                     const tagLower = p.fsm_tag.toLowerCase();
                     const topicLower = topic.value.toLowerCase();
                     return tagLower.includes(topicLower.split('-')[0]);
                 });
 
-                const verified = topicPatterns.filter(p => p.mastery_level === 'verified').length;
-                const total = topic.subtopics.length; // Max possible patterns per topic
+                const verified = userTopicPatterns.filter(p => p.mastery_level === 'verified').length;
+                const learning = userTopicPatterns.filter(p => p.mastery_level === 'learning').length;
 
                 return {
                     topic,
-                    totalPatterns: total,
+                    totalPatterns: totalAvailable,
                     verifiedPatterns: verified,
-                    learningPatterns: topicPatterns.filter(p => p.mastery_level === 'learning').length,
-                    progressPercent: total > 0 ? Math.round((verified / total) * 100) : 0,
+                    learningPatterns: learning,
+                    progressPercent: totalAvailable > 0 ? Math.round((verified / totalAvailable) * 100) : 0,
                 };
             });
 
             setData({
                 speedScore,
                 speedRating,
-                speedTrend: 12, // Mock for now (would need historical data)
+                speedTrend,
                 totalPatternsSeen,
                 verifiedPatterns,
                 learningPatterns,
@@ -192,11 +172,37 @@ export function useDashboardData(useMockData: boolean = false) {
         } finally {
             setLoading(false);
         }
-    }, [useMockData]);
+    }, [data]); // data dep allows us to check if it's first load
 
+    // Initial Fetch
     useEffect(() => {
         fetchData();
-    }, [fetchData]);
+    }, []);
+
+    // Realtime Subscription
+    useEffect(() => {
+        const subscription = supabase
+            .channel('dashboard_updates')
+            .on(
+                'postgres_changes',
+                {
+                    event: '*', // Listen to INSERT, UPDATE, DELETE
+                    schema: 'public',
+                    table: 'user_pattern_mastery'
+                },
+                (payload) => {
+                    console.log('[Realtime] Pattern mastery changed:', payload);
+                    // Simple strategy: refetch all data on change
+                    // Optimization: merge payload into state locally
+                    fetchData();
+                }
+            )
+            .subscribe();
+
+        return () => {
+            subscription.unsubscribe();
+        };
+    }, []); // Empty dep array = runs once on mount
 
     return { data, loading, error, examProfile, refetch: fetchData };
 }

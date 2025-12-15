@@ -33,6 +33,8 @@ export interface QuestionData {
   fullStepByStep: FullStepByStep;
   // FSM tag for pattern grouping
   fsmTag: string;
+  // Learning explanation
+  fsm_explanation?: string;
 }
 
 // This is the data shape returned by our server-side analytics RPC.

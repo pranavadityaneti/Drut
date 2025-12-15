@@ -30,35 +30,133 @@ serve(async (req) => {
           <head>
             <meta charset="utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Welcome to Drut</title>
             <style>
-              body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; margin: 0; padding: 0; background-color: #f9f9f9; color: #333; }
-              .container { max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 12px; overflow: hidden; margin-top: 40px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-              .header { background: linear-gradient(90deg, #e8f5e9 0%, #c8e6c9 100%); padding: 24px; text-align: center; }
-              .header h1 { margin: 0; color: #2e7d32; font-size: 24px; }
-              .content { padding: 32px; line-height: 1.6; }
-              .cta-box { margin-top: 24px; padding: 20px; background: #f1f8e9; border-left: 4px solid #4caf50; border-radius: 4px; }
-              .footer { padding: 24px; text-align: center; color: #888; font-size: 12px; border-top: 1px solid #eee; }
+              body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; margin: 0; padding: 0; background-color: #f5f5f5; color: #333; }
+              .container { max-width: 600px; margin: 0 auto; background: #ffffff; overflow: hidden; margin-top: 40px; margin-bottom: 40px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+              
+              /* Header Blue (Drut Green now) */
+              .header { 
+                background-color: #4CAF50; 
+                padding: 40px 0; 
+                text-align: center;
+                position: relative;
+              }
+              
+              /* Hero illustration area */
+              .hero-img {
+                display: block;
+                margin: 0 auto;
+                max-width: 100%;
+                /* Placeholder style if no image */
+                width: 600px;
+                height: 320px;
+                background-color: #4CAF50;
+                object-fit: cover;
+              }
+              
+              .content { padding: 40px; text-align: left; }
+              
+              .title { 
+                font-size: 24px; 
+                font-weight: 800; 
+                color: #ffffff; 
+                margin: 0; 
+                text-transform: uppercase; 
+                letter-spacing: 1px;
+                position: absolute;
+                bottom: 40px;
+                left: 0; right: 0;
+                text-align: center;
+              }
+
+              .greeting {
+                font-weight: 700;
+                font-size: 18px;
+                color: #111;
+                margin-bottom: 16px;
+              }
+              
+              .text {
+                font-size: 15px;
+                line-height: 1.6;
+                color: #555;
+                margin-bottom: 16px;
+              }
+              
+              .list {
+                margin: 24px 0;
+                padding-left: 20px;
+              }
+              .list li {
+                margin-bottom: 10px;
+                color: #555;
+                font-size: 15px;
+                line-height: 1.5;
+              }
+
+              .btn {
+                display: block;
+                width: fit-content;
+                margin: 32px auto 0;
+                background-color: #4CAF50;
+                color: #ffffff;
+                text-decoration: none;
+                padding: 14px 32px;
+                border-radius: 4px;
+                font-weight: bold;
+                font-size: 15px;
+                text-align: center;
+              }
+              
+              .footer { 
+                background-color: #fafafa; 
+                padding: 30px; 
+                text-align: center; 
+                color: #999; 
+                font-size: 12px; 
+                border-top: 1px solid #eee; 
+              }
             </style>
           </head>
           <body>
             <div class="container">
-              <div class="header">
-                <h1>Drut Research Panel</h1>
+              
+              <!-- Imitating the reference style: Main bold header area -->
+              <div style="background-color: #4CAF50; text-align: center;">
+                 <!-- If user provides image, replace src. Using placeholder for now. -->
+                 <!-- White/Blue style reference implies image blends with bg. -->
+                 <img src="https://placehold.co/600x320/4CAF50/ffffff?text=THANKS+FOR+JOINING!&font=roboto" alt="Welcome" class="hero-img" />
               </div>
+
               <div class="content">
-                <p>Hi ${firstName},</p>
-                <p>Thanks for joining the Drut Research Panel.</p>
-                <p>We are building the future of fast thinking for exams like <strong>${exam || 'competitive exams'}</strong>, and your insights are critical to us.</p>
+                <div class="greeting">Hi ${firstName},</div>
                 
-                <div class="cta-box">
-                  <h3 style="margin-top: 0; color: #2e7d32;">WHAT NEXT?</h3>
-                  <p style="margin-bottom: 0;">Our founders will reach out to you on the communication details provided to personally schedule a 15-min discussion.</p>
+                <div class="text">
+                  Drut provides adaptive practice for exams like <strong>${exam || 'competitive exams'}</strong>.
+                  We are excited to have you on our Research Panel.
                 </div>
-                
-                <p>Cheers,<br>The Drut Team</p>
+
+                <div class="text">
+                  Here is what you can expect next:
+                </div>
+
+                <ul class="list">
+                  <li>• A short 15-min chat with our founders to understand your study patterns.</li>
+                  <li>• Early access to our speed-training modules.</li>
+                  <li>• Exclusive updates on new features and tools.</li>
+                </ul>
+
+                <div class="text">
+                  Click the button below if you want to schedule your chat right away.
+                </div>
+
+                <a href="https://drut.zohobookings.in/#/LivePreview" class="btn">Schedule Chat</a>
               </div>
+              
               <div class="footer">
-                <p>&copy; 2025 Drut. All rights reserved.<br>admin@drut.club</p>
+                &copy; 2025 Drut. All rights reserved.<br>
+                <a href="#" style="color: #999; text-decoration: underline;">Unsubscribe</a>
               </div>
             </div>
           </body>

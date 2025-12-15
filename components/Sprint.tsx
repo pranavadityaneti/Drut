@@ -10,6 +10,7 @@ interface SessionConfig {
     topic: string;
     subtopic: string;
     examProfile: string;
+    questionCount: number;
     retryQuestions?: QuestionData[];
 }
 
@@ -24,6 +25,10 @@ export const Sprint: React.FC = () => {
     };
 
     const handleExitSession = (completedSessionId: string) => {
+        if (completedSessionId === 'error') {
+            setScreen('start');
+            return;
+        }
         setSessionId(completedSessionId);
         setScreen('results');
     };

@@ -1,6 +1,7 @@
 import { supabase } from '../lib/supabase';
 import { QuestionData } from '../types';
 import { log } from '../lib/log';
+import { getQuestionsForUser } from './questionCacheService';
 
 export interface SprintAttempt {
     questionId: string;
@@ -31,18 +32,61 @@ export interface SprintSessionData {
     attempts?: SprintAttempt[];
 }
 
-/**
- * Calculate score for a Sprint question
- * Correct = 10 + speed bonus (0-5)
- * Wrong/Skip = 0
- */
 export function calculateSprintScore(isCorrect: boolean, timeMs: number): number {
     if (!isCorrect) return 0;
 
-    const speedBonus = Math.floor(5 * (1 - timeMs / 45000));
-    const clampedBonus = Math.max(0, Math.min(5, speedBonus));
+    // Formula: 10 + (45 - timeTaken) / 4.5
+    // Max score: 10 + 10 = 20 (at 0s)
+    // Min score: 10 + 0 = 10 (at 45s)
 
-    return 10 + clampedBonus; // 10-15 points
+    // timeMs is in ms, so convert to seconds
+    const timeSec = timeMs / 1000;
+    const bonus = Math.round((45 - timeSec) / 4.5);
+    const clampedBonus = Math.max(0, Math.min(10, bonus));
+
+    return 10 + clampedBonus;
+}
+
+/**
+ * Start a new Sprint Session
+ * Creates DB entry and fetches initial batch of questions
+ */
+export async function startSession(
+    userId: string,
+    topic: string,
+    questionCount: number,
+    examProfile: string,
+    subtopic: string,
+    isRetry: boolean = false
+): Promise<{ sessionId: string; questions: QuestionData[] }> {
+    try {
+        // 1. Create Session in DB
+        const sessionId = await createSprintSession(
+            userId,
+            examProfile,
+            topic,
+            subtopic,
+            isRetry // isRetry
+        );
+
+        // 2. Fetch Questions
+        // We fetch 'questionCount' questions. 
+        // If the user picked a specific topic/subtopic, we respect it.
+        // If 'Mixed' or generic, the service handles it (mostly).
+        const { questions } = await getQuestionsForUser(
+            userId,
+            examProfile,
+            topic,
+            subtopic,
+            questionCount,
+            'Medium' // Default sprint difficulty
+        );
+
+        return { sessionId, questions };
+    } catch (error: any) {
+        log.error('[sprint] Failed to start session:', error);
+        throw error;
+    }
 }
 
 /**
@@ -78,6 +122,19 @@ export async function createSprintSession(
         log.error('[sprint] Failed to create session:', error);
         throw new Error(`Failed to create Sprint session: ${error.message}`);
     }
+}
+
+/**
+ * Create a specialized Retry Session (Background)
+ * Does NOT fetch questions. Just creates the session container.
+ */
+export async function createRetrySession(
+    userId: string,
+    topic: string,
+    subtopic: string,
+    examProfile: string
+): Promise<string> {
+    return createSprintSession(userId, examProfile, topic, subtopic, true); // true = isRetry
 }
 
 /**
@@ -197,6 +254,7 @@ export async function getSprintSessionData(sessionId: string): Promise<SprintSes
                 scoreEarned: a.score_earned,
                 inputMethod: a.input_method,
                 questionData: a.question_data,
+                selectedOptionIndex: a.selected_option_index,
             })) || [],
         };
     } catch (error: any) {
