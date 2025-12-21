@@ -593,25 +593,26 @@ const WhySpeedMattersSection = () => {
     const speedCards = [
         {
             number: '01',
-            title: 'CAT: 5 Questions = 20-30 Percentile Jump',
-            description: 'In CAT, solving just 5 extra questions can increase your percentile by 20–30 points. Speed is the difference between IIM-A and rejection.',
+            title: 'Speed Buy Accuracy.',
+            description: 'When you solve faster, you buy yourself time to double-check. Speed is the ultimate safety net against negative marking.',
         },
         {
             number: '02',
-            title: 'JEE: Seconds Saved = Higher Accuracy',
-            description: 'In JEE, seconds saved per question translates to higher accuracy under pressure. Every second counts in a 3-hour battle.',
+            title: 'The "10-Question" Gap.',
+            description: 'In any exam (CAT, JEE, PO), solving just 10 more questions than the average candidate moves you from the top 20% to the top 1%.',
         },
         {
             number: '03',
-            title: 'Toppers Solve Faster, Not Better',
-            description: 'Toppers don\'t solve better — they solve faster. Their secret isn\'t more knowledge, it\'s trained reflexes and pattern recognition.',
+            title: 'Panic is a Speed Issue.',
+            description: 'Anxiety happens when you run out of time. Drut builds the stamina to keep your heart rate down and your brain sharp for 3 hours.',
         },
         {
             number: '04',
-            title: 'Speed is Trainable, Not Talent',
-            description: 'Speed is scientifically trainable, not talent. With the right system, anyone can reduce their time-to-solve by 20-40% in 30 days.',
+            title: 'Rank > Marks.',
+            description: "The cutoff doesn't care how hard you studied. It only cares how many you got right before the buzzer. We maximize that number.",
         },
     ];
+
 
     return (
         <section className="why-speed-section">

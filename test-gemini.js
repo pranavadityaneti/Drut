@@ -1,6 +1,9 @@
 import { GoogleGenAI } from "@google/genai";
 
-const apiKey = "AIzaSyAEeKi8yNY9yf0OptQq46RAUNZeKUDFNmY";
+const apiKey = process.env.GEMINI_API_KEY || "YOUR_API_KEY_HERE";
+if (!process.env.GEMINI_API_KEY) {
+    console.warn("Warning: GEMINI_API_KEY not set in environment. Using placeholder.");
+}
 const client = new GoogleGenAI({ apiKey });
 
 async function testGen() {
