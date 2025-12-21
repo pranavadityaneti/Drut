@@ -36,9 +36,9 @@ export type RefinedQuestion = z.infer<typeof RefinedQuestionSchema>;
 // Constants
 // ============================================================
 
-// Use gemini-2.0-flash-exp which is confirmed working, or gemini-1.5-flash as fallback
+// Use gemini-3-flash-preview which is the new frontier-class model
 // Note: gemini-1.5-pro requires specific API access - using flash for now
-const MODEL_NAME = 'gemini-2.0-flash-exp';
+const MODEL_NAME = 'gemini-3-flash-preview';
 const TEMPERATURE = 0.2; // Consistent, deterministic logic
 const MAX_OUTPUT_TOKENS = 4096;
 
@@ -137,7 +137,7 @@ Return ONLY the JSON output.
     try {
         const client = getAiClient();
 
-        // Generate content using Gemini 1.5 Pro
+        // Generate content using Gemini 3 Flash Preview
         const response = await client.models.generateContent({
             model: MODEL_NAME,
             contents: userPrompt,
@@ -145,6 +145,8 @@ Return ONLY the JSON output.
                 temperature: TEMPERATURE,
                 maxOutputTokens: MAX_OUTPUT_TOKENS,
                 systemInstruction: SYSTEM_INSTRUCTION,
+                // Deep mode: Offline content tagging, accuracy is critical
+                thinkingConfig: { thinkingLevel: 'high' as any }
             },
         });
 

@@ -6,6 +6,48 @@ let client: GoogleGenAI | null = null;
 const GEMINI_API_KEY = import.meta.env?.VITE_GEMINI_API_KEY || (typeof process !== 'undefined' ? process.env.GEMINI_API_KEY : '') || '';
 
 /**
+ * Drut AI Thinking Modes
+ * - 'speed': Low latency for real-time interactions (hints, live questions)
+ * - 'deep': High reasoning for analysis tasks (post-sprint, pattern detection)
+ */
+export type DrutAIMode = 'speed' | 'deep';
+
+/**
+ * Model configuration based on mode
+ */
+interface DrutAIConfig {
+    model: string;
+    thinkingLevel: string;
+}
+
+/**
+ * Get model and thinking configuration based on operation mode
+ * 
+ * HYBRID THINKING ARCHITECTURE:
+ * - 'speed' mode: For user-facing real-time interactions where <2s latency is critical
+ *   Uses 'low' thinking to minimize TTFT (time to first token)
+ * 
+ * - 'deep' mode: For async analysis where accuracy > speed
+ *   Uses 'high' thinking for complex multi-datapoint reasoning
+ * 
+ * @param mode - 'speed' for real-time, 'deep' for analysis
+ */
+export const getDrutAIConfig = (mode: DrutAIMode = 'speed'): DrutAIConfig => {
+    if (mode === 'speed') {
+        return {
+            model: 'gemini-3-flash-preview',
+            thinkingLevel: 'low'
+        };
+    }
+
+    // 'deep' mode for analysis
+    return {
+        model: 'gemini-3-flash-preview',
+        thinkingLevel: 'high'
+    };
+};
+
+/**
  * Get or create AI client instance using @google/genai
  * This SDK works in browsers and provides access to Gemini models
  */
@@ -21,10 +63,48 @@ export const getAiClient = (): GoogleGenAI => {
 };
 
 /**
- * Get model instance - compatible with both GenAI and Vertex AI
- * @param modelName - Model to use (default: gemini-2.0-flash-exp)
+ * Generate content with Drut's Hybrid Thinking Architecture
+ * 
+ * @param prompt - The prompt to send
+ * @param mode - 'speed' for real-time (low thinking), 'deep' for analysis (high thinking)
+ * @param options - Additional configuration options
  */
-export const getGeminiModel = (modelName: string = 'gemini-2.0-flash-exp') => {
+export const generateDrutContent = async (
+    prompt: string,
+    mode: DrutAIMode = 'speed',
+    options: {
+        systemInstruction?: string;
+        responseMimeType?: string;
+        temperature?: number;
+    } = {}
+): Promise<string> => {
+    const ai = getAiClient();
+    const config = getDrutAIConfig(mode);
+
+    const result = await ai.models.generateContent({
+        model: config.model,
+        contents: prompt,
+        config: {
+            systemInstruction: options.systemInstruction,
+            responseMimeType: options.responseMimeType || 'text/plain',
+            temperature: options.temperature ?? (mode === 'speed' ? 0.2 : 0.4),
+            // Gemini 3 thinking configuration
+            thinkingConfig: {
+                thinkingLevel: config.thinkingLevel as any
+            }
+        },
+    });
+
+    return result.text || '';
+};
+
+/**
+ * Get model instance - compatible with both GenAI and Vertex AI
+ * @param modelName - Model to use (default: gemini-3-flash-preview)
+ * @deprecated Use getDrutAIConfig() for proper mode-based configuration
+ */
+export const getGeminiModel = (modelName: string = 'gemini-3-flash-preview') => {
     const client = getAiClient();
     return client;
 };
+

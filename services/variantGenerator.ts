@@ -44,7 +44,7 @@ const VariantOutputSchema = z.object({
 // Constants
 // ============================================================
 
-const MODEL_NAME = 'gemini-2.0-flash-exp';
+const MODEL_NAME = 'gemini-3-flash-preview';
 const TEMPERATURE = 0.7; // Higher for creative variance
 const MAX_OUTPUT_TOKENS = 4096;
 
@@ -128,6 +128,8 @@ Return ONLY the JSON output.
                 temperature: TEMPERATURE,
                 maxOutputTokens: MAX_OUTPUT_TOKENS,
                 systemInstruction: buildSystemPrompt(master),
+                // Deep mode: Variant generation is offline, needs accuracy
+                thinkingConfig: { thinkingLevel: 'high' as any }
             },
         });
 
