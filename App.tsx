@@ -20,6 +20,8 @@ import { WaitlistClassic } from './components/WaitlistClassic';
 import { AdminIngestion } from './components/AdminIngestion';
 import { BulkIngest } from './components/BulkIngest';
 import { ModalProvider } from './components/ui/Modal';
+import { PrivacyPolicy } from './components/legal/PrivacyPolicy';
+import { TermsAndConditions } from './components/legal/TermsAndConditions';
 
 
 // In a real Next.js app, this would be process.env.NEXT_PUBLIC_DEBUG
@@ -140,6 +142,10 @@ function App() {
           <Route path="/admin/bulk" element={
             user ? <AuthenticatedLayout user={user} onLogout={handleLogout} page="admin-bulk" /> : <Navigate to="/login" replace />
           } />
+
+          {/* Legal routes */}
+          <Route path="/privacypolicy" element={<PrivacyPolicy />} />
+          <Route path="/termsandconditions" element={<TermsAndConditions />} />
 
           {/* Catch all - redirect to home */}
           <Route path="*" element={<Navigate to="/" replace />} />

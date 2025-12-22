@@ -11,6 +11,8 @@ export const Footer = () => {
             <div className="inline-block border border-zinc-800 bg-zinc-900/50 px-4 py-2 rounded-full">
                 <p className="text-zinc-500 font-mono text-xs">
                     SYSTEM_STATUS: ONLINE  |  © 2025 DRUT_CORP  |  SPEED_METRIC_ONLY
+                    <br />
+                    <a href="/privacypolicy" className="hover:text-zinc-300">PRIVACY</a>  |  <a href="/termsandconditions" className="hover:text-zinc-300">TERMS</a>
                 </p>
             </div>
         </footer>

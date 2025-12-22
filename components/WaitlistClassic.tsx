@@ -468,7 +468,11 @@ export const WaitlistClassic: React.FC<WaitlistLandingPageProps> = ({ onGetStart
                             <span className="footer-divider" style={{ opacity: 0.5 }}>|</span>
                             <a href="tel:+919100117027" style={{ color: 'white', textDecoration: 'none', marginLeft: '15px' }}>+91 9100117027</a>
                         </div>
-                        <div className="footer-copyright" style={{ opacity: 0.7, fontSize: '0.875rem' }}>© 2025 Drut Learning Technologies.</div>
+                        <div className="footer-copyright" style={{ opacity: 0.7, fontSize: '0.875rem' }}>© 2025 Drut Learning Technologies. All rights reserved.</div>
+                        <div className="footer-legal" style={{ marginTop: '0.5rem', fontSize: '0.75rem', opacity: 0.5 }}>
+                            <a href="/privacypolicy" style={{ color: 'white', textDecoration: 'none', marginRight: '1rem' }} className="hover:opacity-100 transition-opacity">Privacy Policy</a>
+                            <a href="/termsandconditions" style={{ color: 'white', textDecoration: 'none' }} className="hover:opacity-100 transition-opacity">Terms & Conditions</a>
+                        </div>
                     </div>
                 </div>
             </div>
