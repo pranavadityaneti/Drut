@@ -7,6 +7,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '../lib/supabase';
 import { EXAM_TAXONOMY, getExam, TopicDef } from '../lib/taxonomy';
+import { fetchStaminaCurve, fetchSprintPerformance, StaminaPoint, SprintPerformance } from '../services/analyticsService';
 
 // ============================================================
 // Types
@@ -49,6 +50,15 @@ export interface DashboardData {
 
     // Raw data
     patterns: PatternMastery[];
+
+    // Stamina & Sprint data
+    staminaCurve: StaminaPoint[];
+    sprintSummary: {
+        totalSprints: number;
+        bestScore: number;
+        avgAccuracy: number;
+        recentSprints: SprintPerformance[];
+    } | null;
 }
 
 
@@ -100,6 +110,12 @@ export function useDashboardData() {
             // Note: These use the RPC functions defined in migration 015
             const { data: trendData } = await supabase.rpc('get_user_accuracy_trend', { p_user_id: user.id });
             const { data: topicCounts } = await supabase.rpc('get_topic_pattern_counts');
+
+            // 4. Fetch Stamina Curve & Sprint Performance (parallel)
+            const [staminaData, sprintData] = await Promise.all([
+                fetchStaminaCurve(),
+                fetchSprintPerformance()
+            ]);
 
             // --- Compute Stats ---
 
@@ -153,6 +169,14 @@ export function useDashboardData() {
                 };
             });
 
+            // Compute Sprint Summary
+            const sprintSummary = sprintData && sprintData.length > 0 ? {
+                totalSprints: sprintData.length,
+                bestScore: Math.max(...sprintData.map(s => Math.round(s.accuracy))),
+                avgAccuracy: Math.round(sprintData.reduce((sum, s) => sum + s.accuracy, 0) / sprintData.length),
+                recentSprints: sprintData.slice(0, 5)
+            } : null;
+
             setData({
                 speedScore,
                 speedRating,
@@ -164,6 +188,8 @@ export function useDashboardData() {
                 debtCount: debtPatterns.length,
                 topicStats,
                 patterns: patternData,
+                staminaCurve: staminaData || [],
+                sprintSummary,
             });
 
         } catch (err: any) {

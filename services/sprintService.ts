@@ -101,6 +101,8 @@ export async function createSprintSession(
     parentSessionId?: string
 ): Promise<string> {
     try {
+        console.log('[DEBUG] createSprintSession called with:', { userId, examProfile, topic, subtopic, isRetry });
+
         const { data, error } = await supabase
             .from('sprint_sessions')
             .insert({
@@ -114,11 +116,16 @@ export async function createSprintSession(
             .select('id')
             .single();
 
-        if (error) throw error;
+        if (error) {
+            console.error('[DEBUG] createSprintSession INSERT FAILED:', error);
+            throw error;
+        }
 
+        console.log('[DEBUG] createSprintSession SUCCESS - session ID:', data.id);
         log.info(`[sprint] Created session ${data.id}`);
         return data.id;
     } catch (error: any) {
+        console.error('[DEBUG] createSprintSession EXCEPTION:', error);
         log.error('[sprint] Failed to create session:', error);
         throw new Error(`Failed to create Sprint session: ${error.message}`);
     }
@@ -146,6 +153,8 @@ export async function saveSprintAttempt(
     attempt: SprintAttempt
 ): Promise<void> {
     try {
+        console.log('[DEBUG] saveSprintAttempt called with:', { sessionId, userId, questionId: attempt.questionId, result: attempt.result });
+
         const { error } = await supabase
             .from('sprint_question_attempts')
             .insert({
@@ -160,10 +169,15 @@ export async function saveSprintAttempt(
                 selected_option_index: attempt.selectedOptionIndex,
             });
 
-        if (error) throw error;
+        if (error) {
+            console.error('[DEBUG] saveSprintAttempt INSERT FAILED:', error);
+            throw error;
+        }
 
+        console.log('[DEBUG] saveSprintAttempt SUCCESS for session:', sessionId);
         log.info(`[sprint] Saved attempt for session ${sessionId}`);
     } catch (error: any) {
+        console.error('[DEBUG] saveSprintAttempt EXCEPTION:', error);
         log.error('[sprint] Failed to save attempt:', error);
         // Don't throw - we don't want to break the session if tracking fails
     }

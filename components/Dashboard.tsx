@@ -2,7 +2,7 @@
  * Command Center Dashboard
  * 
  * 3-column responsive layout
- * Left: Arena | Center: Content | Right: Debt Collector
+ * Left: Weak Spots | Center: Speed Pulse | Right: Debt Collector
  */
 
 import React from 'react';
@@ -10,10 +10,10 @@ import { useDashboardData } from '../hooks/useDashboardData';
 import { SpeedPulse } from './dashboard/SpeedPulse';
 import { DebtCollector } from './dashboard/DebtCollector';
 import { MasteryGrid } from './dashboard/MasteryGrid';
-import { ArenaWidget } from './dashboard/ArenaWidget';
+import { WeakSpotsWidget } from './dashboard/WeakSpotsWidget';
 import { StaminaCurve } from './analytics/StaminaCurve';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/Card';
-import { Loader2, Activity } from 'lucide-react';
+import { Loader2, Activity, Zap, TrendingUp } from 'lucide-react';
 
 export const Dashboard: React.FC = () => {
   const { data, loading, error, refetch } = useDashboardData();
@@ -28,6 +28,12 @@ export const Dashboard: React.FC = () => {
   const handleTopicClick = (topicValue: string) => {
     console.log('Opening topic:', topicValue);
     // TODO: Navigate to topic-focused practice
+  };
+
+  // Handle practice from weak spots
+  const handlePracticeWeakSpot = (subtopic: string, topic: string) => {
+    console.log('Practice weak spot:', subtopic, 'in topic:', topic);
+    // TODO: Navigate to subtopic-focused practice
   };
 
   if (loading) {
@@ -65,26 +71,20 @@ export const Dashboard: React.FC = () => {
   const totalPatterns = data?.totalPatternsSeen ?? 0;
   const debtPatterns = data?.debtPatterns ?? [];
   const topicStats = data?.topicStats ?? [];
+  const staminaCurve = data?.staminaCurve ?? [];
+  const sprintSummary = data?.sprintSummary;
 
   return (
     <div className="space-y-8 pb-12">
       {/* 
         ROW 1: Stats & Widgets
-        Desktop: 3 columns, equal height (widgets are direct children)
-        Tablet: 2 columns top (Arena + Speed), 1 full width bottom (Debt) or vice versa
-        Mobile: 1 column stack
-      */}
-      {/* 
-        ROW 1: Stats & Widgets
-        Desktop: 12-column Grid (3-6-3 split) to make Speed Pulse wider
-        Tablet: 2 columns top (Arena + Speed), 1 full width bottom (Debt) or vice versa
+        Desktop: 12-column Grid (4-4-4 split)
         Mobile: 1 column stack
       */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 items-stretch">
-        <ArenaWidget
-          currentUserRank={4}
-          currentUserScore={speedScore * 5}
-          className="h-full lg:col-span-3"
+        <WeakSpotsWidget
+          onPractice={handlePracticeWeakSpot}
+          className="h-full lg:col-span-4"
         />
         <SpeedPulse
           score={speedScore}
@@ -92,12 +92,12 @@ export const Dashboard: React.FC = () => {
           trend={speedTrend}
           verifiedCount={verifiedPatterns}
           totalCount={totalPatterns}
-          className="h-full lg:col-span-6"
+          className="h-full lg:col-span-4"
         />
         <DebtCollector
           patterns={debtPatterns}
           onClearDebt={handleClearDebt}
-          className="md:col-span-2 lg:col-span-3 h-full"
+          className="md:col-span-2 lg:col-span-4 h-full"
         />
       </div>
 
@@ -113,12 +113,44 @@ export const Dashboard: React.FC = () => {
       </div>
 
       {/* 
-        ROW 3: Stamina Curve
-        Right aligned (occupies right half on desktop)
+        ROW 3: Sprint Summary + Stamina Curve
+        Two columns on desktop
       */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* Empty left column placeholder for future card */}
-        <div className="hidden lg:block"></div>
+        {/* Sprint Summary - Left Side */}
+        <Card className="h-full">
+          <CardHeader className="pb-2">
+            <CardTitle className="flex items-center gap-2 text-base">
+              <Zap className="w-4 h-4 text-amber-500" />
+              Sprint Summary
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            {sprintSummary ? (
+              <div className="grid grid-cols-3 gap-4">
+                <div className="text-center p-4 bg-muted/50 rounded-lg">
+                  <p className="text-2xl font-bold text-foreground">{sprintSummary.totalSprints}</p>
+                  <p className="text-xs text-muted-foreground">Total Sprints</p>
+                </div>
+                <div className="text-center p-4 bg-emerald-50 rounded-lg">
+                  <p className="text-2xl font-bold text-emerald-600">{sprintSummary.bestScore}%</p>
+                  <p className="text-xs text-muted-foreground">Best Score</p>
+                </div>
+                <div className="text-center p-4 bg-blue-50 rounded-lg">
+                  <p className="text-2xl font-bold text-blue-600">{sprintSummary.avgAccuracy}%</p>
+                  <p className="text-xs text-muted-foreground">Avg Accuracy</p>
+                </div>
+              </div>
+            ) : (
+              <div className="flex flex-col items-center justify-center h-32 text-center">
+                <Zap className="w-8 h-8 text-muted-foreground/30 mb-2" />
+                <p className="text-sm text-muted-foreground">
+                  Complete a sprint to see your stats
+                </p>
+              </div>
+            )}
+          </CardContent>
+        </Card>
 
         {/* Stamina Curve - Right Side */}
         <Card className="h-full">
@@ -129,7 +161,7 @@ export const Dashboard: React.FC = () => {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <StaminaCurve data={[]} />
+            <StaminaCurve data={staminaCurve} />
           </CardContent>
         </Card>
       </div>
@@ -138,3 +170,4 @@ export const Dashboard: React.FC = () => {
 };
 
 export default Dashboard;
+
