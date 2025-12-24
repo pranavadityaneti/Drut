@@ -55,10 +55,10 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentPage, setCurrentPage, u
       <div className="flex h-16 items-center justify-between px-6 border-b border-border">
         <div className="flex items-center gap-3">
           {!isCollapsed && (
-            <span className="font-bold text-2xl text-emerald-600">Drut</span>
+            <img src="/brand-logo.png" alt="Drut" className="h-8" />
           )}
           {isCollapsed && (
-            <span className="font-bold text-2xl text-emerald-600 mx-auto">D</span>
+            <span className="font-bold text-2xl mx-auto" style={{ color: '#5cbb21' }}>D</span>
           )}
         </div>
 
@@ -108,15 +108,16 @@ const NavItemComponent: React.FC<{
     className={cn(
       "group relative flex items-center gap-4 px-4 py-3.5 rounded-lg text-base font-medium transition-all duration-200",
       isActive
-        ? "bg-emerald-500 text-white shadow-sm"
+        ? "text-white shadow-sm"
         : "text-muted-foreground hover:bg-accent hover:text-accent-foreground",
       isCollapsed && "justify-center px-2"
     )}
+    style={isActive ? { backgroundColor: '#5cbb21' } : undefined}
     title={isCollapsed ? label : undefined}
   >
     <Icon className={cn(
       "h-6 w-6 flex-shrink-0 transition-colors",
-      isActive ? "text-white" : "group-hover:text-emerald-700"
+      isActive ? "text-white" : "group-hover:text-[#5cbb21]"
     )} />
     {!isCollapsed && <span>{label}</span>}
   </button>

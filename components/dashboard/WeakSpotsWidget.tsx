@@ -70,8 +70,8 @@ export const WeakSpotsWidget: React.FC<WeakSpotsWidgetProps> = ({
                     </div>
                 ) : weakSpots.length === 0 ? (
                     <div className="flex flex-col items-center justify-center h-48 text-center">
-                        <div className="w-12 h-12 rounded-full bg-emerald-50 flex items-center justify-center mb-3">
-                            <Target className="w-6 h-6 text-emerald-500" />
+                        <div className="w-12 h-12 rounded-full flex items-center justify-center mb-3" style={{ backgroundColor: '#f6fbe8' }}>
+                            <Target className="w-6 h-6" style={{ color: '#5cbb21' }} />
                         </div>
                         <p className="text-sm text-muted-foreground">
                             Complete some practice sessions<br />to see your focus areas

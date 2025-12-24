@@ -24,7 +24,7 @@ export const MasteryGrid: React.FC<MasteryGridProps> = ({
         <div className="space-y-4">
             {/* Header */}
             <div className="flex items-center gap-2">
-                <BookOpen className="w-5 h-5 text-emerald-600" />
+                <BookOpen className="w-5 h-5" style={{ color: '#5cbb21' }} />
                 <h2 className="text-lg font-semibold text-foreground">Mastery Map</h2>
                 <span className="text-sm text-muted-foreground">
                     Your pattern library
@@ -32,7 +32,7 @@ export const MasteryGrid: React.FC<MasteryGridProps> = ({
             </div>
 
             {/* Grid */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                 {topicStats.map(({ topic, totalPatterns, verifiedPatterns, learningPatterns, progressPercent }) => {
                     const isComplete = progressPercent === 100;
 
@@ -41,9 +41,10 @@ export const MasteryGrid: React.FC<MasteryGridProps> = ({
                             key={topic.value}
                             onClick={() => onTopicClick?.(topic.value)}
                             className={cn(
-                                "cursor-pointer transition-all hover:shadow-md hover:border-emerald-200",
-                                isComplete && "border-emerald-300 bg-emerald-50/50"
+                                "cursor-pointer transition-all hover:shadow-md",
+                                isComplete && "bg-[#f6fbe8]"
                             )}
+                            style={isComplete ? { borderColor: '#5cbb21' } : undefined}
                         >
                             <CardContent className="p-4">
                                 {/* Topic header */}
@@ -52,7 +53,7 @@ export const MasteryGrid: React.FC<MasteryGridProps> = ({
                                         {topic.label}
                                     </h3>
                                     {isComplete && (
-                                        <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0 ml-2" />
+                                        <CheckCircle2 className="w-4 h-4 flex-shrink-0 ml-2" style={{ color: '#5cbb21' }} />
                                     )}
                                 </div>
 
@@ -60,14 +61,14 @@ export const MasteryGrid: React.FC<MasteryGridProps> = ({
                                 <div className="space-y-2">
                                     <div className="h-1.5 bg-muted rounded-full overflow-hidden">
                                         <div
-                                            className="h-full rounded-full bg-emerald-500 transition-all duration-500"
-                                            style={{ width: `${progressPercent}%` }}
+                                            className="h-full rounded-full transition-all duration-500"
+                                            style={{ width: `${progressPercent}%`, backgroundColor: '#5cbb21' }}
                                         />
                                     </div>
 
                                     {/* Stats */}
                                     <div className="flex items-center justify-between text-xs">
-                                        <span className="text-emerald-600 font-medium">
+                                        <span className="font-medium" style={{ color: '#5cbb21' }}>
                                             {verifiedPatterns}/{totalPatterns} Verified
                                         </span>
                                         <span className="text-muted-foreground">

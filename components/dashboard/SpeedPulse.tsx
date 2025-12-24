@@ -2,7 +2,7 @@
  * SpeedPulse Component
  * 
  * Hero component with semi-circle gauge showing Speed Rating (0-100)
- * Light theme with Emerald accents
+ * Light theme with Drut brand accents
  */
 
 import React from 'react';
@@ -27,11 +27,11 @@ export const SpeedPulse: React.FC<SpeedPulseProps> = ({
     totalCount,
     className,
 }) => {
-    // Rating colors (Emerald-based)
-    const ratingConfig: Record<string, { color: string; bg: string }> = {
+    // Rating colors (Brand-based)
+    const ratingConfig: Record<string, { color: string; bg: string; style?: React.CSSProperties }> = {
         Rookie: { color: 'text-muted-foreground', bg: 'bg-muted' },
         Learner: { color: 'text-blue-600', bg: 'bg-blue-100' },
-        Pro: { color: 'text-emerald-600', bg: 'bg-emerald-100' },
+        Pro: { color: '', bg: '', style: { color: '#5cbb21', backgroundColor: '#f6fbe8' } },
         Elite: { color: 'text-amber-600', bg: 'bg-amber-100' },
     };
 
@@ -41,7 +41,7 @@ export const SpeedPulse: React.FC<SpeedPulseProps> = ({
         <Card className={className}>
             <CardHeader className="pb-2">
                 <CardTitle className="flex items-center gap-2 text-base">
-                    <Zap className="w-5 h-5 text-emerald-600" />
+                    <Zap className="w-5 h-5" style={{ color: '#5cbb21' }} />
                     Speed Pulse
                 </CardTitle>
             </CardHeader>
@@ -60,11 +60,11 @@ export const SpeedPulse: React.FC<SpeedPulseProps> = ({
                                 strokeLinecap="round"
                             />
 
-                            {/* Progress arc - Emerald */}
+                            {/* Progress arc - Drut Green */}
                             <path
                                 d="M 20 95 A 80 80 0 0 1 180 95"
                                 fill="none"
-                                stroke="#10b981"
+                                stroke="#5cbb21"
                                 strokeWidth="12"
                                 strokeLinecap="round"
                                 strokeDasharray={`${(score / 100) * 251.2} 251.2`}
@@ -81,11 +81,14 @@ export const SpeedPulse: React.FC<SpeedPulseProps> = ({
                     </div>
 
                     {/* Rating badge */}
-                    <span className={cn(
-                        "px-4 py-1.5 rounded-full text-sm font-medium mb-4",
-                        config.bg,
-                        config.color
-                    )}>
+                    <span
+                        className={cn(
+                            "px-4 py-1.5 rounded-full text-sm font-medium mb-4",
+                            config.bg,
+                            config.color
+                        )}
+                        style={config.style}
+                    >
                         {rating}
                     </span>
 
@@ -106,12 +109,15 @@ export const SpeedPulse: React.FC<SpeedPulseProps> = ({
                                 <div className="flex items-center gap-1">
                                     <TrendingUp className={cn(
                                         "w-4 h-4",
-                                        trend > 0 ? "text-emerald-600" : "text-red-500"
-                                    )} />
-                                    <span className={cn(
-                                        "font-medium",
-                                        trend > 0 ? "text-emerald-600" : "text-red-500"
-                                    )}>
+                                        trend > 0 ? "" : "text-red-500"
+                                    )} style={trend > 0 ? { color: '#5cbb21' } : undefined} />
+                                    <span
+                                        className={cn(
+                                            "font-medium",
+                                            trend > 0 ? "" : "text-red-500"
+                                        )}
+                                        style={trend > 0 ? { color: '#5cbb21' } : undefined}
+                                    >
                                         {trend > 0 ? '+' : ''}{trend}%
                                     </span>
                                 </div>

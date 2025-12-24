@@ -75,13 +75,13 @@ export const Dashboard: React.FC = () => {
   const sprintSummary = data?.sprintSummary;
 
   return (
-    <div className="space-y-8 pb-12">
+    <div className="space-y-6 md:space-y-8 pb-12 px-2 md:px-0">
       {/* 
         ROW 1: Stats & Widgets
         Desktop: 12-column Grid (4-4-4 split)
         Mobile: 1 column stack
       */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 items-stretch">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-4 md:gap-8 items-stretch">
         <WeakSpotsWidget
           onPractice={handlePracticeWeakSpot}
           className="h-full lg:col-span-4"
@@ -116,7 +116,7 @@ export const Dashboard: React.FC = () => {
         ROW 3: Sprint Summary + Stamina Curve
         Two columns on desktop
       */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 gap-4 md:gap-8 lg:grid-cols-2">
         {/* Sprint Summary - Left Side */}
         <Card className="h-full">
           <CardHeader className="pb-2">
@@ -127,17 +127,17 @@ export const Dashboard: React.FC = () => {
           </CardHeader>
           <CardContent>
             {sprintSummary ? (
-              <div className="grid grid-cols-3 gap-4">
-                <div className="text-center p-4 bg-muted/50 rounded-lg">
-                  <p className="text-2xl font-bold text-foreground">{sprintSummary.totalSprints}</p>
+              <div className="grid grid-cols-3 gap-2 md:gap-4">
+                <div className="text-center p-3 md:p-4 bg-muted/50 rounded-lg">
+                  <p className="text-xl md:text-2xl font-bold text-foreground">{sprintSummary.totalSprints}</p>
                   <p className="text-xs text-muted-foreground">Total Sprints</p>
                 </div>
-                <div className="text-center p-4 bg-emerald-50 rounded-lg">
-                  <p className="text-2xl font-bold text-emerald-600">{sprintSummary.bestScore}%</p>
+                <div className="text-center p-3 md:p-4 rounded-lg" style={{ backgroundColor: '#f6fbe8' }}>
+                  <p className="text-xl md:text-2xl font-bold" style={{ color: '#5cbb21' }}>{sprintSummary.bestScore}%</p>
                   <p className="text-xs text-muted-foreground">Best Score</p>
                 </div>
-                <div className="text-center p-4 bg-blue-50 rounded-lg">
-                  <p className="text-2xl font-bold text-blue-600">{sprintSummary.avgAccuracy}%</p>
+                <div className="text-center p-3 md:p-4 bg-blue-50 rounded-lg">
+                  <p className="text-xl md:text-2xl font-bold text-blue-600">{sprintSummary.avgAccuracy}%</p>
                   <p className="text-xs text-muted-foreground">Avg Accuracy</p>
                 </div>
               </div>
