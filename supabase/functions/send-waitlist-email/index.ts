@@ -11,11 +11,11 @@ serve(async (req) => {
   }
 
   try {
-    const { email, customerId, name, role, exam, phone, painPoint, email_type } = await req.json();
+    const { email, customerId, name, user_type, exam, phone, pain_point, email_type } = await req.json();
 
     console.log(`NEW LEAD (${email_type}): ${email} (ID: ${customerId})`);
-    console.log(`Details: ${name}, ${role}, ${exam}, ${phone}`);
-    console.log(`Pain Point: ${painPoint}`);
+    console.log(`Details: ${name}, ${user_type}, ${exam}, ${phone}`);
+    console.log(`Pain Point: ${pain_point}`);
 
     const firstName = name ? name.split(' ')[0] : 'there';
 
@@ -433,7 +433,10 @@ serve(async (req) => {
 
     // Try sending with Resend if Key exists
     const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY');
+    const ADMIN_EMAIL = 'pranav.n@drut.club';
+
     if (RESEND_API_KEY) {
+      // 1. Send confirmation email to user
       const res = await fetch('https://api.resend.com/emails', {
         method: 'POST',
         headers: {
@@ -448,7 +451,138 @@ serve(async (req) => {
         })
       });
       const data = await res.json();
-      console.log('Resend response:', data);
+      console.log('Resend response (user email):', data);
+
+      // 2. Send admin notification email
+      const adminSubject = email_type === 'research'
+        ? `🔬 New Research Panel Signup: ${name || email}`
+        : `🎉 New Waitlist Signup: ${email}`;
+
+      // Different templates for waitlist vs research panel
+      let adminEmailHtml = '';
+
+      if (email_type === 'research') {
+        // Full template for Research Panel with all details
+        adminEmailHtml = `
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <meta charset="utf-8">
+            <style>
+              body { font-family: 'Helvetica Neue', Arial, sans-serif; margin: 0; padding: 20px; background: #f5f5f5; }
+              .container { max-width: 600px; margin: 0 auto; background: #fff; border-radius: 12px; padding: 32px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+              .header { border-bottom: 2px solid #1976D2; padding-bottom: 16px; margin-bottom: 24px; }
+              .header h1 { color: #1976D2; margin: 0; font-size: 24px; }
+              .header .type-badge { display: inline-block; background: #E3F2FD; color: #1976D2; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; margin-top: 8px; }
+              .field { margin-bottom: 16px; }
+              .field-label { font-size: 12px; color: #888; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+              .field-value { font-size: 16px; color: #333; }
+              .pain-point { background: #f9f9f9; padding: 16px; border-radius: 8px; border-left: 4px solid #1976D2; margin-top: 8px; }
+              .footer { margin-top: 24px; padding-top: 16px; border-top: 1px solid #eee; font-size: 12px; color: #999; }
+              .timestamp { color: #666; font-size: 14px; }
+            </style>
+          </head>
+          <body>
+            <div class="container">
+              <div class="header">
+                <h1>New Research Panelist 🔬</h1>
+                <div class="type-badge">Research Panel</div>
+              </div>
+              
+              <div class="field">
+                <div class="field-label">Name</div>
+                <div class="field-value">${name || 'Not provided'}</div>
+              </div>
+              
+              <div class="field">
+                <div class="field-label">Email</div>
+                <div class="field-value"><a href="mailto:${email}">${email}</a></div>
+              </div>
+              
+              <div class="field">
+                <div class="field-label">User Type</div>
+                <div class="field-value">${user_type || 'Not specified'}</div>
+              </div>
+              
+              <div class="field">
+                <div class="field-label">Target Exam</div>
+                <div class="field-value">${exam || 'Not specified'}</div>
+              </div>
+              
+              ${phone ? `
+              <div class="field">
+                <div class="field-label">Phone</div>
+                <div class="field-value"><a href="tel:${phone}">${phone}</a></div>
+              </div>
+              ` : ''}
+              
+              <div class="field">
+                <div class="field-label">What Slows Them Down</div>
+                <div class="pain-point">${pain_point || 'Not specified'}</div>
+              </div>
+              
+              <div class="footer">
+                <div class="timestamp">Received: ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}</div>
+                <div>Lead ID: ${customerId || email}</div>
+              </div>
+            </div>
+          </body>
+          </html>
+        `;
+      } else {
+        // Minimal template for Quick Waitlist Signup (email only)
+        adminEmailHtml = `
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <meta charset="utf-8">
+            <style>
+              body { font-family: 'Helvetica Neue', Arial, sans-serif; margin: 0; padding: 20px; background: #f5f5f5; }
+              .container { max-width: 600px; margin: 0 auto; background: #fff; border-radius: 12px; padding: 32px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+              .header { border-bottom: 2px solid #4CAF50; padding-bottom: 16px; margin-bottom: 24px; }
+              .header h1 { color: #4CAF50; margin: 0; font-size: 24px; }
+              .header .type-badge { display: inline-block; background: #E8F5E9; color: #2E7D32; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; margin-top: 8px; }
+              .email-highlight { font-size: 20px; color: #333; background: #f5f5f5; padding: 16px 20px; border-radius: 8px; margin: 16px 0; }
+              .email-highlight a { color: #4CAF50; text-decoration: none; }
+              .footer { margin-top: 24px; padding-top: 16px; border-top: 1px solid #eee; font-size: 12px; color: #999; }
+              .timestamp { color: #666; font-size: 14px; }
+            </style>
+          </head>
+          <body>
+            <div class="container">
+              <div class="header">
+                <h1>New Waitlist Signup 🎉</h1>
+                <div class="type-badge">Quick Signup</div>
+              </div>
+              
+              <div class="email-highlight">
+                <a href="mailto:${email}">${email}</a>
+              </div>
+              
+              <div class="footer">
+                <div class="timestamp">Received: ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}</div>
+              </div>
+            </div>
+          </body>
+          </html>
+        `;
+      }
+
+      const adminRes = await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${RESEND_API_KEY}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          from: 'Drut Alerts <admin@drut.club>',
+          to: ADMIN_EMAIL,
+          subject: adminSubject,
+          html: adminEmailHtml
+        })
+      });
+      const adminData = await adminRes.json();
+      console.log('Resend response (admin notification):', adminData);
     } else {
       console.log('No RESEND_API_KEY found. Skipping actual email send.');
     }
