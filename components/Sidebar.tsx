@@ -47,7 +47,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentPage, setCurrentPage, u
   return (
     <aside
       className={cn(
-        "fixed inset-y-0 left-0 z-40 flex flex-col bg-card border-r border-border transition-all duration-300 ease-in-out",
+        "fixed inset-y-0 left-0 z-40 hidden lg:flex flex-col bg-card border-r border-border transition-all duration-300 ease-in-out",
         isCollapsed ? 'w-[72px]' : 'w-80'
       )}
     >
