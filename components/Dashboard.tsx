@@ -1,22 +1,65 @@
 /**
  * Command Center Dashboard
  * 
- * 3-column responsive layout
- * Left: Weak Spots | Center: Speed Pulse | Right: Debt Collector
+ * Modern redesigned dashboard with welcome header and card menus
  */
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDashboardData } from '../hooks/useDashboardData';
 import { SpeedPulse } from './dashboard/SpeedPulse';
 import { DebtCollector } from './dashboard/DebtCollector';
 import { MasteryGrid } from './dashboard/MasteryGrid';
 import { WeakSpotsWidget } from './dashboard/WeakSpotsWidget';
+import { WelcomeHeader } from './dashboard/WelcomeHeader';
+import { DashboardBanner } from './dashboard/DashboardBanner';
+import { DashboardStatsRow } from './dashboard/DashboardStatsRow';
 import { StaminaCurve } from './analytics/StaminaCurve';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/Card';
-import { Loader2, Activity, Zap, TrendingUp } from 'lucide-react';
+import { Loader2, Activity, Zap } from 'lucide-react';
+import { supabase } from '../lib/supabase';
 
 export const Dashboard: React.FC = () => {
   const { data, loading, error, refetch } = useDashboardData();
+  const [userName, setUserName] = useState('there');
+
+  // Get user name
+  useEffect(() => {
+    const fetchUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        const name = user.user_metadata?.full_name || user.email?.split('@')[0] || 'there';
+        setUserName(name);
+      }
+    };
+    fetchUser();
+  }, []);
+
+  // Export performance report
+  const handleExport = () => {
+    // Generate and download performance report
+    const report = {
+      exportDate: new Date().toISOString(),
+      speedScore: data?.speedScore ?? 0,
+      speedRating: data?.speedRating ?? 'Rookie',
+      verifiedPatterns: data?.verifiedPatterns ?? 0,
+      totalPatternsSeen: data?.totalPatternsSeen ?? 0,
+      debtPatterns: data?.debtPatterns?.length ?? 0,
+      topicBreakdown: data?.topicStats?.map(t => ({
+        topic: t.topic.label,
+        progress: t.progressPercent,
+        verified: t.verifiedPatterns
+      })) ?? [],
+      sprintSummary: data?.sprintSummary ?? null
+    };
+
+    const blob = new Blob([JSON.stringify(report, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `drut-performance-${new Date().toISOString().split('T')[0]}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
 
   // Handle debt clearing (placeholder)
   const handleClearDebt = () => {
@@ -75,7 +118,13 @@ export const Dashboard: React.FC = () => {
   const sprintSummary = data?.sprintSummary;
 
   return (
-    <div className="space-y-6 md:space-y-8 pb-12 px-2 md:px-0">
+    <div className="max-w-[1600px] mx-auto space-y-8 p-4 md:p-8">
+      {/* Welcome Header */}
+      <WelcomeHeader userName={userName} onExport={handleExport} />
+
+      <DashboardBanner userName={userName} />
+      <DashboardStatsRow />
+
       {/* 
         ROW 1: Stats & Widgets
         Desktop: 12-column Grid (4-4-4 split)
@@ -93,10 +142,12 @@ export const Dashboard: React.FC = () => {
           verifiedCount={verifiedPatterns}
           totalCount={totalPatterns}
           className="h-full lg:col-span-4"
+          onRefresh={refetch}
         />
         <DebtCollector
           patterns={debtPatterns}
           onClearDebt={handleClearDebt}
+          onRefresh={refetch}
           className="md:col-span-2 lg:col-span-4 h-full"
         />
       </div>

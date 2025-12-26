@@ -7,7 +7,18 @@ import { DrutIcon } from './icons/Icons';
 
 // Flipping Text Animation Component
 const FlippingText: React.FC = () => {
-    const texts = ["It's a Speed Test.", "It's a Logic Test.", "It's a Pattern Test.", "It's a Race Against Time."];
+    const texts = [
+        "Competitive Exams", // Start with generic
+        "JEE Main",
+        "JEE Advanced",
+        "AP EAPCET",
+        "TG EAPCET",
+        "WBJEE",
+        "MHT CET",
+        "KCET",
+        "KEAM",
+        "GUJCET"
+    ];
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isFlipping, setIsFlipping] = useState(false);
 
@@ -17,13 +28,13 @@ const FlippingText: React.FC = () => {
             setTimeout(() => {
                 setCurrentIndex((prev) => (prev + 1) % texts.length);
                 setIsFlipping(false);
-            }, 300);
-        }, 2500);
+            }, 500); // Faster transition
+        }, 3000); // 3 seconds per exam
         return () => clearInterval(interval);
     }, []);
 
     return (
-        <span className={`flipping-text ${isFlipping ? 'flip-out' : 'flip-in'}`}>
+        <span className={`flipping-text ${isFlipping ? 'flip-out' : 'flip-in'}`} style={{ display: 'inline-block', minWidth: '200px' }}>
             {texts[currentIndex]}
         </span>
     );
@@ -34,13 +45,6 @@ interface WaitlistLandingPageProps {
 }
 
 export const WaitlistClassic: React.FC<WaitlistLandingPageProps> = ({ onGetStarted }) => {
-    // We can keep the form logic if we want the "Get Started" to scroll to a waitlist form
-    // For now, let's just make the "Get Started" button trigger the auth modal as per typical SaaS flows
-    // or scroll to the waitlist section if that's still the goal.
-    // The Prompt asked to "redesign", but the previous functionality was "Join Waitlist". 
-    // I'll keep the "Get Started" -> "Scroll to Waitlist" behavior for continuity,
-    // but style the top part as requested.
-
     const scrollToWaitlist = () => {
         document.getElementById('waitlist-form-area')?.scrollIntoView({ behavior: 'smooth' });
     };
@@ -51,8 +55,8 @@ export const WaitlistClassic: React.FC<WaitlistLandingPageProps> = ({ onGetStart
             <div className="gradient-bg" />
 
             {/* Centered Logo Header */}
-            <div className="centered-header">
-                <img src="/logo.png" alt="Drut" className="centered-logo" />
+            <div className="centered-header pt-8 pb-4">
+                <img src="/brand-logo.png" alt="Drut" className="centered-logo h-12 w-auto mx-auto" />
             </div>
 
             {/* Hero Content */}
@@ -61,16 +65,54 @@ export const WaitlistClassic: React.FC<WaitlistLandingPageProps> = ({ onGetStart
                     <div className="badge-pill">Unlock Your Speed Potential</div>
 
                     <h1 className="hero-title">
-                        The Exam is Not a <span style={{ whiteSpace: 'nowrap' }}>Memory Test.</span><br />
-                        <span className="hero-gradient-text"><FlippingText /></span>
+                        The AI-Powered Practice Platform<br />
+                        for <span className="hero-gradient-text"><FlippingText /></span>
                     </h1>
 
                     <p className="hero-subtitle">
-                        Bridge the gap between knowing the answer and marking it in time. Stop leaving questions unattempted.
+                        Time is the difference between a rank and a rejection. Drut optimizes your solving method so you can answer faster and finish the paper with confidence.
                     </p>
 
                     {/* Inline Hero Form -> Email Input + CTA Button */}
                     <HeroEmailForm />
+
+                    {/* Core Features Section */}
+                    <div className="mt-16 mb-8 w-full max-w-5xl mx-auto">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            {/* Feature 1: The Optimal Path */}
+                            <div className="bg-white/80 backdrop-blur-sm border border-white/20 rounded-2xl p-6 text-center hover:transform hover:-translate-y-1 transition-all duration-300 shadow-lg">
+                                <div className="w-12 h-12 mx-auto bg-emerald-100 rounded-full flex items-center justify-center mb-4 text-emerald-600">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"></path></svg>
+                                </div>
+                                <h3 className="font-bold text-gray-900 mb-2">The Optimal Path</h3>
+                                <p className="text-sm text-gray-600 leading-relaxed">
+                                    Stop using long textbook methods. Learn the mathematically shortest path to solve problems.
+                                </p>
+                            </div>
+
+                            {/* Feature 2: Sprint Mode */}
+                            <div className="bg-white/80 backdrop-blur-sm border border-white/20 rounded-2xl p-6 text-center hover:transform hover:-translate-y-1 transition-all duration-300 shadow-lg">
+                                <div className="w-12 h-12 mx-auto bg-rose-100 rounded-full flex items-center justify-center mb-4 text-rose-600">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                </div>
+                                <h3 className="font-bold text-gray-900 mb-2">Sprint Mode</h3>
+                                <p className="text-sm text-gray-600 leading-relaxed">
+                                    High-intensity, time-bound practice drills designed to build your solving speed and stamina.
+                                </p>
+                            </div>
+
+                            {/* Feature 3: Weakness Detector */}
+                            <div className="bg-white/80 backdrop-blur-sm border border-white/20 rounded-2xl p-6 text-center hover:transform hover:-translate-y-1 transition-all duration-300 shadow-lg">
+                                <div className="w-12 h-12 mx-auto bg-blue-100 rounded-full flex items-center justify-center mb-4 text-blue-600">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="22" y1="12" x2="18" y2="12"></line><line x1="6" y1="12" x2="2" y2="12"></line><line x1="12" y1="6" x2="12" y2="2"></line><line x1="12" y1="22" x2="12" y2="18"></line></svg>
+                                </div>
+                                <h3 className="font-bold text-gray-900 mb-2">Weakness Detector</h3>
+                                <p className="text-sm text-gray-600 leading-relaxed">
+                                    Our engine automatically identifies the specific concepts and patterns where you are losing time.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
 
                     {/* Dashboard Mockup */}
                     <div className="dashboard-preview-container">

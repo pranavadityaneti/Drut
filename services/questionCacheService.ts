@@ -74,7 +74,7 @@ export async function getQuestionsForUser(
           options: qd.options,
           correctOptionIndex: qd.correctOptionIndex,
           timeTargets: qd.timeTargets,
-          fastestSafeMethod: qd.fastestSafeMethod,
+          theOptimalPath: (qd as any).theOptimalPath || (qd as any).fastestSafeMethod,
           fullStepByStep: qd.fullStepByStep,
         };
       });
@@ -128,7 +128,7 @@ export async function getQuestionsForUser(
             options: nq.options,
             correctOptionIndex: nq.correctOptionIndex,
             timeTargets: nq.timeTargets,
-            fastestSafeMethod: nq.fastestSafeMethod,
+            theOptimalPath: (nq as any).theOptimalPath || (nq as any).fastestSafeMethod,
             fullStepByStep: nq.fullStepByStep,
           };
           questions.push(questionWithMeta);

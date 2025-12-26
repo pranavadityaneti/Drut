@@ -79,23 +79,23 @@ export const InterventionModal: React.FC<InterventionModalProps> = ({
                 <CardContent className="p-5">
                     <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
                         <span className="text-emerald-600">💡</span>
-                        Fastest Safe Method
+                        The Optimal Path
                     </h3>
 
-                    {questionData.fastestSafeMethod.exists ? (
+                    {questionData.theOptimalPath.exists ? (
                         <FsmPanel
-                            patternTrigger={questionData.fastestSafeMethod.preconditions || 'This question type'}
-                            steps={questionData.fastestSafeMethod.steps.map((step) => ({ step }))}
+                            patternTrigger={questionData.theOptimalPath.preconditions || 'This question type'}
+                            steps={questionData.theOptimalPath.steps.map((step) => ({ step }))}
                             safetyChecks={
-                                questionData.fastestSafeMethod.sanityCheck
-                                    ? [questionData.fastestSafeMethod.sanityCheck]
+                                questionData.theOptimalPath.sanityCheck
+                                    ? [questionData.theOptimalPath.sanityCheck]
                                     : []
                             }
                             whenToUse="Use this method when you need to solve quickly with high accuracy"
                         />
                     ) : (
                         <div className="p-4 bg-muted rounded-lg text-muted-foreground">
-                            No FSM available for this question type.
+                            No optimal path available for this question type.
                         </div>
                     )}
                 </CardContent>

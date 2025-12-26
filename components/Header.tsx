@@ -5,22 +5,18 @@ import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuIte
 import { User } from '../types';
 import { MobileNav } from './MobileNav';
 
-import { Switch } from './ui/switch-new';
+
 
 interface HeaderProps {
   currentPage: string;
   setCurrentPage: (page: string) => void;
   onLogout: () => void;
-  useMockData?: boolean;
-  setUseMockData?: (useMock: boolean) => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
   currentPage,
   setCurrentPage,
   onLogout,
-  useMockData = false,
-  setUseMockData
 }) => {
   const [user, setUser] = useState<User | null>(null);
 
@@ -60,19 +56,7 @@ export const Header: React.FC<HeaderProps> = ({
 
           {/* Right: User Profile with Dropdown - hidden on mobile */}
           <div className="hidden lg:flex items-center gap-6">
-            {/* Mock Data Toggle */}
-            {setUseMockData && (
-              <div className="flex items-center gap-3">
-                <span className="text-sm font-medium text-muted-foreground">
-                  {useMockData ? 'Mock Data' : 'Real Data'}
-                </span>
-                <Switch
-                  checked={useMockData}
-                  onCheckedChange={setUseMockData}
-                  title="Toggle Data Mode"
-                />
-              </div>
-            )}
+
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>

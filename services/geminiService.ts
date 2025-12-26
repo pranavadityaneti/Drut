@@ -16,7 +16,7 @@ const SCHEMA_HINT = `
   ],
   "correctOptionIndex": 0 | 1 | 2 | 3,
   "timeTargets": { "jee_main": number, "cat": number, "eamcet": number },
-  "fastestSafeMethod": {
+  "theOptimalPath": {
     "exists": boolean,
     "preconditions": string,
     "steps": string[],
@@ -37,7 +37,7 @@ IMPORTANT RULES:
 - Do NOT output Markdown code fences (e.g., \`\`\`json).
 - "options" array MUST have exactly 4 items.
 - "correctOptionIndex" MUST be an integer 0..3.
-- "fastestSafeMethod" steps should be short and actionable.
+- "theOptimalPath" steps should be short and actionable.
 - "fullStepByStep" should be detailed and didactic.
 `.trim();
 
@@ -403,3 +403,82 @@ Example: ["Tip 1", "Tip 2", "Tip 3", "Tip 4"]
     ];
   }
 }
+
+/**
+ * Generate AI-powered session analysis for Sprint results
+ */
+export async function generateSessionAnalysis(sessionData: {
+  score: number;
+  accuracy: number;
+  avgTime: number;
+  missedCount: number;
+  topic: string;
+  subtopic: string;
+  totalQuestions: number;
+}): Promise<string> {
+  // Build a simpler, more structured prompt
+  const accuracyLevel = sessionData.accuracy >= 80 ? 'excellent' : sessionData.accuracy >= 50 ? 'moderate' : 'needs improvement';
+  const speedLevel = sessionData.avgTime > 30 ? 'slow' : sessionData.avgTime > 15 ? 'moderate' : 'fast';
+
+  const prompt = `You are a learning coach. Write a 2-sentence performance feedback for this sprint:
+
+Score: ${sessionData.score} | Accuracy: ${Math.round(sessionData.accuracy)}% | Avg Time: ${sessionData.avgTime.toFixed(1)}s | Missed: ${sessionData.missedCount}/${sessionData.totalQuestions}
+Topic: ${sessionData.topic} > ${sessionData.subtopic}
+
+Performance Level: ${accuracyLevel} accuracy, ${speedLevel} speed
+
+Write exactly 2 complete sentences:
+1. First sentence: Comment on their ${accuracyLevel} performance (score/accuracy)
+2. Second sentence: Give ONE specific tip${sessionData.accuracy < 50 ? ` to practice ${sessionData.subtopic} more` : sessionData.avgTime > 30 ? ' to improve speed' : ' to maintain or challenge themselves'}
+
+Keep it encouraging and natural. No bullet points. Output ONLY the 2 sentences, nothing else.`;
+
+  try {
+    const ai = getAiClient();
+    const res = await ai.models.generateContent({
+      model: 'gemini-3-flash-preview',
+      contents: prompt,
+      config: {
+        temperature: 0.5,
+        maxOutputTokens: 150,
+      },
+    });
+
+    const analysis = res.text?.trim() || '';
+
+    // Validate: Must be at least 50 chars and contain at least 2 sentences (periods)
+    const periodCount = (analysis.match(/\./g) || []).length;
+    if (analysis.length >= 50 && periodCount >= 2) {
+      return analysis;
+    }
+
+    // If validation fails, use fallback
+    log.warn('[gemini] Session analysis validation failed, using fallback');
+    return generateFallbackAnalysis(sessionData);
+  } catch (error: any) {
+    log.error('[gemini] Failed to generate session analysis:', error.message);
+    return generateFallbackAnalysis(sessionData);
+  }
+}
+
+function generateFallbackAnalysis(sessionData: {
+  score: number;
+  accuracy: number;
+  avgTime: number;
+  missedCount: number;
+  topic: string;
+  subtopic: string;
+  totalQuestions: number;
+}): string {
+  const accuracy = Math.round(sessionData.accuracy);
+
+  if (accuracy >= 80) {
+    return `Excellent work! You scored ${sessionData.score} points with ${accuracy}% accuracy on ${sessionData.subtopic}. Keep challenging yourself with harder problems to maintain this momentum.`;
+  } else if (accuracy >= 50) {
+    return `Good effort on this sprint! You achieved ${accuracy}% accuracy with ${sessionData.score} points. Review the ${sessionData.missedCount} questions you missed in ${sessionData.subtopic} to solidify your understanding.`;
+  } else {
+    return `This sprint highlights areas for growth in ${sessionData.subtopic}. With ${accuracy}% accuracy, we recommend focused practice on this subtopic before attempting more sprints.`;
+  }
+}
+
+

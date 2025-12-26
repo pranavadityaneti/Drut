@@ -2,11 +2,12 @@
  * SpeedPulse Component
  * 
  * Hero component with semi-circle gauge showing Speed Rating (0-100)
- * Light theme with Drut brand accents
+ * Modern design with CardMenu and larger numbers
  */
 
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/Card';
+import { CardMenu } from '../ui/CardMenu';
 import { cn } from '@/lib/utils';
 import { Zap, TrendingUp } from 'lucide-react';
 
@@ -17,6 +18,7 @@ interface SpeedPulseProps {
     verifiedCount: number;
     totalCount: number;
     className?: string;
+    onRefresh?: () => void;
 }
 
 export const SpeedPulse: React.FC<SpeedPulseProps> = ({
@@ -26,6 +28,7 @@ export const SpeedPulse: React.FC<SpeedPulseProps> = ({
     verifiedCount,
     totalCount,
     className,
+    onRefresh,
 }) => {
     // Rating colors (Brand-based)
     const ratingConfig: Record<string, { color: string; bg: string; style?: React.CSSProperties }> = {
@@ -40,10 +43,27 @@ export const SpeedPulse: React.FC<SpeedPulseProps> = ({
     return (
         <Card className={className}>
             <CardHeader className="pb-2">
-                <CardTitle className="flex items-center gap-2 text-base">
-                    <Zap className="w-5 h-5" style={{ color: '#5cbb21' }} />
-                    Speed Pulse
-                </CardTitle>
+                <div className="flex items-center justify-between">
+                    <CardTitle className="flex items-center gap-2 text-base">
+                        <Zap className="w-5 h-5" style={{ color: '#5cbb21' }} />
+                        Speed Pulse
+                    </CardTitle>
+                    <CardMenu
+                        onRefresh={onRefresh}
+                        infoTitle="About Speed Pulse"
+                        infoContent={
+                            <>
+                                <p className="mb-2">Your Speed Score measures how well you're mastering patterns quickly and accurately.</p>
+                                <ul className="list-disc list-inside space-y-1">
+                                    <li><strong>0-30:</strong> Rookie - Just getting started</li>
+                                    <li><strong>31-60:</strong> Learner - Building momentum</li>
+                                    <li><strong>61-85:</strong> Pro - Strong progress</li>
+                                    <li><strong>86-100:</strong> Elite - Master level</li>
+                                </ul>
+                            </>
+                        }
+                    />
+                </div>
             </CardHeader>
 
             <CardContent>
@@ -74,7 +94,7 @@ export const SpeedPulse: React.FC<SpeedPulseProps> = ({
 
                         {/* Center score */}
                         <div className="absolute inset-0 flex flex-col items-center justify-end pb-1">
-                            <span className="text-4xl font-bold text-foreground">
+                            <span className="text-5xl font-bold text-foreground">
                                 {score}
                             </span>
                         </div>

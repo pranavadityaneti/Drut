@@ -49,7 +49,12 @@ export const Sprint: React.FC = () => {
         setScreen('start');
     };
 
-    const handleBackToPractice = () => {
+    const handleBackToPractice = (subtopic?: string) => {
+        // If subtopic provided, navigate to practice with that subtopic pre-selected
+        if (subtopic) {
+            // Save subtopic to localStorage so Practice page can pick it up
+            localStorage.setItem('selectedSubtopic', subtopic);
+        }
         window.location.href = '/practice';
     };
 

@@ -13,7 +13,7 @@ export const QuestionSchema = z.object({
     cat: z.number(),
     eamcet: z.number()
   }),
-  fastestSafeMethod: z.object({
+  theOptimalPath: z.object({
     exists: z.boolean(),
     preconditions: z.string().optional(),
     steps: z.array(z.string()),

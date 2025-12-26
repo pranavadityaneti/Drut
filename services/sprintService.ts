@@ -2,6 +2,15 @@ import { supabase } from '../lib/supabase';
 import { QuestionData } from '../types';
 import { log } from '../lib/log';
 import { getQuestionsForUser } from './questionCacheService';
+import { EXAM_SYLLABUS_CONFIG } from '../lib/examSyllabusConfig';
+
+/**
+ * Helper to get random unique items from an array
+ */
+function getRandomTopics(list: string[], count: number): string[] {
+    const shuffled = [...list].sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, count);
+}
 
 export interface SprintAttempt {
     questionId: string;
@@ -32,20 +41,44 @@ export interface SprintSessionData {
     attempts?: SprintAttempt[];
 }
 
-export function calculateSprintScore(isCorrect: boolean, timeMs: number): number {
-    if (!isCorrect) return 0;
 
-    // Formula: 10 + (45 - timeTaken) / 4.5
+const EXAM_SCORING_CONFIG: Record<string, { base: number; penalty: number }> = {
+    jee_main: { base: 10, penalty: -5 }, // -1/4 equivalent relative to max 20
+    jee_advanced: { base: 10, penalty: -5 },
+    wbjee: { base: 10, penalty: -5 }, // Simplification for now
+    cat: { base: 10, penalty: -3 }, // 1/3
+    eamcet: { base: 10, penalty: 0 },
+    mht_cet: { base: 10, penalty: 0 },
+    kcet: { base: 10, penalty: 0 },
+    gujcet: { base: 10, penalty: 0 },
+    keam: { base: 10, penalty: -5 }, // usually has negative
+    default: { base: 10, penalty: 0 }
+};
+
+export function calculateSprintScore(isCorrect: boolean, timeMs: number, examProfile: string = 'default'): number {
+    const config = EXAM_SCORING_CONFIG[examProfile] || EXAM_SCORING_CONFIG.default;
+
+    if (!isCorrect) {
+        // Apply Penalty for wrong answers
+        return config.penalty;
+    }
+
+    // Formula: Base + SpeedBonus
     // Max score: 10 + 10 = 20 (at 0s)
-    // Min score: 10 + 0 = 10 (at 45s)
+    // Min score: 10 + 0 = 10 (at 45s) - Note: This 45s is legacy speed audit, 
+    // we should probably scale bonus based on the Exam Target Time eventually.
+    // For now, keeping the 45s curve for 'Speed Bonus' intensity across all exams 
+    // to encourage speed even in slower exams, OR we strictly punish time.
+    // Let's stick to the existing curve for consistency in "Sprint Points".
 
     // timeMs is in ms, so convert to seconds
     const timeSec = timeMs / 1000;
     const bonus = Math.round((45 - timeSec) / 4.5);
     const clampedBonus = Math.max(0, Math.min(10, bonus));
 
-    return 10 + clampedBonus;
+    return config.base + clampedBonus;
 }
+
 
 /**
  * Start a new Sprint Session
@@ -70,17 +103,56 @@ export async function startSession(
         );
 
         // 2. Fetch Questions
-        // We fetch 'questionCount' questions. 
-        // If the user picked a specific topic/subtopic, we respect it.
-        // If 'Mixed' or generic, the service handles it (mostly).
-        const { questions } = await getQuestionsForUser(
-            userId,
-            examProfile,
-            topic,
-            subtopic,
-            questionCount,
-            'Medium' // Default sprint difficulty
-        );
+        // Logic for "Full Syllabus" Weighted Fetching (MHT CET 80/20)
+        let questions: QuestionData[] = [];
+        const config = EXAM_SYLLABUS_CONFIG[examProfile];
+
+        if (topic === 'full_syllabus' && config) {
+            console.log(`[sprint] Starting Full Syllabus Session for ${examProfile} (80/20 Rule)`);
+
+            // 1. Calculate Weighted Counts
+            const c11Count = Math.round(questionCount * config.fetching_logic.class_11_ratio);
+            const c12Count = questionCount - c11Count;
+
+            // 2. Select Random Topics
+            // We pick one topic for Class 11 and one for Class 12 to generate/fetch questions from
+            // In a real Mock, we might want to distribute across chapters, but for a 10-Q Sprint, 
+            // focus is better. Or we can loop? 
+            // Let's loop 2 topics for diversity if count > 5
+            const c11Topics = getRandomTopics(config.syllabus_rules.class_11_whitelist, 2);
+            const c12Topics = getRandomTopics(config.syllabus_rules.class_12_whitelist, 3); // More topics for C12
+
+            // 3. Fetch (Parallel)
+            // Distribute questions roughly evenly among selected topics
+            const qPerTopic11 = Math.ceil(c11Count / c11Topics.length);
+            const qPerTopic12 = Math.ceil(c12Count / c12Topics.length);
+
+            const promises = [
+                ...c11Topics.map(t => getQuestionsForUser(userId, examProfile, t, 'general', qPerTopic11, 'Medium')),
+                ...c12Topics.map(t => getQuestionsForUser(userId, examProfile, t, 'general', qPerTopic12, 'Medium'))
+            ];
+
+            const results = await Promise.all(promises);
+            questions = results.flatMap(r => r.questions);
+
+            // Shuffle and trim to exact count
+            questions = questions.sort(() => Math.random() - 0.5).slice(0, questionCount);
+
+            // Fix metadata for the session (topic -> 'mixed')
+            topic = 'full_syllabus';
+            subtopic = 'mixed';
+        } else {
+            // Standard Single-Topic Fetch
+            const res = await getQuestionsForUser(
+                userId,
+                examProfile,
+                topic,
+                subtopic,
+                questionCount,
+                'Medium' // Default sprint difficulty
+            );
+            questions = res.questions;
+        }
 
         return { sessionId, questions };
     } catch (error: any) {
@@ -146,6 +218,7 @@ export async function createRetrySession(
 
 /**
  * Save a Sprint question attempt
+ * Also updates pattern mastery if the question has an fsm_tag
  */
 export async function saveSprintAttempt(
     sessionId: string,
@@ -155,6 +228,7 @@ export async function saveSprintAttempt(
     try {
         console.log('[DEBUG] saveSprintAttempt called with:', { sessionId, userId, questionId: attempt.questionId, result: attempt.result });
 
+        // 1. Save to sprint_question_attempts (sprint-specific tracking)
         const { error } = await supabase
             .from('sprint_question_attempts')
             .insert({
@@ -176,6 +250,31 @@ export async function saveSprintAttempt(
 
         console.log('[DEBUG] saveSprintAttempt SUCCESS for session:', sessionId);
         log.info(`[sprint] Saved attempt for session ${sessionId}`);
+
+        // 2. Also update pattern mastery if question has fsm_tag
+        // This ensures Sprint answers contribute to dashboard stats
+        const fsmTag = attempt.questionData?.fsmTag || 'general';
+        if (fsmTag && fsmTag !== 'general') {
+            const isCorrect = attempt.result === 'correct';
+            const targetTimeMs = 45000; // Sprint default: 45 seconds
+
+            try {
+                await supabase.rpc('save_attempt_and_update_mastery', {
+                    p_user_id: userId,
+                    p_question_uuid: attempt.questionId,
+                    p_fsm_tag: fsmTag,
+                    p_is_correct: isCorrect,
+                    p_time_ms: attempt.timeTaken,
+                    p_target_time_ms: targetTimeMs,
+                    p_selected_option_index: attempt.selectedOptionIndex ?? -1,
+                    p_skip_drill: false, // Sprint doesn't have drill mode
+                });
+                console.log('[DEBUG] Pattern mastery updated for fsm_tag:', fsmTag);
+            } catch (masteryError) {
+                // Non-critical: log but don't fail the main operation
+                console.warn('[DEBUG] Pattern mastery update failed (non-critical):', masteryError);
+            }
+        }
     } catch (error: any) {
         console.error('[DEBUG] saveSprintAttempt EXCEPTION:', error);
         log.error('[sprint] Failed to save attempt:', error);

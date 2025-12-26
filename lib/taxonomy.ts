@@ -203,6 +203,178 @@ export const EXAM_TAXONOMY: ExamDef[] = [
             },
         ],
     },
+    {
+        value: 'mht_cet',
+        label: 'MHT CET',
+        topics: [
+            // === PHYSICS (Class 11 - 20%) ===
+            {
+                value: 'motion-in-a-plane',
+                label: 'Motion in a Plane (Phy 11)',
+                subtopics: [
+                    { value: 'projectile-motion', label: 'Projectile Motion' },
+                    { value: 'uniform-circular-motion', label: 'Uniform Circular Motion' }
+                ]
+            },
+            {
+                value: 'laws-of-motion',
+                label: 'Laws of Motion (Phy 11)',
+                subtopics: [
+                    { value: 'friction', label: 'Friction' },
+                    { value: 'dynamics-of-circular-motion', label: 'Dynamics of Circular Motion' }
+                ]
+            },
+            {
+                value: 'gravitation',
+                label: 'Gravitation (Phy 11)',
+                subtopics: [
+                    { value: 'universal-law', label: 'Universal Law & Acceleration' },
+                    { value: 'keplers-laws', label: "Kepler's Laws" }
+                ]
+            },
+            {
+                value: 'electrostatics',
+                label: 'Electrostatics (Phy 11/12)',
+                subtopics: [
+                    { value: 'electric-charges-fields', label: 'Electric Charges & Fields (11)' },
+                    { value: 'capacitance-potential', label: 'Capacitance & Potential (12)' }
+                ]
+            },
+
+            // === MATHS (Class 11 - 20%) ===
+            {
+                value: 'trigonometry-ii',
+                label: 'Trigonometry II (Math 11)',
+                subtopics: [
+                    { value: 'compound-angles', label: 'Compound Angles' },
+                    { value: 'factorization-formulae', label: 'Factorization Formulae' }
+                ]
+            },
+            {
+                value: 'straight-lines',
+                label: 'Straight Lines (Math 11)',
+                subtopics: [
+                    { value: 'slope-of-line', label: 'Slope of a Line' },
+                    { value: 'equation-forms', label: 'Equation Forms' }
+                ]
+            },
+            {
+                value: 'circles',
+                label: 'Circles (Math 11)',
+                subtopics: [
+                    { value: 'standard-equations', label: 'Standard Equations' },
+                    { value: 'tangents-normals', label: 'Tangents & Normals' }
+                ]
+            },
+            {
+                value: 'probability', // Overlaps with JEE
+                label: 'Probability (Math 11)',
+                subtopics: [
+                    { value: 'basic-probability', label: 'Basic Probability' },
+                    { value: 'conditional-probability', label: 'Conditional Probability' }
+                ]
+            },
+
+            // === MATHS (Class 12 - 80% - Examples) === 
+            {
+                value: 'integration',
+                label: 'Integration (Math 12)',
+                subtopics: [
+                    { value: 'indefinite-integration', label: 'Indefinite Integration' },
+                    { value: 'definite-integration', label: 'Definite Integration' }
+                ]
+            },
+            {
+                value: 'differentiation',
+                label: 'Differentiation (Math 12)',
+                subtopics: [
+                    { value: 'chain-rule', label: 'Chain Rule' },
+                    { value: 'application-of-derivatives', label: 'Application of Derivatives' }
+                ]
+            }
+        ],
+    },
+    {
+        value: 'wbjee',
+        label: 'WBJEE',
+        topics: [
+            {
+                value: 'calculus',
+                label: 'Calculus',
+                subtopics: [
+                    { value: 'definite-integral', label: 'Definite Integral' },
+                    { value: 'differential-equations', label: 'Differential Equations' },
+                ]
+            },
+            {
+                value: 'coordinate-geometry',
+                label: 'Coordinate Geometry',
+                subtopics: [
+                    { value: 'conic-sections', label: 'Conic Sections' },
+                    { value: 'straight-lines', label: 'Straight Lines' },
+                ]
+            }
+        ],
+    },
+    {
+        value: 'kcet',
+        label: 'KCET',
+        topics: [
+            {
+                value: 'matrices-determinants',
+                label: 'Matrices & Determinants',
+                subtopics: [
+                    { value: 'matrices', label: 'Matrices' },
+                    { value: 'determinants', label: 'Determinants' },
+                ]
+            },
+            {
+                value: 'calculus',
+                label: 'Calculus',
+                subtopics: [
+                    { value: 'continuity-differentiability', label: 'Continuity & Differentiability' },
+                    { value: 'integrals', label: 'Integrals' },
+                ]
+            }
+        ],
+    },
+    {
+        value: 'gujcet',
+        label: 'GUJCET',
+        topics: [
+            {
+                value: 'class-12-math',
+                label: 'Class 12 Math',
+                subtopics: [
+                    { value: 'relations-functions', label: 'Relations & Functions' },
+                    { value: 'linear-programming', label: 'Linear Programming' },
+                ]
+            }
+        ]
+    },
+    {
+        value: 'jee_advanced',
+        label: 'JEE Advanced',
+        topics: [
+            // Using JEE Main topics as base syllabus, but questions will be Multi-Concept in data
+            {
+                value: 'quadratic-equations',
+                label: 'Quadratic Equations',
+                subtopics: [
+                    { value: 'nature-of-roots', label: 'Nature of Roots' },
+                    { value: 'sum-product-of-roots', label: 'Sum and Product of Roots' },
+                ],
+            },
+            {
+                value: 'complex-numbers',
+                label: 'Complex Numbers',
+                subtopics: [
+                    { value: 'algebra-of-complex-numbers', label: 'Algebra of Complex Numbers' },
+                    { value: 'de-moivres-theorem', label: "De Moivre's Theorem" },
+                ],
+            },
+        ]
+    }
 ];
 
 // ============================================================

@@ -2,11 +2,12 @@
  * DebtCollector Component
  * 
  * Sticky right panel showing patterns with is_in_debt = TRUE
- * Light theme with subtle amber/orange accent for urgency
+ * Modern design with CardMenu
  */
 
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/Card';
+import { CardMenu } from '../ui/CardMenu';
 import { Button } from '../ui/Button';
 import { cn } from '@/lib/utils';
 import { AlertTriangle, ChevronRight, Clock, CheckCircle2 } from 'lucide-react';
@@ -22,12 +23,14 @@ interface DebtPattern {
 interface DebtCollectorProps {
     patterns: DebtPattern[];
     onClearDebt?: () => void;
+    onRefresh?: () => void;
     className?: string;
 }
 
 export const DebtCollector: React.FC<DebtCollectorProps> = ({
     patterns,
     onClearDebt,
+    onRefresh,
     className,
 }) => {
     const hasDebt = patterns.length > 0;
@@ -56,18 +59,27 @@ export const DebtCollector: React.FC<DebtCollectorProps> = ({
         )}>
             <CardHeader className="pb-3">
                 <div className="flex items-center justify-between">
-                    <CardTitle className="flex items-center gap-2 text-base">
-                        <AlertTriangle className={cn(
-                            "w-4 h-4",
-                            hasDebt ? "text-amber-600" : "text-muted-foreground"
-                        )} />
-                        Debt Collector
-                    </CardTitle>
-                    {hasDebt && (
-                        <Badge variant="secondary" className="bg-amber-100 text-amber-700">
-                            {patterns.length} items
-                        </Badge>
-                    )}
+                    <div className="flex items-center gap-2">
+                        <CardTitle className="flex items-center gap-2 text-base">
+                            <AlertTriangle className={cn(
+                                "w-4 h-4",
+                                hasDebt ? "text-amber-600" : "text-muted-foreground"
+                            )} />
+                            Debt Collector
+                        </CardTitle>
+                        {hasDebt && (
+                            <Badge variant="secondary" className="bg-amber-100 text-amber-700">
+                                {patterns.length}
+                            </Badge>
+                        )}
+                    </div>
+                    <CardMenu
+                        onRefresh={onRefresh}
+                        infoTitle="About Debt Collector"
+                        infoContent={
+                            <p>Patterns go into "debt" when you skip practice drills or answer incorrectly multiple times. Clear your debt by practicing these patterns to reinforce your learning.</p>
+                        }
+                    />
                 </div>
             </CardHeader>
 

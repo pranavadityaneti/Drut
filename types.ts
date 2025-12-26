@@ -5,9 +5,15 @@ export interface TimeTargets {
   jee_main: number;
   cat: number;
   eamcet: number;
+  mht_cet?: number;
+  wbjee?: number;
+  kcet?: number;
+  gujcet?: number;
+  keam?: number;
+  jee_advanced?: number;
 }
 
-export interface FastestSafeMethod {
+export interface TheOptimalPath {
   exists: boolean;
   preconditions?: string;
   steps: string[];
@@ -29,9 +35,9 @@ export interface QuestionData {
   options: QuestionOption[];
   correctOptionIndex: number;
   timeTargets: TimeTargets;
-  fastestSafeMethod: FastestSafeMethod;
+  theOptimalPath: TheOptimalPath;
   fullStepByStep: FullStepByStep;
-  // FSM tag for pattern grouping
+  // Pattern tag for grouping
   fsmTag: string;
   // Learning explanation
   fsm_explanation?: string;

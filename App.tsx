@@ -163,7 +163,7 @@ const AuthenticatedLayout: React.FC<{
 }> = ({ user, onLogout, page }) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [useMockData, setUseMockData] = useState(false);
+
 
   const setCurrentPage = (newPage: string) => {
     navigate(`/${newPage}`);
@@ -186,8 +186,6 @@ const AuthenticatedLayout: React.FC<{
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
             onLogout={onLogout}
-            useMockData={useMockData}
-            setUseMockData={setUseMockData}
           />
           <main className="flex-1 p-6 md:p-8 overflow-y-auto w-full min-w-0">
             <div className="container mx-auto px-0 max-w-full">

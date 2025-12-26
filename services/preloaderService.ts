@@ -27,7 +27,18 @@ export const preloadFirstQuestion = async (): Promise<void> => {
         // Don't preload if it's already there
         if (preloadedQuestion?.key === key) return;
 
-        const data = await generateQuestionAndSolutions(savedTopic, firstSubTopic, savedProfile);
+        const generated = await generateQuestionAndSolutions(savedTopic, firstSubTopic, savedProfile);
+        // Transform QuestionItem to QuestionData (with type assertion for schema differences)
+        const data = {
+          uuid: `preload-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+          questionText: generated.questionText,
+          options: generated.options,
+          correctOptionIndex: generated.correctOptionIndex,
+          timeTargets: generated.timeTargets,
+          theOptimalPath: (generated as any).theOptimalPath || (generated as any).fastestSafeMethod,
+          fullStepByStep: generated.fullStepByStep,
+          fsmTag: (generated as any).fsmTag || `${firstSubTopic}-preload`,
+        } as QuestionData;
         preloadedQuestion = { key, data };
       }
     }

@@ -275,7 +275,7 @@ export function toQuestionData(refined: RefinedQuestion): {
     options: Array<{ text: string }>;
     correctOptionIndex: number;
     timeTargets: { jee_main: number; cat: number; eamcet: number };
-    fastestSafeMethod: {
+    theOptimalPath: {
         exists: boolean;
         preconditions: string;
         steps: string[];
@@ -305,7 +305,7 @@ export function toQuestionData(refined: RefinedQuestion): {
             cat: Math.round(refined.target_time_sec * 0.8), // CAT is faster
             eamcet: Math.round(refined.target_time_sec * 1.2), // EAMCET is slower
         },
-        fastestSafeMethod: {
+        theOptimalPath: {
             exists: true,
             preconditions: `Use when: ${refined.fsm_tag.replace(/-/g, ' ')}`,
             steps: fsmSteps.length > 0 ? fsmSteps : [refined.explanation_fsm],

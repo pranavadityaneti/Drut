@@ -29,15 +29,17 @@ export const SprintStartScreen: React.FC<SprintStartScreenProps> = ({ onStart })
                 const stats = await fetchSprintPerformance();
                 if (stats && stats.length > 0) {
                     const totalSprints = stats.length;
-                    const bestScore = totalSprints > 0 ? Math.max(...stats.map((s: any) => s.total_score || 0)) : 0;
-                    const sumAccuracy = stats.reduce((sum: number, s: any) => sum + (s.correct_count / s.total_questions) * 100, 0);
-                    const avgAccuracy = totalSprints > 0 ? (sumAccuracy / totalSprints) : 0;
+                    // RPC returns 'accuracy' directly as percentage
+                    const avgAccuracy = stats.reduce((sum: number, s: any) => sum + (s.accuracy || 0), 0) / totalSprints;
+                    // Best performance based on accuracy * questions
+                    const bestScore = totalSprints > 0
+                        ? Math.max(...stats.map((s: any) => Math.round((s.accuracy || 0) * (s.total_questions || 0) / 10)))
+                        : 0;
 
                     setSprintStats({
                         totalSprints,
                         bestScore,
                         avgAccuracy: avgAccuracy.toFixed(1),
-                        bestStreak: 8 // Placeholder, would need real streak tracking
                     });
                 }
             } catch (err) {

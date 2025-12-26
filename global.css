@@ -4,6 +4,7 @@
  * Drut Brand Theme for Tailwind v4
  * Primary: #5cbb21 (Lime Green)
  * Secondary: #cbe856 (Light Lime)
+ * Redesigned for modern dashboard aesthetics
  */
 
 @theme {
@@ -11,11 +12,11 @@
     --color-primary: #5cbb21;
     --color-primary-foreground: #ffffff;
 
-    /* Background */
-    --color-background: #ffffff;
+    /* Background - Warm Gray for modern look */
+    --color-background: #f8f9fa;
     --color-foreground: #1a1f1c;
 
-    /* Card */
+    /* Card - Pure white with no border */
     --color-card: #ffffff;
     --color-card-foreground: #1a1f1c;
 
@@ -28,8 +29,8 @@
     --color-secondary-foreground: #1a1f1c;
 
     /* Muted */
-    --color-muted: #f6fbe8;
-    --color-muted-foreground: #6b7280;
+    --color-muted: #f1f5f9;
+    --color-muted-foreground: #64748b;
 
     /* Accent - Light Lime #cbe856 */
     --color-accent: #e8f5cc;
@@ -40,21 +41,22 @@
     --color-destructive-foreground: #ffffff;
 
     /* Border/Input/Ring */
-    --color-border: #d1d5db;
-    --color-input: #d1d5db;
+    --color-border: #e2e8f0;
+    --color-input: #e2e8f0;
     --color-ring: #5cbb21;
 
-    /* Radius */
-    --radius-sm: 0.375rem;
-    --radius-md: 0.5rem;
-    --radius-lg: 0.625rem;
+    /* Radius - Larger for modern cards */
+    --radius-sm: 0.5rem;
+    --radius-md: 0.75rem;
+    --radius-lg: 1rem;
+    --radius-xl: 1.25rem;
 }
 
 /* CSS variables for shadcn component compatibility */
 :root {
     --primary: 90 70% 43%;
     --primary-foreground: 0 0% 100%;
-    --background: 0 0% 100%;
+    --background: 210 20% 98%;
     --foreground: 150 10% 10%;
     --card: 0 0% 100%;
     --card-foreground: 150 10% 10%;
@@ -62,16 +64,16 @@
     --popover-foreground: 150 10% 10%;
     --secondary: 72 70% 95%;
     --secondary-foreground: 150 10% 10%;
-    --muted: 72 70% 95%;
-    --muted-foreground: 220 9% 46%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
     --accent: 72 70% 88%;
     --accent-foreground: 90 76% 27%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
     --ring: 90 70% 43%;
-    --radius: 0.625rem;
+    --radius: 1rem;
 }
 
 /* Base styles */
@@ -85,13 +87,27 @@ body {
     font-feature-settings: "rlig" 1, "calt" 1;
 }
 
-/* Custom shadow utilities */
+/* Modern shadow utilities */
 .shadow-card {
-    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.04), 0 1px 2px -1px rgb(0 0 0 / 0.04);
 }
 
 .shadow-soft {
-    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    box-shadow: 0 4px 24px -4px rgb(0 0 0 / 0.08);
+}
+
+.shadow-hover {
+    box-shadow: 0 8px 32px -8px rgb(0 0 0 / 0.12);
+}
+
+/* Card hover lift effect */
+.card-hover {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-hover:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px -8px rgb(0 0 0 / 0.12);
 }
 
 /* Background utilities for compatibility */
@@ -101,4 +117,18 @@ body {
 
 .bg-blue-soft {
     background-color: #ecfdf5;
+}
+
+/* Pill button style */
+.btn-pill {
+    border-radius: 9999px;
+}
+
+/* Trend indicators */
+.trend-up {
+    color: #22c55e;
+}
+
+.trend-down {
+    color: #ef4444;
 }

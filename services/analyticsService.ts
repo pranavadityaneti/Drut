@@ -123,3 +123,32 @@ export async function fetchStaminaCurve(): Promise<StaminaPoint[]> {
   if (error) { console.error("fetchStaminaCurve error", error); return []; }
   return data || [];
 }
+
+export async function fetchSubtopicStats(subtopic: string): Promise<{ total_attempts: number; accuracy: number }> {
+  const { data: { session } } = await supabase.auth.getSession();
+  if (!session?.user) return { total_attempts: 0, accuracy: 0 };
+  const { data, error } = await supabase.rpc('get_subtopic_stats', { p_user_id: session.user.id, p_subtopic: subtopic });
+  if (error) { console.error("fetchSubtopicStats error", error); return { total_attempts: 0, accuracy: 0 }; }
+  return data?.[0] || { total_attempts: 0, accuracy: 0 };
+}
+
+export async function fetchUserStreak(): Promise<number> {
+  const { data: { session } } = await supabase.auth.getSession();
+  if (!session?.user) return 0;
+  const { data, error } = await supabase.rpc('get_user_streak', { p_user_id: session.user.id });
+  if (error) { console.error("fetchUserStreak error", error); return 0; }
+  return Number(data || 0);
+}
+
+export async function fetchPatternMasteryStats(): Promise<{ verified_count: number; learning_count: number }> {
+  const { data: { session } } = await supabase.auth.getSession();
+  if (!session?.user) return { verified_count: 0, learning_count: 0 };
+
+  const { data, error } = await supabase.rpc('get_pattern_mastery_stats', { p_user_id: session.user.id });
+  if (error) { console.error("fetchPatternMasteryStats error", error); return { verified_count: 0, learning_count: 0 }; }
+
+  return data?.[0] ? {
+    verified_count: Number(data[0].verified_count),
+    learning_count: Number(data[0].learning_count)
+  } : { verified_count: 0, learning_count: 0 };
+}

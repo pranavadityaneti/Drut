@@ -5,10 +5,11 @@
  * with actionable "Practice" buttons for each
  */
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/Card';
+import { CardMenu } from '../ui/CardMenu';
 import { cn } from '@/lib/utils';
-import { Target, AlertTriangle, TrendingDown, ChevronRight } from 'lucide-react';
+import { Target, ChevronRight } from 'lucide-react';
 import { fetchWeakestSubtopics, WeakestSubtopic } from '../../services/analyticsService';
 
 interface WeakSpotsWidgetProps {
@@ -23,19 +24,21 @@ export const WeakSpotsWidget: React.FC<WeakSpotsWidgetProps> = ({
     const [weakSpots, setWeakSpots] = useState<WeakestSubtopic[]>([]);
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        const loadWeakSpots = async () => {
-            try {
-                const data = await fetchWeakestSubtopics(3);
-                setWeakSpots(data);
-            } catch (err) {
-                console.error('Failed to load weak spots:', err);
-            } finally {
-                setLoading(false);
-            }
-        };
-        loadWeakSpots();
+    const loadWeakSpots = useCallback(async () => {
+        setLoading(true);
+        try {
+            const data = await fetchWeakestSubtopics(3);
+            setWeakSpots(data);
+        } catch (err) {
+            console.error('Failed to load weak spots:', err);
+        } finally {
+            setLoading(false);
+        }
     }, []);
+
+    useEffect(() => {
+        loadWeakSpots();
+    }, [loadWeakSpots]);
 
     const handlePractice = (spot: WeakestSubtopic) => {
         if (onPractice) {
@@ -55,10 +58,19 @@ export const WeakSpotsWidget: React.FC<WeakSpotsWidgetProps> = ({
     return (
         <Card className={cn("min-h-[280px]", className)}>
             <CardHeader className="pb-2">
-                <CardTitle className="flex items-center gap-2 text-base">
-                    <Target className="w-4 h-4 text-red-500" />
-                    Focus Areas
-                </CardTitle>
+                <div className="flex items-center justify-between">
+                    <CardTitle className="flex items-center gap-2 text-base">
+                        <Target className="w-4 h-4 text-red-500" />
+                        Focus Areas
+                    </CardTitle>
+                    <CardMenu
+                        onRefresh={loadWeakSpots}
+                        infoTitle="About Focus Areas"
+                        infoContent={
+                            <p>These are your weakest subtopics based on your practice accuracy. Focus on these areas to improve your overall score.</p>
+                        }
+                    />
+                </div>
             </CardHeader>
 
             <CardContent className="space-y-2">

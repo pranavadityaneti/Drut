@@ -4,13 +4,14 @@ import { Button } from '../ui/Button';
 import { Card, CardContent } from '../ui/Card';
 import { QuestionData } from '../../types';
 import { log } from '../../lib/log';
-import { Trophy, Clock, Target, AlertCircle, RotateCcw, Play, CheckCircle2, XCircle, Timer, Grid } from 'lucide-react';
+import { Trophy, Clock, Target, AlertCircle, RotateCcw, Play, CheckCircle2, XCircle, Timer, Grid, Sparkles, BookOpen, ArrowRight } from 'lucide-react';
+import { generateSessionAnalysis } from '../../services/geminiService';
 
 interface SprintResultsScreenProps {
     sessionId: string;
     onRetry: (missedQuestions: QuestionData[]) => void;
     onNewSprint: () => void;
-    onBackToPractice: () => void;
+    onBackToPractice: (subtopic?: string) => void;
 }
 
 export const SprintResultsScreen: React.FC<SprintResultsScreenProps> = ({
@@ -23,6 +24,8 @@ export const SprintResultsScreen: React.FC<SprintResultsScreenProps> = ({
     const [missedQuestions, setMissedQuestions] = useState<QuestionData[]>([]);
     const [loading, setLoading] = useState(true);
     const [expandedId, setExpandedId] = useState<string | null>(null);
+    const [aiAnalysis, setAiAnalysis] = useState<string | null>(null);
+    const [analysisLoading, setAnalysisLoading] = useState(false);
 
     useEffect(() => {
         const loadData = async () => {
@@ -33,9 +36,11 @@ export const SprintResultsScreen: React.FC<SprintResultsScreenProps> = ({
                 // Get missed/skipped questions
                 const missed = data.attempts?.filter(a => a.result !== 'correct') || [];
                 setMissedQuestions(missed.map(a => a.questionData));
+
+                // Generate AI analysis
+                generateAIAnalysis(data);
             } catch (error: any) {
                 log.error('[sprint] Failed to load results:', error);
-                // alert('Failed to load results');
             } finally {
                 setLoading(false);
             }
@@ -43,6 +48,33 @@ export const SprintResultsScreen: React.FC<SprintResultsScreenProps> = ({
 
         loadData();
     }, [sessionId]);
+
+    const generateAIAnalysis = async (data: SprintSessionData) => {
+        setAnalysisLoading(true);
+        try {
+            const accuracy = data.totalQuestions > 0
+                ? (data.correctCount / data.totalQuestions) * 100
+                : 0;
+            const avgTimeSeconds = data.avgTimeMs ? data.avgTimeMs / 1000 : 0;
+            const missedCount = data.totalQuestions - data.correctCount;
+
+            const analysis = await generateSessionAnalysis({
+                score: data.totalScore,
+                accuracy,
+                avgTime: avgTimeSeconds,
+                missedCount,
+                topic: data.topic,
+                subtopic: data.subtopic,
+                totalQuestions: data.totalQuestions,
+            });
+            setAiAnalysis(analysis);
+        } catch (error: any) {
+            log.error('[sprint] Failed to generate AI analysis:', error);
+            setAiAnalysis(null);
+        } finally {
+            setAnalysisLoading(false);
+        }
+    };
 
     if (loading || !sessionData) {
         return (
@@ -60,6 +92,7 @@ export const SprintResultsScreen: React.FC<SprintResultsScreenProps> = ({
         : '0';
 
     const avgTime = sessionData.avgTimeMs ? (sessionData.avgTimeMs / 1000).toFixed(1) : '0.0';
+    const needsRePractice = parseFloat(accuracy) < 50;
 
     // Helper to determine speed color
     const getAttemptColor = (attempt: SprintAttempt) => {
@@ -128,6 +161,56 @@ export const SprintResultsScreen: React.FC<SprintResultsScreenProps> = ({
                 </Card>
             </div>
 
+            {/* AI Session Analysis */}
+            <Card className="border-0 shadow-lg bg-gradient-to-br from-indigo-50 to-purple-50">
+                <CardContent className="p-6">
+                    <div className="flex items-center gap-2 mb-4">
+                        <Sparkles className="w-5 h-5 text-indigo-600" />
+                        <h3 className="text-lg font-bold text-slate-800">Session Analysis</h3>
+                    </div>
+                    {analysisLoading ? (
+                        <div className="flex items-center gap-3 text-slate-500">
+                            <div className="animate-spin h-4 w-4 border-2 border-indigo-500 border-t-transparent rounded-full" />
+                            <span>Generating personalized analysis...</span>
+                        </div>
+                    ) : aiAnalysis ? (
+                        <p className="text-slate-700 leading-relaxed whitespace-pre-line">{aiAnalysis}</p>
+                    ) : (
+                        <p className="text-slate-500">Analysis unavailable. Complete more sprints to unlock insights.</p>
+                    )}
+                </CardContent>
+            </Card>
+
+            {/* Re-Practice Prompt (if accuracy < 50%) */}
+            {needsRePractice && (
+                <Card className="border-2 border-amber-300 bg-amber-50">
+                    <CardContent className="p-6">
+                        <div className="flex items-start gap-4">
+                            <div className="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center flex-shrink-0">
+                                <BookOpen className="w-6 h-6 text-amber-600" />
+                            </div>
+                            <div className="flex-1">
+                                <h3 className="text-lg font-bold text-amber-800 mb-1">
+                                    Practice Recommended
+                                </h3>
+                                <p className="text-amber-700 mb-4">
+                                    Your accuracy on <strong>{sessionData.subtopic}</strong> is below 50%.
+                                    We recommend focused practice on this subtopic to strengthen your understanding.
+                                </p>
+                                <Button
+                                    onClick={() => onBackToPractice(sessionData.subtopic)}
+                                    className="bg-amber-600 hover:bg-amber-700 text-white"
+                                >
+                                    <BookOpen className="w-4 h-4 mr-2" />
+                                    Practice {sessionData.subtopic}
+                                    <ArrowRight className="w-4 h-4 ml-2" />
+                                </Button>
+                            </div>
+                        </div>
+                    </CardContent>
+                </Card>
+            )}
+
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 {/* Speed Grid */}
                 <div className="lg:col-span-2">
@@ -152,7 +235,7 @@ export const SprintResultsScreen: React.FC<SprintResultsScreenProps> = ({
                                         </div>
                                         {/* Tooltip */}
                                         <div className="absolute -top-12 left-1/2 -translate-x-1/2 px-3 py-2 bg-slate-900 text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10 pointer-events-none">
-                                            {(attempt.timeTaken / 1000).toFixed(1)}s • {attempt.result === 'correct' ? `+${attempt.scoreEarned} pts` : 'Wrong'}
+                                            {(attempt.timeTaken / 1000).toFixed(1)}s • {attempt.scoreEarned > 0 ? '+' : ''}{attempt.scoreEarned} pts
                                         </div>
                                     </div>
                                 ))}
@@ -238,6 +321,31 @@ export const SprintResultsScreen: React.FC<SprintResultsScreenProps> = ({
                                                 </div>
                                             </div>
 
+                                            {/* The Optimal Path - Show for wrong answers */}
+                                            {attempt.result !== 'correct' && attempt.questionData.theOptimalPath?.exists && (
+                                                <div className="bg-indigo-50 border border-indigo-200 rounded-lg p-4">
+                                                    <h4 className="text-sm font-bold text-indigo-800 mb-3 flex items-center gap-2">
+                                                        <Sparkles className="w-4 h-4" />
+                                                        The Optimal Path (TOP)
+                                                    </h4>
+                                                    {attempt.questionData.theOptimalPath.preconditions && (
+                                                        <p className="text-xs text-indigo-600 mb-2">
+                                                            <strong>When to use:</strong> {attempt.questionData.theOptimalPath.preconditions}
+                                                        </p>
+                                                    )}
+                                                    <ol className="list-decimal list-inside space-y-1 text-sm text-indigo-700">
+                                                        {attempt.questionData.theOptimalPath.steps.map((step, i) => (
+                                                            <li key={i}>{step}</li>
+                                                        ))}
+                                                    </ol>
+                                                    {attempt.questionData.theOptimalPath.sanityCheck && (
+                                                        <p className="text-xs text-indigo-600 mt-2 border-t border-indigo-200 pt-2">
+                                                            <strong>Sanity Check:</strong> {attempt.questionData.theOptimalPath.sanityCheck}
+                                                        </p>
+                                                    )}
+                                                </div>
+                                            )}
+
                                             {attempt.questionData.fsm_explanation && (
                                                 <div>
                                                     <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-1">Explanation</span>
@@ -255,37 +363,37 @@ export const SprintResultsScreen: React.FC<SprintResultsScreenProps> = ({
                 </div>
 
                 {/* Actions Panel */}
-                <div className="lg:col-span-1 space-y-4">
-                    <Card className="border-0 shadow-lg h-full">
-                        <CardContent className="p-6 flex flex-col justify-center h-full space-y-4">
+                <div className="lg:col-span-1">
+                    <Card className="border-0 shadow-lg sticky top-8">
+                        <CardContent className="p-6 space-y-4">
                             {missedQuestions.length > 0 ? (
                                 <Button
                                     onClick={() => onRetry(missedQuestions)}
-                                    className="w-full py-6 text-lg bg-orange-500 hover:bg-orange-600 shadow-orange-200 shadow-lg"
+                                    className="w-full py-5 text-lg bg-orange-500 hover:bg-orange-600 shadow-orange-200 shadow-lg"
                                 >
                                     <RotateCcw className="w-5 h-5 mr-2" />
                                     Retry Missed ({missedQuestions.length})
                                 </Button>
                             ) : (
-                                <div className="p-4 bg-emerald-50 text-emerald-700 rounded-xl text-center font-medium mb-2 border border-emerald-100">
+                                <div className="p-4 bg-emerald-50 text-emerald-700 rounded-xl text-center font-medium border border-emerald-100">
                                     🎉 Perfect Score! Amazing!
                                 </div>
                             )}
 
                             <Button
                                 onClick={onNewSprint}
-                                className="w-full py-6 text-lg bg-slate-900 hover:bg-slate-800 shadow-lg"
+                                className="w-full py-5 text-lg bg-slate-900 hover:bg-slate-800 shadow-lg"
                             >
                                 <Play className="w-5 h-5 mr-2" />
                                 Start New Sprint
                             </Button>
 
                             <Button
-                                onClick={onBackToPractice}
+                                onClick={() => onBackToPractice(needsRePractice ? sessionData.subtopic : undefined)}
                                 variant="outline"
-                                className="w-full py-6 border-2 hover:bg-slate-50"
+                                className="w-full py-4 border-2 hover:bg-slate-50"
                             >
-                                Back to Practice
+                                {needsRePractice ? `Practice ${sessionData.subtopic}` : 'Back to Practice'}
                             </Button>
                         </CardContent>
                     </Card>

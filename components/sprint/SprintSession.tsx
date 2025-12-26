@@ -17,6 +17,19 @@ interface SprintSessionProps {
     onExit: (sessionId: string) => void;
 }
 
+const EXAM_DEFAULTS: Record<string, number> = {
+    jee_main: 120,
+    cat: 120,
+    eamcet: 60,
+    mht_cet: 54,
+    wbjee: 90,
+    kcet: 60,
+    gujcet: 60,
+    keam: 60,
+    jee_advanced: 300, // 5 mins (Solvability focus)
+    default: 45 // Speed Audit default
+};
+
 export const SprintSession: React.FC<SprintSessionProps> = ({ config, onExit }) => {
     const [questions, setQuestions] = useState<QuestionData[]>([]);
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -27,6 +40,7 @@ export const SprintSession: React.FC<SprintSessionProps> = ({ config, onExit }) 
     const stateRef = useRef({
         sessionId: null as string | null,
         startTime: 0, // Time when current question started
+        targetTime: 45, // Target time for current question
         timerId: null as number | null, // requestAnimationFrame ID
         answers: [] as any[], // Local buffer of answers
         pendingAttempts: [] as any[], // Queue for attempts made before session ID is ready
@@ -35,6 +49,41 @@ export const SprintSession: React.FC<SprintSessionProps> = ({ config, onExit }) 
         wrong: 0,
         skipped: 0
     });
+
+    // Helper to get target time
+    const getTargetTime = (question: QuestionData) => {
+        // 1. Try specific time target from question data
+        // We cast to any because keys like 'mht_cet' might be optional or dynamically accessed
+        const targets = question.timeTargets as any;
+        if (targets && targets[config.examProfile]) {
+            return targets[config.examProfile];
+        }
+        // 2. Fallback to Exam Default
+        return EXAM_DEFAULTS[config.examProfile] || EXAM_DEFAULTS.default;
+    };
+
+    const stopTimer = () => {
+        if (stateRef.current.timerId) {
+            cancelAnimationFrame(stateRef.current.timerId);
+            stateRef.current.timerId = null;
+        }
+    };
+
+    const startQuestionTimer = useCallback(() => {
+        stopTimer();
+
+        // We need to access the CURRENT question based on the CURRENT index state
+        // However, if we just updated currentIndex, we might need to rely on the functional update or closure
+        // But simply: accessing questions[currentIndex] here relies on closure.
+        // It's safer to pass the question or index, but since we use this inside effects/callbacks, 
+        // we can assume questions is stable.
+
+        // BUT `currentIndex` from outer scope might be stale if called from stale closure.
+        // `useCallback` dependency on `currentIndex` fixes this.
+    }, [currentIndex, questions]); // Wait, this circular dependency is tricky.
+
+    // Let's implement timer logic directly without useCallback where possible, or use a ref for current Index.
+    // Actually, we can just start the timer in a useEffect that watches `currentIndex`.
 
     // Initialize session
     useEffect(() => {
@@ -45,21 +94,18 @@ export const SprintSession: React.FC<SprintSessionProps> = ({ config, onExit }) 
 
                 if (config.retryQuestions) {
                     // === INSTANT RETRY MODE ===
-                    // 1. Start UI immediately using provided questions
                     setQuestions(config.retryQuestions);
                     setSessionReady(true);
-                    startQuestionTimer();
+                    // Timer will be started by the 'currentIndex' effect
 
-                    // 2. Create Session in Background
-                    // We don't await this blocking the UI.
+                    // Create Background Session
                     createRetrySession(
                         user.id,
                         config.topic,
-                        config.subtopic, // subtopic
+                        config.subtopic,
                         config.examProfile
                     ).then(sid => {
                         stateRef.current.sessionId = sid;
-                        // Flush any pending attempts that happened while creating session
                         if (stateRef.current.pendingAttempts.length > 0) {
                             stateRef.current.pendingAttempts.forEach(attempt => {
                                 saveSprintAttempt(sid, user.id, attempt);
@@ -68,15 +114,11 @@ export const SprintSession: React.FC<SprintSessionProps> = ({ config, onExit }) 
                         }
                     }).catch(err => {
                         log.error('[sprint] Background retry session creation failed:', err);
-                        // We might want to show a toast or error, but let them play.
-                        // Attempts won't be saved until session ID exists (which won't happen here).
-                        // Maybe alerting the user is safer if persistence is critical.
                     });
 
                 } else {
                     // === REGULAR MODE ===
-                    // Fetch questions and create session first (blocking)
-                    const { sessionId, questions } = await startSession(
+                    const { sessionId, questions: fetchedQuestions } = await startSession(
                         user.id,
                         config.topic,
                         config.questionCount,
@@ -84,9 +126,9 @@ export const SprintSession: React.FC<SprintSessionProps> = ({ config, onExit }) 
                         config.subtopic
                     );
                     stateRef.current.sessionId = sessionId;
-                    setQuestions(questions);
+                    setQuestions(fetchedQuestions);
                     setSessionReady(true);
-                    startQuestionTimer();
+                    // Timer will be started by the 'currentIndex' effect
                 }
             } catch (error: any) {
                 log.error('[sprint] Init failed:', error);
@@ -98,104 +140,48 @@ export const SprintSession: React.FC<SprintSessionProps> = ({ config, onExit }) 
         init();
 
         return () => stopTimer();
-    }, []);
+    }, []); // Only run once
 
-    const stopTimer = () => {
-        if (stateRef.current.timerId) {
-            cancelAnimationFrame(stateRef.current.timerId);
-            stateRef.current.timerId = null;
-        }
-    };
+    // Effect to start timer when question changes (or session becomes ready)
+    useEffect(() => {
+        if (!sessionReady || questions.length === 0) return;
 
-    const startQuestionTimer = () => {
+        const question = questions[currentIndex];
+        if (!question) return;
+
         stopTimer();
+
+        // Calculate Target Time
+        const target = getTargetTime(question);
+        stateRef.current.targetTime = target;
         stateRef.current.startTime = Date.now();
+        setTimeLeft(target);
 
         const loop = () => {
             const now = Date.now();
             const elapsed = (now - stateRef.current.startTime) / 1000;
-            const remaining = Math.max(0, 45 - elapsed);
+            const remaining = Math.max(0, stateRef.current.targetTime - elapsed);
 
             setTimeLeft(remaining);
 
             if (remaining <= 0) {
-                handleAnswer(null, true); // Auto-submit on timeout
+                handleAnswer(null, true);
             } else {
                 stateRef.current.timerId = requestAnimationFrame(loop);
             }
         };
 
         stateRef.current.timerId = requestAnimationFrame(loop);
-    };
 
-    const handleAnswer = async (optionIndex: number | null, isTimeout = false) => {
-        stopTimer();
+        return () => stopTimer();
+    }, [currentIndex, sessionReady, questions]);
 
-        const question = questions[currentIndex];
-        if (!question) return;
-
-        // Calculate stats
-        const timeTakenMs = isTimeout ? 45000 : Math.min(45000, Date.now() - stateRef.current.startTime);
-
-        let isCorrect = false;
-        let result: 'correct' | 'wrong' | 'skipped' = 'skipped';
-
-        if (isTimeout) {
-            result = 'wrong'; // Treating timeout as wrong 
-        } else if (optionIndex !== null) {
-            isCorrect = optionIndex === question.correctOptionIndex;
-            result = isCorrect ? 'correct' : 'wrong';
-        }
-
-        const score = calculateSprintScore(isCorrect, timeTakenMs);
-
-        // Update local state refs
-        stateRef.current.score += score;
-        if (isCorrect) stateRef.current.correct++;
-        else if (result === 'wrong') stateRef.current.wrong++;
-        else stateRef.current.skipped++;
-
-        // Prepare attempt object
-        const attempt = {
-            questionId: question.uuid, // Using UUID as required
-            result,
-            timeTaken: timeTakenMs,
-            scoreEarned: score,
-            inputMethod: isTimeout ? 'timeout' : 'click',
-            questionData: question,
-            selectedOptionIndex: optionIndex,
-        };
-        stateRef.current.answers.push(attempt);
-
-        // Async save
-        // QUEUE LOGIC: If session ID is not ready, queue it.
-        getCurrentUser().then(user => {
-            if (user) {
-                if (stateRef.current.sessionId) {
-                    // Session ready, save immediately
-                    saveSprintAttempt(stateRef.current.sessionId, user.id, attempt as any);
-                } else {
-                    // Session creating in background, queue it
-                    stateRef.current.pendingAttempts.push(attempt);
-                }
-            }
-        });
-
-        // Transition
-        const nextIndex = currentIndex + 1;
-        if (nextIndex < questions.length) {
-            setCurrentIndex(nextIndex);
-            startQuestionTimer();
-        } else {
-            finishSession();
-        }
-    };
 
     const finishSession = async () => {
         if (!stateRef.current.sessionId) return;
 
         // Calculate final stats
-        const totalQuestions = stateRef.current.answers.length; // or questions.length
+        const totalQuestions = stateRef.current.answers.length;
         const totalTime = stateRef.current.answers.reduce((acc, a) => acc + a.timeTaken, 0);
         const avgTime = totalQuestions > 0 ? totalTime / totalQuestions : 0;
 
@@ -211,6 +197,67 @@ export const SprintSession: React.FC<SprintSessionProps> = ({ config, onExit }) 
         onExit(stateRef.current.sessionId);
     };
 
+    const handleAnswer = async (optionIndex: number | null, isTimeout = false) => {
+        stopTimer();
+
+        const question = questions[currentIndex];
+        if (!question) return;
+
+        const maxTime = stateRef.current.targetTime * 1000;
+        // Calculate stats
+        const timeTakenMs = isTimeout ? maxTime : Math.min(maxTime, Date.now() - stateRef.current.startTime);
+
+        let isCorrect = false;
+        let result: 'correct' | 'wrong' | 'skipped' = 'skipped';
+
+        if (isTimeout) {
+            result = 'wrong';
+        } else if (optionIndex !== null) {
+            isCorrect = optionIndex === question.correctOptionIndex;
+            result = isCorrect ? 'correct' : 'wrong';
+        }
+
+        const score = calculateSprintScore(isCorrect, timeTakenMs, config.examProfile);
+
+        // Update local state refs
+        stateRef.current.score += score;
+        if (isCorrect) stateRef.current.correct++;
+        else if (result === 'wrong') stateRef.current.wrong++;
+        else stateRef.current.skipped++;
+
+        // Prepare attempt object
+        const attempt = {
+            questionId: question.uuid,
+            result,
+            timeTaken: timeTakenMs,
+            scoreEarned: score,
+            inputMethod: isTimeout ? 'timeout' : 'click',
+            questionData: question,
+            selectedOptionIndex: optionIndex,
+        };
+        stateRef.current.answers.push(attempt);
+
+        // Async save
+        getCurrentUser().then(user => {
+            if (user) {
+                if (stateRef.current.sessionId) {
+                    saveSprintAttempt(stateRef.current.sessionId, user.id, attempt as any);
+                } else {
+                    stateRef.current.pendingAttempts.push(attempt);
+                }
+            }
+        });
+
+        // Transition
+        const nextIndex = currentIndex + 1;
+        if (nextIndex < questions.length) {
+            setCurrentIndex(nextIndex);
+        } else {
+            finishSession();
+        }
+    };
+
+
     if (!sessionReady) {
         return (
             <div className="flex items-center justify-center min-h-[60vh]">
@@ -225,6 +272,9 @@ export const SprintSession: React.FC<SprintSessionProps> = ({ config, onExit }) 
     const currentQuestion = questions[currentIndex];
     const progress = (currentIndex / questions.length) * 100;
     const isUrgent = timeLeft <= 10;
+    // Progress calculation for timer bar
+    const totalDuration = stateRef.current.targetTime || 45;
+    const timeProgress = Math.min(100, (timeLeft / totalDuration) * 100);
 
     return (
         <div className="max-w-4xl mx-auto mt-6 space-y-6">
@@ -247,7 +297,7 @@ export const SprintSession: React.FC<SprintSessionProps> = ({ config, onExit }) 
                 <CardContent className="p-0">
                     <div
                         className={`h-2 transition-all duration-75 ease-linear ${isUrgent ? 'bg-red-500' : 'bg-emerald-500'}`}
-                        style={{ width: `${Math.min(100, (timeLeft / 45) * 100)}%` }}
+                        style={{ width: `${timeProgress}%` }}
                     />
                     <div className="p-4 flex justify-between items-center">
                         <span className={`text-2xl font-mono font-bold ${isUrgent ? 'text-red-600 animate-pulse' : 'text-emerald-700'}`}>
@@ -283,11 +333,6 @@ export const SprintSession: React.FC<SprintSessionProps> = ({ config, onExit }) 
                     ))}
                 </div>
             </div>
-
-            {/* Debug/Dev Skip - Remove in prod if needed, but useful for testing */}
-            {/* <div className="text-center pt-8 opacity-20 hover:opacity-100 transition-opacity">
-                <button onClick={() => handleAnswer(null)} className="text-sm underline">Skip (0 pts)</button>
-            </div> */}
         </div>
     );
 };

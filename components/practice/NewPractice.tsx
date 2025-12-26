@@ -615,14 +615,14 @@ export const NewPractice: React.FC = () => {
                     <ReflectionPanel onReflectionSelect={handleReflectionSelect} />
                 )}
 
-                {/* FSM Panel */}
-                {(practiceState === 'fsm' || practiceState === 'reinforce') && questionData.fastestSafeMethod.exists && (
+                {/* The Optimal Path Panel */}
+                {(practiceState === 'fsm' || practiceState === 'reinforce') && questionData.theOptimalPath.exists && (
                     <FsmPanel
-                        patternTrigger={questionData.fastestSafeMethod.preconditions || 'This question type'}
-                        steps={questionData.fastestSafeMethod.steps.map((step) => ({ step }))}
+                        patternTrigger={questionData.theOptimalPath.preconditions || 'This question type'}
+                        steps={questionData.theOptimalPath.steps.map((step) => ({ step }))}
                         safetyChecks={
-                            questionData.fastestSafeMethod.sanityCheck
-                                ? [questionData.fastestSafeMethod.sanityCheck]
+                            questionData.theOptimalPath.sanityCheck
+                                ? [questionData.theOptimalPath.sanityCheck]
                                 : []
                         }
                         whenToUse="Use this method when you need to solve quickly with high accuracy"

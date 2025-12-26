@@ -2,16 +2,19 @@ import React, { useState } from 'react';
 import { cn } from '@/lib/utils';
 import { User } from '../types';
 import {
-  LayoutDashboard,
-  Dumbbell,
-  Zap,
+  LayoutGrid,  // Minimal Dashboard
+  Target,      // Precise Practice
+  Timer,       // Sprint
+  BarChart2,   // Analytics
+  FileText,    // Papers
+  HelpCircle,  // FAQs
+  MessageSquare, // Contact
   User as UserIcon,
+  Shield,      // Admin
   Upload,
-  ChevronLeft,
-  LogOut
+  ChevronLeft
 } from 'lucide-react';
 import { Button } from './ui/Button';
-import { Separator } from './ui/separator-new';
 
 interface SidebarProps {
   currentPage: string;
@@ -26,33 +29,56 @@ interface NavItem {
   icon: React.ElementType;
 }
 
+interface NavGroup {
+  title: string;
+  items: NavItem[];
+}
+
 export const Sidebar: React.FC<SidebarProps> = ({ currentPage, setCurrentPage, user, onLogout }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
 
-  const navItems: NavItem[] = [
-    { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
-    { id: 'practice', label: 'Practice', icon: Dumbbell },
-    { id: 'sprint', label: 'Sprint', icon: Zap },
-  ];
-
-  // Admin users get extra nav items
+  // Admin Detection
   const isAdmin = user?.email === 'pranav.n@ideaye.in';
-  const adminItems: NavItem[] = isAdmin ? [
-    { id: 'admin/ingest', label: 'Admin Ingest', icon: Upload },
-    { id: 'admin/bulk', label: 'Bulk Ingest', icon: Upload },
-  ] : [];
 
-  const allNavItems = [...navItems, ...adminItems];
+  const navGroups: NavGroup[] = [
+    {
+      title: 'Overview',
+      items: [
+        { id: 'dashboard', label: 'Dashboard', icon: LayoutGrid },
+        { id: 'analytics', label: 'Analytics', icon: BarChart2 },
+      ]
+    },
+    {
+      title: 'Learning',
+      items: [
+        { id: 'practice', label: 'Practice', icon: Target },
+        { id: 'sprint', label: 'Sprints', icon: Timer },
+        { id: 'previous_papers', label: 'Previous Papers', icon: FileText },
+      ]
+    },
+    {
+      title: 'Help & Settings',
+      items: [
+        { id: 'profile', label: 'Profile', icon: UserIcon },
+        ...(isAdmin ? [
+          { id: 'admin/ingest', label: 'Admin Ingest', icon: Upload },
+          { id: 'admin/bulk', label: 'Bulk Ingest', icon: Shield }
+        ] : []),
+        { id: 'faqs', label: 'FAQs', icon: HelpCircle },
+        { id: 'contact', label: 'Contact', icon: MessageSquare },
+      ]
+    }
+  ];
 
   return (
     <aside
       className={cn(
-        "fixed inset-y-0 left-0 z-40 hidden lg:flex flex-col bg-card border-r border-border transition-all duration-300 ease-in-out",
-        isCollapsed ? 'w-[72px]' : 'w-80'
+        "fixed inset-y-0 left-0 z-40 hidden lg:flex flex-col bg-card border-r border-border transition-all duration-300 ease-in-out font-sans",
+        isCollapsed ? 'w-[72px]' : 'w-72'
       )}
     >
       {/* Logo Section */}
-      <div className="flex h-16 items-center justify-between px-6 border-b border-border">
+      <div className="flex h-20 items-center justify-between px-6 mb-2">
         <div className="flex items-center gap-3">
           {!isCollapsed && (
             <img src="/brand-logo.png" alt="Drut" className="h-8" />
@@ -68,7 +94,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentPage, setCurrentPage, u
           size="icon"
           onClick={() => setIsCollapsed(!isCollapsed)}
           className={cn(
-            "h-8 w-8 transition-transform",
+            "h-8 w-8 transition-transform text-muted-foreground hover:text-foreground",
             isCollapsed && "mx-auto rotate-180"
           )}
           title={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
@@ -78,19 +104,29 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentPage, setCurrentPage, u
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 flex flex-col gap-2 p-4">
-        {allNavItems.map(item => (
-          <NavItemComponent
-            key={item.id}
-            {...item}
-            isActive={currentPage === item.id}
-            onClick={() => setCurrentPage(item.id)}
-            isCollapsed={isCollapsed}
-          />
+      <nav className="flex-1 overflow-y-auto py-2 px-0 space-y-6 scrollbar-hide">
+        {navGroups.map((group, groupIdx) => (
+          <div key={groupIdx}>
+            {!isCollapsed && (
+              <h4 className="px-6 mb-2 text-xs font-bold text-slate-400 uppercase tracking-wider">
+                {group.title}
+              </h4>
+            )}
+            <div className="space-y-1">
+              {group.items.map(item => (
+                <NavItemComponent
+                  key={item.id}
+                  {...item}
+                  isActive={currentPage === item.id}
+                  onClick={() => setCurrentPage(item.id)}
+                  isCollapsed={isCollapsed}
+                />
+              ))}
+            </div>
+          </div>
         ))}
       </nav>
 
-      {/* Footer Removed as requested */}
     </aside>
   );
 };
@@ -106,19 +142,24 @@ const NavItemComponent: React.FC<{
   <button
     onClick={onClick}
     className={cn(
-      "group relative flex items-center gap-4 px-4 py-3.5 rounded-lg text-base font-medium transition-all duration-200",
+      "w-full group relative flex items-center gap-4 px-6 py-3 text-sm transition-all duration-200",
       isActive
-        ? "text-white shadow-sm"
-        : "text-muted-foreground hover:bg-accent hover:text-accent-foreground",
-      isCollapsed && "justify-center px-2"
+        ? "text-slate-900 font-bold bg-gradient-to-r from-[#5cbb21]/10 to-transparent"
+        : "text-slate-500 font-medium hover:text-slate-900 hover:bg-slate-50",
+      isCollapsed && "justify-center px-2 py-3"
     )}
-    style={isActive ? { backgroundColor: '#5cbb21' } : undefined}
     title={isCollapsed ? label : undefined}
   >
+    {/* Active Indicator (Left Gradient Bar) */}
+    {isActive && (
+      <div className="absolute left-0 top-0 bottom-0 w-[4px] rounded-r-full bg-gradient-to-b from-[#5cbb21] to-[#cbe856] shadow-[0_0_10px_rgba(92,187,33,0.3)]"></div>
+    )}
+
     <Icon className={cn(
-      "h-6 w-6 flex-shrink-0 transition-colors",
-      isActive ? "text-white" : "group-hover:text-[#5cbb21]"
+      "h-[18px] w-[18px] flex-shrink-0 transition-colors duration-200",
+      isActive ? "text-[#5cbb21]" : "text-slate-400 group-hover:text-slate-600"
     )} />
-    {!isCollapsed && <span>{label}</span>}
+
+    {!isCollapsed && <span className="tracking-tight">{label}</span>}
   </button>
 );
