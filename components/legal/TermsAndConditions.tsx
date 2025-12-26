@@ -6,7 +6,7 @@ export const TermsAndConditions: React.FC = () => {
             <header className="border-b border-gray-100 py-4">
                 <div className="container mx-auto px-4 flex items-center justify-between">
                     <a href="/" className="flex items-center gap-2 text-decoration-none">
-                        <span className="font-bold text-xl tracking-tight text-gray-900">Drut</span>
+                        <img src="/brand-logo.png" alt="Drut" className="h-8 w-auto" />
                     </a>
                 </div>
             </header>
