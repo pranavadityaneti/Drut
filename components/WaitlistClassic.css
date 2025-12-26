@@ -3557,7 +3557,7 @@
 .visul-card {
     width: 240px;
     /* Fixed narrower width */
-    min-height: 320px;
+    min-height: 360px;
     /* Taller vertical rectangle */
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
@@ -3567,8 +3567,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    /* Center content vertically too */
+    justify-content: flex-start;
+    /* Align top, let margins handle spacing */
     text-align: center;
     border: 1px solid rgba(255, 255, 255, 0.6);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
