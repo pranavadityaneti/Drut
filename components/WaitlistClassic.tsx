@@ -45,6 +45,8 @@ interface WaitlistLandingPageProps {
 }
 
 export const WaitlistClassic: React.FC<WaitlistLandingPageProps> = ({ onGetStarted }) => {
+    const [showResearchModal, setShowResearchModal] = useState(false);
+
     const scrollToWaitlist = () => {
         document.getElementById('waitlist-form-area')?.scrollIntoView({ behavior: 'smooth' });
     };
@@ -73,8 +75,8 @@ export const WaitlistClassic: React.FC<WaitlistLandingPageProps> = ({ onGetStart
                         Time is the difference between a rank and a rejection. Drut optimizes your solving method so you can answer faster and finish the paper with confidence.
                     </p>
 
-                    {/* Inline Hero Form -> Email Input + CTA Button */}
-                    <HeroEmailForm />
+                    {/* Inline Hero Form -> Email Input + CTA Button + Research Link */}
+                    <HeroEmailForm onOpenResearch={() => setShowResearchModal(true)} />
 
                     {/* Core Features Section */}
                     <div className="mt-16 mb-8 w-full max-w-5xl mx-auto">
@@ -518,6 +520,30 @@ export const WaitlistClassic: React.FC<WaitlistLandingPageProps> = ({ onGetStart
                     </div>
                 </div>
             </div>
+
+            {/* Research Modal */}
+            {showResearchModal && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+                    <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setShowResearchModal(false)} />
+                    <div className="relative bg-white rounded-2xl shadow-xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
+                        <div className="p-6">
+                            <div className="flex justify-between items-start mb-4">
+                                <div>
+                                    <h3 className="text-xl font-bold text-gray-900">Join Research Panel</h3>
+                                    <p className="text-sm text-gray-500 mt-1">Help shape the future of speed solving.</p>
+                                </div>
+                                <button
+                                    onClick={() => setShowResearchModal(false)}
+                                    className="p-1 hover:bg-gray-100 rounded-full transition-colors"
+                                >
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 6L6 18M6 6l12 12" /></svg>
+                                </button>
+                            </div>
+                            <ResearchForm onSuccess={() => setTimeout(() => setShowResearchModal(false), 2000)} />
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
@@ -801,7 +827,7 @@ const BentoSection = () => {
 };
 
 /* --- Hero Email Form (Quick Waitlist) --- */
-const HeroEmailForm = () => {
+const HeroEmailForm = ({ onOpenResearch }: { onOpenResearch?: () => void }) => {
     const [email, setEmail] = useState('');
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
@@ -879,8 +905,8 @@ const HeroEmailForm = () => {
     }
 
     return (
-        <div className="hero-form-container">
-            <form onSubmit={handleSubmit} className="hero-cta-wrapper hero-inline-form">
+        <div className="w-full max-w-4xl mx-auto flex flex-wrap justify-center items-center gap-4 px-4 mt-8">
+            <form onSubmit={handleSubmit} className="hero-cta-wrapper hero-inline-form !m-0 w-full max-w-[420px]">
                 <input
                     type="email"
                     placeholder="Enter your email"
@@ -893,23 +919,36 @@ const HeroEmailForm = () => {
                     {loading ? '...' : 'Join Waitlist'}
                 </button>
             </form>
-            {error && <div className="hero-error-msg-below">{error}</div>}
+
+            <div className="hidden md:block w-px h-8 bg-gray-300 opacity-80 mx-2"></div>
+
+            {onOpenResearch && (
+                <button
+                    type="button"
+                    onClick={onOpenResearch}
+                    className="whitespace-nowrap px-6 py-3.5 text-sm font-bold text-[#5cbb21] bg-white border border-[#5cbb21] rounded-full hover:bg-[#f0fdf4] transition-all shadow-sm flex-shrink-0"
+                >
+                    Join Research Panel
+                </button>
+            )}
+
+            {error && <div className="hero-error-msg-below w-full text-center basis-full">{error}</div>}
         </div>
     );
 };
 
-// Research Panel Component - Ported from landing/index.html
-const ResearchPanel = () => {
+// Research Form Component (Reusable)
+const ResearchForm = ({ onSuccess }: { onSuccess?: () => void }) => {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
+        phone: '', // Added Phone
         user_type: '',
         exam: '',
         pain_point: ''
     });
     const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
     const [message, setMessage] = useState('');
-    const [customerId, setCustomerId] = useState('');
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -920,18 +959,18 @@ const ResearchPanel = () => {
         setStatus('loading');
 
         try {
-            // 1. Insert into Supabase (optional, keeping consistent with classic flow)
+            // 1. Insert into Supabase
             const { error: insertError } = await supabase
                 .from('waitlist')
                 .insert([{
                     email: formData.email,
                     name: formData.name,
+                    phone_number: formData.phone, // Save Phone
                     exam_interest: formData.exam,
                     user_type: formData.user_type,
                     pain_point: formData.pain_point
                 }]);
 
-            // Check for duplicate email error
             if (insertError) {
                 if (insertError.code === '23505' || insertError.message?.includes('duplicate') || insertError.message?.includes('unique')) {
                     setStatus('error');
@@ -958,17 +997,131 @@ const ResearchPanel = () => {
             });
 
             setStatus('success');
-            setCustomerId(`DRUT-${Math.floor(1000 + Math.random() * 9000)}`);
             setMessage("You're on the panel. We'll reach out soon.");
+            if (onSuccess) onSuccess();
 
         } catch (err: any) {
             console.error(err);
-            // Fallback success for UX if backend fails
             setStatus('success');
             setMessage("Thanks for joining!");
+            if (onSuccess) onSuccess();
         }
     };
 
+    if (status === 'success') {
+        return (
+            <div className="research-success-inline">
+                <div className="animated-tick">
+                    <svg className="tick-svg" viewBox="0 0 52 52">
+                        <circle className="tick-circle" cx="26" cy="26" r="24" fill="none" />
+                        <path className="tick-check" fill="none" d="M14 27l7 7 16-16" />
+                    </svg>
+                </div>
+                <span className="research-success-text">Thank you for your submission!</span>
+            </div>
+        );
+    }
+
+    return (
+        <form className="waitlist-form" onSubmit={handleSubmit}>
+            <div className="form-col-stack">
+                <label className="form-label">Name <span className="text-red-500">*</span></label>
+                <input
+                    type="text"
+                    name="name"
+                    placeholder="Your full name"
+                    className="form-input"
+                    required
+                    value={formData.name}
+                    onChange={handleChange}
+                />
+
+                <label className="form-label">Email <span className="text-red-500">*</span></label>
+                <input
+                    type="email"
+                    name="email"
+                    placeholder="example@gmail.com"
+                    className="form-input"
+                    required
+                    value={formData.email}
+                    onChange={handleChange}
+                />
+
+                <label className="form-label">Phone Number <span className="text-red-500">*</span></label>
+                <input
+                    type="tel"
+                    name="phone"
+                    placeholder="+91 98765 43210"
+                    className="form-input"
+                    required
+                    value={formData.phone}
+                    onChange={handleChange}
+                />
+
+                <label className="form-label">You are a... <span className="text-red-500">*</span></label>
+                <select
+                    name="user_type"
+                    className="form-input"
+                    required
+                    value={formData.user_type}
+                    onChange={handleChange}
+                >
+                    <option value="">Select your role</option>
+                    <option value="Student">Student</option>
+                    <option value="Parent">Parent</option>
+                    <option value="Working Professional">Working Professional</option>
+                    <option value="Teacher">Teacher</option>
+                    <option value="Other">Other</option>
+                </select>
+
+                <label className="form-label">Target Exam <span className="text-red-500">*</span></label>
+                <select
+                    name="exam"
+                    className="form-input"
+                    required
+                    value={formData.exam}
+                    onChange={handleChange}
+                >
+                    <option value="">Select your target exam</option>
+                    <option value="JEE Mains">JEE Mains</option>
+                    <option value="JEE Advanced">JEE Advanced</option>
+                    <option value="NEET">NEET</option>
+                    <option value="MHT CET">MHT CET</option>
+                    <option value="KCET">KCET</option>
+                    <option value="WBJEE">WBJEE</option>
+                    <option value="GUJCET">GUJCET</option>
+                    <option value="TS EAMCET">TS EAMCET</option>
+                    <option value="AP EAPCET">AP EAPCET</option>
+                    <option value="BITSAT">BITSAT</option>
+                    <option value="VITEEE">VITEEE</option>
+                    <option value="SRMJEEE">SRMJEEE</option>
+                    <option value="CAT">CAT</option>
+                    <option value="SSC/CGL">SSC/CGL</option>
+                    <option value="Banking Exams">Banking Exams</option>
+                    <option value="Other">Other</option>
+                </select>
+
+                <label className="form-label">What slows you down the most?</label>
+                <textarea
+                    name="pain_point"
+                    placeholder="Example: I take too long identifying the right method..."
+                    className="form-input form-textarea"
+                    rows={4}
+                    value={formData.pain_point}
+                    onChange={handleChange}
+                ></textarea>
+            </div>
+
+            <button type="submit" className="btn btn-primary btn-full mt-4" disabled={status === 'loading'}>
+                {status === 'loading' ? 'Joining...' : 'Join the Research Panel →'}
+            </button>
+            {status === 'error' && <div className="form-message error">{message}</div>}
+        </form>
+    );
+};
+
+// Research Panel Component - Ported from landing/index.html
+const ResearchPanel = () => {
     return (
         <section className="research-panel" id="research-panel">
             <div className="container mx-auto px-10 max-w-[1400px]">
@@ -981,96 +1134,13 @@ const ResearchPanel = () => {
                                 We're interviewing students preparing for CAT, JEE, SSC, and Banking exams to understand how they think under time pressure. Your insights, patterns, and feedback help us directly shape Drut.
                             </p>
                         </div>
-
-                        {status === 'success' ? (
-                            <div className="research-success-inline">
-                                <div className="animated-tick">
-                                    <svg className="tick-svg" viewBox="0 0 52 52">
-                                        <circle className="tick-circle" cx="26" cy="26" r="24" fill="none" />
-                                        <path className="tick-check" fill="none" d="M14 27l7 7 16-16" />
-                                    </svg>
-                                </div>
-                                <span className="research-success-text">Thank you for your submission!</span>
-                            </div>
-                        ) : (
-                            <form className="waitlist-form" onSubmit={handleSubmit}>
-                                <div className="form-col-stack">
-                                    <label className="form-label">Name</label>
-                                    <input
-                                        type="text"
-                                        name="name"
-                                        placeholder="Your full name"
-                                        className="form-input"
-                                        value={formData.name}
-                                        onChange={handleChange}
-                                    />
-
-                                    <label className="form-label">Email</label>
-                                    <input
-                                        type="email"
-                                        name="email"
-                                        placeholder="example@gmail.com"
-                                        className="form-input"
-                                        required
-                                        value={formData.email}
-                                        onChange={handleChange}
-                                    />
-
-                                    <label className="form-label">You are a...</label>
-                                    <select
-                                        name="user_type"
-                                        className="form-input"
-                                        required
-                                        value={formData.user_type}
-                                        onChange={handleChange}
-                                    >
-                                        <option value="">Select your role</option>
-                                        <option value="Student">Student</option>
-                                        <option value="Parent">Parent</option>
-                                        <option value="Working Professional">Working Professional</option>
-                                        <option value="Teacher">Teacher</option>
-                                        <option value="Other">Other</option>
-                                    </select>
-
-                                    <label className="form-label">Target Exam</label>
-                                    <select
-                                        name="exam"
-                                        className="form-input"
-                                        required
-                                        value={formData.exam}
-                                        onChange={handleChange}
-                                    >
-                                        <option value="">Select your target exam</option>
-                                        <option value="CAT">CAT</option>
-                                        <option value="JEE Mains">JEE Mains</option>
-                                        <option value="JEE Advanced">JEE Advanced</option>
-                                        <option value="SSC/CGL">SSC/CGL</option>
-                                        <option value="Banking Exams">Banking Exams</option>
-                                        <option value="Other">Other</option>
-                                    </select>
-
-                                    <label className="form-label">What slows you down the most?</label>
-                                    <textarea
-                                        name="pain_point"
-                                        placeholder="Example: I take too long identifying the right method, I panic under time, calculation mistakes, weak fundamentals..."
-                                        className="form-input form-textarea"
-                                        rows={4}
-                                        value={formData.pain_point}
-                                        onChange={handleChange}
-                                    ></textarea>
-                                </div>
-
-                                <button type="submit" className="btn btn-primary btn-full mt-4" disabled={status === 'loading'}>
-                                    {status === 'loading' ? 'Joining...' : 'Join the Research Panel →'}
-                                </button>
-                                {status === 'error' && <div className="form-message error">{message}</div>}
-                            </form>
-                        )}
+                        <ResearchForm />
                     </div>
 
                     {/* Right Column: Scrolling Cards with Green Gradient */}
                     <div className="research-visuals-container">
                         <div className="scrolling-visul-track">
+                            {/* ... Visuals ... */}
                             <div className="visul-card">
                                 <div className="visul-card-label">CONCEPTS MASTERED</div>
                                 <div className="visul-card-value">156</div>
@@ -1100,7 +1170,7 @@ const ResearchPanel = () => {
                                 <div className="visul-glow-msg">Top 5% Speed</div>
                             </div>
 
-                            {/* Duplicated for Seamless Loop */}
+                            {/* Duplicate for loop */}
                             <div className="visul-card">
                                 <div className="visul-card-label">CONCEPTS MASTERED</div>
                                 <div className="visul-card-value">156</div>
@@ -1112,15 +1182,6 @@ const ResearchPanel = () => {
                                     <div className="v-bar h-70" />
                                     <div className="v-bar h-60" />
                                     <div className="v-bar h-80" />
-                                </div>
-                            </div>
-
-                            <div className="visul-card">
-                                <div className="visul-card-label">WEEKLY SPRINTS</div>
-                                <div className="visul-card-value">47</div>
-                                <div className="visul-card-sub">Avg sprints completed</div>
-                                <div className="visul-progress-container">
-                                    <div className="visul-progress-bar" style={{ width: '75%' }} />
                                 </div>
                             </div>
                         </div>

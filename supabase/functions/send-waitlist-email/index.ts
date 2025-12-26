@@ -126,7 +126,9 @@ serve(async (req) => {
               <div style="background-color: #4CAF50; text-align: center;">
                  <!-- If user provides image, replace src. Using placeholder for now. -->
                  <!-- White/Blue style reference implies image blends with bg. -->
-                 <img src="https://placehold.co/600x320/4CAF50/ffffff?text=THANKS+FOR+JOINING!&font=roboto" alt="Welcome" class="hero-img" />
+                 <div style="padding: 40px 0;">
+                     <h1 style="color: white; margin: 0; font-size: 32px; letter-spacing: 1px;">WELCOME!</h1>
+                 </div>
               </div>
 
               <div class="content">
