@@ -123,6 +123,19 @@ export const NewPractice: React.FC = () => {
                         `[cache] Loaded ${questions.length} questions (${metadata.cached} cached, ${metadata.generated} generated)`
                     );
 
+                    // Prefetch diagram images for faster rendering
+                    const diagramUrls = questions
+                        .map(q => (q as any).diagramUrl)
+                        .filter((url): url is string => !!url);
+
+                    if (diagramUrls.length > 0) {
+                        log.info(`[prefetch] Preloading ${diagramUrls.length} diagram images`);
+                        diagramUrls.forEach(url => {
+                            const img = new Image();
+                            img.src = url;
+                        });
+                    }
+
                     setQuestionCache((prevCache) => {
                         const newCache = { ...prevCache };
                         const existing = newCache[currentSubTopic] || [];

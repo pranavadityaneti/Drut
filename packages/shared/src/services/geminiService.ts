@@ -22,7 +22,10 @@ const SCHEMA_HINT = `
     "steps": string[],
     "sanityCheck": string
   },
-  "fullStepByStep": { "steps": string[] }
+  "fullStepByStep": { "steps": string[] },
+  "visualDescription": string | null,
+  "diagramRequired": boolean,
+  "difficulty": "Easy" | "Medium" | "Hard"
 }
 `.trim();
 
@@ -39,6 +42,15 @@ IMPORTANT RULES:
 - "correctOptionIndex" MUST be an integer 0..3.
 - "theOptimalPath" steps should be short and actionable.
 - "fullStepByStep" should be detailed and didactic.
+- "difficulty" MUST be exactly "Easy", "Medium", or "Hard".
+
+VISUAL DESCRIPTION RULES (for "visualDescription"):
+- For Physics topics (circuits, optics, mechanics, electrostatics) that need a visual diagram, write a DETAILED DESCRIPTION for an artist to draw the diagram.
+- Format: "Schematic physics diagram. White background. [describe components, labels, angles, forces]."
+- Include ALL relevant details: dimensions, angles (θ), masses (m₁, m₂), force vectors, surface types.
+- Specify "Line art style" and "No force vectors shown" if the student should deduce them.
+- Example: "Schematic physics diagram. White background. Inclined plane at 30° to horizontal. Block of mass 5kg on the plane. Rough surface labeled μ=0.3. No force vectors. Line art style."
+- If no diagram is needed (math, chemistry, non-visual physics), set "visualDescription" to null and "diagramRequired" to false.
 `.trim();
 
 function buildUserPrompt(spec: {
@@ -50,6 +62,44 @@ function buildUserPrompt(spec: {
     Hard: 'The question should be challenging, requiring advanced problem-solving, deep conceptual understanding, or multi-step reasoning. May involve complex calculations, edge cases, or integration of multiple concepts. Test mastery and analytical thinking.'
   };
 
+  // Subtopics that REQUIRE diagrams - set diagramRequired to true
+  const DIAGRAM_REQUIRED_SUBTOPICS = [
+    'pulleys-inclined-planes',
+    'free-body-diagrams',
+    'projectile-motion',
+    'circular-motion',
+    'mirrors-lenses',
+    'reflection-refraction',
+    'resistances-series-parallel',
+    'wheatstone-bridge',
+    'kirchhoffs-laws',
+    'capacitors',
+  ];
+
+  const requiresDiagram = DIAGRAM_REQUIRED_SUBTOPICS.some(sub =>
+    spec.subtopic.toLowerCase().includes(sub) ||
+    sub.includes(spec.subtopic.toLowerCase().replace(/\s+/g, '-'))
+  );
+
+  const diagramInstruction = requiresDiagram
+    ? `
+MANDATORY VISUAL DESCRIPTION:
+This subtopic (${spec.subtopic}) REQUIRES a visual diagram. You MUST:
+1. Set "diagramRequired" to true
+2. Write a detailed "visualDescription" for an artist to draw the diagram
+
+For ${spec.subtopic}, include in visualDescription:
+- "Schematic physics diagram. White background."
+- All physical setup details (angles, masses with values, surfaces)
+- Whether to show force vectors or not
+- "Line art style. 4:3 aspect ratio."
+
+Example: "Schematic physics diagram. White background. Pulley fixed to ceiling. Two masses m₁=3kg and m₂=5kg connected by inextensible string over pulley. No force vectors shown. Line art style. 4:3 aspect ratio."
+`
+    : `
+Set "diagramRequired" to false and "visualDescription" to null for this subtopic.
+`;
+
   return `
 Generate one practice question for:
 - Exam Profile: ${spec.exam}
@@ -58,10 +108,11 @@ Generate one practice question for:
 - Difficulty Level: ${spec.difficulty}
 
 ${difficultyGuidance[spec.difficulty]}
-
+${diagramInstruction}
 The question should be conceptual, appropriate for the selected exam profile and difficulty level.
 `;
 }
+
 
 function tryExtractJson(text: string): string | null {
   const fence = text.match(/```json([\s\S]*?)```/i);
@@ -94,7 +145,7 @@ ${invalidText}
 
   const model = getAiClient();
   const result = await model.models.generateContent({
-    model: 'gemini-3-flash-preview',
+    model: 'gemini-3-pro-preview',
     contents: repairPrompt,
     config: {
       responseMimeType: "application/json",
@@ -120,7 +171,7 @@ export async function generateOneQuestion(topic: string, subTopic: string, examP
     try {
       const ai = getAiClient();
       const res = await ai.models.generateContent({
-        model: 'gemini-3-flash-preview',
+        model: 'gemini-3-pro-preview',
         contents: user,
         config: {
           systemInstruction: SYSTEM_INSTRUCTION,
@@ -193,6 +244,18 @@ CRITICAL REQUIREMENTS:
 - DO NOT return a single object
 - DO NOT wrap the array in any other structure
 - Make each question unique and different from the others
+- Set "difficulty" field to match: ${spec.difficulty}
+
+VISUAL DESCRIPTION RULES:
+- For Physics topics requiring diagrams, set "diagramRequired" to true
+- Write detailed "visualDescription" for an artist: "Schematic physics diagram. White background. [setup details]. Line art style. 4:3 aspect ratio."
+- For non-visual topics, set "visualDescription" to null and "diagramRequired" to false
+
+${['pulleys-inclined-planes', 'free-body-diagrams', 'projectile-motion', 'circular-motion', 'mirrors-lenses', 'reflection-refraction', 'resistances-series-parallel', 'wheatstone-bridge', 'kirchhoffs-laws', 'capacitors'].some(sub => spec.subtopic.toLowerCase().includes(sub) || sub.includes(spec.subtopic.toLowerCase().replace(/\s+/g, '-'))) ? `
+MANDATORY VISUAL DESCRIPTION - THIS SUBTOPIC (${spec.subtopic}) REQUIRES DIAGRAMS:
+Every question MUST have "diagramRequired": true and a detailed "visualDescription".
+Include all physical setup details (angles, masses, surfaces, labels) in the description.
+` : ''}
 `.trim();
 
   const maxRetries = 3;
@@ -204,7 +267,7 @@ CRITICAL REQUIREMENTS:
     try {
       const ai = getAiClient();
       const res = await ai.models.generateContent({
-        model: 'gemini-3-flash-preview',
+        model: 'gemini-3-pro-preview',
         contents: batchPrompt,
         config: {
           systemInstruction: BATCH_SYSTEM_INSTRUCTION,

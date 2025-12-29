@@ -42,41 +42,83 @@ export interface SprintSessionData {
 }
 
 
+// Exam-specific scoring configuration (Real exam ratios)
 const EXAM_SCORING_CONFIG: Record<string, { base: number; penalty: number }> = {
-    jee_main: { base: 10, penalty: -5 }, // -1/4 equivalent relative to max 20
-    jee_advanced: { base: 10, penalty: -5 },
-    wbjee: { base: 10, penalty: -5 }, // Simplification for now
-    cat: { base: 10, penalty: -3 }, // 1/3
-    eamcet: { base: 10, penalty: 0 },
-    mht_cet: { base: 10, penalty: 0 },
-    kcet: { base: 10, penalty: 0 },
-    gujcet: { base: 10, penalty: 0 },
-    keam: { base: 10, penalty: -5 }, // usually has negative
-    default: { base: 10, penalty: 0 }
+    jee_main: { base: 100, penalty: -25 },     // 4:1 ratio (correct: +4, wrong: -1)
+    jee_advanced: { base: 100, penalty: -25 }, // 4:1 ratio
+    wbjee: { base: 100, penalty: -25 },        // Similar to JEE
+    cat: { base: 100, penalty: -33 },          // 3:1 ratio
+    eamcet: { base: 100, penalty: 0 },         // No negative marking
+    mht_cet: { base: 100, penalty: 0 },        // No negative marking
+    kcet: { base: 100, penalty: 0 },           // No negative marking
+    gujcet: { base: 100, penalty: 0 },         // No negative marking
+    keam: { base: 100, penalty: -25 },         // Has negative marking
+    default: { base: 100, penalty: 0 }
 };
 
-export function calculateSprintScore(isCorrect: boolean, timeMs: number, examProfile: string = 'default'): number {
+// Base target times per exam (in seconds)
+const EXAM_BASE_TIMES: Record<string, number> = {
+    jee_main: 120,      // 2 minutes average
+    jee_advanced: 180,  // 3 minutes (harder questions)
+    mht_cet: 54,        // ~1 minute
+    eamcet: 60,
+    wbjee: 90,
+    kcet: 60,
+    gujcet: 60,
+    keam: 60,
+    cat: 120,
+    default: 60
+};
+
+// Difficulty multipliers for target time
+const DIFFICULTY_MULTIPLIERS: Record<string, number> = {
+    Easy: 0.6,
+    Medium: 1.0,
+    Hard: 1.5
+};
+
+/**
+ * Calculate target time based on exam profile and difficulty
+ * Example: JEE Main (120s) * Hard (1.5) = 180s
+ */
+export function calculateTargetTime(
+    examProfile: string = 'default',
+    difficulty: 'Easy' | 'Medium' | 'Hard' = 'Medium'
+): number {
+    const baseTime = EXAM_BASE_TIMES[examProfile] || EXAM_BASE_TIMES.default;
+    const multiplier = DIFFICULTY_MULTIPLIERS[difficulty] || 1.0;
+    return Math.round(baseTime * multiplier);
+}
+
+/**
+ * Calculate Sprint score based on correctness, time, and exam profile
+ * Uses exam-specific base points and penalties
+ */
+export function calculateSprintScore(
+    isCorrect: boolean,
+    timeMs: number,
+    examProfile: string = 'default',
+    difficulty: 'Easy' | 'Medium' | 'Hard' = 'Medium'
+): number {
     const config = EXAM_SCORING_CONFIG[examProfile] || EXAM_SCORING_CONFIG.default;
 
     if (!isCorrect) {
-        // Apply Penalty for wrong answers
+        // Apply exam-specific penalty for wrong answers
         return config.penalty;
     }
 
-    // Formula: Base + SpeedBonus
-    // Max score: 10 + 10 = 20 (at 0s)
-    // Min score: 10 + 0 = 10 (at 45s) - Note: This 45s is legacy speed audit, 
-    // we should probably scale bonus based on the Exam Target Time eventually.
-    // For now, keeping the 45s curve for 'Speed Bonus' intensity across all exams 
-    // to encourage speed even in slower exams, OR we strictly punish time.
-    // Let's stick to the existing curve for consistency in "Sprint Points".
-
-    // timeMs is in ms, so convert to seconds
+    // Calculate speed bonus based on target time for this exam/difficulty
+    const targetTimeMs = calculateTargetTime(examProfile, difficulty) * 1000;
     const timeSec = timeMs / 1000;
-    const bonus = Math.round((45 - timeSec) / 4.5);
-    const clampedBonus = Math.max(0, Math.min(10, bonus));
+    const targetTimeSec = targetTimeMs / 1000;
 
-    return config.base + clampedBonus;
+    // Speed bonus: Up to 50% of base score for fast answers
+    // Full bonus at 0s, 0 bonus at target time, no bonus beyond target
+    const maxBonus = config.base * 0.5; // 50 points max bonus
+    const bonusRatio = Math.max(0, (targetTimeSec - timeSec) / targetTimeSec);
+    const speedBonus = Math.round(maxBonus * bonusRatio);
+
+    return config.base + speedBonus;
 }
 
 

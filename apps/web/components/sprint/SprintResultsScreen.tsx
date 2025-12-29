@@ -5,7 +5,7 @@ import { Card, CardContent } from '../ui/Card';
 import { QuestionData } from '@drut/shared';
 import { log } from '@drut/shared'; // from ../../lib/log';
 import { Trophy, Clock, Target, AlertCircle, RotateCcw, Play, CheckCircle2, XCircle, Timer, Grid, Sparkles, BookOpen, ArrowRight } from 'lucide-react';
-import { generateSessionAnalysis } from '@drut/shared'; // from ../../services/geminiService';
+import { generateSessionAnalysis } from '../../../../packages/shared/src/services/geminiService';
 
 interface SprintResultsScreenProps {
     sessionId: string;

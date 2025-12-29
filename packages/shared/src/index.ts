@@ -79,6 +79,7 @@ export * from './lib/log';
 export * from './lib/health';
 export * from './lib/explCache';
 export * from './lib/supabase';
+export * from './lib/svgSanitizer';
 
 // Hooks (Careful with React usage)
 export * from './hooks/useDashboardData';

@@ -24,6 +24,7 @@ export const PracticeSetup: React.FC<PracticeSetupProps> = ({ onStart }) => {
     const [selectedExam, setSelectedExam] = useState<string>('');
     const [selectedTopic, setSelectedTopic] = useState<string>('');
     const [selectedSubtopic, setSelectedSubtopic] = useState<string>('');
+    const [difficulty, setDifficulty] = useState<'Easy' | 'Medium' | 'Hard'>('Medium');
 
     useEffect(() => {
         const init = async () => {
@@ -85,7 +86,7 @@ export const PracticeSetup: React.FC<PracticeSetupProps> = ({ onStart }) => {
             examProfile: selectedExam,
             topic: selectedTopic,
             subtopic: selectedSubtopic || 'mixed',
-            difficulty: 'Medium' // Default as requested
+            difficulty: difficulty
         });
     };
 
@@ -166,6 +167,30 @@ export const PracticeSetup: React.FC<PracticeSetupProps> = ({ onStart }) => {
                                 </select>
                                 <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" size={16} />
                             </div>
+                        </div>
+                    </div>
+
+                    {/* 3. Difficulty */}
+                    <div>
+                        <label className="text-sm font-semibold text-slate-900 mb-3 block">Difficulty Level</label>
+                        <div className="grid grid-cols-3 gap-4">
+                            {(['Easy', 'Medium', 'Hard'] as const).map((level) => {
+                                const isSelected = difficulty === level;
+                                let colorClass = '';
+                                if (level === 'Easy') colorClass = isSelected ? 'bg-emerald-50 border-emerald-500 text-emerald-700 ring-1 ring-emerald-500' : 'hover:border-emerald-200 hover:bg-emerald-50';
+                                if (level === 'Medium') colorClass = isSelected ? 'bg-amber-50 border-amber-500 text-amber-700 ring-1 ring-amber-500' : 'hover:border-amber-200 hover:bg-amber-50';
+                                if (level === 'Hard') colorClass = isSelected ? 'bg-rose-50 border-rose-500 text-rose-700 ring-1 ring-rose-500' : 'hover:border-rose-200 hover:bg-rose-50';
+
+                                return (
+                                    <button
+                                        key={level}
+                                        onClick={() => setDifficulty(level)}
+                                        className={`py-3 px-4 rounded-xl border text-sm font-medium transition-all duration-200 flex items-center justify-center gap-2 ${isSelected ? colorClass : 'border-slate-200 text-slate-600 ' + colorClass}`}
+                                    >
+                                        {level}
+                                    </button>
+                                );
+                            })}
                         </div>
                     </div>
 

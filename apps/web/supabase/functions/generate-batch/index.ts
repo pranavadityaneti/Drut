@@ -1,11 +1,10 @@
-// Edge Function: Generate batch of questions
+// Edge Function: Generate batch with OPTIONAL verification
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { corsHeaders } from '../_shared/cors.ts';
-import { generateContent, extractJSON, SCHEMA_HINT } from '../_shared/vertex-client.ts';
+import { generateContent, extractJSON, verifyAnswer, SCHEMA_HINT } from '../_shared/vertex-client.ts';
 import type { GenerateBatchRequest, QuestionItem } from '../_shared/types.ts';
 
 serve(async (req) => {
-    // Handle CORS
     if (req.method === 'OPTIONS') {
         return new Response('ok', { headers: corsHeaders });
     }
@@ -13,7 +12,6 @@ serve(async (req) => {
     try {
         const body: GenerateBatchRequest = await req.json();
 
-        // Validate request
         if (!body.topic || !body.subtopic || !body.examProfile || !body.difficulty || !body.count) {
             return new Response(
                 JSON.stringify({ error: 'Missing required fields' }),
@@ -21,70 +19,124 @@ serve(async (req) => {
             );
         }
 
-        const count = Math.min(body.count, 10); // Limit to 10 questions per batch
+        const count = Math.min(body.count, 10);
+
+        const DIAGRAM_REQUIRED_SUBTOPICS = [
+            'pulleys-inclined-planes', 'free-body-diagrams', 'projectile-motion',
+            'circular-motion', 'mirrors-lenses', 'reflection-refraction',
+            'resistances-series-parallel', 'wheatstone-bridge', 'kirchhoffs-laws', 'capacitors',
+        ];
+
+        const subtopicLower = body.subtopic.toLowerCase().replace(/\s+/g, '-');
+        const requiresDiagram = DIAGRAM_REQUIRED_SUBTOPICS.some(sub =>
+            subtopicLower.includes(sub) || sub.includes(subtopicLower)
+        );
 
         const batchPrompt = `
-Generate EXACTLY ${count} unique practice questions for:
-- Exam Profile: ${body.examProfile}
-- Topic: ${body.topic}
-- Subtopic: ${body.subtopic}
-- Difficulty Level: ${body.difficulty}
+Generate ${count} physics questions for JEE Main.
+Topic: ${body.topic}
+Subtopic: ${body.subtopic}
+Difficulty: ${body.difficulty}
 
-CRITICAL: You must return a JSON ARRAY containing ${count} question objects.
-Format: [question1, question2, question3, ...]
+CRITICAL - OPTION GENERATION:
+1. FIRST solve the problem step-by-step
+2. Calculate the EXACT numerical answer with units
+3. Set Option A = your exact calculated answer
+4. Create Options B, C, D as plausible distractors (common mistakes)
+5. Set correctOptionIndex = 0 (since Option A is your answer)
 
-DO NOT return a single object. DO NOT wrap in any other structure.
-Each question must match this schema:
-${SCHEMA_HINT}
+PHYSICS FORMULAS:
+- Atwood: a = g(m2-m1)/(m1+m2), T = 2*m1*m2*g/(m1+m2)
+- Incline with friction: a = g(sinθ - μcosθ)
+
+${requiresDiagram ? `
+VISUAL DESCRIPTION (for diagram generation):
+Set "diagramRequired": true and write a detailed "visualDescription" for an artist.
+Format: "Schematic physics diagram. White background. [describe setup]. Line art style. 4:3 aspect ratio."
+Include: angles, masses, surfaces, labels.
+` : 'Set "diagramRequired": false and "visualDescription": null.'}
+
+OUTPUT: JSON array of ${count} objects with this exact structure:
+{
+  "questionText": "...",
+  "options": [{"text": "EXACT ANSWER"}, {"text": "..."}, {"text": "..."}, {"text": "..."}],
+  "correctOptionIndex": 0,
+  "timeTargets": {"jee_main": 180, "cat": 120, "eamcet": 150},
+  "fastestSafeMethod": {"exists": true, "preconditions": "...", "steps": ["..."], "sanityCheck": "..."},
+  "fullStepByStep": {"steps": ["..."]},
+  "fsmTag": "topic-tag",
+  "visualDescription": ${requiresDiagram ? '"Schematic physics diagram. White background. ..."' : 'null'},
+  "diagramRequired": ${requiresDiagram},
+  "difficulty": "${body.difficulty}"
+}
 `;
 
-        const BATCH_SYSTEM_INSTRUCTION = `
-You are an expert exam question generator.
-Your task is to generate EXACTLY ${count} practice questions and return them as a JSON ARRAY.
+        const SYSTEM_INSTRUCTION = `You are a JEE physics expert.
+Generate exactly ${count} questions as a JSON array.
+CRITICAL: Option A must be your calculated answer. correctOptionIndex must be 0.
+Output ONLY valid JSON - no markdown, no explanation.`;
 
-Each item in the array must match the question schema.
-
-CRITICAL REQUIREMENTS:
-- Output MUST be a JSON Array: [item1, item2, item3, ...]
-- Array MUST contain EXACTLY ${count} question objects
-- DO NOT return a single object
-- DO NOT wrap the array in any other structure
-- Make each question unique and different from the others
-
-FSM TAG REQUIREMENT:
-- Each question MUST include "fsmTag": a lowercase kebab-case string
-- fsmTag represents the underlying heuristic/pattern (e.g., "ratio-inverse-prop", "time-work-lcm-method", "quadratic-vieta-relations")
-- Questions with similar solving techniques should have the SAME fsmTag
-- Use consistent tags across similar problems for pattern grouping
-`.trim();
-
-        // Generate content using Vertex AI
-        const response = await generateContent(batchPrompt, BATCH_SYSTEM_INSTRUCTION, 0.4);
+        console.log('[PASS 1] Generating questions...');
+        const response = await generateContent(batchPrompt, SYSTEM_INSTRUCTION, 0.2);
         const jsonStr = extractJSON(response);
         let parsed = JSON.parse(jsonStr);
 
-        // Handle non-array responses
         if (!Array.isArray(parsed)) {
-            if (parsed && typeof parsed === 'object' && Array.isArray(parsed.questions)) {
+            if (parsed?.questions && Array.isArray(parsed.questions)) {
                 parsed = parsed.questions;
-            } else if (parsed && typeof parsed === 'object' && parsed.questionText) {
+            } else if (parsed?.questionText) {
                 parsed = [parsed];
             } else {
-                throw new Error('AI returned non-array response for batch generation');
+                throw new Error('AI returned non-array response');
             }
         }
 
-        // Validate questions
+        console.log(`[PASS 1] Got ${parsed.length} questions`);
+
+        // Validate and optionally verify
         const validQuestions: QuestionItem[] = [];
-        for (const item of parsed) {
-            if (item.questionText && item.options && item.options.length === 4) {
-                validQuestions.push(item);
+
+        for (let i = 0; i < parsed.length; i++) {
+            const item = parsed[i];
+
+            // Basic structure validation only
+            if (!item.questionText || !item.options || item.options.length !== 4) {
+                console.warn(`[Q${i + 1}] Skipped: invalid structure`);
+                continue;
             }
+
+            // Ensure correctOptionIndex is valid
+            if (typeof item.correctOptionIndex !== 'number' || item.correctOptionIndex < 0 || item.correctOptionIndex > 3) {
+                item.correctOptionIndex = 0; // Default to first option
+            }
+
+            // OPTIONAL: Try to verify, but don't reject if verification fails
+            try {
+                const options = item.options.map((o: any) => o.text);
+                const verification = await verifyAnswer(item.questionText, options);
+
+                if (verification.isValid && verification.matchedOptionIndex !== null) {
+                    if (verification.matchedOptionIndex !== item.correctOptionIndex) {
+                        console.log(`[Q${i + 1}] Correcting answer: ${item.correctOptionIndex} → ${verification.matchedOptionIndex}`);
+                        item.correctOptionIndex = verification.matchedOptionIndex;
+                    } else {
+                        console.log(`[Q${i + 1}] ✓ Answer verified`);
+                    }
+                } else {
+                    console.log(`[Q${i + 1}] Verification inconclusive, keeping original answer`);
+                }
+            } catch (verifyError) {
+                console.warn(`[Q${i + 1}] Verification failed, keeping original answer`);
+            }
+
+            validQuestions.push(item);
         }
 
         if (validQuestions.length === 0) {
             throw new Error('No valid questions generated');
         }
+
+        console.log(`[SUCCESS] ${validQuestions.length}/${parsed.length} questions ready`);
 
         return new Response(
             JSON.stringify({ questions: validQuestions }),
@@ -92,9 +144,9 @@ FSM TAG REQUIREMENT:
         );
 
     } catch (error) {
-        console.error('Error generating batch:', error);
+        console.error('[ERROR]', error);
         return new Response(
-            JSON.stringify({ error: error.message || 'Failed to generate batch' }),
+            JSON.stringify({ error: error.message || 'Failed to generate' }),
             { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         );
     }

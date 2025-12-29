@@ -76,6 +76,10 @@ export async function getQuestionsForUser(
           timeTargets: qd.timeTargets,
           theOptimalPath: (qd as any).theOptimalPath || (qd as any).fastestSafeMethod,
           fullStepByStep: qd.fullStepByStep,
+          visualDescription: (qd as any).visualDescription || undefined,
+          diagramUrl: (qd as any).diagramUrl || undefined,
+          diagramRequired: (qd as any).diagramRequired || false,
+          difficulty: (qd as any).difficulty || difficulty,
         };
       });
       questions.push(...cachedQs);
@@ -130,6 +134,10 @@ export async function getQuestionsForUser(
             timeTargets: nq.timeTargets,
             theOptimalPath: (nq as any).theOptimalPath || (nq as any).fastestSafeMethod,
             fullStepByStep: nq.fullStepByStep,
+            visualDescription: (newQuestion as any).visualDescription || undefined,
+            diagramUrl: (newQuestion as any).diagramUrl || undefined,
+            diagramRequired: (newQuestion as any).diagramRequired || false,
+            difficulty: (newQuestion as any).difficulty || difficulty,
           };
           questions.push(questionWithMeta);
           metadata.generated++;

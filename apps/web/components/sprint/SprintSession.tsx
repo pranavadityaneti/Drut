@@ -2,10 +2,11 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { QuestionData } from '@drut/shared';
 import { authService } from '@drut/shared';
 const { getCurrentUser } = authService;
-import { startSession, saveSprintAttempt, finalizeSprintSession, calculateSprintScore, createRetrySession } from '@drut/shared'; // from ../../services/sprintService';
+import { startSession, saveSprintAttempt, finalizeSprintSession, calculateSprintScore, createRetrySession, calculateTargetTime } from '@drut/shared';
 import { Button } from '../ui/Button';
 import { Card, CardContent } from '../ui/Card';
-import { log } from '@drut/shared'; // from ../../lib/log';
+import { DiagramRenderer } from '../ui/DiagramRenderer';
+import { log } from '@drut/shared';
 
 interface SprintSessionProps {
     config: {
@@ -17,20 +18,6 @@ interface SprintSessionProps {
     };
     onExit: (sessionId: string) => void;
 }
-
-const EXAM_DEFAULTS: Record<string, number> = {
-    jee_main: 120,
-    cat: 120,
-    eamcet: 60,
-    mht_cet: 54,
-    wbjee: 90,
-    kcet: 60,
-    gujcet: 60,
-    keam: 60,
-    jee_advanced: 300, // 5 mins (Solvability focus)
-    default: 45 // Speed Audit default
-};
-
 export const SprintSession: React.FC<SprintSessionProps> = ({ config, onExit }) => {
     const [questions, setQuestions] = useState<QuestionData[]>([]);
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -51,16 +38,16 @@ export const SprintSession: React.FC<SprintSessionProps> = ({ config, onExit }) 
         skipped: 0
     });
 
-    // Helper to get target time
+    // Helper to get target time using calculateTargetTime
     const getTargetTime = (question: QuestionData) => {
         // 1. Try specific time target from question data
-        // We cast to any because keys like 'mht_cet' might be optional or dynamically accessed
         const targets = question.timeTargets as any;
         if (targets && targets[config.examProfile]) {
             return targets[config.examProfile];
         }
-        // 2. Fallback to Exam Default
-        return EXAM_DEFAULTS[config.examProfile] || EXAM_DEFAULTS.default;
+        // 2. Use calculateTargetTime with exam profile and difficulty
+        const difficulty = question.difficulty || 'Medium';
+        return calculateTargetTime(config.examProfile, difficulty);
     };
 
     const stopTimer = () => {
@@ -218,7 +205,8 @@ export const SprintSession: React.FC<SprintSessionProps> = ({ config, onExit }) 
             result = isCorrect ? 'correct' : 'wrong';
         }
 
-        const score = calculateSprintScore(isCorrect, timeTakenMs, config.examProfile);
+        const difficulty = question.difficulty || 'Medium';
+        const score = calculateSprintScore(isCorrect, timeTakenMs, config.examProfile, difficulty);
 
         // Update local state refs
         stateRef.current.score += score;
@@ -314,6 +302,14 @@ export const SprintSession: React.FC<SprintSessionProps> = ({ config, onExit }) 
                 <h2 className="text-2xl font-medium text-slate-800 leading-relaxed p-2">
                     {currentQuestion.questionText}
                 </h2>
+
+                {/* Render diagram if available */}
+                {(currentQuestion as any).diagramUrl && (
+                    <DiagramRenderer
+                        diagramUrl={(currentQuestion as any).diagramUrl}
+                        height={280}
+                    />
+                )}
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {currentQuestion.options.map((option, idx) => (

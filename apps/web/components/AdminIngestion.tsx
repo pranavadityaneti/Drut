@@ -8,7 +8,7 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/Card';
 import { Button } from './ui/Button';
 import { Select } from './ui/Select';
-import { ingestAndRefineQuestion, RefinedQuestion } from '@drut/shared'; // from ../services/contentRefinery';
+import { ingestAndRefineQuestion, RefinedQuestion } from '../../../packages/shared/src/services/contentRefinery';
 import { supabase } from '@drut/shared';
 import { log } from '@drut/shared';
 import {

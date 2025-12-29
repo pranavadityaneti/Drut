@@ -41,6 +41,14 @@ export interface QuestionData {
   fsmTag: string;
   // Learning explanation
   fsm_explanation?: string;
+  // Visual description - prompt for image model
+  visualDescription?: string;
+  // Hosted diagram URL from Supabase Storage
+  diagramUrl?: string;
+  // Whether this question requires a diagram
+  diagramRequired?: boolean;
+  // Question difficulty for dynamic timer
+  difficulty?: 'Easy' | 'Medium' | 'Hard';
 }
 
 // This is the data shape returned by our server-side analytics RPC.

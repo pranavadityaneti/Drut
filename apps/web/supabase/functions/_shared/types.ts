@@ -17,6 +17,17 @@ export interface QuestionItem {
     fullStepByStep: {
         steps: string[];
     };
+    // NEW: Visual description for diagram generation (prompt for image model)
+    visualDescription?: string | null;
+    // NEW: Hosted diagram URL (replaces diagramCode)
+    diagramUrl?: string | null;
+    // NEW: Whether this question requires a diagram
+    diagramRequired?: boolean;
+}
+
+export interface DiagramRequest {
+    questionId: string;
+    visualDescription: string;
 }
 
 export interface GenerateQuestionRequest {
