@@ -80,9 +80,7 @@ STRICT REQUIREMENTS:
         contents: [{ role: 'user', parts: [{ text: prompt }] }],
         generationConfig: {
             temperature: 0.2,
-            maxOutputTokens: 8192,
-            responseModalities: ['image'],
-            imageMimeType: 'image/png',
+            responseModalities: ['TEXT', 'IMAGE'],
         },
     };
 
