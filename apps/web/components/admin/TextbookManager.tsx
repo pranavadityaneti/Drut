@@ -51,6 +51,9 @@ export const TextbookManager: React.FC = () => {
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
             const selectedFile = e.target.files[0];
+            if (selectedFile.size > 10 * 1024 * 1024) {
+                alert('Warning: File is larger than 10MB. Processing might timeout on the free tier.');
+            }
             setFile(selectedFile);
             // Auto-fill title if empty
             if (!title) {

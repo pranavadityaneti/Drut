@@ -25,7 +25,7 @@ export async function generateContent(
     prompt: string,
     systemInstruction?: string,
     temperature = 0.3,
-    model = 'gemini-2.0-flash'  // Use 2.0 for JSON generation (more reliable)
+    model = 'gemini-1.5-flash'  // Use 1.5 Flash for JSON generation (reliable & fast)
 ): Promise<string> {
     const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${GEMINI_API_KEY}`;
 
