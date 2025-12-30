@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../ui
 import { Button } from '../ui/Button';
 import { supabase } from '@drut/shared';
 import { Upload, Book, FileText, CheckCircle, AlertCircle, Loader2, Trash2 } from 'lucide-react';
+import { Select } from '../ui/Select';
 import * as pdfjsLibProxy from 'pdfjs-dist';
 // @ts-ignore
 const pdfjsLib = pdfjsLibProxy.default || pdfjsLibProxy;
@@ -247,7 +248,7 @@ export const TextbookManager: React.FC = () => {
                             <label className="text-sm font-medium">Subject</label>
                             <Select
                                 value={subject}
-                                onValueChange={setSubject}
+                                onChange={(e) => setSubject(e.target.value)}
                                 options={[
                                     { value: 'Physics', label: 'Physics' },
                                     { value: 'Chemistry', label: 'Chemistry' },
@@ -259,7 +260,7 @@ export const TextbookManager: React.FC = () => {
                             <label className="text-sm font-medium">Board</label>
                             <Select
                                 value={board}
-                                onValueChange={setBoard}
+                                onChange={(e) => setBoard(e.target.value)}
                                 options={[
                                     { value: 'CBSE', label: 'CBSE' },
                                     { value: 'TSBIE', label: 'TSBIE' },
@@ -274,7 +275,7 @@ export const TextbookManager: React.FC = () => {
                         <label className="text-sm font-medium">Class</label>
                         <Select
                             value={classLevel}
-                            onValueChange={setClassLevel}
+                            onChange={(e) => setClassLevel(e.target.value)}
                             options={[
                                 { value: '11', label: '11' },
                                 { value: '12', label: '12' }
