@@ -39,41 +39,53 @@ export async function generateOneQuestion(
 }
 
 const FALLBACK_QUESTIONS: QuestionItem[] = [
+    // Physics fallback: Inclined plane with friction
     {
-        questionText: "Which number replaces the question mark? 2, 6, 12, 20, ?",
-        options: [{ text: "30" }, { text: "42" }, { text: "28" }, { text: "24" }],
+        questionText: "A block of mass 2 kg is placed on an inclined plane that makes an angle of 30° with the horizontal. If the coefficient of kinetic friction is 0.2, what is the acceleration of the block down the incline? (Take g = 10 m/s²)",
+        options: [{ text: "3.27 m/s²" }, { text: "5.0 m/s²" }, { text: "1.73 m/s²" }, { text: "6.67 m/s²" }],
         correctOptionIndex: 0,
-        timeTargets: { jee_main: 30, cat: 45, eamcet: 20 },
+        timeTargets: { jee_main: 180, cat: 120, eamcet: 150 },
         theOptimalPath: {
             exists: true,
-            steps: ["Calculate differences: 6-2=4, 12-6=6, 20-12=8.", "Pattern is +4, +6, +8.", "Next difference is +10.", "20 + 10 = 30."],
-            sanityCheck: "Sequence of n(n+1): 1*2, 2*3, 3*4, 4*5, so 5*6=30."
+            steps: ["a = g(sinθ - μcosθ)", "a = 10(sin30° - 0.2×cos30°)", "a = 10(0.5 - 0.2×0.866)", "a = 10(0.5 - 0.173) = 3.27 m/s²"],
+            sanityCheck: "Friction reduces acceleration below g×sinθ = 5 m/s²"
         },
-        fullStepByStep: { steps: ["Identify difference series.", "Add next difference."] }
+        fullStepByStep: { steps: ["Draw FBD.", "Forces: mg sinθ down, friction up.", "a = g(sinθ - μcosθ) = 3.27 m/s²"] },
+        fsmTag: "pulleys-inclined-planes",
+        diagramRequired: true,
+        visualDescription: "Schematic physics diagram. White background. Inclined plane at 30° to horizontal. Block of mass 2kg on the plane. Rough surface labeled μ=0.2. Ground line. Angle marked. Line art style. 4:3 aspect ratio."
     } as any,
+    // Physics fallback: Atwood machine
     {
-        questionText: "If A is 40% more than B, by what % is B less than A?",
-        options: [{ text: "28.57%" }, { text: "40%" }, { text: "33.33%" }, { text: "25%" }],
+        questionText: "Two blocks of masses 3 kg and 5 kg are connected by a light inextensible string passing over a frictionless pulley. What is the acceleration of the system? (Take g = 10 m/s²)",
+        options: [{ text: "2.5 m/s²" }, { text: "5.0 m/s²" }, { text: "1.25 m/s²" }, { text: "3.75 m/s²" }],
         correctOptionIndex: 0,
-        timeTargets: { jee_main: 40, cat: 60, eamcet: 30 },
+        timeTargets: { jee_main: 120, cat: 90, eamcet: 100 },
         theOptimalPath: {
             exists: true,
-            steps: ["Use formula: R / (100+R) * 100.", "40 / 140 * 100 = 2/7 * 100.", "1/7 is 14.28%, so 2/7 is 28.56%."],
-            sanityCheck: "40 is less than 50% but more than 25%."
+            steps: ["For Atwood machine: a = g(m2-m1)/(m1+m2)", "a = 10(5-3)/(3+5)", "a = 10(2)/8 = 2.5 m/s²"],
+            sanityCheck: "Acceleration is less than g and proportional to mass difference"
         },
-        fullStepByStep: { steps: ["Assume B=100.", "A=140.", "Difference=40.", "% Less = 40/140 * 100."] }
+        fullStepByStep: { steps: ["Net force = (m2-m1)g", "Total mass = m1+m2", "a = Net force / Total mass"] },
+        fsmTag: "pulleys-inclined-planes",
+        diagramRequired: true,
+        visualDescription: "Schematic physics diagram. White background. Frictionless pulley at top. Two masses hanging: 3kg on left, 5kg on right. String connecting them. Labels for masses. Line art style. 4:3 aspect ratio."
     } as any,
+    // Physics fallback: Smooth inclined plane
     {
-        questionText: "Speed ratio is 3:4. Time ratio to cover same distance is?",
-        options: [{ text: "3:4" }, { text: "4:3" }, { text: "1:1" }, { text: "9:16" }],
-        correctOptionIndex: 1,
-        timeTargets: { jee_main: 10, cat: 15, eamcet: 10 },
+        questionText: "A block of mass 4 kg is placed on a smooth inclined plane that makes an angle of 45° with the horizontal. What is the acceleration of the block down the incline? (Take g = 10 m/s²)",
+        options: [{ text: "7.07 m/s²" }, { text: "10 m/s²" }, { text: "5 m/s²" }, { text: "3.54 m/s²" }],
+        correctOptionIndex: 0,
+        timeTargets: { jee_main: 90, cat: 60, eamcet: 75 },
         theOptimalPath: {
             exists: true,
-            steps: ["Speed and Time are inversely proportional.", "Inverse of 3:4 is 4:3."],
-            sanityCheck: "Faster speed takes less time."
+            steps: ["For smooth incline: a = g sinθ", "a = 10 × sin45°", "a = 10 × (1/√2) = 7.07 m/s²"],
+            sanityCheck: "At 45°, acceleration is g/√2 ≈ 7.07"
         },
-        fullStepByStep: { steps: ["S = D/T.", "Ratio T1/T2 = S2/S1."] }
+        fullStepByStep: { steps: ["No friction on smooth surface.", "Component of gravity along incline = mg sinθ.", "a = g sinθ = 7.07 m/s²"] },
+        fsmTag: "pulleys-inclined-planes",
+        diagramRequired: true,
+        visualDescription: "Schematic physics diagram. White background. Smooth inclined plane at 45° to horizontal. Block of mass 4kg on the plane. Smooth surface notation. Angle marked. Line art style. 4:3 aspect ratio."
     } as any
 ];
 
