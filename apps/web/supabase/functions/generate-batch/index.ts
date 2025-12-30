@@ -27,7 +27,7 @@ serve(async (req) => {
             'resistances-series-parallel', 'wheatstone-bridge', 'kirchhoffs-laws', 'capacitors',
         ];
 
-        const subtopicLower = body.subtopic.toLowerCase().replace(/\s+/g, '-');
+        const subtopicLower = body.subtopic.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
         const requiresDiagram = DIAGRAM_REQUIRED_SUBTOPICS.some(sub =>
             subtopicLower.includes(sub) || sub.includes(subtopicLower)
         );

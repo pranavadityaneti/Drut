@@ -4,6 +4,91 @@ import { log } from '../lib/log';
 import { getQuestionsForUser } from './questionCacheService';
 import { EXAM_SYLLABUS_CONFIG } from '../lib/examSyllabusConfig';
 
+// Supabase Edge Function URL for diagram generation
+const SUPABASE_URL = 'https://ukrtaerwaxekonislnpw.supabase.co';
+
+/**
+ * Trigger diagram generation for questions that need it.
+ * This runs asynchronously in the background while the user starts practicing.
+ * @param questions - Array of questions to process for diagram generation
+ * @returns Promise that resolves with updated questions (with diagramUrl if available)
+ */
+export async function triggerDiagramGeneration(
+    questions: QuestionData[]
+): Promise<QuestionData[]> {
+    // Filter questions that need diagrams (have visualDescription and diagramRequired is true)
+    const needsDiagram = questions.filter(q =>
+        (q as any).visualDescription &&
+        ((q as any).diagramRequired === true || (q as any).diagramRequired === undefined)
+    );
+
+    if (needsDiagram.length === 0) {
+        log.info('[sprint] No questions require diagram generation');
+        return questions;
+    }
+
+    log.info(`[sprint] Triggering diagram generation for ${needsDiagram.length} questions`);
+
+    // Get the service key for authenticated Edge Function calls
+    // For client-side, we'll use the anon key and edge function auth
+    const { data: { session } } = await supabase.auth.getSession();
+    const authToken = session?.access_token;
+
+    if (!authToken) {
+        log.warn('[sprint] No auth token available for diagram generation');
+        return questions;
+    }
+
+    // Process diagrams in parallel (fire-and-forget background task)
+    const diagramPromises = needsDiagram.map(async (q) => {
+        try {
+            const response = await fetch(`${SUPABASE_URL}/functions/v1/generate-diagram`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${authToken}`,
+                },
+                body: JSON.stringify({
+                    questionId: q.uuid,
+                    visualDescription: (q as any).visualDescription,
+                }),
+            });
+
+            if (!response.ok) {
+                log.warn(`[sprint] Diagram generation failed for ${q.uuid}: ${response.status}`);
+                return { uuid: q.uuid, diagramUrl: null };
+            }
+
+            const data = await response.json();
+            log.info(`[sprint] Diagram generated for ${q.uuid}: ${data.diagramUrl}`);
+            return { uuid: q.uuid, diagramUrl: data.diagramUrl };
+        } catch (error) {
+            log.error(`[sprint] Diagram generation error for ${q.uuid}:`, error);
+            return { uuid: q.uuid, diagramUrl: null };
+        }
+    });
+
+    // Wait for all diagrams to complete
+    const diagramResults = await Promise.allSettled(diagramPromises);
+
+    // Map diagram URLs back to questions
+    const diagramUrlMap = new Map<string, string>();
+    diagramResults.forEach((result, idx) => {
+        if (result.status === 'fulfilled' && result.value.diagramUrl) {
+            diagramUrlMap.set(result.value.uuid, result.value.diagramUrl);
+        }
+    });
+
+    // Return questions with updated diagramUrls
+    return questions.map(q => {
+        const diagramUrl = diagramUrlMap.get(q.uuid);
+        if (diagramUrl) {
+            return { ...q, diagramUrl } as QuestionData;
+        }
+        return q;
+    });
+}
+
 /**
  * Helper to get random unique items from an array
  */
@@ -221,6 +306,11 @@ export async function startSession(
             // Also, slicing to exact count if we went over (unlikely with this logic but good practice)
             questions = questions.slice(0, targetCount);
         }
+
+        // 3. Trigger diagram generation for questions that need it (async, non-blocking)
+        // This populates diagramUrl for questions with visualDescription
+        log.info(`[sprint] Starting diagram generation for ${questions.length} questions`);
+        questions = await triggerDiagramGeneration(questions);
 
         return { sessionId, questions };
     } catch (error: any) {
