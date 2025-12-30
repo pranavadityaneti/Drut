@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect, useRef, useMemo } from 'react'
 import { cn } from '@drut/shared';
 import { PracticeSetup } from './PracticeSetup';
 import { QuestionData } from '@drut/shared';
-import { getQuestionsForUser } from '@drut/shared'; // from ../../services/questionCacheService';
+import { getQuestionsForUser, triggerDiagramGeneration } from '@drut/shared';
 import { authService } from '@drut/shared';
 const { getCurrentUser } = authService;
 import { getPreloadedQuestion } from '@drut/shared'; // from ../../services/preloaderService';
@@ -129,8 +129,11 @@ export const NewPractice: React.FC = () => {
                         `[cache] Loaded ${questions.length} questions (${metadata.cached} cached, ${metadata.generated} generated)`
                     );
 
+                    // Trigger diagram generation for questions that need it
+                    const questionsWithDiagrams = await triggerDiagramGeneration(questions as QuestionData[]);
+
                     // Prefetch diagram images for faster rendering
-                    const diagramUrls = questions
+                    const diagramUrls = questionsWithDiagrams
                         .map(q => (q as any).diagramUrl)
                         .filter((url): url is string => !!url);
 
@@ -145,7 +148,7 @@ export const NewPractice: React.FC = () => {
                     setQuestionCache((prevCache) => {
                         const newCache = { ...prevCache };
                         const existing = newCache[currentSubTopic] || [];
-                        newCache[currentSubTopic] = [...existing, ...(questions as QuestionData[])];
+                        newCache[currentSubTopic] = [...existing, ...(questionsWithDiagrams as QuestionData[])];
                         questionCacheRef.current = newCache;
                         return newCache;
                     });
