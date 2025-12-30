@@ -38,20 +38,48 @@ export async function generateContent(
         requestBody.systemInstruction = { parts: [{ text: systemInstruction }] };
     }
 
-    const response = await fetch(endpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(requestBody),
-    });
+    // Retry logic with exponential backoff
+    const maxRetries = 3;
+    let lastError: Error | null = null;
 
-    if (!response.ok) {
-        const error = await response.text();
-        console.error('Gemini API error:', error);
-        throw new Error(`Gemini API error: ${response.status}`);
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+        try {
+            const response = await fetch(endpoint, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(requestBody),
+            });
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                console.error(`Gemini API error (attempt ${attempt}/${maxRetries}):`, response.status, errorText);
+
+                // Retry on 429 (rate limit) or 5xx (server errors)
+                if ((response.status === 429 || response.status >= 500) && attempt < maxRetries) {
+                    const delay = Math.pow(2, attempt - 1) * 1000; // 1s, 2s, 4s
+                    console.log(`Retrying in ${delay}ms...`);
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                    continue;
+                }
+
+                throw new Error(`Gemini API error: ${response.status}`);
+            }
+
+            const data = await response.json();
+            return data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+        } catch (error: any) {
+            lastError = error;
+            console.error(`Attempt ${attempt}/${maxRetries} failed:`, error.message);
+
+            if (attempt < maxRetries) {
+                const delay = Math.pow(2, attempt - 1) * 1000;
+                console.log(`Retrying in ${delay}ms...`);
+                await new Promise(resolve => setTimeout(resolve, delay));
+            }
+        }
     }
 
-    const data = await response.json();
-    return data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+    throw lastError || new Error('Gemini API failed after retries');
 }
 
 /**

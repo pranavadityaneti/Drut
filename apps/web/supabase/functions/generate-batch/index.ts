@@ -32,11 +32,30 @@ serve(async (req) => {
             subtopicLower.includes(sub) || sub.includes(subtopicLower)
         );
 
+        // Generate random seed to ensure variety between calls
+        const varietySeed = Math.random().toString(36).substring(2, 8);
+        const scenarioTypes = [
+            'real-world application', 'conceptual understanding', 'numerical calculation',
+            'multi-step problem', 'graph interpretation', 'comparison scenario'
+        ];
+        const randomScenario = scenarioTypes[Math.floor(Math.random() * scenarioTypes.length)];
+
         const batchPrompt = `
-Generate ${count} physics questions for JEE Main.
+Generate ${count} UNIQUE and DIVERSE physics questions for JEE Main.
 Topic: ${body.topic}
 Subtopic: ${body.subtopic}
 Difficulty: ${body.difficulty}
+Variety Seed: ${varietySeed}
+Focus on: ${randomScenario}
+
+CRITICAL - VARIETY REQUIREMENTS:
+1. Each question MUST have DIFFERENT numerical values (masses, angles, coefficients)
+2. Vary the physical scenarios: horizontal surfaces, inclined planes, pulleys, connected systems
+3. Mix question types: find acceleration, find tension, find force, find coefficient
+4. Use diverse angle values (15°, 30°, 37°, 45°, 53°, 60°)
+5. Vary mass values (1-10 kg range with different combinations)
+6. Include both "smooth" (frictionless) and "rough" (with friction) surfaces
+7. NEVER repeat the same problem setup - each question must be recognizably different
 
 CRITICAL - OPTION GENERATION:
 1. FIRST solve the problem step-by-step
@@ -48,6 +67,8 @@ CRITICAL - OPTION GENERATION:
 PHYSICS FORMULAS:
 - Atwood: a = g(m2-m1)/(m1+m2), T = 2*m1*m2*g/(m1+m2)
 - Incline with friction: a = g(sinθ - μcosθ)
+- Incline smooth: a = g sinθ
+- Connected masses on table: a = (m_hanging × g) / (m_table + m_hanging)
 
 ${requiresDiagram ? `
 VISUAL DESCRIPTION (for diagram generation):
@@ -71,13 +92,14 @@ OUTPUT: JSON array of ${count} objects with this exact structure:
 }
 `;
 
-        const SYSTEM_INSTRUCTION = `You are a JEE physics expert.
+        const SYSTEM_INSTRUCTION = `You are a JEE physics expert creating diverse practice questions.
 Generate exactly ${count} questions as a JSON array.
+CRITICAL: Each question must be UNIQUE with different values and scenarios. Never repeat problem setups.
 CRITICAL: Option A must be your calculated answer. correctOptionIndex must be 0.
 Output ONLY valid JSON - no markdown, no explanation.`;
 
-        console.log('[PASS 1] Generating questions...');
-        const response = await generateContent(batchPrompt, SYSTEM_INSTRUCTION, 0.2);
+        console.log('[PASS 1] Generating questions with variety seed:', varietySeed);
+        const response = await generateContent(batchPrompt, SYSTEM_INSTRUCTION, 0.7);
         const jsonStr = extractJSON(response);
         let parsed = JSON.parse(jsonStr);
 

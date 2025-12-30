@@ -48,6 +48,12 @@ function buildUserPrompt(spec: GenerateQuestionRequest) {
         Hard: 'The question should be challenging, requiring advanced problem-solving, deep conceptual understanding, or multi-step reasoning.',
     };
 
+    // Generate variety seed to ensure different questions each call
+    const varietySeed = Math.random().toString(36).substring(2, 8);
+    const massValue = Math.floor(Math.random() * 9) + 1; // 1-10 kg
+    const angleValue = [15, 30, 37, 45, 53, 60][Math.floor(Math.random() * 6)];
+    const frictionCoeff = [0.1, 0.2, 0.3, 0.4, 0.5][Math.floor(Math.random() * 5)];
+
     // Check if this subtopic requires a diagram
     const requiresDiagram = DIAGRAM_REQUIRED_SUBTOPICS.some(sub =>
         spec.subtopic.toLowerCase().includes(sub) ||
@@ -74,11 +80,18 @@ Set "diagramRequired" to false and "visualDescription" to null for this subtopic
 `;
 
     return `
-Generate one practice question for:
+Generate one UNIQUE practice question for:
 - Exam Profile: ${spec.examProfile}
 - Topic: ${spec.topic}
 - Subtopic: ${spec.subtopic}
 - Difficulty Level: ${spec.difficulty}
+- Variety Seed: ${varietySeed}
+- Suggested values to use: mass ~${massValue}kg, angle ~${angleValue}°, μ ~${frictionCoeff}
+
+VARIETY REQUIREMENTS:
+- Use DIFFERENT numerical values than typical textbook problems
+- Try scenarios like: pulley systems, connected masses, blocks on inclines, Atwood machines
+- Vary between finding: acceleration, tension, force, coefficient, angle
 
 ${difficultyGuidance[spec.difficulty]}
 ${diagramInstruction}
@@ -105,8 +118,9 @@ serve(async (req) => {
 
         const userPrompt = buildUserPrompt(body);
 
-        // Generate content using Vertex AI
-        const response = await generateContent(userPrompt, SYSTEM_INSTRUCTION, 0.3);
+        // Generate content using Vertex AI with higher temperature for variety
+        console.log('[generate-question] Generating with variety...');
+        const response = await generateContent(userPrompt, SYSTEM_INSTRUCTION, 0.7);
         const jsonStr = extractJSON(response);
         const question: QuestionItem = JSON.parse(jsonStr);
 
