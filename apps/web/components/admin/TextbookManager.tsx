@@ -206,11 +206,22 @@ export const TextbookManager: React.FC = () => {
     const handleDelete = async (id: string, filePath: string) => {
         if (!confirm('Are you sure? This will delete the book and all associated embeddings.')) return;
         try {
-            await supabase.from('textbooks').delete().match({ id });
-            await supabase.storage.from('textbooks').remove([filePath]);
+            // Delete from DB (cascade deletes chunks)
+            const { error: dbError } = await supabase.from('textbooks').delete().eq('id', id);
+            if (dbError) throw dbError;
+
+            // Delete from Storage
+            const { error: storageError } = await supabase.storage.from('textbooks').remove([filePath]);
+            if (storageError) {
+                console.warn('Storage delete failed (potentially already deleted):', storageError);
+                // We don't throw here to ensure UI updates if DB row is gone
+            }
+
             fetchTextbooks();
-        } catch (error) {
+            alert('Textbook deleted successfully');
+        } catch (error: any) {
             console.error('Delete failed:', error);
+            alert(`Delete failed: ${error.message || error.error_description || JSON.stringify(error)}`);
         }
     };
 
