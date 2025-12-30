@@ -18,8 +18,7 @@ import { SidebarProvider, SidebarInset } from './components/ui/AppShell';
 import { Profile } from './components/Profile';
 import { WaitlistModern } from './components/WaitlistModern';
 import { WaitlistClassic } from './components/WaitlistClassic';
-import { AdminIngestion } from './components/AdminIngestion';
-import { BulkIngest } from './components/BulkIngest';
+import { AdminDashboard } from './components/admin/AdminDashboard';
 import { ModalProvider } from './components/ui/Modal';
 import { PrivacyPolicy } from './components/legal/PrivacyPolicy';
 import { TermsAndConditions } from './components/legal/TermsAndConditions';
@@ -156,11 +155,8 @@ function App() {
           <Route path="/profile" element={
             user ? <AuthenticatedLayout user={user} onLogout={handleLogout} page="profile" /> : <Navigate to="/login" replace />
           } />
-          <Route path="/admin/ingest" element={
-            user ? <AuthenticatedLayout user={user} onLogout={handleLogout} page="admin-ingest" /> : <Navigate to="/login" replace />
-          } />
-          <Route path="/admin/bulk" element={
-            user ? <AuthenticatedLayout user={user} onLogout={handleLogout} page="admin-bulk" /> : <Navigate to="/login" replace />
+          <Route path="/admin" element={
+            user ? <AuthenticatedLayout user={user} onLogout={handleLogout} page="admin" /> : <Navigate to="/login" replace />
           } />
 
           {/* Legal routes */}
@@ -179,7 +175,7 @@ function App() {
 const AuthenticatedLayout: React.FC<{
   user: User;
   onLogout: () => void;
-  page: 'dashboard' | 'practice' | 'sprint' | 'profile' | 'admin-ingest' | 'admin-bulk';
+  page: 'dashboard' | 'practice' | 'sprint' | 'profile' | 'admin';
 }> = ({ user, onLogout, page }) => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -220,8 +216,7 @@ const AuthenticatedLayout: React.FC<{
               {page === 'practice' && <Practice />}
               {page === 'sprint' && <Sprint />}
               {page === 'profile' && <Profile />}
-              {page === 'admin-ingest' && <AdminIngestion />}
-              {page === 'admin-bulk' && <BulkIngest />}
+              {page === 'admin' && <AdminDashboard />}
             </div>
           </main>
           <footer className="py-4 text-center text-sm text-muted-foreground border-t bg-card">

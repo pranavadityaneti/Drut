@@ -208,4 +208,41 @@ export function extractJSON(text: string): string {
     return cleaned;
 }
 
+/**
+ * Generate text embeddings using text-embedding-004
+ * Returns array of 768 floats
+ */
+export async function embedText(text: string): Promise<number[]> {
+    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/text-embedding-004:embedContent?key=${GEMINI_API_KEY}`;
+
+    // Retry logic for embeddings
+    for (let attempt = 1; attempt <= 3; attempt++) {
+        try {
+            const response = await fetch(endpoint, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    content: { parts: [{ text: text.substring(0, 2048) }] }, // Truncate to avoid limits
+                    model: 'models/text-embedding-004'
+                }),
+            });
+
+            if (!response.ok) {
+                if (response.status === 429 && attempt < 3) {
+                    await new Promise(r => setTimeout(r, 1000 * attempt));
+                    continue;
+                }
+                throw new Error(`Embedding API error: ${response.status}`);
+            }
+
+            const data = await response.json();
+            return data.embedding.values;
+        } catch (error) {
+            console.error('Embedding error:', error);
+            if (attempt === 3) throw error;
+        }
+    }
+    return [];
+}
+
 export { SCHEMA_HINT };

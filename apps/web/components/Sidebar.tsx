@@ -61,8 +61,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentPage, setCurrentPage, u
       items: [
         { id: 'profile', label: 'Profile', icon: UserIcon },
         ...(isAdmin ? [
-          { id: 'admin/ingest', label: 'Admin Ingest', icon: Upload },
-          { id: 'admin/bulk', label: 'Bulk Ingest', icon: Shield }
+          { id: 'admin', label: 'Admin Dashboard', icon: Shield }
         ] : []),
         { id: 'faqs', label: 'FAQs', icon: HelpCircle },
         { id: 'contact', label: 'Contact', icon: MessageSquare },
