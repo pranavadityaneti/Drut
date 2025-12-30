@@ -11,7 +11,8 @@ const pdfjsLib = pdfjsLibProxy.default || pdfjsLibProxy;
 // Set worker to CDN to avoid Vite build/worker issues
 try {
     if (typeof window !== 'undefined' && pdfjsLib.GlobalWorkerOptions) {
-        pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
+        // Use unpkg with .mjs extension for v5 compatibility
+        pdfjsLib.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjsLib.version}/build/pdf.worker.min.mjs`;
     }
 } catch (e) {
     console.warn('PDF Worker setup warning:', e);
