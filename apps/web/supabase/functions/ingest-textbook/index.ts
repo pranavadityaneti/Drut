@@ -71,40 +71,52 @@ serve(async (req) => {
         console.log(`[ingest-textbook] Created ${chunks.length} chunks`);
 
         // 4. Generate Embeddings & Store (in batches)
-        // Gemini rate limit is restrictive, so we do it serially or small batches
+        // Parallelize embeddings to speed up processing
+        const BATCH_SIZE = 5; // Process 5 chunks at a time (Limit checks)
         let processed = 0;
 
-        for (let i = 0; i < chunks.length; i++) {
-            const chunkText = chunks[i];
+        for (let i = 0; i < chunks.length; i += BATCH_SIZE) {
+            const batch = chunks.slice(i, i + BATCH_SIZE);
 
-            // Clean text
-            const cleanText = chunkText.replace(/\s+/g, ' ').trim();
-            if (cleanText.length < 50) continue; // Skip tiny chunks
+            // 1. Generate Embeddings in Parallel
+            const embedPromises = batch.map(async (chunkText, batchIdx) => {
+                const globalIdx = i + batchIdx;
+                const cleanText = chunkText.replace(/\s+/g, ' ').trim();
 
-            try {
-                // Generate Embedding
-                const embedding = await embedText(cleanText);
+                if (cleanText.length < 50) return null;
 
-                // Insert into DB
-                const { error: insertError } = await supabase
-                    .from('textbook_chunks')
-                    .insert({
+                try {
+                    const embedding = await embedText(cleanText);
+                    return {
                         textbook_id: textbook.id,
                         content: cleanText,
-                        chunk_index: i,
-                        embedding: `[${embedding.join(',')}]` // Format as vector string
-                    });
+                        chunk_index: globalIdx,
+                        embedding: `[${embedding.join(',')}]`
+                    };
+                } catch (err) {
+                    console.error(`Embedding failed for chunk ${globalIdx}`, err);
+                    return null;
+                }
+            });
 
-                if (insertError) throw insertError;
-                processed++;
+            const results = await Promise.all(embedPromises);
+            const validRows = results.filter(r => r !== null);
 
-            } catch (err) {
-                console.error(`Error processing chunk ${i}:`, err);
-                // Continue with next chunk
+            // 2. Batch Insert into DB
+            if (validRows.length > 0) {
+                const { error: insertError } = await supabase
+                    .from('textbook_chunks')
+                    .insert(validRows);
+
+                if (insertError) {
+                    console.error('Batch insert error:', insertError);
+                } else {
+                    processed += validRows.length;
+                }
             }
 
-            // Simple rate limit helper
-            if (i % 10 === 0) await new Promise(resolve => setTimeout(resolve, 1000));
+            // Small delay to be nice to API limits if needed, but keeping it minimal for speed
+            // await new Promise(r => setTimeout(r, 100)); 
         }
 
         // 5. Update Status
