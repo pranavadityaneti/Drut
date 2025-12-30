@@ -38,8 +38,8 @@ type PracticeState =
 export const NewPractice: React.FC = () => {
     const [examProfile, setExamProfile] = useState<string | null>(null);
     const [topic, setTopic] = useState<string | null>(null);
-    const [currentSubTopics, setCurrentSubTopics] = useState<string[]>([]);
-    const [selectedSubTopic, setSelectedSubTopic] = useState<string | null>(null);
+    const [currentSubTopics, setCurrentSubTopics] = useState<Array<{ value: string, label: string }>>([]);
+    const [selectedSubTopic, setSelectedSubTopic] = useState<string | null>(null); // This is now always a VALUE
     const [difficulty, setDifficulty] = useState<'Easy' | 'Medium' | 'Hard'>('Medium');
 
     const [questionCache, setQuestionCache] = useState<{ [key: string]: QuestionData[] }>({});
@@ -86,9 +86,15 @@ export const NewPractice: React.FC = () => {
     }, [examProfile, topic]);
 
     const currentTopicInfo = useMemo(() => {
-        // Use LABELS for database queries, not values
-        return { topic: topicLabel, subTopic: selectedSubTopic };
-    }, [topicLabel, selectedSubTopic]);
+        // Use subtopic VALUE for API calls (not label)
+        // Get the label for display purposes
+        const subtopicDef = currentSubTopics.find(s => s.value === selectedSubTopic);
+        return {
+            topic: topicLabel,
+            subTopic: selectedSubTopic,  // API uses value
+            subTopicLabel: subtopicDef?.label || selectedSubTopic  // Display uses label
+        };
+    }, [topicLabel, selectedSubTopic, currentSubTopics]);
 
     const ensureQuestionBuffer = useCallback(
         async (startIndex: number) => {
@@ -292,13 +298,12 @@ export const NewPractice: React.FC = () => {
 
         setExamProfile(config.examProfile);
         setTopic(config.topic);
-        setSelectedSubTopic(config.subtopic);
+        setSelectedSubTopic(config.subtopic); // This is a VALUE like 'free-body-diagrams'
         setDifficulty(config.difficulty);
-        setCurrentSubTopics([config.subtopic]); // Or load sibling subtopics if we want to allow switching?
 
-        // Load sibling subtopics for the dropdown
+        // Load sibling subtopics for the dropdown (store both value and label)
         const topicDef = getTopic(config.examProfile, config.topic);
-        const subs = topicDef?.subtopics.map(s => s.label) || [];
+        const subs = topicDef?.subtopics.map(s => ({ value: s.value, label: s.label })) || [];
         setCurrentSubTopics(subs);
 
         setCurrentQuestionIndex(0);
@@ -337,9 +342,9 @@ export const NewPractice: React.FC = () => {
         }
     }, [currentTopicInfo, currentQuestionIndex, loadQuestion]);
 
-    const handleSubTopicSelect = (subTopic: string) => {
-        if (subTopic === selectedSubTopic) return;
-        setSelectedSubTopic(subTopic);
+    const handleSubTopicSelect = (subTopicValue: string) => {
+        if (subTopicValue === selectedSubTopic) return;
+        setSelectedSubTopic(subTopicValue);
         setCurrentQuestionIndex(0);
         setQuestionCache({});
         questionCacheRef.current = {};
@@ -726,10 +731,10 @@ export const NewPractice: React.FC = () => {
                                 setTopic(newTopic);
                                 localStorage.setItem('topic', newTopic);
                                 const topicDef = getTopic(examProfile || '', newTopic);
-                                const subs = topicDef?.subtopics.map(s => s.label) || [];
+                                const subs = topicDef?.subtopics.map(s => ({ value: s.value, label: s.label })) || [];
                                 setCurrentSubTopics(subs);
                                 if (subs.length > 0) {
-                                    setSelectedSubTopic(subs[0]);
+                                    setSelectedSubTopic(subs[0].value); // Use value, not label
                                 }
                                 setCurrentQuestionIndex(0);
                                 setQuestionCache({});
@@ -748,7 +753,7 @@ export const NewPractice: React.FC = () => {
                         <Select
                             value={selectedSubTopic || ''}
                             onChange={(e) => handleSubTopicSelect(e.target.value)}
-                            options={currentSubTopics.map((sub) => ({ value: sub, label: sub }))}
+                            options={currentSubTopics.map((sub) => ({ value: sub.value, label: sub.label }))}
                         />
                     </div>
                 </div>
