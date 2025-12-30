@@ -176,13 +176,18 @@ export const NewPractice: React.FC = () => {
             const { subTopic: currentSubTopic, topic: currentTopic } = currentTopicInfo;
             if (!currentSubTopic || !currentTopic || !examProfile) return;
 
+            log.info(`[loadQuestion] Loading question for ${currentTopic}/${currentSubTopic} (request: ${requestId})`);
+
             ensureQuestionBuffer(index);
 
             if (index === 0) {
                 const preloaded = getPreloadedQuestion(examProfile, currentTopic, currentSubTopic);
                 if (preloaded) {
                     // Check for race condition before applying state
-                    if (currentRequestId.current !== requestId) return;
+                    if (currentRequestId.current !== requestId) {
+                        log.warn(`[loadQuestion] Stale request ${requestId}, ignoring preloaded`);
+                        return;
+                    }
 
                     setQuestionData(preloaded);
                     setCurrentQuestionUuid(preloaded.uuid);
@@ -201,7 +206,10 @@ export const NewPractice: React.FC = () => {
                 const cachedQuestion = questionCache[currentSubTopic][index];
 
                 // Check for race condition
-                if (currentRequestId.current !== requestId) return;
+                if (currentRequestId.current !== requestId) {
+                    log.warn(`[loadQuestion] Stale request ${requestId}, ignoring cached`);
+                    return;
+                }
 
                 setQuestionData(cachedQuestion);
                 setCurrentQuestionUuid(cachedQuestion.uuid);
@@ -218,6 +226,7 @@ export const NewPractice: React.FC = () => {
                     throw new Error('Please log in to practice');
                 }
 
+                log.info(`[loadQuestion] Fetching from API for ${currentTopic}/${currentSubTopic}`);
                 const { questions } = await getQuestionsForUser(
                     user.id,
                     examProfile,
@@ -228,13 +237,19 @@ export const NewPractice: React.FC = () => {
                 );
 
                 // Check for race condition after async call
-                if (currentRequestId.current !== requestId) return;
+                if (currentRequestId.current !== requestId) {
+                    log.warn(`[loadQuestion] Stale request ${requestId} after API call, ignoring`);
+                    // Still need to turn off loading for this stale request path
+                    setIsLoading(false);
+                    return;
+                }
 
                 if (questions.length === 0) {
                     throw new Error('No questions available. Please try again later.');
                 }
 
                 const data = questions[0];
+                log.info(`[loadQuestion] Received question: ${data.questionText?.substring(0, 50)}...`);
                 setQuestionData(data);
                 setCurrentQuestionUuid(data.uuid);
                 setCurrentFsmTag(data.fsmTag);
@@ -249,8 +264,13 @@ export const NewPractice: React.FC = () => {
                 startTimer();
                 ensureQuestionBuffer(index + 1);
             } catch (err: any) {
-                // Ignore errors if request is stale
-                if (currentRequestId.current !== requestId) return;
+                // Log error but still handle loading state
+                log.error(`[loadQuestion] Error: ${err.message}`);
+
+                if (currentRequestId.current !== requestId) {
+                    setIsLoading(false);
+                    return;
+                }
 
                 if (err.message?.includes('QUOTA_EXCEEDED') || err.message?.includes('429')) {
                     setError(
@@ -260,13 +280,11 @@ export const NewPractice: React.FC = () => {
                     setError(err.message || 'An unknown error occurred.');
                 }
             } finally {
-                // Only turn off loading if request is still fresh
-                if (currentRequestId.current === requestId) {
-                    setIsLoading(false);
-                }
+                // Always turn off loading - this was our request at start
+                setIsLoading(false);
             }
         },
-        [currentTopicInfo, questionCache, ensureQuestionBuffer, examProfile]
+        [currentTopicInfo, questionCache, ensureQuestionBuffer, examProfile, difficulty]
     );
 
     const loadProfileSettings = useCallback((config: typeof setupConfig) => {
