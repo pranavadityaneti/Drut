@@ -38,7 +38,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentPage, setCurrentPage, u
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   // Admin Detection
-  const isAdmin = user?.email === 'pranav.n@ideaye.in';
+  const isAdmin = user?.email === 'pranav.n@ideaye.in' || user?.email === 'pranav.n@drut.club';
 
   const navGroups: NavGroup[] = [
     {
