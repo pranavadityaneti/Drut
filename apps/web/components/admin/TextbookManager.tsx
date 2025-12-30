@@ -3,11 +3,18 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../ui
 import { Button } from '../ui/Button';
 import { supabase } from '@drut/shared';
 import { Upload, Book, FileText, CheckCircle, AlertCircle, Loader2, Trash2 } from 'lucide-react';
-import * as pdfjsLib from 'pdfjs-dist';
+import * as pdfjsLibProxy from 'pdfjs-dist';
+// @ts-ignore
+const pdfjsLib = pdfjsLibProxy.default || pdfjsLibProxy;
 
 // Set worker to CDN to avoid Vite build/worker issues
-// Using specific version matching the installed package is best, but generic latest 3.x is usually fine for basic extraction
-pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
+try {
+    if (typeof window !== 'undefined' && pdfjsLib.GlobalWorkerOptions) {
+        pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
+    }
+} catch (e) {
+    console.warn('PDF Worker setup warning:', e);
+}
 
 interface Textbook {
     id: string;
