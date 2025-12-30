@@ -13,7 +13,7 @@ serve(async (req) => {
     }
 
     try {
-        const { filePath } = await req.json();
+        const { filePath, textContent } = await req.json();
 
         if (!filePath) {
             throw new Error('Missing filePath');
@@ -26,20 +26,29 @@ serve(async (req) => {
         const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
         const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-        // 1. Download PDF
-        const { data: fileData, error: downloadError } = await supabase.storage
-            .from('textbooks')
-            .download(filePath);
+        let fullText = '';
 
-        if (downloadError) throw downloadError;
+        if (textContent) {
+            console.log(`[ingest-textbook] Received text content (${textContent.length} chars) from client`);
+            fullText = textContent;
+        } else {
+            console.log('[ingest-textbook] No text provided, attempting server-side parse...');
+            // 1. Download PDF
+            const { data: fileData, error: downloadError } = await supabase.storage
+                .from('textbooks')
+                .download(filePath);
 
-        // 2. Parse PDF Text
-        const arrayBuffer = await fileData.arrayBuffer();
-        const buffer = Buffer.from(arrayBuffer);
-        const pdfData = await pdf(buffer);
-        const fullText = pdfData.text;
+            if (downloadError) throw downloadError;
 
-        console.log(`[ingest-textbook] Extracted ${fullText.length} characters`);
+            // 2. Parse PDF Text
+            const arrayBuffer = await fileData.arrayBuffer();
+            // @ts-ignore
+            const buffer = Buffer.from(arrayBuffer);
+            const pdfData = await pdf(buffer);
+            fullText = pdfData.text;
+        }
+
+        console.log(`[ingest-textbook] Ready to chunk ${fullText.length} characters`);
 
         // Get textbook ID from DB to link chunks
         const { data: textbook, error: tbError } = await supabase

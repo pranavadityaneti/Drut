@@ -38,6 +38,7 @@
     "lucide-react": "^0.561.0",
     "p-limit": "^5.0.0",
     "papaparse": "^5.5.3",
+    "pdfjs-dist": "^5.4.530",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-dropzone": "^14.3.8",

@@ -3,7 +3,11 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../ui
 import { Button } from '../ui/Button';
 import { supabase } from '@drut/shared';
 import { Upload, Book, FileText, CheckCircle, AlertCircle, Loader2, Trash2 } from 'lucide-react';
-import { Select } from '../ui/Select'; // Assuming we have this, or use native select
+import * as pdfjsLib from 'pdfjs-dist';
+
+// Set worker to CDN to avoid Vite build/worker issues
+// Using specific version matching the installed package is best, but generic latest 3.x is usually fine for basic extraction
+pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
 
 interface Textbook {
     id: string;
@@ -11,34 +15,53 @@ interface Textbook {
     subject: string;
     board: string;
     class_level: string;
-    file_path: string; // Added field
+    file_path: string;
     status: 'processing' | 'ready' | 'error';
     uploaded_at: string;
 }
 
 export const TextbookManager: React.FC = () => {
-    const [textbooks, setTextbooks] = useState<Textbook[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [isUploading, setIsUploading] = useState(false);
-
-    // Upload Form State
-    const [file, setFile] = useState<File | null>(null);
+    const [user, setUser] = useState<any>(null);
     const [title, setTitle] = useState('');
     const [subject, setSubject] = useState('Physics');
-    const [board, setBoard] = useState('CBSE');
+    const [board, setBoard] = useState('Ncert');
     const [classLevel, setClassLevel] = useState('11');
+    const [file, setFile] = useState<File | null>(null);
+    const [isUploading, setIsUploading] = useState(false);
+    const [uploadStatus, setUploadStatus] = useState(''); // Text feedback for user
+    const [params, setParams] = useState({
+        q: '',
+        subject: '',
+        board: '',
+        class_level: ''
+    });
+
+    const [textbooks, setTextbooks] = useState<Textbook[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        // Fetch User
+        supabase.auth.getUser().then(({ data }) => setUser(data.user));
+    }, []);
 
     useEffect(() => {
         fetchTextbooks();
-    }, []);
+    }, [params]);
 
     const fetchTextbooks = async () => {
         try {
-            const { data, error } = await supabase
+            setLoading(true);
+            let query = supabase
                 .from('textbooks')
                 .select('*')
                 .order('uploaded_at', { ascending: false });
 
+            if (params.subject && params.subject !== 'all') query = query.eq('subject', params.subject);
+            if (params.board && params.board !== 'all') query = query.eq('board', params.board);
+            if (params.class_level && params.class_level !== 'all') query = query.eq('class_level', params.class_level);
+            if (params.q) query = query.ilike('title', `%${params.q}%`);
+
+            const { data, error } = await query;
             if (error) throw error;
             setTextbooks(data || []);
         } catch (error) {
@@ -51,32 +74,64 @@ export const TextbookManager: React.FC = () => {
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
             const selectedFile = e.target.files[0];
-            if (selectedFile.size > 10 * 1024 * 1024) {
-                alert('Warning: File is larger than 10MB. Processing might timeout on the free tier.');
-            }
             setFile(selectedFile);
-            // Auto-fill title if empty
             if (!title) {
                 setTitle(selectedFile.name.replace('.pdf', ''));
             }
         }
     };
 
+    /**
+     * Extracts text using Client-Side Browser RAM.
+     * Pros: No 50MB Server limit, no 128MB RAM Server Crash.
+     */
+    const extractTextClientSide = async (file: File): Promise<string> => {
+        try {
+            const arrayBuffer = await file.arrayBuffer();
+            const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer });
+            const pdf = await loadingTask.promise;
+
+            let fullText = '';
+            console.log(`[Client] PDF loaded: ${pdf.numPages} pages.`);
+
+            // Extract text page by page
+            for (let i = 1; i <= pdf.numPages; i++) {
+                const page = await pdf.getPage(i);
+                const textContent = await page.getTextContent();
+                const pageText = textContent.items.map((item: any) => item.str).join(' ');
+                fullText += pageText + ' \n';
+
+                // Optional: Update progress
+                if (i % 10 === 0) setUploadStatus(`Extracting text: Page ${i}/${pdf.numPages}...`);
+            }
+            return fullText;
+        } catch (error) {
+            console.error('Client-side parsing failed:', error);
+            throw new Error('Failed to extract text. File might be corrupted or encrypted.');
+        }
+    };
+
     const handleUpload = async () => {
-        if (!file) return;
-        setIsUploading(true);
+        if (!file || !title) return;
 
         try {
-            // 1. Upload file to Storage
-            const filePath = `textbooks/${Date.now()}_${file.name.replace(/\s+/g, '_')}`;
+            setIsUploading(true);
+            setUploadStatus('Uploading PDF for archival...');
+
+            // 1. Upload File to Storage (Archival)
+            const fileExt = file.name.split('.').pop();
+            const fileName = `${title.replace(/\s+/g, '_')}_${Date.now()}.${fileExt}`;
+            const filePath = `${fileName}`;
+
             const { error: uploadError } = await supabase.storage
-                .from('textbooks') // Ensure this bucket exists!
+                .from('textbooks')
                 .upload(filePath, file);
 
             if (uploadError) throw uploadError;
 
-            // 2. Insert metadata to DB
-            const { error: dbError } = await supabase
+            // 2. Insert Metadata into DB
+            setUploadStatus('Registering textbook...');
+            const { data: tbData, error: dbError } = await supabase
                 .from('textbooks')
                 .insert({
                     title,
@@ -84,26 +139,56 @@ export const TextbookManager: React.FC = () => {
                     board,
                     class_level: classLevel,
                     file_path: filePath,
-                    status: 'processing' // Edge Function will pick this up
-                });
+                    status: 'processing',
+                    uploaded_by: user?.id
+                })
+                .select()
+                .single();
 
             if (dbError) throw dbError;
 
-            // 3. Reset form and refresh list
-            setFile(null);
-            setTitle('');
-            await fetchTextbooks();
+            // 3. Extract Text Client-Side
+            setUploadStatus('Extracting text (Browser)...');
+            let extractedText = '';
+            try {
+                extractedText = await extractTextClientSide(file);
+                console.log(`Extracted ${extractedText.length} characters.`);
 
-            // Trigger Edge Function (fire and forget, or let trigger handle it)
-            // For now, assuming DB trigger or separate Cron will handle 'processing' rows
-            // Or we can invoke explicitly:
-            await supabase.functions.invoke('ingest-textbook', {
-                body: { filePath } // Payload specific to function
+                if (extractedText.trim().length < 50) {
+                    alert('Warning: Extracted text is very short (Scanned PDF?). AI context might be empty.');
+                }
+            } catch (err) {
+                console.warn('Client extraction failed:', err);
+                alert('Text extraction failed. Processing will continue on server (may fail if file is large).');
+            }
+
+            // 4. Send Text to Backend
+            setUploadStatus('Ingesting chunks...');
+            const { error: ingestError } = await supabase.functions.invoke('ingest-textbook', {
+                body: {
+                    filePath,
+                    textContent: extractedText
+                }
             });
 
+            if (ingestError) {
+                console.error('Ingest request failed:', ingestError);
+                // Mark error in DB
+                await supabase.from('textbooks').update({ status: 'error', error_message: 'Ingestion Request Failed' }).eq('id', tbData.id);
+            } else {
+                console.log('Ingestion triggered successfully');
+            }
+
+            // Reset
+            setFile(null);
+            setTitle('');
+            setUploadStatus('');
+            fetchTextbooks();
+
         } catch (error: any) {
-            console.error('Upload failed:', error.message);
+            console.error('Upload failed:', error);
             alert(`Upload failed: ${error.message}`);
+            setUploadStatus('Failed');
         } finally {
             setIsUploading(false);
         }
@@ -111,15 +196,9 @@ export const TextbookManager: React.FC = () => {
 
     const handleDelete = async (id: string, filePath: string) => {
         if (!confirm('Are you sure? This will delete the book and all associated embeddings.')) return;
-
         try {
-            // Delete from DB (cascade deletes chunks)
             await supabase.from('textbooks').delete().match({ id });
-
-            // Delete from Storage
-            // Note: We might need the full path logic here if filePath stored is relative
-            // await supabase.storage.from('textbooks').remove([filePath]);
-
+            await supabase.storage.from('textbooks').remove([filePath]);
             fetchTextbooks();
         } catch (error) {
             console.error('Delete failed:', error);
@@ -128,7 +207,6 @@ export const TextbookManager: React.FC = () => {
 
     return (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Upload Sidebar */}
             <Card className="lg:col-span-1 h-fit">
                 <CardHeader>
                     <CardTitle className="flex items-center gap-2">
@@ -160,41 +238,41 @@ export const TextbookManager: React.FC = () => {
                     <div className="grid grid-cols-2 gap-2">
                         <div>
                             <label className="text-sm font-medium">Subject</label>
-                            <select
+                            <Select
                                 value={subject}
-                                onChange={(e) => setSubject(e.target.value)}
-                                className="w-full p-2 mt-1 border rounded-md text-sm bg-background"
-                            >
-                                <option>Physics</option>
-                                <option>Chemistry</option>
-                                <option>Maths</option>
-                            </select>
+                                onValueChange={setSubject}
+                                options={[
+                                    { value: 'Physics', label: 'Physics' },
+                                    { value: 'Chemistry', label: 'Chemistry' },
+                                    { value: 'Maths', label: 'Maths' }
+                                ]}
+                            />
                         </div>
                         <div>
                             <label className="text-sm font-medium">Board</label>
-                            <select
+                            <Select
                                 value={board}
-                                onChange={(e) => setBoard(e.target.value)}
-                                className="w-full p-2 mt-1 border rounded-md text-sm bg-background"
-                            >
-                                <option>CBSE</option>
-                                <option>TSBIE</option>
-                                <option>ICSE</option>
-                                <option>Ncert</option>
-                            </select>
+                                onValueChange={setBoard}
+                                options={[
+                                    { value: 'CBSE', label: 'CBSE' },
+                                    { value: 'TSBIE', label: 'TSBIE' },
+                                    { value: 'ICSE', label: 'ICSE' },
+                                    { value: 'Ncert', label: 'Ncert' }
+                                ]}
+                            />
                         </div>
                     </div>
 
                     <div>
                         <label className="text-sm font-medium">Class</label>
-                        <select
+                        <Select
                             value={classLevel}
-                            onChange={(e) => setClassLevel(e.target.value)}
-                            className="w-full p-2 mt-1 border rounded-md text-sm bg-background"
-                        >
-                            <option>11</option>
-                            <option>12</option>
-                        </select>
+                            onValueChange={setClassLevel}
+                            options={[
+                                { value: '11', label: '11' },
+                                { value: '12', label: '12' }
+                            ]}
+                        />
                     </div>
 
                     <Button
@@ -202,12 +280,16 @@ export const TextbookManager: React.FC = () => {
                         disabled={!file || isUploading}
                         className="w-full"
                     >
-                        {isUploading ? <Loader2 className="animate-spin h-4 w-4 mr-2" /> : 'Upload & Process'}
+                        {isUploading ? (
+                            <div className="flex items-center gap-2">
+                                <Loader2 className="animate-spin h-4 w-4" />
+                                {uploadStatus || 'Processing...'}
+                            </div>
+                        ) : 'Upload & Process'}
                     </Button>
                 </CardContent>
             </Card>
 
-            {/* List of Textbooks */}
             <Card className="lg:col-span-2">
                 <CardHeader>
                     <CardTitle className="flex items-center gap-2">
@@ -253,11 +335,9 @@ export const TextbookManager: React.FC = () => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="flex items-center gap-2">
-                                        <Button variant="ghost" size="sm" className="text-red-500 hover:text-red-600 hover:bg-red-50" onClick={() => handleDelete(book.id, book.file_path)}>
-                                            <Trash2 className="h-4 w-4" />
-                                        </Button>
-                                    </div>
+                                    <Button variant="ghost" size="sm" className="text-red-500 hover:text-red-600 hover:bg-red-50" onClick={() => handleDelete(book.id, book.file_path)}>
+                                        <Trash2 className="h-4 w-4" />
+                                    </Button>
                                 </div>
                             ))}
                         </div>
