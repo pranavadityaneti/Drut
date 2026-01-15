@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from './ui/Card';
 import { Button } from './ui/Button';
 import { updateOnboardingProfile } from '@drut/shared'; // from ../services/profileService';
-import { authService, EXAM_TAXONOMY, getExamOptions } from '@drut/shared';
+import { authService, getExamOptions } from '@drut/shared';
+import { EXAM_TAXONOMY } from '../../../packages/shared/src/lib/taxonomy';
 // Destructure what we need or use directly
 const { getCurrentUser } = authService;
 import { useNavigate } from 'react-router-dom';
@@ -17,14 +18,11 @@ export const Onboarding: React.FC<OnboardingProps> = () => {
 
     const [formData, setFormData] = useState({
         full_name: '',
-        class: '' as '11' | '12' | 'Reappear' | '',
+        class: '' as '11' | '12' | 'Both' | '',
         target_exams: [] as string[],
     });
 
-    const EXAM_OPTIONS = [
-        "CAT", "JEE Main", "AP EAPCET", "TG EAPCET",
-        "MHT CET", "WBJEE", "KCET", "GUJCET", "JEE Advanced"
-    ];
+    const EXAM_OPTIONS = EXAM_TAXONOMY.map(e => e.label);
 
     const handleExamToggle = (exam: string) => {
         setFormData(prev => {
@@ -53,7 +51,7 @@ export const Onboarding: React.FC<OnboardingProps> = () => {
 
             await updateOnboardingProfile(user.id, {
                 full_name: formData.full_name,
-                class: formData.class as '11' | '12' | 'Reappear',
+                class: formData.class as '11' | '12' | 'Both',
                 target_exams: formData.target_exams,
             });
 
@@ -95,7 +93,7 @@ export const Onboarding: React.FC<OnboardingProps> = () => {
                     <div className="space-y-2">
                         <label className="text-sm font-medium leading-none">Class <span className="text-destructive">*</span></label>
                         <div className="grid grid-cols-3 gap-2">
-                            {['11', '12', 'Reappear'].map((cls) => (
+                            {['11', '12', 'Both'].map((cls) => (
                                 <div
                                     key={cls}
                                     className={cn(
@@ -104,7 +102,7 @@ export const Onboarding: React.FC<OnboardingProps> = () => {
                                     )}
                                     onClick={() => setFormData({ ...formData, class: cls as any })}
                                 >
-                                    {cls === 'Reappear' ? 'Reappear' : `Class ${cls}`}
+                                    {cls === 'Both' ? 'Both (Class 11 & 12)' : `Class ${cls}`}
                                 </div>
                             ))}
                         </div>

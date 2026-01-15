@@ -1,0 +1,1195 @@
+
+
+Board  of  Intermediate  Education, Andhra  Pradesh
+Telugu  and  Sanskrit Akademi, Andhra  Pradesh
+Permission & Support by:
+National Council of Educational Research and Training
+New  Delhi
+Text Book for
+INTERMEDIATE
+First Year
+Physics
+
+ALL RIGHTS RESERVED
+No part of this publication may be reproduced, stored in a retrieval system or transmitted,
+in any form or by any m eans, electronic, mechanical, photocopying, recording or
+otherwise without this prior permission of the publisher.
+This book is sold subject to the condition that it shall not, by way of trade, be lent, resold,
+hired out or otherwise disposed of without the publisher’s consent, in any form of binding
+or cover other than that in which it is published.
+The correct price of these publication is the price printed on this page, any revised price
+indicated by rubber stam p or by a sticker or by any other m eans is incorrect and is
+unacceptable.
+Published by Telugu and Sanskrit Akademi, Andhra Pradesh under the Centrally
+Sponsored Scheme of Production of Books and Literature in Regional Languages at the
+University level of the Governm ent of India in the Ministry of Human Resource
+Development, New Delhi.
+Intermediate
+First Year
+Physics
+Text Book
+Pages : Pp xvi + 400 + iv
+© National  Council  of  Educational
+   Research and Training, 2007
+Reprint  : 2023
+Copies  : 38,000
+Permission and Prescribed by
+Board of Intermediate Education, A.P.
+Vijayawada.
+Published, Printed & Distributed by
+Telugu and Sanskrit Akademi, A.P.
+Price : Rs. 203.00
+Laser Typeset by Pavan Graphics, Hyderabad
+Published and Printed by
+M/s GBR Offset Printers & Publishers
+Surampalli, NTR Dist.
+on behalf of  Telugu and Sanskrit Akademi
+
+Y.S. JAGAN MOHAN REDDY
+AMARAVATI
+CHIEF  MINISTER
+ANDHRA PRADESH
+MESSAGE
+I congratulate  Akademi for starting its activities with printing of textbooks from
+the  academic year  2021 –  22.
+Education is a real asset which cannot be stolen by anyone and it is the foundation
+on which children build their future. As the world has become a global village, children
+will have to compete with the world as they grow up. For this there is every need for
+good books and good education.
+Our government has brought in many changes in the education system and more
+are to come. The government has been taking care to provide education to the poor
+and needy through various measures, like developing infrastructure, upgrading the skills
+of teachers, providing incentives to the children and parents to pursue education. Nutritious
+mid-day meal and converting Anganwadis into pre-primary schools with English as medium
+of instruction are the steps taken to initiate children into education from a young age.
+Besides introducing CBSE syllabus and Telugu as a compulsory subject, the government
+has taken up numerous innovative programmes.
+The revival of the Akademi also took place during the tenure of our government
+as it was neglected after the State was bifurcated. The Akademi, which was started on
+August 6, 1968 in the undivided state of Andhra Pradesh, was printing text books,
+works of popular writers and books for competitive exams and personality development.
+Our government has decided to make available all kinds of books required for
+students and employees through Akademi, with headquarters at Tirupati.
+I extend my best wishes to the Akademi and hope it will regain its past glory.
+(Y.S. JAGAN MOHAN REDDY)
+
+Dr. NANDAMURI  LAKSHMIPARVATHI
+               M.A., M.Phil., Ph.D.
+Chairperson, (Cabinet Minister Rank)
+Telugu and Sanskrit Akademi, A.P.
+Message  of  Chairperson,  Telugu  and  Sanskrit  Akademi,  A.P.
+In accordance with the syllabus developed by the Board of Intermediate, State
+Council for Higher Education, SCERT etc., we design high quality Text books by recruiting
+efficient Professors, department heads and faculty members from various Universities and
+Colleges as writers and editors. We are taking steps to print the required number of these
+books in a timely manner and distribute through the Akademi’s Regional Centers present
+across the Andhra Pradesh.
+In addition to text books, we strive to keep monographs, dictionaries, dialect texts,
+question banks, contact texts, popular texts, essays, linguistics texts, school level dictionaries,
+glossaries, etc., updated and printed and made available to students from time to time.
+For competitive examinations conducted by the Andhra Pradesh Public Service
+Commission and for Entrance examinations conducted by various Universities, the contents
+of  the Akademi publications are taken as standard.  So, I want all the students and
+Employees to make use of  Akademi books of high standards for their golden future.
+Congratulations and best wishes to all of you.
+(NANDAMURI    LAKSHMIPARVATHI)
+
+Higher Education Department
+Government of Andhra Pradesh
+J. SYAMALA RAO, I.A.S.,
+Principal Secretary to Government
+MESSAGE
+I Congratulate Telugu and Sanskrit Akademi for taking up the initiative of
+printing and distributing textbooks in both Telugu and English media within a short
+span of establishing Telugu and Sanskrit Akademi.
+Number of students of Andhra Pradesh are competing of National Level for
+admissions into Medicine and Engineering courses.  In order to help these students
+Telugu and Sanskrit Akademi consultation with NCERT redesigned their Textbooks
+to suit the requirement of National Level Examinations in a lucid language.
+As the content in Telugu and Sanskrit Akademi books is highly informative
+and authentic, printed in multi-color on high quality paper and will be made available
+to the students in a time bound manner. I hope all the students in Andhra Pradesh
+will utilize the Akademi textbooks for better understanding of the subjects to compete
+of state and national levels.
+(J. SYAMALA RAO)
+
+THE CONSTITUTION OF INDIA
+PREAMBLE
+WE,  THE  PEOPLE  OF  INDIA,  having
+solemnly  resolved  to  constitute  India  into  a
+[SOVEREIGN SOCIALIST SECULAR
+DEMOCRATIC  REPUBLIC] and to  secure to  all
+its citizens:
+JUSTICE, social, economic and political;
+LIBERTY of thought, expression, belief, faith
+and worship;
+EQUALITY of status and of opportunity; and
+to promote among them all
+FRATERNITY  assuring  the  dignity  of  the
+individual and the [unity and integrity of the
+Nation];
+IN OUR CONSTITUENT ASSEMBLY this
+twenty-sixth day of November, 1949 do HEREBY
+ADOPT,  ENACT AND GIVE TO OURSELVES
+THIS CONSTITUTION.
+
+Ch ai r per son , Adv i sor y  Gr ou p f or  T ex t book s i n  Sc i en c e an d M at h em at i c s
+J .V. Nar l i k ar, Emeritus Professor, Ch air man ,  Advi sor y Commi ttee, In ter  Un i versity Cen t re
+for  Ast r on om y an d Ast r op h ysi cs (IUCAA), Gan eshkh i n d, Pu n e Un i ver si t y, Pu n e
+Ch i ef  Advi sor
+A.W. J osh i , Professor, Hon or ar y Visi ti n g Scien ti st , NCRA, Pu n e (For m er ly at  Depart m en t
+of Ph ysi cs, Un i ver si t y of Pu n e)
+Mem ber s
+An u r ad h a M at h u r, PGT , M oder n  Sch ool , Vasan t  Vi h ar, New D el h i
+Ch i t r a  Go el, PGT,  Raj k i ya  Pr at i b h a  Vi k as  Vi d yal aya,  Tyagr aj   Nagar,  Lod h i   Road ,
+New D elh i
+Gagan  Gu pt a, Read er, DESM , NCERT, New Delh i
+H .C.  Pr ad h an , Professor,  H om i   Bh abh a  Cen t r e  of  Sci en ce  Edu cat i on ,  Tat a  In st i t u t e
+of Fu n dam en t al  Resear ch , V.N. Pu r av M ar g, M an k h u r d, M u m bai
+N. Pan ch apak esan , Professor (Retd.), Departmen t of Ph ysics an d Astroph ysics, University
+of  D el h i , Del h i
+P.K . Sr i v ast ava, Professor (Ret d.), D i rect or, CSEC,  Un i ver si t y of D el h i , D el h i
+P.K . M oh an t y , PGT, Sai n i k  Sch ool , Bh u ban eswar
+P.C.  Agar w al , Read er,  Regi on al   In st i t u t e  of  Ed u cat i on ,  NCERT,  Sach i val aya  M ar g,
+Bh u ban eswar
+R. J osh i , Lecturer (S.G.), D ESM , NCERT, New D elh i
+S. Rai  Ch ou d h ar y , Professor, D epar t m en t  of Ph ysics an d Ast r oph ysi cs, Un i ver si ty of
+D el h i ,  D el h i
+S.K . Dash , Read er, DESM, NCERT, New D elh i
+Sh er  Si n gh , PGT, ND M C Navyu g Sch ool , Lodh i  Road, New D el h i
+S.N. Pr abh ak ar a, PGT, D M  Sch ool,  Region al  In st i t u t e of Edu cat ion , NCERT, M ysor e
+Th i yam  J ek en dr a Si n gh , Professor, Departmen t of Physics, University of Man ipu r, Imphal
+V.P. Sr i v ast av a, Read er, D ESM , NCERT, New D elh i
+M em ber -Coor di n at or
+B.K . Sh ar m a, Professor,  D ESM , NCERT, New D elh i
+Tex t book   Dev el op m en t   Com m i t t ee (NCERT )
+
+TEXT  BOOK  DEVELOPMENT
+COMMITTEE  - A.P. EDITION
+Coordinator
+Dr. S. Sreehari Sastry
+Professor,  Department of    Physics,
+Acharya  Nagarjuna  University  (ANU)
+Editors
+Dr. Mudigonda Salagram
+Professor  of  Physics  (Retd.),
+RGUKT, IIIT, Nuzvid, Krishna Dist.
+Osmania University, Hyderabad.
+Dr. B. Krishnarajulu Naidu
+Professor  of  Physics  (Retd.),
+Osmania University, Hyderabad.
+Members
+Dr. Mudigonda Salagram
+Professor  of  Physics  (Retd.),
+RGUKT, IIIT, Nuzvid, Krishna Dist.
+Osmania University, Hyderabad.
+Dr. B. Krishnarajulu Naidu
+Professor  of  Physics  (Retd.),
+Osmania University, Hyderabad.
+D. Kameswar Rao
+Jr.  Lecturer,
+Dr. L. Bullayya Junior College,
+Visakhapatnam.
+V. V. R. Lakshmi
+Jr. Lecturer, Govt. Junior College,
+Maredpally, Secunderabad.
+B. Surendranath Reddy
+Lecturer, Ramayya I.I.T Institute,
+Hyderabad.
+Dr. N. Bhaskara Rao
+Lecturer, Narayana Junior College,
+S.R. Nagar,  Hyderabad.
+SUBJECT  COMMITTEE
+MEMBERS  -  BIE, A.P.
+Dr. S. Sreehari Sastry
+Professor,  Department  of  Physics,
+Acharya  Nagarjuna  University  (ANU)
+Dr. K. Gnana Prasoona
+Professor,  Dr. B. R. Ambedkar Open University,
+Hyderabad.
+Dr. V. V. R. Narasimha Rao
+Professor  (Retd),  Dept.  of  Physics,
+Sri Venkateshwara  University,
+Thirupathi, Chittoor Dist
+Dr. T. Ramanujappa
+Professor, Dept of Physics,
+Sri Krishnadevaraya University,  Ananthapur (A.P)
+Dr. S. Ramana Murthy
+Professor  (Retd.),  Dept  of  Physics,
+Osmania University, Hyderabad.
+Dr. K. Nageshwar, Reader (Retd.),
+Dr. K. Subramanyam Naidu
+Reader,  P. V.  K.  N  Govt.  Degree  College,
+Chittoor Dist.
+K.  Prasada  Rao
+Principal, Govt Junior College,
+Sattenapalli, Guntur Dist
+Y. Sudhakar
+Principal, Govt. Junior College,
+Mallial, Karimnagar Dist.
+Dr. P. Eswara Kumar
+Lecturer,  S. V. A Govt.  Degree  College  (Men),
+Sri Kalahasthy, Chittoor Dist
+V. V. R. Lakshmi
+Jr. Lecturer, Govt. Junior College,
+Maredpally, Secunderabad.
+D. Kameswar Rao
+Jr. Lecturer, Dr. L. Bullayya Junior College,
+Visakhapatnam.
+N. Chenna Keshava Chowdary
+Jr. Lecturer,  KSR. Govt Jr. College (G),
+Ananthapur
+
+Telugu and Sanskrit Akademi Coordinating Committee
+Sri V. Ramakrishna, I.R.S.
+Director
+Dr. M. Koteswaramma, M.Com., Ph.D.
+Research  Officer
+Dr. S.A.T. Rajyalakshmi, M.Sc., B.Ed., M.A., Ph.D.
+Research  Assistant
+Dr. K. Glory Sathyavani, M.Sc., Ph.D., M.Ed.
+Research  Assistant
+Text Book Review Committee
+Sri K. Venugopala Sarma
+Principal, GJC Girls
+Gooty, Anantapur Dt.
+Smt.  T. Gnaneswari
+J.L. in Physics, GJC
+Veldurthy, Kurnool Dt.
+Coordinating Committee of Board of Intermediate Education,  A.P.
+Sri M.V. Seshagiri Babu, I.A.S., Secretary
+Board of  Intermediate Education, Andhra Pradesh
+Educational  Research  &  Training  Wing (Text  Books)
+Dr. A. SrinivasuluSri. M. Ravi Sankar Naik
+ProfessorAssistant  Professor
+Dr. M. Ramana ReddySri  J.V. Ramana Gupta
+Assistant  ProfessorAssistant  Professor
+Sri Seethiraju Nagabhushanam
+J.L. in Physics
+APTWR  College  of  Excellence
+Vissannapet, NTR Dt.
+Sri Kotwala Naveen
+J.L. in Physics, GJC, Peapully
+Nandyal Dt.
+
+Foreword
+Th e  Gover n m en t   of  In dia  vowed  t o  r em ove  t h e  ed u cat ion al  disp ar it ies  an d
+adop t  a com m on  cor e cu r r icu lu m  acr oss t h e cou n t r y especially at  t h e I n t er m ed iat e
+level. Ever  sin ce t h e Gover n m en t  of An dh r a Pr ad esh  an d  t h e Boar d of I n t er m ed iat e
+Edu cat ion   (BIE)  swu n g  in t o  act ion   wit h   t h e  t ask   of  evol vin g  a  r evised  syllabu s  in
+al l  t h e  Scien ce  su bj ect s  on   par   wi t h   t h at   of  COB SE,  ap pr oved   b y  NCERT,  i t s
+ch ief  in t en t ion   bein g  en ablin g  t h e  st u d en t s  fr om   An dh r a  Pr ad esh   t o  pr epar e  for
+t h e  Nat ion al   Level  Com m on   En t r an ce  t est s  lik e  NEET,  ISEET  et c  for   adm ission
+in t o  In st it u t ion s  of  pr ofession al  cou r ses  in   ou r   Cou n t r y.
+For   t h e  fir st   t im e  BI E  AP  h as  decided  t o  pr epar e  t h e  Sci en ce  t ext book s.
+A c c o r d i n gl y   a n   Ac a d em i c   Rev i ew   Co m m i t t ee  w a s   c o n s t i t u t ed   w i t h   t h e
+Com m i ssion er   of  I n t er m edi at e  Ed u cat ion ,  AP  as  Ch ai r m an   an d   t h e  Secr et ar y,
+BIE  AP;  t h e  Dir ect or   SCERT  an d  t h e  Dir ect or   Telu gu   Ak ad em i  as  m em ber s.  Th e
+Nat ion al  an d  St at e  Level  Ed u cat ion al  lu m in ar ies  wer e  in volved  in   t h e  t ext b ook
+pr ep ar at ion ,  wh o  d id  it   wit h   m et icu lou s  car e.  Th e  t ex t book s  ar e  pr i n t ed  on   t h e
+lin es  of  NCERT  m ain t ain in g  Nat ion al  Level  St an dar ds.
+Th e  Edu cat ion   Depar t m en t   of  Gover n m en t   of  An dh r a  Pr adesh   h as  t ak en   a
+d ecisi on   t o  p u bl ish   an d   t o  su pp l y  al l   t h e  t ext   book s  wi t h   fr ee  of  cost   for   t h e
+st u d en t s  of  all  Gover n m en t   an d  Aided  J u n ior   Colleges  of  n ewly  for m ed  st at e  of
+An dh r a  Pr ad esh .
+We  exp r ess  ou r   si n cer e  gr at it u de  t o  t h e  Di r ect or,  NCERT  for   accor d in g
+per m ission   t o  ad opt   i t s  syll abi   an d  cu r r icu lu m   of  Sci en ce  t ext book s.  We  h ave
+been   per m it t ed  t o  m ak e  u se  of  t h eir   t ex t book s  wh ich   will  be  of  gr eat   advan t age
+t o ou r  st u d en t  com m u n it y. I also expr ess  m y gr at it u de t o t h e Ch air m an , BIE an d
+t h e  h on or abl e  Min ist er   for   HRD  an d   Vice  Ch air m an ,  BIE  an d   Secr et ar y  (SE)  for
+t h ei r   dedicat ed  si n cer e  gu idan ce  an d  h elp.
+I  si n cer ely  h ope  t h at   t h e  assor t ed  m et h ods  of  i n n ovat ion   t h at   ar e  adopt ed
+in   t h e  pr ep ar at ion   of  t h ese  t ext book s  wi ll  be  of  gr eat   h elp  an d  gu id an ce  t o  t h e
+st u d en t s.
+I   w h ol eh ear t ed l y   a p p r ec i a t e  t h e  s i n cer e  en d eavor s   of   t h e  Tex t b ook
+Developm en t   Com m it t ee  wh ich   h as  accom plish ed  t h is  n oble  t ask .
+Con st r u ct ive su ggest ion s ar e solicit ed for  t h e im pr ovem en t  of t h is t ext book
+fr om   t h e  st u d en t s,  t each er s  an d   gen er al   pu b l ic  i n   t h e  su bj ect s  con cer n ed   so
+t h at   n ext   edit ion   will  be  r evised  du ly  in cor por at in g  t h ese  su ggest i on s.
+It  i s ver y m u ch  com m en dabl e t h at  In t er m ed iat e t ext  book s ar e bein g pr i n t ed
+for   t h e  fir st   t im e  by  t h e  Ak adem i   fr om   t h e  2021 -22  academ ic  year.
+Sr i . V. Ram ak r i sh n a I.R.S.
+Di r ec t o r
+Telu gu   an d  San sk r it   Ak ad em i,
+An dh r a  Pr adesh
+
+Preface
+Th e  st u den t s  an d  t each er s  of  Ph ysics  at   In t er m ediat e  Fir st   Year   level
+in   A.P.  h ave  been   followin g  t h e  su bject   t h r ou gh   t h e  t ext -book s  pu blish ed  by
+Telu gu  Ak adem i,  Govt . of A.P.  Th e t ext -book s,  au t h or ed an d edit ed  by su bject
+exper t s  of  A.P.,  pr esen t ed  t h e  Ph ysics  su bject ,  wh ich   cou ld  be  divided  m ain ly
+in t o  t wo  br an ch es,  viz,  Mech an ics  an d  Heat .  Th e  con t en t s  of  t h ese  br an ch es
+cou l d   be  cover ed   u n d er   d i ffer en t   ch ap t er s  (1 6 )  wi t h   r at h er   ‘’con ven t i on al ’
+h eadin gs  lik e  Vect or s,  Rot at or y  Mot i on ,  Sim ple  Har m on ic  Mot ion ,  Tem per a-
+t u r e  an d Th er m al  Expan sion   et c. Of  cou r se, t h e  book   in clu ded sever al  solved,
+exam pl e  p r ob l em s,  b esi d es  t h e  qu est i on s  u n der   Ver y  Sh or t   An swer,  Sh or t
+An swer,  Lon g  An swer   Qu est ion s,  followin g  t h e  pat t er n   of  pu blic  exam in at ion
+of  In t er m ediat e  Ph ysics,  Fir st   Year.
+Th e  p r esen t   t ex t -b ook   on   Ph ysi cs  for   I n t er m ed i at e  Fi r st   Year,  ad op t ed
+alm ost   as su ch   fr om   t h e NCERT  book s,  PHYSICS Par t -I  (Cl ass  XI)  an d  Par t -II
+bu t   su it ably  m odified,  cover s  alm ost   all  t h e  con t en t s  of  t h e  pr eviou s  Ph ysics
+Text   book   an d  t h e presen t ly  revised  syllabu s/ cu rr icu lu m   con ten ts.  Th e  book
+also  in clu des  Qu est ions  com plian t   with   t he  pat t ern   of  pu blic  examin ation   of
+In t er m ediat e  Ph ysics,  Fir st   Year.
+Th e  appr oach   t o  t h e  ch apt er s  deviat es  fr om   con ven t ion   an d  t h e  syll abu s
+con t en t s   ar e  cover ed   i n   d i f f er en t   ch ap t er s  w i t h   c on c ep t / t h em e  b as ed
+h ead in gs,  as  can   be  seen   fr om   t h e  list   of  con t en t s.  For   exam ple,  scalar s  an d
+vect or s  an d  t h e  r el at ed  asp ect s  ar e  cover ed  u n der   t h e  ch apt er   t i t led  ‘Mot ion
+i n   a  Pl an e’.   Si m i l ar l y ,   Si m p l e  H ar m on i c   M ot i on   i s   cover ed   u n d er   t h e
+ap p r op r i at el y  b r oad   t i t le  ‘Osci l lat i on s’,  (Ch ap t er   8 ).  B ot h   Su r face  Ten si on
+an d Viscosi t y t opi cs h ave been  cover ed u n der  ‘Mech an i cal Pr oper t ies of Flu ids’
+(Ch ap t er   11 ).
+Th u s,  t h e  t ext -book   con t ain s  14  ch apt er s,  ou t   of  wh ich   t h e  on e  ch ap t er,
+on   ‘Ki n et i c  Th eor y’  i s  a  su i t ab l e,   n ew  ad d i t i on   w h i ch   r ai ses  t h e  l evel   of
+k n owledge  above  t h e  pr evi ou s  Ph ysics  b ook s  of  In t er m ediat e  Fir st   Year.
+Th e  book ,  i n   gen er al,  is  expect ed   t o  cat er   t o  t h e  n eeds  of  st u d en t s  of  all
+sect ion s  of  Scien ce  St r eam   wh o  m ay  aspir e  t o  com pet e  in   t h e  Nat ion al  Level
+En t r an ce  Test s  or   pu r su e  h igh er   cou r ses  in   Ph ysics,  wh ich ,  an y  way,  n eed
+t h e  basic  fou n dat ion s,  t h at     ar e  m ade  available  in   t h e  b ook .
+Dr. Mudigonda Salagram.
+Dr. Bandi Krishnarajulu Naidu.
+
+A Not e for  t h e Teach er s
+To m ak e t h e  cu r r icu lu m  lear n er -cen t r ed, st u den t s sh ou ld  be m ad e t o par t i cipat e  an d  in t er act
+in  t h e lear n in g pr ocess di r ect ly. On ce a w eek  or  on e ou t  of ever y six  classes w ou ld  be a good  per iodici t y
+for   su ch   sem in ar s  an d  m u t u al  in t er act ion .  Som e  su ggest ion s  for   m ak in g t h e  di scu ssi on   p ar t ici pat or y
+ar e  gi ven   below,  wi t h   r efer en ce  t o  som e  specific  t opi cs  i n   t h is  book .
+St u den t s m ay be divided  in t o gr ou ps of five t o six . Th e m em ber sh ip of t h ese gr ou p s m ay b e r ot at ed
+du r in g t h e  year, if  fel t  n ecessar y.
+Th e  t opic  for   di scu ssi on   can   be  pr esen t ed  on   t h e  boar d  or   on   sl ips  of  pap er.  St u den t s  sh ou ld  be
+ask ed  t o  wr i t e  t h ei r   r eact ion s  or   an swer s  t o  qu est ion s,  wh i ch ever   is  ask ed,  on   t h e  given   sh eet s.  Th ey
+sh ou ld  t h en  discu ss in  t h eir  gr ou ps an d  add  m odifi cat ion s or  com m en t s in  t h ose sh eet s. Th ese sh ou ld
+be  discu ssed   eit h er  in   t h e  sam e  or   i n  a  differ en t   class.  Th e  sh eet s  m ay al so  b e  eval u at ed.
+We  su ggest   h er e  t h r ee  p ossible  t opics  fr om   t h e  book .  Th e  fir st   t wo  t opi cs  su ggest ed  ar e,  in   fact ,
+ver y gen er al  an d  r efer  t o t h e developm en t  of scien ce over  t h e p ast  fou r  cen t u r ies or  m or e. St u den t s an d
+t each er s  m ay  t h i n k   of  m or e su ch   t opics  for   each   sem in ar.
+1 .I d eas  t h at   c h an ged   ci v i l i sat i on
+Su ppose h u m an   bein gs ar e  b ecom in g ex t in ct .  A m essage  h as  t o  be  left  for   fu t u r e gen er at i on s  or  ali en
+vi sit or s. Em in en t   p h ysicist  R P  Feyn m an n  w an t ed t h e  foll owi n g  m essage left   for   fu t u r e  bei n gs,  if an y.
+“M at t er   i s  m ad e  u p   of   at om s”
+A  lady  st u den t   an d  t each er   of  lit er at u r e,  w an t ed  t h e  foll owi n g  m essage  left :
+“Wat er   ex i st ed ,  so  h u m an   bei n gs  c ou l d   h ap p en ”.
+An ot h er   p er son   t h ou gh t  it   sh ou ld   be: “I d ea  of   w h eel   f o r   m ot i o n ”
+Wr it e dow n  w h at  m essage each  on e of you  wou ld lik e t o leave for  fu t u r e gen er at ion s. Th en  d iscu ss
+it  in   you r  gr ou p  an d add or  m odi fy,  if  you  wan t  t o ch an ge you r  m in d.  Give it  t o you r  t each er  an d  join
+in   an y  di scu ssion   t h at   fol low s.
+2 .R ed u c t i on i sm
+Ki n et i c  Th eor y  of  Gases  r elat es  t h e  Big  t o  t h e  Sm all ,  t h e  M acr o  t o  t h e  M icr o.  A  gas  as  a  syst em   is
+r elat ed t o i t s com p on en t s, t h e m olecu les. Th is way of descr i bin g a  syst em  as a r esu l t  of t h e p r op er ti es
+of  i t s  com pon en t s  is  u su al ly  cal led R ed u c t i o n i sm.  I t   ex pl ai n s  t h e  b eh aviou r   of  t h e  gr ou p   b y  t h e
+si m pler  an d pr ed ict abl e beh aviou r  of in dividu als. M acr oscop ic obser vat ion s an d m icr oscopi c p r oper t i es
+h ave  a  m u t u al   in t er depen den ce  in   t h is  ap pr oach .  Is  t h i s  m et h od  u sefu l?
+Th is w ay of u n der st an di n g h as it s lim it at ion s ou t side ph ysics an d ch em i st r y, m ay be even  in  t h ese
+su bject s. A p ain t in g can n o t b e di scu ssed as a col lect ion  of t h e pr oper t ies of ch em i cal s u sed in  m ak i n g
+t h e  can vas  an d  t h e  pai n t in g.  Wh at   em er ges  is  m or e  t h an   t h e  su m   of  it s  com pon en t s.
+Qu est i o n:  Can   you   t h i n k   of  ot h er   ar eas  wh er e  su ch   an   ap pr oach   is  u sed?
+                  D escr i be  br iefly  a syst em   w h ich  i s  fu lly  descr i babl e i n   t er m s of  it s com pon en t s.   D escr i be  on e
+wh ich   is  n ot .  D i scu ss  wit h   ot h er   m em ber s  of  t h e  gr ou p   an d  wr it e  you r   view s.  Give  it   t o  you r   t each er
+an d  join   in   an y  discu ssion   t h at   m ay  follow.
+3 .M o l ecu l ar   ap p r oac h   t o  h eat
+D escr i be wh at  you  t h in k  wi ll h ap pen  in   t h e fol low in g case. An   en cl osu r e is separ at ed b y a por ou s wall
+in t o t wo par t s.  On e is fil led  wi t h  n it r ogen  gas (N
+2
+)  an d  t h e ot h er  wit h  CO
+2
+.  Gases w ill diffu se fr om  on e
+si de  t o  t h e  ot h er.
+Qu est i on   1: Will  bot h   gases di ffu se t o t h e  sam e ex t en t ? I f n ot ,  wh i ch   wil l di ffu se  m or e.  Give r eason s.
+Qu est i on   2:  Will   t h e  pr essu r e  an d   t em per at u r e  be  u n ch an ged?  If  n ot ,  wh at   wil l  be  t h e  ch an ges  in
+bot h .  Give  r eason s.
+Wr it e dow n  you r  an swer s. D iscu ss wit h  t h e gr ou p an d m odi fy t h em  or  ad d com m en t s. Give t o
+t h e  t each er   an d  join   in   t h e  di scu ssion .
+St u d en t s  an d  t each er s  w i ll   fin d   t h at   su ch   sem i n ar s  an d   di scu ssi on s  l ead   t o  t r em en dou s
+u n der st an din g,  n ot   on ly  of  ph ysics,  bu t   also  of  scien ce  an d  soci al  sci en ces.  Th ey  al so  b r in g  i n   som e
+m at u r it y  am on g  st u d en t s.
+
+Addi t i on al  Not e for
+t h e PHYSI CS Teach er s of A.P. St at e
+It  is advised t h at  t h e PHYSICS t each ers, at  In t er mediat e level of A.P. St at e, shou ld,
+first , k eenly go t hrou gh ever y paragraph of each  chapt er/ su b-t opic and edu cat e t hemselves
+abou t  t h e pedagogy an d n ot e t h at  easil y u n der st an dabl e lan gu age i s u sed in  t h e Text -
+book  t o br i n g i n  con cept u al  coh er en ce.
+Th e  u su al ly  fol lowed  m et h od,  of  t each in g  Ph ysics  ch apt er s  in volvi n g  defin it ion s,
+st at em ent  of laws and der ivat ion  of for mu lae/ expressions, may, pr obably, have t o ‘ch ange’.
+Becau se, t h e pr esen t  book , in  an y ch apt er, of cou r se, begin s wi t h  su ch  an  In t r odu ct ion ,
+t hat , it  at t r act s t he at t en t ion of st u den t s t o t he obser vable happenin gs, in and ar ou n d t h e
+social life of m an  an d t h en  relat es t h em t o t h e cont ext u al Ph ysics. Aft er  t h e discu ssion  of
+t h e t opic, most ly qu alit at ive, t h e book  leads t o sim ple mat hem at ical st eps, wit h int ervening
+logic,  an d  fin ally  ‘ar r ives’  at   t h e  fin al  equ at ion / expr ession   or   for m u la  (ex:  Ber n ou ll i’s
+equ at ion, Chapt er  11), rat h er  t h an ‘der iving’ it  in  for mal, m at h emat ical st eps, som et im es,
+wit h  cert ain  assu m pt ions.
+Som e of t h e exam ples, u sed in  t h e Text  t o el abor at e t h e wor k i n g of cer t ai n  Ph ysics
+pr i n ciple/  con cept  u n der lyin g t h e act u al applicat ion , ar e ‘n ot  ver y fam iliar ’, n ot  on ly t o
+t h e m ost  of t h e st u den t s in  a class bu t  also t o t h e t each er. Th is indicat es t h e n ecessit y, or
+even  in evit abilit y, on  t he part  of t h e Physics t each er  t o edu cat e him self pr ior -h and an d, if
+possible, pract ically exper ien ce t h e applicat ion  of Physics pr inciple an d t h u s pr epar e an d
+plan  in  advan ce t o pr esen t / dem on st r at e it  t o t h e st u den t s in  a class. Th is obser vat ion
+m ade h er e becom es am ply cl ear  if t h e t each er  st u dies t h e t opic on  ‘Hydr au lic Mach in es’
+an d t h e exam ple pr oblem  No. 11.6 in  t h e ch apt er  on  ‘Mech an ical Pr oper t ies of Fl u ids’.
+In  an y case, k een  st u dy, of each  of t h e t opic t o be t ak en  u p in  a class, (if n ecessar y
+r epeat edly) an d t h en  t h or ou gh  u n der st an din g of it  (possibly t h r ou gh  discu ssion  wit h  co-
+Physics t each ers or sen ior, more experienced Ph ysics t eachers) is very ‘essent ial’ for  Physics
+t each er s of t h is n ew, pr esent  Text -book .
+Once t eacher  can  appreciat e ‘t h e beau t y an d logic of Physics’, h e can  deliver/ t each t h e
+t opic in  h is own  su it able, con ven ien t  (perhaps, local) lan gu age. Or, in fact , t he pr esent at ion
+of  t h e basic Ph ysics  in  t h e Text -book , is so lu ci d, t h at  t h e  t each er   can  r epr odu ce  t h e
+par agr aph s of t h e t opic-’ver bat u m ’-in  t h e cl ass an d t h en  m ak e  t h e st u den t s/ lear n er s
+par t icipat e in  t h e discu ssion .
+Not e t h at  t he Text -Book  opens wit h  Macro (Max) - vision of “Physical World” and closes
+wit h  Micr o (scopic) - in vi sibil it y of “Kin et ic Th eor y”, bot h  con st it u t i n g t h e r eal  Ph ysi cs;
+indicat in g t h at  so mu ch  m u st  be t he diver sit y in  t he ‘vision ’ of t he A.P. Ph ysics t eacher an d
+at  t h e sam e t im e m ain t ain  equ alit y in  qu alit y, effect iven ess an d em ph asis in t r an sfer r in g
+t h is Ph ysics t o t h e st u den t s eit h er  at  as vast  as Hyder abad cit y or  Visak h apat n am  cit y or
+at  as t in y village as Nar m et t a or  On t i Mit t a.
+In  fin e, it  is h oped, t h at  t h e Ph ysics t each er s of A.P., edu cat e (an d equ ip) t h em sel ves
+abou t  t h e n ew, scien t ifically logi cal way of st u dyin g t h e su bject  an d expose t h e st u den t s
+t o t h e ‘r ealm  of Ph ysics’.
+Th is is n ot  on l y t o m ak e t h e st u den t s feel ‘t h e joy an d excit em en t  of lear n in g Ph ysics’
+bu t  also im par t  t h em  t h e n ecessar y sk ills an d ‘sou n d-foot in g’ in  basics of PH YSICS, so
+t hat  t hey can  face an y compet it ive examinat ion , however challenging it  may be, wit h gr eat er
+confiden ce.
+Dr. M u d i gon d a Sal agr am
+Dr. Ban d i  K r i sh n ar aj u l u  Nai d u
+
+C H A P T E R   1
+Ph y si cal  Wor l d
+1.1Wh at  i s Ph ysi cs ?1
+1.2Scope an d  ex ci t em en t  of Ph ysi cs3
+1.3Ph ysi cs, t ech n ol ogy an d Soci et y5
+1.4Fu n dam en t al  for ces i n  n at u r e7
+1.5Nat u r e of Ph ysi cal  Laws11
+C H A P T E R    2
+Un i t s an d  M easu r em en t s
+2.1Int rodu ct ion16
+2.2Th e I n t er n at i on al  Syst em  of Un i t s16
+2.3Measu r em en t  of Len gt h18
+2.4Measu r em en t  of Mass21
+2.5Measu r em en t  of Ti m e22
+2.6Accu r acy, p r eci si on  of i n st r u m en t s an d er r or s i n  m easu r em en t22
+2.7Si gn i fi can t  Fi gu r es27
+2.8Di m en si on s of Ph ysi cal  Qu an t i t i es31
+2.9Di m en si on al  For m u l ae and di m en si on al equ ati on s32
+2.10Di m en si on al  An al ysi s an d It s Ap pl i cat i on s32
+C H A P T E R    3
+M ot i on  i n  a St r ai gh t  L i n e
+3.1Int rodu ct ion40
+3.2Posi t i on , Pat h  Len gt h  an d D i sp l acem en t40
+3.3Aver age Vel oci t y an d Aver age Speed43
+3.4In st an t an eou s Vel oci t y an d  Speed44
+3.5Accel er at ion46
+3.6Ki n em at i c equ at i on s for  u n i for m l y accel er at ed m ot i on48
+3.7Rel at i ve vel oci t y52
+C H A P T E R    4
+M ot i on  i n  a Pl an e
+4.1Int rodu ct ion68
+4.2Scal ar s an d  Vect or s68
+4.3Mu l t i pl i cat i on  of Vect or s b y r eal  n u m ber s70
+4.4Ad di t i on  an d Su bt r act i on  of Vect or s – gr aph i cal  m et h od70
+4.5Resol u t i on  of Vect or s72
+4.6Vect or  ad di t i on  – an al yt i cal  m et h od74
+4.7Mot i on  i n  a pl an e75
+4.8Mot i on  i n  a p l an e wi t h  con st an t  accel er at i on78
+4.9Rel at i ve vel oci t y i n  t wo di m en si on s79
+4.10Pr oj ect i l e Mot i on80
+4.11Un i for m  ci r cu l ar  m ot i on82
+C H A P T E R    5
+L aw s of  M ot i on
+5.1Int rodu ct ion93
+5.2Ar i st ot l e’s fal l acy94
+5.3Th e l aw of i n er t i a94
+5.4Newt on ’s fi r st  l aw of M ot i on95
+5.5Newt on ’s Secon d  Law of M ot i on97
+5.6Newt on ’s Th i r d  Law of M ot i on100
+5.7Con ser vat i on of m om en t u m102
+5.8Equ i l i b r i u m  of a par t i cl e103
+5.9Com m on  For ces i n  Mech an i cs104
+5.10Cir cu lar  Mot ion108
+5.11Sol vi n g pr obl em s i n  Mech an i cs109
+Contents
+
+C H A P T E R    6
+Wor k , En er gy  an d Pow er
+6.1Int rodu ct ion120
+6.2Not i on s of Wor k  an d Ki n et i c En er gy : Th e wor k - en er gy t h eor em122
+6.3Wor k122
+6.4Ki n et i c en er gy123
+6.5Wor k  don e b y a  var i ab l e for ce124
+6.6Th e wor k -en er gy t h eor em  for  a  var i ab l e for ce125
+6.7Th e con cept  of Pot en t i al  En er gy126
+6.8Th e con ser vat i on  of Mech an i cal  En er gy127
+6.9Th e Pot en t i al  En er gy of a spr i n g129
+6.10Var i ou s for m s of en er gy : t h e l aw  of con ser vat i on   of En er gy132
+6.11Power134
+6.12Colli sions135
+C H A P T E R    7
+Sy st em  o f  Par t i cl es an d  Rot at i on al  M ot i on
+7.1Int rodu ct ion149
+7.2Cen t r e of Mass152
+7.3Mot i on  of Cen t r e of Mass157
+7.4Li n ear  Mom en t u m  of a Syst em  of par t i cl es158
+7.5Vect or  p r od u ct   of  Two Vect or s160
+7.6An gu l ar  Vel oci t y an d i t s r el at i on  wi t h  l i n ear  vel oci t y162
+7.7Tor qu e an d An gu l ar  Mom en t u m165
+7.8Equ i l i b r i u m  of a Ri gi d B ody169
+7.9Mom en t  of In er t i a171
+7.10Th eor em s of per pen di cu l ar  an d p ar al l el  ax es174
+7.11Dyn am i cs of Rot at i on al  M ot i on  abou t  a Fi x ed Axi s176
+7.12An gu l ar  m om en t u m  i n  case of r ot at i on s abou t  a fi xed  ax i s179
+7.13Rol li ng Mot ion181
+C H A P T E R    8
+Osci l l at i on s
+8.1Int rodu ct ion192
+8.2Per i odi c an d Osci l at or y Mot i on s193
+8.3Si m pl e Har m on ic Mot i on  (SHM)195
+8.4Si m pl e Har m on i c Mot i on  an d Un i for m  Ci r cu l ar  M ot i on197
+8.5Vel oci t y an d Accel er at i on  i n  Si m p l e Har m on i c Mot i on199
+8.6For ce Law for  Si m p l e Har m on i c M ot i on200
+8.7En er gy i n  Si m pl e Har m on i c Mot i on201
+8.8Som e syst em s execu t i n g Si m p l e Har m on i c Mot i on203
+8.9Dam ped Si m pl e Har m on i c Mot i on206
+8.10For ced Osci l l at i on s an d Reson an ce208
+C H A P T E R    9
+Gr av i t at i on
+9.1In trodu cti on220
+9.2Kepl er ’s  Laws221
+9.3Un i ver sal  Law of Gr avi t at i on222
+9.4The Gr avi tat ion al  Const an t226
+9.5Accel er at i on  du e t o Gr avi t y of t h e Ear t h226
+9.6Accel er at i on  du e t o gr avi t y bel ow an d above t h e su r face of Ear t h227
+9.7Gravit ati onal  Pot ent i al  En ergy228
+9.8Escape  Speed230
+9.9Ear t h  Satel l it e231
+9.10En er gy of an  or bi t i n g sat el l i t e232
+9.11Geostat i on ar y an d Polar  sat ell i t es233
+9.12Wei gh t l essn ess234
+
+C H A P T E R    1 0
+M ec h an i c al  Pr op er t i es o f  Sol i d s
+10.1Int rodu ct ion242
+10.2El ast i c b eh avi ou r  of Sol i ds243
+10.3St r ess an d St r ai n243
+10.4Hook e’s l aw245
+10.5St r ess-st r ai n  cu r ve245
+10.6El ast i c Modu l i246
+10.7Ap pl i cat i on s of el ast i c b eh avi ou r  of Mat er i al s251
+C H A P T E R    1 1
+M ec h an i c al  Pr op er t i es o f  Fl u i d s
+11.1In trodu cti on259
+11.2Pr essu r e259
+11.3St ream li n e fl ow266
+11.4Bern ou ll i’s pr in ci pl e267
+11.5Viscosit y271
+11.6Reynol ds n u m ber273
+11.7Su r face Ten si on274
+C H A P T E R    1 2
+Th er m al  Pr op er t i es of  M at t er
+12.1In trodu cti on288
+12.2Tem per at u r e an d Heat288
+12.3Measu r em en t  of Tem per at u r e289
+12.4Ideal -Gas Equ ati on  and Absol u t e Tem per at u r e289
+12.5Therm al  Expansion290
+12.6Speci fi c Heat  Capaci t y294
+12.7Calori met ry295
+12.8Ch an ge of St at e296
+12.9Heat   t r an sfer300
+12.10Newt on ’s Law of Cool i n g306
+C H A P T E R    1 3
+Th er m ody n am i cs
+13.1Int rodu ct ion315
+13.2Therm al Equ il i br iu m316
+13.3Zer ot h Law of Thermodynamics317
+13.4Heat , In t er n al  En er gy an d  Wor k317
+13.5Fi r st  Law of Th er m odyn am i cs319
+13.6Sp eci fi c Heat  Cap aci t y320
+13.7Th er m odyn am i c St at e Var i abl es an d Equ at i on  of St at e321
+13.8Th er m odyn am i c Pr ocesses322
+13.9Heat  En gi n es325
+13.10Refr i ger at or s an d  Heat  Pu m ps325
+13.11Secon d Law of Th er modyn am ics326
+13.12Rever si bl e  an d  Ir r ever si b l e  Pr ocesses327
+13.13Car n ot  En gi n e328
+C H A P T E R    1 4
+K i n et i c  Th eor y
+14.1In trodu cti on336
+14.2Mol ecu l ar  Nat u r e of Mat t er336
+14.3Beh avi ou r  of Gases338
+14.4Ki n et i c Th eor y of an  Ideal  Gas341
+14.5Law of equ i par t i t i on  of en er gy345
+14.6Speci fi c Heat  Capaci t y346
+14.7Mean  Fr ee Pat h348
+Ap pen d i ces355
+An sw er s (for  Addi ti onal  Pr obl ems)371
+Bi bl i ogr aph y390
+
+1.1  WHAT IS PHYSICS ?
+Humans have always been curious about the world around
+them.  The  night  sky  with  its  bright  celestial  objects  has
+fascinated  humans  since  time  immemorial.  The  regular
+repetitions of day and night, the annual cycle of seasons,
+the eclipses, the tides, the volcanoes, the rainbow have always
+been a source of wonder. The world has an astonishing variety
+of materials and a bewildering diversity of life and behaviour.
+The inquiring and imaginative human mind has responded
+to the wonder and awe of nature in different ways. One kind
+of response from the earliest times has been to observe the
+physical  environment  carefully,  look  for  any  meaningful
+patterns and relations in natural phenomena, and build and
+use new tools to interact with nature.  This human endeavour
+led, in course of time, to modern science and technology.
+The word 
+Science originates from the Latin verb Scientia
+meaning ‘to know’.  The Sanskrit word Vijnan and the Arabic
+word Ilm  convey  similar  meaning,  namely  ‘knowledge’.
+Science, in a broad sense, is as old as human species. The
+early civilisations of Egypt, India, China, Greece, Mesopotamia
+and many others made vital contributions to its progress.
+From the sixteenth century onwards, great strides were made
+in science in Europe. By the middle of the twentieth century,
+science  had  become  a  truly  international  enterprise,  with
+many cultures and countries contributing to its rapid growth.
+What  is  Science  and  what  is  the  so-called  
+Scientific
+Method?    Science  is  a  systematic  attempt  to  understand
+natural phenomena in as much detail and depth as possible,
+and  use  the  knowledge  so  gained  to  predict,  modify  and
+control phenomena. Science is exploring, experimenting and
+predicting from what we see around us. The curiosity to learn
+about the world, unravelling the secrets of nature is the first
+CHAPTER ONE
+PHYSICAL WORLD
+1.1What is physics ?
+1.2Scope and excitement of
+physics
+1.3Physics, technology and
+society
+1.4Fundamental forces in
+nature
+1.5Nature of physical laws
+Summary
+Exercises
+
+PHYSICS2
+step  towards  the  formulation  of  science.  The
+scientific     method     involves     several
+interconnected steps : Systematic observations,
+controlled  experiments,  qualitative  and
+quantitative   reasoning,   mathematical
+modelling,  prediction  and  verification  or
+falsification  of  theories.  Speculation  and
+conjecture  also  have  a  place  in  science;  but
+ultimately, a scientific theory, to be acceptable,
+must  be  verified  by  relevant  observations    or
+experiments.  There  is  much  philosophical
+debate about the nature and method of science
+that we need not discuss here.
+The interplay of theory and observation (or
+experiment) is basic to the progress of science.
+Science  is  ever  dynamic.  There  is  no  ‘final’
+theory  in  science  and  no  unquestioned
+authority  among  scientists.    As  observations
+improve in detail and precision or experiments
+yield  new  results,  theories  must  account  for
+them, if necessary, by introducing modifications.
+Sometimes the modifications may not be drastic
+and  may  lie  within  the  framework  of  existing
+theory.    For  example,  when  Johannes  Kepler
+(1571-1630)  examined  the  extensive  data  on
+planetary  motion  collected  by  Tycho  Brahe
+(1546-1601),  the  planetary  circular  orbits  in
+heliocentric    theory  (sun  at  the  centre  of  the
+solar system) imagined by Nicolas Copernicus
+(1473–1543)  had  to  be  replaced  by  elliptical
+orbits  to  fit  the  data  better.    Occasionally,
+however, the  existing theory is simply unable
+to  explain  new  observations.    This  causes  a
+major upheaval in science. In the beginning of
+the  twentieth  century,  it  was  realised  that
+Newtonian  mechanics,  till  then  a  very
+successful theory, could not explain some of the
+most  basic  features  of  atomic  phenomena.
+Similarly, the then accepted wave picture of light
+failed to explain the photoelectric effect properly.
+This led to the development of a  radically new
+theory (Quantum Mechanics) to deal with atomic
+and molecular phenomena.
+Just  as  a  new  experiment  may  suggest  an
+alternative  theoretical  model,  a  theoretical
+advance may suggest what to look for in some
+experiments.    The  result  of  experiment  of
+scattering of alpha particles by gold foil, in 1911
+by Ernest Rutherford (1871–1937) established
+the  nuclear  model  of  the  atom,  which  then
+became  the  basis  of  the  quantum  theory  of
+hydrogen  atom  given  in  1913  by  Niels  Bohr
+(1885–1962). On the other hand, the concept of
+antiparticle was first introduced theoretically by
+Paul Dirac (1902–1984) in 1930 and confirmed
+two years later by the experimental discovery of
+positron (antielectron) by Carl Anderson.
+Physics is a basic discipline in the category
+of 
+Natural Sciences, which also includes other
+disciplines like Chemistry and Biology. The word
+Physics  comes  from  a  Greek  word  meaning
+nature. Its Sanskrit equivalent is Bhautiki that
+is used to refer to the study of the physical world.
+A precise definition of this discipline is neither
+possible nor necessary.  We can broadly describe
+physics as a study of the basic laws of  nature
+and  their  manifestation  in  different  natural
+phenomena.  The scope of physics is described
+briefly in the next section.  Here we remark on
+two principal thrusts in physics :  
+unification
+and reduction.
+In  Physics,  we  attempt  to  explain  diverse
+physical phenomena i
+n terms of a few concepts
+and laws.  The effort is to see the physical world
+as  manifestation  of  some  universal  laws  in
+different domains and conditions.  For example,
+the same law of gravitation (given by Newton)
+describes the fall of an apple to the ground, the
+motion of the moon around the earth and the
+motion of planets around the sun. Similarly, the
+basic  laws  of  electromagnetism  (Maxwell’s
+equations)  govern  all  electric  and  magnetic
+phenomena. The attempts to unify fundamental
+forces of nature (section 1.4) reflect this same
+quest for unification.
+A related effort is to derive the properties of a
+bigger, more complex, system from the properties
+and interactions of its constituent simpler parts.
+This  approach  is  called  
+reductionism  and  is
+at the heart of physics.  For example, the subject
+of thermodynamics, developed in the nineteenth
+century,  deals  with  bulk  systems  in  terms  of
+macroscopic  quantities  such  as  temperature,
+internal energy, entropy, etc.  Subsequently, the
+subjects  of  kinetic  theory  and  statistical
+mechanics interpreted these quantities in terms
+
+PHYSICAL  WORLD3
+with  macroscopic  phenomena  and  includes
+subjects  like  
+Mechanics, Electrodynamics,
+Optics  and  Thermodynamics.  Mechanics
+founded on Newton’s laws of motion and the law
+of gravitation is concerned with the motion (or
+equilibrium)  of  particles,  rigid  and  deformable
+bodies,  and  general  systems  of  particles.    The
+propulsion of a rocket by a jet of ejecting gases,
+propagation of water waves or sound waves in
+air, the equilibrium of a bent rod under a load,
+etc., are problems of mechanics.  Electrodynamics
+deals  with  electric  and  magnetic  phenomena
+associated  with  charged  and  magnetic  bodies.
+Its basic laws were given by Coulomb, Oersted,
+Ampere  and  Faraday,  and  encapsulated  by
+internal energy, temperature, entropy, etc., of the
+system  through  external  work  and  transfer  of
+heat.    The  efficiency  of  heat  engines  and
+refrigerators,  the  direction  of  a  physical  or
+chemical process, etc., are problems of interest
+in thermodynamics.
+The microscopic domain of physics deals  with
+the constitution and structure of matter at the
+minute  scales  of  atoms  and  nuclei  (and  even
+lower scales of length) and their interaction with
+different probes such as electrons, photons and
+other elementary particles. Classical physics is
+inadequate to handle this domain and Quantum
+Theory  is  currently  accepted  as  the  proper
+framework   for   explaining   microscopic
+Fig. 1.1Theory and experiment go hand in hand in physics and help each other’s progress. The alpha scattering
+experiments of Rutherford gave the nuclear model of the atom.
+*Recently, the domain intermediate between the macroscopic and the microscopic (the so-called mesoscopic
+physics), dealing with a few tens or hundreds of atoms, has emerged as an exciting  field of  research.
+of the properties of the molecular constituents
+of  the  bulk  system.    In  particular,  the
+temperature was seen to be related to the average
+kinetic energy of molecules  of the system.
+1.2  SCOPE AND EXCITEMENT OF PHYSICS
+We can get some idea of the scope of physics by
+looking at its various sub-disciplines.  Basically,
+there are two domains of interest : macroscopic
+and  microscopic.  The  macroscopic  domain
+includes phenomena at the laboratory, terrestrial
+and astronomical scales. The microscopic domain
+includes nuclear, atomic  and  molecular
+phenomena
+*. Classical  Physics deals  mainly
+Maxwell  in  his  famous  set  of  equations.  The
+motion  of  a  current-carrying  conductor  in  a
+magnetic field, the response of a circuit to an ac
+voltage (signal), the working of an antenna, the
+propagation of radio waves in the ionosphere, etc.,
+are  problems  of  electrodynamics.  Optics  deals
+with the phenomena involving light. The working
+of telescopes and microscopes, colours exhibited
+by  thin  films,  etc.,  are  topics  in  optics.
+Thermodynamics, in contrast to mechanics, does
+not deal with the motion of bodies as a whole.
+Rather,  it  deals  with  systems  in  macroscopic
+equilibrium  and  is  concerned  with  changes  in
+
+PHYSICS4
+phenomena.  Overall, the edifice of physics is
+beautiful and imposing and you will appreciate
+it more as you pursue the subject.
+You can now see that the scope of physics is
+truly  vast.    It  covers  a  tremendous  range  of
+magnitude  of  physical  quantities  like  length,
+mass, time, energy, etc.  At one end, it studies
+phenomena  at  the  very  small  scale  of  length
+(10
+14 
+m or even less) involving electrons, protons,
+etc.; at the other end, it deals with astronomical
+phenomena at the scale of galaxies or even the
+entire universe whose extent is of the order of
+10
+26 
+m.  The two length scales differ by a factor of
+10
+40
+ or even more.  The range of time scales can
+be obtained by dividing the length scales by the
+speed  of  light  :  10
+–22 
+s  to  10
+18
+ 
+s.    The  range  of
+masses  goes  from,  say,  10
+–30
+  kg    (mass  of  an
+electron) to 10
+55 
+kg (mass of known observable
+universe). Terrestrial phenomena lie somewhere
+in the middle of this range.
+Physics is exciting in many ways. To some people
+the  excitement  comes  from  the  elegance  and
+universality of its basic theories, from the fact that
+a  few  basic  concepts  and  laws  can  explain
+phenomena covering a large range of magnitude
+of physical quantities. To some others, the challenge
+in  carrying  out  imaginative  new  experiments  to
+unlock  the  secrets  of  nature,  to  verify  or  refute
+theories,  is  thrilling.    Applied  physics  is  equally
+demanding.  Application  and  exploitation  of
+physical laws to make useful devices is the most
+interesting  and  exciting  part  and  requires  great
+ingenuity and persistence of effort.
+What lies behind the phenomenal progress
+of  physics  in  the  last  few  centuries?  Great
+progress usually accompanies changes in our
+basic perceptions.  First, it was realised that for
+scientific  progress,  only  qualitative  thinking,
+though  no  doubt  important,  is  not  enough.
+Quantitative  measurement  is  central  to  the
+growth of science, especially physics, because
+the laws of nature happen to be expressible in
+precise  mathematical  equations.  The  second
+most important insight was that the basic laws
+Hypothesis, axioms and models
+One should not think that everything can be proved
+with physics and mathematics. All physics, and also
+mathematics,  is  based  on  assumptions,  each  of
+which is variously called a hypothesis or axiom or
+postulate, etc.
+For  example,  the  universal  law  of  gravitation
+proposed by Newton is an assumption or hypothesis,
+which he proposed out of his ingenuity. Before him,
+there were several observations, experiments and
+data,  on  the  motion  of  planets  around  the  sun,
+motion of the moon around the earth, pendulums,
+bodies falling towards the earth etc. Each of these
+required a separate explanation, which was more
+or  less  qualitative.  What  the  universal  law  of
+gravitation says is that, if we assume that any two
+bodies  in  the  universe  attract  each  other  with  a
+force proportional to the product of their masses
+and  inversely  proportional  to  the  square  of  the
+distance  between  them,  then  we  can  explain  all
+these observations in one stroke. It not only explains
+these phenomena, it also allows us to predict the
+results of future experiments.
+A hypothesis is a supposition without assuming
+that it is true. It would not be fair to ask anybody
+to prove the universal law of gravitation, because
+it  cannot  be  proved.  It  can  be  verified  and
+substantiated by experiments and observations.
+An axiom is a self-evident truth while a model
+is  a  theory  proposed  to  explain  observed
+phenomena. But you need not worry at this stage
+about  the  nuances  in  using  these  words.  For
+example, next year you will learn about Bohr’s model
+of hydrogen atom, in which Bohr assumed that an
+electron in the hydrogen atom follows certain rules
+(postutates). Why did he do that? There was a large
+amount of spectroscopic data before him which no
+other theory could explain. So Bohr said that if we
+assume that an atom behaves in such a manner,
+we can explain all these things at once.
+Einstein’s  special  theory  of  relativity  is  also
+based on two postulates, the constancy of the speed
+of  electromagnetic  radiation  and  the  validity  of
+physical laws in all inertial frames of reference. It
+would not be wise to ask somebody to prove that
+the  speed  of  light  in  vacuum  is  constant,
+independent of the source or observer.
+In  mathematics  too,  we  need  axioms  and
+hypotheses at every stage. Euclid’s statement that
+parallel lines never meet, is a hypothesis. This means
+that if we assume this statement, we can explain
+several properties of straight lines and two or three
+dimensional figures made out of them. But if you
+don’t assume it, you are free to use a different axiom
+and get a new geometry, as has indeed happened in
+the past few centuries and decades.
+
+PHYSICAL  WORLD5
+Table 1.1 Some physicists from different countries of the world and their major contributions
+of physics are universal — the same laws apply
+in widely different contexts. Lastly, the strategy
+of  approximation  turned  out  to  be  very
+successful.  Most observed phenomena in daily
+life are rather complicated manifestations of the
+basic laws. Scientists recognised the importance
+of  extracting  the  essential  features  of  a
+phenomenon from its less significant aspects.
+It is not practical to take into account all the
+complexities of a phenomenon in one go.  A good
+strategy is to focus first on the essential features,
+discover the basic principles and then introduce
+corrections to build a more refined theory of the
+phenomenon. For example, a stone and a feather
+dropped from the same height do not reach the
+ground at the same time. The reason is that the
+essential aspect of the phenomenon, namely free
+fall  under  gravity,  is  complicated  by  the
+presence of air resistance. To get the law of free
+fall  under  gravity,  it  is  better  to  create  a
+situation  wherein  the  air  resistance  is
+negligible. We can, for example, let the stone and
+the feather fall through a long evacuated tube.
+In that case, the two objects will fall almost at
+the  same  rate,  giving  the  basic  law  that
+acceleration due to gravity is independent of the
+mass  of  the  object.    With  the  basic  law  thus
+found, we can go back to the feather, introduce
+corrections  due  to  air  resistance,  modify  the
+existing theory and try to build a more realistic
+theory  of  objects  falling  to  the  earth  under
+gravity.
+1.3    PHYSICS, TECHNOLOGY AND SOCIETY
+The connection between physics, technology and
+society  can  be  seen  in  many  examples.  The
+discipline  of  thermodynamics  arose  from  the
+need to understand and improve the working of
+heat engines.  The steam engine, as we know,
+is inseparable from the Industrial Revolution in
+England in the eighteenth century, which had
+great  impact  on  the  course  of  human
+civilisation. Sometimes technology gives rise to
+new physics; at other times physics generates
+new technology. An example of the latter is the
+wireless communication technology that followed
+the discovery of the basic laws of electricity and
+magnetism  in  the  nineteenth  century.  The
+applications of  physics are not always easy to
+foresee.  As  late  as  1933,  the  great  physicist
+Ernest Rutherford had dismissed the possibility
+NameMajor contribution/discoveryCountry of
+Origin
+ArchimedesPrinciple of buoyancy; Principle of the leverGreece
+Galileo  GalileiLaw of inertiaItaly
+Christiaan HuygensWave theory of lightHolland
+Isaac NewtonUniversal law of gravitation; Laws of motion;U.K.
+Reflecting telescope
+Michael FaradayLaws of electromagnetic inductionU.K.
+James Clerk MaxwellElectromagnetic theory; Light-anU.K.
+electromagnetic wave
+Heinrich Rudolf HertzGeneration of electromagnetic wavesGermany
+J.C. BoseShort radio wavesIndia
+W.K.  RoentgenX-raysGermany
+J.J. ThomsonElectronU.K.
+Marie Sklodowska CurieDiscovery of radium and polonium; Studies on   Poland
+natural  radioactivity
+Albert EinsteinExplanation of photoelectric effect;Germany
+Theory of relativity
+
+PHYSICS6
+*Sections 1.4 and 1.5 contain several ideas that you may not grasp fully in your first reading. However, we
+advise you to read them carefully to develop a feel for some basic aspects of  physics. These are some of the
+areas which continue to occupy the physicists today.
+of tapping energy from atoms. But only a few
+years  later,  in  1938,  Hahn  and  Meitner
+discovered the phenomenon of neutron-induced
+fission of uranium, which would serve as the
+basis  of  nuclear  power  reactors  and  nuclear
+weapons.  Yet  another  important  example  of
+physics giving rise to technology is the silicon
+‘chip’ that triggered  the computer revolution in
+the last three decades of the twentieth century.
+A  most  significant  area  to  which  physics  has
+and  will  contribute  is  the  development  of
+alternative energy resources.  The fossil fuels of
+the  planet  are  dwindling  fast  and  there  is  an
+urgent  need  to  discover  new  and  affordable
+sources of energy.  Considerable progress has
+already  been  made  in  this  direction  (for
+example,  in  conversion  of  solar  energy,
+geothermal  energy,  etc.,  into  electricity),  but
+much more is still to be accomplished.
+Table1.1 lists some of the great physicists,
+their  major  contribution  and  their  country  of
+origin. You will appreciate from this table the
+multi-cultural,  international  character  of  the
+scientific  endeavour.  Table  1.2  lists  some
+important  technologies  and  the  principles  of
+physics  they  are  based on.  Obviously,  these
+tables are not exhaustive. We urge you to try to
+add many names and items to these tables with
+Victor Francis HessCosmic radiationAustria
+R.A.  MillikanMeasurement of electronic chargeU.S.A.
+Ernest RutherfordNuclear model of atomNew Zealand
+Niels BohrQuantum model of hydrogen atomDenmark
+C.V. RamanInelastic scattering of light by moleculesIndia
+Louis Victor de BorglieWave nature of matterFrance
+M.N. SahaThermal ionisationIndia
+S.N. BoseQuantum statisticsIndia
+Wolfgang PauliExclusion principleAustria
+Enrico FermiControlled nuclear fissionItaly
+Werner HeisenbergQuantum mechanics; Uncertainty principleGermany
+Paul DiracRelativistic theory of electron;U.K.
+Quantum  statistics
+Edwin HubbleExpanding universeU.S.A.
+Ernest Orlando LawrenceCyclotronU.S.A.
+James ChadwickNeutronU.K.
+Hideki YukawaTheory of nuclear forcesJapan
+Homi Jehangir BhabhaCascade process of cosmic radiationIndia
+Lev Davidovich LandauTheory of condensed matter; Liquid heliumRussia
+S. ChandrasekharChandrasekhar limit, structure and evolutionIndia
+of stars
+John BardeenTransistors; Theory of super conductivityU.S.A.
+C.H. TownesMaser; LaserU.S.A.
+Abdus SalamUnification of weak and electromagneticPakistan
+interactions
+NameMajor contribution/discoveryCountry of
+Origin
+
+PHYSICAL  WORLD7
+the  help  of  your  teachers,  good  books  and
+websites  on  science.    You  will  find  that  this
+exercise is very educative and also great fun.
+And, assuredly, it will never end.  The progress
+of science is unstoppable!
+Physics  is  the  study  of  nature  and  natural
+phenomena. Physicists try to discover the rules
+that  are  operating  in  nature,  on  the  basis  of
+observations,  experimentation  and  analysis.
+Physics  deals  with  certain  basic  rules/laws
+governing the natural world. What is the nature
+of  physical  laws?  We  shall  now  discuss  the
+nature of fundamental forces and the laws that
+govern the diverse phenomena of the physical
+world.
+1.4  FUNDAMENTAL FORCES IN NATURE*
+We all have an intuitive notion of force. In our
+experience,  force  is  needed  to  push, carry  or
+throw objects, deform or break them.  We also
+experience the impact of forces on us, like when
+a moving object hits us or we are in a merry-go-
+round.  Going  from  this  intuitive  notion  to  the
+proper scientific concept of force is not a trivial
+matter. Early thinkers like Aristotle had wrong
+ideas about it.  The correct notion of force was
+arrived at by Isaac Newton in his famous laws of
+ 
+Table 1.2  Link between technology and physics
+TechnologyScientific principle(s)
+Steam  engineLaws of thermodynamics
+Nuclear reactorControlled nuclear fission
+Radio and TelevisionGeneration, propagation and detection
+of electromagnetic waves
+ComputersDigital  logic
+LasersLight amplification by stimulated emission of
+radiation
+Production of ultra high magneticSuperconductivity
+fields
+Rocket propulsionNewton’s laws of motion
+Electric generatorFaraday’s laws of electromagnetic induction
+Hydroelectric powerConversion  of gravitational potential energy into
+electrical energy
+AeroplaneBernoulli’s principle in fluid dynamics
+Particle acceleratorsMotion of charged particles in electromagnetic
+fields
+SonarReflection of ultrasonic waves
+Optical fibresTotal internal reflection of light
+Non-reflecting coatingsThin film optical interference
+Electron microscopeWave nature of electrons
+PhotocellPhotoelectric effect
+Fusion test reactor (Tokamak)Magnetic confinement of plasma
+Giant Metrewave RadioDetection of cosmic radio waves
+Telescope (GMRT)
+Bose-Einstein condensateTrapping and cooling of atoms by laser beams and
+magnetic fields.
+
+PHYSICS8
+motion. He also gave an explicit form for the force
+for gravitational attraction between two bodies.
+We  shall  study these  matters  in  subsequent
+chapters.
+In  the  macroscopic  world,  besides  the
+gravitational force, we encounter several kinds
+of forces: muscular force, contact forces between
+bodies,  friction  (which  is  also  a  contact  force
+parallel  to  the  surfaces  in  contact),  the  forces
+exerted by compressed or elongated springs and
+taut  strings  and  ropes  (tension),  the  force  of
+buoyancy and viscous force when solids are in
+contact with fluids, the force due to pressure of
+a fluid, the force due to surface tension of a liquid,
+and so on. There are also forces involving charged
+and magnetic bodies. In the microscopic domain
+again,  we  have  electric  and  magnetic  forces,
+nuclear  forces  involving  protons  and  neutrons,
+interatomic and intermolecular forces, etc.  We
+shall get familiar with some of these forces in later
+parts of this course.
+A great insight of  twentieth century physics
+is  that  these  different  forces  occurring    in
+different contexts actually arise from only a small
+number of fundamental forces in nature.  For
+example, the elastic spring force arises due to
+the  net  attraction/repulsion  between  the
+neighbouring  atoms  of  the  spring  when  the
+spring  is  elongated/compressed.  This  net
+attraction/repulsion  can  be  traced  to  the
+(unbalanced) sum of electric forces between the
+charged constituents of the atoms.
+In  principle,  this  means  that  the  laws  for
+‘derived’ forces (such as spring force, friction)
+are not independent of the laws of fundamental
+forces  in  nature.  The    origin  of  these  derived
+forces is, however, very complex.
+At the present stage of our understanding,
+we know of four fundamental forces in nature,
+which are described in brief here :
+1.4.1Gravitational Force
+The  gravitational  force  is  the  force  of  mutual
+attraction between any two objects by virtue of
+their masses. It is a universal force. Every object
+experiences this force due to every other object
+in  the  universe.  All  objects  on  the  earth,  for
+example, experience the force of gravity due to
+the  earth.  In  particular,  gravity  governs  the
+motion of the moon and artificial satellites around
+the  earth,  motion  of  the  earth  and  planets
+around the sun, and, of course, the motion of
+bodies falling to the earth.  It plays a key role in
+the  large-scale  phenomena 

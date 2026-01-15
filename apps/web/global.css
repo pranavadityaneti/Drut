@@ -25,7 +25,7 @@
     --color-popover-foreground: #1a1f1c;
 
     /* Secondary - Light Lime tint #cbe856 */
-    --color-secondary: #f6fbe8;
+    --color-secondary: #cbe856;
     --color-secondary-foreground: #1a1f1c;
 
     /* Muted */
@@ -62,7 +62,7 @@
     --card-foreground: 150 10% 10%;
     --popover: 0 0% 100%;
     --popover-foreground: 150 10% 10%;
-    --secondary: 72 70% 95%;
+    --secondary: 74 75% 62%;
     --secondary-foreground: 150 10% 10%;
     --muted: 210 40% 96%;
     --muted-foreground: 215 16% 47%;

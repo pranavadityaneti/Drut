@@ -1,0 +1,3059 @@
+
+
+Telugu and Sanskrit Akademi
+Andhra  Pradesh
+Text Book for
+INTERMEDIATE
+Second Year
+Paper - IIA
+Algebra, Probability
+Mathematics
+
+ALL RIGHTS RESERVED
+No part of this publication may be reproduced, stored in a retrieval system or transmitted,
+in any form or by any m eans, electronic, mechanical, photocopying, recording or
+otherwise without this prior permission of the publisher.
+This book is sold subject to the condition that it shall not, by way of trade, be lent, resold,
+hired out or otherwise disposed of without the publisher’s consent, in any form of binding
+or cover other than that in which it is published.
+The correct price of these publication is the price printed on this page, any revised price
+indicated by rubber stam p or by a sticker or by any other m eans is incorrect and is
+unacceptable.
+Published by Telugu and Sanskrit Akademi, Andhra Pradesh under the Centrally
+Sponsored Scheme of Production of Books and Literature in Regional Languages at the
+University level of the Governm ent of India in the Ministry of Human Resource
+Development, New Delhi.
+Intermediate
+Second Year
+Mathematics
+Paper - IIA
+Text Book
+Pages : xviii + 400 + vi + iv
+© Telugu and Sanskrit Akademi, Andhra Pradesh
+Reprint 2023
+Copies : 24000
+Published, Printed & Distributed by
+Telugu and Sanskrit Akademi, A.P.
+Price: Rs. 207.00
+Laser Typeset by Pavan Graphics, Hyderabad
+Published and Printed by
+M/s GBR Offset Printers & Publishers
+Surampalli, NTR Dist.
+on behalf of  Telugu and Sanskrit Akademi
+
+Y.S. JAGAN MOHAN REDDY
+AMARAVATI
+CHIEF  MINISTER
+ANDHRA PRADESH
+MESSAGE
+I congratulate  Akademi for starting its activities with printing of textbooks from
+the  academic year  2021 –  22.
+Education is a real asset which cannot be stolen by anyone and it is the foundation
+on which children build their future. As the world has become a global village, children
+will have to compete with the world as they grow up. For this there is every need for
+good books and good education.
+Our government has brought in many changes in the education system and more
+are to come. The government has been taking care to provide education to the poor
+and needy through various measures, like developing infrastructure, upgrading the skills
+of teachers, providing incentives to the children and parents to pursue education. Nutritious
+mid-day meal and converting Anganwadis into pre-primary schools with English as medium
+of instruction are the steps taken to initiate children into education from a young age.
+Besides introducing CBSE syllabus and Telugu as a compulsory subject, the government
+has taken up numerous innovative programmes.
+The revival of the Akademi also took place during the tenure of our government
+as it was neglected after the State was bifurcated. The Akademi, which was started on
+August 6, 1968 in the undivided state of Andhra Pradesh, was printing text books,
+works of popular writers and books for competitive exams and personality development.
+Our government has decided to make available all kinds of books required for
+students and employees through Akademi, with headquarters at Tirupati.
+I extend my best wishes to the Akademi and hope it will regain its past glory.
+(Y.S. JAGAN MOHAN REDDY)
+
+Dr. NANDAMURI  LAKSHMIPARVATHi
+               M.A., M.Phil., Ph.D.
+Chairperson, (Cabinet Minister Rank)
+Telugu and Sanskrit Akademi, A.P.
+Message  of  Chairperson,  Telugu  and  Sanskrit  Akademi,  A.P.
+In accordance with the syllabus developed by the Board of Intermediate, State
+Council for Higher Education, SCERT etc., we design high quality Text books by recruiting
+efficient Professors, department heads and faculty members from various Universities and
+Colleges as writers and editors. We are taking steps to print the required number of these
+books in a timely manner and distribute through the Akademi’s Regional Centers present
+across the Andhra Pradesh.
+In addition to text books, we strive to keep monographs, dictionaries, dialect texts,
+question banks, contact texts, popular texts, essays, linguistics texts, school level dictionaries,
+glossaries, etc., updated and printed and made available to students from time to time.
+For competitive examinations conducted by the Andhra Pradesh Public Service
+Commission and for Entrance examinations conducted by various Universities, the contents
+of  the Akademi publications are taken as standard.  So, I want all the students and
+Employees to make use of  Akademi books of high standards for their golden future.
+Congratulations and best wishes to all of you.
+(NANDAMURI    LAKSHMIPARVATHI)
+
+Higher Education Department
+Government of Andhra Pradesh
+J. SYAMALA RAO, I.A.S.,
+Principal Secretary to Government
+MESSAGE
+I Congratulate Telugu and Sanskrit Akademi for taking up the initiative of
+printing and distributing textbooks in both Telugu and English media within a short
+span of establishing Telugu and Sanskrit Akademi.
+Number of students of Andhra Pradesh are competing of National Level for
+admissions into Medicine and Engineering courses.  In order to help these students
+Telugu and Sanskrit Akademi consultation with NCERT redesigned their Textbooks
+to suit the requirement of National Level Examinations in a lucid language.
+As the content in Telugu and Sanskrit Akademi books is highly informative
+and authentic, printed in multi-color on high quality paper and will be made available
+to the students in a time bound manner. I hope all the students in Andhra Pradesh
+will utilize the Akademi textbooks for better understanding of the subjects to compete
+of state and national levels.
+(J. SYAMALA RAO)
+
+THE CONSTITUTION OF INDIA
+PREAMBLE
+WE,  THE  PEOPLE  OF  INDIA,  having
+solemnly  resolved  to  constitute  India  into  a
+[SOVEREIGN SOCIALIST SECULAR
+DEMOCRATIC  REPUBLIC] and to  secure to  all
+its citizens:
+JUSTICE, social, economic and political;
+LIBERTY of thought, expression, belief, faith
+and worship;
+EQUALITY of status and of opportunity; and
+to promote among them all
+FRATERNITY  assuring  the  dignity  of  the
+individual and the [unity and integrity of the
+Nation];
+IN OUR CONSTITUENT ASSEMBLY this
+twenty-sixth day of November, 1949 do HEREBY
+ADOPT,  ENACT AND GIVE TO OURSELVES
+THIS CONSTITUTION.
+
+Ch i ef  Coor d i n at o r
+Pr o f .  P. V.  Ar u n ac h al am , Fou n d er  Vi ce- Ch an cel l or, D r avi d i an  Un i ver si t y, Ku p p am
+Ed i t or s
+Pr of .  K .  Pat t abh i  Ram a Sast r y , Pr ofessor  of M at h em at i cs (Ret d ), An d h r a Un i ver si t y,
+Vi sak h apat n am
+Pr o f .  U. M .  Sw am y , Pr ofessor  of M at h em at i cs (Ret d ). An d h r a Un i ver si t y.
+Vi sak h apat n am
+Pr of . Y. Ven k at esw ar a Red dy , Pr ofessor  of M at h em at i cs(Ret d.), Ach ar ya Nagarsj u n a
+U n i ver si t y, Gu n t u r
+Pr o f .  D.  Ram a M u r t h y , Pr ofessor  (Ret d ). D ep ar t m en t  of M at h em at i cs. Osm an i a
+Un i ver si t y. H yder abad
+Pr o f . T. Ram  Red d y , Pr ofessor of M at h em at i cs(Ret d.), Kak at i ya U n i ver si t y, War an gal
+Pr of . K . Sam bai ah , Ch ai r m an, BOS, D ep ar t m en t  of M at h em at i cs, Kak at i ya Un i ver si t y.
+War an gal
+Sr i  A.  Pad m an abh am, H ead  of t h e D epar t m en t  of M at h em at i cs (Ret d.), M ah ar an i
+Col l ege, Pedd ap u r am
+Sr i  Son t h i  K r i sh n a Sast r y , Resear ch  Assi st an t  (Ret d), M at h em at i cs. Tel u gu Ak adem i .
+H yd er ab ad
+Au t h o r s
+Pr o f ,  K .  Ram a M o h an a Rao , Pr ofessor  of Ap p l i ed M at h em at i cs (Ret d). An dh r a
+U n i ver si t y, Vi sak h apat n am
+Sr i  K . Ch an dr a Sek h ar a Rao , J u n i or  Lect u r er  . Govt . J u n i or  col l ege , Up pu gu n du r u .
+Pr ak asam  (D i st )
+Sr i  K .V.S. Pr asad, Lect u r er  i n  M at h em at i cs, Govt . D egr ee Col l ege (Wom en ), Sr i k ak u l am
+Pr o f .   N.   B h a s k a r a   R e d d y ,  C h a i r m a n ,   B O S, D ep a r t m en t   o f  M a t h em a t i c s,
+Sr i  Ven k at esw ar a U n i ver si t y, Ti r u p at i
+Dr. D.  Ch i t t i  Babu , Reader, D ep ar t m en t  of M at h em at i cs, Govt. Col l ege (Au t on om ou s),
+Raj ah m u n dr y
+Pr o f .   G.   Ch ak r ad h ar a  Rao ,  Pr ofessor   of  M at h em at i cs  &   Ch ai r m an,  P.G.  B oar d   of
+St u di es, An d h r a U n i ver si t y, Vi sak h ap at n am
+Sm t .  S.V.  Sai l aj a, J u n i or  Lect u r er  i n  M at h em at i cs, New  Gover n m en t  J u n i or  Col l ege,
+Nam p al l y at  Ku k at pal l y. H yd er abad
+Sr i  V.  Sr een i v asu l u , Lect u r er  i n  M at h em at i cs, Govt o D egr ee Col l ege, M ah aboobabad,
+War an gal.
+Sr i   C.  Sad asi v a  Sast r y ,  Lect u r er   i n   M at h em at i cs  (Ret d).  Sn   Ram ab h ad r a  J u r u or
+Col l ege, Ram n agar, H yder abad
+Textbook  Development  Committee
+
+Pr of. D. Ram a Mur t h y , Pr ofessor of M ath emat ics (Retd.), Osman ia Un i versity, H yderabad
+Pr of . S. Raj  Reddy , Pr ofessor  of M at h em at i cs (Ret d.), Kak at i ya Un i ver si t y, War an gal
+Pr of. D.R.V. Pr asada Rao, Pr ofessor of M ath em a ti cs (Retd.), S.K.Un l versi ty, An an th apu r
+Dr. D. Ch i t t i  Babu , Reader. Govt . Col l ege (Au t on om ou s), Raj ah m u n dr y
+Dr.C.T. Su r y an ar ay an a Ch ar i , Reader, Si l ver  J u bi l ee Govt . Col l ege. Ku r n ool
+Dr. Y. Bh ask ar  Reddy , Reader, Govt . D egr ee Col l ege, Ran gasai pet . War an gal
+Dr. M .V.N. Pat r u du , Pr i n ci pal . Govt . J u n i or  Col l ege, Veer agh at t am , Sr i k ak u l am  (D i st )
+Sr i  T. M ar k an dey a Nai du , Lect u r er. P.V.K.N. Govt . D egr ee Col l ege. Ch i t t or e
+Sr i  C. Li n ga Reddy , Pr i n ci pal , Govt . J u n i or  Col l ege (Boys), Ni r m al , Adi l abad (D i st )
+Sr i  K odi  Nageswar a Rao, Sch ool  Assi st an t  (Ret d.), Ch agal l u , West  Godavar i  (D i st )
+Sr i  C. Sadasi v a Sast r y , Lect u r er  i n  M at h em at i cs (Ret d.), Sr i  Ram abh adr a J r. Col l ege,
+Hyderabad
+Sm t . S.V. Sai l aj a, J u n i or  Lect u r er. New Govt . J u n i or  Col l ege, Ku k at pal l y, H yder abad
+Sr i  K . Ch an dr a Sek h ar a Rao, J u n i or  Lect u r er, GJ C, Uppu gu n du r. Pr ak asam  (D i st )
+Sr i  P.  H ar i n adh a Ch ar y , J u n ior  Lect u r er, Sri  Sr in i vasa Jr. Col l ege, Ti ru ch an u r, Ti r u pat i
+Su bj ec t   Com m i t t ee  M em ber s  of     BI E
+Pan el   of   Ex per t s  of     BI E
+Pr of. D. Ram a M ur t h y , Professor  of M at h em at i cs (Ret dl. Osman la Un lversi ty. H yderabad
+Pr of. D.R.V. Pr asad a Rao, Professor  of M at h em ati cs (Retdl. S.K. Un i ver si ty. An an th apu r
+Dr,  C.T.  Su r y an ar ay an a  Ch ar i , Reader   i n   M at h em at i cs,  Si l ver   J u bi l ee  Gover n m en t
+Coll ege (Au t on om ou s) , Ku r n ool
+Sr i  C. Sadasi v a Sast r y , Lect u r er  i n  M ath em at i cs (Ret d). Sr i Ramabh adr a J u n lor  Col l ege.
+Hyderabad
+Dr. M .V.N. Pat r u du , Pr i n ci pal , Govt . J u n i or  Col l ege, Veer agh at t am . Sr i k ak u l am  (D i st )
+Sm t . S.V. Sai l aj a, J u n i or  Lect u r er, New Govt . J u n i or  Col l ege, Ku k at pal l y. H yder abad
+
+Text  Book  Review  Committee
+Editors
+Reviewed by
+Prof.  K.  Rama  Mohan  Rao
+ Professor of Applied Mathematics (Retd.)
+Andhra University, Visakhapatnam.
+Prof.  G.  Chakradhara  Rao
+Professor of  Mathematics (Retd.)
+Andhra University, Visakhapatnam.
+Sri  K.V.S.  Prasad
+Lecturer in Mathematics (Retd.)
+Government College for Women,
+Srikakulam.
+Dr. Y. Purushothama  Reddy
+Principal (Retd.)
+Government Degree Collge, Bantumilli,
+Krishna Dist.
+Prof.  S.  Kalesha Vali
+Department of  Engineering Mathematics
+Andhra University, Visakhapatnam.
+Dr. K. Ravi Babu
+Lecturer in Mathematics
+Dr. V.S. Krishna Govt. Degree & P.G. Collge(A),
+Visakhapatnam.
+
+Coordinating  Committee  of
+Board  of  Intermediate  Education, A.P.
+Sri M.V. Seshagiri Babu, I.A.S.
+Secretary
+Board of Intermediate Education,
+Andhra Pradesh
+Educational Research & Training Wing (Text Books)
+Dr. A. Srinivasulu
+Professor
+Sri. M. Ravi Sankar Naik
+Assistant  Professor
+Dr. M. Ramana Reddy
+Assistant  Professor
+Sri  J.V. Ramana Gupta
+Assistant  Professor
+
+Telugu and Sanskrit Akademi, Andhra Pradesh
+Coordinating Committee
+Sri V. Ramakrishna, I.R.S.
+Director
+Dr. M. Koteswaramma, M.Com., Ph.D.
+Research  Officer
+Dr. S.A.T. Rajyalakshmi M.Sc., B.Ed., M.A., Ph.D.
+Research  Assistant
+Dr. K. Glory Sathyavani, M.Sc., Ph.D., M.Ed.
+Research  Assistant
+
+Foreword
+Th e  Gover n m en t   of  In d i a  vowed   t o  r em ove  t h e  ed u cat i on al   d i spar i t i es
+an d   ad op t   a  com m on   cor e  cu r r i cu l u m   acr oss  t h e  cou n t r y  esp eci al l y  at   t h e
+In t er m ediat e level.  Ever  si n ce t h e  Gover n m en t  of An dh r a Pr adesh  an d t h e B oar d
+of  I n t er m edi at e  Edu cat ion   (BIE)  swu n g  in t o  act ion   wit h   t h e  t ask   of  evolvi n g  a
+r evi sed  syl labu s  i n   all  t h e  Scien ce  su bj ect s  on   par   wi t h   t h at   of  CBSE,  appr oved
+by  NCERT,  it s  ch ief  in t en t i on   bein g  en abli n g  t h e  st u den t s  fr om   An dh r a  Pr adesh
+t o  p r epar e  for   t h e  Nat ion al   Level  Com m on   En t r an ce  t est s  l ik e  NEET,  ISEET  et c
+for   adm issi on   in t o  In st it u t ion s  of  pr ofession al  cou r ses  in   ou r   Cou n t r y.
+For   t h e  fir st   t im e  BIE  AP  h as  decided  t o  pr epar e  t h e  Scien ce  t ext book s.
+Ac c or d i n gl y   a n   A c a d em i c   Rev i ew   Co m m i t t ee  w a s   c on s t i t u t ed   w i t h   t h e
+Com m issi on er   of  I n t er m ediat e  Edu cat ion ,  AP  as  Ch air m an   an d  t h e  Secr et ar y,
+BIE  AP; t h e  Dir ect or   SCERT  an d t h e  Dir ect or   Telu gu   Ak ad em i as  m em ber s.  Th e
+Nat i on al  an d   St at e  Level  Ed u cat ion al  lu m in ar ies  wer e  in vol ved  in   t h e  t ext book
+pr ep ar at ion ,  wh o  d id  it   wit h   m et icu lou s  car e.  Th e  t ex t book s  ar e  pr i n t ed  on   t h e
+lin es  of  NCERT  m ain t ain in g  Nat ion al  Level  St an dar ds.
+Th e  Edu cat i on   Depar t m en t   of  Gover n m en t   of  An dh r a  Pr adesh   h as  t ak en
+a  decision   t o  pu bl ish   an d  t o  su pp ly  all  t h e  t ex t   book s  wit h   fr ee  of  cost   for   t h e
+st u d en t s  of  all  Gover n m en t   an d  Aided  J u n ior   Colleges  of  n ewly  for m ed  st at e  of
+An dh r a  Pr ad esh .
+We  ex pr ess  ou r   sin cer e  gr at it u de  t o  t h e  Dir ect or,  NCERT  for   accor di n g
+per m ission   t o  adopt   it s  syl labi  an d  cu r r icu lu m   of  Scien ce  t ext book s.  We  h ave
+been   per m it t ed  t o  m ak e  u se  of  t h eir   t ex t book s  wh ich   will  be  of  gr eat   advan t age
+t o  ou r   st u den t   com m u n it y.  I  also  expr ess  m y  gr at it u de  t o  t h e  Ch air m an ,  BIE
+an d   t h e  h on or ab l e  M in i st er   for   HRD   an d   Vi ce  Ch air m an ,  B I E  an d   Secr et ar y
+(SE)  for   t h eir   ded icat ed  sin cer e  gu idan ce  an d  h elp.
+I si n cer ely  h ope t h at  t h e  assor t ed  m et h ods of i n n ovat ion  t h at   ar e adopt ed
+in   t h e  pr ep ar at ion   of  t h ese  t ext book s  wi ll  be  of  gr eat   h elp  an d  gu id an ce  t o  t h e
+st u d en t s.
+I   w h ol eh ear t ed l y   ap p r eci at e  t h e  s i n cer e  en d ea vor s  of   t h e  T ex t b ook
+Developm en t   Com m it t ee  wh ich   h as  accom plish ed  t h is  n oble  t ask .
+Con st r u ct ive su ggest ion s ar e solicit ed for  t h e im pr ovem en t  of t h is t ext book
+fr om   t h e  st u d en t s,  t each er s  an d   gen er al  pu bl ic  in   t h e  su bj ect s  con cer n ed  so
+t h at   n ext   edit ion   will  be  r evised  du ly  in cor por at in g  t h ese  su ggest i on s.
+I t   i s  ver y  m u ch   com m en d ab l e  t h at   I n t er m ed i at e  t ex t   b ook s  ar e  b ei n g
+pr in t ed  for   t h e  fir st   t im e  by  t h e  Ak adem i  fr om   t h e  2021 -22  academ ic  year.
+Sr i . V. Ram ak r i sh n a I.R.S.
+Di r ec t o r
+Telu gu   an d  San sk r it   Ak ad em i,
+An dh r a  Pr adesh
+
+Preface
+Th e  B oar d   of  I n t er m ed i at e  E d u cat i on ,  h as  r ecen t l y   r evi s ed   t h e  sy l l ab u s  i n
+M at h em at i cs  for   t h e  In t er m ed i at e  Cou r se  wi t h   effect   fr om   t h e  Ak ad em i c  year   2 0 1 2- 1 3 .
+Accor d i n gl y, Tel u gu  Ak ad em i   h as p r ep ar ed t h e n ecessar y Tex t  B ook s i n  M at h em at i cs.
+In  accor dan ce wi t h  t h e cu r r en t  syl l abu s, t h e t opi cs r el at i n g t o  paper  II-A : Al gebr a an d
+Pr obabi l i t y ar e dealt  wi th  i n  t h i s book . Th e syl labu s i s presen ted i n  t en  ch apt er s. Al gebr a par t
+gi ven  in  seven  ch apter s : Com p l ex  n u m ber s, De Moi vr e’s Th eor em , Qu ad r at i c Exp r essi on s,
+T h eor y   of   Equ at i on s,  Per m u t at i o n s  an d   Co m bi n at i o n s,  Bi n om i al   Th eor em ,  Par t i al
+Fr act i on s an d Pr obabi l i t y par t  gi ven  i n  t h r ee ch apt er s M easu r es of   Di sp er si on , Pr obabi l i t y
+an d  Ran d om  Var i abl es an d  Pr obabi l i t y  Di st r i bu t i on s.
+Fu r t h er, for  t h e ben fi t  of st u den t s i n t en di n g t o appear  for  Al l  In di a Level  Com pet i t i ve
+Exam i n at i on s, t h e Ad d i t i on al  Read i n g M at er i al  i s i n cl u ded i n  t h e Appen di x, It  con t ai n s t wo
+ch apt er s Expon en t i al  an d Logar i t h m i c Ser i es an d Li n ear  Pr ogr am m i n g. Th ese t opi cs ar  for
+addition al r eadin g, bu t n ot for examin ation s. No qu est i on  wi l l  be set  on  t h e Addi t i on al  Readi n g
+M at er i al , i n  t h e I n t er m ed i at e I I  Year  Pu bl i c Ex am i n at i on , M at h em at i cs, p ap er - I I A.
+Ever y ch ap t er  h er ei n . i s d i vi ded  i n t o var i ou s sect i on s an d  su b sect i on s. depen di n g on
+t h e  con t en t s  d i scu ssed .  Th ese  con t en t s  ar e  st r i ct l y  i n   accor d an ce  w i t h   t h e  p r escr i b ed
+syl l abu s an d  t h ey r efl ect  fai t h fu l l y t h e scop e an d sp i r i t  of t h e sam e. Necessar y defi n i t i on s,
+t h eor em s, cor ol l ar i es. p r oofs an d  n ot es ar e gi ven  i n  d et ai l . Key con cep t s ar e gi ven  at  t h e
+en d  of each  ch apt er, Il l u st r at i ve ex am p l es an d  sol ved p r ob l em s ar e i n  pl en t y. an d  t h ese
+sh al l  h el p t h e st u d en t s i n  u n der st an di n g t h e su b j ect  m at t er.
+Ever y ch apt er  con t ai n s ex er ci ses i n  a gr ad ed  m an n er  w h i ch  en ab l e t h e st u d en t s t o
+sol ve t h em  b y app l yi n g t h e k n owl ed ge acqu i r ed . Al l  t h ese p r obl em s ar e cl assi fi ed  accor di n g
+t o t h e n at u r e of t h ei r  an swer s as I  - v er y  sh o r t  I I  sh or t  an d   I I I -l on g.  An swer s ar e pr ovi d ed
+for  al l  t h e ex er ci ses at  t h e en d  of each  ch apt er.
+Keepi n g i n  vi ew t h e Nat i on al  l evel  com peti t i ve exam i n at i on s, some con cept s an d n ot i on s
+ar e h i gh l i gh l ed  for  t h e b en efi t  of t h e st u d en t s.  Car e h as b een  t ak en  r egar d i n g r i gor  an d
+l ogi cal  con Si st en cy i n  t h e p r esen l at i on  of con cept s an d i n  p r ovi n g t h eor em s. Al t  t h e en d  of
+t h e t ex t  B ook , a l i sl  of som e R ef er en c e Boo k s i n  t h e su b j ect  m al t er  i s fu r n i sh ed .
+Th e  M em b er s  of  t h e  M at h em at i cs  Su b j ect   Com m i t t ee,  con st i t u t ed   b y  B oar d   of
+In t er m ed i at e Edu cat i on , wer e i n vi t ed  t o i n t er act  w i t h  t h e t eam  of t h e Au t h or s an d Ed i t or s.
+Th ey pu r su ed  t h e con t en l s ch ap t er  w i se an d  gave som e u sefu l  su ggest i on s an d  com m en t s
+w h i ch  ar e d u l y i n cor p or at ed . Th e sp eci al  feat u r e ofl h i s Book , b r ou gh t  ou t  i n  a n ew  for m al ,
+i s t h at  each  ch ap t er  begi n s wi t h  a t h ou gh t  m ost l y on  M at h em at i cs. t h r ou gh  a qu ot at i on
+fr om  a fam ou s t h i n k er. It  car r i es a por t r ai t  of a n ot ed  : m at h em at i ci an  wi t h  a br i ef wr i t e- u p .
+In  t h e con cl u d i n g p ar t  of each  ch apt er  som e r el evan t  h i st or i cal  n ot es ar e ap p en d ed .
+Wh er ever  fou n d  app r opr i at e, r efer en ces ar e al so m ade of t h e con t r i bu t i on s of an ci en t  In di an
+sci en t i st s t o t h e ad van cem en t  of  M et h am at i cs. Th e p u r p ose i s t o en ab l e t h e st u d en t s t o
+h ave a gl i m p se i n t o t h e h i st or y of M at h em at i cs i n  gen er al  an d  t h e oon t r i bu t i on s of In d i an
+m et h em at i ci an s i n  p ar t i cu l ar.
+In spi t e of en ou gh  car e t ak en  i n  t h e scr u t i n y at  var i ou s st ages i n  t h e p r epar at i on  of
+t h e  b ook , er r or s m i gh t  h ave cr ep t  i n .  Th e r ead er s ar e t h er efor e, r equ est ed t o i den t i fy an d
+b r i n g t h em  t o t h e n ot i ce of t h e Ak ad em i .  We w i l l  ap p r eci at e i f su gget i on s t o en h an ce t h e
+qu al i t y of t h e book  ar e gi ven . Effor t s w i l l  b e m ad e t o i n cor p or at e t h em  i n  t h e su b sequ en t
+edi t i on s.
+Pr of . P.V. Ar u n ach al am
+Ch i ef  Co o r d i n at o r
+
+Pr ef ace  t o  t h e  Rev i ewed  Edi t i on
+Telu gu   Ak adem i  is  p u blish in g  Text   book s  for   Two  year   In t er m ediat e  in
+En gli sh   an d   Telu gu   m edi u m   sin ce  it s  in cept ion ,  p er i odi cal   r eview  an d
+r evi sion   of  t h ese  p u blicat i on s  h as  been   u n der t ak en   as  an d  wh en   t h er e
+was  an   u pdat ion   of  In t er m ediat e  syllabu s.
+In  t h is r evi ewed Ed it ion , n ow bein g u n der t ak en  by t h e Tel u gu  Ak ad em i,
+An d h r a  Pr adesh   t h e  b asi c  con t en t   of  i t s  ear l ier   Ed it i on   i s  con sid er ed
+an d  it   is  r eviewed   b y  a  t eam   of  exper i en ced  t each er s.  Mod ificat ion   by
+way  of cor r ect in g er r or s,  pr in t  m ist ak es, in cor p or at in g addit ion al con t en t
+wh er e n ecessar y t o elu cidat e a con cept  an d /  or  a defin it ion , m odificat ion
+of  exist in g  con t en t   t o  r em ove  ob scu r it ies  for   r eleasin g  t h e  con cept   m or e
+easi ly  ar e  car r ied  ou t   m ai n ly  in   t h is  r eview.
+Not   wit h st an din g  t h e  effor t   an d  t im e  spen t   by  t h e  r eview  t eam   in   t h is
+en d eavou r,  st i l l   a  few  asp ect s  t h at   st i l l   n eed   m od i f i cat i on   or   ch an ge
+m igh t   h ave  b een   left   u n n ot i ced.
+Con st r u ct i ve  su ggest i on s  fr om   t h e  acad em i c  fr at er n i t y  ar e  wel com e
+an d   t h e  Ak adem i   wil l  t ak e  n ecessar y  st ep s  t o  in cor por at e  t h em   in   t h e
+for t h   com in g  edit i on .
+We  a p p r eci at e  t h e  en cou r agem en t   a n d   s u p p or t   ex t en d ed   b y   t h e
+Academ i c  an d   Adm in i st r at i ve  st aff  of  t h e  Tel u gu   Ak ad em i   i n   fu l fi ll in g
+ou r   assign m en t   wit h   sat isfact ion .
+Ed i t or s
+(Revi ew ed   Ed i t i on )
+
+Contents
+1.Complex  Numbers1  -  34
+Introduction.....................................1
+1.1Complex number as an ordered pair of real numbers.....................................2
+Fundamental operations
+1.2Representation of complex number in the form a + ib.....................................7
+1.3Modulus and Amplitude of a complex number-Illustrations.....................................16
+1.4Geometrical and Polar representation of complex number.....................................25
+in Argand plane - Argand diagram
+2.De  Moivre’s  Theorem35  -  50
+Introduction.....................................35
+2.1De Moivre’s Theorem -  Integral and Rational Indices.....................................35
+2.2n
+th
+ roots of unity- Geometrical Interpretations - Illustrations....................................40
+3.Quadratic  Expressions51  -  94
+Introduction.....................................51
+3.1Quadratic Expressions, Equations in one Variable.....................................52
+3.2Sign of quadratic expressions - Change in signs and.....................................73
+Maximum and Minimum values
+3.3Quadratic Inequations.....................................85
+
+4.Theory  of  Equations95  -  148
+Introduction.....................................95
+4.1Relation  between  the  roots  and  the  coefficients.....................................96
+in an equation
+4.2Solving an equation when two or more of its roots are.....................................108
+connected  by  certain  relations
+4.3Equations with real coefficients -  occurrence of  complex.....................................123
+roots in conjugate pairs and its consequences
+4.4Transformation of equations - Reciprocal equations.....................................129
+5.Permutations  and  Combinations149 - 202
+Introduction.....................................149
+5.1Fundamental Principle of Counting - Linear and.....................................150
+Circular permutations
+5.2Permutations of  n dissimilar things taken r at a time.....................................154
+5.3Permutations  when repetitions  are  allowed.....................................168
+5.4Circular Permutations.....................................172
+5.5Permutations with Constraint repetitions.....................................177
+5.6Combinations - Definitions and Certain Theorems.....................................182
+6.Binomial  Theorem203  -  258
+Introduction.....................................203
+6.1Binomial Theorem for positive integral index.....................................205
+6.2Binomial Theorem for Rational Index.....................................235
+6.3Approximations using Binomial Theorem.....................................248
+7.Partial  Fractions259  -  278
+Introduction.....................................259
+7.0Rational Fractions.....................................260
+7.1Partial Fractions of  f(x) / g(x), when  g(x) contains.....................................261
+non-repeated  linear  factors
+
+7.2Partial Fractions of  f(x) / g(x), when g(x)  contains.....................................264
+repeated  and  /  or  non-repeated  linear  factors
+7.3Partial Fractions of  f(x) / g(x), when g(x)  contains.....................................268
+irreducible factors
+8.Measures  of    Dispersion279  -  308
+Introduction.....................................279
+8.1Range.....................................280
+8.2Mean  Deviation.....................................281
+8.3Variance and Standard Deviation of ungrouped /.....................................290
+grouped data
+8.4Coefficient of Variation and analysis of frequency.....................................296
+distributions with equal means but different variances
+9.Probability309  -  344
+Introduction.....................................309
+9.1Random Experiments  and Events.....................................310
+9.2Classical definition of probability, Axiomatic approach.....................................314
+and addition theorem of probability.....................................
+9.3Independent  and  Dependent  events,  Conditional.....................................327
+Probability, Multiplication Theorem and Baye’s Theorem
+10.Random  Variables  and  Probability  Distributions345  -  366
+Introduction.....................................345
+10.1Random  Variables.....................................346
+10.2Theoretical discrete distributions -.....................................355
+Binomial and Poisson distributions
+
+ADDITIONAL   READING   MATERIAL
+For the benefit of students who want to appear for competitive exams based on COBSE the following
+topics may be given as Additional Reading Material.
+1.Exponential  and Logarithmic  Series367 - 378
+1.1Exponential  Series.....................................367
+1.2Solved Problems.....................................369
+1.3Logarithmic Series.....................................373
+1.4Solved Problems.....................................374
+2.Linear  Programming379 - 392
+Introduction.....................................379
+2.1Mathematical  formulation  of  the  LPP.....................................380
+2.2Different  types  of    LPP.....................................381
+2.3Graphical method for solving a LPP.....................................382
+2.4Solved Problems.....................................384
+Reference  Books3 9 3
+Syllabus394  -  396
+Model  Question  Paper397  -  399
+
+Al gebr a
+
+
+
+g2x
+I
+w	2	22222	2
+x22	2222w	
+E22q
+s
+
+s22	
+	2
+222
+	22		
+2	
+2	222	2	22	
+
+	2
+2D2	D2
+
+2
+F2222
+2
+	2
+2
+	22
+222	
+22	222
+	
+F222222222
+P2
+C2I2a2H22
+2	
+2
+222	22	2	
+2	2
+ F22222222"2
+	
+2	2222
+		2D2222
+2	22
+22222
+P
+2a22IF22s22
+D22
+2
+2
+2222
+P
+2C22C22a2H
+	2222
+P
+22R2`2HD22222
+222	
+
+	2F
+s22i
+	2@IUHU2 2IUVQA2222	
+	22	222
+P
+2C2I2a2H2222
+22	F
+r	
+@IVHS2E2IVTSA
+2	
+2r	222s	
+
+
+		D2  
+		D2  
+2 
+2 2 	
+		22
+222
+	D2	22F22r	
+	22	2	2
+
+
+	222			F2hF
+f	2222r	22
+
+22	
+X2!
+	22D2s
+222	2D22	D2
+2	
+
+		22
+	2F#
+
+w2E2sse
+P
+i
+	2
+
+222	2	22	22	222	22C2	D
+D22
+
+2222
+"2	F22r	D2222
+"2	222	2	
+22 
+
+
+22222r
+2@IVHS2 2IVTSA222		2	22	
+2	22@D2A
+22	2		D2
+222
+	2	22222
+"2	F
+2
+
+2
+2222
+2,D2
+22
+222
+"2	F
+p
+
+2222	
+2		222
+"2	22	22e	2
+2
+e	2	22222D2	D2	22222
+"2	
+	
+
+F
+IFI 2g22222
+2222
+2p2
+
+2s22D22
+
+222	
+2222
+"2	22	2	
+@
+	A2	22222
+"2	22
+22
+	2		22
+"
+	F
+IFIFI2h	
+	22@g2	A
+e2"#22	222"	22#222@D2AF22222##2"#2
+	2222g2a2/@D2A2'22
+
+2D22
+
+02a22
+
+2F
+IFIFP2h	
+	22@i
+222	A
+(2"#22
+
+1
+za,b
+222
+
+2
+zc,d
+22	222)#2	222a2222a2F
+IFIFQ2h	
+	
+@Ae	
+2	2	2
+
+s22
+
+1
+za,b
+222
+
+2
+zc,d
+D222
+
+12
+zz  a,b  c,d   
+2222
+"2	22@2C2D222C2AF
+@Ax2	22	2
+
+2222
+"2	22*2a2@D2A22222 *22222
+2 2*2a2@ D2 AF
+@Ah
+2	2	2
+
+s22*
+I
+2a2@D22A2222*
+P
+2a2@D22A2D222222*
+I
+2+2*
+P
+2a2*
+I
+2C2@+2*
+P2
+AF
+2*
+I
+2+2*
+P
+22a22@22+22D2222+2AF
+
+g2x
+Q
+@Aw	
+2	2	2
+
+s22*
+I
+2a2@D2AD22*
+P
+2a2@D2A22222	2	2
+*
+I
+2F2*
+P
+2a2@D22A2F2@D22A22a22@22+22D2222C22A
+IFIFR 2i
+s*
+I
+a@PD2QA *
+P
+a@TD2SAD*
+I
+2C2*
+P
+2a2@P22 2TD22Q22C22SA22a22@ RD22VA
+s*
+I
+a @TD2QA *
+P
+a @PD2IAD*
+I
+2222*
+P
+22a22@T2 2PD2Q2 2@ 2IA2a2@RD2RA
+s*
+I
+a @ID2PA *
+P
+a @QD2RAD*
+I
+2F2*
+P
+2a2@ID2PA2F2@QD2 2RA2a2@Q2C2VD2 2R2C2TA2a2@IID22PA
+x	X22p	2222222
+"2	D222
+	2
+222222222222
+
+2gD22C22F
+s22
+	2	2222222222222222222222222F2r22	2222
+
+2	22	
+	22
+C
+F22222F2222
+F
+22	22
+
+2
+2222gF
+IFIFS22!
+222222@As22gD22		2	2		-
+	FFD22
+
+for all,,,    C
+22222@As22gD22		-2		2	22	2	)
+	FFD22	22	)2
+C
+2222
+ 
+22##2
+C
+	2#2222	2##22		-2		F
+2222@A22q	-22
+,  C
+2	222	)2#22
+C
+
+such that
+F
+2#2
+
+
+2
+2	2##22		-2	-222F
+2222@As22gD22		2	2	-
+	FFD2
+for all,    C
+22		2X22v22
+,,C
+F22v2222222a2@D2AD22a2@D2A22222a2@D22AF22
+22222@A222C2@22C2Aa@D2A2C2@D2A2C2@D22A
+a@D2A2C2@2C2D222C2A
+a@2C22C2D222C22C2A
+a@2C2A2C2D22@2C2A2C22
+a222@2C2D222C2A22C22@D22A
+a222@D2A2C2@D2A2C2@D22A
+a222@
+2C2A2C2
+2e2222gF
+C
+ .C
+
+w2E2sse
+R
+@Av2
+
+22a22@HD2HAF222	2
+
+222a2@D2A22g
+22C22222a22@D2A2C2@HD2HA2a22@2C2HD22C2HA
+222222222222222222222222222a22@D2A2a2@H2C2D22H2C2A2a2@HD2HA2C2@D2A2a22
+
+C2F
+2FFD22C
+
+2a222a2
+
+CF
+s222g222	2
+2222C22a222C22a222
+for allC
+D
+D2222
+
+222
+
+F
+r22gD22222F
+@Av22
+
+2gF22222a2@D22A2	22
+a, b
+F
+v22
+
+a,   b  .
+
+ 
+22
+
+00a, ba,   ba   a, b   b,
+
+   
+22222222
+
+aa,bb
+
+   
+222222FFD22
+   
+
+
+s22
+C
+2222
+ 
+D2
+2222
+
+    
+
+      
+r2222	2222F
+@Av22
+2
+
+a, b
+2222
+
+c, d
+F22
+2C222a22@D2A2C2@D22A22a2@2C2D222C2A
+222222222222a22@2C2D222C2A22a2@D2A22C2@D2A2a22CF
+2s22gD2222F
+x	2X2222222g222222HF22222	22222g222222F22
+
+
+22
+22
+22	2IFIFS22
+
+22	2	F
+IFIFT22!
+@As22gD2#	"#		2	2		-X22FFD2
+
+for all,,  ....C
+@As22gD
+2
+22	222	)2#222		122F222a2F222aD22
+for allC
+F
+	2#2
+2	2##22#	"#		-2		F
+@As22gD2#	"#		2	2	-X2FFD22F222a22F2D222
+for all,C
+@As22gD22			-2#(2#X22FFD22
+
+   ...
+D
+2
+
+for all,,,...C
+
+g2x
+S
+		2X22v22222a22@D22AD222a2@D22AD222a2@D22A2g
+2222222222@A22F2@2F2A22a222@D2A2F2@D2A2F2@D22A
+22222a222@D2A2F2@22+22D2222C2A
+22222a2222@22+22A22 222@22C2AD222@22C22A22C222@22+22A
+22222a222@22+22A222 22@22C22A2D22@22+22A2222C22@22C22A2
+22222a222@22+22D2222C22A2F2@D22A
+22222a222@D2A2F2@D2A2F2@D2A22a22@2F2A2F2F
+222222222222222222@A2222v222a222@ID22HAF222222gF222p	222gD
+F2222a222@ID22HA2F2@D22A22a22@2C2HD222C2HA22a22@D22A22a22F
+22222222222222222F2222a222@D22A2F2@ID2HA22a222 2HD22C2HA22a22@D22A22a2F
+222222222222s2
+C
+222D22
+for all    C
+D222
+.
+F
+2222@AF22a2@D2A2F2@D2A22a222@2+2D222C2A2a222@2+2D222C2AD
+@2D2D2D22222
+
+2222A
+222222222a222@D2A2F2@D2A2a2
+2FF
+2222@AF2@2C2A22a22@D2A2F2@D2A2C2@D2A
+222222222222222222222222222222a222@D2A2@2C2D22C2A
+222222a2222@2C2A2+22@2C2AD22@2C2A2C22@2C2A
+222222a2222C22+22+2D222C22C22C2
+222222a222@2+2D22C2A2C22@2+2D22C2A
+222222a222@D2A2F2@D2A2C2@D2A2F2@D2A
+222222a2
+2F222C22F
+x	X2p	2	2@IFIFSA22@IFIFTA22
+
+22222
+
+2
+"2	22222	
+22	22	2222
+
+F2222
+
+22
+222	2
+F
+s2@A22
+
+22
+
+2222IF
+e22222	
+2	2D22222222
+E9	2
+"2	F222
+22	22
+
+2	X
+
+w2E2sse
+T
+IFIFU222!2@h$	222	A
+s2
+,C
+222
+
+2@HD2HAD222	22	)22*222g222222a*F
+		X22v22a2@D2A222a2@D2AF22222
+
+2@HD2HAD
+22	222
+
+2H22	222
+
+2H222
+P
+2C22
+P
+22
+
+2HF
+2222222v22
+2*22a2
+22  22
+,
+acbd    bcad
+cd  cd
+
+
+
+
+
+F2222*22g
+x22F2*2
+22a22@D2A2F2
+22  22
+,
+acbdbcad
+cd  cd
+
+
+
+
+
+2222222a22
+222   2
+2222
+,
+acbcd    bcdadbcadcadcbd
+cdcd
+
+
+
+
+
+2222222a22@D22A2a2F
+v2@D2A22g22222222a2F2@D2A
+2222a222 222222a22C2
+r22a2
+22
+acbd
+cd
+
+
+22222a2
+22
+bcad
+cd
+
+
+2F22r2@D2A2a2*F
+x	2Xs22@HD2HAD2222
+22*22g222292a2D2222
+
+2
+@ID2HA22gD22
+
+22
+
+2	22F22s2222
+1
+
+
+F222x2D2222a2@D2A222@HD2HAD
+2
+1
+
+
+2a2
+2222
+,
+ab
+abab
+
+
+
+
+
+F
+IFIFV22h	
+	
+p2222gD222gD22@HD2HAD222	)22*22g22		122a22*22	
+222G222p2	2(22	22	-		222a2@D2A222a2@D2A2
+2
+2222
+acbd   bc   ad
+z,
+cdcd
+
+
+
+
+
+
+
+
+F
+IFIFW22i
+s22@PD2SAD222a2@E2ID2RA222292a2
+220   58
+116   116
+,
+
+
+
+  
+
+
+
+
+2a2
+1813
+1717
+,
+
+
+
+
+
+g2x
+U
+IFIFIH222h	
+	2@s	
+)2*2222	A
+v2292gF2222522
+1
+zz
+F
+2	229
+2
+2		-#22222*22H222##(X22
+
+
+1
+1
+1
+100
+ 0
+0
+n
+n
+n
+zifn
+,ifn
+z
+zzifn
+zifn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.
+i
+2I@A
+sFIF s22*
+I
+2a2@PD22IAD2*
+P
+2a2@TD2QA222*
+I
+22*
+PF
+PF s22*
+I
+2a2@QD2SA2222*
+P
+2a2@PD2TA222*
+I2
+F2*
+P
+QF 	222	222
+
+2
+"2	X
+@A2
+
+35,
+@A2@2TD2SA22C22@IHD22RA   @A22@PD2IA2@2RD2TA
+ssF22IF s22*
+I
+2a2@TD2QA2Y222*
+P
+2a2@PD22IA222*
+I2
+2G22*
+PF
+222222PF s22*22a22@2D222AD2222
+1
+z
+z
+
+
+
+
+222222QF 	22
+
+2	222
+
+2
+"2	X
+2222222@A 2@QD2RA22222222@A22@2D222A2222222222@A22@UD2PRA222222222@A22@PD2IA
+2IFP 2
+22222
+2222C2
+v22	
+
+2222
+"2	2222		2	2@D2A22	
+2	F22p	22	
+
+	2D2@D2HA222
+"2	F222e
+2@D2HA2C2@D2HA2a2@2C2D2HA22@D2HA2F2@D2HA22a22@D2HA2	2
+D222F
+22
+22222	
+2	2222
+"2	
+@D2HAF222222D2222
+
+22	
+2	2	22222
+		2
+"2	F2p	2
+D222@D2HA22222
+"2	2@HD2IA222	F
+D22222	2F2	222a222@HD2IA2F2@HD2IA22a22@2ID2HA22a222IF
+
+w2E2sse
+V
+e
+D2	22
+"2	2@D2AD22
+@D2A22a22@D2HA22C22@HD2A222a22@D2HA22C2@D2HA2F2@HD2IA
+22222a222C2	
+	222D2222y2a2@HD2HA22g22222
+H22F22
+	
+22
+
+22I2a2@ID2HA22g222I222F
+r22
+"2	2@D2A222		2222C2	222	2222C22	222	22222222	
+	
+2	222	2222
+"2	2222	
+P
+2a22IF22@2D22	2222	2222
+P
+2C2I2a2HAF
+IFPFI222	,2)	2
+2222	22
+s22*2a22C22	2Y222D222D2222222
+
+22	
+2	222*2222D22	2	222*F222
+	22222@*A222s2@*A22	
+F222222@*A22a22HD222*222
+
+2	
+2	F
+x2222	
+22	2	222*22	2	
+2	F222e
+D222		2
+*222	22	
+22	2	D2222
+
+22
+"2	222		22
+2
+2D22222	
+P
+2a22IF22
+@2C22	A22C22@2C22	A22a22@2C2A22C22@2C2A2	
+@2C22	A22F2@2C22	A222a22@222+22A22C22@22C22A2	
+y	2222C22	22a222C22	2222
+2222a222222a2222FFD22
+"2	22*22
+z
+
+2	2
+222
+2222@*A22a222@
+z
+
+A2222s2@*A2a2s2@z
+
+AF
+IFPFP22$,2
+IF2	X222i"22
+4234
+1223
+ii
+ii
+
+
+
+22	22222C22	2D2
+,abRR
+F
+		
+X22
+
+
+
+
+42 1234  23
+42    34
+122312  1223 23
+iii i
+ii
+ii ii   ii
+    
+
+
+ 
+222222222a22
+
+
+
+
+22
+22
+442 86 1289
+1223
+ii
+ii
+   
+
+
+222222222a22
+1018130905
+51365
+iii  i
+
+222222222a222
+901251825
+651313
+i
+i
+
+
+F
+PF2	X22p	22#22	1	2"222"#22
+aib
+aib
+
+
+F
+		
+X22222
+
+
+2
+22
+22
+2
+aib
+aiba  biab
+aibaibaiba  b
+
+
+
+
+
+g2x
+W
+a22
+22
+2222
+2abab
+i
+abab
+
+
+
+2
+2	2222a22
+22
+22
+,
+ab
+ab
+
+
+2	2	2a2
+22
+2ab
+ab
+F
+QF2	X22i"2@I2 2	A
+Q
+2@I2C2	A2	2222222C2	F
+		
+X2222222@I2 2	A
+Q
+2@I2C2	A22a22@I2 2	A
+P
+2@I2 2	A2@I2C2	A
+2222222222a22@I2C2	
+P
+2 2P2	A2@I
+P
+2 2	
+P
+A
+2222222222a22@I2 2I2 2P2	A22@I2C2IA2a2P2@H2 2P2	A
+2222222222a22H2 2R	22a22H2C2	2@2RAF
+RF2	X22p	22#	"#		-2	-222U2C2PR2	F
+		
+X222@2C2	A2
+22
+1
+xiy
+xy
+
+
+
+
+
+
+D22
+
+222
+
+2	2222@2C2	2A2222
+22
+xiy
+xy
+
+
+F
+r22
+
+2	222U2C2PR	22
+22222
+  
+22
+724724724
+49576625
+724
+iii
+
+
+
+2F
+SF2	X22h	22#2222*D222*2
+
+2P	2D22222
+4
+0
+2
+z
+zi
+
+
+
+
+
+
+F
+		
+X22v222*2a22C2	2F222
+
+
+
+ 
+4[4][2]
+44
+22 2[2][2]
+xiyx iyxiy
+zxiy
+zi xiy i xiyxiyxiy
+    
+
+ 
+
+22222222222a222
+
+
+
+22
+2
+2
+42248
+2
+xxyyixy
+xy
+   
+
+F
+rD2	
+2	22
+
+22
+2
+2
+442
+2
+2
+zxxyy
+zi
+xy
+
+
+
+
+
+
+
+F
+2	222FrFF229	22FFD22
+P
+2 2R2C2
+P
+2 2P2a2H2222
+2
+@2 2PA
+P
+2C2@2 2IA
+P
+2a2SF222		
+2zi
+2222
+
+4
+002
+2
+
+
+   
+
+
+
+z
+x,y,
+zi
+22@2 2PA
+P
+2C2@2 2IA
+P
+a2SF
+
+w2E2sse
+IH
+r22
+22222		22
+"2	222	
+22@PD2IA22	
+2
+5
+222	2"222@HD2PAF
+TF2	X2s22R2C2	2@Q2+2A2a2Q2+ 2T	2(222222#2D22	22-#2222222F
+		
+X2222R2C2	2@Q2 2A2a2Q2C2	2@2TAF22i22	
+22	2	2222D
+222R2a2QD2Q2 22a22TF222
+22
+2D222222a2QGR22222a2QQGRF
+UF2	X22s2*2a2P2 2Q	D222(22*
+P
+2+2R*2C2IQ2a2HF
+		
+X222
+22
+232    3   (2)(3)zizizi      
+22222222222222222222222222
+22
+4494  13 0zzzz  
+F
+IFPFQ22g	/)
+2222	
+22
+	222
+"2	2222
+2	22
+"
+	F2222
+2		22
+"2	22*2222	222C2	222
+
+22D22	
+2	2
+D222	2	222*F222s22D22
+
+2	22222,222
+"
+	22*D222	2	222
+
+2	222
+"2	F
+IFPFR22h	
+	
+p22"#222*2a22C2	D2(2	22;1222*22222C2@
+
+2A	22
+2	2222
+z
+F
+222	"#D2(2(	22
+z
+2a22+2	F
+IFPFS22x
+
+@A
+aib   aib
+F
+@A p	2
+,
+2
+zz
+z
+
+
+
+
+
+C
+222	
+2	222*2222
+2
+zz
+i
+
+
+
+
+2222	2	222*F
+22222*2a22C2	2D22
+;
+22
+zzzz
+ab
+i
+
+
+F
+@A s22922a22@D22HAD22
+(0) (0) (0)za,    ai   a,  z
+F
+r22*2222	
+2	2()   0    zz   ImzF
+@A s22*2a2@HD2AD22
+(0   )(0)z,bib z
+F
+p	2222
+()   0  zzRezF22s2	
+	2
+ii
+F
+
+g2x
+II
+IFPFT22i
+@A s22*a P2C2S	D22
+25   25zii 
+F
+@A s22*
+I
+a IS2C2V	D22*
+P
+2a2U2 2PH	2222*2a2*
+I
+2+2*
+P
+D2
+222222*a @IS2C2V	2A22 22@U2 2PH	A22a22@IS2 2UA2C2	2@V2C2PHA2a2V2C2PV	222
+z
+2a2V2 2PV	F
+IFPFU2!X22s2
+,CC
+D222##(	12#2#F
+22@A2
+ 
+@A22
+   ..
+@A2
+
+@A222
+
+0,//
+		
+@A v222
+,C
+2222
+,,aibc id
+22D2D2D222F
+222
+
+aib   cidac ibd     
+22222222222
+
+a22
+()( )() ( )ac ibdacibd     
+a222@22+2	2A22C22@22+22	2A2a22
+.
+@A 222
+()()(   )(   )aibcidacbd  iad bc       
+() ()acbdi  adbc 
+() ()aibcid  22
+.
+F
+@A 2
+
+
+
+aibaib    aib.   
+@Av222G2a2F222222a22222
+222222222222
+ .
+D222@22@AA
+222222222222222222222
+/,
+2@2222H222
+
+2HA2F2222222
+
+// 
+IFPFV222
+2222	
+v22
+zC
+F22s22
+wC
+22222(
+P
+2a2*2D222(222
+
+22	2	222*F22222
+	2	222*2a22C2	D
+
+w2E2sse
+IP
+g2@A2X22222H2F22D2222222b2HD22(
+P
+22a22*22a22222	22(2a2
+a
+D
+222222222222`2HD22(
+P
+22a22*22a22222	22(2a2
+ia
+g2@A22X222
+0b
+F
+v22@22C2	A22222
+
+2
+xiy   aib
+222C2	222a22
+P
+2+2
+P
+2C2P2	22F
+y222	
+22	2	2222222D22
+2a2
+P
+2+2
+P
+D22a2PF
+22
+222 222   2222
+()()4     xyxyxyab
+D
+2222
+2222
+ xy   ab.
+222222
+P
+2 2
+P
+2a2D2222D
+222222222222222222
+222
+2xa ab  
+22222
+222
+2yaba
+2222222222r22
+2222
+22
+aababa
+x,y
+
+
+22
+2xyb
+D22222222222222	222	
+222222b2H222222222222222`2HF
+r222C2	22a22
+2222
+2222
+0
+22
+0
+22
+ab aaba
+i,ifb
+ab aaba
+i,ifb
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+s222C2	22222D22222	22@2C2	A
+P
+22a22C2	D222222C2	222
+	2	2222C2	F
+IFPFW2x
+
+22222@Ap	222	
+2	22D22222
+a
+2222222	2	222F22p	2
+
+"2	2*D2222
+12/
+z
+22	22222	2	222*F22f222
+
+	22	2
+z
+2	2
+12/
+z
+F
+2222@A s2
+
+aibxiy
+D222
+
+aibxiy
+F
+
+g2x
+IQ
+222@A222
+11
+,
+22
+ii
+ii
+
+ 
+F
+2222@A22
+22
+22aib    aibaa  b    
+22	22
+22
+22iaba
+F
+IFPFIH@A22h	
+	22@
+
+22
+2222	A
+v222222"		-2	12222
+zC
+F222s22
+wC
+22	222
+2
+2(
+
+2a2*D22222(22	2##
+22
+
+222222*222	2222*
+IG
+F
+s2#2PD2(2##2"-222E*2"#222#2222		22
+
+22F
+2222222222@A22h	
+	
+v22*2222+*2"#2D22222"		-2	1222222	1F22222
+m/n
+z
+	2	22
+
+1/n
+m
+zF
+IFPFII2x	Xs22*2
+
+2HD2
+1/
+()
+mn
+z
+222222
+
+2
+
+22
+
+22
+
+22
+22	
+222
+2
+	F
+g2X22s22	22@D25A22	22D2222222	
+2
+22@2222A
+P
+22C22@22225A
+P
+222a22
+P
+F
+222	2	222	
+222
+P
+22C2
+P
+2C2P12C2P222C22a2HD22@1
+P
+22C222
+P
+222b2HA
+22r	22	22@21D2222A22	22
+22
+gfc
+F
+r.	2X222	
+2	222	
+22	2@D25A22
+
+22
+22
+1
+xhyk
+ab
+
+
+F2222	
+	2222	
+22
+22
+22
+1
+xy
+ab
+
+D2222	22@HD2HAF
+2
+
+2
+	22
+22	
+D2222	2	F
+IFPFIP22$,22
+IF2	X22p	22"#2;1222@Q22C22R	A22@P22Q	AF
+		
+X2222
+"2	22@Q2C2R	A22@P2 2Q	A22a22T22W	22C22V	22C2IP2a2IV222	F
+s2
+"2,22a22IV22C22	F
+PF2	X22(222*
+I
+22a2
+
+2
+2
+2112
+25
+12
+ii
+,z
+i
+
+
+
+22;1222F
+		
+X22
+
+
+22
+22 2
+34
+14   4
+12
+ii i
+i
+ii
+i
+
+
+
+
+
+
+w2E2sse
+IR
+222222222
+
+
+234
+2211
+34   34 3425
+ii
+ii
+iii
+
+
+
+
+F
+22
+"2	222,22
+211
+25
+i
+D2222
+"2	22
+12
+z,z22	
+,222	F
+QF2	X22p	22)2222
+
+512i
+F
+		
+X22p	2IFPFVD222
+2222
+22
+ab aaba
+aibi
+
+
+
+
+
+
+r	22a22S2222222a2IPF222r
+222
+
+25    1445251445
+512
+22
+ii
+
+
+
+   
+
+
+222222222222222222222222222222222
+
+135135
+23
+22
+ii.
+
+
+  
+
+
+F
+2	222
+
+23i
+F
+i
+2I@A
+22sFIF 	2222
+
+22
+"22	222222	222e22C22	fF
+@A @P22Q	A2@Q2C2R	A@A @I2C2P	A
+Q
+@A
+aib
+aib
+
+
+@A
+43
+(2   3 )(4   3 )
+i
+ii
+
+
+@A
+(3    2)(23)i   
+@A
+(5)
+8
+i
+i
+
+
+
+
+@A @	A2P	@A	
+W
+@"A	
+IW
+@"A Q@U2C2U	A2C2	2@U2C2U	A  @"A
+25  25
+32  32
+ii
+ii
+
+
+
+PF 	2222,222222
+
+22
+"22	F
+@A @Q2C2R	A@A@IS2C2Q	A2@R22PH	A  @A @P2C2S	A2@R2C2T	A
+@A
+5
+7
+i
+i
+QF 
+
+@A	
+P
+2C2	
+R2
+C2	
+T
+C22FFFF2C2@P2C2IA2	@A	
+IV
+22QF	
+U2
+C2	
+P
+@I2C2	
+R
+A2@	A
+PT
+
+g2x
+IS
+RF p2222	22	22	2222
+
+22
+"22	F
+@A U2C2PR	@AV22T	@A Q2C2R	
+@A2RU2C2	FV
+3
+SF p2222
+
+22	222222
+
+22
+"22	F
+@A
+5
+2C2Q	@A	@A	
+QS
+22ssF2222IF @A s2@2C2	A
+P
+2a22C2	D222
+P
+2C2
+P
+F
+@A s222C2	2a2
+3
+2cossini 
+2D22222
+P
+2C2
+P2
+a2R22Q
+@A s222C2	2a2
+1
+1cossini 
+2D2222R
+P
+22I2a22HF
+@A s222C2	-2a2
+2
+3
+i
+z
+
+
+2222*
+2
+a22C2	2222D2-F
+2222222222222PF @A s2*2a2Q22S	2D222222*
+Q
+22IH*
+P
+2C2SV*22IQT2a2HF
+@A s22*2a2P22	
+7
+D22222Q*
+Q
+22R*
+P
+2C2*2C2VV2a2HF
+@A22
+2
+2
+(1    2  )
+i
+i
+
+
+22
+211
+25
+i
+2	2,222	F
+222222222222QF @A s2@22	A
+IGQ
+2a222	D22222
+xy
+ab
+
+2a2R@
+P
+22
+P
+AF
+@A 	2
+22
+aibaib
+aibaib
+
+
+
+
+
+
+222	222C2	F
+@A s2222222	2	
+2	222
+(1)2( 2    3 )
+33
+ix    iiy  i
+i
+ii
+    
+
+
+D22	2
+
+2222F
+222222222222RF @Ap22
+22	22D222
+1
+1
+1
+n
+i
+i
+
+
+
+
+
+
+F
+@A s22
+33
+11
+11
+ii
+ii
+
+
+
+
+
+
+2a22C2	D222
+2
+2F
+@Ap22	
+2
+22222		22
+32sin
+12sin
+i
+i
+
+
+2222
+@A22	
+2	@A22	
+22	22	
+@Ap22	
+2
+2222222222
+11
+33
+xy
+i
+ii
+
+
+
+F
+
+w2E2sse
+IT
+IFQ222w22e
+22222E2s
+
+s22D22
+
+2	222
+222
+"2	F2222
+
+2	2
+22
+222
+"2	222	
+2
+F222
+
+2
+	222"	22
+
+"2	222
+2 2
+2	2
+	2	F
+IFQFI22h	
+	22@w,22e
+2$2222	A
+2#22#2-#222"#222*2a22C2	22	2	2222+
+1	-2#22
+22
+xy
+F222s2	2222'2*2'222	2##2222*F2q	##2
+#2'2*2'2a2'2C2	2'2	22	222	1	2@HD2HA222"	2@D2AF
+IFQFP22x
+
+@A
+0zzC
+@Av22*22a2@D22A22
+C
+F22222
+22
+00zxy   
+22
+000xyxyz
+F
+IFQFQ22i2X222v22*22a2Q2C2	F2222
+22
+33110zi   
+F
+IFQFR22!22X222s22
+,CC
+22
+2@A2
+
+22222222222@A2
+2
+
+22222222222@A2
+   
+		2X22v22a222C22	Y22D222F22222
+
+xiy xi y 
+@A
+
+2
+222
+xyxy
+@A
+ 
+2
+22
+xiyxiy  x  y     
+@A
+2
+()()     
+2D22@	22	
+2@AA
+22222222222a2
+ .
+D2@	2	2IFPFU2@AA
+22222222222a2
+22
+     .
+D22@	22	
+2@AA
+22222222222
+   
+F
+
+g2x
+IU
+IFQFS2!X222v22
+,CC
+F222
+@A222
+();   Im()  Re
+@A22
+222
+2( )Re   
+@A2
+
+2222
+2        
+@A2
+  
+		2X22v222a222C2	2Y22222a22C2	
+@A2222222
+2
+2222
+ab,a
+r2
+()Rea
+s22
+	2D22222
+Im (   )
+@A222
+
+
+2
+     
+2Y22	2	2IFQFR2@A
+a22
+
+
+
+2Y22	2	2IFPFU2@A
+a22
+.      
+a22
+
+,       
+2@	2	2IFPFU2@AD2@AA
+a2
+
+22
+2Re    F
+@A222
+
+
+222222
+22ReRe,        
+@	2	
+2@AA
+222222a22
+
+2222
+22ReRe         
+222222a22
+
+22
+2
+2F
+@A2222
+
+22 2
+2Re  
+2D2	2@A
+2
+22
+2 
+2a22
+22
+2 
+2D2@	2@A22@A222	2IFQFRA
+2a22
+
+2
+
+r
+  
+F
+
+w2E2sse
+IV
+IFQFT22g
+	2,	
+2	,22,	
+
+v22	22
+F22v2y2222"222y222"2	222
+F2222y2
+
+
+22
+2222	2y22
+
+22
+2
+F22v222222222
+22
+
+HF22v
+y22a22F222v2222
+22y2222
+2
+2	222
+2F
+22D22222222222
+D22222	2	2H222@"
+2A2
+22	2	2H22P"
+22PAF222		2	2@D2A22
+
+22
+	2		222
+22D22	2
+
+22
+	2	222F
+p%F2IFI@Ap%F2IFI@A
+p%F2IFI@Ap%F2IFI@'A
+222	2	2yD222
+2	F
+2
+
+2222y2222
+222y222
+2
+2
+
+22yD2	222E
+
+2F22v2@D2A222	2	22222	222	2	2yF222v2w
+22222	
+	2	2222 "F
+Y
+X
+O
+
+X
+Y
+M
+P(
+)x, y
+x
+r
+y
+Y
+X
+O
+
+X
+Y
+M
+P
+()x, y
+
+x
+r
+y
+Y
+X
+O
+
+X
+Y
+M
+P ()x,   y
+x
+r
+y
+Y
+X
+O
+
+X
+Y
+M
+P()
+x,   y
+
+x
+r
+y
+
+g2x
+IW
+222a2C@ywA2	2 2@ywA2	22w2
+222	22222 "2
+2a2C2@wA2	2 2@wA2	222
+22	2
+22 "F
+v2@D22A222
+	2		222F222p	22yw222
+yw2a2@yA22
+POM
+222w2a2@yA22
+POM
+F222222
+POM
+2a222	
+@2222A22	22@22A22	22@P22A2	222222
+222	2	2222	22	2	22	
+	F
+22
+222	2	2	2	D22
+POM
+2a2222222w22
+22222
+2 "D22222a2yw2@22	2IFI@A222IFI@AAF22222
+2222	2	2	D
+2
+POM
+22a222222w22
+2222222 "22222a222@ywA2@2	2IFI@A
+2IFI@AAF22r222a222222
+
+2F22222
+222	22	D222
+POM
+22a222
+2a2wF
+22
+222	2	2	2	D222
+POM
+2a22222
+2a22@wA2F22r222a22222
+
+22F
+22222a22222222a222222FFF2@IA
+s22222
+22222	2	22	2yF222222
+22yD222222a2HD222a2H22222a2H22222222	22HD2PA222@IA2	
+
+2222
+F
+222222222222
+D22	2	
+@	
+222	2	222yA222222		22222
+
+2222
+
+2222F2222g2a2222D222
+"2	2*2a22C2	D22	2		22222
+
+22g	2	2@D2A22E	F222222
+"2	22*22
+2222 "
+22
+222*2222	
+2	2222
+222 "222
+2222	
+2	F222r2
+ "222			2222	
+2"222 "222	2"F
+s222*2a2@D2A22g22222222222
+22	2	2@D2A222@D2A2	2
+
+	2	222D2222
+*2a22C2	222a222222C22	22222a222@222C2	
+22A
+		2
+
+222 222
+cosv  zxy rrr
+2@222HAF
+IFQFU2h	
+	2@2e
+,2222	D22	2
+,A
+s2-	(22)	2@IA22IFQFTD2	2##(22221	-2+*2"#2
+*2a2@D2A22	22222222
+22
+cos0
+xx
+r
+xy
+
+
+22
+22
+sin
+yy
+r
+xy
+
+
+F
+222222222222222FFF2@PA
+
+w2E2sse
+PH
+e2	
+2	22222	222@PAD22
+
+22
+2	2	222*F
+r	D2	222
+"2	22*22H22	2"222222	
+2
+
+
+,
+2
+2@PAF222
+
+2222	
+2
+2	2	
+2	222*2222222e	2*F22p	
+2	
+2
+2D22222a222G2222		2
+1
+Uh
+y
+x
+
+
+
+
+
+D222222HF
+s222222	22222
+222*D222@P2222C22A222
+22
+222*2222
+
+
+2	
+2
+222
+222*F
+IFQFV22x
+
+2	
+2
+222*2a2@D22A22
+22@HD2GPA22	22@GPD2A22	22@D2GPA222	22@GPD2HA
+	2222@D2 A2
+222	2	222	22	2	2
+	2	222222"F
+IFQFW22h	
+	2@w,2E2e
+,2A
+2@222C2	22AD2
+d
+2	2##22"#222#2"#	222
+"#222*2a2@D2AF
+IFQFIH22i
+p22
+222	
+2
+222
+"2	2
+
+13i
+F
+		
+2X22v22
+
+13cosviri   
+22222222222222a2I22222222a2
+3
+
+
+2
+2
+13132r        
+F
+2222222r22
+13
+cosv
+22
+
+
+2F
+222
+
+13i
+2
+222	2	D22
+2	22
+22222
+
+222DGPAF222222a2C2GQ2a2PGQ22222
+F
+2p	222
+"2	D2
+2a2P22	
+2
+2aPG2QF
+IFQFII22x
+
+22222@A 2	2@22C2	22A222
+2	22222
+
+2
+	2
+22a2
+
+22
+	F2222	
+P
+2aI2222
+P
+222C22
+P2
+2a22ID222
+
+P2
+22	
+P
+2
+P2
+2a22@22C2222A22@222	22A2a2I2F
+
+g2x
+PI
+p	22222a2
+1
+cos
+vi
+F
+22@2A22a222@2A22C22	22@2A22a222222222a22
+11
+cosvpvi
+
+
+F
+222@A 222222C2	2222a22
+cosvpv
+222
+i
+
+ 
+   
+ 
+ 
+F
+IFQFIP222
+	2	22	2	2
+!2,262
+,2
+v22*
+I
+2a2@D2A2a22
+I
+2@2
+I
+22C22	22
+I
+A2Y22*
+P
+22a22@"D2)A2a2
+P
+2@2
+P
+2C22	22
+P
+AF
+2
+
+22"	22*
+I2
+*
+P
+2Y22*
+I2
+G2*
+P
+D22*
+P
+22H2222
+2 2
+2	X
+*
+I
+2a2@D2A2a2
+I
+2@2
+I
+22C22	22
+I
+A22
+11  11
+cos    ,sinxryr       F
+*
+P
+2a2@"D2)A2a2
+P
+2@2
+P
+22C22	22
+P
+A22
+22  22
+cosvprqrF
+222222222222222222222222
+2*
+I2
+*
+P
+22a2@D2A22@"D2)A a222@"2+2)D222)2C2"A
+a2222@
+I
+22
+I
+2F2
+P
+22
+P
+22
+I
+22
+I
+2F2
+P
+22
+P
+AD
+22222@
+I
+22
+I
+2F2
+P
+22
+P
+22C22
+I
+22
+I
+2F2
+P
+22
+P
+A
+a222
+I
+2
+P2
+22@
+I
+2C22
+P
+AD22
+I
+2
+P
+22@
+I
+2C2
+P
+A
+a222
+I
+2
+P
+22@
+I
+2C2
+P
+AD22@
+I
+2C2
+P
+A
+a222
+I
+2
+P
+2	2@
+I
+2C2
+P
+AF
+s22
+	2D222	22
+22D22222222	D
+*
+I
+2F2*
+P
+22N2*
+
+22a222
+I
+2
+P
+22N22
+
+222@
+I
+2C2
+P
+2C2N2C2
+
+AD
+1
+22 22
+2
+()
+()
+z
+xiyx, yxpyqypxq
+,
+zpiqp,q
+pq pq
+
+
+
+
+
+
+
+a22
+112 21122
+2222
+2222
+cospvv
+cosv
+rr   rr
+rr
+
+
+
+
+
+..
+D2
+112  21 12 2
+2222
+2222
+sincospv
+cosv
+
+
+
+
+
+
+r.rr .r
+rr
+a22
+1212 1212
+22
+22
+cos (v
+,
+
+
+
+
+rrrr
+rr
+a22
+
+1
+1212121   2
+2
+/cos(),sin()()
+r
+rrcis
+r
+  
+F
+
+w2E2sse
+PP
+IFQFIQ22x
+
+@A	2
+I
+2F2	2
+P
+22a

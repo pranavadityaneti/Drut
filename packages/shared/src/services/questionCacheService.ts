@@ -34,28 +34,45 @@ export async function getQuestionsForUser(
   topic: string,
   subtopic: string,
   count: number = 5,
-  difficulty: 'Easy' | 'Medium' | 'Hard' = 'Medium'
+  difficulty: 'Easy' | 'Medium' | 'Hard' = 'Medium',
+  classLevel?: string,
+  board?: string,
+  subject?: string,
+  language?: 'English' | 'Telugu' | 'Hindi'
 ): Promise<{ questions: QuestionData[]; metadata: { cached: number; generated: number } }> {
-  console.log('[DEBUG] getQuestionsForUser called:', { userId, examProfile, topic, subtopic, count });
+  console.log('[DEBUG] getQuestionsForUser called:', { userId, examProfile, topic, subtopic, count, classLevel, board, subject, language });
   const metadata = { cached: 0, generated: 0 };
   const questions: QuestionData[] = [];
 
   try {
     console.log('[DEBUG] Step 1: Checking cache...');
-    // Step 1: Try to get unseen cached questions for this user
-    const { data: unseenQuestions, error: cacheError } = await supabase
-      .rpc('get_unseen_questions', {
-        p_user_id: userId,
-        p_exam_profile: examProfile,
-        p_topic: topic,
-        p_subtopic: subtopic,
-        p_difficulty: difficulty,
-        p_limit: count,
-      });
 
-    if (cacheError) {
-      console.error('[DEBUG] Cache error:', cacheError);
-      log.warn('[cache] Error fetching unseen questions:', cacheError);
+    // Step 1: Cache Check
+    // NOTE: We do NOT filter cache by language yet (assuming English cache is okay or we clear cache)
+    // To support multi-lingual cache, 'get_unseen_questions' RPC needs update, OR we assume cache is mixed
+    // For now, let's proceed. If language is NOT English, maybe skip cache?
+    const skipCache = language && language !== 'English';
+    let unseenQuestions: any[] | null = [];
+
+    if (!skipCache) {
+      const { data, error: cacheError } = await supabase
+        .rpc('get_unseen_questions', {
+          p_user_id: userId,
+          p_exam_profile: examProfile,
+          p_topic: topic,
+          p_subtopic: subtopic,
+          p_difficulty: difficulty,
+          p_limit: count,
+        });
+
+      if (cacheError) {
+        console.error('[DEBUG] Cache error:', cacheError);
+        log.warn('[cache] Error fetching unseen questions:', cacheError);
+      } else {
+        unseenQuestions = data;
+      }
+    } else {
+      console.log(`[DEBUG] Skipping cache for language: ${language}`);
     }
 
     // Step 2: Use cached questions if available
@@ -100,6 +117,9 @@ export async function getQuestionsForUser(
 
       try {
         console.log(`[DEBUG] Generating batch of ${needed} questions...`);
+        console.log('[DEBUG] Pre-Vertex Call Args:', {
+          topic, subtopic, examProfile, needed, difficulty, classLevel, board, subject, language
+        });
 
         // Generate batch - 1 API call
         const generatedBatch = await generateQuestionsBatch(
@@ -107,7 +127,8 @@ export async function getQuestionsForUser(
           subtopic,
           examProfile,
           needed,
-          difficulty
+          difficulty,
+          { classLevel, board, subject, language }
         );
 
         console.log(`[DEBUG] Batch generation successful. Got ${generatedBatch.length} questions.`);

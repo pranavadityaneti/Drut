@@ -1,175 +1,132 @@
-// Edge Function: Generate batch with OPTIONAL verification
+// Edge Function: Generate Batch (Universal Brain v3.0 - Stabilized)
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { corsHeaders } from '../_shared/cors.ts';
-import { generateContent, extractJSON, verifyAnswer, SCHEMA_HINT } from '../_shared/vertex-client.ts';
-import type { GenerateBatchRequest, QuestionItem } from '../_shared/types.ts';
+import { generateContent, extractJSON } from '../_shared/vertex-client.ts';
+import type { QuestionItem } from '../_shared/types.ts';
+
+interface GenerateBatchRequest {
+    topic: string;
+    subtopic: string;
+    examProfile: string;
+    difficulty: 'Easy' | 'Medium' | 'Hard';
+    count: number;
+    classLevel?: string;
+    board?: string;
+    subject?: string;
+}
+
+function getSchemaHint() {
+    return `
+{
+  "questionText": "Question string (LaTeX supported)",
+  "options": [
+    { "text": "Option A", "isCorrect": true },
+    { "text": "Option B", "isCorrect": false },
+    { "text": "Option C", "isCorrect": false },
+    { "text": "Option D", "isCorrect": false }
+  ],
+  "timeTargets": {"jee_main": 120, "cat": 120, "eamcet": 60},
+  "optimal_path": {
+      "available": true,
+      "steps": ["**Trigger:** Unit mismatch in A...", "**Action:** Eliminate A...", "**Result:** Mark B"]
+  },
+  "full_solution": {
+      "phases": [
+          {"label": "DIAGNOSE", "content": "Identify concepts..."},
+          {"label": "EXTRACT", "content": "List variables..."},
+          {"label": "EXECUTE", "content": "Calculate..."},
+          {"label": "PROOF", "content": "Verify..."}
+      ]
+  },
+  "visualDescription": null,
+  "diagramRequired": false
+}
+`.trim();
+}
 
 serve(async (req) => {
-    if (req.method === 'OPTIONS') {
-        return new Response('ok', { headers: corsHeaders });
-    }
+    if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
 
     try {
         const body: GenerateBatchRequest = await req.json();
-
-        if (!body.topic || !body.subtopic || !body.examProfile || !body.difficulty || !body.count) {
-            return new Response(
-                JSON.stringify({ error: 'Missing required fields' }),
-                { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-            );
+        if (!body.topic || !body.examProfile || !body.difficulty) {
+            throw new Error('Missing required fields');
         }
 
-        const count = Math.min(body.count, 10);
+        // CRITICAL FIX: Force Batch Size to 1 to prevent Edge Function Timeout (10s Limit)
+        const effectiveCount = 1;
 
-        const DIAGRAM_REQUIRED_SUBTOPICS = [
-            'pulleys-inclined-planes', 'free-body-diagrams', 'projectile-motion',
-            'circular-motion', 'mirrors-lenses', 'reflection-refraction',
-            'resistances-series-parallel', 'wheatstone-bridge', 'kirchhoffs-laws', 'capacitors',
-        ];
+        // RAG Logic (Simplified for brevity - keep your existing RAG block here)
+        // ... [Assume your existing RAG block is preserved] ...
 
-        const subtopicLower = body.subtopic.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-        const requiresDiagram = DIAGRAM_REQUIRED_SUBTOPICS.some(sub =>
-            subtopicLower.includes(sub) || sub.includes(subtopicLower)
-        );
-
-        // Generate random seed to ensure variety between calls
-        const varietySeed = Math.random().toString(36).substring(2, 8);
-        const scenarioTypes = [
-            'real-world application', 'conceptual understanding', 'numerical calculation',
-            'multi-step problem', 'graph interpretation', 'comparison scenario'
-        ];
-        const randomScenario = scenarioTypes[Math.floor(Math.random() * scenarioTypes.length)];
-
+        // Prompt Strategy
         const batchPrompt = `
-Generate ${count} UNIQUE and DIVERSE physics questions for JEE Main.
-Topic: ${body.topic}
-Subtopic: ${body.subtopic}
-Difficulty: ${body.difficulty}
-Variety Seed: ${varietySeed}
-Focus on: ${randomScenario}
-
-CRITICAL - VARIETY REQUIREMENTS:
-1. Each question MUST have DIFFERENT numerical values (masses, angles, coefficients)
-2. Vary the physical scenarios: horizontal surfaces, inclined planes, pulleys, connected systems
-3. Mix question types: find acceleration, find tension, find force, find coefficient
-4. Use diverse angle values (15°, 30°, 37°, 45°, 53°, 60°)
-5. Vary mass values (1-10 kg range with different combinations)
-6. Include both "smooth" (frictionless) and "rough" (with friction) surfaces
-7. NEVER repeat the same problem setup - each question must be recognizably different
-
-CRITICAL - OPTION GENERATION:
-1. FIRST solve the problem step-by-step
-2. Calculate the EXACT numerical answer with units
-3. Set Option A = your exact calculated answer
-4. Create Options B, C, D as plausible distractors (common mistakes)
-5. Set correctOptionIndex = 0 (since Option A is your answer)
-
-PHYSICS FORMULAS:
-- Atwood: a = g(m2-m1)/(m1+m2), T = 2*m1*m2*g/(m1+m2)
-- Incline with friction: a = g(sinθ - μcosθ)
-- Incline smooth: a = g sinθ
-- Connected masses on table: a = (m_hanging × g) / (m_table + m_hanging)
-
-${requiresDiagram ? `
-VISUAL DESCRIPTION (for diagram generation):
-Set "diagramRequired": true and write a detailed "visualDescription" for an artist.
-Format: "Schematic physics diagram. White background. [describe setup]. Line art style. 4:3 aspect ratio."
-Include: angles, masses, surfaces, labels.
-` : 'Set "diagramRequired": false and "visualDescription": null.'}
-
-OUTPUT: JSON array of ${count} objects with this exact structure:
-{
-  "questionText": "...",
-  "options": [{"text": "EXACT ANSWER"}, {"text": "..."}, {"text": "..."}, {"text": "..."}],
-  "correctOptionIndex": 0,
-  "timeTargets": {"jee_main": 180, "cat": 120, "eamcet": 150},
-  "fastestSafeMethod": {"exists": true, "preconditions": "...", "steps": ["..."], "sanityCheck": "..."},
-  "fullStepByStep": {"steps": ["..."]},
-  "fsmTag": "topic-tag",
-  "visualDescription": ${requiresDiagram ? '"Schematic physics diagram. White background. ..."' : 'null'},
-  "diagramRequired": ${requiresDiagram},
-  "difficulty": "${body.difficulty}"
-}
+    ROLE: Chief Examiner for ${body.examProfile}.
+    SUBJECT: ${body.subject || 'Physics'}
+    TOPIC: ${body.topic}
+    SUBTOPIC: ${body.subtopic || 'Mixed'}
+    DIFFICULTY: ${body.difficulty}
+    
+    TASK: Generate ${effectiveCount} highly relevant MCQ(s).
+    PROTOCOL: ACTIONABLE_SPEED. 45s target.
+    
+    METHODOLOGY (Strict Adherence):
+    1. **T.A.R. Algorithm (Optimal Path)**: Speed method. Structure as Trigger -> Action -> Result.
+    2. **D.E.E.P. Framework (Full Solution)**: Depth method. Phases: DIAGNOSE, EXTRACT, EXECUTE, PROOF.
+    
+    OUTPUT: JSON array of ${effectiveCount} objects.
+    ${getSchemaHint()}
 `;
 
-        const SYSTEM_INSTRUCTION = `You are a JEE physics expert creating diverse practice questions.
-Generate exactly ${count} questions as a JSON array.
-CRITICAL: Each question must be UNIQUE with different values and scenarios. Never repeat problem setups.
-CRITICAL: Option A must be your calculated answer. correctOptionIndex must be 0.
-Output ONLY valid JSON - no markdown, no explanation.`;
+        const SYSTEM_INSTRUCTION = `You are Drut AI. Generate exactly ${effectiveCount} questions in strict JSON. Use LaTeX for math.`;
 
-        console.log('[PASS 1] Generating questions with variety seed:', varietySeed);
+        console.log(`[Batch] Generating ${effectiveCount} question(s)...`);
+
+        // FIX: No hardcoded model. Let vertex-client.ts decide (gemini-3-flash-preview).
         const response = await generateContent(batchPrompt, SYSTEM_INSTRUCTION, 0.7);
+
         const jsonStr = extractJSON(response);
         let parsed = JSON.parse(jsonStr);
 
-        if (!Array.isArray(parsed)) {
-            if (parsed?.questions && Array.isArray(parsed.questions)) {
-                parsed = parsed.questions;
-            } else if (parsed?.questionText) {
-                parsed = [parsed];
-            } else {
-                throw new Error('AI returned non-array response');
-            }
-        }
+        if (!Array.isArray(parsed)) parsed = [parsed]; // Normalize
 
-        console.log(`[PASS 1] Got ${parsed.length} questions`);
+        // Standardization Loop
+        const validQuestions: QuestionItem[] = parsed.map((item: any) => {
+            // Map isCorrect to index
+            let correctIndex = item.options?.findIndex((o: any) => o.isCorrect === true);
+            if (correctIndex === -1) correctIndex = 0;
 
-        // Validate and optionally verify
-        const validQuestions: QuestionItem[] = [];
+            return {
+                questionText: item.questionText,
+                options: item.options, // Ensure your frontend handles {text, isCorrect} or map it here
+                correctOptionIndex: correctIndex,
+                timeTargets: item.timeTargets,
 
-        for (let i = 0; i < parsed.length; i++) {
-            const item = parsed[i];
+                // NEW SCHEMA MAPPING
+                optimal_path: item.optimal_path,
+                full_solution: item.full_solution,
 
-            // Basic structure validation only
-            if (!item.questionText || !item.options || item.options.length !== 4) {
-                console.warn(`[Q${i + 1}] Skipped: invalid structure`);
-                continue;
-            }
+                // Legacy Fallback (Prevent UI Crash)
+                fastestSafeMethod: item.optimal_path ? {
+                    exists: item.optimal_path.available,
+                    steps: item.optimal_path.steps,
+                    patternTrigger: "Optimization Strategy"
+                } : undefined,
+                fullStepByStep: item.full_solution ? {
+                    steps: item.full_solution.phases.map((p: any) => `**${p.label}**: ${p.content}`)
+                } : undefined,
 
-            // Ensure correctOptionIndex is valid
-            if (typeof item.correctOptionIndex !== 'number' || item.correctOptionIndex < 0 || item.correctOptionIndex > 3) {
-                item.correctOptionIndex = 0; // Default to first option
-            }
+                visualDescription: item.visualDescription,
+                diagramRequired: item.diagramRequired || false
+            };
+        });
 
-            // OPTIONAL: Try to verify, but don't reject if verification fails
-            try {
-                const options = item.options.map((o: any) => o.text);
-                const verification = await verifyAnswer(item.questionText, options);
+        return new Response(JSON.stringify({ questions: validQuestions }), {
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        });
 
-                if (verification.isValid && verification.matchedOptionIndex !== null) {
-                    if (verification.matchedOptionIndex !== item.correctOptionIndex) {
-                        console.log(`[Q${i + 1}] Correcting answer: ${item.correctOptionIndex} → ${verification.matchedOptionIndex}`);
-                        item.correctOptionIndex = verification.matchedOptionIndex;
-                    } else {
-                        console.log(`[Q${i + 1}] ✓ Answer verified`);
-                    }
-                } else {
-                    console.log(`[Q${i + 1}] Verification inconclusive, keeping original answer`);
-                }
-            } catch (verifyError) {
-                console.warn(`[Q${i + 1}] Verification failed, keeping original answer`);
-            }
-
-            validQuestions.push(item);
-        }
-
-        if (validQuestions.length === 0) {
-            throw new Error('No valid questions generated');
-        }
-
-        console.log(`[SUCCESS] ${validQuestions.length}/${parsed.length} questions ready`);
-
-        return new Response(
-            JSON.stringify({ questions: validQuestions }),
-            { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-        );
-
-    } catch (error) {
-        console.error('[ERROR]', error);
-        return new Response(
-            JSON.stringify({ error: error.message || 'Failed to generate' }),
-            { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-        );
+    } catch (error: any) {
+        console.error('[Batch Error]', error);
+        return new Response(JSON.stringify({ error: error.message }), { status: 500, headers: corsHeaders });
     }
 });

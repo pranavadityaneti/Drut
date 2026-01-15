@@ -10,7 +10,10 @@ export async function generateOneQuestion(
     topic: string,
     subTopic: string,
     examProfile: string,
-    difficulty: 'Easy' | 'Medium' | 'Hard' = 'Medium'
+    difficulty: 'Easy' | 'Medium' | 'Hard' = 'Medium',
+    classLevel?: string,
+    board?: string,
+    subject?: string
 ): Promise<QuestionItem> {
     try {
         const { data, error } = await supabase.functions.invoke('generate-question', {
@@ -19,6 +22,9 @@ export async function generateOneQuestion(
                 subtopic: subTopic,
                 examProfile,
                 difficulty,
+                classLevel,
+                board,
+                subject
             },
         });
 
@@ -97,17 +103,34 @@ export async function generateQuestionsBatch(
     subTopic: string,
     examProfile: string,
     count: number,
-    difficulty: 'Easy' | 'Medium' | 'Hard' = 'Medium'
+    difficulty: 'Easy' | 'Medium' | 'Hard' = 'Medium',
+    options: {
+        classLevel?: string,
+        board?: string,
+        subject?: string,
+        language?: 'English' | 'Telugu' | 'Hindi'
+    } = {}
 ): Promise<QuestionItem[]> {
     try {
+        const { classLevel, board, subject, language } = options;
+
+        console.log(`[vertex] generateQuestionsBatch called. Options KEYS: ${Object.keys(options)}`);
+
+        const requestBody = {
+            topic,
+            subtopic: subTopic,
+            examProfile,
+            difficulty,
+            count: Math.min(count, 10), // Limit to 10 per batch
+            classLevel,
+            board,
+            subject,
+            language
+        };
+        console.log('[vertex] Payload sent to generate-batch:', requestBody);
+
         const { data, error } = await supabase.functions.invoke('generate-batch', {
-            body: {
-                topic,
-                subtopic: subTopic,
-                examProfile,
-                difficulty,
-                count: Math.min(count, 10), // Limit to 10 per batch
-            },
+            body: requestBody,
         });
 
         if (error) {
@@ -121,7 +144,20 @@ export async function generateQuestionsBatch(
 
         return data.questions as QuestionItem[];
     } catch (error: any) {
-        log.error('[vertex] Batch generation failed:', error);
+        // Enhanced Error Logging
+        if (error && typeof error === 'object') {
+            // Try to read the context or cause if Supabase client provides it
+            const errorDetails = {
+                message: error.message,
+                context: (error as any).context,
+                cause: (error as any).cause,
+                stack: error.stack
+            };
+            console.error('[vertex] Batch generation DETAILED error:', JSON.stringify(errorDetails, null, 2));
+        } else {
+            console.error('[vertex] Batch generation failed:', error);
+        }
+
         console.warn('Falling back to local backup questions due to AI service failure.');
         // Return fallback questions so the user is not blocked
         return FALLBACK_QUESTIONS.slice(0, count);
@@ -172,12 +208,13 @@ export const generateQuestionAndSolutions = generateOneQuestion;
 export const generateBatch = async (
     topic: string,
     subTopic: string,
-    examProfile: string,
     count: number,
-    difficulty: 'Easy' | 'Medium' | 'Hard' = 'Medium'
+    difficulty: 'Easy' | 'Medium' | 'Hard' = 'Medium',
+    classLevel?: string,
+    board?: string
 ): Promise<{ success: QuestionItem[], failed: number }> => {
     try {
-        const questions = await generateQuestionsBatch(topic, subTopic, examProfile, count, difficulty);
+        const questions = await generateQuestionsBatch(topic, subTopic, 'jee_main', count, difficulty, { classLevel, board });
         return { success: questions, failed: count - questions.length };
     } catch (error) {
         return { success: [], failed: count };

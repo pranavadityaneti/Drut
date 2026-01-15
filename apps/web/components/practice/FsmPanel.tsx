@@ -1,5 +1,6 @@
 import React from 'react';
 import { Card, CardContent } from '../ui/Card';
+import { LatexText } from '../ui/LatexText';
 
 interface FsmStep {
     step: string;
@@ -37,7 +38,7 @@ export const FsmPanel: React.FC<FsmPanelProps> = ({
                         📌 Pattern Trigger
                     </p>
                     <p className="text-sm text-green-800 dark:text-green-200">
-                        {patternTrigger}
+                        <LatexText text={patternTrigger} />
                     </p>
                 </div>
 
@@ -59,9 +60,13 @@ export const FsmPanel: React.FC<FsmPanelProps> = ({
                                     {index + 1}
                                 </span>
                                 <div className="flex-1 pt-0.5">
-                                    <p className="text-sm font-medium text-foreground">{step.step}</p>
+                                    <div className="text-sm font-medium text-foreground">
+                                        <LatexText text={step.step} />
+                                    </div>
                                     {step.description && (
-                                        <p className="text-xs text-muted-foreground mt-1">{step.description}</p>
+                                        <div className="text-xs text-muted-foreground mt-1">
+                                            <LatexText text={step.description} />
+                                        </div>
                                     )}
                                 </div>
                             </li>
@@ -79,7 +84,9 @@ export const FsmPanel: React.FC<FsmPanelProps> = ({
                             {safetyChecks.map((check, index) => (
                                 <li key={index} className="text-sm text-amber-800 dark:text-amber-200 flex gap-2">
                                     <span className="text-amber-600 dark:text-amber-400">•</span>
-                                    <span>{check}</span>
+                                    <span>
+                                        <LatexText text={check} />
+                                    </span>
                                 </li>
                             ))}
                         </ul>

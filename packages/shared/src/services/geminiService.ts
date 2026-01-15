@@ -145,13 +145,12 @@ ${invalidText}
 
   const model = getAiClient();
   const result = await model.models.generateContent({
-    model: 'gemini-3-pro-preview',
+    model: 'gemini-3-flash-preview',
     contents: repairPrompt,
     config: {
       responseMimeType: "application/json",
       temperature: 0.1,
       // Speed mode: JSON repair is simple, needs low latency
-      thinkingConfig: { thinkingLevel: 'low' as any }
     },
   });
 
@@ -171,14 +170,13 @@ export async function generateOneQuestion(topic: string, subTopic: string, examP
     try {
       const ai = getAiClient();
       const res = await ai.models.generateContent({
-        model: 'gemini-3-pro-preview',
+        model: 'gemini-3-flash-preview',
         contents: user,
         config: {
           systemInstruction: SYSTEM_INSTRUCTION,
           responseMimeType: "application/json",
           temperature: 0.2,
           // Speed mode: User is waiting for next question
-          thinkingConfig: { thinkingLevel: 'low' as any }
         },
       });
 
@@ -267,14 +265,13 @@ Include all physical setup details (angles, masses, surfaces, labels) in the des
     try {
       const ai = getAiClient();
       const res = await ai.models.generateContent({
-        model: 'gemini-3-pro-preview',
+        model: 'gemini-3-flash-preview',
         contents: batchPrompt,
         config: {
           systemInstruction: BATCH_SYSTEM_INSTRUCTION,
           responseMimeType: "application/json",
           temperature: 0.4,
           // Deep mode: Batch for cache, accuracy > speed
-          thinkingConfig: { thinkingLevel: 'high' as any }
         },
       });
 
@@ -437,7 +434,6 @@ Example: ["Tip 1", "Tip 2", "Tip 3", "Tip 4"]
         responseMimeType: "application/json",
         temperature: 0.8,
         // Speed mode: Tips are quick, user is waiting
-        thinkingConfig: { thinkingLevel: 'low' as any }
       },
     });
 

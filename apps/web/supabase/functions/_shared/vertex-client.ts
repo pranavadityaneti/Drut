@@ -1,3 +1,4 @@
+// Force Update: v2
 // Shared Gemini AI client for Edge Functions
 
 const SCHEMA_HINT = `
@@ -25,61 +26,102 @@ export async function generateContent(
     prompt: string,
     systemInstruction?: string,
     temperature = 0.3,
-    model = 'gemini-1.5-flash'  // Use 1.5 Flash for JSON generation (reliable & fast)
+    model = 'gemini-3-flash-preview'
 ): Promise<string> {
-    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${GEMINI_API_KEY}`;
+    const endpoint = (modelName: string) => `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${GEMINI_API_KEY}`;
 
-    const requestBody: any = {
+    let currentModel = model;
+
+    // Config with explicit JSON mode
+    const getRequestBody = (mName: string) => ({
         contents: [{ role: 'user', parts: [{ text: prompt }] }],
-        generationConfig: { temperature, maxOutputTokens: 8192 },
-    };
+        generationConfig: {
+            temperature,
+            maxOutputTokens: 8192,
+            responseMimeType: "application/json"
+        },
+        ...(systemInstruction ? { systemInstruction: { parts: [{ text: systemInstruction }] } } : {})
+    });
 
-    if (systemInstruction) {
-        requestBody.systemInstruction = { parts: [{ text: systemInstruction }] };
-    }
-
-    // Retry logic with exponential backoff
     const maxRetries = 3;
     let lastError: Error | null = null;
+    let fallbackTriggered = false;
 
-    for (let attempt = 1; attempt <= maxRetries; attempt++) {
-        try {
-            const response = await fetch(endpoint, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(requestBody),
-            });
+    // Outer loop for fallback
+    while (true) {
+        // Inner loop for retries on same model
+        for (let attempt = 1; attempt <= maxRetries; attempt++) {
+            try {
+                const response = await fetch(endpoint(currentModel), {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(getRequestBody(currentModel)),
+                });
 
-            if (!response.ok) {
-                const errorText = await response.text();
-                console.error(`Gemini API error (attempt ${attempt}/${maxRetries}):`, response.status, errorText);
+                if (!response.ok) {
+                    const errorText = await response.text();
 
-                // Retry on 429 (rate limit) or 5xx (server errors)
-                if ((response.status === 429 || response.status >= 500) && attempt < maxRetries) {
-                    const delay = Math.pow(2, attempt - 1) * 1000; // 1s, 2s, 4s
-                    console.log(`Retrying in ${delay}ms...`);
-                    await new Promise(resolve => setTimeout(resolve, delay));
-                    continue;
+                    // Check for fallback conditions (404 or 503)
+                    if ((response.status === 404 || response.status === 503 || response.status === 500) && !fallbackTriggered && currentModel === 'gemini-3-flash-preview') {
+                        throw new Error('FALLBACK_NEEDED');
+                    }
+
+                    console.error(`Gemini API error (${currentModel} - attempt ${attempt}/${maxRetries}):`, response.status, errorText);
+
+                    if ((response.status === 429 || response.status >= 500) && attempt < maxRetries) {
+                        const delay = Math.pow(2, attempt - 1) * 1000;
+                        console.log(`Retrying in ${delay}ms...`);
+                        await new Promise(resolve => setTimeout(resolve, delay));
+                        continue;
+                    }
+
+                    throw new Error(`Gemini API error: ${response.status} - ${errorText}`);
                 }
 
-                throw new Error(`Gemini API error: ${response.status}`);
+                const data = await response.json();
+                return data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+            } catch (error: any) {
+                if (error.message === 'FALLBACK_NEEDED') {
+                    console.warn('[Drut AI] Fallback triggered: using gemini-1.5-flash');
+                    currentModel = 'gemini-1.5-flash';
+                    fallbackTriggered = true;
+                    break; // Break retry loop to start fresh with new model
+                }
+
+                lastError = error;
+                console.error(`Attempt ${attempt}/${maxRetries} failed:`, error.message);
+
+                if (attempt < maxRetries) {
+                    const delay = Math.pow(2, attempt - 1) * 1000;
+                    console.log(`Retrying in ${delay}ms...`);
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                }
+            }
+        }
+
+        // If we broke out of the retry loop due to fallback needed, the while loop continues with new model
+        // If we finished retries without success on fallback model (or primary if not fallback-able), throw error
+        if (!fallbackTriggered || lastError) {
+            // If we just fell back, we loop again. If we exhausted retries on current model, we check logic.
+            // If fallbackTriggered is true BUT we are here, it means we finished the retry loop for the fallback model too (or we just set it).
+            // Actually, if we set fallbackTriggered=true and break, we hit this code.
+            // We need to distinguish between "need to loop for fallback" and "exhausted all retries".
+
+            if (currentModel === 'gemini-1.5-flash' && lastError) {
+                // We failed on fallback too
+                throw lastError;
             }
 
-            const data = await response.json();
-            return data.candidates?.[0]?.content?.parts?.[0]?.text || '';
-        } catch (error: any) {
-            lastError = error;
-            console.error(`Attempt ${attempt}/${maxRetries} failed:`, error.message);
-
-            if (attempt < maxRetries) {
-                const delay = Math.pow(2, attempt - 1) * 1000;
-                console.log(`Retrying in ${delay}ms...`);
-                await new Promise(resolve => setTimeout(resolve, delay));
+            if (currentModel === 'gemini-1.5-flash') {
+                // We shouldn't be here if we just set it, unless we restructure the loop.
+                // Let's rely on the break.
+                // Re-entering the loop
+            } else {
+                // We failed on primary and it wasn't a fallback case (e.g. 429s) or we exhausted retries
+                throw lastError || new Error('Gemini API failed after retries');
             }
         }
     }
-
-    throw lastError || new Error('Gemini API failed after retries');
 }
 
 /**
@@ -165,8 +207,8 @@ D) ${options[3]}
 Reply with ONLY the letter (A, B, C, or D) of the correct answer. Nothing else.`;
 
     try {
-        // Use 2.5-flash for verification (just returns one letter, no JSON needed)
-        const response = await generateContent(prompt, 'You are a physics solver. Reply with only one letter: A, B, C, or D. No explanation.', 0.1, 'gemini-2.5-flash');
+        // Use 3.0-flash-preview for verification
+        const response = await generateContent(prompt, 'You are a physics solver. Reply with only one letter: A, B, C, or D. No explanation.', 0.1, 'gemini-3-flash-preview');
         const letter = response.trim().toUpperCase().charAt(0);
         const optionMap: Record<string, number> = { 'A': 0, 'B': 1, 'C': 2, 'D': 3 };
 
@@ -212,6 +254,8 @@ export function extractJSON(text: string): string {
  * Generate text embeddings using text-embedding-004
  * Returns array of 768 floats
  */
+// [Deleted duplicate generateContent implementation]
+
 export async function embedText(text: string): Promise<number[]> {
     const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/text-embedding-004:embedContent?key=${GEMINI_API_KEY}`;
 

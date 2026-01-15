@@ -1,7 +1,10 @@
+import { useRouter } from 'expo-router';
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
 import { Colors } from '../../constants/Colors';
 import { authService, EXAM_TAXONOMY } from '@drut/shared';
+// @ts-ignore
+import { supabase } from '@drut/shared';
 import { ChevronDown, Check } from 'lucide-react-native';
 
 const LEVELS = ['Easy', 'Medium', 'Hard'];
@@ -9,62 +12,119 @@ const LEVELS = ['Easy', 'Medium', 'Hard'];
 export default function PracticeScreen() {
     const [loading, setLoading] = useState(true);
 
-    // User Data
-    const [userExams, setUserExams] = useState<string[]>([]);
+    // Configuration from Shared Taxonomy
+    const EXAMS = EXAM_TAXONOMY.map(e => e.label);
+    const SUBJECTS = ['Mathematics', 'Physics', 'Chemistry'];
 
     // Selections
-    const [selectedExam, setSelectedExam] = useState<string>('');
+    const [selectedExam, setSelectedExam] = useState<string>(EXAMS[0]);
+    const [selectedSubject, setSelectedSubject] = useState<string>(SUBJECTS[0]);
     const [selectedTopic, setSelectedTopic] = useState<string>('');
-    const [selectedSubtopic, setSelectedSubtopic] = useState<string>('');
+
+    // Dynamic Topics
+    const [dynamicTopics, setDynamicTopics] = useState<any[]>([]);
     const [difficulty, setDifficulty] = useState<'Easy' | 'Medium' | 'Hard'>('Medium');
 
     // UI States
     const [showTopicPicker, setShowTopicPicker] = useState(false);
-    const [showSubtopicPicker, setShowSubtopicPicker] = useState(false);
 
     useEffect(() => {
-        const init = async () => {
-            const user = await authService.getCurrentUser();
-            if (user) {
-                let exams = (user.user_metadata?.target_exams || []) as string[];
-
-                // Fallback
-                if (exams.length === 0 && user.user_metadata?.exam_profile) exams.push(user.user_metadata.exam_profile);
-
-                // Normalization
-                exams = exams.map(e => {
-                    const clean = e.toLowerCase().replace(/[^a-z0-9]/g, '');
-                    if (clean.includes('eapcet') || clean.includes('eamcet')) return 'eamcet';
-                    return e;
-                });
-                exams = Array.from(new Set(exams));
-
-                setUserExams(exams);
-
-                // Auto-select
-                if (exams.length > 0) {
-                    setSelectedExam(exams[0]);
-                }
-            }
-            setLoading(false);
-        };
-        init();
+        // Just simulate loading for a moment or remove loading entirely if not needed
+        // For now, we keep it simple
+        setLoading(false);
     }, []);
 
-    // Derived Logic
-    const examDef = EXAM_TAXONOMY.find(e => e.value === selectedExam);
+    // Fetch Dynamic Topics
+    useEffect(() => {
+        const fetchDynamic = async () => {
+            // Fetch topics from knowledge_nodes
+            // We will filter by subject locally or in query if possible, but let's stick to the previous pattern
+            // of fetching topics for context.
+            // Actually, to make it robust, let's just fetch all topics for now.
 
-    // Topic Filtering
-    // For mobile we simplify and just show all topics for the exam for now, can refine class logic later if needed
-    const filteredTopics = examDef?.topics || [];
-    const topicDef = filteredTopics.find(t => t.value === selectedTopic);
+            const { data } = await supabase
+                .from('knowledge_nodes')
+                .select('name, metadata')
+                .eq('node_type', 'topic')
+                .limit(1000);
+
+            if (data) {
+                setDynamicTopics(data.map((d: any) => ({
+                    label: d.name,
+                    value: d.name,
+                    subject: d.metadata?.subject || 'Unknown',
+                })));
+            } else {
+                setDynamicTopics([]);
+            }
+        };
+        fetchDynamic();
+    }, []);
+
+    // State for user class
+    const [userClass, setUserClass] = useState<'11' | '12' | 'Both'>('11');
+
+    useEffect(() => {
+        const loadUser = async () => {
+            const user = await authService.getCurrentUser();
+            if (user) {
+                // Map legacy 'Reappear' -> 'Both'
+                const cls = (user.user_metadata?.class as string) === 'Reappear' ? 'Both' : (user.user_metadata?.class || '11');
+                setUserClass(cls as any);
+            }
+        };
+        loadUser();
+    }, []);
+
+    // Filter Topics based on Subject & Class
+    let filteredTopics = [
+        ...(EXAM_TAXONOMY.find(e => e.value === selectedExam)?.topics || []),
+        ...dynamicTopics
+    ].filter(t => {
+        if (!t.subject) return false;
+
+        // Strict Filtering Logic
+        if (userClass === '11' && t.class_level !== '11') return false;
+        if (userClass === '12' && t.class_level !== '12') return false;
+        // If 'Both', show everything
+
+        // Normalize for comparison
+        const tSub = t.subject.toLowerCase();
+        const sSub = selectedSubject.toLowerCase();
+
+        // Handle "Maths" vs "Mathematics"
+        if (sSub.startsWith('math') && tSub.startsWith('math')) return true;
+        return tSub === sSub;
+    });
+
+    // Deduplicate
+    const uniqueMap = new Map();
+    filteredTopics.forEach(t => uniqueMap.set(t.value, t));
+    filteredTopics = Array.from(uniqueMap.values());
+    filteredTopics.sort((a, b) => a.label.localeCompare(b.label));
+
+    const router = useRouter();
 
     const handleStart = () => {
-        Alert.alert(
-            "Ready to Practice?",
-            `Config: ${selectedExam.toUpperCase()} \nTopic: ${selectedTopic} \nSubtopic: ${selectedSubtopic || 'Mixed'} \nDifficulty: ${difficulty}`,
-            [{ text: "Let's Go!" }]
-        );
+        if (!selectedExam || !selectedSubject) {
+            Alert.alert('Incomplete Selection', 'Please select at least an exam and a subject to start.');
+            return;
+        }
+
+        router.push({
+            pathname: '/practice/session',
+            params: {
+                exam: selectedExam,
+                subject: selectedSubject,
+                topic: selectedTopic || 'mixed', // Default to mixed if no topic selected (though UI might force valid topic)
+                // Actually, if we want topic to be optional (whole subject practice), we can do that.
+                // But the UI shows "Select a Topic". Let's assume user MUST pick a topic for now, or if they don't, it implies 'mixed' for the whole subject?
+                // The prompt said "Topic dropdown only populates...", implies selection. 
+                // Let's coerce empty topic to 'mixed' which usually means "All topics in this subject/exam".
+                subtopic: 'mixed', // HARDCODED as requested
+                mode: 'practice'
+            }
+        });
     };
 
     if (loading) {
@@ -75,7 +135,7 @@ export default function PracticeScreen() {
         );
     }
 
-    const isReady = selectedExam && selectedTopic;
+    const isReady = selectedExam && (selectedTopic || true); // Allow starting without topic? Let's assume yes (Mixed)
 
     return (
         <ScrollView style={styles.container} contentContainerStyle={{ paddingBottom: 40 }}>
@@ -87,20 +147,39 @@ export default function PracticeScreen() {
             <View style={styles.section}>
                 <Text style={styles.label}>Target Exam</Text>
                 <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.examList}>
-                    {userExams.map(exam => {
+                    {EXAMS.map(exam => {
                         const isSelected = selectedExam === exam;
                         return (
                             <TouchableOpacity
                                 key={exam}
                                 style={[styles.examChip, isSelected && styles.examChipSelected]}
+                                onPress={() => setSelectedExam(exam)}
+                            >
+                                <Text style={[styles.examChipText, isSelected && styles.examChipTextSelected]}>
+                                    {exam}
+                                </Text>
+                            </TouchableOpacity>
+                        );
+                    })}
+                </ScrollView>
+            </View>
+
+            <View style={styles.section}>
+                <Text style={styles.label}>Subject</Text>
+                <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.examList}>
+                    {SUBJECTS.map(sub => {
+                        const isSelected = selectedSubject === sub;
+                        return (
+                            <TouchableOpacity
+                                key={sub}
+                                style={[styles.examChip, isSelected && styles.examChipSelected]}
                                 onPress={() => {
-                                    setSelectedExam(exam);
+                                    setSelectedSubject(sub);
                                     setSelectedTopic('');
-                                    setSelectedSubtopic('');
                                 }}
                             >
                                 <Text style={[styles.examChipText, isSelected && styles.examChipTextSelected]}>
-                                    {exam.toUpperCase()}
+                                    {sub}
                                 </Text>
                             </TouchableOpacity>
                         );
@@ -110,30 +189,35 @@ export default function PracticeScreen() {
 
             <View style={styles.section}>
                 <Text style={styles.label}>Topic</Text>
-                {filteredTopics.length > 0 ? (
-                    <TouchableOpacity
-                        style={styles.dropdown}
-                        onPress={() => setShowTopicPicker(!showTopicPicker)}
-                    >
-                        <Text style={selectedTopic ? styles.dropdownText : styles.dropdownPlaceholder}>
-                            {filteredTopics.find(t => t.value === selectedTopic)?.label || "Select a Topic"}
-                        </Text>
-                        <ChevronDown size={20} color={Colors.textDim} />
-                    </TouchableOpacity>
-                ) : (
-                    <Text style={styles.emptyText}>No topics available for this exam.</Text>
-                )}
+                <TouchableOpacity
+                    style={styles.dropdown}
+                    onPress={() => setShowTopicPicker(!showTopicPicker)}
+                >
+                    <Text style={selectedTopic ? styles.dropdownText : styles.dropdownPlaceholder}>
+                        {filteredTopics.find(t => t.value === selectedTopic)?.label || "Select a Topic (Optional)"}
+                    </Text>
+                    <ChevronDown size={20} color={Colors.textDim} />
+                </TouchableOpacity>
 
-                {/* Simple Topic List Expansion */}
                 {showTopicPicker && (
                     <View style={styles.pickerContainer}>
+                        <TouchableOpacity
+                            style={styles.pickerItem}
+                            onPress={() => {
+                                setSelectedTopic('');
+                                setShowTopicPicker(false);
+                            }}
+                        >
+                            <Text style={[styles.pickerItemText, { fontStyle: 'italic', opacity: 0.8 }]}>
+                                Mixed (All Topics)
+                            </Text>
+                        </TouchableOpacity>
                         {filteredTopics.map(t => (
                             <TouchableOpacity
                                 key={t.value}
                                 style={styles.pickerItem}
                                 onPress={() => {
                                     setSelectedTopic(t.value);
-                                    setSelectedSubtopic('');
                                     setShowTopicPicker(false);
                                 }}
                             >
@@ -150,56 +234,7 @@ export default function PracticeScreen() {
                 )}
             </View>
 
-            <View style={styles.section}>
-                <Text style={styles.label}>Subtopic <Text style={styles.optional}>(Optional)</Text></Text>
-                <TouchableOpacity
-                    style={[styles.dropdown, (!selectedTopic || !topicDef?.subtopics?.length) && styles.disabled]}
-                    disabled={!selectedTopic || !topicDef?.subtopics?.length}
-                    onPress={() => setShowSubtopicPicker(!showSubtopicPicker)}
-                >
-                    <Text style={selectedSubtopic ? styles.dropdownText : styles.dropdownPlaceholder}>
-                        {topicDef?.subtopics.find(s => s.value === selectedSubtopic)?.label || "Mixed (All Subtopics)"}
-                    </Text>
-                    <ChevronDown size={20} color={Colors.textDim} />
-                </TouchableOpacity>
-
-                {showSubtopicPicker && topicDef && (
-                    <View style={styles.pickerContainer}>
-                        <TouchableOpacity
-                            style={styles.pickerItem}
-                            onPress={() => {
-                                setSelectedSubtopic('');
-                                setShowSubtopicPicker(false);
-                            }}
-                        >
-                            <Text style={[
-                                styles.pickerItemText,
-                                selectedSubtopic === '' && { color: Colors.primary, fontWeight: 'bold' }
-                            ]}>
-                                Mixed (All Subtopics)
-                            </Text>
-                        </TouchableOpacity>
-                        {topicDef.subtopics.map(s => (
-                            <TouchableOpacity
-                                key={s.value}
-                                style={styles.pickerItem}
-                                onPress={() => {
-                                    setSelectedSubtopic(s.value);
-                                    setShowSubtopicPicker(false);
-                                }}
-                            >
-                                <Text style={[
-                                    styles.pickerItemText,
-                                    selectedSubtopic === s.value && { color: Colors.primary, fontWeight: 'bold' }
-                                ]}>
-                                    {s.label}
-                                </Text>
-                                {selectedSubtopic === s.value && <Check size={16} color={Colors.primary} />}
-                            </TouchableOpacity>
-                        ))}
-                    </View>
-                )}
-            </View>
+            {/* Subtopic Removed */}
 
             <View style={styles.section}>
                 <Text style={styles.label}>Difficulty</Text>

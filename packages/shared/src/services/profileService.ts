@@ -11,6 +11,7 @@ export interface UserProfile {
     phone: string | null;
     avatarUrl: string | null;
     customerId: string;
+    class?: '11' | '12' | 'Both';
 }
 
 /**
@@ -41,6 +42,7 @@ export async function getProfile(): Promise<UserProfile | null> {
             phone: user.user_metadata?.phone || user.phone || null,
             avatarUrl: user.user_metadata?.avatar_url || null,
             customerId,
+            class: user.user_metadata?.class,
         };
     } catch (err) {
         log.error('[profileService] Exception getting profile:', err);
@@ -54,6 +56,7 @@ export async function getProfile(): Promise<UserProfile | null> {
 export async function updateProfile(updates: {
     fullName?: string;
     phone?: string;
+    class?: '11' | '12' | 'Both';
 }): Promise<{ success: boolean; error?: string }> {
     const supabase = getSupabase();
     if (!supabase) {
@@ -64,6 +67,7 @@ export async function updateProfile(updates: {
         const updateData: Record<string, any> = {};
         if (updates.fullName !== undefined) updateData.full_name = updates.fullName;
         if (updates.phone !== undefined) updateData.phone = updates.phone;
+        if (updates.class !== undefined) updateData.class = updates.class;
 
         const { error } = await supabase.auth.updateUser({
             data: updateData,
@@ -144,7 +148,7 @@ export const updateOnboardingProfile = async (
     userId: string,
     data: {
         full_name: string;
-        class: '11' | '12' | 'Reappear';
+        class: '11' | '12' | 'Both';
         target_exams: string[];
     }
 ): Promise<void> => {

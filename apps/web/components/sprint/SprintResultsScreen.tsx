@@ -6,6 +6,7 @@ import { QuestionData } from '@drut/shared';
 import { log } from '@drut/shared'; // from ../../lib/log';
 import { Trophy, Clock, Target, AlertCircle, RotateCcw, Play, CheckCircle2, XCircle, Timer, Grid, Sparkles, BookOpen, ArrowRight } from 'lucide-react';
 import { generateSessionAnalysis } from '../../../../packages/shared/src/services/geminiService';
+import { SolutionView } from '../SolutionView';
 
 interface SprintResultsScreenProps {
     sessionId: string;
@@ -321,37 +322,10 @@ export const SprintResultsScreen: React.FC<SprintResultsScreenProps> = ({
                                                 </div>
                                             </div>
 
-                                            {/* The Optimal Path - Show for wrong answers */}
-                                            {attempt.result !== 'correct' && attempt.questionData.theOptimalPath?.exists && (
-                                                <div className="bg-indigo-50 border border-indigo-200 rounded-lg p-4">
-                                                    <h4 className="text-sm font-bold text-indigo-800 mb-3 flex items-center gap-2">
-                                                        <Sparkles className="w-4 h-4" />
-                                                        The Optimal Path (TOP)
-                                                    </h4>
-                                                    {attempt.questionData.theOptimalPath.preconditions && (
-                                                        <p className="text-xs text-indigo-600 mb-2">
-                                                            <strong>When to use:</strong> {attempt.questionData.theOptimalPath.preconditions}
-                                                        </p>
-                                                    )}
-                                                    <ol className="list-decimal list-inside space-y-1 text-sm text-indigo-700">
-                                                        {attempt.questionData.theOptimalPath.steps.map((step, i) => (
-                                                            <li key={i}>{step}</li>
-                                                        ))}
-                                                    </ol>
-                                                    {attempt.questionData.theOptimalPath.sanityCheck && (
-                                                        <p className="text-xs text-indigo-600 mt-2 border-t border-indigo-200 pt-2">
-                                                            <strong>Sanity Check:</strong> {attempt.questionData.theOptimalPath.sanityCheck}
-                                                        </p>
-                                                    )}
-                                                </div>
-                                            )}
-
-                                            {attempt.questionData.fsm_explanation && (
-                                                <div>
-                                                    <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-1">Explanation</span>
-                                                    <p className="text-slate-600 text-sm leading-relaxed">
-                                                        {attempt.questionData.fsm_explanation}
-                                                    </p>
+                                            {/* Unified Solution View (TAR/DEEP) */}
+                                            {attempt.result !== 'correct' && (
+                                                <div className="mt-4">
+                                                    <SolutionView question={attempt.questionData} />
                                                 </div>
                                             )}
                                         </div>

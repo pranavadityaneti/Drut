@@ -2,6 +2,7 @@ import React from 'react';
 import { QuestionData } from '@drut/shared';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from './ui/Card';
 import { Button } from './ui/Button';
+import { LatexText } from './ui/LatexText';
 
 interface QuestionCardProps {
   data: QuestionData;
@@ -14,8 +15,8 @@ interface QuestionCardProps {
   isDisabled?: boolean;
 }
 
-const TimerIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4 mr-1.5 text-muted-foreground"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
+const TimerIcon = ({ className }: { className?: string }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`h-4 w-4 mr-1.5 text-muted-foreground ${className || ''}`}><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
 );
 
 export const QuestionCard: React.FC<QuestionCardProps> = ({
@@ -52,27 +53,30 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
 
 
   return (
-    <Card>
+    <Card className="shadow-sm">
       <CardHeader>
         <div className="flex justify-between items-start flex-wrap gap-2">
           <div>
             <CardTitle>Question</CardTitle>
             <CardDescription>Read the problem carefully and select the correct option.</CardDescription>
           </div>
-          <div className="flex items-center space-x-4">
-            <div className="flex items-center bg-secondary text-secondary-foreground text-sm font-medium px-3 py-1.5 rounded-md">
-              <TimerIcon />
-              <span>Target: {targetTime}s</span>
-            </div>
-            <div className="flex items-center bg-secondary text-secondary-foreground text-sm font-medium px-3 py-1.5 rounded-md">
-              <TimerIcon />
-              <span>Your Time: {timeTaken}s</span>
+          <div className="flex items-center gap-4">
+            {/* Target Timer Removed */}
+            <div className="bg-secondary text-secondary-foreground text-sm font-medium px-3 py-1.5 rounded-md flex items-center justify-between gap-2 w-[170px] h-[36px] flex-none overflow-hidden">
+              <TimerIcon className="shrink-0" />
+              <div className="grid grid-cols-[auto_40px_auto] items-center text-xs">
+                <span>Your Time:</span>
+                <span className="font-mono text-right tabular-nums">{timeTaken}</span>
+                <span className="ml-[2px]">s</span>
+              </div>
             </div>
           </div>
         </div>
       </CardHeader>
       <CardContent>
-        <p className="mb-6 text-base leading-relaxed break-words">{data.questionText}</p>
+        <div className="mb-6 text-base leading-relaxed break-words">
+          <LatexText text={data.questionText} />
+        </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {data.options.map((option, index) => (
             <label key={index} className={getOptionClassName(index)}>
@@ -85,13 +89,15 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
                 disabled={isAnswered || isDisabled}
               />
               <span className="font-bold mr-4 text-emerald-600">({String.fromCharCode(65 + index)})</span>
-              <span className="break-words">{option.text}</span>
+              <span className="break-words">
+                <LatexText text={option.text} />
+              </span>
             </label>
           ))}
         </div>
         {!isAnswered && (
           <div className="mt-6 flex justify-end">
-            <Button onClick={onAnswerSubmit} disabled={selectedOption === null || isDisabled}>
+            <Button onClick={onAnswerSubmit} disabled={selectedOption === null || isDisabled} className="transition-none transform-none shadow-none">
               {isDisabled ? 'Processing...' : 'Submit Answer'}
             </Button>
           </div>

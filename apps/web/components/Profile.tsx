@@ -250,7 +250,7 @@ export const Profile: React.FC<{}> = () => {
                 <label className="text-sm font-medium text-gray-700 block mb-3">Class</label>
                 <div className="flex items-center gap-3">
                   <div className="px-5 py-3 rounded-xl bg-violet-50 text-violet-700 border border-violet-100 font-semibold text-lg inline-block">
-                    {user?.user_metadata?.class === 'Reappear' ? 'Reappear' : `Class ${user?.user_metadata?.class || 'N/A'}`}
+                    {(user?.user_metadata?.class as string) === 'Reappear' || (user?.user_metadata?.class as string) === 'Both' ? 'Both (Class 11 & 12)' : `Class ${user?.user_metadata?.class || 'N/A'}`}
                   </div>
                 </div>
               </div>

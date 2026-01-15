@@ -1,0 +1,175 @@
+
+
+ 
+ 
+ 
+ 
+ANNUAL  ACADEMIC PLAN 2023 - 2024 
+ 
+Mathematics-II(B)      Subject Code:- 232                            SECOND YEAR 
+Month/ No. 
+of working 
+days & 
+Periods 
+Topics to be covered Unit test/ Exams/  
+Assignments/AP EAPCET classes to be 
+conducted. 
+Periods 
+allotted 
+for each 
+topic 
+JUNE -(24) 
+Syllabus and prerequisites  1 
+01. Circle :  
+1.1 Equation of circle -standard form-center and 
+radius of a circle with a given line segment as 
+diameter & equation of circle through three non 
+collinear points - parametric equations of a circle.  4 
+1.2 Position of a point in the plane of a circle – 
+power of a point-definition of tangent-length of 
+tangent  4 
+1.3 Position of a straight line in the plane of a circle 
+conditions for a line to be tangent – chord joining 
+two points on a circle – equation of the tangent at a 
+point on the circle- point of contact-equation of 
+normal. 2 
+1.4 Chord of contact - pole and polar-conjugate 
+points and conjugate lines - equation of chord with 
+given middle point. 3 
+1.5 Relative position of two circles- circles touching 
+each other externally, internally common tangents 
+–centers of similitude- equation of pair of tangents 
+from an external point.  7 
+AP EAPCET classes on Circles 2 
+ASSIGNMENT-I 1 
+
+JULY - (24) 
+02. System of circles:   
+2.1 Angle between two intersecting circles.  5 
+2.2 Radical axis of two circles- properties- Common 
+chord and common tangent oftwo circles – radical 
+Centre Intersection of a line and a Circle. 3 
+AP EAPCET classes on system of circles 1 
+06. Integration :  
+6.1 Integration as the inverse process of 
+differentiation- Standard forms – properties of 
+integrals.  4 
+6.2 Method of substitution- integration of Algebraic, 
+exponential, logarithmic, trigonometric and inverse 
+trigonometricfunctions. Integration by parts.  7 
+UNIT TEST-I 
+From 26-07-2023 to 28-07-2023 
+1 
+ASSIGNMENT-II 1 
+August - (25) 
+(18P) 
+6.3 Integration- Partial fractions method.  3 
+6.4 Reduction formulae.  3 
+AP EAPCET classes on integration  2 
+07. Definite Integrals:   
+7.1 Definite Integral as the limit of sum  4 
+7.2 Interpretation of Definite Integral as an area.  5 
+ASSIGNMENT-III 
+UNIT TEST-II 
+From 24-08-2023 to 26-08-2023 
+1 
+QUARTERLY EXAMINATIONS FROM 16.09.2023 TO 23.09.2023 
+SEP - (19) 
+7.3 Fundamental theorem of Integral  
+Calculus.  4 
+7.4 Properties. 4 
+7.5 Reduction formulae.  5 
+
+7.6 Application of Definite Integral to area 5 
+AP EAPCET classes on Definite Integral  1 
+DUSSEHRA HOLIDAYS FROM 19.10.2023 TO 25.10.2023 
+OCT - (25) 
+(19P) 
+03. Parabola:  
+ 
+3.1 Conic sections –Parabola- equation of parabola 
+in standard form-different forms of the parabola –
+parametric equations  7 
+3.2 Equation of tangent normal on the parabola and 
+condition for straight line in to tangent  5 
+(Cont..) 3.2 Equation of tangent normal on the 
+parabola and condition for straight line in to 
+tangent  3 
+AP EAPCET CLASS ON parabola 2 
+ASSIGNMENT-IV 
+UNIT TEST – III 
+From 16-10-2023 to 18-10-2023 
+1 
+NOV -(26) 
+ 
+ 
+ 
+ 
+ 
+ 
+Dec-19 
+ 
+ 
+ 
+ 
+ 
+ 
+04. Ellipse  
+4.1 Equation of ellipse in standard form  
+Parametric equations.  4 
+4.2 Equation of tangent and normal at a  
+point on the ellipse (Cartesian and  
+parametric)- condition for a straight line to  
+be a tangent. 4 
+AP EAPCET classes on ellipse 
+2 
+05. Hyperbola:   
+5.1 Equation of hyperbola in standard form-
+Parametric equations. 3 
+5.2 Equations of tangent and normal at a point on 
+the hyperbola (Cartesian and parametric)- 
+conditions for a straight line to be a tangent 
+Asymptotes          3 
+AP EAPCET class on Hyperbola  2 
+08. Differential equations:  
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+8.1 Formation of differential equation-Degree and 
+order of an ordinary differential equation 4 
+8.2 Solving differential equation a) Variables 
+separable method 2 
+UNIT TEST-IV 
+From 23-11-2023 to 25-11-2023 1 
+ASSIGNMENT-V 1 
+HALF YEARLY EXAMINATIONS FROM 18.12.2023 TO 23.12.2023 
+SANKRANTHI HOLIDAYS 11.01.2024 TO 17.01.2024 
+REOPENING AFTER SANKRANTHI HOILDAYS 18-01-2024 
+JAN-(19) 
+8.2 Solving differential equation   
+b) Homogeneous differential equation. 5 
+c) Non - Homogeneous differential equation. 5 
+d) Linear differential equations. 5 
+AP EAPCET class on differential equations 3 
+ASSIGNMENT-VI 1 
+PRE-FINAL EXAMINATIONS FROM 19.01.2024 TO 25.01.2024 
+FEB -(22) REVISION 
+ 
+PRACTICAL EXAMINATION IPE 2023 TENATAIVELY  
+2
+nd
+ Week of Feb 2024 
+MARCH -(23) 
+DATE OF COMMENCEMENT OF THEORY EXAMINATIONS 
+TENTATIVELY, 1
+st
+ Week of March 2024  
+ 
+Dec-19 

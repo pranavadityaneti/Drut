@@ -11,6 +11,9 @@ interface SessionConfig {
     subtopic: string;
     examProfile: string;
     questionCount: number;
+    classLevel?: string;
+    board?: string;
+    subject?: string;
     retryQuestions?: QuestionData[];
 }
 

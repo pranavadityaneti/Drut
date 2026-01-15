@@ -2,7 +2,8 @@ import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.45.0';
 import { Buffer } from 'node:buffer';
 import { corsHeaders } from '../_shared/cors.ts';
-import { embedText } from '../_shared/vertex-client.ts';
+import { embedText, generateContent } from '../_shared/vertex-client.ts';
+import JSON5 from 'https://esm.sh/json5@2.2.3';
 // @ts-ignore
 import pdf from 'npm:pdf-parse@1.1.1';
 
@@ -13,13 +14,13 @@ serve(async (req) => {
     }
 
     try {
-        const { filePath, textContent } = await req.json();
+        const { filePath, textContent, skipExtraction, skipChunking } = await req.json();
 
         if (!filePath) {
             throw new Error('Missing filePath');
         }
 
-        console.log(`[ingest-textbook] Processing: ${filePath}`);
+        console.log(`[ingest-textbook] Processing: ${filePath} (skipExtraction: ${skipExtraction}, skipChunking: ${skipChunking})`);
 
         // Initialize Supabase Admin Client
         const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
@@ -27,20 +28,20 @@ serve(async (req) => {
         const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
         let fullText = '';
+        let aiResponseDebug = 'N/A';
+        let syllabusDebug = 'N/A';
 
         if (textContent) {
             console.log(`[ingest-textbook] Received text content (${textContent.length} chars) from client`);
             fullText = textContent;
         } else {
             console.log('[ingest-textbook] No text provided, attempting server-side parse...');
-            // 1. Download PDF
             const { data: fileData, error: downloadError } = await supabase.storage
                 .from('textbooks')
                 .download(filePath);
 
             if (downloadError) throw downloadError;
 
-            // 2. Parse PDF Text
             const arrayBuffer = await fileData.arrayBuffer();
             // @ts-ignore
             const buffer = Buffer.from(arrayBuffer);
@@ -48,18 +49,123 @@ serve(async (req) => {
             fullText = pdfData.text;
         }
 
-        console.log(`[ingest-textbook] Ready to chunk ${fullText.length} characters`);
-
-        // Get textbook ID from DB to link chunks
+        // Get textbook metadata
         const { data: textbook, error: tbError } = await supabase
             .from('textbooks')
-            .select('id')
+            .select('id, subject, class_level, board')
             .eq('file_path', filePath)
             .single();
 
         if (tbError) throw tbError;
 
-        // 3. Chunk Text (Simple sliding window)
+        // --- DYNAMIC SYLLABUS EXTRACTION ---
+        // Only run if not explicitly skipped (to allow re-runs of just this part if needed)
+        if (!skipExtraction) {
+            console.log('[ingest-textbook] Attempting to extract Table of Contents...');
+            try {
+                // Heuristic: TOC is usually in the first 60k chars
+                const tocContext = fullText.slice(0, 60000);
+                const prompt = `
+                    You are a syllabus extractor. I will provide the beginning of a textbook.
+                    Your goal is to extract the Chapter Names and their Topics from the Table of Contents.
+                    
+                    The TOC might be messy (e.g. "1.Locus9 - 16" -> Chapter 1: Locus).
+                    Please parse messy lines intelligently to find the chapter title.
+
+                    Return ONLY a JSON object with this structure:
+                    {
+                        "chapters": [
+                            {
+                                "name": "Chapter 1: Sets",
+                                "topics": ["Introduction", "Sets and their Representations", "The Empty Set"]
+                            }
+                        ]
+                    }
+
+                    Do NOT use Markdown. Just raw JSON.
+                    
+                    TEXTBOOK START:
+                    ${tocContext}
+                `;
+
+                const aiResponse = await generateContent(prompt);
+                console.log('[ingest-textbook] AI Response (Length):', aiResponse.length);
+                aiResponseDebug = aiResponse; // Capture RAW response immediately
+
+                // Aggressive Cleanup
+                const cleanJson = aiResponse
+                    .replace(/```json/g, '')
+                    .replace(/```/g, '')
+                    .trim();
+
+                let syllabus;
+                try {
+                    syllabus = JSON5.parse(cleanJson);
+                } catch (e) {
+                    console.log("[ingest-textbook] JSON5 Parse failed, trying aggressive repair...");
+                    // Fallback: Try to find the first { and last } or closing ]
+                    const firstBrace = cleanJson.indexOf('{');
+                    // If terminated string error, maybe the last brace is missing?
+                    // We try to find the last valid `}` or `]`?
+                    // Simplest repair: Just try parsing the substring up to the last `}` found.
+                    const lastBrace = cleanJson.lastIndexOf('}');
+                    if (firstBrace !== -1 && lastBrace !== -1 && lastBrace > firstBrace) {
+                        const jsonSubstring = cleanJson.substring(firstBrace, lastBrace + 1);
+                        console.log('[ingest-textbook] Attempting to parse substring:', jsonSubstring.length);
+                        syllabus = JSON5.parse(jsonSubstring);
+                    } else {
+                        throw e;
+                    }
+                }
+
+                syllabusDebug = syllabus;
+
+                if (syllabus.chapters && syllabus.chapters.length > 0) {
+                    const nodesToInsert: any[] = [];
+                    for (const chap of syllabus.chapters) {
+                        nodesToInsert.push({
+                            name: chap.name,
+                            node_type: 'topic',
+                            metadata: {
+                                textbook_id: textbook.id,
+                                subject: textbook.subject,
+                                is_chapter: true
+                            },
+                        });
+                    }
+
+                    if (nodesToInsert.length > 0) {
+                        const { error: nodeError } = await supabase.from('knowledge_nodes').insert(nodesToInsert);
+                        if (nodeError) console.error('Error inserting nodes:', nodeError);
+                        else console.log(`[ingest-textbook] Inserted ${nodesToInsert.length} chapters into knowledge_nodes`);
+                    }
+                }
+
+            } catch (err) {
+                console.error('[ingest-textbook] Syllabus extraction failed (non-blocking):', err);
+                // Keep aiResponseDebug as the raw text if available
+                if (aiResponseDebug === 'N/A') aiResponseDebug = 'Error: ' + err.message;
+            }
+        }
+        // -----------------------------------
+
+        // SKIP CHUNKING check
+        if (skipChunking) {
+            console.log('[ingest-textbook] Skipping chunking/embedding as requested.');
+            return new Response(JSON.stringify({
+                message: 'Syllabus extraction complete (chunking skipped)',
+                extractionDebug: {
+                    aiResponse: aiResponseDebug,
+                    syllabus: syllabusDebug
+                }
+            }), {
+                headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+            });
+        }
+
+        console.log(`[ingest-textbook] Ready to chunk ${fullText.length} characters`);
+
+        // ... (Existing Chunking Logic) ...
         const CHUNK_SIZE = 1000;
         const OVERLAP = 200;
         const chunks: string[] = [];
@@ -114,9 +220,6 @@ serve(async (req) => {
                     processed += validRows.length;
                 }
             }
-
-            // Small delay to be nice to API limits if needed, but keeping it minimal for speed
-            // await new Promise(r => setTimeout(r, 100)); 
         }
 
         // 5. Update Status
@@ -125,21 +228,19 @@ serve(async (req) => {
             .update({ status: 'ready' })
             .eq('id', textbook.id);
 
-        return new Response(JSON.stringify({ success: true, chunks: processed }), {
+        return new Response(JSON.stringify({
+            message: 'Ingestion complete',
+            chunks: chunks.length,
+            extractionDebug: {
+                aiResponse: aiResponseDebug,
+                syllabus: syllabusDebug
+            }
+        }), {
             headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         });
 
     } catch (error) {
         console.error('Ingest Error:', error);
-
-        // Try to update DB with error
-        /*
-        const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
-        const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
-        const supabase = createClient(supabaseUrl, supabaseServiceKey);
-        // ... update status='error'
-        */
-
         return new Response(JSON.stringify({ error: error.message }), {
             status: 500,
             headers: { ...corsHeaders, 'Content-Type': 'application/json' },

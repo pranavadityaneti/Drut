@@ -120,10 +120,10 @@ END$$;
 -- Returns questions the user has NOT seen before
 CREATE OR REPLACE FUNCTION public.get_unseen_questions(
   p_user_id UUID,
-  p_exam TEXT,
+  p_exam_profile TEXT,
   p_topic TEXT,
   p_subtopic TEXT,
-  p_count INTEGER DEFAULT 5
+  p_limit INTEGER DEFAULT 5
 ) RETURNS SETOF public.cached_questions
 LANGUAGE plpgsql
 SECURITY DEFINER
@@ -134,7 +134,7 @@ BEGIN
   RETURN QUERY
   SELECT cq.*
   FROM public.cached_questions cq
-  WHERE cq.exam_profile = p_exam
+  WHERE cq.exam_profile = p_exam_profile
     AND cq.topic = p_topic
     AND cq.subtopic = p_subtopic
     -- Exclude questions user has already seen
@@ -149,7 +149,7 @@ BEGIN
     cq.times_served ASC,
     -- Then by newest
     cq.generated_at DESC
-  LIMIT p_count;
+  LIMIT p_limit;
 END;
 $$;
 
@@ -236,10 +236,10 @@ $$;
 -- 10. Grant necessary permissions
 GRANT ALL ON public.cached_questions TO authenticated;
 GRANT ALL ON public.user_question_history TO authenticated;
-GRANT EXECUTE ON FUNCTION public.get_unseen_questions TO authenticated;
-GRANT EXECUTE ON FUNCTION public.mark_questions_seen TO authenticated;
-GRANT EXECUTE ON FUNCTION public.get_cache_stats TO authenticated, anon;
-GRANT EXECUTE ON FUNCTION public.get_user_question_stats TO authenticated;
+GRANT EXECUTE ON FUNCTION public.get_unseen_questions(UUID, TEXT, TEXT, TEXT, INTEGER) TO authenticated;
+GRANT EXECUTE ON FUNCTION public.mark_questions_seen(UUID, UUID[]) TO authenticated;
+GRANT EXECUTE ON FUNCTION public.get_cache_stats(TEXT, TEXT, TEXT) TO authenticated, anon;
+GRANT EXECUTE ON FUNCTION public.get_user_question_stats(UUID) TO authenticated;
 
 -- 11. Notify PostgREST to reload schema
 DO $$ 

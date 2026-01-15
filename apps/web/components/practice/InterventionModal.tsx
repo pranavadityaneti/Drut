@@ -54,6 +54,7 @@ export const InterventionModal: React.FC<InterventionModalProps> = ({
     };
 
     const failure = getFailureReason();
+    const optimalPath = questionData?.theOptimalPath || { exists: false, steps: [], preconditions: '', sanityCheck: '' };
 
     return (
         <div className="space-y-4">
@@ -82,13 +83,13 @@ export const InterventionModal: React.FC<InterventionModalProps> = ({
                         The Optimal Path
                     </h3>
 
-                    {questionData.theOptimalPath.exists ? (
+                    {optimalPath.exists ? (
                         <FsmPanel
-                            patternTrigger={questionData.theOptimalPath.preconditions || 'This question type'}
-                            steps={questionData.theOptimalPath.steps.map((step) => ({ step }))}
+                            patternTrigger={optimalPath.preconditions || 'This question type'}
+                            steps={optimalPath.steps.map((step) => ({ step }))}
                             safetyChecks={
-                                questionData.theOptimalPath.sanityCheck
-                                    ? [questionData.theOptimalPath.sanityCheck]
+                                optimalPath.sanityCheck
+                                    ? [optimalPath.sanityCheck]
                                     : []
                             }
                             whenToUse="Use this method when you need to solve quickly with high accuracy"

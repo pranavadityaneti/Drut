@@ -16,6 +16,7 @@ import { HealthStatus, runtimeHealth } from '@drut/shared';
 import { log } from '@drut/shared';
 import { SidebarProvider, SidebarInset } from './components/ui/AppShell';
 import { Profile } from './components/Profile';
+import { HelpSupport } from './components/HelpSupport';
 import { WaitlistModern } from './components/WaitlistModern';
 import { WaitlistClassic } from './components/WaitlistClassic';
 import { AdminDashboard } from './components/admin/AdminDashboard';
@@ -155,6 +156,9 @@ function App() {
           <Route path="/profile" element={
             user ? <AuthenticatedLayout user={user} onLogout={handleLogout} page="profile" /> : <Navigate to="/login" replace />
           } />
+          <Route path="/help-support" element={
+            user ? <AuthenticatedLayout user={user} onLogout={handleLogout} page="help-support" /> : <Navigate to="/login" replace />
+          } />
           <Route path="/admin" element={
             user ? <AuthenticatedLayout user={user} onLogout={handleLogout} page="admin" /> : <Navigate to="/login" replace />
           } />
@@ -175,7 +179,7 @@ function App() {
 const AuthenticatedLayout: React.FC<{
   user: User;
   onLogout: () => void;
-  page: 'dashboard' | 'practice' | 'sprint' | 'profile' | 'admin';
+  page: 'dashboard' | 'practice' | 'sprint' | 'profile' | 'admin' | 'help-support';
 }> = ({ user, onLogout, page }) => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -216,6 +220,7 @@ const AuthenticatedLayout: React.FC<{
               {page === 'practice' && <Practice />}
               {page === 'sprint' && <Sprint />}
               {page === 'profile' && <Profile />}
+              {page === 'help-support' && <HelpSupport />}
               {page === 'admin' && <AdminDashboard />}
             </div>
           </main>

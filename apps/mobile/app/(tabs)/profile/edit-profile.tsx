@@ -29,6 +29,7 @@ export default function EditProfileScreen() {
     // Form state
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
+    const [classLevel, setClassLevel] = useState<'11' | '12' | 'Both'>('11');
     const [avatarUri, setAvatarUri] = useState<string | null>(null);
 
     useEffect(() => {
@@ -42,6 +43,9 @@ export default function EditProfileScreen() {
             setProfile(data);
             setName(data.fullName);
             setPhone(data.phone || '');
+            // Handle legacy Reappear or newly explicit Both
+            const cls = (data.class as string) === 'Reappear' ? 'Both' : (data.class || '11');
+            setClassLevel(cls as '11' | '12' | 'Both');
             setAvatarUri(data.avatarUrl);
         }
         setLoading(false);
@@ -92,6 +96,7 @@ export default function EditProfileScreen() {
             const result = await profileService.updateProfile({
                 fullName: name,
                 phone: phone || undefined,
+                class: classLevel,
             });
 
             if (result.success) {
@@ -205,6 +210,30 @@ export default function EditProfileScreen() {
                                 placeholderTextColor={Colors.textDim}
                                 keyboardType="phone-pad"
                             />
+                        </View>
+
+                        {/* Class Selection */}
+                        <View style={styles.fieldContainer}>
+                            <Text style={styles.fieldLabel}>Class</Text>
+                            <View style={styles.classSelector}>
+                                {(['11', '12', 'Both'] as const).map((cls) => (
+                                    <TouchableOpacity
+                                        key={cls}
+                                        style={[
+                                            styles.classOption,
+                                            classLevel === cls && styles.classOptionSelected
+                                        ]}
+                                        onPress={() => setClassLevel(cls)}
+                                    >
+                                        <Text style={[
+                                            styles.classOptionText,
+                                            classLevel === cls && styles.classOptionTextSelected
+                                        ]}>
+                                            {cls === 'Both' ? 'Both (11 & 12)' : `Class ${cls}`}
+                                        </Text>
+                                    </TouchableOpacity>
+                                ))}
+                            </View>
                         </View>
                     </View>
                 </ScrollView>
@@ -323,5 +352,30 @@ const styles = StyleSheet.create({
     readOnlyText: {
         fontSize: 16,
         color: Colors.textDim,
+    },
+    classSelector: {
+        flexDirection: 'row',
+        gap: 12,
+    },
+    classOption: {
+        flex: 1,
+        paddingVertical: 12,
+        borderRadius: 12,
+        borderWidth: 1,
+        borderColor: Colors.border,
+        alignItems: 'center',
+        backgroundColor: Colors.white,
+    },
+    classOptionSelected: {
+        borderColor: Colors.primary,
+        backgroundColor: '#ecfdf5', // Light emerald
+    },
+    classOptionText: {
+        fontSize: 14,
+        fontWeight: '600',
+        color: Colors.textDim,
+    },
+    classOptionTextSelected: {
+        color: Colors.primary,
     },
 });

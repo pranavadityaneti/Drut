@@ -1,0 +1,1603 @@
+
+
+Print
+Andhra Pradesh State Council of Higher Education
+  
+ 
+Notations :
+1.Options shown in green color and with  icon are correct.
+2.Options shown in red color and with  icon are incorrect.
+ 
+  
+Question Paper Name :ENGINEERING 26thMay 2025 Shift 1
+Subject Name :ENGINEERING
+Creation Date :2025-05-26 15:02:35
+Duration :180
+Total Marks :160
+Display Marks:No
+Share Answer Key With Delivery Engine :Yes
+Change Font Color :No
+Change Background Color :No
+Change Theme :No
+Help Button :No
+Show Reports :No
+Show Progress Bar :No
+  
+  
+ENGINEERING
+Group Number :1
+Group Id :640411106
+Group Maximum Duration :0
+Group Minimum Duration :180
+Show Attended Group? :No
+Edit Attended Group? :No
+Break time :0
+Group Marks :160
+  
+  
+Mathematics
+Section Id :640411348
+Section Number :1
+Section type :Online
+Mandatory or Optional :Mandatory
+Number of Questions :80
+Number of Questions to be attempted :80
+Section Marks :80
+Maximum Instruction Time :0
+Sub-Section Number :1
+Sub-Section Id :640411348
+Question Shuffling Allowed :Yes
+  
+Question Number : 1 Question Id : 64041116801 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 2 Question Id : 64041116802 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 3 Question Id : 64041116803 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 4 Question Id : 64041116804 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+
+Question Number : 5 Question Id : 64041116805 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 6 Question Id : 64041116806 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+
+3.  
+4.  
+  
+Question Number : 7 Question Id : 64041116807 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 8 Question Id : 64041116808 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 9 Question Id : 64041116809 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+
+4.  
+  
+Question Number : 10 Question Id : 64041116810 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 11 Question Id : 64041116811 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+
+4.  
+  
+Question Number : 12 Question Id : 64041116812 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 13 Question Id : 64041116813 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+
+Question Number : 14 Question Id : 64041116814 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 15 Question Id : 64041116815 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 16 Question Id : 64041116816 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 17 Question Id : 64041116817 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 18 Question Id : 64041116818 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 19 Question Id : 64041116819 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+
+4.  
+  
+Question Number : 20 Question Id : 64041116820 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 21 Question Id : 64041116821 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+
+  
+Question Number : 22 Question Id : 64041116822 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 23 Question Id : 64041116823 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+
+  
+Question Number : 24 Question Id : 64041116824 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 25 Question Id : 64041116825 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+
+4.  
+  
+Question Number : 26 Question Id : 64041116826 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 27 Question Id : 64041116827 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+
+4.  
+  
+Question Number : 28 Question Id : 64041116828 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 29 Question Id : 64041116829 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 30 Question Id : 64041116830 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 31 Question Id : 64041116831 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 32 Question Id : 64041116832 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 33 Question Id : 64041116833 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+
+4.  
+  
+Question Number : 34 Question Id : 64041116834 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 35 Question Id : 64041116835 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+
+2.  
+3.  
+4.  
+  
+Question Number : 36 Question Id : 64041116836 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 37 Question Id : 64041116837 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 38 Question Id : 64041116838 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 39 Question Id : 64041116839 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 40 Question Id : 64041116840 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 41 Question Id : 64041116841 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 42 Question Id : 64041116842 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+
+Question Number : 43 Question Id : 64041116843 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 44 Question Id : 64041116844 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+
+3.  
+4.  
+  
+Question Number : 45 Question Id : 64041116845 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 46 Question Id : 64041116846 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 47 Question Id : 64041116847 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 48 Question Id : 64041116848 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 49 Question Id : 64041116849 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 50 Question Id : 64041116850 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 51 Question Id : 64041116851 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+
+Question Number : 52 Question Id : 64041116852 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 53 Question Id : 64041116853 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+
+4.  
+  
+Question Number : 54 Question Id : 64041116854 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 55 Question Id : 64041116855 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 56 Question Id : 64041116856 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 57 Question Id : 64041116857 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 58 Question Id : 64041116858 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+
+Question Number : 59 Question Id : 64041116859 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 60 Question Id : 64041116860 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 61 Question Id : 64041116861 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 62 Question Id : 64041116862 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+
+3.  
+4.  
+  
+Question Number : 63 Question Id : 64041116863 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 64 Question Id : 64041116864 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+
+3.  
+4.  
+  
+Question Number : 65 Question Id : 64041116865 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 66 Question Id : 64041116866 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+
+4.  
+  
+Question Number : 67 Question Id : 64041116867 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 68 Question Id : 64041116868 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+
+4.  
+  
+Question Number : 69 Question Id : 64041116869 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 70 Question Id : 64041116870 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+
+3.  
+4.  
+  
+Question Number : 71 Question Id : 64041116871 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 72 Question Id : 64041116872 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 73 Question Id : 64041116873 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 74 Question Id : 64041116874 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+
+2.  
+3.  
+4.  
+  
+Question Number : 75 Question Id : 64041116875 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 76 Question Id : 64041116876 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+
+2.  
+3.  
+4.  
+  
+Question Number : 77 Question Id : 64041116877 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 78 Question Id : 64041116878 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 79 Question Id : 64041116879 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 80 Question Id : 64041116880 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+  
+Physics
+Section Id :640411349
+Section Number :2
+Section type :Online
+Mandatory or Optional :Mandatory
+Number of Questions :40
+Number of Questions to be attempted :40
+Section Marks :40
+Maximum Instruction Time :0
+Sub-Section Number :1
+Sub-Section Id :640411349
+Question Shuffling Allowed :Yes
+  
+Question Number : 81 Question Id : 64041116881 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+
+  
+Question Number : 82 Question Id : 64041116882 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 83 Question Id : 64041116883 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+
+2.  
+3.  
+4.  
+  
+Question Number : 84 Question Id : 64041116884 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 85 Question Id : 64041116885 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+
+2.  
+3.  
+4.  
+  
+Question Number : 86 Question Id : 64041116886 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 87 Question Id : 64041116887 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+
+2.  
+3.  
+4.  
+  
+Question Number : 88 Question Id : 64041116888 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 89 Question Id : 64041116889 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 90 Question Id : 64041116890 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 91 Question Id : 64041116891 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 92 Question Id : 64041116892 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+
+3.  
+4.  
+  
+Question Number : 93 Question Id : 64041116893 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 94 Question Id : 64041116894 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 95 Question Id : 64041116895 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+
+2.  
+3.  
+4.  
+  
+Question Number : 96 Question Id : 64041116896 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 97 Question Id : 64041116897 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+
+2.  
+3.  
+4.  
+  
+Question Number : 98 Question Id : 64041116898 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 99 Question Id : 64041116899 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+
+3.  
+4.  
+  
+Question Number : 100 Question Id : 64041116900 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 101 Question Id : 64041116901 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+
+4.  
+  
+Question Number : 102 Question Id : 64041116902 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 103 Question Id : 64041116903 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+
+4.  
+  
+Question Number : 104 Question Id : 64041116904 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 105 Question Id : 64041116905 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+
+  
+Question Number : 106 Question Id : 64041116906 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 107 Question Id : 64041116907 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+
+Question Number : 108 Question Id : 64041116908 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 109 Question Id : 64041116909 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 110 Question Id : 64041116910 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 111 Question Id : 64041116911 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 112 Question Id : 64041116912 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 113 Question Id : 64041116913 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+
+Question Number : 114 Question Id : 64041116914 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 115 Question Id : 64041116915 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+
+Question Number : 116 Question Id : 64041116916 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 117 Question Id : 64041116917 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 118 Question Id : 64041116918 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 119 Question Id : 64041116919 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 120 Question Id : 64041116920 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+  
+Chemistry
+Section Id :640411350
+Section Number :3
+Section type :Online
+Mandatory or Optional :Mandatory
+Number of Questions :40
+Number of Questions to be attempted :40
+Section Marks :40
+Maximum Instruction Time :0
+Sub-Section Number :1
+Sub-Section Id :640411350
+Question Shuffling Allowed :Yes
+  
+Question Number : 121 Question Id : 64041116921 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 122 Question Id : 64041116922 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 123 Question Id : 64041116923 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+
+4.  
+  
+Question Number : 124 Question Id : 64041116924 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 125 Question Id : 64041116925 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 126 Question Id : 64041116926 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 127 Question Id : 64041116927 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 128 Question Id : 64041116928 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 129 Question Id : 64041116929 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+
+3.  
+4.  
+  
+Question Number : 130 Question Id : 64041116930 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 131 Question Id : 64041116931 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+
+2.  
+3.  
+4.  
+  
+Question Number : 132 Question Id : 64041116932 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 133 Question Id : 64041116933 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 134 Question Id : 64041116934 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 135 Question Id : 64041116935 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 136 Question Id : 64041116936 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+
+2.  
+3.  
+4.  
+  
+Question Number : 137 Question Id : 64041116937 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 138 Question Id : 64041116938 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 139 Question Id : 64041116939 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+
+3.  
+4.  
+  
+Question Number : 140 Question Id : 64041116940 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 141 Question Id : 64041116941 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+
+4.  
+  
+Question Number : 142 Question Id : 64041116942 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 143 Question Id : 64041116943 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+
+3.  
+4.  
+  
+Question Number : 144 Question Id : 64041116944 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 145 Question Id : 64041116945 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+
+3.  
+4.  
+  
+Question Number : 146 Question Id : 64041116946 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 147 Question Id : 64041116947 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 148 Question Id : 64041116948 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 149 Question Id : 64041116949 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+
+3.  
+4.  
+  
+Question Number : 150 Question Id : 64041116950 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 151 Question Id : 64041116951 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+
+4.  
+  
+Question Number : 152 Question Id : 64041116952 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 153 Question Id : 64041116953 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+
+3.  
+4.  
+  
+Question Number : 154 Question Id : 64041116954 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 155 Question Id : 64041116955 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 156 Question Id : 64041116956 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 157 Question Id : 64041116957 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 158 Question Id : 64041116958 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 159 Question Id : 64041116959 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+
+Options :
+1.  
+2.  
+3.  
+4.  
+  
+Question Number : 160 Question Id : 64041116960 Question Type : MCQ Option Shuffling : Yes Display Question
+Number : Yes
+Correct Marks : 1 Wrong Marks : 0
+Options :
+1.  
+2.  
+3.  
+4.  

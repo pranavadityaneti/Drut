@@ -16,11 +16,11 @@ CREATE INDEX idx_cached_questions_lookup
 -- 3. Update get_unseen_questions function to filter by difficulty
 CREATE OR REPLACE FUNCTION public.get_unseen_questions(
   p_user_id UUID,
-  p_exam TEXT,
+  p_exam_profile TEXT,
   p_topic TEXT,
   p_subtopic TEXT,
   p_difficulty TEXT,
-  p_count INTEGER DEFAULT 5
+  p_limit INTEGER DEFAULT 5
 ) RETURNS SETOF public.cached_questions
 LANGUAGE plpgsql
 SECURITY DEFINER
@@ -31,7 +31,7 @@ BEGIN
   RETURN QUERY
   SELECT cq.*
   FROM public.cached_questions cq
-  WHERE cq.exam_profile = p_exam
+  WHERE cq.exam_profile = p_exam_profile
     AND cq.topic = p_topic
     AND cq.subtopic = p_subtopic
     AND cq.difficulty = p_difficulty
@@ -47,7 +47,7 @@ BEGIN
     cq.times_served ASC,
     -- Then by newest
     cq.generated_at DESC
-  LIMIT p_count;
+  LIMIT p_limit;
 END;
 $$;
 

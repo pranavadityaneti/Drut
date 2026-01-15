@@ -14,6 +14,9 @@ interface SprintSessionProps {
         subtopic: string;
         examProfile: string;
         questionCount: number;
+        classLevel?: string;
+        board?: string;
+        subject?: string;
         retryQuestions?: QuestionData[];
     };
     onExit: (sessionId: string) => void;
@@ -111,7 +114,11 @@ export const SprintSession: React.FC<SprintSessionProps> = ({ config, onExit }) 
                         config.topic,
                         config.questionCount,
                         config.examProfile,
-                        config.subtopic
+                        config.subtopic,
+                        false,
+                        config.classLevel,
+                        config.board,
+                        config.subject
                     );
                     stateRef.current.sessionId = sessionId;
                     setQuestions(fetchedQuestions);

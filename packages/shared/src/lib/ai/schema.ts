@@ -13,15 +13,29 @@ export const QuestionSchema = z.object({
     cat: z.number(),
     eamcet: z.number()
   }),
+  // T.A.R. (Optimal Path)
+  optimal_path: z.object({
+    available: z.boolean(),
+    steps: z.array(z.string())
+  }).nullable().optional(),
+  // D.E.E.P. (Full Solution)
+  full_solution: z.object({
+    phases: z.array(z.object({
+      label: z.enum(['DIAGNOSE', 'EXTRACT', 'EXECUTE', 'PROOF']),
+      content: z.string()
+    }))
+  }).optional(),
+
+  // Legacy (Optional)
   theOptimalPath: z.object({
     exists: z.boolean(),
     preconditions: z.string().optional(),
     steps: z.array(z.string()),
     sanityCheck: z.string().optional()
-  }),
+  }).optional(),
   fullStepByStep: z.object({
     steps: z.array(z.string())
-  }),
+  }).optional(),
   // FSM Tag: kebab-case pattern identifier for grouping similar problems
   fsmTag: z.string().regex(
     /^[a-z0-9]+(-[a-z0-9]+)*$/,

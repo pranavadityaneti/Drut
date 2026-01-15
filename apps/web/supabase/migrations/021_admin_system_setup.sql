@@ -46,15 +46,40 @@ ALTER TABLE public.textbooks ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.textbook_chunks ENABLE ROW LEVEL SECURITY;
 
 -- Admins can do everything, standard users can only read processed content (via RPC)
+-- Admins can do everything, standard users can only read processed content (via RPC)
 -- For now, allowing all authenticated users to read for development speed
-CREATE POLICY "Allow read access to authenticated users"
-  ON public.textbooks FOR SELECT TO authenticated USING (true);
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_policies 
+    WHERE schemaname = 'public' 
+      AND tablename = 'textbooks' 
+      AND policyname = 'Allow read access to authenticated users'
+  ) THEN
+    CREATE POLICY "Allow read access to authenticated users"
+      ON public.textbooks FOR SELECT TO authenticated USING (true);
+  END IF;
 
-CREATE POLICY "Allow insert/update to authenticated users (admin)"
-  ON public.textbooks FOR ALL TO authenticated USING (true);
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_policies 
+    WHERE schemaname = 'public' 
+      AND tablename = 'textbooks' 
+      AND policyname = 'Allow insert/update to authenticated users (admin)'
+  ) THEN
+    CREATE POLICY "Allow insert/update to authenticated users (admin)"
+      ON public.textbooks FOR ALL TO authenticated USING (true);
+  END IF;
 
-CREATE POLICY "Allow read access to chunks"
-  ON public.textbook_chunks FOR SELECT TO authenticated USING (true);
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_policies 
+    WHERE schemaname = 'public' 
+      AND tablename = 'textbook_chunks' 
+      AND policyname = 'Allow read access to chunks'
+  ) THEN
+    CREATE POLICY "Allow read access to chunks"
+      ON public.textbook_chunks FOR SELECT TO authenticated USING (true);
+  END IF;
+END$$;
 
 -- ============================================================
 -- SYSTEM 2: QUESTION STAGING (ADMIN UPLOAD)
@@ -93,8 +118,18 @@ CREATE INDEX IF NOT EXISTS idx_staging_questions_status
 -- RLS Policies for Staging
 ALTER TABLE public.staging_questions ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY "Allow all access to authenticated users (admin)"
-  ON public.staging_questions FOR ALL TO authenticated USING (true);
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_policies 
+    WHERE schemaname = 'public' 
+      AND tablename = 'staging_questions' 
+      AND policyname = 'Allow all access to authenticated users (admin)'
+  ) THEN
+    CREATE POLICY "Allow all access to authenticated users (admin)"
+      ON public.staging_questions FOR ALL TO authenticated USING (true);
+  END IF;
+END$$;
 
 -- ============================================================
 -- FUNCTIONS
@@ -136,7 +171,7 @@ END;
 $$;
 
 -- Grant Execute
-GRANT EXECUTE ON FUNCTION public.match_syllabus_content TO authenticated;
+GRANT EXECUTE ON FUNCTION public.match_syllabus_content(vector, float, int, text, text) TO authenticated;
 
 -- Notify Pgrst to reload schema
 NOTIFY pgrst, 'reload schema';

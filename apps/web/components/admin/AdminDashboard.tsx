@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from '../ui/Card';
 import { Button } from '../ui/Button';
-import { TextbookManager } from './TextbookManager';
+import { KnowledgeBase } from './KnowledgeBase';
 import { StagingManager } from './StagingManager';
-import { BookOpen, Database, Upload } from 'lucide-react';
+import { QuestionSeeding } from './QuestionSeeding';
+import { BookOpen, Database, Upload, FileSpreadsheet } from 'lucide-react';
 
-type Tab = 'textbooks' | 'questions';
+type Tab = 'textbooks' | 'questions' | 'seeding';
 
 export const AdminDashboard: React.FC = () => {
     const [activeTab, setActiveTab] = useState<Tab>('textbooks');
@@ -44,15 +45,28 @@ export const AdminDashboard: React.FC = () => {
                         `}
                     >
                         <Database className="h-4 w-4" />
-                        Question Bank
+                        Staging
+                    </button>
+                    <button
+                        onClick={() => setActiveTab('seeding')}
+                        className={`
+                            flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-colors
+                            ${activeTab === 'seeding'
+                                ? 'bg-background shadow text-foreground'
+                                : 'text-muted-foreground hover:bg-background/50'}
+                        `}
+                    >
+                        <FileSpreadsheet className="h-4 w-4" />
+                        Seeding (Excel)
                     </button>
                 </div>
             </div>
 
             {/* Content Area */}
             <div className="min-h-[500px]">
-                {activeTab === 'textbooks' && <TextbookManager />}
+                {activeTab === 'textbooks' && <KnowledgeBase />}
                 {activeTab === 'questions' && <StagingManager />}
+                {activeTab === 'seeding' && <QuestionSeeding />}
             </div>
         </div>
     );

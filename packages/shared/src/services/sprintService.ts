@@ -217,7 +217,10 @@ export async function startSession(
     questionCount: number,
     examProfile: string,
     subtopic: string,
-    isRetry: boolean = false
+    isRetry: boolean = false,
+    classLevel?: string,
+    board?: string,
+    subject?: string
 ): Promise<{ sessionId: string; questions: QuestionData[] }> {
     try {
         // 1. Create Session in DB
@@ -255,8 +258,8 @@ export async function startSession(
             const qPerTopic12 = Math.ceil(c12Count / c12Topics.length);
 
             const promises = [
-                ...c11Topics.map(t => getQuestionsForUser(userId, examProfile, t, 'general', qPerTopic11, 'Medium')),
-                ...c12Topics.map(t => getQuestionsForUser(userId, examProfile, t, 'general', qPerTopic12, 'Medium'))
+                ...c11Topics.map(t => getQuestionsForUser(userId, examProfile, t, 'general', qPerTopic11, 'Medium', '11', board, subject)),
+                ...c12Topics.map(t => getQuestionsForUser(userId, examProfile, t, 'general', qPerTopic12, 'Medium', '12', board, subject))
             ];
 
             const results = await Promise.all(promises);
@@ -285,7 +288,10 @@ export async function startSession(
                     topic,
                     subtopic,
                     needed, // Ask for what's missing
-                    'Medium'
+                    'Medium',
+                    classLevel,
+                    board,
+                    subject
                 );
 
                 // Avoid duplicates if getQuestionsForUser returns some duplicates (it shouldn't if cache logic works, but let's be safe)

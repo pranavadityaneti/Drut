@@ -1,0 +1,3342 @@
+
+
+Telugu and Sanskrit Akademi
+Andhra  Pradesh
+Text Book for
+INTERMEDIATE
+First Year
+Paper - IA
+Algebra, Vector Algebra, Trigonometry
+Mathematics
+
+ALL RIGHTS RESERVED
+No part of this publication may be reproduced, stored in a retrieval system or transmitted,
+in any form or by any m eans, electronic, mechanical, photocopying, recording or
+otherwise without this prior permission of the publisher.
+This book is sold subject to the condition that it shall not, by way of trade, be lent, resold,
+hired out or otherwise disposed of without the publisher’s consent, in any form of binding
+or cover other than that in which it is published.
+The correct price of these publication is the price printed on this page, any revised price
+indicated by rubber stam p or by a sticker or by any other m eans is incorrect and is
+unacceptable.
+Published by Telugu and Sanskrit Akademi, Andhra Pradesh under the Centrally
+Sponsored Scheme of Production of Books and Literature in Regional Languages at the
+University level of the Governm ent of India in the Ministry of Human Resource
+Development, New Delhi.
+Intermediate
+Second Year
+Mathematics
+Paper - IA
+Text Book
+Pages : xx + 456 + viii + iv
+© Telugu and Sanskrit Akademi, Andhra Pradesh
+Reprint : 2023
+Copies : 35000
+Published, Printed & Distributed by
+Telugu and Sanskrit Akademi, A.P.
+Price: Rs. 236.00
+Laser Typeset by Pavan Graphics, Hyderabad
+Published and Printed by
+M/s GBR Offset Printers & Publishers
+Surampalli, NTR Dist.
+on behalf of  Telugu and Sanskrit Akademi
+
+Y.S. JAGAN MOHAN REDDY
+AMARAVATI
+CHIEF  MINISTER
+ANDHRA PRADESH
+MESSAGE
+I congratulate  Akademi for starting its activities with printing of textbooks from
+the  academic year  2021 –  22.
+Education is a real asset which cannot be stolen by anyone and it is the foundation
+on which children build their future. As the world has become a global village, children
+will have to compete with the world as they grow up. For this there is every need for
+good books and good education.
+Our government has brought in many changes in the education system and more
+are to come. The government has been taking care to provide education to the poor
+and needy through various measures, like developing infrastructure, upgrading the skills
+of teachers, providing incentives to the children and parents to pursue education. Nutritious
+mid-day meal and converting Anganwadis into pre-primary schools with English as medium
+of instruction are the steps taken to initiate children into education from a young age.
+Besides introducing CBSE syllabus and Telugu as a compulsory subject, the government
+has taken up numerous innovative programmes.
+The revival of the Akademi also took place during the tenure of our government
+as it was neglected after the State was bifurcated. The Akademi, which was started on
+August 6, 1968 in the undivided state of Andhra Pradesh, was printing text books,
+works of popular writers and books for competitive exams and personality development.
+Our government has decided to make available all kinds of books required for
+students and employees through Akademi, with headquarters at Tirupati.
+I extend my best wishes to the Akademi and hope it will regain its past glory.
+(Y.S. JAGAN MOHAN REDDY)
+
+
+
+Dr. NANDAMURI  LAKSHMIPARVATHi
+               M.A., M.Phil., Ph.D.
+Chairperson, (Cabinet Minister Rank)
+Telugu and Sanskrit Akademi, A.P.
+Message  of  Chairperson,  Telugu  and  Sanskrit  Akademi,  A.P.
+In accordance with the syllabus developed by the Board of Intermediate, State
+Council for Higher Education, SCERT etc., we design high quality Text books by recruiting
+efficient Professors, department heads and faculty members from various Universities and
+Colleges as writers and editors. We are taking steps to print the required number of these
+books in a timely manner and distribute through the Akademi’s Regional Centers present
+across the Andhra Pradesh.
+In addition to text books, we strive to keep monographs, dictionaries, dialect texts,
+question banks, contact texts, popular texts, essays, linguistics texts, school level dictionaries,
+glossaries, etc., updated and printed and made available to students from time to time.
+For competitive examinations conducted by the Andhra Pradesh Public Service
+Commission and for Entrance examinations conducted by various Universities, the contents
+of  the Akademi publications are taken as standard.  So, I want all the students and
+Employees to make use of  Akademi books of high standards for their golden future.
+Congratulations and best wishes to all of you.
+(NANDAMURI    LAKSHMIPARVATHI)
+
+
+
+Higher Education Department
+Government of Andhra Pradesh
+J. SYAMALA RAO, I.A.S.,
+Principal Secretary to Government
+MESSAGE
+I Congratulate Telugu and Sanskrit Akademi for taking up the initiative of
+printing and distributing textbooks in both Telugu and English media within a short
+span of establishing Telugu and Sanskrit Akademi.
+Number of students of Andhra Pradesh are competing of National Level for
+admissions into Medicine and Engineering courses.  In order to help these students
+Telugu and Sanskrit Akademi consultation with NCERT redesigned their Textbooks
+to suit the requirement of National Level Examinations in a lucid language.
+As the content in Telugu and Sanskrit Akademi books is highly informative
+and authentic, printed in multi-color on high quality paper and will be made available
+to the students in a time bound manner. I hope all the students in Andhra Pradesh
+will utilize the Akademi textbooks for better understanding of the subjects to compete
+of state and national levels.
+(J. SYAMALA RAO)
+
+THE CONSTITUTION OF INDIA
+PREAMBLE
+WE,  THE  PEOPLE  OF  INDIA,  having
+solemnly  resolved  to  constitute  India  into  a
+[SOVEREIGN SOCIALIST SECULAR
+DEMOCRATIC  REPUBLIC] and to  secure to  all
+its citizens:
+JUSTICE, social, economic and political;
+LIBERTY of thought, expression, belief, faith
+and worship;
+EQUALITY of status and of opportunity; and
+to promote among them all
+FRATERNITY  assuring  the  dignity  of  the
+individual and the [unity and integrity of the
+Nation];
+IN OUR CONSTITUENT ASSEMBLY this
+twenty-sixth day of November, 1949 do HEREBY
+ADOPT,  ENACT AND GIVE TO OURSELVES
+THIS CONSTITUTION.
+
+Ch i ef  Co o r d i n at o r
+Pr o f .  P. V.  Ar u n ac h al am , Fou n d er  Vi ce- Ch an cel l or, D r avi d i an  Un i ver si t y, Ku p p am
+Ed i t or s
+Pr of .  K .  Pat t abh i  Ram a Sast r y , Pr ofessor  of M at h em at i cs (Ret d ), An d h r a Un i ver si t y,
+Vi sak h apat n am
+Pr o f .   U . M .   Sw a m y ,  Pr o f es s o r   o f   M a t h em a t i c s   (R et d ).   A n d h r a   U n i v er s i t y .
+Vi sak h apat n am
+Pr o f .  I .  Ram abh ad r a  Sar m a,  Pr ofessor   of  M at h em at i cs  (Ret d ),  Ach ar ya  Nagar j u n a
+Un i ver si t y, Gu n t u r
+Pr o f .  Y.  Ven k at eswar a Red dy , Pr ofessor  of M at h em at i cs(Ret d.), Ach ar ya Nagarj u n a
+U n i ver si t y, Gu n t u r
+Pr o f .  D.  Ram a M u r t h y , Pr ofessor  (Ret d ). D ep ar t m en t  of M at h em at i cs. Osm an i a
+Un i ver si t y. H yder abad
+Pr of . K . Sam bai ah , Ch ai r m an, BOS, D ep ar t m en t  of M at h em at i cs, Kak at i ya Un i ver si t y.
+War an gal
+Sr i  A.  Pad m an abh am, H ead  of t h e D epar t m en t  of M at h em at i cs (Ret d.), M ah ar an i
+Col l ege, Pedd ap u r am
+Sr i  Son t h i  K r i sh n a Sast r y , Resear ch  Assi st an t  (Ret d), M at h em at i cs, Tel u gu Ak adem i,
+H yd er ab ad
+Au t h o r s
+Sr i  K .V.S. Pr asad, Lect u r er  i n  M at h em at i cs, Govt . D egr ee Col l ege (Wom en ), Sr i k ak u l am
+Sm t .  S.V.  Sai l aj a, J u n i or  Lect u r er  i n  M at h em at i cs, New  Gover n m en t  J u n i or  Col l ege,
+Ku k at pal l y. H yder ab ad
+Sr i  V.  Sr een i v asu l u , Lect u r er  i n  M at h em at i cs, Govt. D egr ee Col l ege, M ah ab oob ab ad,
+War an gal.
+Sr i  G. Set h u M adh av a Rao, Associat e Pr ofessor  of M ath em at i cs, Kak at iya Govt . D egr ee
+Coll ege, H an am k on da, War an gal .
+Sr i   G.  Su r y an ar ay an a  M u r t h y, Reader   i n  M at h em at i cs  (Ret d). R.S.R.K  Ran ga  Rao
+Coll ege, Bobbi li
+Pr o f. K .  Ram a M o h an a Rao , Pr ofessor  of Ap p l i ed M at h em at i cs (Ret d). An dh r a
+U n i ver si t y, Vi sak h apat n am
+Pr o f .   G.   Ch ak r ad h ar a  Rao ,  Pr ofessor   of  M at h em at i cs  &   Ch ai r m an,  P.G.  B oar d   of
+St u di es, An d h r a U n i ver si t y, Vi sak h ap at n am
+Sr i  K . Ch an d r a Sek h ar a Rao, J u n i or  Lect u r er, Govt . J u n i or  col l ege , Up pu gu n d u r u .
+Pr ak asam  (D i st )
+Dr. D.  Ch i t t i  Babu , Reader, D ep ar t m en t  of M at h em at i cs, Govt. Col l ege (Au t on om ou s),
+Raj ah m u n dr y
+Sr i   C.  Sad asi v a  Sast r y ,  Lect u r er   i n   M at h em at i cs  (Ret d.),  Sr i  Ram ab h adr a  J u n i or
+Col l ege, Ram n agar, H yder abad
+Sr i Pot u k uc h i  Raj am ou l i, Sr. Lect u rer  in  M at h emat i cs (Ret d.), P.B. Si ddh ar dh a Col l ege
+of Ar t s an d Sci en ce(A), Vi j ayawada
+Textbook  Development  Committee
+
+Pr of. D. Ram a Mur t h y , Pr ofessor of M ath emat ics (Retd.), Osman ia Un i versity, H yderabad
+Pr of . S. Raj  Reddy , Pr ofessor  of M at h em at i cs (Ret d.), Kak at i ya Un i ver si t y, War an gal
+Pr of . D.R.V. Pr asada Rao, Professor  of M at h em at ics (Retd.), S.K.Un i ver si ty, An an t h apu r
+Dr. D. Ch i t t i  Babu , Reader. Govt . Col l ege (Au t on om ou s), Raj ah m u n dr y
+Dr. C.T. Su r y an ar ay an a Ch ar i , Reader, Si l ver  J u bi l ee Govt . Col l ege. Ku r n ool
+Dr. Y. Bh ask ar  Reddy , Reader, Govt . D egr ee Col l ege, Ran gasai pet . War an gal
+Dr. M .V.N. Pat r u du , Pr i n ci pal . Govt . J u n i or  Col l ege, Veer agh at t am , Sr i k ak u l am  (D i st )
+Sr i  T. M ar k an dey a Nai du , Lect u r er. P.V.K.N. Govt . D egr ee Col l ege. Ch i t t oor
+Sr i  C. Li n ga Reddy , Pr i n ci pal , Govt . J u n i or  Col l ege (Boys), Ni r m al , Adi l abad (D i st )
+Sr i  K odi  Nageswar a Rao, Sch ool  Assi st an t  (Ret d.), Ch agal l u , West  Godavar i  (D i st )
+Sr i  C. Sadasi v a Sast r y , Lect u r er  i n  M at h em at i cs (Ret d.), Sr i  Ram abh adr a J r. Col l ege,
+Hyderabad
+Sm t . S.V. Sai l aj a, J u n i or  Lect u r er. New Govt . J u n i or  Col l ege, Ku k at pal l y, H yder abad
+Sr i  K . Ch an dr a Sek h ar a Rao, J u n i or  Lect u r er, GJ C, Uppu gu n du r. Pr ak asam  (D i st )
+Sr i  P.  H ar i n adh a Ch ar y , J u n i or  Lect u r er, Sr i  Sr i n i vasa J r. Col l ege, Ti r u ch an u r
+Su bj ec t   Com m i t t ee  M em ber s  of     BI E
+Pan el   of   Ex per t s  of     BI E
+Pr of . D. Ram a M ur t h y , Pr ofessor of M ath em at ics (Ret d.), Osman i a Un iversit y, H yder abad
+Pr of. D.R.V. Pr asada Rao, Professor  of M at h em at i cs (Ret d.), S.K. Un i ver si t y. An an t h apu r
+Dr,  C.T.  Su r y an ar ay an a  Ch ar i , Reader   i n   M at h em at i cs,  Si l ver   J u bi l ee  Gover n m en t
+Coll ege (Au t on om ou s) , Ku r n ool
+Sr i  C. Sadasi v a Sast r y , Lectu r er  in  M ath em ati cs (Retd.), Sri  Ram abh adra J u n l or  Col lege.
+Hyderabad
+Dr. M .V.N. Pat r u du , Pr i n ci pal , Govt . J u n i or  Col l ege, Veer agh at t am . Sr i k ak u l am  (D i st )
+Sm t . S.V. Sai l aj a, J u n i or  Lect u r er, New Govt . J u n i or  Col l ege, Ku k at pal l y. H yder abad
+
+Text  Book  Review  Committee
+Editors
+Reviewed by
+Prof.  K.  Rama  Mohan  Rao
+ Professor of Applied Mathematics (Retd.)
+Andhra University, Visakhapatnam.
+Prof.  G.  Chakradhara  Rao
+Professor of  Mathematics (Retd.)
+Andhra University, Visakhapatnam.
+Sri  K.V.S.  Prasad
+Lecturer in Mathematics (Retd.)
+Government College for Women,
+Srikakulam.
+Dr. Y. Purushothama  Reddy
+Principal (Retd.)
+Government Degree Collge, Bantumilli,
+Krishna Dist.
+Prof.  S.  Kalesha Vali
+Department of  Engineering Mathematics
+Andhra University, Visakhapatnam.
+Dr. K. Ravi Babu
+Lecturer in Mathematics
+Dr. V.S. Krishna Govt. Degree & P.G. Collge(A),
+Visakhapatnam.
+
+Coordinating  Committee  of
+Board  of  Intermediate  Education, A.P.
+Sri M.V. Seshagiri Babu, I.A.S.
+Secretary
+Board of Intermediate Education,
+Andhra Pradesh
+Educational Research & Training Wing (Text Books)
+Dr. A. Srinivasulu
+Professor
+Sri. M. Ravi Sankar Naik
+Assistant  Professor
+Dr. M. Ramana Reddy
+Assistant  Professor
+Sri  J.V. Ramana Gupta
+Assistant  Professor
+
+Telugu and Sanskrit Akademi, Andhra Pradesh
+Coordinating Committee
+Sri V. Ramakrishna, I.R.S.
+Director
+Dr. M. Koteswaramma, M.Com., Ph.D.
+Research  Officer
+Dr. S.A.T. Rajyalakshmi M.Sc., B.Ed., M.A., Ph.D.
+Research  Assistant
+Dr. K. Glory Sathyavani, M.Sc., Ph.D., M.Ed.
+Research  Assistant
+
+Foreword
+Th e  Gover n m en t   of  In dia  vowed  t o  r em ove  t h e  ed u cat ion al  disp ar it ies  an d
+adop t  a com m on  cor e cu r r icu lu m  acr oss t h e cou n t r y especially at  t h e I n t er m ed iat e
+level. Ever  sin ce t h e Gover n m en t  of An dh r a Pr ad esh  an d  t h e Boar d of I n t er m ed iat e
+Edu cat ion   (BIE)  swu n g  in t o  act ion   wit h   t h e  t ask   of  evol vin g  a  r evised  syllabu s  in
+all  t h e  Sci en ce  su bject s  on   par   wit h   t h at   of  CB SE,  app r oved  b y  NCERT,  it s  ch ief
+in t en t ion   b ei n g  en abli n g  t h e  st u den t s  fr om   An dh r a  Pr ad esh   t o  pr ep ar e  for   t h e
+Nat i on al  Level  Com m on   En t r an ce  t est s  lik e  NEET,  I SEET  et c  for   ad m ission   in t o
+In st it u t ion s  of  pr ofession al  cou r ses  in   ou r   Cou n t r y.
+For   t h e  fi r st   t im e  BI E  AP  h as  decided  t o  pr epar e  t h e  Scien ce  t ext book s.
+A c c o r d i n gl y   a n   A c a d em i c   Rev i ew   C o m m i t t ee  w a s   c o n s t i t u t ed   w i t h   t h e
+Com m i ssi on er   of  In t er m ed iat e  Ed u cat i on ,  AP  as  Ch ai r m an   an d  t h e  Secr et ar y,
+BIE  AP;  t h e  Dir ect or   SCERT  an d  t h e  Dir ect or   Telu gu   Ak ad em i  as  m em ber s.  Th e
+Nat ion al  an d  St at e  Level  Edu cat ion al  lu m in ar ies  wer e  in volved  i n   t h e  t ext book
+pr ep ar at ion ,  wh o  d id  it   wit h   m et icu lou s  car e.  Th e  t ex t book s  ar e  pr i n t ed  on   t h e
+lin es  of  NCERT  m ain t ain in g  Nat ion al  Level  St an dar ds.
+Th e  Edu cat ion   Depar t m en t   of  Gover n m en t   of  An dh r a  Pr adesh   h as  t ak en   a
+d eci sion   t o  p u b li sh   an d   t o  su p p ly  all   t h e  t ex t   b ook s  wi t h   fr ee  of  cost   for   t h e
+st u d en t s  of  all  Gover n m en t   an d  Aided  J u n ior   Colleges  of  n ewly  for m ed  st at e  of
+An dh r a  Pr ad esh .
+We  ex p r ess  ou r   sin cer e  gr at i t u d e  t o  t h e  D ir ect or,  NCERT  for   accor di n g
+p er m i ssion   t o  adopt   i t s  syl labi   an d   cu r r i cu lu m   of  Sci en ce  t ex t b ook s.  We  h ave
+been   per m it t ed  t o  m ak e  u se  of  t h eir   t ex t book s  wh ich   will  be  of  gr eat   advan t age
+t o  ou r  st u d en t   com m u n it y. I  also  expr ess m y  gr at it u de  t o t h e  Ch air m an , BIE  an d
+t h e  h on or abl e  Min ist er   for   HRD  an d   Vice  Ch air m an ,  BIE  an d   Secr et ar y  (SE)  for
+t h ei r   dedicat ed  si n cer e  gu idan ce  an d  h elp.
+I  si n cer ely  h ope  t h at   t h e  assor t ed  m et h ods  of  i n n ovat ion   t h at   ar e  adopt ed
+in   t h e  pr ep ar at ion   of  t h ese  t ext book s  wi ll  be  of  gr eat   h elp  an d  gu id an ce  t o  t h e
+st u d en t s.
+I   w h ol eh ear t ed l y   a p p r eci at e  t h e  s i n cer e  en d ea vor s   of   t h e  T ex t b ook
+Developm en t   Com m it t ee  wh ich   h as  accom plish ed  t h is  n oble  t ask .
+Con st r u ct ive su ggest ion s  ar e solicit ed  for  t h e  im pr ovem en t  of  t h is t ext book
+fr om   t h e  st u d en t s,  t each er s  an d   gen er al   pu b l i c  i n   t h e  su b j ect s  con cer n ed   so
+t h at   n ext   edit ion   will  be  r evised  du ly  in cor por at in g  t h ese  su ggest i on s.
+It  i s ver y m u ch  com m en dabl e t h at  In t er m ed iat e t ext  book s ar e bein g pr i n t ed
+for   t h e  fir st   t im e  by  t h e  Ak adem i   fr om   t h e  2021 -22  academ ic  year.
+Sr i . V. Ram ak r i sh n a I.R.S.
+Di r ec t o r
+Telu gu   an d  San sk r it   Ak ad em i,
+An dh r a  Pr adesh
+
+Preface
+Th e  B oar d  of  In t er m edi at e  Ed u cat i on  (AP),  h as  r ecen t l y  r evi sed  t h e  syl l ab u s  i n
+M at h em at i cs  for   t h e  In t er m ed i at e  Cou r se  wi t h   effect   fr om   t h e  Ak ad em i c  year   2 0 1 2- 1 3 .
+Accor d i n gl y Tel u gu  Ak ad em i   h as p r ep ar ed t h e n ecessar y Tex t  B ook s i n  M at h em at i cs.
+In  accordan ce wit h  th e cu rr en t syll abu s, th e topi cs r el at in g to  paper I-A : Al gebr a, Vect or
+Al gebr a an d Tr i gon om et r y are dealt with  i n  th is book . Th e syl labu s is presen ted in  ten  ch apt ers.
+Al gebr a  par t   gi ven   i n  t h r ee  ch apt er s  : Fu n ct i on s,  M at h em at i cal   I n d u ct i on  an d M at r i ces
+Vect or   Al gebr a  par t   gi ven   i n   t wo  ch apt er s  : Ad d i t i on   of   Vect or s an d  Pr od u ct   of   Vect or s.
+Tr i gon om et r y  par t   gi ven   i n   fi ve  ch apt er s  : Tr i gon om et r i c  Rat i os  u p t o  Tr an sf or m at i on ,
+Tr i gon om i t r i c Equ at i on s, I n v er se Tr i gon om et r i c Fu n ct i on s, H y p er bol i c Fu n ct i on s an d
+Pr op er t i es of  Tr i an gl es.
+Fu r t h er, for  t h e ben fi t  of st u den t s i n t en di n g t o appear  for  Al l  In di a Level  Com pet i t i ve
+Exam i n at i on s, t h e Addi t i on al  Readi n g M at er i al  i s i n cl u ded i n  t h e Appen di x, It  con t ai n s fou r
+ch apt er s  : Set s,  Rel at i on s,  Sequ en ces  an d   Ser i es an d M at h em at i cal   Reason i n g.  Th ese
+t opi cs ar e for  addi t i on al  r eadi n g, bu t  n ot  for  exam i n at i on s. No qu est i on  w i l l  be set  on  t h e
+Ad di t i on al  Readi n g Mat er i al , i n  t h e I n t er m ed i at e I  Year  Pu bl i c Exam i n at i on , Mat h em at i cs,
+paper - I A.
+Ever y ch ap t er  h er ei n . i s d i vi d ed i n t o var i ou s sect i on s an d  su bsect i on s, d ep en di n g on
+t h e  con t en t s  d i scu ssed .  Th ese  con t en t s  ar e  st r i ct l y  i n   accor d an ce  w i t h   t h e  p r escr i b ed
+syl l ab u s an d t h ey r efl ect  fai t h fu l l y, t h e scope an d spi r i t  of t h e sam e. Necessar y d efi n i t i on s,
+t h eor em s, Cor ol l ar i es, p r oofs an d  n ot es ar e gi ven  i n  d et ai l . Key con cep t s ar e gi ven  at  t h e
+en d  of each  ch apt er. Il l u st r at i ve exam p l es an d  sol ved   pr ob l em s ar e i n  p l en t y, an d  t h ese
+sh al l  h el p t h e st u d en t s i n  u n der st an di n g t h e su b j ect  m at t er.
+Ever y ch apt er  con t ai n s ex er ci ses i n  a gr ad ed  m an n er  w h i ch  en ab l e t h e st u d en t s t o
+sol ve t h em  b y app l yi n g t h e k n owl ed ge acqu i r ed . Al l  t h ese p r obl em s ar e cl assi fi ed  accor di n g
+t o t h e n at u r e of t h ei r  an swer s as I  - v er y  sh o r t  I I  sh or t  an d   I I I -l on g.  An swer s ar e pr ovi d ed
+for  al l  t h e ex er ci ses at  t h e en d  of each  ch apt er.
+Keepi n g i n  vi ew t h e Nat i on al  l evel  com peti t i ve exam i n at i on s, some con cept s an d n ot i on s
+ar e h i gh l i gh l ed  for  t h e b en efi t  of t h e st u d en t s.  Car e h as b een  t ak en  r egar d i n g r i gor  an d
+l ogi cal  con Si st en cy i n  t h e p r esentat i on  of con cep t s an d  i n  p r ovi n g t h eor em s. At  t h e en d of
+t h e t ex t  B ook , a l i sl  of som e R ef er en c e Boo k s i n  t h e su b j ect  m al t er  i s fu r n i sh ed .
+Th e  M em b er s  of  t h e  M at h em at i cs  Su b j ect   Com m i t t ee,  con st i t u t ed   b y  B oar d   of
+In t er m ed i at e Edu cat i on , wer e i n vi t ed  t o i n t er act  w i t h  t h e t eam  of t h e Au t h or s an d Ed i t or s.
+Th ey p u r su ed t h e con t ents ch apt er  w i se an d  gave som e u sefu l  su ggest i on s an d com m en t s
+w h i ch  ar e d u l y i n cor p or at ed. Th e speci al  feat u r e of th i s B ook , br ou gh t  ou t  i n  a n ew for m at,
+i s t h at  each  ch ap t er  begi n s wi t h  a t h ou gh t  m ost l y on  M at h em at i cs. t h r ou gh  a qu ot at i on
+fr om  a fam ou s t h i n k er. It  car r i es a p or t r ai t  of a n ot ed m at h em at i ci an  w i t h  a b r i ef wr i t e-u p .
+In  t h e con cl u d i n g p ar t  of each  ch apt er  som e r el evan t  h i st or i cal  n ot es ar e ap p en d ed .
+Wh er ever  fou n d  app r opr i at e, r efer en ces ar e al so m ade of t h e con t r i bu t i on s of an ci en t  In di an
+sci en t i st s t o t h e ad van cem en t  of  M et h am at i cs. Th e p u r p ose i s t o en ab l e t h e st u d en t s t o
+h ave a gl i m p se i n t o t h e h i st or y of M at h em at i cs i n  gen er al  an d  t h e con t r i b u t i on s of In d i an
+mat h em at i ci an s i n  par t i cu l ar.
+In spi t e of en ou gh  car e t ak en  i n  t h e scr u t i n y at  var i ou s st ages i n  t h e p r epar at i on  of
+t h e  b ook , er r or s m i gh t  h ave cr ep t  i n .  Th e r ead er s ar e t h er efor e, r equ est ed t o i den t i fy an d
+b r i n g t h em  t o t h e n ot i ce of t h e Ak ad em i .  We w i l l  ap p r eci at e i f su gget i on s t o en h an ce t h e
+qu al i t y of t h e book  ar e gi ven . Effor t s w i l l  b e m ad e t o i n cor p or at e t h em  i n  t h e su b sequ en t
+edi t i on s.
+Pr of . P.V. Ar u n ach al am
+Ch i ef  Co o r d i n at o r
+
+Pr ef ace  t o  t h e  Rev i ewed  Edi t i on
+Telu gu   Ak adem i  is  p u blish in g  Text   book s  for   Two  year   In t er m ediat e  in
+En gli sh   an d   Telu gu   m edi u m   sin ce  it s  in cept ion ,  p er i odi cal   r eview  an d
+r evi sion   of  t h ese  p u blicat i on s  h as  been   u n der t ak en   as  an d  wh en   t h er e
+was  an   u pdat ion   of  In t er m ediat e  syllabu s.
+In  t h is r evi ewed Ed it ion , n ow bein g u n der t ak en  by t h e Tel u gu  Ak ad em i,
+An d h r a  Pr adesh   t h e  b asi c  con t en t   of  i t s  ear l ier   Ed it i on   i s  con sid er ed
+an d  it   is  r eviewed   b y  a  t eam   of  exper i en ced  t each er s.  Mod ificat ion   by
+way  of cor r ect in g er r or s,  pr in t  m ist ak es, in cor p or at in g addit ion al con t en t
+wh er e n ecessar y t o elu cidat e a con cept  an d /  or  a defin it ion , m odificat ion
+of  exist in g  con t en t   t o  r em ove  ob scu r it ies  for   r eleasin g  t h e  con cept   m or e
+easi ly  ar e  car r ied  ou t   m ai n ly  in   t h is  r eview.
+Not   wit h st an din g  t h e  effor t   an d  t im e  spen t   by  t h e  r eview  t eam   in   t h is
+en d eavou r,  st i l l   a  few  asp ect s  t h at   st i l l   n eed   m od i f i cat i on   or   ch an ge
+m igh t   h ave  b een   left   u n n ot i ced.
+Con st r u ct i ve  su ggest i on s  fr om   t h e  acad em i c  fr at er n i t y  ar e  wel com e
+an d   t h e  Ak adem i   wil l  t ak e  n ecessar y  st ep s  t o  in cor por at e  t h em   in   t h e
+for t h   com in g  edit i on .
+We  a p p r eci at e  t h e  en cou r agem en t   a n d   s u p p or t   ex t en d ed   b y   t h e
+Academ i c  an d   Adm in i st r at i ve  st aff  of  t h e  Tel u gu   Ak ad em i   i n   fu l fi ll in g
+ou r   assign m en t   wit h   sat isfact ion .
+Ed i t or s
+(Revi ew ed   Ed i t i on )
+
+Contents
+ 1.Functions1  -  38
+Introduction..................................1
+1.0Ordered pairs..................................2
+1.1Types of Functions - Definitions..................................3
+1.2Inverse Functions and Theorems..................................14
+1.3Real valued functions  (Domain, Range and Inverse)..................................22
+  2.Mathematical  Induction39 - 54
+Introduction..................................39
+2.1Principles of mathematical induction & Theorems..................................40
+2.2Applications of  mathematical induction..................................43
+2.3Problems on divisibility..................................48
+  3.Matrices55 - 130
+Introduction..................................55
+3.1Types of matrices..................................56
+3.2Scalar multiple of a matrix and multiplication of matrices..................................61
+3.3Transpose of a matrix..................................75
+3.4Determinants..................................80
+3.5Adjoint and inverse of a Matrix..................................97
+3.6Consistency and Inconsistency of system
+of  Simultaneous Equations - Rank of a Matrix..................................103
+3.7Solution of Simultaneous Linear Equations..................................115
+
+  4.Addition of Vectors131 - 164
+Introduction..................................131
+4.1Vectors as a triad of real numbers, some basic concepts..................................132
+4.2Classification (Types) of vectors..................................135
+4.3Sum (Addition) of vectors..................................136
+4.4Scalar Multiplication of a vector..................................139
+4.5Angle between two non-zero vectors..................................141
+4.6Linear Combination of Vectors..................................145
+4.7Components of a vector in Three Dimensions.................................. 145
+4.8Vector Equations of Line and Plane..................................155
+  5.Product of  Vectors165 - 218
+Introduction..................................165
+5.1Scalar or dot product of two vectors - Geometrical
+interpretation - Orthogonal Projections..................................166
+5.2Properties of  dot product..................................170
+5.3Expression for scalar (dot) product,  Angle  between two vectors......................171
+5.4Geometrical  Vector methods..................................171
+5.5Vector equation of a plane - normal form..................................174
+5.6Angle between two planes..................................175
+5.7Vector product (cross product) of two vectors and properties...........................182
+5.8Vector product in  (i,  j,  k)  system..................................186
+5.9Vector Areas..................................187
+5.10Scalar triple product..................................196
+5.11Vector equation of a plane - different forms, skew lines,
+shortest distance - plane, condition for coplanarity etc...................................200
+5.12Vector triple product - results..................................206
+
+6.Trigonometric  Ratios  upto  Transformations219 - 296
+Introduction..................................219
+6.1Trigonometric ratios - variation - Graphs and periodicity..................................221
+6.2Trigonometric ratios of compound angles..................................243
+6.3Trigonometric ratios of multiple and sub-multiple angles..................................260
+6.4Sum and product transformations..................................274
+7.Trigonometric  Equations297 - 318
+Introduction..................................297
+7.1    General solutions of trigonometric equations..................................298
+7.2 Simple trigonometric equations - solutions..................................305
+8.Inverse  Trigonometric  Functions319 - 352
+Introduction..................................319
+8.1To reduce a trigonometric function into a bijective function................................320
+8.2Graphs of Inverse trigonometric functions..................................322
+8.3Properties of inverse trigonometric functions..................................323
+9.Hyperbolic  Functions353 - 372
+Introduction..................................353
+9.1Definitions of Hyperbolic functions, graphs..................................354
+9.2Definition of Inverse hyperbolic functions and graphs..................................359
+9.3Addition formulas of  Hyperbolic functions..................................361
+10Properties  of  Triangles373 - 408
+Introduction..................................373
+10.1Relation between the sides and angles of a triangle..................................374
+10.2Sine, Cosine and Tangent Rules - Projection Rules..................................374
+10.3Half angle formulae and area of a triangle..................................378
+10.4Incircle and excircles of a triangle..................................392
+
+Appendix
+(No Question is to be set in the IPE, Mathematics - IA from the topics mentioned below)
+  1.Sets409  -  414
+Introduction..................................409
+1.1Set..................................409
+1.2Examples..................................409
+1.3Representation of a set..................................410
+1.4Classification (Types) of sets..................................410
+1.5Venn Diagram..................................411
+1.6Operations on sets..................................412
+1.7Example..................................412
+1.8Complement of a set..................................413
+1.9Some Properties of operations on sets..................................413
+1.10Cardinal number of a set..................................414
+  2.Relations415 - 416
+Introduction..................................415
+2.1Cartesian Product of sets..................................415
+2.2Relation on sets..................................416
+  3.Sequences and Series417 - 422
+Introduction..................................417
+3.1Definition..................................417
+3.2Series..................................418
+  4.Mathematical  Reasoning423-436
+Introduction..................................423
+4.1Definition (Statement)..................................424
+4.2Negation, Conjunction and Disjunction..................................426
+4.3Implication - conditional and bi-conditional..................................431
+4.4Quantifiers..................................433
+4.5Validating Statements..................................434
+Reference  Books437
+Syllabus438 - 441
+Model  Question  Paper442-  444
+
+Al gebr a
+
+
+
+Functions
+1
+Introduction
+All the scientists use mathematics essentially to study
+relationships.  Physicists, Chemists, Engineers, Biologists and
+Social Scientists, all seek to discern connection among the
+various elements of their chosen fields and so to arrive at a
+clear understanding of why these elements behave the way
+they do.  A  function  is a special case of a relation.
+The famous mathematician  Lejeune Dirichlet  
+(1805 -
+1859)
+ defined a function as follows.  A variable is a symbol
+which represents any one of a set of numbers;  if two variables
+x  and  y  are so related that whenever a value is assigned to  x
+there  is  automatically  assigned,  by  some  rule  or
+correspondence, a value to  y,  then we say  y is a (single
+valued) function of  x,  the permissible values that  x  may
+assume constitute the domain of definition of the  function,
+and the values taken on by   y  constitute the range of values
+of the function.
+Dirichlet
+(1805 - 1859 )
+Johann  Peter  Gustav  Lejeune
+Dirichlet   was  a  German
+mathematician credited with the
+modern  “formal”  definition  of
+a function.  He was a student of
+Gauss.    After  Gauss’s  death  in
+1855,  he  was  appointed  as
+Gauss’s successor at Gottingen.
+“The word function (or its Latin equivalent) seems
+to have been introduced into mathematics by Leibnitz
+in  1694.    The  concept  now  dominates  much  of
+mathematics and is indispensable in sciences”
+−−
+−−
+−  E.T.  Bell
+
+ Mathematics - IA
+2
+The  above  definition  is  a  very  broad  one  and  does  not  imply  anything  regarding
+the possibility of expressing the relationship between  x  and  y  by some kind of analytic expression. It
+stresses the basic idea of a relationship between two sets.  Set theory has naturally extended the concept of
+function to embrace relationships between any two sets of elements.
+In  this  chapter  we  focus  our  attention  on  a  special  type  of  relation,  a  function,
+that plays an important role in mathematics and its many applications.  Here we study its basic properties and
+then discuss several special types of functions.  In order to have various important applications of functions
+later, it is essential to get a good grasp of the concepts in this chapter.
+1.0   Ordered pairs
+Let  A  and  B  be sets.   If 
+Aa
+∈
+ and 
+Bb
+∈
+ then (a, b) is an ordered pair. ‘a’ is called the first
+component (coordinate) and ‘b’ is called the second component (coordinate) of the ordered pair (a, b).
+For example, the coordinates of a point in a plane are ordered pairs of real numbers.  If 
+11
+(,)
+ab
+ and  
+22
+(,  )
+ab
+are ordered pairs, then
+()()
+1122
+a,ba ,b
+=
+ 
+1212
+ and 
+aabb
+⇔==
+.
+1.0.1  Definition (Cartesian  product)
+Let  A  and  B  be two sets. Then 
+{}
+(, )|A,Bab ab
+∈∈
+ is called the Cartesian product of
+A  and  B, and is denoted by 
+A×B
+ (to be read as  A  cross  B).
+1.0.2  Examples
+         If    A    =
+{} {}
+123    B
+=
+,,  ,x,
+y
+ then
+A×B
+=
+{}
+(1 )(1 )(2 )(2  )(3 )(3 ),x ,   ,y ,,x ,,y ,    ,x ,    ,y
+BA
+×
+=
+{}
+( 1)(  2)(  3)( 1)(  2)(  3)x,   ,  x,,  x,    ,  y,   ,  y,,  y,
+AA
+×
+=
+{}
+(1  1)  (1  2 )  (1  3)  ( 2  1)  ( 2  2 )  ( 2  3)  ( 3  1)  ( 3  2 )  ( 3  3),,,,,,,,,,,,,,,,,
+BB
+×
+=
+{}
+()()()( )x, x ,   x, y ,   y, x ,   y, y
+1.0.3  Note
+1.If  A  and  B  are distinct non-empty sets then 
+A×BB×A
+≠
+.
+2.If one of the sets  A  and  B  is empty, then 
+A×B
+ is also empty.
+3.Some particular notations
+       
+¡
+ or R:set of all real numbers
+R
++
+:set of all positive real numbers : 
+{}
+0x|x, xR
+∈>
+Q:set of all rational numbers
+Q
++
+:set of all positive rational numbers
+N:set of all natural numbers
+Z:set of all integers
+
+Functions
+3
+If  a, b 
+R
+∈
+,  a < b  then
+(a, b)={x 
+R
+∈
+ |  a < x < b}
+(a, b]={x 
+R
+∈
+ |  a < x 
+≤
+ b}
+[a, b)={x 
+R
+∈
+ |  a 
+≤
+ x < b}
+[a, b]={x 
+R
+∈
+ |  a 
+≤
+ x 
+≤
+ b}
+[a,
+∞
+)={x 
+R
+∈
+ |  a 
+≤
+ x}
+(a,
+∞
+)={x 
+R
+∈
+ |  a < x}
+(−
+∞
+, a)={x 
+R
+∈
+ |  x < a}
+(−
+∞
+, a]={x 
+R
+∈
+ |  x 
+≤
+ a}
+1.0.4      Definition    (Relation)
+If   A  and  B  are non-empty sets, then any subset of  A 
+×
+ B  is called  a relation  from  A
+to  B.   In particular,  any relation from  A  to  A  is called a binary relation on  A.
+1.0.5   Examples
+ If    
+{} {}
+A123B,,  ,,
+αβ==
+ then
+()()( )( )( )( )
+{}
+A×B112233,,,,,,,,,,,
+αβ α βα β=
+ (i)    
+()( )( )
+{}
+12 3f,,,,,
+αβα=
+ is a relation from  A  to  B.
+ (ii)  
+()()
+{}
+11g,,,
+αβ=
+  is a relation from  A  to B.
+In fact we can define  2
+6
+ = 64  relations from  A  to  B  because the number of elements in  A 
+×
+ B  is
+6  hence there are 2
+6
+ subsets of  A 
+×
+ B.
+1.1   Types of Functions - Definitions
+1.1.1Definition  (Function)
+Let  A  and  B  be non-empty sets and   f   be a relation from  A  to  B.   If for each element
+Aa,
+∈
+  there  exists  a  unique  
+Bb
+∈
+  such  that  
+()
+,,ab    f
+∈
+  then    f    is  called  a   function  (or
+mapping) from  A  to  B  (or  A  into  B).  It is denoted by  
+:fA  B
+→
+. The set A  is called the
+domain of   f  and  B is called the co-domain   of   f.
+A function  f  can also be seen  in the following way,  which takes an input  x and  returns an output
+f(x).
+
+ Mathematics - IA
+4
+For  example,    if    
+ABf:
+→
+   is  a  function  defined  as    f(x)    =  x  +  1    and    A  =  {1,  2,  3},    then
+f (A) = {2, 3, 4}.
+1.1.2   Note
+A relation   f   from  A  to  B  
+(. .A  B)ie  f
+⊆×
+ is a function from  A  to  B  if  for each 
+Aa
+∈
+, there
+exists exactly one 
+Bb
+∈
+ such that 
+(, )abf
+∈
+ and this 
+''b
+ will be denoted by 
+()fa
+.  In other words, for each
+Aa
+∈
+, there exists a unique element 
+()  Bfa
+∈
+ such that 
+()
+,()
+f
+afa
+∈
+.
+ 1.1.3   Definition  (Image,  Pre-Image)
+If 
+ABf:
+→
+  is a function and if 
+()fa   b
+=
+,  then 
+''b
+ is called the image of  
+''a
+ under  f  or
+the  f-image of  a.   The element 
+''a
+  is called a pre-image or an inverse image of  b under f and
+is denoted by f 
+−1
+(b) .  More generally if  E 
+⊆
+ B, f 
+−1
+(E) = {x| x 
+∈
+ A,  f (x) 
+∈
+ E} is called the
+inverse image of E under f.  Then  f 
+−1
+(b) = f 
+−1
+({b}) if b 
+∈
+ B.
+1.1.4   Examples
+1. Example: The relation 
+2
+{(  ,1) |}
+=+∈
+fxx   xR
+ is a function from  R  to  R
++
+, since every 
+x
+∈
+R  has
+association with unique element 
+1
+2
++
+x
+ in  R
++
+.  The function   f  : R 
+→
+ R
++
+  is given by 
+2
+()1
+=+
+fx   x
+.
+Observe that 
+(1)2
+=
+f
+ and 
+(1)  2
+−=
+f
+.  Note that the numbers less than 1 have no pre-image under  f.
+2. Example:The relation 
+1
+(, )|0
+
+=≠∈
+
+
+Rfxx
+x
+ is not a function from  R  to  R  since there is no  b  in
+R  such that 
+()
+0,bf
+∈
+.    But 
+()
+x
+xf
+1
+=
+ is a function from    R  {0}
+→
+ R since  every  x 
+∈
+ R  {0}  has
+association with a unique element in 
+R
+.
+f
+x
+f(x)
+↓
+↓
+f(x) = x + 1
+A
+∈
+x
+f(A)
+↓
+↓
+
+Functions
+5
+1.1.5    Definition    (  Range )
+If 
+ABf:
+→
+ is a function, then  f(A), the set of all  f - images of elements in  A, is called the
+range of   f .    Clearly  
+()()
+{}
+AABffa|a
+=∈⊆
+.
+Also 
+{}
+(A)B |(  )Afbbfaforsomea
+=∈   =∈
+.
+1.1.6  Examples
+1. Example: Let 
+→
+f:NN
+ be defined by 
+()  2fn    n
+=
+.
+Then the range of 
+{}
+()2ffn|n
+==∈=
+NN
+ set of all even natural numbers.
+2. Example: Let  
+:f
+→
+RR
+ be defined by 
+2
+()
+fx  x
+=
+.
+          Then the range of  
+{}
+2
+()|[0,)
+ffxx
+==∈=∞
+RR
+ 
+2
+0for all 
+xx
+
+≥∈
+
+R
+Q
+.
+1.1.7   Definition  (Injection   or  one - one function)
+A      function  
+ABf:
+→
+  is  called  an  injection  if  distinct  elements  of    A    have  distinct
+f - images in  B.   An injection is also called a one-one function.
+ABf:
+→
+ is an injection  
+⇔
+ 
+12
+A
+a,a
+∈
+ and 
+21
+aa
+≠
+ implies that 
+12
+()( )
+fa    fa
+≠
+                                   
+⇔
+ 
+12
+A
+a,a
+∈
+ and 
+12
+()( )
+fa    fa
+=
+ implies that 
+21
+aa
+=
+1.1.8   Examples
+1.  Example
+Let  
+{}
+Aa, b, c, d
+=
+  and  
+{}
+B   12345,,,,
+=
+   (i)If  
+{}
+(3)(5)(1)( 4)fa,,b,,c,,d,
+=
+ then   f   is a function from  A  into  B  and for different
+elements in  A,  there are different  f - images in  B.  Hence  f  is an injection.
+  (ii)If 
+{}
+( 2)( 2)( 3)(  5)ga,,b,,c,,d,
+=
+, then  g  is a function from  A  into  B,  but 
+()()gagb
+=
+.
+Hence  ‘g’  is not an injection.
+2.  Example
+Let  
+:f
+→
+RR
+  be defined by 
+()  2   1fxx
+=+
+.  Then 
+''f
+ is an injection since for any 
+12
+,
+aa
+∈
+R
+and   
+121212
+()( )21   21
+fafaaaaa
+=⇒+=+⇒=
+.
+3.  Example
+Let  
+:f
+→
+RR
+ be defined by 
+()
+2
+xxf
+=
+.  Then 
+''f
+ is not an injection because 
+(1) 1(1)ff
+−==
+.
+
+ Mathematics - IA
+6
+f
+4.  Example
+Let 
+f:
+→
+NN
+ be defined by 
+2
+()
+fx   x
+=
+.  Then 
+''f
+ is an injection since for 
+12
+a,a
+∈
+N
+ and
+2222
+1212121212
+()( )() 0()() 0
+fa    faa   aa   aa a   a a
+=⇒=⇒−=⇒−+=
+                   
+[]
+1212121 2
+00
+⇒−=∈⇒+> ⇒=
+Qaaa,aaaa
+aN
+.
+5.   Example
+Let 
+{}
+Aa,b,c,d
+=
+ and 
+{}
+Bx, y,z
+=
+.  We can’t define an injection from A  to  B  because atleast
+two distinct elements in  A  have the same f - image in  B  for any function 
+:ABf
+→
+.
+1.1.9  Definition (Surjection)
+A  function 
+ABf:
+→
+  is  called  a surjection  if  the range  of   f   is  equal  to the  co-domain
+of   f.
+   
+ABf:
+→
+ is a surjection
+⇔
+ range 
+()
+(A)B-ffco domain
+==
+{}
+B()Afa|a
+⇔=∈
+⇔
+ for every 
+Bb
+∈
+ there exists atleast
+      one  
+Aa
+∈
+ such that 
+()fa  b
+=
+Hence we may conclude that 
+:ABf
+→
+  is a surjection if every element of  B  occurs as the image
+of atleast one element of  A  (i.e., every element in  B  has a ‘pre image’ in  A).  A surjection is also called an
+onto function.
+1.1.10  Examples
+1.  Example
+Let  A
+  = {1, 2, 3, 4} and B = {a, b, c}
+     (i)If 
+  f   =  {(1, a),  (2, b),  (3, c), (4, c)} then
+ f  is a function from  A  to  B  and  range
+{}
+(A)Bffa,b,c
+==    =
+, the
+co-domain.   Hence it is a surjection.
+Note that  f  is not an injection.
+Fig.  1.1
+
+Functions
+7
+   (ii)If  g = {(1, b),  (2, b),  (3, c),  (4, c)} then  g
+is a function from  A  to B  but not a surjection
+because there is no pre image to the element
+Ba
+∈
+.  Note that  g  is not an injection.
+2. Example
+Let  A = {-3, -2, -1, 1, 2, 3}  and  B = {1, 4, 9}.  If  
+ABf:
+→
+  defined by 
+2
+()
+fx  x
+=
+ for all 
+Ax
+∈
+then,  range 
+{}
+(A)   (3)(2)(1)(1)(2)(3)fff    ,f,f   ,f,f ,f
+==− − −
+=
+{}
+149B,,
+=
+.
+   
+  
+:ABf
+∴→
+ is a surjection.  Note that  f  is not an injection.
+3. Example
+Let  
+:f
+→
+RR
+  be  defined  by 
+()fx  axb
+=+
+ 
+(,ab
+∈
+R
+ and  
+0)a
+≠
+.  Then   f   is  a surjection
+since   for   any   
+y
+∈
+R
+   (co-domain)   there   exists   
+yb
+x
+a
+−
+=∈
+R
+   (domain)   such   that
+()
+()
+ay b
+fx  ax bb
+y
+a
+−
+=+=+=
+  (i.e., every element in the co-domain has a pre-image in the domain).
+Note that   f   is an injection too.
+4. Example
+Let  
+:f
+→
+RR
+ be defined by  f (x) = x
+2
+ + 4 .  Then range of 
+[
+)
+∞=
+,4f
+ 
+Q
+[
+ for any  
+x
+∈
+R
+ we
+have 
+]440
+22
+≥+⇒≥
+xx
+  and it is not equal to co-domain 
+R
+.  Hence 
+:f
+→
+RR
+  is not a surjection. In
+particular there are no pre-images for all real numbers less than 4 in its co-domain 
+R
+.  Note that  f  is not an
+injection.
+1.1.11 Definition    (Bijection)
+If 
+ABf:
+→
+  is both an injection and a surjection then  f  is said to be a bijection or
+one-to-one  from  A  onto  B.
+   i.e., 
+ABf:
+→
+ is a bijection  
+⇔
+  f  is both injection and surjection
+                      
+⇔
+  (i)If 
+12
+A
+a,a
+∈
+ and 
+12 12
+()( )then
+fa    faa  a
+==
+                            (ii)for every 
+Bb
+∈
+ there exists atleast one 
+Aa
+∈
+such that 
+()fa   b
+=
+.
+A
+B
+g
+Fig.  1.2
+
+ Mathematics - IA
+8
+1.1.12    Definition    (Finite  set)
+If    A    is    empty    or    there  exists    
+n
+∈
+N
+ such  that  there  is  a  bijection  from  A    onto
+{1, 2, 3, ..., n} then  A  is called a finite set.   In such a case we say  that the number of elements
+in A is  n  and denote it by  |A|  or n(A).
+1.1.13  Remarks
+(i)In particular,  if  A  and  B  are two finite sets with  |A| > |B|  then we can’t define an injection from A into
+B.  Hence if there is an injection from A to B then   |A| 
+≤
+ |B|.   The converse of this also holds good, that
+is, if  A  and  B  are finite sets such that |A| 
+≤
+ |B|, then we can define an injection  
+ABf:
+→
+,  for, if
+{}
+12
+A
+n
+a , a  ,  .....,a
+=
+ then there exist distinct elements  
+12
+B
+n
+b , b  ,....,b
+∈
+  (since 
+ABn
+=≤
+)  and
+the function 
+ABf:
+→
+, defined by 
+()   ,for1
+ii
+fa   bi n
+=≤≤
+, is an injection.
+(ii)Let  A  and  B  be two finite sets and  |A| < |B|,  then we can’t define a surjection from  A  to  B.   Since
+if  
+ABf:
+→
+  then range 
+(A)ff
+=
+ contains atmost  |A|  elements 
+B||
+≠
+ (codomain) 
+AB
+
+<
+
+Q
+.
+Hence if there is an onto function from  A  to  B  then  
+AB
+≥
+.  The converse of this also holds good.
+That is if  A and B  are finite sets such that  
+AB
+≥
+, then we can define a surjection 
+ABf:
+→
+;  for
+if  
+{}
+12
+B
+n
+b , b  ,....,b
+=
+  then  
+A|n|
+≤
+ and hence there exist distinct elements 
+12
+A
+n
+a , a  , ........,a
+∈
+and we can define 
+ABf:
+→
+  by
+1
+()
+ii
+i
+bifa  a forsomei
+fa
+b  if  aa   for all i
+=
+
+=
+
+≠
+
+,  which becomes a surjection.
+(iii)Note that if there is a bijection 
+''f
+ from a finite set A to a finite set B then, since  f  is both injection and
+surjection, 
+AB
+≤
+ and 
+AB
+≥
+ hence |A| = |B|.  Thus for any two finite sets A and B, 
+AB
+=
+ if and
+only if there is a bijection 
+:ABf
+→
+.
+1.1.14  Example
+Let  
+:f
+→
+RR
+ be defined by 
+()  2   3fxx
+=+
+, then from example 3 (1.1.10),   f  is a bijection.
+However if we change the domain of   f  as N then  f (x) = 2x  + 3 
+∈
+ N  
+∀
+x 
+∈
+ N.  Also,
+(i) If  
+12
+x,x
+∈
+N
+ (domain), 
+121 212
+()( )  2   3 2    3
+fx    fxxxx  x
+=⇒+=+⇒=
+.
+:f
+∴→
+NN
+ is an injection.
+
+Functions
+9
+(ii)Range 
+{}{}
+()(1)   (2)   (3)579fff,  f,  f, ...,  ,  ,...
+===≠
+NN
+. 
+(codomain)
+Hence 
+:f
+→
+NN
+  is not a surjection.
+Observe  that  the  natural  numbers  less  than  5  and  the  even  natural  numbers  in  the
+co-domain  N  of   f   have no pre-images in domain  N.
+1.1.15 Definition (Equality of functions)
+Let   f  and  g be functions.   We say   f   and   g   are equal and write   f  =  g  if  domain of
+f  = domain of  g  and  f(x) =  g(x)  for all  
+x
+∈
+ domain f.
+Problem : On what domain the functions  f(x) = x
+2 
+− 2x and g(x) = − x + 6 are equal?
+Solution :   f(x)  = g(x)
+⇔
+x
+2
+ − 2x  =  − x + 6
+⇔
+x
+2
+ − x  −  6 = 0
+⇔
+(x − 3) (x + 2) = 0
+⇔
+x  = −2, 3
+∴  f(x)  and  g(x)  are  equal on the domain {−2, 3}.
+1.1.16 Definition (Constant function)
+A function  f  : 
+AB
+→
+  is said to be a constant function, if the range of   f  contains one
+and only one element.  i.e.  f(x) = c   for all  
+Ax
+∈
+,  for some fixed   c 
+∈
+ B.  In this case the
+constant function  f  will be denoted by ‘c’  itself.
+1.1.17  Example
+Let  A = {a, b, c, d},  B = {1, 2, 3}  and  f  = {(a, 2),  (b, 2),  (c, 2), (d, 2)} then 
+ABf:
+→
+ is a
+constant function.
+1.1.18 Definition (Identity function)
+Let  A  be a non-empty set.  Then the function 
+AAf:
+→
+ defined by  f (x) = x  for all  
+Ax
+∈
+is called the identity function on  A  and is denoted by  
+A
+I
+.
+1.1.19  Example
+If 
+{}
+Aa, b,c
+=
+, then 
+{}
+A
+I()()()
+a, a ,   b, b ,  c, c
+=
+.
+1.1.20  Solved Problems
+1. Problem:  If   
+:fR
+ 
+{}
+0
+→
+R
+ is defined by   f (x) = 
+x
+x
+1
++
+  then  prove that
+()
+2
+2
+()(  )(1)
+fxf xf
+=+
+.
+
+ Mathematics - IA
+10
+Solution: Since 
+1
+()fx    x
+x
+
+=+
+
+
+222
+22
+111
+()    (1)12
+1
+fxfxx
+xx
+
++  =+++=++
+
+
+     
+()
+2
+2
+1
+()
+xfx
+x
+
+=+=
+
+
+.
+2. Problem:  If the function  f  is defined by  
+2
+32  3
+()2   22
+21    3
+x,x
+fxx,x
+x,x
+−>
+
+
+=−−≤≤
+
+
++<−
+
+then find the values,  if exist, of   f(4),  f(2.5),  f(−2),  f(−4),  f(0),  f(−7).
+Solution:  Note that the domain of  f  is 
+[]
+(3)22  (3),,,
+−∞ −∪   −∪∞
+.
+(i)Since 
+()  3   2,fx    x
+=−
+ for 
+3x
+>
+, we have 
+(4)    12   2    10f
+=−=
+(ii)2.5 does not belong to domain f,  f (2.5) is not defined.
+(iii)Since 
+()
+2
+2,   22
+fx   xx
+=−−≤≤
+, we have 
+2
+(2)  (2)   2  2
+f
+−=− −=
+(iv)Since 
+()  2   1,3,fxx   x
+=+ <−
+ we have 
+(4)  2(4) 1    7f
+−= −+=−
+(v)Since  f (x) = x
+2
+ − 2 when 
+−
+ 2 
+≤
+ x 
+≤
+ 2, we have  f (0) = 0
+2
+ − 2 = 
+−
+2
+(vi)Since 
+()   21,fxx
+=+
+ for x < - 3, we have 
+(7)  2(7) 1    13f
+−= −+=−
+.
+3. Problem:  If  
+A0,,,,
+6432
+ππππ
+
+=
+
+
+  and  
+:ABf
+→
+  is  a  surjection  defined
+  by  
+()fx  cosx
+=
+  then  find  B.
+Solution:  Let  
+:ABf
+→
+  be a surjection defined by 
+()
+cosfxx
+=
+.
+      Then   B = range  f  
+(A)(0),,,,
+6432
+f   fffff
+ππππ
+
+            
+==
+
+            
+            
+
+      
+cos 0,  cos,   cos,   cos,   cos
+6432
+ππππ
+
+=
+
+
+   
+311
+1,,,,   0
+22
+2
+
+
+=
+
+
+
+.
+4. Problem:  Determine whether the function 
+:f
+→
+RR
+ defined by
+ 
+()
+x
+x
+xx
+ee
+fx
+ee
+−
+−
+−
+=
++
+  is  an injection  or a surjection or a bijection.
+Solution:  Let  
+:f
+→
+RR
+  be defined by  
+()
+x
+x
+xx
+ee
+fx
+ee
+−
+−
+−
+=
++
+,   then   f   is not an injection as
+
+Functions
+11
+00
+00
+(0)0
+ee
+f
+ee
+−
+==
++
+  and  
+1
+(1)0
+ee
+f
+ee
+−
+−
+−==
++
+  and also   f   is not a surjection  since,  for  y = 1
+there is no 
+x
+∈
+R
+ such that 
+() 1fx
+=
+.
+If there is such 
+x
+∈
+R
+ then  
+x
+xx  x
+ee ee
+−−
+−=+
+, clearly 
+0x
+≠
+for  x > 0  this equation gives  
+xx
+ee
+−−
+−=
+ which is not possible
+for  
+0x
+<
+  this equation gives  
+xx
+ee
+−
+−=
+ which is also not possible.
+5. Problem:  Determine whether the function 
+:f
+→
+RR
+  defined by
+2
+()
+522
+xifx
+fx
+xifx
+>
+
+=
+
+−≤
+
+  is an injection or a surjection or a bijection.
+Solution:  Since 3 > 2,  we have   f (3) = 3,
+     Since 1 < 2, we have  f (1) = 5(1) − 2 = 3
+∴
+ 1 and 3 have same ‘f ’  image.Hence   f   is not an injection.
+Let  
+y
+∈
+R
+   then  
+2y
+>
+  (or)  
+2y
+≤
+If  
+2y
+>
+  take 
+xy
+=∈
+R
+  so that  
+()fx  x y
+==
+.
+If  
+2y
+≤
+  take  
+2
+5
+y
+x
++
+=∈
+R
+  and  
+2
+1
+5
+y
+x
++
+=<
+.
+∴
+ 
+2
+()52    52
+5
+y
+fxx
+y
++
+
+=−=−=
+
+
+.
+∴
+f
+  is a surjection.
+Since  f   is not an injection, it is not a bijection.
+6. Problem:  Find the domain of definition of the function y(x), given by the equation
+2
+x
+ + 2
+y
+ = 2.
+Solution:2
+x
+ = 2 − 2
+y
+ < 2          (
+Q
+ 2
+y
+ > 0)
+⇒
+log
+2 
+2
+x
+ < log
+2 
+2
+⇒
+        x < 1
+∴  Domain = (−
+∞
+, 1).
+7. Problem:  If  f : R
+→
+R  is defined as   f(x + y) = f(x) + f(y)  
+∀
+x, y 
+∈
+ R  and  f (1) = 7,
+then  find  
+1
+()
+=
+∑
+n
+r
+fr
+.
+Solution:  Considerf(2)  = f(1 + 1) = f(1) + f(1) = 2 f(1)
+f(3)  = f(2 + 1) = f(2) + f(1) = 3 f(1)
+       Similarly  f(r)   = r f (1)
+∴    
+1
+()
+=
+∑
+n
+r
+fr
+    =  f (1) + f (2)  + ..... + f (n)
+         =  f (1) + 2 f (1) + ..... + n f (1)
+
+ Mathematics - IA
+12
+         =   f (1) (1 + 2 + ..... + n)
+         =  
+7(   1)
+.
+2
+nn
++
+8.   Problem :  If  
+24
+24
+cossin
+()
+sincos
+xx
+fxx
+xx
++
+=∀∈
++
+R
+  then show that   f(2012) = 1.
+Solution: 
+24
+24
+cossin
+()
+sincos
+xx
+fx
+xx
++
+=
++
+          
+24
+24
+1sinsin
+1coscos
+xx
+xx
+−+
+=
+−+
+          
+22
+22
+1sin  (1sin  )
+1cos (1cos )
+xx
+xx
+−−
+=
+−−
+          
+22
+22
+1sin  cos
+1sin  cos
+xx
+xx
+−
+=
+−
+           = 1.
+          ∴  f(2012) = 1.
+Exercise  1(a)
+I.1.If the function  f  is defined by 
+2,1
+()    2   ,  11
+1,    31
+xx
+fxx
+xx
++>
+
+
+=−≤≤
+
+
+−−<<−
+
+, then find the values   of
+ (i)   
+(3)f
+,(ii) 
+(0)f
+,(iii) 
+(1.5)f
+−
+,
+(iv)   
+(2)(  2)ff
++−
+,(v) 
+(5)f
+−
+2.If   f  : R  {0} 
+→
+R is defined by  f (x) = 
+3
+3
+1
+x
+x
+−
+,  then show that 
+()(1/ )  0fx  f    x
++=
+.
+3.If  
+:f
+→
+RR
+  is defined by  
+2
+2
+1
+()
+1
+x
+fx
+x
+−
+=
++
+, then show that  
+(tanè)cos2èf
+=
+.
+4.If    f  :  R 
+  {+1} 
+→
+R   is defined by 
+1
+()  log
+1
+x
+fx
+x
++
+=
+−
+, then show that  
+2
+2
+2()
+1
+x
+ff
+x
+x
+
+=
+
++
+
+.
+
+Functions
+13
+5.If 
+{}
+A2,1,0,1,2
+=−  −
+ and  
+:ABf
+→
+  is a surjection defined by  
+2
+()1
+fx  x  x
+=++
+,  then
+find  B.
+6.If  
+{}
+A   1,2,3,4
+=
+ and 
+:Af
+→
+R
+  is  a  function  defined  by
+2
+1
+()
+1
+xx
+fx
+x
+−+
+=
++
+, then  find the range of  f.
+7.If   f (x + y)  =  f (xy)  
+∀
+x,  y 
+∈
+ R  then prove that  fis a constant  function.
+II.1.If 
+{}
+A|1 1xx
+=−≤≤
+,
+23
+(),(),
+fx  x   gx  x
+==
+ which of the following are  surjections?
+   (i)  
+:AAf
+→
+ (ii)  
+:AAg
+→
+2.Which of the following are injections or surjections or bijections? Justify your answers.
+(i)
+:f
+→
+RR
+  defined by 
+21
+()
+3
+x
+fx
++
+=
+(ii)
+:(0,)f
+→∞
+R
+ defined by 
+()  2
+x
+fx
+=
+(iii)
+:(0,  )f
+∞→
+R
+ defined by 
+()  log
+e
+fxx
+=
+(iv)
+[
+)
+[
+)
+:0,0,f
+∞→   ∞
+ defined by 
+2
+()
+fx  x
+=
+(v)
+[
+)
+:0,f
+→∞
+R
+ defined by 
+2
+()
+fx  x
+=
+(vi)
+:f
+→
+RR
+  defined by 
+2
+()
+fx  x
+=
+3.Is  
+{}
+(1,1), (2, 3), (3, 5), (4, 7)g
+=
+ a function from 
+{}
+A    1,2,3,4
+=
+ to  
+{}
+B1,3,5,7
+=
+?   If this is
+given by the formula 
+()gx  ax b
+=+
+, then find a and b.
+4.If the function 
+:f
+→
+RR
+ defined by 
+33
+()
+2
+xx
+fx
+−
++
+=
+, then show that
+()()2()()fxy  fxyfxfy
+++    −=
+.
+5.If the function  
+:f
+→
+RR
+  defined by 
+4
+()
+42
+x
+x
+fx
+=
++
+, then show that
+(1)    1(   )fx   fx
+−=−
+, and hence deduce the value of  
+113
+2
+424
+fff
+   
+++
+   
+   
+.
+6.If  the  function  
+{} {}
+:1,10,2f
+−→
+,  defined  by  
+()fxaxb
+=+
+  is  a  surjection,  then  find
+a  and  b.
+7.If  
+()  cos(log )fxx
+=
+, then show that  
+()
+111
+0
+2
+x
+fff  fxy
+xyy
+
+
+
+−+=
+
+
+
+
+
+
+.
+
+ Mathematics - IA
+14
+1.2   Inverse Functions and Theorems
+If   f   is a relation from  A   to  B,  then the relation 
+{}
+(, )|(, )ba   abf
+∈
+ is denoted by 
+1
+f
+−
+.
+1.2.1  Theorem
+If 
+:ABf
+→
+ is an injection, then
+1
+f
+−
+  is a bijection from  f(A)  to  A.
+Proof:  Let 
+:ABf
+→
+  be an injection.  clearly 
+1
+f
+−
+ is a relation from 
+(A)f
+  to  A.
+Let  
+(A)bf
+∈
+.   Then there exists atleast one 
+Aa
+∈
+ such that 
+()fa  b
+=
+.   Since  f  is an injection  ‘a’  is the
+only element of  A  such that  f(a) = b.   Thus given  
+(A)bf
+∈
+, there is a unique element  a  in A  such that
+(,)abf
+∈
+.   Hence given  
+(A)bf
+∈
+ there is a unique  
+Aa
+∈
+  such that   
+1
+(, )
+baf
+−
+∈
+.  Hence 
+1
+f
+−
+  is a
+function from 
+(A)f
+  to  A,  and 
+1
+()
+fba
+−
+=
+  if and only if  
+()fa   b
+=
+.  Clearly 
+1
+f
+−
+  is a surjection.  If
+12
+,(A)
+bb   f
+∈
+  and 
+11
+12
+()( )(   )
+fb fb asay
+−−
+==
+  then 
+12
+()
+bfab
+==
+.  Thus 
+1
+f
+−
+ is an injection.
+1
+:(A) A
+ff
+−
+∴→
+  is a bijection.
+1.2.2  Corollary
+If 
+:ABf
+→
+ is a bijection, then 
+1
+f
+−
+ is a bijection from  B  to  A.
+Proof:  This is an immediate consequence of Theorem 1.2.1, since  f (A) = B.
+Note : Since 
+()
+1
+1
+f
+−
+−
+ = f , it follows from 1.2.2 that  
+1
+f
+−
+ : 
+BA
+→
+ is a bijection if and only if  f : 
+AB
+→
+ is
+a bijection.
+1.2.3  Definition (Inverse function)
+If 
+:ABf
+→
+ is a bijection, then the relation 
+{}
+1
+(, )|(, )
+fbaabf
+−
+=∈
+ is a function from  B  to
+A and is called the inverse of  f.
+1.2.4  Examples
+1. Example:  If 
+{}
+A1,2,3,
+=
+ 
+{}
+B,,abc
+=
+  then  
+{}
+(1,   ) , ( 2,   ) , ( 3,   )fcba
+=
+ is a bijection from A  to  B
+and 
+{}
+1
+(,3),(,2),(,1)
+fabc
+−
+=
+ is a bijection from  B  to  A.
+2. Example:  If 
+{} {}
+A1,2,3,B  ,,,abcd
+==
+ then 
+{}
+(1,   ),  (2,   ),  (3,   )fcba
+=
+ is an injection but not a
+surjection, 
+{}
+1
+(,1),(,2),( ,3)
+fcba
+−
+=
+ is a relation from  B  to  A  but not a function because  
+'' Bd
+∈
+  has
+no 
+1
+f
+−
+  image in  A.
+3. Example: If 
+{}{}
+A1,2,3,B   ,ab
+==
+; then 
+{}
+(1,   ),  (2,   ),  (3,   )faba
+=
+  is a surjection but not an
+injection, 
+{}
+1
+(,1),(,2),(,3)
+faba
+−
+=
+ is a relation from  B  to  A  but not a function from  B  to A  because
+for  
+Ba
+∈
+  there are two 
+1
+f
+−
+ images in  A.
+
+Functions
+15
+1.2.5   Definition Composite Function
+If    
+:ABf
+→
+,    
+:BCg
+→
+,  then  the  relation
+()
+()
+()
+{}
+,|Aag  f aa
+∈
+  is called  composite of  ‘g’
+with ‘ f ’ and is denoted as  gof .
+1.2.6  Theorem:  Let  
+:ABf
+→
+  and  
+:BCg
+→
+  be functions.  Then  gof  is a function from  A  to
+C,  and (gof) (a)  =  g ( f ( a ) )  for all  
+Aa
+∈
+.
+Proof :  Let  
+Aa
+∈
+.  Since  f  is a function from  A  to  B then  
+()  Bfa
+∈
+.  Since  g  is a  function from  B  to
+C then 
+()
+()   Cgfa
+∈
+.   Hence  gof  is a relation from  A  to C.  Further, given 
+Aa
+∈
+ there is one and only one
+element  c  in  C,  namely,  
+()
+()gfa
+,  such that 
+(,)acgof
+∈
+.  Hence 
+gof
+ is a function from  A  to  C  and
+()
+()()()gofag   f  a
+=
+  for all 
+Aa
+∈
+.
+1.2.7  Theorem:  Let  
+:AB,:BCfg
+→→
+ be injections, then 
+:ACgof
+→
+ is an injection.
+Proof  :  
+ Let 
+12
+,A
+aa
+∈
+  be such that 
+12
+()()()()
+gofagofa
+=
+                         
+()( )
+12
+()( )
+gfagfa
+=
+                                
+12
+()( )
+fafa
+=
+ [since g is an injection]
+                                       
+12
+aa
+=
+        [since f  is an injection]
+:ACgof
+∴→
+  is an injection.
+1.2.8  Theorem:  Let 
+:ABf
+→
+ and  
+:BCg
+→
+  be such that  gof  is an injection.  Then  f  is an
+injection.
+Proof :  Let 
+12
+,A
+aa
+∈
+ be such that 
+12
+()( )
+fafa
+=
+  then  
+()( )
+12
+()( )
+gfagfa
+=
+           
+12
+()( )
+gof   agof    a
+⇒=
+           
+12
+aa
+⇒=
+. 
+[gof
+Q
+ is an injection]
+∴  f  is an injection.
+1.2.9  Note
+   If  
+:ABf
+→
+,  
+:BCg
+→
+ are such that  gof  is injection then  g  need not be injection.  For example,
+let 
+{}    {}    { }
+A1,2,B  ,,,C   ,abcde
+===
+, 
+{}
+(1,   ) ,  ( 2,   )fab
+=
+  and  
+{}
+(,  ), (, ),(, )gadbece
+=
+,    then
+{}
+(1,    ) ,  ( 2,   )gofde
+=
+.
+gof
+f
+g
+A
+B
+C
+Fig.  1.3
+
+ Mathematics - IA
+16
+Hence  gof  is an injection but  g  is not an injection.  However, if  gof  is an injection then necessarily  f
+is an injection.
+1.2.10   Theorem:  Let 
+:ABf
+→
+,  
+:BCg
+→
+  be surjections.  Then 
+:ACgof
+→
+ is a surjection.
+Proof :  Let 
+Cc
+∈
+.   Since 
+:BCg
+→
+ is a surjection then there exists 
+Bb
+∈
+ such that 
+()gb   c
+=
+.  Since
+:ABf
+→
+ is a surjection then there exists 
+'' Aa
+∈
+ such that 
+()fa  b
+=
+.
+()
+()()()()cgb gfagofa
+∴===
+.
+∴
+ for each 
+'' Cc
+∈
+ there exists 
+'' Aa
+∈
+ such that 
+()()gofac
+=
+.
+Hence 
+:ACgof
+→
+ is a surjection.
+1.2.11  Theorem:  Let  
+:AB,    :BCfg
+→→
+  be such that  gof   is a surjection.   Then  g  is a surjection.
+Proof : Let 
+Cc
+∈
+.  Since 
+:ACgof
+→
+ is a surjection then there exists 
+Aa
+∈
+ such that 
+()()gofac
+=
+, i.e.,
+()
+()gfac
+=
+.  Let 
+()bfa
+=
+. Then 
+()Bfa  b
+=∈
+ and 
+()gb   c
+=
+.
+g
+∴
+ is a surjection.
+1.2.12  Note
+     If  
+:AB,    :BCfg
+→→
+  are such that  gof  is a surjection then  f  need not be a surjection.  In Note
+1.2.9,  gof  is a surjection but  f  is not a surjection.  However, if  gof  is a surjection then necessarily  ‘g’  is
+a surjection.
+1.2.13  Theorem:  Let  
+:AB,:BCfg
+→→
+  be bijections.  Then  
+:ACgof
+→
+  is  a bijection.
+Proof:  This is a consequence of Theorems 1.2.7 and 1.2.10.
+1.2.14  Theorem: Let 
+:AB,:BCfg
+→→
+ be bijections.  Then
+()
+1
+1
+1
+goff   og
+−
+−−
+=
+.
+Proof:  Since  
+:AB,:BCfg
+→→
+  are bijections, so is  gof  from  A  to C  (from Theorem 1.2.13).
+Hence  (gof)
+− 1
+ is a bijection from  C  to  A.   Further,  
+11
+:BA;:CB
+fg
+−−
+→→
+are also bijections.
+Hence 
+11
+fog
+−−
+ is a bijection from  C  to  A.
+∴
+ The functions 
+1
+()
+gof
+−
+ and 
+11
+fog
+−−
+ are defined on the same domain ‘C’.
+Let 
+Cc
+∈
+.  Since 
+:BCg
+→
+  is a bijection, there exists a unique  
+Bb
+∈
+  such that 
+()gb   c
+=
+  i.e.,
+1
+()
+gc b
+−
+=
+.
+Now 
+Bb
+∈
+ and  
+:ABf
+→
+  is a bijection.  Hence there exists a unique 
+Aa
+∈
+ such that 
+()fa  b
+=
+i.e., 
+1
+()
+fba
+−
+=
+.
+
+Functions
+17
+Thus   
+()
+()()    ()()cg   bg   f  agofa
+===
+ (or) 
+1
+()()
+gofca
+−
+=
+Now   
+11111
+()()(())()fog   c   f  g cf  b  a
+−−−−−
+===
+Hence 
+111
+()
+goff   og
+−−−
+=
+.
+1.2.15  Theorem: The identity function 
+:
+A
+IA A
+→
+  is a  bijection and  
+1
+AA
+II
+−
+=
+.
+Proof:  We have 
+{}
+(, )|A
+A
+Iaaa
+=∈
+.
+    Given 
+Aa
+∈
+ we have 
+()
+A
+Ia  a
+=
+.  Hence I
+A
+ is a surjection.
+     Let  
+121212
+,A,()()
+AA
+aaI a    I aa  a
+∈=⇒=
+.   Hence I
+A
+ is an injection.
+:AA
+∴→
+A
+I
+ is bijection and  
+1
+=
+AA
+II
+−
+.
+1.2.16   Theorem:  Let  
+:AB,f
+→
+ I
+A
+ and  I
+B
+ be identity functions on  A  and  B respectively.  Then
+AB
+foIfI  of
+==
+.
+Proof:  Since  
+:AA
+A
+I
+→
+  and  
+:ABf
+→
+ are functions, 
+A
+foI
+ is a function from  A  to  B.   Hence
+functions 
+A
+foI
+ and  f  are defined on same domain A.
+Let 
+Aa
+∈
+,  then 
+()
+()()()()[()
+AAA
+foIaf   I    af  aIaa
+===
+Q
+ for all 
+A]a
+∈
+        
+A
+foIf
+∴=
+                 ... (1)
+Since  
+:AB,:BB
+B
+fI
+→→
+,  are functions then 
+B
+Iof
+ is a function from  A  to  B.
+∴
+ The functions 
+B
+Iof
+ and  f  are defined on the same domain A.
+Let 
+Aa
+∈
+, then 
+()
+()()()()[:A   B
+BB
+Iof   aI   f af af
+==→
+Q
+ we have 
+()]fa   B
+∈
+           
+B
+Iof    f
+∴=
+                             ... (2)
+From (1) and (2) we have 
+AB
+foIfI  of
+==
+.
+1.2.17   Theorem:  Let  
+:ABf
+→
+  be  a bijection.  Then 
+1
+B
+fofI
+−
+=
+ and 
+1
+A
+fof  I
+−
+=
+.
+Proof :  Since 
+:ABf
+→
+  is a bijection then 
+1
+:BA
+f
+−
+→
+ is also a bijection.  Hence 
+1
+fof
+−
+ is a bijection
+from  B  to  B and 
+1
+fof
+−
+ is a bijection from  A  to  A.   We have that 
+B
+I
+ is a bijection from  B  to  B  and 
+A
+I
+is a bijection from  A  to  A.
+∴
+ The functions 
+1
+fof
+−
+ and 
+B
+I
+ are defined on the same domain B.
+    Let 
+Bb
+∈
+.  Since  
+:ABf
+→
+  is a bijection then there exists a unique 
+Aa
+∈
+ such that
+ 
+   
+()fab
+=
+  i.e.,  
+1
+()
+fb a
+−
+=
+.
+
+ Mathematics - IA
+18
+      Thus  
+()
+11
+()()()()
+B
+fofbf    fbf  abI    b
+−−
+====
+                      
+1
+B
+fofI
+−
+∴=
+The functions 
+1
+fof
+−
+ and 
+A
+I
+ are defined on the same domain.
+   We have 
+()
+11 1
+()()()()
+A
+fofaf   faf  b  a Ia
+−− −
+====
+                        
+1
+A
+fof    I
+−
+∴=
+.
+1.2.18  Theorem:  Let 
+:ABf
+→
+  be a function.  Then  f   is a bijection if and only if there exists a
+function 
+:BAg
+→
+ such that 
+B
+fogI
+=
+ and 
+A
+gofI
+=
+ and, in this case, 
+1
+gf
+−
+=
+.
+Proof:  Let 
+:ABf
+→
+  be a bijection. Then 
+1
+:BA
+f
+−
+→
+ is a bijection [from Corollary 1.2.2].  Take 
+1
+gf
+−
+=
+.
+Then from Theorem 1.2.17, 
+B
+fogI
+=
+ and 
+A
+gofI
+=
+.
+Conversely, if there exists a function 
+:BAg
+→
+ such that 
+B
+fogI
+=
+ and 
+A
+gofI
+=
+ then   
+A
+gofI
+=
+ is an
+injection, we get from Theorem 1.2.8 that  f  is an injection.  Also, since 
+B
+fogI
+=
+ is a surjection, we get from
+Theorem 1.2.11 that  f  is a surjection.
+:ABf
+∴→
+ is a bijection.  Hence 
+1
+:BA
+f
+−
+→
+ is a bijection. We also have 
+:BAg
+→
+.
+1
+f
+−
+∴
+ and  g  are defined on the same domain  B.
+Let 
+Bb
+∈
+.  Since 
+:ABf
+→
+  is a bijection then there exists a unique 
+'' Aa
+∈
+ such that 
+()fa   b
+=
+ or
+1
+()
+fb a
+−
+=
+.   Now
+               
+()
+1
+()()  ()()()()
+A
+fb aIa  gofa gfa  gb
+−
+=====
+1
+gf
+−
+∴=
+.
+1.2.19    Theorem:  L
+et 
+:ABf
+→
+, 
+:BCg
+→
+  and  
+:CDh
+→
+.    Then  
+()()ho  gofhog  of
+=
+,  that  is,
+composition of  functions is associative.
+Proof:  Since    f  :  A 
+→
+ B,   g  :  B 
+→
+ C  and 
+:CDh
+→
+,
+    
+  gof  :  A 
+→
+ C  and  h  :  C 
+→
+ D     
+()
+:AD
+⇒→
+ho  gof
+.  Further
+ 
+:ABf
+→
+  and  hog  :  B 
+→
+ D  
+() :AD
+⇒→
+hog   of
+.
+Thus 
+()
+ho  gof
+ and 
+()
+hog  of
+ have the same domain  A .   Let  ‘a’  be any element of  A. Now
+[]
+()()
+()
+()()
+()
+()
+()()()()()()()ho   gofah    gofah  g   f  ahogf   ahog  ofa
+=== =
+                                        
+()()ho   go

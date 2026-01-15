@@ -1,0 +1,2789 @@
+
+
+Telugu  and  Sanskrit  Akademi
+Andhra  Pradesh
+Text Book for
+INTERMEDIATE
+First Year
+Mathematics
+Paper - IB
+Coordinate Geometry, Calculus
+
+ALL RIGHTS RESERVED
+No part of this publication may be reproduced, stored in a retrieval system or transmitted,
+in any form or by any m eans, electronic, mechanical, photocopying, recording or
+otherwise without this prior permission of the publisher.
+This book is sold subject to the condition that it shall not, by way of trade, be lent, resold,
+hired out or otherwise disposed of without the publisher’s consent, in any form of binding
+or cover other than that in which it is published.
+The correct price of these publication is the price printed on this page, any revised price
+indicated by rubber stam p or by a sticker or by any other m eans is incorrect and is
+unacceptable.
+Published by Telugu and Sanskrit Akademi, Andhra Pradesh under the Centrally
+Sponsored Scheme of Production of Books and Literature in Regional Languages at the
+University level of the Governm ent of India in the Ministry of Human Resource
+Development, New Delhi.
+Intermediate
+First Year
+Mathematics
+Paper - IB
+Text Book
+Pages : xx + 360 + iv + iv
+© Telugu and Sanskrit Akademi, Andhra Pradesh
+Reprint : 2023
+Copies : 35000
+Published, Printed & Distributed by
+Telugu and Sanskrit Akademi, A.P.
+Price: Rs. 188.00
+Laser Typeset by Pavan Graphics, Hyderabad
+Published and Printed by
+M/s GBR Offset Printers & Publishers
+Surampalli, NTR Dist.
+on behalf of  Telugu and Sanskrit Akademi
+
+Y.S. JAGAN MOHAN REDDY
+AMARAVATI
+CHIEF  MINISTER
+ANDHRA PRADESH
+MESSAGE
+I congratulate  Akademi for starting its activities with printing of textbooks from
+the  academic year  2021 –  22.
+Education is a real asset which cannot be stolen by anyone and it is the foundation
+on which children build their future. As the world has become a global village, children
+will have to compete with the world as they grow up. For this there is every need for
+good books and good education.
+Our government has brought in many changes in the education system and more
+are to come. The government has been taking care to provide education to the poor
+and needy through various measures, like developing infrastructure, upgrading the skills
+of teachers, providing incentives to the children and parents to pursue education. Nutritious
+mid-day meal and converting Anganwadis into pre-primary schools with English as medium
+of instruction are the steps taken to initiate children into education from a young age.
+Besides introducing CBSE syllabus and Telugu as a compulsory subject, the government
+has taken up numerous innovative programmes.
+The revival of the Akademi also took place during the tenure of our government
+as it was neglected after the State was bifurcated. The Akademi, which was started on
+August 6, 1968 in the undivided state of Andhra Pradesh, was printing text books,
+works of popular writers and books for competitive exams and personality development.
+Our government has decided to make available all kinds of books required for
+students and employees through Akademi, with headquarters at Tirupati.
+I extend my best wishes to the Akademi and hope it will regain its past glory.
+Y.S. JAGAN MOHAN REDDY
+
+
+
+Dr. Nandamuri Lakshmiparvathi
+               M.A., M.Phil., Ph.D.
+Chairperson, (Cabinet Minister Rank)
+Telugu and Sanskrit Akademi, A.P.
+Message  of  Chairperson,  Telugu  and  Sanskrit  Akademi,  A.P.
+In accordance with the syllabus developed by the Board of Intermediate, State
+Council for Higher Education, SCERT etc., we design high quality Text books by recruiting
+efficient Professors, department heads and faculty members from various Universities and
+Colleges as writers and editors. We are taking steps to print the required number of these
+books in a timely manner and distribute through the Akademi’s Regional Centers present
+across the Andhra Pradesh.
+In addition to text books, we strive to keep monographs, dictionaries, dialect texts,
+question banks, contact texts, popular texts, essays, linguistics texts, school level dictionaries,
+glossaries, etc., updated and printed and made available to students from time to time.
+For competitive examinations conducted by the Andhra Pradesh Public Service
+Commission and for Entrance examinations conducted by various Universities, the contents
+of  the Akademi publications are taken as standard.  So, I want all the students and
+Employees to make use of  Akademi books of high standards for their golden future.
+Congratulations and best wishes to all of you.
+Nandamuri  Lakshmiparvathi
+Chairperson, Telugu and Sanskrit Akademi, A.P.
+
+
+
+Higher Education Department
+Government of Andhra Pradesh
+J. SYAMALA RAO, I.A.S.,
+Principal Secretary to Government
+MESSAGE
+I Congratulate Telugu and Sanskrit Akademi for taking up the initiative of
+printing and distributing textbooks in both Telugu and English media within a short
+span of establishing Telugu and Sanskrit Akademi.
+Number of students of Andhra Pradesh are competing of National Level for
+admissions into Medicine and Engineering courses.  In order to help these students
+Telugu and Sanskrit Akademi consultation with NCERT redesigned their Textbooks
+to suit the requirement of National Level Examinations in a lucid language.
+As the content in Telugu and Sanskrit Akademi books is highly informative
+and authentic, printed in multi-color on high quality paper and will be made available
+to the students in a time bound manner. I hope all the students in Andhra Pradesh
+will utilize the Akademi textbooks for better understanding of the subjects to compete
+of state and national levels.
+(J. SYAMALA RAO)
+
+THE CONSTITUTION OF INDIA
+PREAMBLE
+WE,  THE  PEOPLE  OF  INDIA,  having
+solemnly  resolved  to  constitute  India  into  a
+[SOVEREIGN SOCIALIST SECULAR
+DEMOCRATIC  REPUBLIC] and to  secure to  all
+its citizens:
+JUSTICE, social, economic and political;
+LIBERTY of thought, expression, belief, faith
+and worship;
+EQUALITY of status and of opportunity; and
+to promote among them all
+FRATERNITY  assuring  the  dignity  of  the
+individual and the [unity and integrity of the
+Nation];
+IN OUR CONSTITUENT ASSEMBLY this
+twenty-sixth day of November, 1949 do HEREBY
+ADOPT,  ENACT AND GIVE TO OURSELVES
+THIS CONSTITUTION.
+
+Ch i ef  Co o r d i n at o r
+Pr o f .  P. V.  Ar u n ac h al am , Fou n d er  Vi ce- Ch an cel l or, D r avi d i an  Un i ver si t y, Ku p p am
+Ed i t or s
+Pr of .  K .  Pat t abh i  Ram a Sast r y , Pr ofessor  of M at h em at i cs (Ret d ), An d h r a Un i ver si t y,
+Vi sak h apat n am
+Pr of .  V.  Si v a  Ram a  Pr asad, Pr ofessor   of  M at h em at i cs  (Ret d.),  Osm an i a  Un i ver si t y,
+H yder abad
+Pr o f .  T.  Ram  Redd y , Pr ofessor of M at h em at i cs(Ret d.),  Kak at i ya U n i ver si t y, War an gal
+Sr i   A.   Pad m an abh am ,  H ead   of  t h e  D epar t m en t   of  M at h em at i cs  (Ret d.),   M ah ar an i
+Col l ege,  Pedd ap u r am
+Au t h o r s
+Pr o f .  N.   Bh ask ar a  Red d y,  Ch ai r m an,  B OS,  D ep ar t m en t   of  M at h em at i cs,  Sr i
+Ven k at eswar a U n i ver si t y, Ti r u pat i .
+Sr i   A.   Pad m an abh am ,  H ead   of  t h e  D epar t m en t   of  M at h em at i cs  (Ret d.),   M ah ar an i
+Col l ege,  Pedd ap u r am
+Sr i Pot u k uc h i  Raj am ou l i, Sr. Lect u rer  in  M at h emat i cs (Ret d.), P.B. Si ddh ar dh a Col l ege
+of Ar t s an d Sci en ce(A), Vi j ayawada
+Sm t .  P.  Lal i t h a,  H ead of D ept . of M at h em at i cs, St . Fr an ci s D egr ee &  P.G. Col l ege for
+Wom en , Begu mpet, H yder abad.
+Sr i  C. Sadasi v a Sast r y, Lectu rer  in  M at h em at i cs (Ret d.), Sri Ram abh adr a J u n i or Col lege,
+Ramn agar, H yder abad.
+Dr. C.  Gov er dh an, Associ ate Pr ofessor  of Mat h em at i cs, Osman ia Un i ver sit y, H yderabad.
+Pr o f .   G. V.   Rav i n d r an ad h   B abu,  Pr ofessor   of  M at h em at i cs,  An d h r a  U n i ver si t y,
+Vi sak h apatn am .
+Dr.    S. Upen der, Lect u r er  i n  M at h em at i cs, Govt . D egr ee Col l ege (Gi r l s), Nal gon da.
+Sr i   Set h u   M adh av a  Rao, Associ at e Pr ofessor  of M at h em at i cs, Kak at i ya Govt . D egr ee
+Coll ege, H an am k on da, War an gal .
+Pr of . K . Sam bai ah , Ch ai r m an, BOS, D ep ar t m en t  of M at h em at i cs, Kak at i ya Un i ver si t y.
+War an gal
+Tex t book   Dev el opm en t   Com m i t t ee
+
+Pr of. D. Ram a Mur t h y , Pr ofessor of M ath emat ics (Retd.), Osman ia Un i versity, H yderabad
+Pr of . S. Raj  Reddy , Pr ofessor  of M at h em at i cs (Ret d.), Kak at i ya Un i ver si t y, War an gal
+Pr of . D.R.V. Pr asada Rao, Professor  of M at h em at ics (Retd.), S.K.Un i ver si ty, An an t h apu r
+Dr. D. Ch i t t i  Babu , Reader, Govt . Col l ege (Au t on om ou s), Raj ah m u n dr y
+Dr.C.T. Su r y an ar ay an a Ch ar i , Reader, Si l ver  J u bi l ee Govt . Col l ege, Ku r n ool
+Dr. Y. Bh ask ar  Reddy , Reader, Govt . D egr ee Col l ege, Ran gasai pet , War an gal
+Dr. M .V.N. Pat r u du , Pr i n ci pal , Govt . J u n i or  Col l ege, Veer agh at t am , Sr i k ak u l am  (D i st )
+Sr i  T. M ar k an dey a Nai du , Lect u r er, P.V.K.N. Govt . D egr ee Col l ege, Ch i t t oor
+Sr i  C. Li n ga Reddy , Pr i n ci pal , Govt . J u n i or  Col l ege (Boys), Ni r m al , Adi l abad (D i st )
+Sr i  K odi  Nageswar a Rao, Sch ool  Assi st an t  (Ret d.), Ch agal l u , West  Godavar i  (D i st )
+Sr i  C. Sadasi v a Sast r y , Lect u r er  i n  M at h em at i cs (Ret d.), Sr i  Ram abh adr a J r. Col l ege,
+Hyderabad
+Sm t . S.V. Sai l aj a, J u n i or  Lect u r er, New Govt . J u n i or  Col l ege, Ku k at pal l y, H yder abad
+Sr i  K . Ch an dr a Sek h ar a Rao, J u n i or  Lect u r er, GJ C, Uppu gu n du r, Pr ak asam  (D i st )
+Sr i  P.  H ar i n adh a Ch ar y , J u n ior  Lect u r er, Sri  Sr in i vasa Jr. Col l ege, Ti ru ch an u r, Ti r u pat i
+Su bj ec t   Com m i t t ee  M em ber s  of     BI E
+Pan el   of   Ex per t s  of     BI E
+Pr of. D. Ram a M ur t h y , Professor  of M at h em at i cs (Ret dl. Osman la Un lversi ty. H yderabad
+Pr of. D.R.V. Pr asad a Rao, Professor  of M at h em ati cs (Retdl. S.K. Un i ver si ty. An an th apu r
+Dr,  C.T.  Su r y an ar ay an a  Ch ar i , Reader   i n   M at h em at i cs,  Si l ver   J u bi l ee  Gover n m en t
+Coll ege (Au t on om ou s) , Ku r n ool
+Sr i  C. Sadasi v a Sast r y , Lect u r er  i n  M ath em at i cs (Ret d). Sr i Ramabh adr a J u n ior  Col l ege.
+Hyderabad
+Dr. M .V.N. Pat r u du , Pr i n ci pal , Govt . J u n i or  Col l ege, Veer agh at t am . Sr i k ak u l am  (D i st )
+Sm t . S.V. Sai l aj a, J u n i or  Lect u r er, New Govt . J u n i or  Col l ege, Ku k at pal l y. H yder abad
+
+Text  Book  Review  Committee
+Editors
+Reviewed by
+Prof.  K.  Rama  Mohan  Rao
+ Professor of Applied Mathematics (Retd.)
+Andhra University, Visakhapatnam.
+Prof.  G.  Chakradhara  Rao
+Professor of  Mathematics (Retd.)
+Andhra University, Visakhapatnam.
+Sri  K.V.S.  Prasad
+Lecturer in Mathematics (Retd.)
+Government College for Women,
+Srikakulam.
+Dr. Y. Purushothama  Reddy
+Principal (Retd.)
+Government Degree Collge, Bantumilli,
+Krishna Dist.
+Prof.  S.  Kalesha Vali
+Department of  Engineering Mathematics
+Andhra University, Visakhapatnam.
+Dr. K. Ravi Babu
+Lecturer in Mathematics
+Dr. V.S. Krishna Govt. Degree & P.G. Collge(A),
+Visakhapatnam.
+
+Telugu and Sanskrit Akademi, Andhra Pradesh
+Coordinating Committee
+Sri V. Ramakrishna, I.R.S.
+Director
+Dr. M. Koteswaramma, M.Com., Ph.D.
+Research  Officer
+Dr. S.A.T. Rajyalakshmi M.Sc., B.Ed., M.A., Ph.D.
+Research  Assistant
+Dr. K. Glory Sathyavani, M.Sc., Ph.D., M.Ed.
+Research  Assistant
+Coordinating  Committee  of
+Board  of  Intermediate  Education, A.P.
+Sri M.V. Seshagiri Babu, I.A.S.
+Secretary
+Board of Intermediate Education,
+Andhra Pradesh
+Educational Research & Training Wing (Text Books)
+Dr. A. Srinivasulu
+Professor
+Sri. M. Ravi Sankar Naik
+Assistant  Professor
+Dr. M. Ramana Reddy
+Assistant  Professor
+Sri  J.V. Ramana Gupta
+Assistant  Professor
+
+Foreword
+Th e  Gover n m en t   of  In d i a  vowed   t o  r em ove  t h e  ed u cat i on al   d i spar i t i es
+an d   ad op t   a  com m on   cor e  cu r r i cu l u m   acr oss  t h e  cou n t r y  esp eci al l y  at   t h e
+In t er m ediat e level.  Ever  si n ce t h e  Gover n m en t  of An dh r a Pr adesh  an d t h e B oar d
+of  I n t er m edi at e  Edu cat ion   (BIE)  swu n g  in t o  act ion   wit h   t h e  t ask   of  evolvi n g  a
+r evi sed  syl labu s  i n   all  t h e  Scien ce  su bj ect s  on   par   wi t h   t h at   of  CBSE,  appr oved
+by  NCERT,  it s  ch ief  in t en t i on   bein g  en abli n g  t h e  st u den t s  fr om   An dh r a  Pr adesh
+t o  p r epar e  for   t h e  Nat ion al   Level  Com m on   En t r an ce  t est s  l ik e  NEET,  ISEET  et c
+for   adm issi on   in t o  In st it u t ion s  of  pr ofession al  cou r ses  in   ou r   Cou n t r y.
+For   t h e  fir st   t im e  BIE  AP  h as  decided  t o  pr epar e  t h e  Scien ce  t ext book s.
+Ac c or d i n gl y   a n   A c a d em i c   Rev i ew   Co m m i t t ee  w a s   c on s t i t u t ed   w i t h   t h e
+Com m issi on er   of  I n t er m ediat e  Edu cat ion ,  AP  as  Ch air m an   an d  t h e  Secr et ar y,
+BIE  AP; t h e  Dir ect or   SCERT  an d t h e  Dir ect or   Telu gu   Ak ad em i as  m em ber s.  Th e
+Nat i on al  an d   St at e  Level  Ed u cat ion al  lu m in ar ies  wer e  in vol ved  in   t h e  t ext book
+pr ep ar at ion ,  wh o  d id  it   wit h   m et icu lou s  car e.  Th e  t ex t book s  ar e  pr i n t ed  on   t h e
+lin es  of  NCERT  m ain t ain in g  Nat ion al  Level  St an dar ds.
+Th e  Edu cat i on   Depar t m en t   of  Gover n m en t   of  An dh r a  Pr adesh   h as  t ak en
+a  decision   t o  pu bl ish   an d  t o  su pp ly  all  t h e  t ex t   book s  wit h   fr ee  of  cost   for   t h e
+st u d en t s  of  all  Gover n m en t   an d  Aided  J u n ior   Colleges  of  n ewly  for m ed  st at e  of
+An dh r a  Pr ad esh .
+We  ex pr ess  ou r   sin cer e  gr at it u de  t o  t h e  Dir ect or,  NCERT  for   accor di n g
+per m ission   t o  adopt   it s  syl labi  an d  cu r r icu lu m   of  Scien ce  t ext book s.  We  h ave
+been   per m it t ed  t o  m ak e  u se  of  t h eir   t ex t book s  wh ich   will  be  of  gr eat   advan t age
+t o  ou r   st u den t   com m u n it y.  I  also  expr ess  m y  gr at it u de  t o  t h e  Ch air m an ,  BIE
+an d   t h e  h on or ab l e  M in i st er   for   HRD   an d   Vi ce  Ch air m an ,  B I E  an d   Secr et ar y
+(SE)  for   t h eir   ded icat ed  sin cer e  gu idan ce  an d  h elp.
+I si n cer ely  h ope t h at  t h e  assor t ed  m et h ods of i n n ovat ion  t h at   ar e adopt ed
+in   t h e  pr ep ar at ion   of  t h ese  t ext book s  wi ll  be  of  gr eat   h elp  an d  gu id an ce  t o  t h e
+st u d en t s.
+I   w h ol eh ear t ed l y   ap p r eci at e  t h e  s i n cer e  en d ea vor s  of   t h e  T ex t b ook
+Developm en t   Com m it t ee  wh ich   h as  accom plish ed  t h is  n oble  t ask .
+Con st r u ct ive su ggest ion s ar e solicit ed for  t h e im pr ovem en t  of t h is t ext book
+fr om   t h e  st u d en t s,  t each er s  an d   gen er al  pu bl ic  in   t h e  su bj ect s  con cer n ed  so
+t h at   n ext   edit ion   will  be  r evised  du ly  in cor por at in g  t h ese  su ggest i on s.
+I t   i s  ver y  m u ch   com m en d ab l e  t h at   I n t er m ed i at e  t ex t   b ook s  ar e  b ei n g
+pr in t ed  for   t h e  fir st   t im e  by  t h e  Ak adem i  fr om   t h e  2021 -22  academ ic  year.
+Sr i . V. Ram ak r i sh n a I.R.S.
+Di r ect or
+Tel u gu  an d San sk r i t  Ak adem i ,
+An d h r a Pr ad esh
+
+Preface
+Th e Boar d of In t er m ediat e Edu cat ion  (A.P.) h as r ecen t ly r evised t h e syllabu s in
+Mat h em at ics for  t h e In t er m ediat e Cou r se, wit h  effect  fr om  t h e academ ic year  2012-13.
+Accor din gly, Telu gu  Ak adcm i has pr epar ed t h e n ecessar y Text  Book s in  Mat h emat ics.
+In  accordance wit h  t h e cu rr en t  syllabu s, t h e t opics relat in g t o paper -IB; Coor di n at e
+Geom et r y an d Cal c u l us are dealt  wit h  in  t h is Book .  Th ey are pr esen t ed in  t h e ch apt ers.
+Coor din at e Geomet r y con sist s of eigh t  ch apt ers: Pr er equ i st i es Locu s, Tr an sf or m at i on
+of  Ax es, T h e St r ai gh t  Li n e, Pai r  of  St r ai gh t  Li n es, Th r ee Di m en si on al  Coor di n at es,
+Di r ec t i on  of  Cosi n es Di r ec t i on  Rat i os an d T h e Pl an e. Calcu lu s is pr esen t ed in  t h r ee
+Ch apt er s : Li m i t s an d Con t i n u i t y , Di f f er en t i at i on  an d Appl i c at i on s of  Der i v at i v es.
+Ever y ch apt er  h er ei n is divi ded in t o var iou s sect ion s an d su bsect ion s,  depen din g
+on  t h e con t ent s discu ssed. Th ese con t en t s ar e st r ict ly in  accor dance wit h  t h e prescr ibed
+syl l abu s  an d  t h ey  r efl ect   fai t h fu l l y  t h e  scope  an d  spi r i t   of  t h e  sam e.  Necessar y
+defi n i t i on s, t h eor em s, cor ol l ar i es. pr oofs an d n ot es ar e gi ven  in  det ai l . Key con cept s
+ar e gi ven  at  t h e en d of each  ch apt er, Il l u st r at i ve ex am pl es an d sol ved pr oblem s ar e i n
+plen t y. an d t h ese sh al l  h elp t h e st u den t s in  u n der st an di n g t h e su bj ect  m at t er.
+Ever y ch apt er  con t ai n s exer cises i n  a gr aded m an n er  wh i ch  en abl e t h e st u den t s
+t o sol ve t h em  by applyi n g  t h e k n owledge  acqu i r ed. Al l  t h ese pr oblem s ar e cl assifi ed
+accor di n g t o t h e n at u r e of t h eir  an swer s as I  - v er y  sh or t,  I I   -  sh or t  an d I I I - l on g.
+An swer s ar e pr ovi ded for  al l t h e ex er cises at  t h e en d of each  ch apt er.
+Keepin g in  vi ew t h e Nat i on al level  com pet it i ves exam in at i on s, som e con cept s an d
+n ot ion s ar e h igh li ght ed for  t h e ben efi t  of t h e st u den t s. Car e h as been  t ak en  r egar din g
+r i gor  an d logi cal consist en cy i n  t h e pr esent at ion  of con cept s an d in  pr ovin g t h eor em s.
+Al t  t h e en d of t h e t ext  B ook , a l i st   of som e Ref er en c e Book s i n  t h e su bj ect  m at t er  i s
+fu r n ish ed.
+Th e M em ber s of t h e Mat h em at ics Su bj ect  Com m it t ee, con st i t u t ed by B oar d of
+I n t er m edi at e  Edu cat ion ,  wer e  i n vi t ed  t o  i n t er act  wi t h   t h e  t eam   of  t h e  Au t h or s  an d
+Edi t or s. Th ey pu r su ed t h e con t ent s ch apt er  wise. an d gave som e u sefu l su ggest i on s
+an d com m en t s wh i ch  ar e du l y i n cor por at ed.
+Th e special feat u r e of t h is Book , br ou gh t  ou t  in  a n ew for m at   is t h at  each  ch apt er
+begi n s  wi t h   a  t h ou gh t   m ost l y  on   M at h em at i cs t h r ou gh   a qu ot at i on   fr om   a  fam ou s
+t h i n k er.   I t  car r ies a por t r ai t  of a n ot ed m at h em at i ci an  wi t h  a br ief wr i t e- u p.
+In t h e con clu din g par t  of each  ch apt er som e relevan t  hist orical not es are appended.
+Wh er ever  fou n d appr opr i at e, r efer en ces ar e also m ade of t h e con t r i bu t ion s of an ci en t
+I n di an  sci en t i st s t o t h e advan cem en t  of  Mat h  em at i cs. Th e pu r pose i s t o en able t h e
+st u den t s  t o  h ave  a  gl i m pse  i n t o  t h e  h i st or y  of  M at h em at i cs  i n   gen er al   an d  t h e
+con t r ibu t ion s of In di an  mat h em at ician s i n  par t icu l ar.
+I n spi t e of en ou gh  car e t ak en  in  t h e scr u t i n y at  var i ou s st ages i n  t h e pr epar at ion
+of t h e  book , er r or s m igh t  h ave cr ept  in .  Th e r eader s ar e t h er efor e, r equ est ed t o iden t ify
+an d br in g t h em  t o t he n ot ice of t h e Ak ademi.  We will appr eciat e if su gget ions t o en h an ce
+t h e  qu al i t y  of  t h e  book   ar e  gi ven .  Effor t s  wil l   be  m ade  t o  i n cor por at e  t h em   in   t h e
+su bsequ en t  edit ion s.
+Pr o f .   P. V.   Ar u n ac h al am
+Ch i ef  Co o r d i n at o r
+
+Pr ef ace  t o  t h e  Rev i ewed  Edi t i on
+Telu gu   Ak adem i  is  p u blish in g  Text   book s  for   Two  year   In t er m ediat e  in
+En gl ish   an d   Tel u gu   m ed iu m   si n ce  i t s  i n cept ion ,  per i od ical   r evi ew  an d
+r evi sion   of  t h ese  p u blicat i on s  h as  been   u n der t ak en   as  an d  wh en   t h er e
+was  an   u pdat ion   of  In t er m ediat e  syllabu s.
+In  t h is r evi ewed Ed it ion , n ow bein g u n der t ak en  by  t h e Tel u gu  Ak ad em i,
+An dh r a  Pr ad esh   t h e  b asi c  con t en t   of  it s  ear l i er   Ed it i on   i s  con si d er ed
+an d   it   is  r eviewed  by  a  t eam   of  exper i en ced  t each er s.    Modifi cat ion   by
+way  cor r ect i n g  er r or s,  pr in t   m ist ak es,  in cor por at in g  add it i on al  con t en t
+wh er e n ecessar y t o elu cidat e a con cept  an d /  or  a defin it ion , m odificat ion
+of  exist in g  con t en t   t o  r em ove  ob scu r it ies  for   r eleasin g  t h e  con cept   m or e
+easi ly  ar e  car r ied  ou t   m ai n ly  in   t h is  r eview.
+Not   wit h st an din g  t h e  effor t   an d  t im e  spen t   by  t h e  r eview  t eam   in   t h is
+en d eavou r,  st i l l   a  few  asp ect s  t h at   st i l l   n eed   m od i f i cat i on   or   ch an ge
+m igh t   h ave  b een   left   u n n ot i ced.
+Con st r u ct i ve  su ggest i on s  fr om   t h e  acad em i c  fr at er n i t y  ar e  wel com e
+an d  t h e  Ak adem i  wil l  t ak e  n ecessar y  st eps  t o  in cor por at e  t h em   i n   t h e
+for t h   com in g  edit i on .
+We appr eciat e t h e en cou r agem en t  an d su ppor t  ext en ded by t h e Acad em ic
+an d Adm in ist r at ive st aff of t h e Telu gu  Ak adem i in  fu lfil lin g ou r  assign m en t
+wi t h   sat i sfact i on .
+Ed i t or s
+(Revi ew ed   Ed i t i on )
+
+Contents
+0Prerequisites1-8
+Introduction..................................1
+0.1Prerequisites..................................2
+1.Locus9  -  16
+Introduction..................................9
+1.1Definition of Locus - Illustrations..................................10
+1.2Equation of Locus - Problems connected to it..................................11
+2.Transformation  of Axes17  -  26
+Introduction..................................17
+2.1Transformation of axes - Rules, derivations
+and illustrations..................................18
+2.2Rotation of axes - Derivations - Illustrations..................................19
+3The  Straight  Line27  -  82
+Introduction..................................27
+3.1Revision of fundamental results..................................2 8
+3.2Straight line - Normal form - Illustrations..................................37
+3.3Straight line - Symmetric form..................................39
+3.4Straight line - Reduction into various forms..................................42
+3.5Intersection of two straight lines..................................47
+3.6Family of straight lines - Concurrent lines..................................50
+3.7Condition for Concurrent lines..................................53
+3.8Angle between two lines..................................57
+3.9Length of the perpendicular from a point to a  line..................................60
+
+3.10Distance between two parallel lines..................................60
+3.11Concurrent lines – Properties related to a triangle..................................68
+4.Pair  of    Straight  Lines83  -  112
+Introudction..................................83
+4.1Equations of  a  pair of  lines passing  through  the
+origin,  Angle between a pair of lines..................................83
+4.2Condition for perpendicular and coincident lines,
+bisectors of angles..................................87
+4.3Pair of bisectors of anlges..................................90
+4.4Pair of lines - Second degree general equation..................................97
+4.5Conditions for parallel lines - Distance between
+them,  P oint of intersection of pair of lines..................................98
+4.6Homogenising a second degree equation with a
+first degree equation in x and y..................................108
+5.Three  Dimensional    Coordinates113  -  132
+Introduction..................................113
+5.1Coordinates..................................114
+5.2Section formula..................................120
+5.3Solved Problems..................................126
+6.Direction  Cosines  and  Direction  Ratios133  -  152
+Introduction..................................133
+6.1  Direction cosines..................................134
+6.2   Direction ratios..................................139
+7.The  Plane153  -  164
+Introduction..................................153
+7.1Cartesian equation of a plane - Simple illustrations..................................153
+8.Limits  and  Continuity165  -  206
+Introduction..................................165
+8.1Intervals and neighbourhoods..................................166
+8.2Limits..................................168
+8.3Standard limits..................................180
+8.4Continuity..................................191
+
+9.Differentiation207  -  254
+Introduction..................................207
+9.1Derivative of a function..................................208
+9.2Elementary properties..................................212
+9.3Trigonometric, Inverse Trigonometric,  Hyperbolic,
+Inverse Hyperbolic Functions - Derivatives..................................222
+9.4Methods of differentiation..................................233
+9.5Second  Order  Derivatives..................................243
+10.      Applications  of  Derivatives255  -  328
+Introduction..................................255
+10.1Errors and approximations..................................255
+10.2Geometrical interpretation of the derivative..................................262
+10.3Equations of tangent and normal to a curve..................................263
+10.4Lengths of tangent, normal, subtangent and subnormal................................271
+10.5Angle between two curves and condition for
+orthogonality of curves..................................274
+10.6Derivative as a rate of change..................................278
+10.7Rolle's Theorem and Lagrange's Mean Value Theorem...............................285
+10.8Increasing and Decreasing functions..................................290
+10.9Maxima and Minima..................................300
+Reference  Books329
+Syllabus330  -  331
+Model  Question  Paper332  -  334
+
+
+
+Alpha
+
+
+Beta
+
+
+Gamma
+
+
+Delta
+
+
+Epsilon
+
+
+Zeta
+
+
+Eta
+
+
+Theta
+
+
+Iota
+
+
+Kappa
+
+
+Lambda
+
+
+Mu
+
+
+Nu
+
+
+Xi
+
+
+Omicron
+
+
+Pi
+
+
+Rho
+
+
+Sigma
+
+
+Tau
+
+
+Upsilon
+
+
+Phi
+
+
+Chi
+
+
+Psi
+
+
+Omega
+Greek  Alphabet
+
+
+
+Coor d i n at e  Geom et r y
+
+
+
+1
+Prerequisites
+Rene  Descartes
+(1596 - 1650)
+Rene  Descartes  was  a    famous
+French         mathematician,
+philosopher  and  writer.      He
+was  hailed  as  the  "Father  of
+Modern  Mathematics".  The
+Cartesian  coordinate  system
+that  is  used  in  geometry  is
+named  after  him.  Descartes
+theory  provided  the  basis  for
+the  calculus  of  Newton  and
+Leibnitz.
+"With  me  everything  turns  into
+mathematics"
+-  Rene  Descartes
+Introduction
+The study of geometry in coordinate method began in
+the third and second centuries B.C. The Greek mathematician
+Menaechmus (ca. 380 - 320 B.C.) used a method which
+had a similarity with the present methods of coordinate
+geometry.  Apollonius (ca. 262 - ca.190 B.C.)  of  Perga,
+solved problems in a way resembling analytical geometry of
+one dimension.  He dealt with conics wherein he developed
+a method which is again similar to analytical geometry,
+anticipating  the  work  of    Rene  Descartes by  eighteen
+centuries earlier. Apollonius came close to inventing analytic
+geometry, but could not do so, as he did not take into account
+the negative magnitudes. However, the decisive step in
+developing coordinate geometry as a subject was taken later
+by Descartes and Fermat. Abraham de Moivre (1667 -
+1754)  also  made  contribution  to  the  development  of
+coordinate geometry.
+Fermat and Descartes studied the plane curves in
+the seventeenth century, while Euler (1707 - 1783) took
+up the study of curves in space in the eighteenth century.
+These  mathematicians  had  developed  the  coordinate
+geometry in a systematic way and opened the doors to a
+new branch of mathematics.
+
+ Mathematics - IB
+2
+The objective of coordinate geometry is to study the algebraic meaning of geometric figures and the
+geometric meaning of algebraic expressions.  The fusion of geometric and algebraic thinking, together with the
+concept of  function provides us an important frame for comprehension and exploration of objective reality.
+For  example, the algebraic equation    y = mx + c  gives rise to the geometric idea of a straight line and, on
+the other hand, any straight line is represented by an algebraic equation   ax + by + c = 0   for real numbers
+a,  b  and  c, with a
+2
+ + b
+2
+ 
+≠
+ 0.
+In 1637, Descartes, in his famous book 'La Geometre', proposed that, a point in the plane can be
+represented as an ordered pair of real numbers which are usually the distances of that point from two
+mutually perpendicular lines (called coordinate axes).  In honour of Descartes,  coordinate geometry is
+called 'Cartesian Geometry'.  However, after Descartes, the present form of coordinate geometry
+was developed, particularly by Euler.
+0.1 Prerequisites
+         In the present section we shall review some of the topics covered in lower classes.
+0.1.1 Coordinate axes
+Consider a pair of mutually perpendicular lines
+of reference X′ X and Y′Y in a plane (Fig. 0.1).
+These straight lines are called coordinate axes and
+their point of intersection is called the origin, and it
+is denoted by  O.
+The horizontal line is called the  X–axis and
+the vertical line is called the Y–axis.
+On  each axis a positive direction is chosen
+(indicated  by  an  arrow).  Naturally,  the  opposite
+direction is referred to as the negative direction. A unit
+of length (scale unit) is chosen, which may be arbitrary
+but is the same for both the axes. The coordinate axes
+X′X, Y′Y (with established positive and negative
+directions  and  an  appropriate  scale  unit)  form  a
+rectangular coordinate system (Cartesian coordinate
+system). The coordinate axes divide the plane into four equal parts called quadrants.
+0.1.2  Coordinates
+Consider a point  P  in the plane.  Let   x
+P
+   denote the perpendicular distance of  P from  Y-axis and
+y
+P
+  denote the perpendicular distance of  P  from X–axis. Then  P  is represented by the ordered pair of
+real numbers as shown in the following table.
+Quadrant in whichOrdered pair which
+P  liesdenotes  P
+1st quadrant(x
+P
+,  y
+P
+)
+2nd quadrant(–x
+P
+,  y
+P
+)
+3rd quadrant(–x
+P
+,  –y
+P
+)
+4th quadrant(x
+P
+,  –y
+P
+)
+Fig. 0.1 Cartesian coordinate system
+2nd  quadrant
+1st  quadrant
+3rd  quadrant
+4th  quadrant
+x
+Q
+x
+P
+y
+S
+x
+S
+x
+R
+y
+R
+y
+Q
+O
+Q
+Y
+P
+S
+R
+X
+'
+X
+y
+P
+Y
+'
+
+3
+Prerequisites
+The first element of the ordered pair is called the x –
+ 
+coordinate (abscissa)  and the second element
+is called the  y – coordinate (ordinate). The point P is generally represented by P (x, y). Conversely, every
+ordered pair of  real numbers represents a unique point in the plane.
+It can be easily seen that the  y
+ 
+–
+ 
+coordinate  y
+P   
+is zero  for any  point  P on the  X
+ 
+–
+ 
+axis and the
+x
+ 
+–
+ 
+coordinate  x
+P
+  is zero for any point P on the Y
+ 
+–
+ 
+axis. Thus the coordinates of the origin O are  (0, 0)
+as it belongs to both the axes.
+0.1.3  Distance between two points
+(i)The distance between two points P (x
+1
+,  y
+1
+)  and   Q (x
+2
+,  y
+2
+) in the plane is denoted by  PQ  and is given
+by
+              PQ  =  
+()( )
+2
+21
+2
+21
+  
+yyxx
+−+−
+=  
+[]
+22
+s)coordinate  of e(differencs)coordinate of e(differenc
+y
+ 
+x
+ 
++
+Note that     PQ  =  QP.
+(ii)The distance of  P (x
+1
+,  y
+1
+) from the origin O (0, 0) is
+             OP  = 
+2
+1
+2
+1
+yx+
+.
+(iii)The distance between two points    A
+ 
+(x
+1
+, 0) and B
+ 
+(x
+2
+, 0)  is
+             AB  =  
+()
+()
+22
+21
+00
+  
+xx
+−+−
+                    =  
+()
+2
+21
+ 
+xx
+−
+ = 
+ xx 
+21
+−
+.
+(iv)The distance between two points    C (0, y
+1
+)  and   D
+ 
+(0, y
+2
+)  is CD  = 
+ yy 
+21
+−
+.
+If  A  and  B  are two distinct points, then we denote
+(i)the line segment joining  A  and  B  by 
+ 
+AB
+,
+(ii)the ray from  A  through  B  by
+ 
+→
+AB
+, and
+(iii)the straight line passing through   A   and  B  by 
+ 
+↔
+AB
+.
+0.1.4  Section formula
+(i)If   P  lies on the line segment joining two points  A  and   B  then   P   is said to divide the line segment
+AB
+  in the ratio  AP : PB   internally (see Fig. 0.2).
+(ii)If   P lies on the extended line of the segment joining  A  and  B, then  P is said to divide the line
+segment 
+AB
+ externally  (see Fig. 0.3).
+In this case  – 
+ 
+AP :  PB   or   AP : –
+ 
+ PB   is taken as the ratio in which P divides the line segment
+AB
+. The positive and negative signs of  AP  and  PB  are in accordance with the signs given to the
+abscissa.
+Fig. 0.2
+A
+P
+B
+A
+P
+B
+A
+B
+Fig. 0.3
+P
+
+ Mathematics - IB
+4
+(iii)The coordinates of a point  P which divides the line segment joining A (x
+1
+, y
+1
+) and B (x
+2
+, y
+2
+)  in the
+ratio  l : m are
+P = 
+
+
+
+
+
+
+
+
++
++
++
++
+ml
+myly
+  ,
+ml
+mxlx
+1212
+.
+It can be easily seen that  P  divides the line segment
+ 
+AB
+ internally when the ratio  l : m  or
+l
+ 
+/
+ 
+m  is positive and externally when  the ratio  l
+ 
+/
+ 
+m  is negative. Note that   l + m 
+≠
+ 0,  for,  if
+l + m = 0,  then  l = –
+ 
+m and hence P divides the line segment 
+  
+AB
+ externally and  AP = PB
+which is absurd. The point A divides the line segment
+  
+AB
+ in the ratio 0 : AB and the point B
+divides the line segment
+ 
+AB
+ in the ratio AB : 0. All other points (on the line joining A and B) divide
+the line segment
+ 
+AB
+ in the ratio   l : m,  where  l and m are both non zero and in this case, the ratio
+can be taken as  
+λ
+ : 1, where 
+λ
+ is a real number (
+λ
+ 
+≠
+ – 1).
+(iv)Coordinates of the mid point of the line segment 
+AB
+ are
+
+
+
+
+
+
+
+
+++
+22
+2121
+yy
+  ,
+xx
+.
+0.1.5  The points of trisection
+The points which divide a line segment in the ratio 1 : 2  or 2 : 1 are called the points of trisection.
+0.1.6  Area of a triangle
+(i)The area of the triangle with vertices at   A (
+ 
+x
+1
+, y
+1
+ 
+),  B
+ 
+ (
+ 
+x
+2
+, y
+2
+ 
+)  and  C
+ 
+ (
+ 
+x
+3
+, y
+3
+ 
+)  is given by
+∆
+=  
+2
+1
+()()
+()
+ yy xyy xyy x
+     
+213132321
+−+−+−
+=  
+2
+1
+ 
+()
+ yyx 
+   
+321
+−∑
+.
+(ii)The area of the triangle OAB with vertices O(0, 0), A (x
+1
+, y
+1
+) and B(x
+2
+, y
+2
+) is given by
+∆
+=  
+2
+1
+    
+yxyx
+1221
+−
+.
+0.1.7Area of a Quadrilateral
+The  area  of  the  quadrilateral  with  vertices  A  (x
+1
+, y
+1
+),  B(x
+2
+, y
+2
+),
+C(x
+3
+, y
+3
+) and D(x
+4
+, y
+4
+)
+= 
+2
+1
+  
+124231342413
+()()()()
+xyyxyyxyyxyy
+−+    −+   −+   −
+=  
+2
+1
+()
+ yyx  
+   
+421
+−Σ
+Note that the area of  the quadrilateral ABCD is  the sum of the
+areas of triangles ABC and BCD (see Fig. 0.4).
+A
+Fig. 0.4
+B
+C
+D
+
+5
+Prerequisites
+0.1.8Concurrent lines, Point of Concurrency
+Three  or  more  straight  lines  are  said  to  be
+Concurrent, if all the straight lines have exactly one point
+in common and this common point is called the Point of
+Concurrency. (see Fig. 0.5)
+0.1.9    Medians-Centroid
+In a triangle  the line segment joining a vertex to the
+midpoint of the opposite side is called a Median of the
+triangle. Clearly a triangle has three medians. We will prove
+later that the medians of a triangle are concurrent. The
+point of concurrency is called the Centroid of the triangle
+and is usually denoted by G. The centroid  G  divides each
+median in the ratio 2 : 1 internally (see Fig. 0.6).
+The centroid  G  of the triangle with vertices at
+A(x
+1
+, y
+1
+), B(x
+2
+, y
+2
+) and C(x
+3
+, y
+3
+) is given by
+G = 
+
+
+
+
+
+
+
+
+++++
+ 
+yyy
+  ,
+xxx
+ 
+33
+321321
+.
+0.1.10Angular bisectors – In-centre
+The bisectors of the internal angles of a triangle
+are concurrent. The point of concurrency is called the
+In-centre of the triangle and is denoted by I.  It is
+equidistant from the three sides of the triangle and the
+distance is called the In-radius of the triangle and is
+denoted by  r.  The circle drawn with I  as centre and
+r  as radius, touches all the three sides of the triangle
+internally. This circle is called the In-circle of the
+triangle. (see Fig. 0.7).
+0.1.11  Theorem :  If  A (x
+1
+, y
+1
+),  B (x
+2
+, y
+2
+) and C (x
+3
+, y
+3
+) are the vertices and a, b and c are respectively
+the sides BC, CA and AB of the triangle ABC, then the coordinates of  the  In-centre are
+I = 
+
+
+
+
+
+
+
+
+++
+++
+++
+++
+ 
+cba
+cybyay
+  ,
+cba
+cxbxax
+ 
+321321
+.
+Proof :  Let
+ 
+AD
+,
+ 
+BE
+and
+ 
+CF
+ be the bisectors of  
+A
+∠
+,
+ 
+B
+∠
+ and
+ 
+C
+∠
+ respectively. Then by the vertical
+angle theorem,  D divides
+ 
+BC
+ in the ratio c : b and hence the coordinates of   D  are
+
+
+
+
+
+
+
+
++
++
++
++
+ 
+bc
+bycy
+  ,
+bc
+bxcx
+ 
+2323
+.
+Again by the same theorem,  the point  I  on
+ 
+AD
+ divides
+ 
+AD
+ in the ratio  b + c :  a (AI : ID).
+Therefore, the coordinates of  I  are
+P
+Fig. 0.5
+Fig. 0.6
+A
+C
+B
+G
+D
+Fig. 0.7
+C
+A
+B
+I
+r
+
+ Mathematics - IB
+6
+      
+()
+()
+()
+()
+
+
+
+
+
+
+
+
+
+
+
+
+++
++
+
+
+
+
+
+
++
++
++
+++
++
+
+
+
+
+
+
++
++
++
+acb
+ay
+bc
+bycy
+ cb
+  ,
+acb
+ax
+bc
+bxcx
+ cb
+1
+23
+1
+23
+i.e.,I = 
+
+
+
+
+
+
+
+
+++
+++
+++
+++
+ 
+cba
+cybyay
+  ,
+cba
+cxbxax
+ 
+321321
+.
+0.1.12  Angular bisectors – Ex-centre
+We will prove later that  in a triangle ABC  the bisector of internal angle
+A and bisectors of external angles B and C are concurrent. The point of
+concurrency is called the Ex-centre of the triangle and is denoted by  I
+1
+.  It is
+equidistant from the side BC and from the extensions of the sides AB and AC
+and this distance is called the Ex-radius of the triangle and is denoted by  r
+1
+.
+The circle drawn with I
+1
+  as centre and  r
+1
+  as radius touches these sides. This
+circle is called  the  Ex-circle of the triangle opposite to the vertex  A (Fig.
+0.8). Similarly, we get two other  Ex-circles of  the triangle opposite to the
+vertices   B  and C respectively. The  Ex-centres of these Ex-circles are
+denoted by  I
+2
+ and I
+3
+ and the corresponding Ex-radii by r
+2
+ and r
+3
+ respectively.
+The coordinates of the Ex-centres are given by
+I
+1
+ = 
+
+
+
+
+
+
+
+
+++−
+++−
+++−
+++−
+ 
+cba
+cybyay
+   ,
+cba
+cxbxax
+ 
+321321
+,
+I
+2
+ = 
+
+
+
+
+
+
+
+
++−
++−
++−
++−
+ 
+cba
+cybyay
+  ,
+cba
+cxbxax
+ 
+321321
+,
+I
+3
+ = 
+
+
+
+
+
+
+
+
+−+
+−+
+−+
+−+
+ 
+cba
+cybyay
+  ,
+cba
+cxbxax
+ 
+321321
+.
+0.1.13Altitudes - Orthocentre
+In a triangle the perpendicular from a vertex to the opposite
+side is called an Altitude of the triangle. We will prove later by
+analytical  methods  that  the  three  altitudes  of  a  triangle  are
+concurrent. The point of concurrency is called the Orthocentre
+of the triangle and is usually denoted   by 'O' (see Fig. 0.9).
+0.1.14  Perpendicular bisectors of sides - Circumcentre
+We will prove later that  the perpendicular bisectors of the
+sides by analytical methods of a triangle are concurrent. The point
+of concurrency is called the  Circumcentre  of  the triangle and
+is denoted by S. The circumcentre S is equidistant from the vertices
+of the triangle. Therefore the circle drawn with  S  as centre and
+the distance from S  to any vertex as radius, passes through all
+the  three  vertices  of  the  triangle.  This  circle  is  called  the
+Circumcircle of the triangle  (see   Fig. 0.10).
+Fig. 0.8
+A
+B
+C
+r
+1
+I
+1
+Fig. 0.9
+C
+O
+D
+B
+F
+E
+A
+Fig. 0.10
+A
+C
+B
+S
+
+7
+Prerequisites
+Key Concepts
+❖Let O(0, 0) be the origin and  P (x
+1
+,  y
+1
+), Q (x
+2
+,  y
+2
+) be any two points in a plane. Then
+PQ = 
+()( )
+2
+21
+2
+21
+  
+yyxx
+−+−
+ =  QP,   OP = 
+2
+1
+2
+1
+yx
++
+.
+❖Let  A (x
+1
+, y
+1
+) and  B (x
+2
+, y
+2
+) be any two points in  the  plane. Then
+(i)   the coordinates of the point which divides  
+AB
+  in the ratio  l : m   are
+ 
+
+
+
+
+
+
+
+
++
++
++
++
+ml
+myly
+  ,
+ml
+mxlx
+1212
+.
+The division is called internal if   l : m  or   l
+ 
+/
+ 
+m  is positive and external if  l
+ 
+/
+ 
+m  is negative.
+(ii)The coordinates of the mid point of the line segment 
+AB
+ are 
+
+
+
+
+
+
+
+
+++
+22
+2121
+yy
+  ,
+xx
+.
+❖Let   A
+ 
+(
+ 
+x
+1
+, y
+1
+ 
+), B
+ 
+(
+ 
+x
+2
+, y
+2
+ 
+), C
+ 
+(
+ 
+x
+3
+, y
+3
+ 
+) and D(x
+4
+, y
+4
+)  be any four points in a plane,  then
+(i)   the area of  
+∆
+ABC =  
+2
+1
+ 
+()
+   
+12 3
+  
+∑−
+xy y
+.
+(ii)The area of  
+∆
+OAB  = 
+2
+1
+ yxyx 
+  
+1221
+−
+.
+(iii)the area of quadrilateral ABCD = 
+2
+1
+()
+ yyx  
+   
+421
+−Σ
+.
+(iv)the coordinates of  the centroid  G  of   
+∆
+ABC  = 
+
+
+
+
+
+
+
+
+++++
+ 
+yyy
+  ,
+xxx
+ 
+33
+321321
+.
+(v)  the coordinates of the In-centre  I  of
+∆
+ABC =
+
+
+
+
+
+
+
+
+++
+++
+++
+++
+ 
+cba
+cybyay
+  ,
+cba
+cxbxax
+ 
+321321
+ ,
+where  a,  b  and  c  are respectively the sides   BC, CA   and   AB.
+(vi)the coordinates of the Ex-centres of  
+∆
+ABC  are
+I
+1
+=
+
+
+
+
+
+
+
+
+++−
+++−
+++−
+++−
+ 
+cba
+cybyay
+   ,
+cba
+cxbxax
+ 
+321321
+,
+I
+2
+=
+
+
+
+
+
+
+
+
++−
++−
++−
++−
+ 
+cba
+cybyay
+  ,
+cba
+cxbxax
+ 
+321321
+,
+I
+3
+=
+
+
+
+
+
+
+
+
+−+
+−+
+−+
+−+
+ 
+cba
+cybyay
+  ,
+cba
+cxbxax
+ 
+321321
+.
+where  I
+1
+,  I
+2
+  and   I
+3  
+are the Ex-centres of the Ex-circles opposite to the vertices A, B  and  C  of
+the triangle  ABC.
+
+ Mathematics - IB
+8
+Historical Note
+The earliest use of geometry that is known was that of the Egyptians,  Babylonians and
+Indians.  The word  'Geometry'  is from the Greek for  'Earth-measurement',  which was the
+primary concern of the ancient geometers.  The knowledge of geometry of these early people was
+obtained by observation and  trial-and-error methods and they made no attempt to generalize or
+to prove their assumptions.
+During the Vedic times and later during Sulvasutra period (1500 B.C.) we find geometrical
+concepts like orbits of planets, the properties of right angled triangle, squaring of the circle and
+areas and volumes of simple geometrical figures.
+It was not until about 600 B.C. that any concern was felt about why certain relationships
+existed and whether these relationships could be proved by logical reasoning. To the Greeks of
+the Golden Age the philosophy of geometry was more important than its applications. Interest
+centered upon ideas rather than physical conditions.
+Thales  of  Miletus (ca. 624 - ca. 547 B.C.), the father of Greek mathematics, is famous
+for the study of geometry based on logical reasoning. His pupil Pythagoras  (ca. 572-496 B.C.)
+is remembered chiefly for his theorem on a right triangle. Apollonius of Perga (times) studied
+conic sections. But it is to Euclid,  who wrote the 'Elements' in about  300 B.C.,  that we owe the
+greatest debt.
+A long time after the Golden Age of Greece, in the 17th century two great mathematicians,
+Rene Descartes (1596 - 1650) and Pierre de Fermat (1601 - 1665) were the codiscoverers of
+analytic geometry, a new method of geometry.
+The Renaissance painters employed projective geometry to depict three dimensional real
+world on two dimensional canvas. Gerard Desargues (17th century) is a notable mathematician
+in this area.
+The important geometric discoveries of 18th and 19th centuries were the non-Euclidean
+geometries  of  Nicholas  I.  Lobachevsky (1793  -  1856), Janos  Bolyai (1802  -  1860), Carl
+Friedrich Gauss (1777 - 1855) and George F.B. Riemann  (1826 - 1866).
+During 18th,  19th and 20th centuries, with the advent of calculus, the geometry further
+developed into branches like differential geometry and topology.  David Hilbert (1862 - 1943)
+gave a logical treatment to the abstract concepts of geometry. In recent times, Mandelbrot (1924)
+introduced fractal geometry, which describes the nature factually.
+
+9
+Locus
+Johannes  Kepler
+(1571 - 1630)
+Kepler was    a    German
+mathematician  and  astronomer
+who  discovered  that  Earth  and
+Planets    move  about  the  sun,    in
+elliptical  orbits.  He  gave  three
+fundamental  laws  of  planetary
+motion.  He  also  did  important
+work  in  optics  and  geometry.  He
+was  a  key  figure  in  the  17th
+century  astronomical  revolution.
+"Where  there  is  matter,  there  is
+geometry
+"
+                      -   Johannes Kepler
+Introduction
+In  school  mathematics,  we  learnt  about  the
+Euclidean  geometry,  its  axioms,  some  theorems,
+constructions,  proofs,  deductive  method,  historical
+background and had a glimpse into Indian contribution
+to geometry. We have also studied some elementary
+concepts  of  analytical  geometry  also  known  as
+coordinate geometry  which unifies the ideas of algebra
+and geometry.  This unification is very well illustrated
+through the concept of locus about which we learnt a
+little in the 9
+th
+ class. There, we studied some patterns
+formed by points in a plane satisfying certain condition
+or conditions. We recall that such patterns lead to the
+concept of locus.
+The mathematicians knew about the conic sections
+as geometric curves several centuries before Kepler
+came to the scene. But it was Kepler who showed the
+application of these curves at the cosmic level. His laws
+of planetary motion magnificiently display the loci of
+planets as elliptic curves.
+Now in this chapter, we discuss about locus in
+detail.
+
+ Mathematics - IB
+10
+1.1  Definition of Locus - Illustrations
+Now we shall discuss the patterns formed by the points, which satisfy certain geometrical conditions,
+which are consistent.  A set of geometric conditions is said to be  'consistent', if there is atleast one point
+satisfying the set of conditions. For example, when A = (1, 0) and B = (3, 0), the condition 'the sum of
+distances of a point P from A and B is equal to 2' is consistent, whereas the condition 'the sum of distances of
+a point Q from A and B is equal to 1' is not consistent, because there is no point Q such that QA
+ 
++
+ 
+QB = 1
+(since AB = 2).
+1.1.1    Definition
+Locus is the set of  points (and only those points) that satisfy the given consistent geometric
+condition(s).
+From the above definition , it follows that :
+(i) Every point satisfying the given condition(s) is a point on the locus.
+(ii)Every point on the locus satisfies the given condition(s).
+1.1.2  Examples
+1. Example : In a plane the locus of a point whose distance from a given point
+A is 4.
+Any point which is at a distance 4 from A lies on the circle of radius  4 with
+centre A.  Conversely,  every point on the circle is at a distance of  4  from  A.
+Hence, the set of all points on the circle is the locus in this example (see Fig. 1.1)
+i.e.,     locus  =  the circle, in the given plane, with
+         centre at A and radius 4.
+2.  Example : 
+ The locus of a point equidistant from two given points  A, B.
+Cleary, the mid  point  D of 
+AB
+ is  a point on the locus. A point P lies on the locus    
+⇔
+ PA = PB
+⇔
+ 
+PADPBD
+∆≅∆
+ (SAS axiom)
+⇔
+ 
+PDAB
+⊥
+suursuur
+.
+Therefore, the required locus is the perpendicular bisector of
+AB
+.  (see Fig. 1.2)
+3.    Example: Locus  of  a  point  above  the  X-axis  whose
+distance from the X-axis is  2.
+Let M be the point on the positive direction of the Y - axis with OM = 2.  P is a point above the X-axis
+with PD = 2, where PD is the distance of P from the X-axis  (Fig. 1.3).  ODPM is  a rectangle so that
+MP || OX
+suursuur
+ .  Conversely, we can prove that any point P on the locus lies on the line parallel to the X-axis
+(above the X-axis) which passes through M.
+Fig. 1.1
+A
+P
+Fig. 1.2
+A
+B
+P
+4
+D
+ 
+ 
+
+11
+Locus
+In view of the above examples, locus of a point in the plane is generally a curve in the plane. For
+simplicity, we call that curve itself as locus. The locus in example 1 is a circle, whereas it is a straight line in
+examples 2 and 3.
+1.2  Equation of Locus - Problems connected to it
+It is clear that, every point on the locus satisfies the given conditions and every point which satisfies
+the given conditions lies on the locus.
+Equation of the locus of a point is an algebraic equation in x and y satisfied by the points
+(x, y) on the locus alone (and by no other point).
+Algebraic descriptions give rise to algebraic equations which some times contain more than what
+is required by the geometric conditions. Thus the required  locus may be a part of the curve represented
+by the algebraic equation. Usually we call this algebraic equation as the equation of locus. However, to
+get the full description of the locus, the exact part of the curve, points of which satisfy the given geometric
+description, need to be specified.
+1.2.1Solved  Problems
+1.  Problem :  Find the equation of the locus of a point which is at a distance 5  from  (–2,  3), in the xoy
+plane.
+Solution :  Let the given point be  A = (–2, 3)  and  P(x, y)  be a point on the plane.
+The geometric condition to be satisfied by   P  to be on the  locus is that
+AP = 5... (1)
+Expressing this condition algebraically, we get
+22
+(2)(3)
+++−
+xy
+ = 5
+i.e.,x
+2
+   +  4x + 4 + y
+2 
+– 6y + 9  = 25
+i.e.,x
+2 
++ y
+2 
++ 4x – 6y – 12  = 0... (2)
+Fig. 1.3
+X
+Y
+O
+1
+2
+locus
+M
+P
+D
+
+ Mathematics - IB
+12
+Let  Q(x
+1
+,  y
+1
+)  satisfy  (2).
+Then,  
+22
+11   1  1
+46120
+xy  x y
+++ − −=
+... (3)
+Now the distance of A from Q is    AQ=
+()()
+22
+11
+23
+xy
+++−
+ThereforeAQ
+2
+=
+22
+1111
+4469
+xx   yy
++++−+
+=
+()
+22
+11   1  1
+461225
+xy  x y
+++ − − +
+=  25 (by using (3))
+HenceAQ=  5.
+This means that   Q(x
+1
+, y
+1
+)   satisfies the geometric condition (1).
+Therefore, the required equation of  locus is
+22
+46120
+xy  xy
+++−−=
+.
+2.  Problem :  Find the equation of locus of a point  P, if the distance of  P  from A (3, 0)   is twice the
+distance of  P  from   B (– 3, 0).
+Solution :  Let   P(x, y)   be a point on the locus. Then the geometric condition to be satisfied by  P   is
+PA = 2PB       ... (1)
+i.e.,PA
+2
+  =  4PB
+2
+i.e.,(x
+ 
+–
+ 
+3)
+2
+ + y
+2
+ =
+  
+4 [(x
+ 
++
+ 
+3)
+2 
++ y
+2
+]
+i.e.,x
+2 
+–
+ 
+6x
+ 
++ 9 + y
+2 
+ = 4 [x
+2 
++ 6x + 9 + y
+2
+]
+i.e.,3x
+2 
++
+ 
+3y
+2 
+ + 30x + 27 = 0
+i.e.,x
+2 
++
+ 
+y
+2 
+ + 10x + 9 = 0       ... (2)
+LetQ(x
+1
+, y
+1
+) satisfy (2). Then 
+22
+111
+109    0
+xy   x
+++   +=
+.       ... (3)
+NowQA
+2     
+ =(x
+1
+ – 3)
+2
+ + y
+1
+2
+            =x
+1
+2
+ – 6x
+1
+ + 9 +  y
+1
+2
+=4x
+1
+2
+ + 24x
+1
+ + 36 + 4 y
+1
+2
+ – 3x
+1
+2 
+– 30x
+1
+ – 27 – 3y
+1
+2
+=4 (x
+1
+2
+ + 6x
+1
+ + 9 + y
+1
+2
+) – 3 (x
+1
+2
+ + 10x
+1
+ + 9 + y
+1
+2
+)
+=4 (x
+1
+2
+ + 6x
+1
+ + 9 + y
+1
+2
+)   (by using (3))
+=4 
+[(x
+1
+ + 3)
+2
+ + y
+1
+2
+]
+=    4QB
+2
+.
+Therefore,     QA = 2QB. This means that Q(x
+1
+, y
+1
+) satisfies (1).
+Hence, the  required equation of  locus is  x
+2 
++
+ 
+y
+2 
+ + 10x + 9 = 0.
+3.    Problem  :   Find  the  locus  of  the  third  vertex  of  a  right  angled  triangle,  the  ends  of  whose
+hypotenuse are (4, 0) and (0, 4).
+Solution :  Let   A = (4, 0)  and   B = (0, 4).   Let   P(x, y)   be a point such that   PA   and PB   are
+perpendicular.  Then  PA
+2
+ + PB
+2
+ = AB
+2
+.      ... (1)
+i.e.,(
+ 
+x
+ 
+–
+ 
+4
+ 
+)
+ 2
+ + 
+ 
+y
+ 2
+ + x
+2
+ + (
+ 
+y
+ 
+–
+ 
+4
+ 
+)
+2 
+=16 + 16,
+i.e.,2x
+2 
++
+ 
+2y
+2 
+–
+ 
+8x
+ 
+–
+ 
+8y = 0,
+orx
+2 
++
+ 
+y
+2 
+–
+ 
+4x
+ 
+–
+ 
+4y = 0.      ... (2)
+LetQ(x
+1
+, y
+1
+)  satisfy (2) and  Q be different from  A  and  B.
+
+13
+Locus
+Then
+11
+2
+1
+2
+1
+44yxyx
+−−+
+= 0, (x
+1
+, y
+1
+) 
+≠
+ (4, 0) and (x
+1
+, y
+1
+)
+≠
+(0, 4)      ... (3)
+NowQA
+2
+ + QB
+2
+=(x
+1
+ – 4)
+2
+ + y
+1
+2
+ + x
+1
+2
+ + (y
+1
+ – 4)
+2
+=x
+1
+2
+ – 8x
+1
+ + 16 +  y
+1
+2
+ + x
+1
+2 
++ y
+1
+2
+  – 8y
+1
+ + 16
+=2 (x
+1
+2
+ + y
+1
+2
+ – 4x
+1
+ – 4y
+1
+) + 32
+=   32     (by using (3))
+=AB
+2
+HenceQA
+2
+ + QB
+2
+=AB
+2
+,  Q
+ 
+≠
+ 
+A   and   Q
+ 
+≠
+ 
+B.
+This means that Q(x
+1
+, y
+1
+) satisfies (1).  Therefore, the required equation of  locus  is  (2),  which is
+the circle with   
+AB
+  as diameter,  deleting the points  A  and  B. Though  A and B satisfy equation (2),
+they do not satisfy the required geometric condition.
+4.    Problem  :    Find  the  equation  of  the  locus  of  P,    if  the  ratio  of  the  distances  from    P      to
+A (5, – 4)   and   B (7, 6)   is   2 : 3.
+Solution :  Let  P (x, y) be any point on the locus.
+The geometric condition to be satisfied by  P  is  
+AP2
+PB3
+=
+.
+i.e.,3AP = 2PB        ... (1)
+i.e.,9AP
+2
+ = 4PB
+2
+i.e.,9 [(x – 5)
+ 2
+ + (y + 4)
+2
+]  = 4 [(x – 7)
+ 2
+ + (y – 6)
+2
+]
+i.e.,9 [x
+ 2
+ + 25 – 10x + y
+ 2
+ + 16 + 8y] =   4 [x
+ 2
+ + 49 – 14x + y
+ 2
+ + 36 – 12y]
+i.e.,5x
+2
+ + 5y
+2
+ – 34x + 120y + 29 = 0        ... (2)
+LetQ(x
+1
+, y
+1
+)   satisfy (2). Then   5x
+1
+2
+ + 5y
+1
+2
+ – 34x
+1
+ + 120y
+1 
++ 29 = 0 ... (3)
+         Now 9AQ
+2
+   =   9 [x
+1
+2
+ + 25 – 10x
+1
+ + y
+1
+2
+ + 16 + 8y
+1
+]
+     = 5x
+1
+2
+ + 5y
+1
+2
+ – 34x
+1
+ + 120y
+1
+ + 29 + 4x
+1
+2
+ + 4y
+1
+2
+ – 56x
+1
+ – 48y
+1
+ + 340
+     =   4 
+[x
+1
+2
+ + y
+1
+2
+ –  14x
+1
+ – 12y
+1
+ + 49 + 36]   (by using (3))
+     =   4 
+[(x
+1
+ – 7)
+2
+ + (y
+1
+ – 6)
+2
+] = 4 PB
+2.
+Thus 3AQ    =  2PB.  This means that   Q (x
+1
+, y
+1
+)   satisfies (1).
+Hence, the required equation of  locus is   5(x
+2
+ + y
+2
+) – 34x + 120y + 29 = 0.
+5.  Problem :   A (2, 3)   and   B (–3, 4)   are two given points. Find the equation of  locus  of   P   so that
+the area of the triangle   PAB   is   8.5
+Solution :  Let   P
+ 
+(x, y)   be a point on the locus.
+The geometric condition to be satisfied by P is that,
+area of 
+∆
+PAB = 8.5       ... (1)
+i.e.,
+()( )()
+ yy x 334243
+2
+1
+−−−+−
+ = 8.5
+i.e.,
+ yyx 9328
++−−+−
+ = 17
+
+ Mathematics - IB
+14
+i.e.,
+ yx 175
++−−
+= 17
+i.e., –
+  
+x –
+ 
+5y + 17 = 17    or    –
+ 
+x – 5y + 17 = –17
+i.e.,x + 5y = 0  or  x + 5y = 34
+   Therefore(x
+ 
++
+ 
+5y)
+ 
+(
+ 
+x
+ 
++
+ 
+5y
+ 
+–
+ 
+34) = 0
+i.e.,x
+2 
++
+ 
+10xy + 25y
+2
+ – 34x – 170y = 0       ... (2)
+Let  Q(x
+1
+, y
+1
+)  satisfy  (2).  Then
+        x
+1
+ + 5y
+1
+=   0   or   x
+1
+ + 5y
+1
+ = 34       ... (3)
+Now, area of  
+∆
+QAB=
+()
+()()
+ yyx 334243
+2
+1
+111
+−−−+−
+=
+ 
+yyx 
+9328
+2
+1
+111
++−−+−
+=
+ 
+yx  
+175
+2
+1
+11
++−−
+=
+2
+17
+ = 8.5(by using (3))
+This means that  Q(x
+1
+, y
+1
+)  satisfies  (1).
+Hence,  the required equation of  locus is
+(x
+ 
++
+ 
+5y)
+ 
+(x
+ 
++
+ 
+5y
+ 
+–
+ 
+34) = 0   or    x
+2
+ 
++
+ 
+10xy
+ 
++
+ 
+25y
+2
+ 
+–
+ 
+34x
+ 
+–
+ 
+170y = 0.
+Exercise  1(a)
+I.1.Find the equation of  locus of a point which is at a distance 5  from  A (4, – 3).
+2.Find the equation of  locus of a point which is equidistant from the points  A (– 3, 2)  and   B (0, 4).
+3.Find the equation of  locus of a point   P   such that the distance of   P   from the origin is twice the
+distance of   P   from   A (1, 2).
+4.Find the equation of locus of a point which is equidistant from the coordinate axes.
+5.Find the equation of locus of a point  equidistant from   A (2, 0)   and the Y-axis.
+6.Find the equation of locus of a point   P,   the square of whose distance from the origin is  4  times its
+y-coordinate.
+7.Find the equation of locus of  a  point   P   such that   PA
+2
+ +  PB
+2
+ = 2c
+2
+,   where  A = (
+ 
+a, 0
+ 
+),
+B = (–
+ a, 0)   and    0 < 
+ a 
+ < 
+ c 
+.
+II.1.Find the equation of locus of    P,    if the line segment joining   (2, 3)   and   (–
+ 
+1, 5) subtends a right
+angle at   P.
+
+15
+Locus
+2.The ends of the hypotenuse of a right angled triangle are   (0, 6)   and   (6, 0).   Find the equation of
+the  locus of its third vertex.
+3.Find the equation of the locus of a point, the difference of whose distances from (– 5, 0) and
+(5, 0)    is   8.
+4.Find the equation of the locus of   P,   if  A = (4, 0), B = (–
+ 
+4, 0)  and 
+ 
+ 
+PBPA
+−
+ = 4.
+5.Find the equation of the locus of a point, the sum of whose distances from (0, 2) and  (0, –2) is   6.
+6.Find the equation of the locus of   P,   if   A = (
+ 
+2, 3
+ 
+), B = (
+ 
+2, –
+ 
+3) and  PA
+ 
++
+ 
+PB = 8.
+7.A (
+ 
+5, 3
+ 
+)   and   B
+ 
+(
+ 
+3, –
+ 
+2
+ 
+)  are two fixed points. Find the equation of  the locus of   P,   so that the
+area of triangle   PAB   is   9.
+8.Find the equation of the locus of  a point, which forms a triangle of area   2  with the points
+A (
+ 
+1, 1
+ 
+)  and   B (
+ 
+–
+ 
+2, 3
+ 
+).
+9.If the distance from  P  to the points  (
+ 
+2, 3
+ 
+)  and   (2, –3)   are in the ratio   2 : 3,   then find the equation
+of the locus of   P.
+10.A(
+ 
+1,  2
+ 
+),    B  (
+ 
+2,  –
+ 
+3
+ 
+)  and  C  (
+ 
+–
+ 
+2,  3
+ 
+)  are  three  points.  A    point    P    moves  such  that
+PA
+2
+ + PB
+2
+ = 2PC
+2
+.  Show that the equation to the locus of  P  is 7x– 7y + 4 = 0.
+Key Concepts
+❖Locus is the set of points (and only those points) that satisfy the given consistent geometric
+condition(s).
+❖An equation of a locus is an algebraic description of the locus. This can be obtained in the
+following way :
+(i)Consider a point   P(x, y)  on the locus.
+(ii)Write the geometric condition(s) to be satisfied by   P   in terms of an equation or
+inequation in symbols.
+(iii)Apply the proper formula of coordinate geometry and translate the geometric
+condition(s) into an algebraic equation.
+(iv)Simplify the equation so that it is free from radicals.
+(v)Verify that if   Q(x
+1
+, y
+1
+)   satisfies the equation, then  Q  satisfies the geometric
+condition.
+  The equation thus obtained is the required equation of locus.
+
+ Mathematics - IB
+16
+Historical Note
+Analytic geometry, as we know, grew out of the need for establishing algebraic  techniques for
+solving geometrical problems, the aim being to apply them to the study of curves, which are of particular
+importance in practical problems. The coordinate method was systematically  developed  in the first
+half of the 17th century in the works of  Fermat  and Descartes.
+Fermat dealt with plane loci, which according to him were collections of points lying in a
+plane; they are curves. He simplified the related earlier work ascribed to Apollonius, by applying
+algebra to geometry through the use of coordinates. He noticed that an independent equation in
+two unknowns determines a locus of points in a plane.
+John Wallis (1616-1703) described the second degree equation as representing curves for
+the first time in 1656. He was pioneer to describe the conic sections as the loci of the second
+degree equations.
+Euler  later extended the work from plane loci to space loci and surfaces. .
+Answers
+Exercise    1(a)
+ I.1.x
+2
+ + y
+2
+  – 8x + 6y = 02.6x  + 4y  = 3
+3.3x
+2
+ + 3y
+2 
+ – 8x – 16y + 20 = 04.x
+2
+ – y
+2
+ = 0
+5.y
+2
+ – 4x + 4 = 06.x
+2 
++ y
+2
+ – 4y = 0
+7.x
+2
+ + y
+2  
+= c
+2
+ – a
+2
+II.1.x
+2
+ + y
+2
+ – x – 8y + 13 = 0;  (x, y) 
+≠
+ (2, 3) and  (x, y) 
+≠
+ (–1, 5)
+2.x
+2
+ + y
+2
+ – 6x – 6y = 0,  (x, y) 
+≠
+ (0, 6) and  (x, y) 
+≠
+ (6, 0)
+3.
+916
+22
+yx
+−
+ = 14.    
+124
+22
+yx
+−
+ = 1
+5.
+95
+22
+yx
++
+ = 1
+6.    16x
+2
+ + 7y
+2
+ – 64x – 48 = 0.   i.e.,  
+()
+7
+2
+2
+−
+x
+ + 
+16
+2
+y
+ = 1
+7.(5x – 2y – 37)
+ 
+(5x – 2y – 1) = 0
+8.(2x + 3y – 1)
+ 
+(2x + 3y – 9) = 0
+9.5x
+2
+ + 5y
+2
+ – 20x – 78y + 65 = 0
+
+17
+Transformation of Axes
+Introduction
+A plane extends infinitely in all directions. By drawing
+X
+ 
+–
+ 
+axis and  Y
+ 
+–
+ 
+axis, and dividing the infinite plane into four
+quadrants,  we represent any point in the plane as an ordered
+pair of real numbers, which are the lengths of perpendicular
+distances of the point from the axes chosen. It is to be noted
+that these axes can be chosen arbitrarily and therefore the
+position of these axes in the plane is not fixed.  They can be
+changed.  When  the  position  of  axes  is  changed,  the
+coordinates of a point also get changed correspondingly.
+Consequently,  equations of curves will also be changed.
+This process of transformation of axes will be of great
+advantage to solve some problems very easily.
+The axes can be transformed or changed usually in
+the following ways :  (i)  Translation of axes  (ii) Rotation of
+axes and  (iii)  Translation and rotation of axes.
+Leonhard  Paul  Euler
+ (1707 - 1783)
+Euler was  a  pioneering  Swiss
+mathematician  and  physicist,  who
+spent  most  of  his  life  in  Russia  and
+Germany.   He   published   more
+papers  than  any  other  mathe-
+matician.  Euler  made  important
+discoveries  in  such  diverse  fields
+as  Calculus,  Geometry,  Trigono-
+metry,   Differential   Equations,
+Fluid  mechanics,  Graph  theory,
+Number  theory  and  so  on.
+"We  transform  a  given  mathematical  set  up  into  a
+new one. By studying the new set up we discover some
+property  of  it.  We  then  invert  the  transformation  to
+obtain a property of the original set up
+"
+- Howard Eves
+
+ Mathematics - IB
+18
+2.1  Transformation of axes-Rules, derivations and illustrations
+Transformation of axes, some times,  proves to be advantageous in solving some problems. We
+discuss  mainly two such transformations. One of these transformations, namely translation of axes is
+discussed in the present section.
+2.1.1  Definition (Translation of axes)
+The transformation obtained, by shifting the origin to a given different point in the plane,
+without changing the directions of coordinate axes therein is called a Translation of axes.
+2.1.2  Ch

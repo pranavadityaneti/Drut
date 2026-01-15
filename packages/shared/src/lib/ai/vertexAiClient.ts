@@ -58,6 +58,7 @@ export const getAiClient = (): GoogleGenAI => {
         throw new Error("API key is missing. Please add VITE_GEMINI_API_KEY to your .env.local file.");
     }
 
+    console.log('[Drut AI] Active Model: gemini-3-flash-preview');
     client = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
     return client;
 };
@@ -81,21 +82,39 @@ export const generateDrutContent = async (
     const ai = getAiClient();
     const config = getDrutAIConfig(mode);
 
-    const result = await ai.models.generateContent({
-        model: config.model,
-        contents: prompt,
-        config: {
-            systemInstruction: options.systemInstruction,
-            responseMimeType: options.responseMimeType || 'text/plain',
-            temperature: options.temperature ?? (mode === 'speed' ? 0.2 : 0.4),
-            // Gemini 3 thinking configuration
-            thinkingConfig: {
-                thinkingLevel: config.thinkingLevel as any
-            }
-        },
-    });
-
-    return result.text || '';
+    try {
+        const result = await ai.models.generateContent({
+            model: config.model,
+            contents: prompt,
+            config: {
+                systemInstruction: options.systemInstruction,
+                responseMimeType: options.responseMimeType || 'text/plain',
+                temperature: options.temperature ?? (mode === 'speed' ? 0.2 : 0.4),
+                // Gemini 3 thinking configuration - Removed for now as thinkingConfig might not be fully supported in all client versions yet or requires specific handling
+                // thinkingConfig: {
+                //     thinkingLevel: config.thinkingLevel as any
+                // }
+            },
+        });
+        return result.text || '';
+    } catch (error: any) {
+        // Fallback Logic
+        if (error.message?.includes('404') || error.message?.includes('503') || error.message?.includes('not found')) {
+            console.warn('[Drut AI] Fallback triggered: using gemini-1.5-flash');
+            const fallbackModel = 'gemini-1.5-flash';
+            const result = await ai.models.generateContent({
+                model: fallbackModel,
+                contents: prompt,
+                config: {
+                    systemInstruction: options.systemInstruction,
+                    responseMimeType: options.responseMimeType || 'text/plain',
+                    temperature: options.temperature ?? 0.2,
+                },
+            });
+            return result.text || '';
+        }
+        throw error;
+    }
 };
 
 /**

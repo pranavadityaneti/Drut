@@ -83,3 +83,7 @@ export * from './lib/svgSanitizer';
 
 // Hooks (Careful with React usage)
 export * from './hooks/useDashboardData';
+
+// Validation
+export * from './lib/clientValidator';
+export * from './lib/taxonomy/physicsRules';

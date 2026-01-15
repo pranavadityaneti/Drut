@@ -8,15 +8,21 @@ export interface QuestionItem {
         cat: number;
         eamcet: number;
     };
-    fastestSafeMethod: {
-        exists: boolean;
-        preconditions?: string;
+    // T.A.R. Algorithm (Optimal Path)
+    optimal_path: {
+        available: boolean;
         steps: string[];
-        sanityCheck?: string;
+    } | null;
+    // D.E.E.P. Framework (Full Solution)
+    full_solution: {
+        phases: Array<{
+            label: 'DIAGNOSE' | 'EXTRACT' | 'EXECUTE' | 'PROOF';
+            content: string;
+        }>;
     };
-    fullStepByStep: {
-        steps: string[];
-    };
+    // Legacy mapping for backward compatibility (Optional)
+    fastestSafeMethod?: any;
+    fullStepByStep?: any;
     // NEW: Visual description for diagram generation (prompt for image model)
     visualDescription?: string | null;
     // NEW: Hosted diagram URL (replaces diagramCode)
@@ -35,6 +41,10 @@ export interface GenerateQuestionRequest {
     subtopic: string;
     examProfile: string;
     difficulty: 'Easy' | 'Medium' | 'Hard';
+    // RAG Filters
+    classLevel?: string;
+    board?: string;
+    subject?: string;
 }
 
 export interface GenerateBatchRequest {
@@ -43,6 +53,10 @@ export interface GenerateBatchRequest {
     examProfile: string;
     difficulty: 'Easy' | 'Medium' | 'Hard';
     count: number;
+    // RAG Filters
+    classLevel?: string;
+    board?: string;
+    subject?: string;
 }
 
 export interface PerformanceData {
