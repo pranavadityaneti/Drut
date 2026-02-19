@@ -22,12 +22,126 @@ if (!GEMINI_API_KEY) {
     console.error('GEMINI_API_KEY not set!');
 }
 
+/* -------------------------------------------------------------------------- */
+/*                              RUNPOD CLIENT                                 */
+/* -------------------------------------------------------------------------- */
+const RUNPOD_API_URL = "http://213.173.102.224:28199/v1/chat/completions";
+const RUNPOD_MODEL = "PhysicsWallahAI/Aryabhata-1.0";
+
+/**
+ * Generate content using RunPod (vLLM)
+ */
+async function generateContentRunPod(prompt: string, systemInstruction?: string): Promise<string> {
+    console.log("➡️ Routing to RunPod (Qwen2.5-Math)...");
+
+    // Construct messages payload for OpenAI-compatible API
+    const messages = [];
+
+    // STRICT RUNPOD SYSTEM PROMPT
+    const runpodSystem = `You are a strict JSON-only API. 
+You must output a VALID JSON object matching the requested schema.
+Do NOT include thinking, markdown, explanations, or any text outside the JSON block.
+If the user asks for a specific schema, follow it exactly.`;
+
+    messages.push({ role: "system", content: runpodSystem });
+
+    if (systemInstruction) {
+        messages.push({ role: "system", content: systemInstruction });
+    }
+
+    // ONE-SHOT EXAMPLE to force JSON behavior
+    messages.push({ role: "user", content: "Generate 1 Math question about fractions." });
+    messages.push({ role: "assistant", content: `{"questions": [{"questionText": "What is 1/2 + 1/4?", "options": [{"text": "3/4", "isCorrect": true}, {"text": "1/2", "isCorrect": false}], "difficulty": "Easy"}]}` });
+
+    messages.push({ role: "user", content: prompt });
+
+    try {
+        // Create an abort controller for timeout
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 25000); // 25 second timeout
+
+        const response = await fetch(RUNPOD_API_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                model: RUNPOD_MODEL,
+                messages: messages,
+                max_tokens: 2048,
+                temperature: 0.2,
+                stop: ["<|im_start|>", "<|im_end|>"]
+            }),
+            signal: controller.signal
+        });
+
+        clearTimeout(timeoutId);
+
+        if (!response.ok) {
+            const errText = await response.text();
+            throw new Error(`RunPod HTTP ${response.status}: ${errText}`);
+        }
+
+        const data = await response.json();
+        const content = data.choices?.[0]?.message?.content;
+
+        if (!content) {
+            throw new Error("RunPod returned empty content");
+        }
+        return content;
+
+    } catch (e: any) {
+        console.error(`❌ RunPod Failed (${e.name}: ${e.message})`);
+        throw e; // Use this to trigger fallback in the main function
+    }
+}
+/* -------------------------------------------------------------------------- */
+
 export async function generateContent(
     prompt: string,
     systemInstruction?: string,
     temperature = 0.3,
     model = 'gemini-3-flash-preview'
 ): Promise<string> {
+
+    // ROGUE ROUTING LOGIC: If generating a QUESTION (implied by prompt context) and topic is Math/Physics
+    // Try RunPod first.
+    // Check both system instruction and prompt content
+    const isMathContext = (systemInstruction &&
+        (systemInstruction.includes("SUBJECT: Mathematics") || systemInstruction.includes("SUBJECT: Physics")));
+
+    const isMathRequest = isMathContext ||
+        prompt.toLowerCase().includes("math") ||
+        prompt.toLowerCase().includes("physics");
+
+    if (isMathRequest) {
+        try {
+            const runpodResult = await generateContentRunPod(prompt, systemInstruction);
+
+            // VALIDATION: Ensure response is parseable JSON (or close enough)
+            // If RunPod returns garbage, we MUST throw here to trigger Gemini fallback.
+            try {
+                const cleaned = extractJSON(runpodResult);
+                // Attempt parse. We don't use the result here, just check validity.
+                // Only if the prompt explicitly asked for JSON (most do via systemInstruction or prompt)
+                if (systemInstruction?.includes("JSON") || prompt.includes("JSON")) {
+                    JSON.parse(cleaned);
+                }
+            } catch (jsonErr) {
+                throw new Error("RunPod returned invalid JSON. Triggering fallback.");
+            }
+
+            return runpodResult;
+        } catch (e) {
+            const fallbackEnabled = Deno.env.get('ENABLE_GEMINI_FALLBACK') !== 'false'; // Default true
+            if (!fallbackEnabled) {
+                console.error("❌ RunPod Failed and Fallback is DISABLED. Throwing error.");
+                throw e;
+            }
+            console.warn("⚠️ RunPod failed/invalid, falling back to Gemini...", e);
+            // Fall through to Gemini logic below
+        }
+    }
     const endpoint = (modelName: string) => `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${GEMINI_API_KEY}`;
 
     let currentModel = model;
