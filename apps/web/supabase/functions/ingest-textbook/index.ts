@@ -1,11 +1,34 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.45.0';
-import { Buffer } from 'node:buffer';
 import { corsHeaders } from '../_shared/cors.ts';
 import { embedText, generateContent } from '../_shared/vertex-client.ts';
 import JSON5 from 'https://esm.sh/json5@2.2.3';
-// @ts-ignore
-import pdf from 'npm:pdf-parse@1.1.1';
+// Phase B chunking helpers (see _shared/pdf-chunking.ts). Replaces direct
+// pdf-parse usage so we get page-aware extraction + de-noising.
+import {
+    extractPagesFromPdf,
+    assertNoFormFeedCollision,
+    detectHeadersFooters,
+    stripHeadersFooters,
+    chunkByPage,
+} from '../_shared/pdf-chunking.ts';
+
+// Aggregate-text-length threshold for scanned-PDF detection. If extraction
+// returns less than this many characters total, mark the textbook as
+// 'partial-extraction' so the admin sees a flag (likely an image-only/scanned
+// PDF that needs OCR). Picked conservatively: even a 5-page textbook should
+// easily exceed this.
+const MIN_EXTRACTED_CHARS = 5000;
+
+// Phase B chunking parameters. See _shared/pdf-chunking.ts JSDoc for
+// rationale on overlap reduction from 200 (Phase A) to 100.
+const CHUNK_SIZE = 1000;
+const CHUNK_OVERLAP = 100;
+const CHUNK_MIN_SIZE = 200;
+
+// Tag every chunk produced by this version of the pipeline so future code
+// can distinguish Phase A vs Phase B vs later chunks in the same table.
+const INGEST_VERSION = 'phase-b-v1';
 
 serve(async (req) => {
     // Handle CORS
@@ -14,7 +37,11 @@ serve(async (req) => {
     }
 
     try {
-        const { filePath, textContent, skipExtraction, skipChunking } = await req.json();
+        const { filePath, skipExtraction, skipChunking } = await req.json();
+        // Note: `textContent` field accepted but IGNORED in Phase B v1. Page-aware
+        // extraction requires server-side parsing — we cannot reconstruct page
+        // boundaries from a client-provided merged string. TextbookManager still
+        // sends the field; we just don't read it here.
 
         if (!filePath) {
             throw new Error('Missing filePath');
@@ -27,27 +54,28 @@ serve(async (req) => {
         const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
         const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-        let fullText = '';
         let aiResponseDebug = 'N/A';
         let syllabusDebug = 'N/A';
 
-        if (textContent) {
-            console.log(`[ingest-textbook] Received text content (${textContent.length} chars) from client`);
-            fullText = textContent;
-        } else {
-            console.log('[ingest-textbook] No text provided, attempting server-side parse...');
-            const { data: fileData, error: downloadError } = await supabase.storage
-                .from('textbooks')
-                .download(filePath);
+        // ---- Server-side page-aware extraction (Phase B) ----
+        console.log('[ingest-textbook] Downloading PDF from storage...');
+        const { data: fileData, error: downloadError } = await supabase.storage
+            .from('textbooks')
+            .download(filePath);
 
-            if (downloadError) throw downloadError;
+        if (downloadError) throw downloadError;
 
-            const arrayBuffer = await fileData.arrayBuffer();
-            // @ts-ignore
-            const buffer = Buffer.from(arrayBuffer);
-            const pdfData = await pdf(buffer);
-            fullText = pdfData.text;
-        }
+        const arrayBuffer = await fileData.arrayBuffer();
+        console.log(`[ingest-textbook] PDF downloaded (${(arrayBuffer.byteLength / 1024 / 1024).toFixed(2)} MB). Parsing per-page with unpdf...`);
+
+        const rawPages = await extractPagesFromPdf(arrayBuffer);
+        assertNoFormFeedCollision(rawPages);
+        const totalChars = rawPages.reduce((acc, p) => acc + p.text.length, 0);
+        console.log(`[ingest-textbook] Extracted ${rawPages.length} pages, ${totalChars} total chars`);
+
+        // fullText (concatenated, for legacy code paths like the AI TOC extractor).
+        // Use \n\n between pages — TOC extractor doesn't care about page boundaries.
+        const fullText = rawPages.map(p => p.text).join('\n\n');
 
         // Get textbook metadata
         const { data: textbook, error: tbError } = await supabase
@@ -163,44 +191,88 @@ serve(async (req) => {
             });
         }
 
-        console.log(`[ingest-textbook] Ready to chunk ${fullText.length} characters`);
+        // ---- Phase B: header/footer de-noising + page-aware chunking ----
 
-        // ... (Existing Chunking Logic) ...
-        const CHUNK_SIZE = 1000;
-        const OVERLAP = 200;
-        const chunks: string[] = [];
-
-        for (let i = 0; i < fullText.length; i += (CHUNK_SIZE - OVERLAP)) {
-            chunks.push(fullText.slice(i, i + CHUNK_SIZE));
+        // 1. Aggregate-text validation (scanned-PDF detection).
+        //    If extraction returned ~nothing, mark partial-extraction and bail
+        //    BEFORE wasting embedding API calls. Admin sees the flag on the
+        //    textbook row and can decide whether to OCR + re-upload.
+        if (totalChars < MIN_EXTRACTED_CHARS) {
+            const warning = `Only ${totalChars} chars extracted from ${rawPages.length} pages (threshold ${MIN_EXTRACTED_CHARS}). PDF may be scanned/image-only.`;
+            console.warn(`[ingest-textbook] ${warning}`);
+            await supabase
+                .from('textbooks')
+                .update({
+                    status: 'partial-extraction',
+                    error_message: warning,
+                })
+                .eq('id', textbook.id);
+            return new Response(JSON.stringify({
+                message: 'Partial extraction — no chunks generated',
+                warning,
+                pages: rawPages.length,
+                totalChars,
+            }), {
+                headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+            });
         }
 
-        console.log(`[ingest-textbook] Created ${chunks.length} chunks`);
+        // 2. Detect headers/footers across the whole book (frequency-based blocklist).
+        const blocklist = detectHeadersFooters(rawPages);
+        console.log(`[ingest-textbook] Header/footer blocklist size: ${blocklist.size}`);
 
-        // 4. Generate Embeddings & Store (in batches)
-        // Parallelize embeddings to speed up processing
-        const BATCH_SIZE = 5; // Process 5 chunks at a time (Limit checks)
+        // 3. Strip headers/footers + page numbers from each page.
+        const { pages: cleanedPages, logs: stripLogs, summary: stripSummary } =
+            stripHeadersFooters(rawPages, blocklist);
+        stripLogs.forEach(l => console.log(l));
+        console.log(
+            `[ingest-textbook] Stripped ${stripSummary.totalLinesStripped} lines ` +
+            `across ${stripSummary.pagesAffected}/${rawPages.length} pages`
+        );
+
+        // 4. Page-aware chunking — chunks now carry pageStart/pageEnd.
+        const phaseBChunks = chunkByPage(cleanedPages, {
+            chunkSize: CHUNK_SIZE,
+            overlap: CHUNK_OVERLAP,
+            minSize: CHUNK_MIN_SIZE,
+        });
+
+        console.log(
+            `[ingest-textbook] Created ${phaseBChunks.length} chunks ` +
+            `(size=${CHUNK_SIZE}, overlap=${CHUNK_OVERLAP}, min=${CHUNK_MIN_SIZE})`
+        );
+
+        // 5. Generate Embeddings & Store (in batches).
+        //    Same BATCH_SIZE=5 + Promise.all pattern as Phase A — only the per-chunk
+        //    shape changed (now carries page_start, page_end, ingest_version).
+        const BATCH_SIZE = 5;
         let processed = 0;
 
-        for (let i = 0; i < chunks.length; i += BATCH_SIZE) {
-            const batch = chunks.slice(i, i + BATCH_SIZE);
+        for (let i = 0; i < phaseBChunks.length; i += BATCH_SIZE) {
+            const batch = phaseBChunks.slice(i, i + BATCH_SIZE);
 
-            // 1. Generate Embeddings in Parallel
-            const embedPromises = batch.map(async (chunkText, batchIdx) => {
+            const embedPromises = batch.map(async (chunk, batchIdx) => {
                 const globalIdx = i + batchIdx;
-                const cleanText = chunkText.replace(/\s+/g, ' ').trim();
-
-                if (cleanText.length < 50) return null;
-
                 try {
-                    const embedding = await embedText(cleanText);
+                    const embedding = await embedText(chunk.text);
                     return {
                         textbook_id: textbook.id,
-                        content: cleanText,
+                        content: chunk.text,
                         chunk_index: globalIdx,
-                        embedding: `[${embedding.join(',')}]`
+                        page_number: chunk.pageStart,
+                        embedding: `[${embedding.join(',')}]`,
+                        metadata: {
+                            ingest_version: INGEST_VERSION,
+                            page_start: chunk.pageStart,
+                            page_end: chunk.pageEnd,
+                            char_count: chunk.charCount,
+                            subject: textbook.subject,
+                            board: textbook.board,
+                            class_level: textbook.class_level,
+                        },
                     };
                 } catch (err) {
-                    console.error(`Embedding failed for chunk ${globalIdx}`, err);
+                    console.error(`Embedding failed for chunk ${globalIdx} (pageStart=${chunk.pageStart})`, err);
                     return null;
                 }
             });
@@ -208,7 +280,6 @@ serve(async (req) => {
             const results = await Promise.all(embedPromises);
             const validRows = results.filter(r => r !== null);
 
-            // 2. Batch Insert into DB
             if (validRows.length > 0) {
                 const { error: insertError } = await supabase
                     .from('textbook_chunks')
@@ -222,19 +293,25 @@ serve(async (req) => {
             }
         }
 
-        // 5. Update Status
+        // 6. Update Status
         await supabase
             .from('textbooks')
             .update({ status: 'ready' })
             .eq('id', textbook.id);
 
         return new Response(JSON.stringify({
-            message: 'Ingestion complete',
-            chunks: chunks.length,
+            message: 'Ingestion complete (Phase B)',
+            ingestVersion: INGEST_VERSION,
+            pages: rawPages.length,
+            totalChars,
+            chunks: phaseBChunks.length,
+            chunksInserted: processed,
+            stripSummary,
+            blocklistSize: blocklist.size,
             extractionDebug: {
                 aiResponse: aiResponseDebug,
-                syllabus: syllabusDebug
-            }
+                syllabus: syllabusDebug,
+            },
         }), {
             headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         });
