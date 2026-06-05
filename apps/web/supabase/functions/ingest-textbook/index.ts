@@ -66,16 +66,28 @@ serve(async (req) => {
         if (downloadError) throw downloadError;
 
         const arrayBuffer = await fileData.arrayBuffer();
-        console.log(`[ingest-textbook] PDF downloaded (${(arrayBuffer.byteLength / 1024 / 1024).toFixed(2)} MB). Parsing per-page with unpdf...`);
+        const sizeMB = (arrayBuffer.byteLength / 1024 / 1024).toFixed(2);
+        console.log(`[ingest-textbook] PDF downloaded (${sizeMB} MB). Parsing per-page with unpdf...`);
 
-        const rawPages = await extractPagesFromPdf(arrayBuffer);
+        // Use 'let' so we can null these out after we're done with them — V8
+        // can then reclaim the memory before the embedding loop allocates
+        // chunks + vectors. On Supabase Free tier (150MB worker memory) the
+        // older version of this function held arrayBuffer + rawPages + fullText
+        // + cleanedPages + chunks all simultaneously and tripped WORKER_RESOURCE_LIMIT
+        // on a 14 MB PDF (2026-06-05 first re-upload smoke test).
+        let rawPages: any[] | null = await extractPagesFromPdf(arrayBuffer);
         assertNoFormFeedCollision(rawPages);
-        const totalChars = rawPages.reduce((acc, p) => acc + p.text.length, 0);
+        const totalChars = rawPages.reduce((acc: number, p: any) => acc + p.text.length, 0);
         console.log(`[ingest-textbook] Extracted ${rawPages.length} pages, ${totalChars} total chars`);
 
-        // fullText (concatenated, for legacy code paths like the AI TOC extractor).
-        // Use \n\n between pages — TOC extractor doesn't care about page boundaries.
-        const fullText = rawPages.map(p => p.text).join('\n\n');
+        // Build TOC context INCREMENTALLY (no second full-text copy in memory).
+        // We only need the first ~60k chars for the AI Table-of-Contents extractor.
+        let fullText = '';
+        for (const p of rawPages) {
+            if (fullText.length >= 60000) break;
+            fullText += p.text + '\n\n';
+        }
+        fullText = fullText.slice(0, 60000);
 
         // Get textbook metadata
         const { data: textbook, error: tbError } = await supabase
@@ -155,15 +167,21 @@ serve(async (req) => {
                     // Pre-Phase-B behavior: chapters inserted with NO parent_id ->
                     // they appeared at the board level in the KnowledgeBase UI and
                     // produced the 230 orphan-chapter cleanup we did on 2026-06-05.
-                    // The fix requires that board/class/subject folders be pre-created
-                    // (see migration 030_clean_knowledge_hierarchy.sql) with metadata
-                    // carrying board + class_level + subject so we can find them here.
+                    //
+                    // Lookup keys MUST match the metadata key convention used by
+                    // KnowledgeBase.tsx LeafFileManager (line 463 reads context.class,
+                    // not context.class_level). Migration 030 was originally written
+                    // with metadata.class_level but that broke uploads (textbook.class_level
+                    // came in as 'general' because the spread in currentContext keyed
+                    // on the wrong field). Aligned on 'class' as the metadata key here
+                    // and in the migration; textbook.class_level is the DB COLUMN we
+                    // match against, but the metadata KEY is 'class'.
                     const { data: subjectNode, error: lookupErr } = await supabase
                         .from('knowledge_nodes')
                         .select('id')
                         .eq('node_type', 'subject')
                         .eq('metadata->>board', textbook.board)
-                        .eq('metadata->>class_level', textbook.class_level)
+                        .eq('metadata->>class', textbook.class_level)
                         .eq('metadata->>subject', textbook.subject)
                         .maybeSingle();
 
@@ -190,7 +208,7 @@ serve(async (req) => {
                                 textbook_id: textbook.id,
                                 subject: textbook.subject,
                                 board: textbook.board,
-                                class_level: textbook.class_level,
+                                class: textbook.class_level,
                                 is_chapter: true,
                             },
                         }));
@@ -233,7 +251,8 @@ serve(async (req) => {
         //    BEFORE wasting embedding API calls. Admin sees the flag on the
         //    textbook row and can decide whether to OCR + re-upload.
         if (totalChars < MIN_EXTRACTED_CHARS) {
-            const warning = `Only ${totalChars} chars extracted from ${rawPages.length} pages (threshold ${MIN_EXTRACTED_CHARS}). PDF may be scanned/image-only.`;
+            const pageCountAtCheck = rawPages?.length ?? 0;
+            const warning = `Only ${totalChars} chars extracted from ${pageCountAtCheck} pages (threshold ${MIN_EXTRACTED_CHARS}). PDF may be scanned/image-only.`;
             console.warn(`[ingest-textbook] ${warning}`);
             await supabase
                 .from('textbooks')
@@ -245,7 +264,7 @@ serve(async (req) => {
             return new Response(JSON.stringify({
                 message: 'Partial extraction — no chunks generated',
                 warning,
-                pages: rawPages.length,
+                pages: pageCountAtCheck,
                 totalChars,
             }), {
                 headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -260,75 +279,86 @@ serve(async (req) => {
         const { pages: cleanedPages, logs: stripLogs, summary: stripSummary } =
             stripHeadersFooters(rawPages, blocklist);
         stripLogs.forEach(l => console.log(l));
+        const pageCount = rawPages.length;
         console.log(
             `[ingest-textbook] Stripped ${stripSummary.totalLinesStripped} lines ` +
-            `across ${stripSummary.pagesAffected}/${rawPages.length} pages`
+            `across ${stripSummary.pagesAffected}/${pageCount} pages`
         );
 
-        // 4. Page-aware chunking — chunks now carry pageStart/pageEnd.
-        const phaseBChunks = chunkByPage(cleanedPages, {
-            chunkSize: CHUNK_SIZE,
-            overlap: CHUNK_OVERLAP,
-            minSize: CHUNK_MIN_SIZE,
-        });
+        // 3b. Release rawPages — cleanedPages is the new source of truth.
+        //     With ~15 MB per pages array on a multi-MB textbook, this is the
+        //     single biggest memory win.
+        rawPages = null;
 
-        console.log(
-            `[ingest-textbook] Created ${phaseBChunks.length} chunks ` +
-            `(size=${CHUNK_SIZE}, overlap=${CHUNK_OVERLAP}, min=${CHUNK_MIN_SIZE})`
-        );
-
-        // 5. Generate Embeddings & Store (in batches).
-        //    Same BATCH_SIZE=5 + Promise.all pattern as Phase A — only the per-chunk
-        //    shape changed (now carries page_start, page_end, ingest_version).
-        const BATCH_SIZE = 5;
+        // 4. STREAMING chunk + embed — process N pages at a time, then drop the
+        //    chunks so V8 can reclaim memory before the next page batch. Trade-off:
+        //    chunks that would have straddled a page-batch boundary are now two
+        //    chunks instead of one. With 20-page batches that's a tiny fraction of
+        //    total chunks; accepted for staying under the 150 MB worker-memory cap.
+        const PAGE_BATCH = 20;
+        const EMBED_BATCH = 5;
         let processed = 0;
+        let totalChunks = 0;
+        let globalChunkIdx = 0;
 
-        for (let i = 0; i < phaseBChunks.length; i += BATCH_SIZE) {
-            const batch = phaseBChunks.slice(i, i + BATCH_SIZE);
-
-            const embedPromises = batch.map(async (chunk, batchIdx) => {
-                const globalIdx = i + batchIdx;
-                try {
-                    const embedding = await embedText(chunk.text);
-                    return {
-                        textbook_id: textbook.id,
-                        content: chunk.text,
-                        chunk_index: globalIdx,
-                        page_number: chunk.pageStart,
-                        embedding: `[${embedding.join(',')}]`,
-                        metadata: {
-                            ingest_version: INGEST_VERSION,
-                            page_start: chunk.pageStart,
-                            page_end: chunk.pageEnd,
-                            char_count: chunk.charCount,
-                            subject: textbook.subject,
-                            board: textbook.board,
-                            class_level: textbook.class_level,
-                        },
-                    };
-                } catch (err) {
-                    console.error(`Embedding failed for chunk ${globalIdx} (pageStart=${chunk.pageStart})`, err);
-                    return null;
-                }
+        for (let pageStart = 0; pageStart < cleanedPages.length; pageStart += PAGE_BATCH) {
+            const pageBatch = cleanedPages.slice(pageStart, pageStart + PAGE_BATCH);
+            const chunks = chunkByPage(pageBatch, {
+                chunkSize: CHUNK_SIZE,
+                overlap: CHUNK_OVERLAP,
+                minSize: CHUNK_MIN_SIZE,
             });
+            totalChunks += chunks.length;
 
-            const results = await Promise.all(embedPromises);
-            const validRows = results.filter(r => r !== null);
+            for (let i = 0; i < chunks.length; i += EMBED_BATCH) {
+                const batch = chunks.slice(i, i + EMBED_BATCH);
 
-            if (validRows.length > 0) {
-                const { error: insertError } = await supabase
-                    .from('textbook_chunks')
-                    .insert(validRows);
+                const embedPromises = batch.map(async (chunk, batchIdx) => {
+                    const localChunkIdx = globalChunkIdx + i + batchIdx;
+                    try {
+                        const embedding = await embedText(chunk.text);
+                        return {
+                            textbook_id: textbook.id,
+                            content: chunk.text,
+                            chunk_index: localChunkIdx,
+                            page_number: chunk.pageStart,
+                            embedding: `[${embedding.join(',')}]`,
+                            metadata: {
+                                ingest_version: INGEST_VERSION,
+                                page_start: chunk.pageStart,
+                                page_end: chunk.pageEnd,
+                                char_count: chunk.charCount,
+                                subject: textbook.subject,
+                                board: textbook.board,
+                                class_level: textbook.class_level,
+                            },
+                        };
+                    } catch (err) {
+                        console.error(`Embedding failed for chunk ${localChunkIdx} (pageStart=${chunk.pageStart})`, err);
+                        return null;
+                    }
+                });
 
-                if (insertError) {
-                    console.error('Batch insert error:', insertError);
-                } else {
-                    processed += validRows.length;
+                const results = await Promise.all(embedPromises);
+                const validRows = results.filter(r => r !== null);
+
+                if (validRows.length > 0) {
+                    const { error: insertError } = await supabase
+                        .from('textbook_chunks')
+                        .insert(validRows);
+
+                    if (insertError) {
+                        console.error('Batch insert error:', insertError);
+                    } else {
+                        processed += validRows.length;
+                    }
                 }
             }
+            globalChunkIdx += chunks.length;
+            // `chunks` goes out of scope at end of this iteration → eligible for GC.
         }
 
-        // 6. Update Status
+        // 5. Update Status
         await supabase
             .from('textbooks')
             .update({ status: 'ready' })
@@ -337,9 +367,9 @@ serve(async (req) => {
         return new Response(JSON.stringify({
             message: 'Ingestion complete (Phase B)',
             ingestVersion: INGEST_VERSION,
-            pages: rawPages.length,
+            pages: pageCount,
             totalChars,
-            chunks: phaseBChunks.length,
+            chunks: totalChunks,
             chunksInserted: processed,
             stripSummary,
             blocklistSize: blocklist.size,

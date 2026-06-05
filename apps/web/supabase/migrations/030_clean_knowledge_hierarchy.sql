@@ -47,21 +47,21 @@ BEGIN
     RETURNING id INTO v_ncert_id;
 
     INSERT INTO public.knowledge_nodes (parent_id, name, node_type, metadata)
-    VALUES (v_ncert_id, 'Class 11', 'class', '{"class_level":"11"}'::jsonb)
+    VALUES (v_ncert_id, 'Class 11', 'class', '{"class":"11"}'::jsonb)
     RETURNING id INTO v_ncert_c11_id;
 
     INSERT INTO public.knowledge_nodes (parent_id, name, node_type, metadata)
-    VALUES (v_ncert_id, 'Class 12', 'class', '{"class_level":"12"}'::jsonb)
+    VALUES (v_ncert_id, 'Class 12', 'class', '{"class":"12"}'::jsonb)
     RETURNING id INTO v_ncert_c12_id;
 
     INSERT INTO public.knowledge_nodes (parent_id, name, node_type, metadata)
     SELECT v_ncert_c11_id, subj, 'subject',
-           jsonb_build_object('subject', subj, 'board', 'NCERT', 'class_level', '11')
+           jsonb_build_object('subject', subj, 'board', 'NCERT', 'class', '11')
     FROM unnest(ARRAY['Mathematics','Physics','Chemistry']) AS subj;
 
     INSERT INTO public.knowledge_nodes (parent_id, name, node_type, metadata)
     SELECT v_ncert_c12_id, subj, 'subject',
-           jsonb_build_object('subject', subj, 'board', 'NCERT', 'class_level', '12')
+           jsonb_build_object('subject', subj, 'board', 'NCERT', 'class', '12')
     FROM unnest(ARRAY['Mathematics','Physics','Chemistry']) AS subj;
 
     -- =================================================================
@@ -72,21 +72,21 @@ BEGIN
     RETURNING id INTO v_bieap_id;
 
     INSERT INTO public.knowledge_nodes (parent_id, name, node_type, metadata)
-    VALUES (v_bieap_id, '1st Year', 'class', '{"class_level":"11"}'::jsonb)
+    VALUES (v_bieap_id, '1st Year', 'class', '{"class":"11"}'::jsonb)
     RETURNING id INTO v_bieap_y1_id;
 
     INSERT INTO public.knowledge_nodes (parent_id, name, node_type, metadata)
-    VALUES (v_bieap_id, '2nd Year', 'class', '{"class_level":"12"}'::jsonb)
+    VALUES (v_bieap_id, '2nd Year', 'class', '{"class":"12"}'::jsonb)
     RETURNING id INTO v_bieap_y2_id;
 
     INSERT INTO public.knowledge_nodes (parent_id, name, node_type, metadata)
     SELECT v_bieap_y1_id, subj, 'subject',
-           jsonb_build_object('subject', subj, 'board', 'BIEAP', 'class_level', '11')
+           jsonb_build_object('subject', subj, 'board', 'BIEAP', 'class', '11')
     FROM unnest(ARRAY['Mathematics','Physics','Chemistry']) AS subj;
 
     INSERT INTO public.knowledge_nodes (parent_id, name, node_type, metadata)
     SELECT v_bieap_y2_id, subj, 'subject',
-           jsonb_build_object('subject', subj, 'board', 'BIEAP', 'class_level', '12')
+           jsonb_build_object('subject', subj, 'board', 'BIEAP', 'class', '12')
     FROM unnest(ARRAY['Mathematics','Physics','Chemistry']) AS subj;
 
     -- =================================================================
@@ -99,21 +99,21 @@ BEGIN
     RETURNING id INTO v_tsbie_id;
 
     INSERT INTO public.knowledge_nodes (parent_id, name, node_type, metadata)
-    VALUES (v_tsbie_id, '1st Year', 'class', '{"class_level":"11"}'::jsonb)
+    VALUES (v_tsbie_id, '1st Year', 'class', '{"class":"11"}'::jsonb)
     RETURNING id INTO v_tsbie_y1_id;
 
     INSERT INTO public.knowledge_nodes (parent_id, name, node_type, metadata)
-    VALUES (v_tsbie_id, '2nd Year', 'class', '{"class_level":"12"}'::jsonb)
+    VALUES (v_tsbie_id, '2nd Year', 'class', '{"class":"12"}'::jsonb)
     RETURNING id INTO v_tsbie_y2_id;
 
     INSERT INTO public.knowledge_nodes (parent_id, name, node_type, metadata)
     SELECT v_tsbie_y1_id, subj, 'subject',
-           jsonb_build_object('subject', subj, 'board', 'TSBIE', 'class_level', '11')
+           jsonb_build_object('subject', subj, 'board', 'TSBIE', 'class', '11')
     FROM unnest(ARRAY['Mathematics','Physics','Chemistry']) AS subj;
 
     INSERT INTO public.knowledge_nodes (parent_id, name, node_type, metadata)
     SELECT v_tsbie_y2_id, subj, 'subject',
-           jsonb_build_object('subject', subj, 'board', 'TSBIE', 'class_level', '12')
+           jsonb_build_object('subject', subj, 'board', 'TSBIE', 'class', '12')
     FROM unnest(ARRAY['Mathematics','Physics','Chemistry']) AS subj;
 
     -- =================================================================
