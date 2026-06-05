@@ -1,15 +1,16 @@
-// Phase B chunking helpers — page-aware PDF extraction, header/footer
-// de-noising, and chunking that preserves page_number per chunk.
+// Phase B chunking helpers — header/footer de-noising and page-aware
+// chunking that preserves page_number per chunk.
 //
-// Pure functions, no I/O or DB dependencies. Designed for the
-// Supabase Edge Function runtime (Deno) with the `unpdf` library,
-// which is purpose-built for serverless PDF.js usage.
+// Pure functions, no I/O or DB dependencies, NO PDF parsing dependencies.
+// PDF parsing now happens in the BROWSER (pdfjs-dist already loaded by
+// LeafFileManager); the client sends an extracted `pages: [{pageNum, text}]`
+// array to ingest-textbook. This file is now PDF-library-free, which keeps
+// the edge function's resident memory tiny enough to comfortably fit under
+// Supabase's 256MB Edge Function memory cap.
 //
 // Used by: apps/web/supabase/functions/ingest-textbook/index.ts
 // Spec: see board-value-audit + phase-b-chunking-design workflows
-//       (2026-06-05) and forlater.md items #23–#26.
-
-import { extractText } from 'npm:unpdf@1.4.0';
+//       (2026-06-05) + hybrid pipeline redesign (2026-06-05 evening).
 
 // ---------------------------------------------------------------------------
 // Types
@@ -33,52 +34,12 @@ export interface Chunk {
     charCount: number;
 }
 
-// ---------------------------------------------------------------------------
-// Page extraction
-// ---------------------------------------------------------------------------
-
-/**
- * Extract text from a PDF buffer, preserving page boundaries.
- *
- * Returns one entry per page in order, 1-indexed. Empty pages (e.g. scanned
- * image-only pages) keep their slot with text: '' so downstream code can
- * detect scan-heavy books via the aggregate-text-length check.
- *
- * Throws if unpdf fails to parse the PDF.
- */
-export async function extractPagesFromPdf(buffer: ArrayBuffer): Promise<PageText[]> {
-    const data = new Uint8Array(buffer);
-    const result: any = await extractText(data, { mergePages: false });
-
-    // unpdf with mergePages: false returns { totalPages: number, text: string[] }.
-    // Defensive: accept either string[] or a single string (shouldn't happen
-    // with mergePages: false but worth coping with API drift).
-    const pageTexts: string[] = Array.isArray(result?.text)
-        ? result.text
-        : (typeof result?.text === 'string' ? [result.text] : []);
-
-    return pageTexts.map((text, i) => ({
-        pageNum: i + 1,
-        text: text ?? '',
-    }));
-}
-
-/**
- * Sanity check: the chunker uses `\f` (form-feed) as the page-join sentinel.
- * If any page text already contains `\f`, the offset map would corrupt.
- * unpdf strips control chars in practice but this asserts the invariant.
- */
-export function assertNoFormFeedCollision(pages: PageText[]): void {
-    for (const page of pages) {
-        if (page.text.includes('\f')) {
-            throw new Error(
-                `[pdf-chunking] Form-feed (\\f) found in page ${page.pageNum} text. ` +
-                `This collides with the page-join sentinel. Switch sentinel to a ` +
-                `private-use Unicode codepoint (e.g. U+E000) before re-running.`
-            );
-        }
-    }
-}
+// NOTE: PDF parsing functions (extractPagesFromPdf, assertNoFormFeedCollision)
+// were removed in the 2026-06-05 hybrid-pipeline redesign. PDF parsing now
+// happens in the client (apps/web/components/admin/KnowledgeBase.tsx
+// LeafFileManager) via pdfjs-dist which is already loaded in the browser.
+// Server receives the per-page array and sanitizes any \f form-feed chars
+// inline (see ingest-textbook/index.ts) so no assertion helper is needed.
 
 // ---------------------------------------------------------------------------
 // Header / footer detection (Lin 2003 adapted, frequency-based)

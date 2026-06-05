@@ -3,14 +3,16 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.45.0';
 import { corsHeaders } from '../_shared/cors.ts';
 import { embedText, generateContent } from '../_shared/vertex-client.ts';
 import JSON5 from 'https://esm.sh/json5@2.2.3';
-// Phase B chunking helpers (see _shared/pdf-chunking.ts). Replaces direct
-// pdf-parse usage so we get page-aware extraction + de-noising.
+// Phase B chunking helpers (see _shared/pdf-chunking.ts).
+// HYBRID pipeline (2026-06-05 redesign): the client parses the PDF per-page
+// in the browser via pdfjs-dist and sends us a `pages: [{pageNum, text}]`
+// array. Server no longer parses PDFs — eliminates the unpdf dependency
+// and the 256MB-memory-cap crashes it caused on 14MB+ books.
 import {
-    extractPagesFromPdf,
-    assertNoFormFeedCollision,
     detectHeadersFooters,
     stripHeadersFooters,
     chunkByPage,
+    type PageText,
 } from '../_shared/pdf-chunking.ts';
 
 // Aggregate-text-length threshold for scanned-PDF detection. If extraction
@@ -37,17 +39,24 @@ serve(async (req) => {
     }
 
     try {
-        const { filePath, skipExtraction, skipChunking } = await req.json();
-        // Note: `textContent` field accepted but IGNORED in Phase B v1. Page-aware
-        // extraction requires server-side parsing — we cannot reconstruct page
-        // boundaries from a client-provided merged string. TextbookManager still
-        // sends the field; we just don't read it here.
+        const { filePath, pages, skipExtraction, skipChunking } = await req.json();
 
         if (!filePath) {
             throw new Error('Missing filePath');
         }
 
-        console.log(`[ingest-textbook] Processing: ${filePath} (skipExtraction: ${skipExtraction}, skipChunking: ${skipChunking})`);
+        // HYBRID pipeline: client extracts per-page text in the browser via
+        // pdfjs-dist and sends as `pages: [{pageNum, text}]`. Server no longer
+        // parses PDFs — see top-of-file comment for rationale.
+        if (!Array.isArray(pages) || pages.length === 0) {
+            throw new Error(
+                'Missing or empty `pages` array. Hybrid pipeline requires the client ' +
+                'to extract per-page text and send as `{filePath, pages: [{pageNum, text}]}`. ' +
+                'Legacy `{filePath, textContent: string}` mode is no longer supported.'
+            );
+        }
+
+        console.log(`[ingest-textbook] Processing: ${filePath} (${pages.length} client-extracted pages, skipExtraction=${skipExtraction}, skipChunking=${skipChunking})`);
 
         // Initialize Supabase Admin Client
         const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
@@ -57,28 +66,18 @@ serve(async (req) => {
         let aiResponseDebug = 'N/A';
         let syllabusDebug = 'N/A';
 
-        // ---- Server-side page-aware extraction (Phase B) ----
-        console.log('[ingest-textbook] Downloading PDF from storage...');
-        const { data: fileData, error: downloadError } = await supabase.storage
-            .from('textbooks')
-            .download(filePath);
+        // ---- Normalize incoming pages array ----
+        // Defensive coercion: sanitize form-feed characters (the chunker uses
+        // \f as its inter-page sentinel and would corrupt the offset map if
+        // any page text contained one), 1-index page numbers, ensure text is
+        // a string. No PDF parsing happens server-side.
+        let rawPages: PageText[] | null = pages.map((p: any, i: number) => ({
+            pageNum: typeof p.pageNum === 'number' && p.pageNum > 0 ? p.pageNum : i + 1,
+            text: typeof p.text === 'string' ? p.text.replace(/\f/g, ' ') : '',
+        }));
 
-        if (downloadError) throw downloadError;
-
-        const arrayBuffer = await fileData.arrayBuffer();
-        const sizeMB = (arrayBuffer.byteLength / 1024 / 1024).toFixed(2);
-        console.log(`[ingest-textbook] PDF downloaded (${sizeMB} MB). Parsing per-page with unpdf...`);
-
-        // Use 'let' so we can null these out after we're done with them — V8
-        // can then reclaim the memory before the embedding loop allocates
-        // chunks + vectors. On Supabase Free tier (150MB worker memory) the
-        // older version of this function held arrayBuffer + rawPages + fullText
-        // + cleanedPages + chunks all simultaneously and tripped WORKER_RESOURCE_LIMIT
-        // on a 14 MB PDF (2026-06-05 first re-upload smoke test).
-        let rawPages: any[] | null = await extractPagesFromPdf(arrayBuffer);
-        assertNoFormFeedCollision(rawPages);
-        const totalChars = rawPages.reduce((acc: number, p: any) => acc + p.text.length, 0);
-        console.log(`[ingest-textbook] Extracted ${rawPages.length} pages, ${totalChars} total chars`);
+        const totalChars = rawPages.reduce((acc: number, p: PageText) => acc + p.text.length, 0);
+        console.log(`[ingest-textbook] Received ${rawPages.length} pages, ${totalChars} total chars`);
 
         // Build TOC context INCREMENTALLY (no second full-text copy in memory).
         // We only need the first ~60k chars for the AI Table-of-Contents extractor.

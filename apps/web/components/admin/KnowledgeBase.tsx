@@ -469,9 +469,18 @@ const LeafFileManager: React.FC<{ context: any, pathLabels: string[] }> = ({ con
 
                 if (dbErr) throw dbErr;
 
-                // 3. Client Parse
+                // 3. Client Parse — extract PER PAGE so the server can
+                //    preserve page_number per chunk WITHOUT loading a heavy
+                //    PDF library on the edge function. Hybrid pipeline: the
+                //    browser already has pdfjs-dist loaded with full fonts /
+                //    DOM / hardware acceleration, so parsing here is cheap;
+                //    sending an array of page texts to the server is far
+                //    lighter than asking the server to re-parse the PDF.
+                //    Previous design (textContent: string concatenation +
+                //    server-side unpdf parsing) tripped the edge function's
+                //    256MB memory cap on 14MB+ PDFs (2026-06-05).
                 setUploadStatus(`Extracting Text ${i + 1}/${filesToUpload.length}...`);
-                let extracted = '';
+                const pages: Array<{ pageNum: number; text: string }> = [];
                 try {
                     const arrayBuffer = await file.arrayBuffer();
                     const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer });
@@ -479,16 +488,19 @@ const LeafFileManager: React.FC<{ context: any, pathLabels: string[] }> = ({ con
                     for (let p = 1; p <= pdf.numPages; p++) {
                         const page = await pdf.getPage(p);
                         const textContent = await page.getTextContent();
-                        extracted += textContent.items.map((item: any) => item.str).join(' ') + '\n';
+                        const text = textContent.items.map((item: any) => item.str).join(' ');
+                        pages.push({ pageNum: p, text });
                     }
                 } catch (e) {
                     console.warn(e);
                 }
 
-                // 4. Ingest
+                // 4. Ingest — send per-page array (hybrid pipeline).
+                //    Legacy {textContent: string} mode is no longer supported
+                //    by the server; this MUST be the array shape.
                 setUploadStatus(`Ingesting ${i + 1}/${filesToUpload.length}...`);
                 const { error: fnErr } = await supabase.functions.invoke('ingest-textbook', {
-                    body: { filePath: fileName, textContent: extracted }
+                    body: { filePath: fileName, pages }
                 });
 
                 if (fnErr) {
