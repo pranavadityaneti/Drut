@@ -33,7 +33,7 @@ export const TextbookManager: React.FC = () => {
     const [user, setUser] = useState<any>(null);
     const [title, setTitle] = useState('');
     const [subject, setSubject] = useState('Physics');
-    const [board, setBoard] = useState('Ncert');
+    const [board, setBoard] = useState('NCERT');
     const [classLevel, setClassLevel] = useState('11');
     const [file, setFile] = useState<File | null>(null);
     const [isUploading, setIsUploading] = useState(false);
@@ -264,7 +264,11 @@ export const TextbookManager: React.FC = () => {
                                 options={[
                                     { value: 'Physics', label: 'Physics' },
                                     { value: 'Chemistry', label: 'Chemistry' },
-                                    { value: 'Maths', label: 'Maths' }
+                                    // Value must be 'Mathematics' to match the RAG retrieval
+                                    // filter in apps/web/supabase/functions/_shared/rag.ts:normalizeSubject().
+                                    // "Maths" was a silent bug — match_syllabus_content would
+                                    // never find math textbooks tagged with that value.
+                                    { value: 'Mathematics', label: 'Mathematics' }
                                 ]}
                             />
                         </div>
@@ -273,11 +277,17 @@ export const TextbookManager: React.FC = () => {
                             <Select
                                 value={board}
                                 onChange={(e) => setBoard(e.target.value)}
+                                // Board values are case-sensitive and must match the
+                                // textbooks.board column AND the filter_board param
+                                // in match_syllabus_content RPC (see _shared/rag.ts).
+                                // Ordering: NCERT first (most common), state boards
+                                // next (EAPCET target audience), national boards last.
                                 options={[
+                                    { value: 'NCERT', label: 'NCERT' },
+                                    { value: 'BIEAP', label: 'BIEAP (Andhra Pradesh)' },
+                                    { value: 'TSBIE', label: 'TSBIE (Telangana)' },
                                     { value: 'CBSE', label: 'CBSE' },
-                                    { value: 'TSBIE', label: 'TSBIE' },
-                                    { value: 'ICSE', label: 'ICSE' },
-                                    { value: 'Ncert', label: 'Ncert' }
+                                    { value: 'ICSE', label: 'ICSE' }
                                 ]}
                             />
                         </div>
