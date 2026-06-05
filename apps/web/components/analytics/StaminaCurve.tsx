@@ -49,7 +49,7 @@ export const StaminaCurve: React.FC<Props> = ({ data }) => {
     }));
 
     return (
-        <div className="h-64 w-full">
+        <div className="stamina-curve h-64 w-full">
             <ResponsiveContainer width="100%" height="100%">
                 <ComposedChart data={chartData} margin={{ top: 12, right: 12, bottom: 24, left: 0 }}>
                     <defs>
