@@ -45,18 +45,18 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
 
  const getOptionClassName = (index: number) => {
  const base =
- "relative flex items-start gap-3 p-4 rounded-[12px] transition-all cursor-pointer ring-hairline";
+ "relative flex items-start gap-3 p-4 rounded-[12px] transition-all cursor-pointer";
 
  if (isDisabled) {
- return cn(base, "opacity-50 cursor-not-allowed");
+ return cn(base, "opacity-50 cursor-not-allowed ring-hairline");
  }
  if (!isAnswered) {
  // Pre-answer states
  if (selectedOption === index) {
- // selected — muted fill + leading lime dot
- return cn(base, "bg-[var(--color-muted)] ring-hairline-strong");
+ // selected — card bg + 2px ink ring so it pops at distance
+ return cn(base, "bg-[var(--color-card)] shadow-[inset_0_0_0_2px_var(--color-ink-1)]");
  }
- return cn(base, "bg-[var(--color-card)] hover:bg-[var(--color-muted)]");
+ return cn(base, "bg-[var(--color-card)] ring-hairline hover:bg-[var(--color-muted)]");
  }
 
  // Post-answer states
@@ -64,22 +64,21 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
  const isSelected = index === selectedOption;
 
  if (isCorrect) {
- // correct — muted fill, lime stripe on left, check icon
+ // correct — full accent-lime fill + 2px lime ring
  return cn(
  base,
- "bg-[var(--color-muted)] ring-hairline-strong",
- "before:content-[''] before:absolute before:left-0 before:top-3 before:bottom-3 before:w-[3px] before:rounded-r-full before:bg-[var(--color-primary)]"
+ "bg-[var(--color-accent)] shadow-[inset_0_0_0_2px_var(--color-primary)]"
  );
  }
  if (isSelected && !isCorrect) {
- // wrong — muted fill, destructive stripe on left, x icon
+ // wrong — muted red fill + 2px destructive ring
  return cn(
  base,
- "bg-[var(--color-muted)] ring-hairline-strong",
- "before:content-[''] before:absolute before:left-0 before:top-3 before:bottom-3 before:w-[3px] before:rounded-r-full before:bg-[var(--color-destructive)]"
+ "bg-[#fde7e5] shadow-[inset_0_0_0_2px_var(--color-destructive)]"
  );
  }
- return cn(base, "opacity-50");
+ // non-selected after answer — fade
+ return cn(base, "opacity-40 ring-hairline");
  };
 
  return (
@@ -122,12 +121,13 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
  disabled={isAnswered || isDisabled}
  />
 
- {/* Option letter chip */}
+ {/* Option letter chip — colored when post-submit state set */}
  <span className={cn(
  "inline-flex h-7 w-7 items-center justify-center rounded-[8px] text-[12px] font-bold shrink-0 num-tabular",
- isSelectedPre || isCorrect || isSelectedWrong
- ? "bg-[var(--color-card)] text-[var(--color-ink-1)] ring-hairline-strong"
- : "bg-[var(--color-muted)] text-[var(--color-ink-2)]"
+ isCorrect && "bg-[var(--color-primary)] text-white",
+ isSelectedWrong && "bg-[var(--color-destructive)] text-white",
+ isSelectedPre && "bg-[var(--color-ink-1)] text-white",
+ !isCorrect && !isSelectedWrong && !isSelectedPre && "bg-[var(--color-muted)] text-[var(--color-ink-2)]"
  )}>
  {String.fromCharCode(65 + index)}
  </span>
@@ -148,9 +148,7 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
  <X className="w-3.5 h-3.5" strokeWidth={3} />
  </span>
  )}
- {isSelectedPre && (
- <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-[var(--color-primary)] mt-2.5 shrink-0" />
- )}
+ {/* No trailing indicator when selected pre-submit — the ring + colored letter chip carry it */}
  </label>
  );
  })}
