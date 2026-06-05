@@ -1,17 +1,21 @@
 /**
- * DebtCollector Component
- * 
- * Sticky right panel showing patterns with is_in_debt = TRUE
- * Modern design with CardMenu
+ * DebtCollector — editorial refresh.
+ *
+ * Sticky-style panel showing patterns flagged is_in_debt. Each pattern
+ * renders as a TicketCard with a coral-warm icon chip, the formatted FSM
+ * tag as title, time-since as a meta row. The most overdue (highest days
+ * since last practice) takes the featured slot. Clear Debt CTA is the ink
+ * button. Empty state uses lime check + new tokens.
  */
 
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/Card';
 import { CardMenu } from '../ui/CardMenu';
 import { Button } from '../ui/Button';
+import { TicketCard, TicketCardRow } from '../ui/TicketCard';
+import { Badge } from '../ui/badge';
 import { cn } from '@drut/shared';
 import { AlertTriangle, ChevronRight, Clock, CheckCircle2 } from 'lucide-react';
-import { Badge } from '../ui/badge';
 
 interface DebtPattern {
     id: string;
@@ -27,6 +31,23 @@ interface DebtCollectorProps {
     className?: string;
 }
 
+const formatTag = (tag: string) =>
+    tag
+        .split('-')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ');
+
+const daysSince = (dateStr: string) => {
+    return Math.floor((Date.now() - new Date(dateStr).getTime()) / (1000 * 60 * 60 * 24));
+};
+
+const timeSinceLabel = (dateStr: string) => {
+    const days = daysSince(dateStr);
+    if (days === 0) return 'Today';
+    if (days === 1) return '1 day ago';
+    return `${days} days ago`;
+};
+
 export const DebtCollector: React.FC<DebtCollectorProps> = ({
     patterns,
     onClearDebt,
@@ -35,40 +56,27 @@ export const DebtCollector: React.FC<DebtCollectorProps> = ({
 }) => {
     const hasDebt = patterns.length > 0;
 
-    // Format fsm_tag to display name
-    const formatTag = (tag: string) => {
-        return tag
-            .split('-')
-            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-            .join(' ');
-    };
-
-    // Time since last practice
-    const timeSince = (dateStr: string) => {
-        const days = Math.floor((Date.now() - new Date(dateStr).getTime()) / (1000 * 60 * 60 * 24));
-        if (days === 0) return 'Today';
-        if (days === 1) return '1 day ago';
-        return `${days} days ago`;
-    };
+    // Featured = oldest unpaid (highest days since last practiced)
+    const visible = patterns.slice(0, 5);
+    const featuredIdx = visible.length > 0
+        ? visible.reduce((maxIdx, p, i, arr) =>
+            daysSince(p.last_practiced_at) > daysSince(arr[maxIdx].last_practiced_at) ? i : maxIdx, 0)
+        : -1;
 
     return (
-        <Card className={cn(
-            "min-h-[280px]", // Match SpeedPulse height
-            hasDebt && "border-amber-200 bg-amber-50/50",
-            className
-        )}>
+        <Card className={cn("min-h-[280px]", className)}>
             <CardHeader className="pb-3">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                        <CardTitle className="flex items-center gap-2 text-base">
+                        <CardTitle className="flex items-center gap-2 text-[14px] tracking-tight">
                             <AlertTriangle className={cn(
                                 "w-4 h-4",
-                                hasDebt ? "text-amber-600" : "text-muted-foreground"
+                                hasDebt ? "text-[var(--color-accent-warm)]" : "text-[var(--color-ink-3)]"
                             )} />
-                            Debt Collector
+                            Debt collector
                         </CardTitle>
                         {hasDebt && (
-                            <Badge variant="secondary" className="bg-amber-100 text-amber-700">
+                            <Badge variant="accent" className="num-tabular">
                                 {patterns.length}
                             </Badge>
                         )}
@@ -77,69 +85,64 @@ export const DebtCollector: React.FC<DebtCollectorProps> = ({
                         onRefresh={onRefresh}
                         infoTitle="About Debt Collector"
                         infoContent={
-                            <p>Patterns go into "debt" when you skip practice drills or answer incorrectly multiple times. Clear your debt by practicing these patterns to reinforce your learning.</p>
+                            <p>Patterns go into debt when you skip drills or miss them repeatedly. Clear the debt by practicing them to lock the pattern in.</p>
                         }
                     />
                 </div>
             </CardHeader>
 
-            <CardContent className="space-y-3">
+            <CardContent className="space-y-2.5">
                 {!hasDebt ? (
                     <div className="flex flex-col items-center justify-center py-10 text-center">
-                        <div className="w-14 h-14 rounded-full bg-emerald-100 flex items-center justify-center mb-4">
-                            <CheckCircle2 className="w-7 h-7 text-emerald-600" />
-                        </div>
-                        <p className="text-emerald-600 font-medium">All Clear!</p>
-                        <p className="text-muted-foreground text-sm mt-1">Start Your Debt-Free Journey</p>
+                        <span className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-[var(--color-accent)] text-[var(--color-accent-foreground)] mb-3">
+                            <CheckCircle2 className="w-5 h-5" />
+                        </span>
+                        <p className="text-[14px] font-semibold text-[var(--color-ink-1)] tracking-tight">All clear</p>
+                        <p className="text-[12px] text-[var(--color-ink-3)] mt-1">No patterns currently in debt.</p>
                     </div>
                 ) : (
                     <>
-                        {/* Debt list */}
-                        <div className="space-y-2">
-                            {patterns.slice(0, 5).map((pattern, index) => (
-                                <div
-                                    key={pattern.id}
-                                    className="flex items-center gap-3 p-2.5 rounded-lg border bg-card hover:bg-muted/50 cursor-pointer transition-colors"
-                                >
-                                    {/* Index */}
-                                    <span className="flex-shrink-0 w-5 h-5 rounded-full bg-amber-100 flex items-center justify-center text-xs font-medium text-amber-700">
-                                        {index + 1}
-                                    </span>
-
-                                    {/* Pattern info */}
-                                    <div className="flex-1 min-w-0">
-                                        <p className="text-sm font-medium text-foreground truncate">
-                                            {formatTag(pattern.fsm_tag)}
-                                        </p>
-                                        <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                                            <Clock className="w-3 h-3" />
-                                            {timeSince(pattern.last_practiced_at)}
-                                        </div>
-                                    </div>
-
-                                    <ChevronRight className="w-4 h-4 text-muted-foreground flex-shrink-0" />
-                                </div>
-                            ))}
-                        </div>
+                        {visible.map((pattern, index) => (
+                            <TicketCard
+                                key={pattern.id}
+                                icon={<Clock className="w-4 h-4" />}
+                                accent={index === featuredIdx ? 'warm' : 'default'}
+                                title={formatTag(pattern.fsm_tag)}
+                                id={`#${pattern.id.slice(0, 6)}`}
+                                featured={index === featuredIdx}
+                                className="cursor-pointer"
+                                rightSlot={
+                                    <ChevronRight className="w-4 h-4 text-[var(--color-ink-3)]" />
+                                }
+                            >
+                                <TicketCardRow
+                                    label="Last practice"
+                                    value={timeSinceLabel(pattern.last_practiced_at)}
+                                />
+                                <TicketCardRow
+                                    label="Streak broken"
+                                    value={`${pattern.streak} → 0`}
+                                />
+                            </TicketCard>
+                        ))}
 
                         {patterns.length > 5 && (
-                            <p className="text-xs text-muted-foreground text-center">
+                            <p className="text-[11px] text-[var(--color-ink-3)] text-center">
                                 +{patterns.length - 5} more patterns
                             </p>
                         )}
 
-                        {/* Clear Debt button */}
+                        {/* Clear Debt CTA */}
                         <Button
                             onClick={onClearDebt}
+                            variant="ink"
                             className="w-full mt-2"
-                            variant="default"
                         >
-                            Clear Debt Now
+                            Clear debt now
                         </Button>
 
-                        {/* Hint text */}
-                        <p className="text-xs text-center text-muted-foreground">
-                            These patterns need reinforcement
+                        <p className="text-[11px] text-center text-[var(--color-ink-3)]">
+                            Practicing these locks the pattern back in.
                         </p>
                     </>
                 )}
