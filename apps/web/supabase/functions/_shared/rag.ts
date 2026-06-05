@@ -78,7 +78,14 @@ export async function retrieveTextbookContext(
     },
 ): Promise<RagResult> {
     const matchCount = opts.matchCount ?? 5;
-    const threshold = opts.threshold ?? 0.5;
+    // Default lowered 0.5 → 0.3 on 2026-06-06: gemini-embedding-001 (our
+    // current embedding model, switched after text-embedding-004 was
+    // retired by Google) produces cosine similarities in a lower range
+    // than the older model. With 0.5, even semantically-direct matches
+    // (e.g. "Mathematics · Sets" vs the literal "Chapter 1 SETS" page)
+    // were being filtered out — confirmed via smoke test 2026-06-06
+    // returning chunks=0 despite 7,204 chunks live in the DB.
+    const threshold = opts.threshold ?? 0.3;
     const subject = opts.subject ?? null;
     const classLevel = opts.classLevel ?? null;
     const board = opts.board ?? null;
