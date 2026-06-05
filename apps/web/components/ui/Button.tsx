@@ -3,27 +3,43 @@ import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@drut/shared";
 
+/**
+ * Button — editorial refresh.
+ *
+ * Primary uses brand lime via `bg-primary`. New `accent` variant uses the warm
+ * coral for the one "featured" CTA per view. Radius matches new system.
+ * All previous variants and the `asChild` + `isLoading` props are preserved.
+ */
+
 const buttonVariants = cva(
-    "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+    "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-[8px] text-sm font-semibold tracking-tight transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
     {
         variants: {
             variant: {
+                // Primary uses a deeper forest lime so it reads confident, not playful.
+                // Brand lime (#5cbb21) is retained as a token for sidebar active, success, etc.
                 default:
-                    "bg-emerald-500 text-white shadow hover:bg-emerald-600",
+                    "bg-[#3d7a0f] text-white hover:bg-[#2f600c]",
+                ink:
+                    "bg-[var(--color-ink-1)] text-white hover:bg-[var(--color-ink-2)]",
+                accent:
+                    "bg-[var(--color-accent-warm)] text-white hover:bg-[#ee6a2a]",
                 destructive:
-                    "bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90",
+                    "bg-destructive text-destructive-foreground hover:bg-destructive/90",
                 outline:
-                    "border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground",
+                    "ring-hairline-strong bg-card text-foreground hover:bg-muted",
                 secondary:
-                    "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
-                ghost: "hover:bg-accent hover:text-accent-foreground",
-                link: "text-emerald-600 underline-offset-4 hover:underline",
+                    "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+                ghost:
+                    "text-foreground hover:bg-muted",
+                link:
+                    "text-[#3d7a0f] underline-offset-4 hover:underline rounded-none",
             },
             size: {
-                default: "h-9 px-4 py-2",
-                sm: "h-8 rounded-md px-3 text-xs",
-                lg: "h-10 rounded-md px-8",
-                icon: "h-9 w-9",
+                default: "h-10 px-4 py-2",
+                sm: "h-8 px-3 text-xs",
+                lg: "h-12 px-6 text-base",
+                icon: "h-10 w-10",
             },
         },
         defaultVariants: {

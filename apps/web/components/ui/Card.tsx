@@ -1,6 +1,15 @@
 import * as React from "react";
 import { cn } from "@drut/shared";
 
+/**
+ * Card — editorial refresh.
+ *
+ * Edge is now carried by a hairline inset ring rather than a drop shadow.
+ * Radius increased to match the new system. Hover lift retained as `shadow-soft`.
+ * All subcomponents (CardHeader / CardTitle / CardDescription / CardContent / CardFooter)
+ * keep identical props/exports.
+ */
+
 const Card = React.forwardRef<
     HTMLDivElement,
     React.HTMLAttributes<HTMLDivElement>
@@ -8,7 +17,7 @@ const Card = React.forwardRef<
     <div
         ref={ref}
         className={cn(
-            "rounded-2xl bg-card text-card-foreground shadow-soft",
+            "rounded-[1.25rem] bg-card text-card-foreground ring-hairline",
             className
         )}
         {...props}
@@ -34,7 +43,7 @@ const CardTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
     <div
         ref={ref}
-        className={cn("font-semibold leading-none tracking-tight", className)}
+        className={cn("font-semibold leading-none tracking-tight text-[var(--color-ink-1)]", className)}
         {...props}
     />
 ));
