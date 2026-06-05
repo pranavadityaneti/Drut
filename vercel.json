@@ -5,7 +5,7 @@
     "framework": "vite",
     "redirects": [
         {
-            "source": "/((?!admin($|/)|login|signup|onboarding|privacypolicy|termsandconditions|assets|favicon).*)",
+            "source": "/",
             "has": [{ "type": "host", "value": "admin.drut.club" }],
             "destination": "/admin",
             "permanent": false
