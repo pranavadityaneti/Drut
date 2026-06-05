@@ -149,23 +149,58 @@ serve(async (req) => {
                 syllabusDebug = syllabus;
 
                 if (syllabus.chapters && syllabus.chapters.length > 0) {
-                    const nodesToInsert: any[] = [];
-                    for (const chap of syllabus.chapters) {
-                        nodesToInsert.push({
+                    // Find the subject knowledge_node this textbook belongs under, so
+                    // extracted chapters nest as its children instead of orphan-ing at root.
+                    //
+                    // Pre-Phase-B behavior: chapters inserted with NO parent_id ->
+                    // they appeared at the board level in the KnowledgeBase UI and
+                    // produced the 230 orphan-chapter cleanup we did on 2026-06-05.
+                    // The fix requires that board/class/subject folders be pre-created
+                    // (see migration 030_clean_knowledge_hierarchy.sql) with metadata
+                    // carrying board + class_level + subject so we can find them here.
+                    const { data: subjectNode, error: lookupErr } = await supabase
+                        .from('knowledge_nodes')
+                        .select('id')
+                        .eq('node_type', 'subject')
+                        .eq('metadata->>board', textbook.board)
+                        .eq('metadata->>class_level', textbook.class_level)
+                        .eq('metadata->>subject', textbook.subject)
+                        .maybeSingle();
+
+                    if (lookupErr) {
+                        console.warn(`[ingest-textbook] Subject lookup failed: ${lookupErr.message}`);
+                    }
+
+                    if (!subjectNode?.id) {
+                        // Refuse to insert orphan chapters. Logging loudly so the admin
+                        // can pre-create the missing subject folder and re-ingest.
+                        console.warn(
+                            `[ingest-textbook] No matching subject node found for ` +
+                            `board=${textbook.board} class=${textbook.class_level} ` +
+                            `subject=${textbook.subject}. Skipping chapter knowledge_node ` +
+                            `creation to avoid orphans-at-root. Pre-create the subject ` +
+                            `folder via the KnowledgeBase admin UI or migration 030.`
+                        );
+                    } else {
+                        const nodesToInsert = syllabus.chapters.map((chap: any) => ({
+                            parent_id: subjectNode.id,
                             name: chap.name,
                             node_type: 'topic',
                             metadata: {
                                 textbook_id: textbook.id,
                                 subject: textbook.subject,
-                                is_chapter: true
+                                board: textbook.board,
+                                class_level: textbook.class_level,
+                                is_chapter: true,
                             },
-                        });
-                    }
+                        }));
 
-                    if (nodesToInsert.length > 0) {
                         const { error: nodeError } = await supabase.from('knowledge_nodes').insert(nodesToInsert);
-                        if (nodeError) console.error('Error inserting nodes:', nodeError);
-                        else console.log(`[ingest-textbook] Inserted ${nodesToInsert.length} chapters into knowledge_nodes`);
+                        if (nodeError) {
+                            console.error('Error inserting chapter nodes:', nodeError);
+                        } else {
+                            console.log(`[ingest-textbook] Inserted ${nodesToInsert.length} chapters nested under subject ${subjectNode.id}`);
+                        }
                     }
                 }
 
