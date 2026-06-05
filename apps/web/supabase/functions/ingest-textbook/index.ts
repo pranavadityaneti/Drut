@@ -127,7 +127,20 @@ serve(async (req) => {
                     ${tocContext}
                 `;
 
-                const aiResponse = await generateContent(prompt);
+                // TOC extraction uses Gemini 2.5 Pro (vs Flash default).
+                // Runs ONCE per book upload — ~$0.005/book at current Pro
+                // pricing ($1.25/M input, $10/M output). The accuracy of
+                // chapter parsing (especially on messy state-board TOCs)
+                // matters more than the small latency/cost increase here.
+                // Other generateContent callers (question generation,
+                // chunk enrichment, etc.) stay on Flash — see workflow
+                // audit wx41ap18i, 2026-06-06.
+                //
+                // gemini-2.5-pro: GA, supports temperature=0.3 (our value)
+                // and responseMimeType:'application/json'. gemini-3.1-pro-
+                // preview was considered but its docs warn against lowering
+                // temperature from default 1.0 — would break this call.
+                const aiResponse = await generateContent(prompt, undefined, 0.3, 'gemini-2.5-pro');
                 console.log('[ingest-textbook] AI Response (Length):', aiResponse.length);
                 aiResponseDebug = aiResponse; // Capture RAW response immediately
 
