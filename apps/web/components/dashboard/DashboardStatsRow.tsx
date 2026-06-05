@@ -25,16 +25,20 @@ import {
 import { EXAM_TAXONOMY, SubtopicDef } from '@drut/shared';
 
 /**
- * DashboardStatsRow — editorial refresh.
+ * DashboardStatsRow — editorial refresh, v2.
  *
- * 4-up KPI grid. Visual hierarchy:
- *   1. Sprint Focus    — INK tile (dark, halftone corner ornament)
- *   2. Practice Volume — neutral hairline card + hatched mini-bar chart, featured bar coral
- *   3. Topic Focus     — neutral hairline card + progress bar
- *   4. Pattern Mastery — FEATURED tile (warm wash bg, coral number, coral underline)
+ * Four neutral white hairline tiles. The featured slot (Pattern Mastery)
+ * is the only color emphasis (coral). Each tile has a subtle hover
+ * signature that animates an internal element:
  *
- * Each tile follows the same vertical rhythm:
- *   icon chip → uppercase tracked label → enormous tabular numeral → tiny trend pill → footnote.
+ *   1. Sprint Focus    — wave slides up from the bottom in ink stroke
+ *   2. Practice Volume — hatched bars stagger up; coral featured bar pulses
+ *   3. Topic Focus     — progress bar gets a sweeping shimmer
+ *   4. Pattern Mastery — coral underline expands from center; numeral nudges
+ *
+ * All transitions are ~250-350ms ease-out. No ambient motion at rest.
+ * The hover state is triggered by Tailwind's `group` on the Card and
+ * `group-hover:` on internals.
  */
 
 export const DashboardStatsRow = () => {
@@ -119,50 +123,59 @@ export const DashboardStatsRow = () => {
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
 
-            {/* === Card 1: SPRINT FOCUS — INK tile === */}
-            <Card className="relative overflow-hidden min-h-[180px] bg-[var(--color-ink-1)] text-white ring-hairline-strong">
-                {/* Halftone corner ornament (replaces the wave SVG) */}
-                <div
-                    aria-hidden
-                    className="pointer-events-none absolute top-0 right-0 h-32 w-32 opacity-60"
-                    style={{
-                        backgroundImage: 'radial-gradient(circle at center, rgba(255,255,255,0.32) 1px, transparent 1.4px)',
-                        backgroundSize: '6px 6px',
-                        WebkitMaskImage: 'radial-gradient(ellipse at top right, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 60%)',
-                        maskImage: 'radial-gradient(ellipse at top right, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 60%)',
-                    }}
-                />
-
-                <CardContent className="relative z-10 p-5 flex flex-col justify-between h-full">
-                    <div className="flex items-start justify-between">
-                        <span className="inline-flex h-8 w-8 items-center justify-center rounded-[10px] bg-white/10 text-white">
+            {/* === Card 1: SPRINT FOCUS — neutral; wave hover signature in ink === */}
+            <Card className="group bg-card relative overflow-hidden">
+                <CardContent className="relative z-10 p-5 flex flex-col justify-between min-h-[190px]">
+                    <div className="flex items-center justify-between">
+                        <span className="inline-flex h-8 w-8 items-center justify-center rounded-[10px] bg-[var(--color-muted)] text-[var(--color-ink-2)] transition-colors duration-300 group-hover:bg-[var(--color-ink-1)] group-hover:text-white">
                             <Clock className="w-4 h-4" />
                         </span>
-                        <MoreHorizontal className="w-4 h-4 text-white/40 cursor-pointer" />
+                        <MoreHorizontal className="w-4 h-4 text-[var(--color-ink-4)]" />
                     </div>
 
                     <div className="mt-6">
-                        <p className="label-uppercase text-white/60">Total sprints</p>
+                        <p className="label-uppercase">Total sprints</p>
                         <div className="flex items-end gap-2 mt-1">
-                            <h3 className="text-[44px] leading-none font-bold tracking-tight num-tabular text-white">
+                            <h3 className="text-[44px] leading-none font-bold tracking-tight num-tabular text-[var(--color-ink-1)]">
                                 {sprintCount}
                             </h3>
-                            <span className="mb-1.5 inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md text-[10px] font-semibold tracking-tight num-tabular bg-white/10 text-white">
+                            <span className="mb-1.5 inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md text-[10px] font-semibold tracking-tight num-tabular bg-[var(--color-muted)] text-[#3d7a0f]">
                                 +12.5%
                             </span>
                         </div>
-                        <p className="text-white/55 text-[11px] mt-3 leading-relaxed">
+                        <p className="text-[11px] text-[var(--color-ink-3)] mt-3 leading-relaxed">
                             Sprints completed this week vs last.
                         </p>
                     </div>
                 </CardContent>
+
+                {/* Hover signature: wave slides up from below in ink stroke */}
+                <svg
+                    aria-hidden
+                    viewBox="0 0 400 60"
+                    preserveAspectRatio="none"
+                    className="absolute bottom-0 left-0 right-0 w-full h-12 pointer-events-none translate-y-full opacity-0 transition-all duration-500 ease-out group-hover:translate-y-0 group-hover:opacity-100"
+                >
+                    <path
+                        d="M0,40 C 80,10 160,55 240,30 C 320,5 360,45 400,25 L 400,60 L 0,60 Z"
+                        fill="var(--color-ink-1)"
+                        fillOpacity="0.06"
+                    />
+                    <path
+                        d="M0,40 C 80,10 160,55 240,30 C 320,5 360,45 400,25"
+                        fill="none"
+                        stroke="var(--color-ink-1)"
+                        strokeWidth="1.5"
+                        strokeOpacity="0.85"
+                    />
+                </svg>
             </Card>
 
-            {/* === Card 2: PRACTICE VOLUME — neutral + hatched bars, featured coral === */}
-            <Card className="bg-card relative">
-                <CardContent className="p-5 h-full flex flex-col justify-between">
+            {/* === Card 2: PRACTICE VOLUME — neutral + hatched bars, featured coral; bars stagger up on hover === */}
+            <Card className="group bg-card relative">
+                <CardContent className="p-5 h-full flex flex-col justify-between min-h-[190px]">
                     <div className="flex items-center justify-between">
-                        <span className="inline-flex h-8 w-8 items-center justify-center rounded-[10px] bg-[var(--color-accent)] text-[var(--color-accent-foreground)]">
+                        <span className="inline-flex h-8 w-8 items-center justify-center rounded-[10px] bg-[var(--color-accent)] text-[var(--color-accent-foreground)] transition-transform duration-300 group-hover:-rotate-6">
                             <Activity className="w-4 h-4" />
                         </span>
                         <MoreHorizontal className="w-4 h-4 text-[var(--color-ink-4)]" />
@@ -179,21 +192,26 @@ export const DashboardStatsRow = () => {
                             </span>
                         </div>
 
-                        {/* Hatched mini bar chart with coral featured last bar */}
+                        {/* Staggered hatched bars; featured last bar coral and pulses */}
                         <div className="flex items-end justify-between h-12 mt-4 gap-1.5">
                             {(practiceHistory.length > 0 ? practiceHistory : Array(7).fill({ count: 0 })).map((d, i) => {
                                 const counts = practiceHistory.map(p => p.count);
                                 const max = Math.max(...counts, 10);
                                 const h = (d.count / max) * 100;
-                                const isFeatured = i === practiceHistory.length - 1;
+                                const isFeatured = i === practiceHistory.length - 1 && practiceHistory.length > 0;
                                 return (
                                     <div
                                         key={i}
                                         className={
-                                            "w-full rounded-[4px] " +
-                                            (isFeatured ? "bg-[var(--color-accent-warm)]" : "bar-hatched")
+                                            "w-full rounded-[4px] origin-bottom transition-transform duration-300 ease-out " +
+                                            (isFeatured
+                                                ? "bg-[var(--color-accent-warm)] group-hover:scale-y-[1.10]"
+                                                : "bar-hatched group-hover:scale-y-[1.06]")
                                         }
-                                        style={{ height: `${Math.max(h, 12)}%` }}
+                                        style={{
+                                            height: `${Math.max(h, 12)}%`,
+                                            transitionDelay: `${i * 60}ms`
+                                        }}
                                     />
                                 );
                             })}
@@ -206,17 +224,16 @@ export const DashboardStatsRow = () => {
                 </CardContent>
             </Card>
 
-            {/* === Card 3: TOPIC FOCUS — neutral + progress === */}
-            <Card className="bg-card">
-                <CardContent className="p-5 h-full flex flex-col justify-between">
+            {/* === Card 3: TOPIC FOCUS — neutral + progress; shimmer sweep on hover === */}
+            <Card className="group bg-card">
+                <CardContent className="p-5 h-full flex flex-col justify-between min-h-[190px]">
                     <div className="flex items-center justify-between">
-                        <span className="inline-flex h-8 w-8 items-center justify-center rounded-[10px] bg-[var(--color-muted)] text-[var(--color-ink-2)]">
+                        <span className="inline-flex h-8 w-8 items-center justify-center rounded-[10px] bg-[var(--color-muted)] text-[var(--color-ink-2)] transition-colors duration-300 group-hover:bg-[var(--color-ink-1)] group-hover:text-white">
                             <CheckCircle2 className="w-4 h-4" />
                         </span>
                         <MoreHorizontal className="w-4 h-4 text-[var(--color-ink-4)]" />
                     </div>
 
-                    {/* Subtopic dropdown */}
                     <div className="mt-4">
                         <Select value={selectedSubtopic} onValueChange={setSelectedSubtopic}>
                             <SelectTrigger className="h-8 text-[12px] w-full bg-[var(--color-muted)] border-0 text-[var(--color-ink-2)] rounded-[8px]">
@@ -243,11 +260,18 @@ export const DashboardStatsRow = () => {
                             </span>
                         </div>
 
-                        {/* Progress bar — muted track, lime fill */}
-                        <div className="w-full h-1.5 bg-[var(--color-muted)] rounded-full overflow-hidden mt-3">
+                        {/* Progress bar with shimmer-sweep overlay on hover */}
+                        <div className="relative w-full h-1.5 bg-[var(--color-muted)] rounded-full overflow-hidden mt-3">
                             <div
-                                className="h-full bg-[var(--color-primary)] rounded-full transition-all duration-1000"
+                                className="absolute inset-y-0 left-0 bg-[var(--color-primary)] rounded-full transition-all duration-700 ease-out"
                                 style={{ width: `${Math.max(subtopicStats.accuracy, 5)}%` }}
+                            />
+                            {/* Shimmer sweep */}
+                            <div
+                                className="absolute inset-y-0 -left-1/3 w-1/3 opacity-0 group-hover:opacity-100 group-hover:animate-[shimmer_900ms_ease-out_forwards]"
+                                style={{
+                                    background: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.65) 50%, transparent 100%)'
+                                }}
                             />
                         </div>
                         <div className="flex justify-between mt-1.5 label-uppercase">
@@ -258,23 +282,23 @@ export const DashboardStatsRow = () => {
                 </CardContent>
             </Card>
 
-            {/* === Card 4: PATTERN MASTERY — FEATURED tile (coral) === */}
-            <Card className="bg-card relative ring-hairline-strong overflow-hidden">
+            {/* === Card 4: PATTERN MASTERY — FEATURED (coral); underline expands from center === */}
+            <Card className="group bg-card relative ring-hairline-strong overflow-hidden">
                 {/* Warm wash gradient */}
                 <div
                     aria-hidden
                     className="pointer-events-none absolute inset-0"
                     style={{ background: 'linear-gradient(180deg, transparent 0%, rgba(255,233,221,0.55) 100%)' }}
                 />
-                {/* Coral underline accent */}
+                {/* Coral underline — expands from center on hover */}
                 <span
                     aria-hidden
-                    className="absolute left-5 right-5 bottom-0 h-[2px] rounded-full bg-[var(--color-accent-warm)]"
+                    className="absolute left-5 right-5 bottom-0 h-[2px] rounded-full bg-[var(--color-accent-warm)] origin-center scale-x-[0.45] transition-transform duration-500 ease-out group-hover:scale-x-100"
                 />
 
-                <CardContent className="relative z-10 p-5 h-full flex flex-col justify-between">
+                <CardContent className="relative z-10 p-5 h-full flex flex-col justify-between min-h-[190px]">
                     <div className="flex items-center justify-between">
-                        <span className="inline-flex h-8 w-8 items-center justify-center rounded-[10px] bg-[var(--color-accent-warm-soft)] text-[var(--color-accent-warm-foreground)]">
+                        <span className="inline-flex h-8 w-8 items-center justify-center rounded-[10px] bg-[var(--color-accent-warm-soft)] text-[var(--color-accent-warm-foreground)] transition-transform duration-300 group-hover:scale-110">
                             <TrendingUp className="w-4 h-4" />
                         </span>
                         <MoreHorizontal className="w-4 h-4 text-[var(--color-ink-4)]" />
@@ -283,7 +307,7 @@ export const DashboardStatsRow = () => {
                     <div className="mt-6">
                         <p className="label-uppercase">Pattern mastery</p>
                         <div className="flex items-end gap-2 mt-1">
-                            <h3 className="text-[44px] leading-none font-bold tracking-tight num-tabular text-[var(--color-accent-warm)]">
+                            <h3 className="text-[44px] leading-none font-bold tracking-tight num-tabular text-[var(--color-accent-warm)] transition-transform duration-300 group-hover:-translate-y-0.5">
                                 {verifiedPatterns}
                             </h3>
                             <span className="mb-1.5 inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md text-[10px] font-semibold tracking-tight num-tabular bg-[var(--color-muted)] text-[#3d7a0f]">
@@ -291,7 +315,6 @@ export const DashboardStatsRow = () => {
                             </span>
                         </div>
 
-                        {/* Verified vs learning split */}
                         <div className="mt-3 space-y-2">
                             <div className="flex items-center justify-between text-[11px]">
                                 <span className="flex items-center gap-2 text-[var(--color-ink-3)]">

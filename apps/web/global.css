@@ -258,6 +258,20 @@ body {
     background-size: 18px 18px;
 }
 
+/* === Hover micro-motion keyframes === */
+
+/* Shimmer sweep — used on KPI progress bar over its filled region */
+@keyframes shimmer {
+    from { transform: translateX(0); opacity: 1; }
+    to   { transform: translateX(400%); opacity: 0; }
+}
+
+/* Subtle vertical drift for halftone ornaments / dot patterns on hover */
+@keyframes halftone-drift {
+    from { background-position: 0 0; }
+    to   { background-position: 0 6px; }
+}
+
 /* === Dashed chart line (used as a stroke-dasharray helper in SVG via class) ===
    Recharts strokeDasharray is passed as a prop, but we expose a CSS var so any
    custom SVG can opt in via stroke-dasharray: var(--dash-editorial). */
