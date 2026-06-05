@@ -5,7 +5,6 @@ import {
     MoreHorizontal,
     TrendingUp,
     CheckCircle2,
-    Circle,
     Clock
 } from 'lucide-react';
 import {
@@ -22,29 +21,36 @@ import {
     fetchLearningVelocity,
     fetchPatternMasteryStats,
     AnalyticsRow
-} from '@drut/shared'; // from ../../services/analyticsService';
-import { EXAM_TAXONOMY, SubtopicDef } from '@drut/shared'; // from ../../lib/taxonomy';
+} from '@drut/shared';
+import { EXAM_TAXONOMY, SubtopicDef } from '@drut/shared';
+
+/**
+ * DashboardStatsRow — editorial refresh.
+ *
+ * 4-up KPI grid. Visual hierarchy:
+ *   1. Sprint Focus    — INK tile (dark, halftone corner ornament)
+ *   2. Practice Volume — neutral hairline card + hatched mini-bar chart, featured bar coral
+ *   3. Topic Focus     — neutral hairline card + progress bar
+ *   4. Pattern Mastery — FEATURED tile (warm wash bg, coral number, coral underline)
+ *
+ * Each tile follows the same vertical rhythm:
+ *   icon chip → uppercase tracked label → enormous tabular numeral → tiny trend pill → footnote.
+ */
 
 export const DashboardStatsRow = () => {
-    // 1. Sprint Data
     const [sprintCount, setSprintCount] = useState(0);
-    const [sprintTrend, setSprintTrend] = useState(0); // Mock trend for now or calc from history
 
-    // 2. Practice Volume (Bar Chart)
     const [practiceHistory, setPracticeHistory] = useState<{ date: string, count: number }[]>([]);
     const [userStats, setUserStats] = useState<AnalyticsRow | null>(null);
 
-    // 3. Focus/Accuracy (Progress)
     const [selectedSubtopic, setSelectedSubtopic] = useState<string>('');
     const [subtopicStats, setSubtopicStats] = useState({ count: 0, accuracy: 0 });
     const [allSubtopics, setAllSubtopics] = useState<SubtopicDef[]>([]);
 
-    // 4. Mastery (List)
     const [verifiedPatterns, setVerifiedPatterns] = useState(0);
     const [learningPatterns, setLearningPatterns] = useState(0);
 
     useEffect(() => {
-        // Init Subtopics
         const subtopics: SubtopicDef[] = [];
         EXAM_TAXONOMY.forEach(exam => {
             exam.topics.forEach(topic => {
@@ -71,7 +77,6 @@ export const DashboardStatsRow = () => {
                 setSprintCount(sprints?.length || 0);
                 setUserStats(userAn);
 
-                // Process bar chart data (last 7 days)
                 const last7Days = Array.from({ length: 7 }, (_, i) => {
                     const d = new Date();
                     d.setDate(d.getDate() - (6 - i));
@@ -85,7 +90,6 @@ export const DashboardStatsRow = () => {
                 }));
                 setPracticeHistory(chartData);
 
-                // Real Pattern Mastery Stats
                 setVerifiedPatterns(mastery.verified_count);
                 setLearningPatterns(mastery.learning_count);
 
@@ -113,115 +117,114 @@ export const DashboardStatsRow = () => {
     }, [selectedSubtopic]);
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
 
-            {/* CARD 1: PRIMARY (SPRINT FOCUS) - DARK GREEN */}
-            <Card className="border-0 shadow-lg relative overflow-hidden bg-emerald-900 min-h-[180px]">
-                {/* Wave Background Graphic */}
-                <div className="absolute bottom-0 left-0 right-0 h-24 opacity-40 pointer-events-none">
-                    <svg viewBox="0 0 1440 320" className="w-full h-full text-white fill-current">
-                        <path fillOpacity="1" d="M0,160L48,176C96,192,192,224,288,208C384,192,480,128,576,133.3C672,139,768,213,864,229.3C960,245,1056,203,1152,186.7C1248,171,1344,181,1392,186.7L1440,192V320H1392C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320H0Z"></path>
-                    </svg>
-                </div>
+            {/* === Card 1: SPRINT FOCUS — INK tile === */}
+            <Card className="relative overflow-hidden min-h-[180px] bg-[var(--color-ink-1)] text-white ring-hairline-strong">
+                {/* Halftone corner ornament (replaces the wave SVG) */}
+                <div
+                    aria-hidden
+                    className="pointer-events-none absolute top-0 right-0 h-32 w-32 opacity-60"
+                    style={{
+                        backgroundImage: 'radial-gradient(circle at center, rgba(255,255,255,0.32) 1px, transparent 1.4px)',
+                        backgroundSize: '6px 6px',
+                        WebkitMaskImage: 'radial-gradient(ellipse at top right, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 60%)',
+                        maskImage: 'radial-gradient(ellipse at top right, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 60%)',
+                    }}
+                />
 
-                <CardContent className="p-6 relative z-10 flex flex-col justify-between h-full">
+                <CardContent className="relative z-10 p-5 flex flex-col justify-between h-full">
                     <div className="flex items-start justify-between">
-                        <div className="p-2 bg-emerald-800/50 rounded-lg backdrop-blur-sm">
-                            <Clock className="w-5 h-5 text-emerald-100" />
-                        </div>
-                        <MoreHorizontal className="w-5 h-5 text-emerald-400/50 cursor-pointer" />
+                        <span className="inline-flex h-8 w-8 items-center justify-center rounded-[10px] bg-white/10 text-white">
+                            <Clock className="w-4 h-4" />
+                        </span>
+                        <MoreHorizontal className="w-4 h-4 text-white/40 cursor-pointer" />
                     </div>
 
-                    <div className="mt-4">
-                        <p className="text-emerald-200 text-sm font-medium">Total Sprints</p>
-                        <div className="flex items-end gap-3 mt-1">
-                            <h3 className="text-4xl font-bold text-white">{sprintCount}</h3>
-                            <span className="mb-1 text-xs font-bold bg-emerald-800 text-emerald-300 px-2 py-0.5 rounded-full">
+                    <div className="mt-6">
+                        <p className="label-uppercase text-white/60">Total sprints</p>
+                        <div className="flex items-end gap-2 mt-1">
+                            <h3 className="text-[44px] leading-none font-bold tracking-tight num-tabular text-white">
+                                {sprintCount}
+                            </h3>
+                            <span className="mb-1.5 inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md text-[10px] font-semibold tracking-tight num-tabular bg-white/10 text-white">
                                 +12.5%
                             </span>
                         </div>
-                        <p className="text-emerald-400 text-xs mt-3 opacity-90">
-                            Sprints completed this week vs last week.
+                        <p className="text-white/55 text-[11px] mt-3 leading-relaxed">
+                            Sprints completed this week vs last.
                         </p>
-                        {/* Progress bar visual */}
-                        <div className="w-24 h-1 bg-emerald-800/50 rounded-full mt-3 overflow-hidden">
-                            <div className="h-full bg-emerald-400 w-[70%] rounded-full"></div>
-                        </div>
                     </div>
                 </CardContent>
             </Card>
 
-            {/* CARD 2: PRACTICE VOLUME (BAR CHART) - WHITE */}
-            <Card className="border-0 shadow-md bg-white hover:shadow-lg transition-shadow">
-                <CardContent className="p-6 h-full flex flex-col justify-between">
+            {/* === Card 2: PRACTICE VOLUME — neutral + hatched bars, featured coral === */}
+            <Card className="bg-card relative">
+                <CardContent className="p-5 h-full flex flex-col justify-between">
                     <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                            <div className="p-1.5 bg-blue-50 rounded-md text-blue-600">
-                                <Activity className="w-4 h-4" />
-                            </div>
-                            <span className="text-sm font-semibold text-slate-700">Total Practice</span>
-                        </div>
-                        <MoreHorizontal className="w-4 h-4 text-slate-300" />
+                        <span className="inline-flex h-8 w-8 items-center justify-center rounded-[10px] bg-[var(--color-accent)] text-[var(--color-accent-foreground)]">
+                            <Activity className="w-4 h-4" />
+                        </span>
+                        <MoreHorizontal className="w-4 h-4 text-[var(--color-ink-4)]" />
                     </div>
 
-                    <div className="mt-4">
-                        <div className="flex items-end gap-2">
-                            <h3 className="text-3xl font-bold text-slate-900">
+                    <div className="mt-6">
+                        <p className="label-uppercase">Total practice</p>
+                        <div className="flex items-end gap-2 mt-1">
+                            <h3 className="text-[44px] leading-none font-bold tracking-tight num-tabular text-[var(--color-ink-1)]">
                                 {userStats?.total_attempts || 0}
                             </h3>
-                            <span className="mb-1 text-xs font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded">
+                            <span className="mb-1.5 inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md text-[10px] font-semibold tracking-tight num-tabular bg-[var(--color-muted)] text-[#3d7a0f]">
                                 +10.4%
                             </span>
                         </div>
 
-                        {/* Mini Bar Chart */}
-                        <div className="flex items-end justify-between h-16 mt-4 gap-1">
+                        {/* Hatched mini bar chart with coral featured last bar */}
+                        <div className="flex items-end justify-between h-12 mt-4 gap-1.5">
                             {(practiceHistory.length > 0 ? practiceHistory : Array(7).fill({ count: 0 })).map((d, i) => {
                                 const counts = practiceHistory.map(p => p.count);
                                 const max = Math.max(...counts, 10);
                                 const h = (d.count / max) * 100;
-                                const isEmpty = d.count === 0;
+                                const isFeatured = i === practiceHistory.length - 1;
                                 return (
-                                    <div key={i} className="w-full bg-slate-100 rounded-sm relative group h-full flex items-end">
-                                        <div
-                                            className={`w-full rounded-sm transition-all duration-500 ${i === 6 ? 'bg-blue-600' : 'bg-blue-400'
-                                                } ${isEmpty ? 'opacity-30' : 'opacity-100'}`}
-                                            style={{ height: `${Math.max(h, 15)}%` }}
-                                        ></div>
-                                    </div>
+                                    <div
+                                        key={i}
+                                        className={
+                                            "w-full rounded-[4px] " +
+                                            (isFeatured ? "bg-[var(--color-accent-warm)]" : "bar-hatched")
+                                        }
+                                        style={{ height: `${Math.max(h, 12)}%` }}
+                                    />
                                 );
                             })}
                         </div>
 
-                        <p className="text-xs text-slate-400 mt-3 font-medium">
-                            Increase in practice by 45 questions this week.
+                        <p className="text-[11px] text-[var(--color-ink-3)] mt-3">
+                            +45 questions this week.
                         </p>
                     </div>
                 </CardContent>
             </Card>
 
-            {/* CARD 3: FOCUS/ACCURACY (PROGRESS) - WHITE */}
-            <Card className="border-0 shadow-md bg-white hover:shadow-lg transition-shadow">
-                <CardContent className="p-6 h-full flex flex-col justify-between">
-                    <div className="flex items-center justify-between mb-2">
-                        <div className="flex items-center gap-2">
-                            <div className="p-1.5 bg-indigo-50 rounded-md text-indigo-600">
-                                <CheckCircle2 className="w-4 h-4" />
-                            </div>
-                            <span className="text-sm font-semibold text-slate-700">Topic Focus</span>
-                        </div>
-                        <MoreHorizontal className="w-4 h-4 text-slate-300" />
+            {/* === Card 3: TOPIC FOCUS — neutral + progress === */}
+            <Card className="bg-card">
+                <CardContent className="p-5 h-full flex flex-col justify-between">
+                    <div className="flex items-center justify-between">
+                        <span className="inline-flex h-8 w-8 items-center justify-center rounded-[10px] bg-[var(--color-muted)] text-[var(--color-ink-2)]">
+                            <CheckCircle2 className="w-4 h-4" />
+                        </span>
+                        <MoreHorizontal className="w-4 h-4 text-[var(--color-ink-4)]" />
                     </div>
 
-                    {/* Subtopic Dropdown as Header */}
-                    <div className="mb-2">
+                    {/* Subtopic dropdown */}
+                    <div className="mt-4">
                         <Select value={selectedSubtopic} onValueChange={setSelectedSubtopic}>
-                            <SelectTrigger className="h-8 text-xs w-full bg-slate-50 border-0 text-slate-600">
+                            <SelectTrigger className="h-8 text-[12px] w-full bg-[var(--color-muted)] border-0 text-[var(--color-ink-2)] rounded-[8px]">
                                 <SelectValue placeholder="Select Topic" />
                             </SelectTrigger>
                             <SelectContent className="max-h-[200px]">
                                 {allSubtopics.map(s => (
-                                    <SelectItem key={s.value} value={s.value} className="text-xs">
+                                    <SelectItem key={s.value} value={s.value} className="text-[12px]">
                                         {s.label}
                                     </SelectItem>
                                 ))}
@@ -229,72 +232,80 @@ export const DashboardStatsRow = () => {
                         </Select>
                     </div>
 
-                    <div className="mt-2">
-                        <div className="flex items-end gap-2">
-                            <h3 className="text-3xl font-bold text-slate-900">{Math.round(subtopicStats.accuracy)}%</h3>
-                            <span className="mb-1 text-xs font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded">
-                                +5%
+                    <div className="mt-3">
+                        <p className="label-uppercase">Topic focus</p>
+                        <div className="flex items-end gap-2 mt-1">
+                            <h3 className="text-[44px] leading-none font-bold tracking-tight num-tabular text-[var(--color-ink-1)]">
+                                {Math.round(subtopicStats.accuracy)}%
+                            </h3>
+                            <span className="mb-1.5 inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md text-[10px] font-semibold tracking-tight num-tabular bg-[var(--color-muted)] text-[#3d7a0f]">
+                                +5.0%
                             </span>
                         </div>
 
-                        <p className="text-xs text-slate-500 mt-1 mb-3">
-                            Accuracy for current topic.
-                        </p>
-
-                        {/* Progress Bar */}
-                        <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
+                        {/* Progress bar — muted track, lime fill */}
+                        <div className="w-full h-1.5 bg-[var(--color-muted)] rounded-full overflow-hidden mt-3">
                             <div
-                                className="h-full bg-indigo-500 rounded-full transition-all duration-1000"
+                                className="h-full bg-[var(--color-primary)] rounded-full transition-all duration-1000"
                                 style={{ width: `${Math.max(subtopicStats.accuracy, 5)}%` }}
-                            ></div>
+                            />
                         </div>
-                        <div className="flex justify-between mt-2 text-[10px] text-slate-400 font-medium uppercase">
+                        <div className="flex justify-between mt-1.5 label-uppercase">
                             <span>0%</span>
-                            <span>Target: 80%</span>
+                            <span>Target 80%</span>
                         </div>
                     </div>
                 </CardContent>
             </Card>
 
-            {/* CARD 4: MASTERY (LIST VIEW) - WHITE */}
-            <Card className="border-0 shadow-md bg-white hover:shadow-lg transition-shadow">
-                <CardContent className="p-6 h-full flex flex-col justify-between">
+            {/* === Card 4: PATTERN MASTERY — FEATURED tile (coral) === */}
+            <Card className="bg-card relative ring-hairline-strong overflow-hidden">
+                {/* Warm wash gradient */}
+                <div
+                    aria-hidden
+                    className="pointer-events-none absolute inset-0"
+                    style={{ background: 'linear-gradient(180deg, transparent 0%, rgba(255,233,221,0.55) 100%)' }}
+                />
+                {/* Coral underline accent */}
+                <span
+                    aria-hidden
+                    className="absolute left-5 right-5 bottom-0 h-[2px] rounded-full bg-[var(--color-accent-warm)]"
+                />
+
+                <CardContent className="relative z-10 p-5 h-full flex flex-col justify-between">
                     <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                            <div className="p-1.5 bg-emerald-50 rounded-md text-emerald-600">
-                                <TrendingUp className="w-4 h-4" />
-                            </div>
-                            <span className="text-sm font-semibold text-slate-700">Pattern Mastery</span>
-                        </div>
-                        <MoreHorizontal className="w-4 h-4 text-slate-300" />
+                        <span className="inline-flex h-8 w-8 items-center justify-center rounded-[10px] bg-[var(--color-accent-warm-soft)] text-[var(--color-accent-warm-foreground)]">
+                            <TrendingUp className="w-4 h-4" />
+                        </span>
+                        <MoreHorizontal className="w-4 h-4 text-[var(--color-ink-4)]" />
                     </div>
 
-                    <div className="mt-4 space-y-4">
-                        <div className="flex items-end gap-2 mb-2">
-                            <h3 className="text-3xl font-bold text-slate-900">
+                    <div className="mt-6">
+                        <p className="label-uppercase">Pattern mastery</p>
+                        <div className="flex items-end gap-2 mt-1">
+                            <h3 className="text-[44px] leading-none font-bold tracking-tight num-tabular text-[var(--color-accent-warm)]">
                                 {verifiedPatterns}
                             </h3>
-                            <span className="mb-1 text-xs font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded">
+                            <span className="mb-1.5 inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md text-[10px] font-semibold tracking-tight num-tabular bg-[var(--color-muted)] text-[#3d7a0f]">
                                 +2
                             </span>
                         </div>
 
-                        {/* List Items */}
-                        <div className="space-y-3 pt-2">
-                            <div className="flex items-center justify-between">
-                                <div className="flex items-center gap-3">
-                                    <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-sm"></div>
-                                    <span className="text-sm font-medium text-slate-600">Verified Patterns</span>
-                                </div>
-                                <span className="text-sm font-bold text-slate-900">{verifiedPatterns}</span>
+                        {/* Verified vs learning split */}
+                        <div className="mt-3 space-y-2">
+                            <div className="flex items-center justify-between text-[11px]">
+                                <span className="flex items-center gap-2 text-[var(--color-ink-3)]">
+                                    <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-primary)]" />
+                                    <span className="font-medium">Verified</span>
+                                </span>
+                                <span className="font-semibold text-[var(--color-ink-1)] num-tabular">{verifiedPatterns}</span>
                             </div>
-                            <div className="w-full h-[1px] bg-slate-100"></div>
-                            <div className="flex items-center justify-between">
-                                <div className="flex items-center gap-3">
-                                    <div className="w-2.5 h-2.5 rounded-full bg-amber-400 shadow-sm"></div>
-                                    <span className="text-sm font-medium text-slate-600">Learning Phase</span>
-                                </div>
-                                <span className="text-sm font-bold text-slate-900">{learningPatterns}</span>
+                            <div className="flex items-center justify-between text-[11px]">
+                                <span className="flex items-center gap-2 text-[var(--color-ink-3)]">
+                                    <span className="h-1.5 w-1.5 rounded-full bg-[var(--color-accent-warm)]" />
+                                    <span className="font-medium">Learning</span>
+                                </span>
+                                <span className="font-semibold text-[var(--color-ink-1)] num-tabular">{learningPatterns}</span>
                             </div>
                         </div>
                     </div>
