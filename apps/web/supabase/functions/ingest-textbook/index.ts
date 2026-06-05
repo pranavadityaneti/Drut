@@ -299,6 +299,13 @@ serve(async (req) => {
         let processed = 0;
         let totalChunks = 0;
         let globalChunkIdx = 0;
+        // Diagnostic counters (returned in response so we can see what's
+        // failing without relying on the spotty function_logs pipeline).
+        let embedFailures = 0;
+        let insertFailures = 0;
+        const firstInsertError: { msg?: string } = {};
+        const firstEmbedError: { msg?: string } = {};
+        let embeddingDimSample: number | null = null;
 
         for (let pageStart = 0; pageStart < cleanedPages.length; pageStart += PAGE_BATCH) {
             const pageBatch = cleanedPages.slice(pageStart, pageStart + PAGE_BATCH);
@@ -316,6 +323,12 @@ serve(async (req) => {
                     const localChunkIdx = globalChunkIdx + i + batchIdx;
                     try {
                         const embedding = await embedText(chunk.text);
+                        if (embeddingDimSample === null) embeddingDimSample = embedding.length;
+                        if (!Array.isArray(embedding) || embedding.length === 0) {
+                            embedFailures++;
+                            if (!firstEmbedError.msg) firstEmbedError.msg = `empty/invalid embedding (length=${embedding?.length ?? 'undefined'})`;
+                            return null;
+                        }
                         return {
                             textbook_id: textbook.id,
                             content: chunk.text,
@@ -332,7 +345,9 @@ serve(async (req) => {
                                 class_level: textbook.class_level,
                             },
                         };
-                    } catch (err) {
+                    } catch (err: any) {
+                        embedFailures++;
+                        if (!firstEmbedError.msg) firstEmbedError.msg = String(err?.message ?? err);
                         console.error(`Embedding failed for chunk ${localChunkIdx} (pageStart=${chunk.pageStart})`, err);
                         return null;
                     }
@@ -347,6 +362,8 @@ serve(async (req) => {
                         .insert(validRows);
 
                     if (insertError) {
+                        insertFailures += validRows.length;
+                        if (!firstInsertError.msg) firstInsertError.msg = `${insertError.code ?? ''} ${insertError.message ?? ''} ${insertError.details ?? ''} ${insertError.hint ?? ''}`.trim();
                         console.error('Batch insert error:', insertError);
                     } else {
                         processed += validRows.length;
@@ -370,6 +387,11 @@ serve(async (req) => {
             totalChars,
             chunks: totalChunks,
             chunksInserted: processed,
+            embedFailures,
+            insertFailures,
+            firstEmbedError: firstEmbedError.msg ?? null,
+            firstInsertError: firstInsertError.msg ?? null,
+            embeddingDimSample,
             stripSummary,
             blocklistSize: blocklist.size,
             extractionDebug: {

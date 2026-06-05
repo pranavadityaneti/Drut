@@ -365,13 +365,24 @@ export function extractJSON(text: string): string {
 }
 
 /**
- * Generate text embeddings using text-embedding-004
- * Returns array of 768 floats
+ * Generate text embeddings using gemini-embedding-001.
+ * Returns array of 768 floats (downscaled from the default 3072 via
+ * outputDimensionality so the existing textbook_chunks.embedding column
+ * — vector(768) — remains usable without a DB migration).
+ *
+ * Model history:
+ *   text-embedding-004 → retired by Google in 2025; returns 404 now.
+ *     Confirmed via diagnostic 2026-06-05 (embedFailures=9,
+ *     firstEmbedError='Embedding API error: 404'). All ~9,812 chunks
+ *     previously embedded in this DB were generated before retirement.
+ *   gemini-embedding-001 → current GA replacement (Mar 2025+).
+ *     Supports output_dimensionality {768, 1536, 3072}; we use 768.
  */
-// [Deleted duplicate generateContent implementation]
+const EMBEDDING_MODEL = 'gemini-embedding-001';
+const EMBEDDING_DIMS = 768;
 
 export async function embedText(text: string): Promise<number[]> {
-    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/text-embedding-004:embedContent?key=${GEMINI_API_KEY}`;
+    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${EMBEDDING_MODEL}:embedContent?key=${GEMINI_API_KEY}`;
 
     // Retry logic for embeddings
     for (let attempt = 1; attempt <= 3; attempt++) {
@@ -381,20 +392,26 @@ export async function embedText(text: string): Promise<number[]> {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     content: { parts: [{ text: text.substring(0, 2048) }] }, // Truncate to avoid limits
-                    model: 'models/text-embedding-004'
+                    model: `models/${EMBEDDING_MODEL}`,
+                    outputDimensionality: EMBEDDING_DIMS,
                 }),
             });
 
             if (!response.ok) {
+                const errText = await response.text().catch(() => '');
                 if (response.status === 429 && attempt < 3) {
                     await new Promise(r => setTimeout(r, 1000 * attempt));
                     continue;
                 }
-                throw new Error(`Embedding API error: ${response.status}`);
+                throw new Error(`Embedding API error: ${response.status} ${errText.substring(0, 200)}`);
             }
 
             const data = await response.json();
-            return data.embedding.values;
+            const values: number[] = data.embedding?.values ?? [];
+            if (values.length !== EMBEDDING_DIMS) {
+                throw new Error(`Embedding dimension mismatch: got ${values.length}, expected ${EMBEDDING_DIMS}`);
+            }
+            return values;
         } catch (error) {
             console.error('Embedding error:', error);
             if (attempt === 3) throw error;
