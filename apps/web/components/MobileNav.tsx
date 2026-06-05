@@ -76,106 +76,118 @@ export const MobileNav: React.FC<MobileNavProps> = ({
 
     return (
         <>
-            {/* Hamburger Button - visible only on mobile */}
+            {/* Hamburger Button - mobile only */}
             <button
                 onClick={() => setIsOpen(true)}
-                className="lg:hidden fixed top-5 right-4 z-50 p-2 rounded-lg bg-card border border-border shadow-sm hover:bg-accent transition-colors"
+                className="lg:hidden fixed top-4 right-4 z-50 inline-flex h-10 w-10 items-center justify-center rounded-[10px] bg-[var(--color-card)] ring-hairline-strong text-[var(--color-ink-1)] hover:bg-[var(--color-muted)] transition-colors"
                 aria-label="Open navigation menu"
             >
-                <Menu className="w-6 h-6 text-foreground" />
+                <Menu className="w-5 h-5" />
             </button>
 
             {/* Backdrop */}
             {isOpen && (
                 <div
-                    className="lg:hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-sm transition-opacity"
+                    className="lg:hidden fixed inset-0 z-50 bg-[rgba(11,11,13,0.40)] backdrop-blur-sm transition-opacity"
                     onClick={() => setIsOpen(false)}
                 />
             )}
 
-            {/* Slide-out Drawer */}
+            {/* Slide-out drawer */}
             <div
                 className={cn(
-                    "lg:hidden fixed inset-y-0 right-0 z-50 w-80 max-w-[85vw] bg-card border-l border-border shadow-xl transition-transform duration-300 ease-in-out",
+                    "lg:hidden fixed inset-y-0 right-0 z-50 w-80 max-w-[85vw] bg-[var(--color-card)] ring-hairline-strong shadow-hover transition-transform duration-300 ease-in-out flex flex-col",
                     isOpen ? "translate-x-0" : "translate-x-full"
                 )}
             >
-                {/* Header */}
-                <div className="flex h-16 items-center justify-between px-6 border-b border-border">
-                    <img src="/brand-logo.png" alt="Drut" className="h-8" />
+                {/* Drawer header */}
+                <div className="flex h-16 items-center justify-between px-5 border-b border-[var(--color-ink-5)]">
+                    <div className="flex items-center gap-2.5">
+                        <span className="inline-flex h-8 w-8 items-center justify-center rounded-[10px] bg-[var(--color-ink-1)] text-white font-bold text-sm">
+                            D
+                        </span>
+                        <span className="font-semibold text-[15px] text-[var(--color-ink-1)] tracking-tight">Drut</span>
+                    </div>
                     <button
                         onClick={() => setIsOpen(false)}
-                        className="p-2 rounded-lg hover:bg-accent transition-colors"
+                        className="inline-flex h-8 w-8 items-center justify-center rounded-[10px] hover:bg-[var(--color-muted)] transition-colors text-[var(--color-ink-3)]"
                         aria-label="Close navigation menu"
                     >
-                        <X className="w-5 h-5 text-muted-foreground" />
+                        <X className="w-4 h-4" />
                     </button>
                 </div>
 
-                {/* User Profile Section */}
-                <div className="p-6 border-b border-border">
-                    <div className="flex items-center gap-4">
+                {/* User profile */}
+                <div className="px-5 py-4 border-b border-[var(--color-ink-5)]">
+                    <div className="flex items-center gap-3">
                         <img
                             src={avatarUrl}
                             alt="Profile"
-                            className="h-12 w-12 rounded-full border-2 border-white shadow-sm bg-gray-100"
+                            className="h-10 w-10 rounded-full bg-[var(--color-muted)]"
                         />
-                        <div>
-                            <p className="font-semibold text-foreground">{userName}</p>
-                            <p className="text-sm text-muted-foreground">{user?.email || 'Loading...'}</p>
+                        <div className="min-w-0">
+                            <p className="font-semibold text-[14px] text-[var(--color-ink-1)] truncate tracking-tight">{userName}</p>
+                            <p className="text-[12px] text-[var(--color-ink-3)] truncate num-tabular">{user?.email || 'Loading...'}</p>
                         </div>
                     </div>
                 </div>
 
                 {/* Navigation */}
-                <nav className="flex-1 flex flex-col gap-2 p-4">
-                    {allNavItems.map(item => (
-                        <button
-                            key={item.id}
-                            onClick={() => handleNavClick(item.id)}
-                            className={cn(
-                                "flex items-center gap-4 px-4 py-3.5 rounded-lg text-base font-medium transition-all duration-200",
-                                currentPage === item.id
-                                    ? "text-white shadow-sm"
-                                    : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
-                            )}
-                            style={currentPage === item.id ? { backgroundColor: '#5cbb21' } : undefined}
-                        >
-                            <item.icon className={cn(
-                                "h-6 w-6 flex-shrink-0",
-                                currentPage === item.id ? "text-white" : ""
-                            )} />
-                            <span>{item.label}</span>
-                        </button>
-                    ))}
+                <nav className="flex-1 flex flex-col gap-0.5 p-2 overflow-y-auto">
+                    {allNavItems.map(item => {
+                        const isActive = currentPage === item.id;
+                        return (
+                            <button
+                                key={item.id}
+                                onClick={() => handleNavClick(item.id)}
+                                className={cn(
+                                    "flex items-center gap-3 px-3 py-3 rounded-[10px] text-[14px] transition-colors",
+                                    isActive
+                                        ? "nav-pill-active"
+                                        : "text-[var(--color-ink-3)] font-medium hover:text-[var(--color-ink-1)] hover:bg-[var(--color-muted)]"
+                                )}
+                            >
+                                {isActive && (
+                                    <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-[var(--color-primary)] shrink-0" />
+                                )}
+                                <item.icon className={cn(
+                                    "h-[18px] w-[18px] flex-shrink-0",
+                                    isActive ? "text-[var(--color-ink-1)]" : "text-[var(--color-ink-3)]"
+                                )} />
+                                <span className="tracking-tight">{item.label}</span>
+                            </button>
+                        );
+                    })}
 
-                    {/* Profile Link */}
+                    {/* Profile link */}
                     <button
                         onClick={() => handleNavClick('profile')}
                         className={cn(
-                            "flex items-center gap-4 px-4 py-3.5 rounded-lg text-base font-medium transition-all duration-200",
+                            "flex items-center gap-3 px-3 py-3 rounded-[10px] text-[14px] transition-colors",
                             currentPage === 'profile'
-                                ? "text-white shadow-sm"
-                                : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+                                ? "nav-pill-active"
+                                : "text-[var(--color-ink-3)] font-medium hover:text-[var(--color-ink-1)] hover:bg-[var(--color-muted)]"
                         )}
-                        style={currentPage === 'profile' ? { backgroundColor: '#5cbb21' } : undefined}
                     >
+                        {currentPage === 'profile' && (
+                            <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-[var(--color-primary)] shrink-0" />
+                        )}
                         <UserIcon className={cn(
-                            "h-6 w-6 flex-shrink-0",
-                            currentPage === 'profile' ? "text-white" : ""
+                            "h-[18px] w-[18px] flex-shrink-0",
+                            currentPage === 'profile' ? "text-[var(--color-ink-1)]" : "text-[var(--color-ink-3)]"
                         )} />
-                        <span>My Profile</span>
+                        <span className="tracking-tight">My Profile</span>
                     </button>
                 </nav>
 
-                {/* Logout Button */}
-                <div className="p-4 border-t border-border">
+                {/* Logout */}
+                <div className="p-3 border-t border-[var(--color-ink-5)]">
                     <button
                         onClick={handleLogout}
-                        className="flex items-center gap-4 w-full px-4 py-3.5 rounded-lg text-base font-medium text-red-500 hover:bg-red-50 transition-colors"
+                        className="flex items-center gap-3 w-full px-3 py-3 rounded-[10px] text-[14px] font-medium text-[var(--color-destructive)] hover:bg-[#fde7e5]/60 transition-colors"
                     >
-                        <LogOut className="h-6 w-6 flex-shrink-0" />
-                        <span>Sign out</span>
+                        <LogOut className="h-[18px] w-[18px] flex-shrink-0" />
+                        <span className="tracking-tight">Sign out</span>
                     </button>
                 </div>
             </div>
