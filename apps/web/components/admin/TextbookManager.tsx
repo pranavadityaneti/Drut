@@ -334,31 +334,31 @@ export const TextbookManager: React.FC = () => {
                             <p className="text-muted-foreground">No textbooks uploaded yet.</p>
                         </div>
                     ) : (
-                        <div className="space-y-3">
+                        <div className="space-y-2.5">
                             {textbooks.map((book) => (
-                                <div key={book.id} className="flex items-center justify-between p-3 border rounded-lg bg-card hover:bg-muted/50 transition-colors">
-                                    <div className="flex items-start gap-3">
-                                        <div className="p-2 bg-blue-50 text-blue-600 rounded">
-                                            <FileText className="h-6 w-6" />
+                                <div key={book.id} className="flex items-center justify-between p-3 ring-hairline rounded-[12px] bg-card transition-shadow card-hover">
+                                    <div className="flex items-start gap-3 min-w-0">
+                                        <div className="inline-flex h-10 w-10 items-center justify-center rounded-[10px] bg-[var(--color-accent)] text-[var(--color-accent-foreground)] shrink-0">
+                                            <FileText className="h-4 w-4" />
                                         </div>
-                                        <div>
-                                            <h4 className="font-medium text-sm">{book.title}</h4>
-                                            <div className="flex items-center gap-2 mt-1">
-                                                <span className="text-xs px-2 py-0.5 bg-gray-100 rounded text-gray-600">
+                                        <div className="min-w-0">
+                                            <h4 className="font-semibold text-[13px] tracking-tight text-[var(--color-ink-1)] truncate">{book.title}</h4>
+                                            <div className="flex items-center gap-2 mt-1 flex-wrap">
+                                                <span className="text-[10px] px-1.5 py-0.5 bg-[var(--color-muted)] rounded-[4px] text-[var(--color-ink-2)] uppercase font-semibold tracking-wider">
                                                     {book.board} · {book.subject} · {book.class_level}
                                                 </span>
                                                 {book.status === 'ready' && (
-                                                    <span className="text-xs flex items-center gap-1 text-green-600">
+                                                    <span className="text-[11px] flex items-center gap-1 text-[#3d7a0f] font-medium">
                                                         <CheckCircle className="h-3 w-3" /> Ready
                                                     </span>
                                                 )}
                                                 {book.status === 'processing' && (
-                                                    <span className="text-xs flex items-center gap-1 text-blue-600">
+                                                    <span className="text-[11px] flex items-center gap-1 text-[var(--color-ink-2)] font-medium">
                                                         <Loader2 className="h-3 w-3 animate-spin" /> Processing
                                                     </span>
                                                 )}
                                                 {book.status === 'error' && (
-                                                    <span className="text-xs flex items-center gap-1 text-red-600">
+                                                    <span className="text-[11px] flex items-center gap-1 text-[var(--color-destructive)] font-medium">
                                                         <AlertCircle className="h-3 w-3" /> Error
                                                     </span>
                                                 )}
@@ -369,7 +369,7 @@ export const TextbookManager: React.FC = () => {
                                         <Button
                                             variant="ghost"
                                             size="sm"
-                                            className="text-red-500 hover:text-red-600 hover:bg-red-50"
+                                            className="text-[var(--color-ink-3)] hover:text-[var(--color-destructive)]"
                                             type="button"
                                             onClick={(e) => {
                                                 e.preventDefault();
