@@ -37,7 +37,11 @@ interface NavGroup {
 export const Sidebar: React.FC<SidebarProps> = ({ currentPage, setCurrentPage, user, onLogout }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
 
-  // Admin Detection
+  // Admin Detection.
+  // Must stay in sync with the admin allowlist in
+  //   apps/web/supabase/migrations/029_admin_only_storage_textbooks.sql
+  // and the parallel check in apps/web/components/MobileNav.tsx.
+  // When adding/changing admins, update all three.
   const isAdmin = user?.email === 'pranav.n@ideaye.in' || user?.email === 'pranav.n@drut.club';
 
   const navGroups: NavGroup[] = [

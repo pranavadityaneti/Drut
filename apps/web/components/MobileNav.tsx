@@ -49,7 +49,10 @@ export const MobileNav: React.FC<MobileNavProps> = ({
         { id: 'sprint', label: 'Sprint', icon: Zap },
     ];
 
-    // Admin users get extra nav items
+    // Admin users get extra nav items.
+    // NOTE: Sidebar.tsx and migration 029 also check 'pranav.n@drut.club';
+    // this file is missing that second admin — left as-is to keep this commit
+    // strictly scoped to comment additions. Flag to fix as a follow-up.
     const isAdmin = user?.email === 'pranav.n@ideaye.in';
     const adminItems: NavItem[] = isAdmin ? [
         { id: 'admin/ingest', label: 'Admin Ingest', icon: Upload },
