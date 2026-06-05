@@ -94,7 +94,7 @@ export const DropdownMenuContent: React.FC<{
   return (
     <div
       ref={contentRef}
-      className={`absolute z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 ${alignClasses[align]} ${sideClasses[side]} ${className}`}
+      className={`absolute z-50 min-w-[10rem] overflow-hidden rounded-[14px] bg-[var(--color-card)] ring-hairline-strong p-1.5 text-[var(--color-ink-1)] shadow-soft animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 ${alignClasses[align]} ${sideClasses[side]} ${className}`}
       data-state={isOpen ? 'open' : 'closed'}
     >
       {children}
@@ -115,7 +115,7 @@ export const DropdownMenuItem: React.FC<{ children: React.ReactNode; onClick?: (
   return (
     <div
       onClick={handleClick}
-      className={`relative flex cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-accent focus:bg-accent focus:text-accent-foreground ${className}`}
+      className={`relative flex cursor-pointer select-none items-center rounded-[10px] px-2.5 py-2 text-[13px] outline-none transition-colors hover:bg-[var(--color-muted)] focus:bg-[var(--color-muted)] ${className}`}
     >
       {children}
     </div>
@@ -123,5 +123,5 @@ export const DropdownMenuItem: React.FC<{ children: React.ReactNode; onClick?: (
 };
 
 export const DropdownMenuSeparator: React.FC<{ className?: string }> = ({ className = '' }) => {
-    return <div className={`-mx-1 my-1 h-px bg-muted ${className}`} />;
+    return <div className={`-mx-1 my-1 h-px bg-[var(--color-ink-5)] ${className}`} />;
 };

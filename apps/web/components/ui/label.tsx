@@ -5,8 +5,9 @@ import * as LabelPrimitive from "@radix-ui/react-label";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@drut/shared";
 
+// Default label is editorial: 10px uppercase tracked, semibold, ink-3.
 const labelVariants = cva(
-    "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+    "text-[10px] tracking-[0.08em] uppercase font-semibold text-[var(--color-ink-3)] leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
 );
 
 const Label = React.forwardRef<

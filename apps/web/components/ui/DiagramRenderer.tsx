@@ -41,7 +41,7 @@ export const DiagramRenderer: React.FC<DiagramRendererProps> = ({
         <>
             {/* Main diagram container */}
             <div
-                className={`relative flex items-center justify-center my-4 bg-white rounded-xl border border-gray-100 cursor-pointer transition-transform hover:scale-[1.02] ${className}`}
+                className={`relative flex items-center justify-center my-4 bg-[var(--color-card)] rounded-[14px] ring-hairline cursor-pointer transition-transform hover:scale-[1.02] ${className}`}
                 style={{
                     maxWidth: typeof width === 'number' ? `${width}px` : width,
                     aspectRatio: '4 / 3',
@@ -60,7 +60,7 @@ export const DiagramRenderer: React.FC<DiagramRendererProps> = ({
                     loading="eager"
                 />
                 {/* Zoom hint */}
-                <div className="absolute bottom-2 right-2 bg-black/50 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
+                <div className="absolute bottom-2 right-2 bg-[var(--color-ink-1)] text-white text-[11px] font-medium px-2 py-1 rounded-[6px] opacity-0 group-hover:opacity-100 transition-opacity">
                     Tap to zoom
                 </div>
             </div>
@@ -68,26 +68,26 @@ export const DiagramRenderer: React.FC<DiagramRendererProps> = ({
             {/* Fullscreen zoom modal */}
             {isZoomed && (
                 <div
-                    className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm"
+                    className="fixed inset-0 z-50 flex items-center justify-center bg-[rgba(11,11,13,0.55)] backdrop-blur-sm"
                     onClick={handleClick}
                     role="dialog"
                     aria-modal="true"
                 >
-                    <div className="relative max-w-[90vw] max-h-[90vh] bg-white rounded-xl p-4 shadow-2xl">
+                    <div className="relative max-w-[90vw] max-h-[90vh] bg-[var(--color-card)] rounded-[20px] ring-hairline-strong p-4 shadow-hover">
                         <img
                             src={diagramUrl}
                             alt="Physics diagram (zoomed)"
                             className="object-contain max-w-full max-h-[80vh]"
                         />
                         <button
-                            className="absolute -top-3 -right-3 w-8 h-8 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-600 hover:text-gray-900"
+                            className="absolute -top-3 -right-3 w-8 h-8 bg-[var(--color-card)] ring-hairline-strong rounded-full shadow-soft flex items-center justify-center text-[var(--color-ink-3)] hover:text-[var(--color-ink-1)]"
                             onClick={(e) => {
                                 e.stopPropagation();
                                 setIsZoomed(false);
                             }}
                             aria-label="Close zoom"
                         >
-                            ✕
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
                         </button>
                     </div>
                 </div>

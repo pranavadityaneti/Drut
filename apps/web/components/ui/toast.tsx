@@ -32,35 +32,39 @@ const Toast: React.FC<ToastProps> = ({ id, message, type = 'info', duration = 30
     }, [duration, id, onDismiss]);
 
     const icons = {
-        success: <CheckCircle2 className="w-5 h-5 text-emerald-600" />,
-        info: <Info className="w-5 h-5 text-blue-600" />,
-        warning: <AlertTriangle className="w-5 h-5 text-amber-600" />,
+        success: <CheckCircle2 className="w-4 h-4 text-[#3d7a0f]" />,
+        info: <Info className="w-4 h-4 text-[var(--color-ink-2)]" />,
+        warning: <AlertTriangle className="w-4 h-4 text-[var(--color-accent-warm-foreground)]" />,
     };
 
-    const bgColors = {
-        success: 'bg-emerald-50 border-emerald-200',
-        info: 'bg-blue-50 border-blue-200',
-        warning: 'bg-amber-50 border-amber-200',
+    // Editorial pattern: muted base + colored left stripe via ::before stripe color
+    const stripeColors = {
+        success: 'var(--color-primary)',
+        info: 'var(--color-ink-2)',
+        warning: 'var(--color-accent-warm)',
     };
 
     return (
         <div
             className={cn(
-                "flex items-center gap-3 px-4 py-3 rounded-lg border shadow-lg transition-all duration-300",
-                bgColors[type],
+                "relative flex items-center gap-3 px-4 py-3 rounded-[12px] bg-[var(--color-card)] ring-hairline-strong shadow-soft transition-all duration-300 overflow-hidden",
                 isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2"
             )}
         >
-            {icons[type]}
-            <span className="text-sm font-medium text-foreground">{message}</span>
+            <span aria-hidden className="absolute left-0 top-3 bottom-3 w-[3px] rounded-r-full" style={{ background: stripeColors[type] }} />
+            <span className="pl-2 flex items-center gap-2.5">
+                {icons[type]}
+                <span className="text-[13px] font-medium text-[var(--color-ink-1)]">{message}</span>
+            </span>
             <button
                 onClick={() => {
                     setIsVisible(false);
                     setTimeout(() => onDismiss(id), 300);
                 }}
-                className="ml-2 text-muted-foreground hover:text-foreground"
+                className="ml-2 inline-flex h-6 w-6 items-center justify-center rounded-[6px] text-[var(--color-ink-3)] hover:bg-[var(--color-muted)] hover:text-[var(--color-ink-1)] transition-colors"
+                aria-label="Dismiss"
             >
-                <X className="w-4 h-4" />
+                <X className="w-3.5 h-3.5" />
             </button>
         </div>
     );
