@@ -331,11 +331,19 @@ export const KnowledgeBase: React.FC = () => {
                                     value={newNodeTag}
                                     onChange={e => setNewNodeTag(e.target.value)}
                                 >
+                                    {/* Values are case-sensitive — must match
+                                        textbooks.board column AND filter_board in
+                                        match_syllabus_content RPC (see rag.ts).
+                                        Kept in sync with TextbookManager dropdown:
+                                        same 5 boards, same canonical values, same
+                                        ordering. 'State' catch-all dropped — was a
+                                        silent RAG-filter mismatch source. */}
                                     <option value="">Select Standard...</option>
-                                    <option value="Ncert">NCERT (For AP/TS State, EAPCET)</option>
-                                    <option value="CBSE">CBSE (For JEE Main/Adv)</option>
+                                    <option value="NCERT">NCERT</option>
+                                    <option value="BIEAP">BIEAP (Andhra Pradesh)</option>
+                                    <option value="TSBIE">TSBIE (Telangana)</option>
+                                    <option value="CBSE">CBSE</option>
                                     <option value="ICSE">ICSE</option>
-                                    <option value="State">Other State Board</option>
                                 </select>
                                 <p className="text-xs text-muted-foreground">
                                     Maps this folder to the AI's syllabus knowledge.

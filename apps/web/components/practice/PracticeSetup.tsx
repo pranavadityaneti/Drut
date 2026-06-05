@@ -215,7 +215,12 @@ export const PracticeSetup: React.FC<PracticeSetupProps> = ({ onStart }) => {
 
         // Board inference
         const isStateBoard = selectedExam.includes('eapcet') || selectedExam.includes('eamcet');
-        const board = isStateBoard ? 'Ncert' : 'CBSE'; // Simplified map
+        // Board value is case-sensitive — must match textbooks.board column AND
+        // filter_board param in match_syllabus_content RPC (see _shared/rag.ts).
+        // 'NCERT' (uppercase) is the canonical form set in TextbookManager dropdown.
+        // TODO(phase-B): per-state mapping — ap_eapcet→BIEAP, ts_eapcet→TSBIE,
+        // with NCERT as fallback. Requires multi-board RAG support first.
+        const board = isStateBoard ? 'NCERT' : 'CBSE';
 
         onStart({
             examProfile: selectedExam,
