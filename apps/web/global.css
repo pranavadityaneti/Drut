@@ -1,82 +1,118 @@
 @import "tailwindcss";
 
-/* 
- * Drut Brand Theme for Tailwind v4
- * Primary: #5cbb21 (Lime Green)
- * Secondary: #cbe856 (Light Lime)
- * Redesigned for modern dashboard aesthetics
+/*
+ * Drut Brand Theme v2 — Editorial Refresh
+ *
+ * Primary brand: #5cbb21 (Drut Lime) — kept as primary CTAs, active nav, success.
+ * Warm accent:   #ff7a3a (Coral)     — single highlight color, one per view.
+ * Surface base:  #f7f7f5 (Warm Paper) — body background.
+ * Ink ramp:      Near-monochrome from deep ink to warm paper.
+ *
+ * All previous token names are preserved so existing components keep compiling.
+ * Values shift to the new system. Old utility classes are retained but retuned.
  */
 
 @theme {
-    /* Primary - Drut Green #5cbb21 */
+    /* === Brand === */
+    /* Primary - Drut Lime (unchanged) */
     --color-primary: #5cbb21;
     --color-primary-foreground: #ffffff;
 
-    /* Background - Warm Gray for modern look */
-    --color-background: #f8f9fa;
-    --color-foreground: #1a1f1c;
+    /* Warm accent - Coral, used for the one "featured" data point per view */
+    --color-accent-warm: #ff7a3a;
+    --color-accent-warm-soft: #ffe9dd;
+    --color-accent-warm-foreground: #5a1f0a;
 
-    /* Card - Pure white with no border */
+    /* === Surface === */
+    --color-background: #f7f7f5;        /* warm paper */
+    --color-foreground: #0b0b0d;        /* deep ink */
+
     --color-card: #ffffff;
-    --color-card-foreground: #1a1f1c;
+    --color-card-foreground: #0b0b0d;
 
-    /* Popover */
     --color-popover: #ffffff;
-    --color-popover-foreground: #1a1f1c;
+    --color-popover-foreground: #0b0b0d;
 
-    /* Secondary - Light Lime tint #cbe856 */
+    /* Secondary kept lime-tinted but used sparingly */
     --color-secondary: #cbe856;
     --color-secondary-foreground: #1a1f1c;
 
-    /* Muted */
-    --color-muted: #f1f5f9;
-    --color-muted-foreground: #64748b;
+    /* Muted moves from bluish slate to warm gray */
+    --color-muted: #f0efeb;
+    --color-muted-foreground: #7a7a82;
 
-    /* Accent - Light Lime #cbe856 */
-    --color-accent: #e8f5cc;
+    /* Accent (soft lime wash) */
+    --color-accent: #eef6dd;
     --color-accent-foreground: #3d7a0f;
 
     /* Destructive */
-    --color-destructive: #ef4444;
+    --color-destructive: #e0483e;
     --color-destructive-foreground: #ffffff;
 
-    /* Border/Input/Ring */
-    --color-border: #e2e8f0;
-    --color-input: #e2e8f0;
+    /* Border / Input / Ring — hairline, near-invisible */
+    --color-border: rgba(11, 11, 13, 0.08);
+    --color-input: rgba(11, 11, 13, 0.08);
     --color-ring: #5cbb21;
 
-    /* Radius - Larger for modern cards */
-    --radius-sm: 0.5rem;
-    --radius-md: 0.75rem;
-    --radius-lg: 1rem;
-    --radius-xl: 1.25rem;
+    /* === Ink ramp (new) === */
+    --color-ink-1: #0b0b0d;   /* primary text */
+    --color-ink-2: #3c3c40;   /* secondary text */
+    --color-ink-3: #7a7a82;   /* muted text */
+    --color-ink-4: #c7c7cd;   /* disabled */
+    --color-ink-5: #ececef;   /* divider */
+    --color-ink-6: #f7f7f5;   /* paper */
+    --color-ink-7: #ffffff;   /* white */
+
+    /* === Radii — larger, more editorial === */
+    --radius-sm: 0.625rem;
+    --radius-md: 0.875rem;
+    --radius-lg: 1.25rem;
+    --radius-xl: 1.5rem;
+    --radius-2xl: 2rem;
+
+    /* === Typography scale === */
+    --text-display: 3.5rem;     /* 56px */
+    --text-display-lh: 1;
+    --text-h1: 2.25rem;         /* 36px */
+    --text-h1-lh: 1.1;
+    --text-h2: 1.75rem;         /* 28px */
+    --text-h2-lh: 1.15;
+    --text-h3: 1.25rem;         /* 20px */
+    --text-h3-lh: 1.2;
+    --text-body: 0.875rem;      /* 14px */
+    --text-body-lh: 1.45;
+    --text-caption: 0.6875rem;  /* 11px */
+    --text-caption-lh: 1.3;
+    --text-label: 0.625rem;     /* 10px */
+    --text-label-lh: 1.3;
+    --tracking-label: 0.08em;
 }
 
-/* CSS variables for shadcn component compatibility */
+/* === shadcn HSL compatibility layer (values aligned to v2) === */
 :root {
     --primary: 90 70% 43%;
     --primary-foreground: 0 0% 100%;
-    --background: 210 20% 98%;
-    --foreground: 150 10% 10%;
+    --background: 60 10% 97%;
+    --foreground: 240 7% 5%;
     --card: 0 0% 100%;
-    --card-foreground: 150 10% 10%;
+    --card-foreground: 240 7% 5%;
     --popover: 0 0% 100%;
-    --popover-foreground: 150 10% 10%;
+    --popover-foreground: 240 7% 5%;
     --secondary: 74 75% 62%;
     --secondary-foreground: 150 10% 10%;
-    --muted: 210 40% 96%;
-    --muted-foreground: 215 16% 47%;
-    --accent: 72 70% 88%;
+    --muted: 50 10% 93%;
+    --muted-foreground: 240 4% 50%;
+    --accent: 72 64% 91%;
     --accent-foreground: 90 76% 27%;
-    --destructive: 0 84% 60%;
+    --destructive: 4 73% 56%;
     --destructive-foreground: 0 0% 100%;
-    --border: 214 32% 91%;
-    --input: 214 32% 91%;
+    --border: 240 7% 5% / 0.08;
+    --input: 240 7% 5% / 0.08;
     --ring: 90 70% 43%;
-    --radius: 1rem;
+    --radius: 1.25rem;
 }
 
-/* Base styles */
+/* === Base === */
 * {
     border-color: var(--color-border);
 }
@@ -84,51 +120,185 @@
 body {
     background-color: var(--color-background);
     color: var(--color-foreground);
-    font-feature-settings: "rlig" 1, "calt" 1;
+    font-feature-settings: "rlig" 1, "calt" 1, "ss01" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
-/* Modern shadow utilities */
+/* === Elevation (retuned — borders carry the card edge, shadow is supporting) === */
 .shadow-card {
-    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.04), 0 1px 2px -1px rgb(0 0 0 / 0.04);
+    box-shadow: 0 0 0 1px rgba(11, 11, 13, 0.04), 0 1px 2px -1px rgba(11, 11, 13, 0.04);
 }
 
 .shadow-soft {
-    box-shadow: 0 4px 24px -4px rgb(0 0 0 / 0.08);
+    box-shadow: 0 1px 2px rgba(11, 11, 13, 0.04), 0 8px 24px -12px rgba(11, 11, 13, 0.08);
 }
 
 .shadow-hover {
-    box-shadow: 0 8px 32px -8px rgb(0 0 0 / 0.12);
+    box-shadow: 0 2px 4px rgba(11, 11, 13, 0.06), 0 16px 40px -16px rgba(11, 11, 13, 0.12);
 }
 
-/* Card hover lift effect */
+/* Hairline border utility — replaces drop shadow as the card's primary edge */
+.ring-hairline {
+    box-shadow: inset 0 0 0 1px rgba(11, 11, 13, 0.06);
+}
+
+.ring-hairline-strong {
+    box-shadow: inset 0 0 0 1px rgba(11, 11, 13, 0.10);
+}
+
+/* === Card hover lift (kept) === */
 .card-hover {
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .card-hover:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 32px -8px rgb(0 0 0 / 0.12);
+    box-shadow: 0 2px 4px rgba(11, 11, 13, 0.06), 0 16px 40px -16px rgba(11, 11, 13, 0.12);
 }
 
-/* Background utilities for compatibility */
+/* === Legacy soft backgrounds (kept for back-compat, retuned to warm paper) === */
 .bg-purple-soft {
-    background-color: #f0fdf4;
+    background-color: #f4f1ec;
 }
 
 .bg-blue-soft {
-    background-color: #ecfdf5;
+    background-color: #eef3f0;
 }
 
-/* Pill button style */
+/* === Pill === */
 .btn-pill {
     border-radius: 9999px;
 }
 
-/* Trend indicators */
+/* === Trend indicators (retuned to coral/lime) === */
 .trend-up {
-    color: #22c55e;
+    color: #5cbb21;
 }
 
 .trend-down {
-    color: #ef4444;
+    color: #e0483e;
+}
+
+/* === New utilities === */
+
+/* Tabular figures — for KPI numerals */
+.num-tabular {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+}
+
+/* Tracked uppercase label — group titles, KPI captions */
+.label-uppercase {
+    font-size: var(--text-label);
+    line-height: var(--text-label-lh);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--color-ink-3);
+}
+
+/* === Halftone bleed — editorial dotted texture at canvas edge === */
+/* Full-width bleed (used on shell top edge) */
+.bg-halftone {
+    background-image: radial-gradient(circle at center, rgba(11, 11, 13, 0.22) 1px, transparent 1.4px);
+    background-size: 8px 8px;
+    background-position: 0 0;
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.4) 50%, rgba(0, 0, 0, 0) 100%);
+    mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.4) 50%, rgba(0, 0, 0, 0) 100%);
+}
+
+/* Corner version — used on cards (top-right corner ornament) */
+.bg-halftone-corner {
+    background-image: radial-gradient(circle at center, rgba(11, 11, 13, 0.22) 1px, transparent 1.4px);
+    background-size: 6px 6px;
+    -webkit-mask-image: radial-gradient(ellipse at top right, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 60%);
+    mask-image: radial-gradient(ellipse at top right, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 60%);
+}
+
+/* Side bleed — used on sidebar trim */
+.bg-halftone-side {
+    background-image: radial-gradient(circle at center, rgba(11, 11, 13, 0.18) 1px, transparent 1.4px);
+    background-size: 7px 7px;
+    -webkit-mask-image: linear-gradient(to right, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 100%);
+    mask-image: linear-gradient(to right, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 100%);
+}
+
+/* === Hatched bar fill — for non-featured bars in bar charts === */
+.bar-hatched {
+    background-image: repeating-linear-gradient(
+        135deg,
+        rgba(11, 11, 13, 0.10) 0px,
+        rgba(11, 11, 13, 0.10) 1.5px,
+        transparent 1.5px,
+        transparent 6px
+    );
+    background-color: rgba(11, 11, 13, 0.02);
+}
+
+.bar-hatched-strong {
+    background-image: repeating-linear-gradient(
+        135deg,
+        rgba(11, 11, 13, 0.16) 0px,
+        rgba(11, 11, 13, 0.16) 2px,
+        transparent 2px,
+        transparent 7px
+    );
+    background-color: rgba(11, 11, 13, 0.03);
+}
+
+/* Featured bar — solid coral, the one highlight per chart */
+.bar-featured {
+    background-color: var(--color-accent-warm);
+}
+
+/* === Dotted grid background — for chart panels / preview canvases === */
+.bg-dotted-grid {
+    background-image: radial-gradient(circle at center, rgba(11, 11, 13, 0.10) 1px, transparent 1.2px);
+    background-size: 18px 18px;
+}
+
+/* === Dashed chart line (used as a stroke-dasharray helper in SVG via class) ===
+   Recharts strokeDasharray is passed as a prop, but we expose a CSS var so any
+   custom SVG can opt in via stroke-dasharray: var(--dash-editorial). */
+:root {
+    --dash-editorial: 4 4;
+}
+
+/* === Underlined tab bar === */
+.tab-underline {
+    position: relative;
+    color: var(--color-ink-3);
+    font-weight: 500;
+    padding: 0.625rem 0;
+    border-bottom: 1px solid transparent;
+    transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.tab-underline:hover {
+    color: var(--color-ink-2);
+}
+
+.tab-underline[data-state="active"],
+.tab-underline.is-active {
+    color: var(--color-ink-1);
+    border-bottom-color: var(--color-ink-1);
+    font-weight: 600;
+}
+
+/* === Filled-pill sidebar nav active state === */
+.nav-pill-active {
+    background-color: rgba(92, 187, 33, 0.10);
+    color: var(--color-ink-1);
+    font-weight: 600;
+}
+
+/* === Scrollbar hide (used by Sidebar) === */
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
 }
