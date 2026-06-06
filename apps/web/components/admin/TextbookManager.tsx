@@ -10,382 +10,382 @@ const pdfjsLib = pdfjsLibProxy.default || pdfjsLibProxy;
 
 // Set worker to CDN to avoid Vite build/worker issues
 try {
-    if (typeof window !== 'undefined' && pdfjsLib.GlobalWorkerOptions) {
-        // Use unpkg with .mjs extension for v5 compatibility
-        pdfjsLib.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjsLib.version}/build/pdf.worker.min.mjs`;
-    }
+  if (typeof window !== 'undefined' && pdfjsLib.GlobalWorkerOptions) {
+  // Use unpkg with .mjs extension for v5 compatibility
+  pdfjsLib.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjsLib.version}/build/pdf.worker.min.mjs`;
+  }
 } catch (e) {
-    console.warn('PDF Worker setup warning:', e);
+  console.warn('PDF Worker setup warning:', e);
 }
 
 interface Textbook {
-    id: string;
-    title: string;
-    subject: string;
-    board: string;
-    class_level: string;
-    file_path: string;
-    status: 'processing' | 'ready' | 'error';
-    uploaded_at: string;
+  id: string;
+  title: string;
+  subject: string;
+  board: string;
+  class_level: string;
+  file_path: string;
+  status: 'processing' | 'ready' | 'error';
+  uploaded_at: string;
 }
 
 export const TextbookManager: React.FC = () => {
-    const [user, setUser] = useState<any>(null);
-    const [title, setTitle] = useState('');
-    const [subject, setSubject] = useState('Physics');
-    const [board, setBoard] = useState('NCERT');
-    const [classLevel, setClassLevel] = useState('11');
-    const [file, setFile] = useState<File | null>(null);
-    const [isUploading, setIsUploading] = useState(false);
-    const [uploadStatus, setUploadStatus] = useState(''); // Text feedback for user
-    const [params, setParams] = useState({
-        q: '',
-        subject: '',
-        board: '',
-        class_level: ''
-    });
+  const [user, setUser] = useState<any>(null);
+  const [title, setTitle] = useState('');
+  const [subject, setSubject] = useState('Physics');
+  const [board, setBoard] = useState('NCERT');
+  const [classLevel, setClassLevel] = useState('11');
+  const [file, setFile] = useState<File | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadStatus, setUploadStatus] = useState(''); // Text feedback for user
+  const [params, setParams] = useState({
+  q: '',
+  subject: '',
+  board: '',
+  class_level: ''
+  });
 
-    const [textbooks, setTextbooks] = useState<Textbook[]>([]);
-    const [loading, setLoading] = useState(true);
+  const [textbooks, setTextbooks] = useState<Textbook[]>([]);
+  const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        // Fetch User
-        supabase.auth.getUser().then(({ data }) => setUser(data.user));
-    }, []);
+  useEffect(() => {
+  // Fetch User
+  supabase.auth.getUser().then(({ data }) => setUser(data.user));
+  }, []);
 
-    useEffect(() => {
-        fetchTextbooks();
-    }, [params]);
+  useEffect(() => {
+  fetchTextbooks();
+  }, [params]);
 
-    const fetchTextbooks = async () => {
-        try {
-            setLoading(true);
-            let query = supabase
-                .from('textbooks')
-                .select('*')
-                .order('uploaded_at', { ascending: false });
+  const fetchTextbooks = async () => {
+  try {
+  setLoading(true);
+  let query = supabase
+  .from('textbooks')
+  .select('*')
+  .order('uploaded_at', { ascending: false });
 
-            if (params.subject && params.subject !== 'all') query = query.eq('subject', params.subject);
-            if (params.board && params.board !== 'all') query = query.eq('board', params.board);
-            if (params.class_level && params.class_level !== 'all') query = query.eq('class_level', params.class_level);
-            if (params.q) query = query.ilike('title', `%${params.q}%`);
+  if (params.subject && params.subject !== 'all') query = query.eq('subject', params.subject);
+  if (params.board && params.board !== 'all') query = query.eq('board', params.board);
+  if (params.class_level && params.class_level !== 'all') query = query.eq('class_level', params.class_level);
+  if (params.q) query = query.ilike('title', `%${params.q}%`);
 
-            const { data, error } = await query;
-            if (error) throw error;
-            setTextbooks(data || []);
-        } catch (error) {
-            console.error('Error fetching textbooks:', error);
-        } finally {
-            setLoading(false);
-        }
-    };
+  const { data, error } = await query;
+  if (error) throw error;
+  setTextbooks(data || []);
+  } catch (error) {
+  console.error('Error fetching textbooks:', error);
+  } finally {
+  setLoading(false);
+  }
+  };
 
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files[0]) {
-            const selectedFile = e.target.files[0];
-            setFile(selectedFile);
-            if (!title) {
-                setTitle(selectedFile.name.replace('.pdf', ''));
-            }
-        }
-    };
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  if (e.target.files && e.target.files[0]) {
+  const selectedFile = e.target.files[0];
+  setFile(selectedFile);
+  if (!title) {
+  setTitle(selectedFile.name.replace('.pdf', ''));
+  }
+  }
+  };
 
-    /**
-     * Extracts text using Client-Side Browser RAM.
-     * Pros: No 50MB Server limit, no 128MB RAM Server Crash.
-     */
-    const extractTextClientSide = async (file: File): Promise<string> => {
-        try {
-            const arrayBuffer = await file.arrayBuffer();
-            const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer });
-            const pdf = await loadingTask.promise;
+  /**
+  * Extracts text using Client-Side Browser RAM.
+  * Pros: No 50MB Server limit, no 128MB RAM Server Crash.
+  */
+  const extractTextClientSide = async (file: File): Promise<string> => {
+  try {
+  const arrayBuffer = await file.arrayBuffer();
+  const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer });
+  const pdf = await loadingTask.promise;
 
-            let fullText = '';
-            console.log(`[Client] PDF loaded: ${pdf.numPages} pages.`);
+  let fullText = '';
+  console.log(`[Client] PDF loaded: ${pdf.numPages} pages.`);
 
-            // Extract text page by page
-            for (let i = 1; i <= pdf.numPages; i++) {
-                const page = await pdf.getPage(i);
-                const textContent = await page.getTextContent();
-                const pageText = textContent.items.map((item: any) => item.str).join(' ');
-                fullText += pageText + ' \n';
+  // Extract text page by page
+  for (let i = 1; i <= pdf.numPages; i++) {
+  const page = await pdf.getPage(i);
+  const textContent = await page.getTextContent();
+  const pageText = textContent.items.map((item: any) => item.str).join(' ');
+  fullText += pageText + ' \n';
 
-                // Optional: Update progress
-                if (i % 10 === 0) setUploadStatus(`Extracting text: Page ${i}/${pdf.numPages}...`);
-            }
-            return fullText;
-        } catch (error) {
-            console.error('Client-side parsing failed:', error);
-            throw new Error('Failed to extract text. File might be corrupted or encrypted.');
-        }
-    };
+  // Optional: Update progress
+  if (i % 10 === 0) setUploadStatus(`Extracting text: Page ${i}/${pdf.numPages}...`);
+  }
+  return fullText;
+  } catch (error) {
+  console.error('Client-side parsing failed:', error);
+  throw new Error('Failed to extract text. File might be corrupted or encrypted.');
+  }
+  };
 
-    const handleUpload = async () => {
-        if (!file || !title) return;
+  const handleUpload = async () => {
+  if (!file || !title) return;
 
-        try {
-            setIsUploading(true);
-            setUploadStatus('Uploading PDF for archival...');
+  try {
+  setIsUploading(true);
+  setUploadStatus('Uploading PDF for archival...');
 
-            // 1. Upload File to Storage (Archival)
-            const fileExt = file.name.split('.').pop();
-            const fileName = `${title.replace(/\s+/g, '_')}_${Date.now()}.${fileExt}`;
-            const filePath = `${fileName}`;
+  // 1. Upload File to Storage (Archival)
+  const fileExt = file.name.split('.').pop();
+  const fileName = `${title.replace(/\s+/g, '_')}_${Date.now()}.${fileExt}`;
+  const filePath = `${fileName}`;
 
-            const { error: uploadError } = await supabase.storage
-                .from('textbooks')
-                .upload(filePath, file);
+  const { error: uploadError } = await supabase.storage
+  .from('textbooks')
+  .upload(filePath, file);
 
-            if (uploadError) throw uploadError;
+  if (uploadError) throw uploadError;
 
-            // 2. Insert Metadata into DB
-            setUploadStatus('Registering textbook...');
-            const { data: tbData, error: dbError } = await supabase
-                .from('textbooks')
-                .insert({
-                    title,
-                    subject,
-                    board,
-                    class_level: classLevel,
-                    file_path: filePath,
-                    status: 'processing',
-                    uploaded_by: user?.id
-                })
-                .select()
-                .single();
+  // 2. Insert Metadata into DB
+  setUploadStatus('Registering textbook...');
+  const { data: tbData, error: dbError } = await supabase
+  .from('textbooks')
+  .insert({
+  title,
+  subject,
+  board,
+  class_level: classLevel,
+  file_path: filePath,
+  status: 'processing',
+  uploaded_by: user?.id
+  })
+  .select()
+  .single();
 
-            if (dbError) throw dbError;
+  if (dbError) throw dbError;
 
-            // 3. Extract Text Client-Side
-            setUploadStatus('Extracting text (Browser)...');
-            let extractedText = '';
-            try {
-                extractedText = await extractTextClientSide(file);
-                console.log(`Extracted ${extractedText.length} characters.`);
+  // 3. Extract Text Client-Side
+  setUploadStatus('Extracting text (Browser)...');
+  let extractedText = '';
+  try {
+  extractedText = await extractTextClientSide(file);
+  console.log(`Extracted ${extractedText.length} characters.`);
 
-                if (extractedText.trim().length < 50) {
-                    alert('Warning: Extracted text is very short (Scanned PDF?). AI context might be empty.');
-                }
-            } catch (err) {
-                console.warn('Client extraction failed:', err);
-                alert('Text extraction failed. Processing will continue on server (may fail if file is large).');
-            }
+  if (extractedText.trim().length < 50) {
+  alert('Warning: Extracted text is very short (Scanned PDF?). AI context might be empty.');
+  }
+  } catch (err) {
+  console.warn('Client extraction failed:', err);
+  alert('Text extraction failed. Processing will continue on server (may fail if file is large).');
+  }
 
-            // 4. Send Text to Backend
-            setUploadStatus('Ingesting chunks...');
-            const { error: ingestError } = await supabase.functions.invoke('ingest-textbook', {
-                body: {
-                    filePath,
-                    textContent: extractedText
-                }
-            });
+  // 4. Send Text to Backend
+  setUploadStatus('Ingesting chunks...');
+  const { error: ingestError } = await supabase.functions.invoke('ingest-textbook', {
+  body: {
+  filePath,
+  textContent: extractedText
+  }
+  });
 
-            if (ingestError) {
-                console.error('Ingest request failed:', ingestError);
-                // Mark error in DB
-                await supabase.from('textbooks').update({ status: 'error', error_message: 'Ingestion Request Failed' }).eq('id', tbData.id);
-            } else {
-                console.log('Ingestion triggered successfully');
-            }
+  if (ingestError) {
+  console.error('Ingest request failed:', ingestError);
+  // Mark error in DB
+  await supabase.from('textbooks').update({ status: 'error', error_message: 'Ingestion Request Failed' }).eq('id', tbData.id);
+  } else {
+  console.log('Ingestion triggered successfully');
+  }
 
-            // Reset
-            setFile(null);
-            setTitle('');
-            setUploadStatus('');
-            fetchTextbooks();
+  // Reset
+  setFile(null);
+  setTitle('');
+  setUploadStatus('');
+  fetchTextbooks();
 
-        } catch (error: any) {
-            console.error('Upload failed:', error);
-            alert(`Upload failed: ${error.message}`);
-            setUploadStatus('Failed');
-        } finally {
-            setIsUploading(false);
-        }
-    };
+  } catch (error: any) {
+  console.error('Upload failed:', error);
+  alert(`Upload failed: ${error.message}`);
+  setUploadStatus('Failed');
+  } finally {
+  setIsUploading(false);
+  }
+  };
 
-    const handleDelete = async (id: string, filePath: string) => {
-        if (!confirm('Are you sure? This will delete the book and all associated embeddings.')) return;
-        try {
-            // Delete from DB (cascade deletes chunks)
-            const { error: dbError } = await supabase.from('textbooks').delete().eq('id', id);
-            if (dbError) throw dbError;
+  const handleDelete = async (id: string, filePath: string) => {
+  if (!confirm('Are you sure? This will delete the book and all associated embeddings.')) return;
+  try {
+  // Delete from DB (cascade deletes chunks)
+  const { error: dbError } = await supabase.from('textbooks').delete().eq('id', id);
+  if (dbError) throw dbError;
 
-            // Delete from Storage
-            const { error: storageError } = await supabase.storage.from('textbooks').remove([filePath]);
-            if (storageError) {
-                console.warn('Storage delete failed (potentially already deleted):', storageError);
-                // We don't throw here to ensure UI updates if DB row is gone
-            }
+  // Delete from Storage
+  const { error: storageError } = await supabase.storage.from('textbooks').remove([filePath]);
+  if (storageError) {
+  console.warn('Storage delete failed (potentially already deleted):', storageError);
+  // We don't throw here to ensure UI updates if DB row is gone
+  }
 
-            fetchTextbooks();
-            alert('Textbook deleted successfully');
-        } catch (error: any) {
-            console.error('Delete failed:', error);
-            alert(`Delete failed: ${error.message || error.error_description || JSON.stringify(error)}`);
-        }
-    };
+  fetchTextbooks();
+  alert('Textbook deleted successfully');
+  } catch (error: any) {
+  console.error('Delete failed:', error);
+  alert(`Delete failed: ${error.message || error.error_description || JSON.stringify(error)}`);
+  }
+  };
 
-    return (
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <Card className="lg:col-span-1 h-fit">
-                <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                        <Upload className="h-5 w-5" /> Upload Textbook
-                    </CardTitle>
-                    <CardDescription>Upload PDF to train the syllabus context.</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                    <div>
-                        <label className="text-sm font-medium">PDF File</label>
-                        <input
-                            type="file"
-                            accept="application/pdf"
-                            onChange={handleFileChange}
-                            className="w-full mt-1 text-sm file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-primary-foreground hover:file:bg-primary/90"
-                        />
-                    </div>
+  return (
+  <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+  <Card className="lg:col-span-1 h-fit">
+  <CardHeader>
+  <CardTitle className="flex items-center gap-2">
+  <Upload className="h-5 w-5" /> Upload Textbook
+  </CardTitle>
+  <CardDescription>Upload PDF to train the syllabus context.</CardDescription>
+  </CardHeader>
+  <CardContent className="space-y-4">
+  <div>
+  <label className="text-sm font-medium">PDF File</label>
+  <input
+  type="file"
+  accept="application/pdf"
+  onChange={handleFileChange}
+  className="w-full mt-1 text-sm file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-primary-foreground hover:file:bg-primary/90"
+  />
+  </div>
 
-                    <div>
-                        <label className="text-sm font-medium">Title</label>
-                        <input
-                            value={title}
-                            onChange={(e) => setTitle(e.target.value)}
-                            className="w-full p-2 mt-1 border rounded-md text-sm bg-background"
-                            placeholder="e.g. Physics Vol 1"
-                        />
-                    </div>
+  <div>
+  <label className="text-sm font-medium">Title</label>
+  <input
+  value={title}
+  onChange={(e) => setTitle(e.target.value)}
+  className="w-full p-2 mt-1 border rounded-md text-sm bg-background"
+  placeholder="e.g. Physics Vol 1"
+  />
+  </div>
 
-                    <div className="grid grid-cols-2 gap-2">
-                        <div>
-                            <label className="text-sm font-medium">Subject</label>
-                            <Select
-                                value={subject}
-                                onChange={(e) => setSubject(e.target.value)}
-                                options={[
-                                    { value: 'Physics', label: 'Physics' },
-                                    { value: 'Chemistry', label: 'Chemistry' },
-                                    // Value must be 'Mathematics' to match the RAG retrieval
-                                    // filter in apps/web/supabase/functions/_shared/rag.ts:normalizeSubject().
-                                    // "Maths" was a silent bug — match_syllabus_content would
-                                    // never find math textbooks tagged with that value.
-                                    { value: 'Mathematics', label: 'Mathematics' }
-                                ]}
-                            />
-                        </div>
-                        <div>
-                            <label className="text-sm font-medium">Board</label>
-                            <Select
-                                value={board}
-                                onChange={(e) => setBoard(e.target.value)}
-                                // Board values are case-sensitive and must match the
-                                // textbooks.board column AND the filter_board param
-                                // in match_syllabus_content RPC (see _shared/rag.ts).
-                                // Ordering: NCERT first (most common), state boards
-                                // next (EAPCET target audience), national boards last.
-                                options={[
-                                    { value: 'NCERT', label: 'NCERT' },
-                                    { value: 'BIEAP', label: 'BIEAP (Andhra Pradesh)' },
-                                    { value: 'TSBIE', label: 'TSBIE (Telangana)' },
-                                    { value: 'CBSE', label: 'CBSE' },
-                                    { value: 'ICSE', label: 'ICSE' }
-                                ]}
-                            />
-                        </div>
-                    </div>
+  <div className="grid grid-cols-2 gap-2">
+  <div>
+  <label className="text-sm font-medium">Subject</label>
+  <Select
+  value={subject}
+  onChange={(e) => setSubject(e.target.value)}
+  options={[
+  { value: 'Physics', label: 'Physics' },
+  { value: 'Chemistry', label: 'Chemistry' },
+  // Value must be 'Mathematics' to match the RAG retrieval
+  // filter in apps/web/supabase/functions/_shared/rag.ts:normalizeSubject().
+  // "Maths" was a silent bug — match_syllabus_content would
+  // never find math textbooks tagged with that value.
+  { value: 'Mathematics', label: 'Mathematics' }
+  ]}
+  />
+  </div>
+  <div>
+  <label className="text-sm font-medium">Board</label>
+  <Select
+  value={board}
+  onChange={(e) => setBoard(e.target.value)}
+  // Board values are case-sensitive and must match the
+  // textbooks.board column AND the filter_board param
+  // in match_syllabus_content RPC (see _shared/rag.ts).
+  // Ordering: NCERT first (most common), state boards
+  // next (EAPCET target audience), national boards last.
+  options={[
+  { value: 'NCERT', label: 'NCERT' },
+  { value: 'BIEAP', label: 'BIEAP (Andhra Pradesh)' },
+  { value: 'TSBIE', label: 'TSBIE (Telangana)' },
+  { value: 'CBSE', label: 'CBSE' },
+  { value: 'ICSE', label: 'ICSE' }
+  ]}
+  />
+  </div>
+  </div>
 
-                    <div>
-                        <label className="text-sm font-medium">Class</label>
-                        <Select
-                            value={classLevel}
-                            onChange={(e) => setClassLevel(e.target.value)}
-                            options={[
-                                { value: '11', label: '11' },
-                                { value: '12', label: '12' }
-                            ]}
-                        />
-                    </div>
+  <div>
+  <label className="text-sm font-medium">Class</label>
+  <Select
+  value={classLevel}
+  onChange={(e) => setClassLevel(e.target.value)}
+  options={[
+  { value: '11', label: '11' },
+  { value: '12', label: '12' }
+  ]}
+  />
+  </div>
 
-                    <Button
-                        onClick={handleUpload}
-                        disabled={!file || isUploading}
-                        className="w-full"
-                    >
-                        {isUploading ? (
-                            <div className="flex items-center gap-2">
-                                <Loader2 className="animate-spin h-4 w-4" />
-                                {uploadStatus || 'Processing...'}
-                            </div>
-                        ) : 'Upload & Process'}
-                    </Button>
-                </CardContent>
-            </Card>
+  <Button
+  onClick={handleUpload}
+  disabled={!file || isUploading}
+  className="w-full"
+  >
+  {isUploading ? (
+  <div className="flex items-center gap-2">
+  <Loader2 className="animate-spin h-4 w-4" />
+  {uploadStatus || 'Processing...'}
+  </div>
+  ) : 'Upload & Process'}
+  </Button>
+  </CardContent>
+  </Card>
 
-            <Card className="lg:col-span-2">
-                <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                        <Book className="h-5 w-5" /> Library
-                    </CardTitle>
-                </CardHeader>
-                <CardContent>
-                    {loading ? (
-                        <div className="text-center py-8 text-muted-foreground">Loading...</div>
-                    ) : textbooks.length === 0 ? (
-                        <div className="text-center py-12 border-2 border-dashed rounded-lg bg-muted/20">
-                            <p className="text-muted-foreground">No textbooks uploaded yet.</p>
-                        </div>
-                    ) : (
-                        <div className="space-y-2.5">
-                            {textbooks.map((book) => (
-                                <div key={book.id} className="flex items-center justify-between p-3 ring-hairline rounded-[12px] bg-card transition-shadow card-hover">
-                                    <div className="flex items-start gap-3 min-w-0">
-                                        <div className="inline-flex h-10 w-10 items-center justify-center rounded-[10px] bg-[var(--color-accent)] text-[var(--color-accent-foreground)] shrink-0">
-                                            <FileText className="h-4 w-4" />
-                                        </div>
-                                        <div className="min-w-0">
-                                            <h4 className="font-semibold text-[13px] tracking-tight text-[var(--color-ink-1)] truncate">{book.title}</h4>
-                                            <div className="flex items-center gap-2 mt-1 flex-wrap">
-                                                <span className="text-[10px] px-1.5 py-0.5 bg-[var(--color-muted)] rounded-[4px] text-[var(--color-ink-2)] uppercase font-semibold tracking-wider">
-                                                    {book.board} · {book.subject} · {book.class_level}
-                                                </span>
-                                                {book.status === 'ready' && (
-                                                    <span className="text-[11px] flex items-center gap-1 text-[#3d7a0f] font-medium">
-                                                        <CheckCircle className="h-3 w-3" /> Ready
-                                                    </span>
-                                                )}
-                                                {book.status === 'processing' && (
-                                                    <span className="text-[11px] flex items-center gap-1 text-[var(--color-ink-2)] font-medium">
-                                                        <Loader2 className="h-3 w-3 animate-spin" /> Processing
-                                                    </span>
-                                                )}
-                                                {book.status === 'error' && (
-                                                    <span className="text-[11px] flex items-center gap-1 text-[var(--color-destructive)] font-medium">
-                                                        <AlertCircle className="h-3 w-3" /> Error
-                                                    </span>
-                                                )}
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="flex items-center gap-2">
-                                        <Button
-                                            variant="ghost"
-                                            size="sm"
-                                            className="text-[var(--color-ink-3)] hover:text-[var(--color-destructive)]"
-                                            type="button"
-                                            onClick={(e) => {
-                                                e.preventDefault();
-                                                e.stopPropagation();
-                                                handleDelete(book.id, book.file_path);
-                                            }}
-                                        >
-                                            <Trash2 className="h-4 w-4" />
-                                        </Button>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    )}
-                </CardContent>
-            </Card>
-        </div>
-    );
+  <Card className="lg:col-span-2">
+  <CardHeader>
+  <CardTitle className="flex items-center gap-2">
+  <Book className="h-5 w-5" /> Library
+  </CardTitle>
+  </CardHeader>
+  <CardContent>
+  {loading ? (
+  <div className="text-center py-8 text-muted-foreground">Loading...</div>
+  ) : textbooks.length === 0 ? (
+  <div className="text-center py-12 border-2 border-dashed rounded-lg bg-muted/20">
+  <p className="text-muted-foreground">No textbooks uploaded yet.</p>
+  </div>
+  ) : (
+  <div className="space-y-2.5">
+  {textbooks.map((book) => (
+  <div key={book.id} className="flex items-center justify-between p-3 ring-hairline rounded-[12px] bg-card transition-shadow card-hover">
+  <div className="flex items-start gap-3 min-w-0">
+  <div className="inline-flex h-10 w-10 items-center justify-center rounded-[10px] bg-[var(--color-accent)] text-[var(--color-accent-foreground)] shrink-0">
+  <FileText className="h-4 w-4" />
+  </div>
+  <div className="min-w-0">
+  <h4 className="font-semibold text-[13px] tracking-tight text-[var(--color-ink-1)] truncate">{book.title}</h4>
+  <div className="flex items-center gap-2 mt-1 flex-wrap">
+  <span className="text-[10px] px-1.5 py-0.5 bg-[var(--color-muted)] rounded-[4px] text-[var(--color-ink-2)] uppercase font-semibold tracking-wider">
+  {book.board} · {book.subject} · {book.class_level}
+  </span>
+  {book.status === 'ready' && (
+  <span className="text-[11px] flex items-center gap-1 text-[#3d7a0f] font-medium">
+  <CheckCircle className="h-3 w-3" /> Ready
+  </span>
+  )}
+  {book.status === 'processing' && (
+  <span className="text-[11px] flex items-center gap-1 text-[var(--color-ink-2)] font-medium">
+  <Loader2 className="h-3 w-3 animate-spin" /> Processing
+  </span>
+  )}
+  {book.status === 'error' && (
+  <span className="text-[11px] flex items-center gap-1 text-[var(--color-destructive)] font-medium">
+  <AlertCircle className="h-3 w-3" /> Error
+  </span>
+  )}
+  </div>
+  </div>
+  </div>
+  <div className="flex items-center gap-2">
+  <Button
+  variant="ghost"
+  size="sm"
+  className="text-[var(--color-ink-3)] hover:text-[var(--color-destructive)]"
+  type="button"
+  onClick={(e) => {
+  e.preventDefault();
+  e.stopPropagation();
+  handleDelete(book.id, book.file_path);
+  }}
+  >
+  <Trash2 className="h-4 w-4" />
+  </Button>
+  </div>
+  </div>
+  ))}
+  </div>
+  )}
+  </CardContent>
+  </Card>
+  </div>
+  );
 };

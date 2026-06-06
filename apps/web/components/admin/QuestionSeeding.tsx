@@ -6,545 +6,545 @@ import { Upload, FileSpreadsheet, AlertCircle, CheckCircle, Save, X } from 'luci
 import readXlsxFile from 'read-excel-file';
 import { supabase } from '@drut/shared';
 import {
-    getExamOptions,
-    getTopicOptions,
-    getSubtopicOptions,
-    getExam,
-    getTopic
+  getExamOptions,
+  getTopicOptions,
+  getSubtopicOptions,
+  getExam,
+  getTopic
 } from '@drut/shared';
 
 // Type definitions for parsing
 interface ParsedQuestion {
-    id: number;
-    questionText: string;
-    options: [string, string, string, string];
-    correctOptionIndex: number;
-    difficulty: 'Easy' | 'Medium' | 'Hard';
-    isValid: boolean;
-    errors: string[];
-    diagramFileName?: string;
-    diagramFile?: File;
+  id: number;
+  questionText: string;
+  options: [string, string, string, string];
+  correctOptionIndex: number;
+  difficulty: 'Easy' | 'Medium' | 'Hard';
+  isValid: boolean;
+  errors: string[];
+  diagramFileName?: string;
+  diagramFile?: File;
 }
 
 export const QuestionSeeding: React.FC = () => {
-    // Taxonomy State
-    const [selectedExam, setSelectedExam] = useState<string>('');
-    const [selectedClass, setSelectedClass] = useState<string>('');
-    const [selectedSubject, setSelectedSubject] = useState<string>('');
-    const [selectedTopic, setSelectedTopic] = useState<string>(''); // Acts as "Chapter"
-    const [selectedSubtopic, setSelectedSubtopic] = useState<string>(''); // Hidden, defaults to 'General'
+  // Taxonomy State
+  const [selectedExam, setSelectedExam] = useState<string>('');
+  const [selectedClass, setSelectedClass] = useState<string>('');
+  const [selectedSubject, setSelectedSubject] = useState<string>('');
+  const [selectedTopic, setSelectedTopic] = useState<string>(''); // Acts as "Chapter"
+  const [selectedSubtopic, setSelectedSubtopic] = useState<string>(''); // Hidden, defaults to 'General'
 
-    // File Parsed State
-    const [file, setFile] = useState<File | null>(null);
-    const [parsedRows, setParsedRows] = useState<ParsedQuestion[]>([]);
-    const [isProcessing, setIsProcessing] = useState(false);
+  // File Parsed State
+  const [file, setFile] = useState<File | null>(null);
+  const [parsedRows, setParsedRows] = useState<ParsedQuestion[]>([]);
+  const [isProcessing, setIsProcessing] = useState(false);
 
-    // Sync State
-    const [isSimulating, setIsSimulating] = useState(false);
-    const [isSyncing, setIsSyncing] = useState(false);
-    const [syncStats, setSyncStats] = useState<{ total: number; success: number; failed: number } | null>(null);
+  // Sync State
+  const [isSimulating, setIsSimulating] = useState(false);
+  const [isSyncing, setIsSyncing] = useState(false);
+  const [syncStats, setSyncStats] = useState<{ total: number; success: number; failed: number } | null>(null);
 
-    // Reset taxonomy when parent changes
-    useEffect(() => {
-        setSelectedClass('');
-        setSelectedSubject('');
-        setSelectedTopic('');
-    }, [selectedExam]);
+  // Reset taxonomy when parent changes
+  useEffect(() => {
+  setSelectedClass('');
+  setSelectedSubject('');
+  setSelectedTopic('');
+  }, [selectedExam]);
 
-    useEffect(() => {
-        setSelectedSubject('');
-        setSelectedTopic('');
-    }, [selectedClass]);
+  useEffect(() => {
+  setSelectedSubject('');
+  setSelectedTopic('');
+  }, [selectedClass]);
 
-    useEffect(() => {
-        setSelectedTopic('');
-    }, [selectedSubject]);
+  useEffect(() => {
+  setSelectedTopic('');
+  }, [selectedSubject]);
 
-    // Helpers
-    const examOptions = getExamOptions();
+  // Helpers
+  const examOptions = getExamOptions();
 
-    // Get unique subjects from current exam's topics
-    const getUniqueSubjects = (examVal: string) => {
-        if (!examVal) return [];
-        // Hardcoded standard subjects or derived
-        // Ideally derive from taxonomy, but for now standard 3
-        return [
-            { value: 'Mathematics', label: 'Mathematics' },
-            { value: 'Physics', label: 'Physics' },
-            { value: 'Chemistry', label: 'Chemistry' }
-        ];
-    };
+  // Get unique subjects from current exam's topics
+  const getUniqueSubjects = (examVal: string) => {
+  if (!examVal) return [];
+  // Hardcoded standard subjects or derived
+  // Ideally derive from taxonomy, but for now standard 3
+  return [
+  { value: 'Mathematics', label: 'Mathematics' },
+  { value: 'Physics', label: 'Physics' },
+  { value: 'Chemistry', label: 'Chemistry' }
+  ];
+  };
 
-    // Filter topics (Chapters) based on Exam + Class + Subject
-    const getFilteredTopics = (examVal: string, classVal: string, subjectVal: string) => {
-        const exam = getExam(examVal);
-        if (!exam) return [];
-        return exam.topics
-            .filter(t => t.class_level === classVal && t.subject === subjectVal)
-            .map(t => ({ value: t.value, label: t.label }));
-    };
+  // Filter topics (Chapters) based on Exam + Class + Subject
+  const getFilteredTopics = (examVal: string, classVal: string, subjectVal: string) => {
+  const exam = getExam(examVal);
+  if (!exam) return [];
+  return exam.topics
+  .filter(t => t.class_level === classVal && t.subject === subjectVal)
+  .map(t => ({ value: t.value, label: t.label }));
+  };
 
-    const isTaxonomyComplete = selectedExam && selectedClass && selectedSubject && selectedTopic;
+  const isTaxonomyComplete = selectedExam && selectedClass && selectedSubject && selectedTopic;
 
-    // --- PARSING LOGIC ---
-    const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        const uploadedFile = e.target.files?.[0];
-        if (!uploadedFile) return;
+  // --- PARSING LOGIC ---
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const uploadedFile = e.target.files?.[0];
+  if (!uploadedFile) return;
 
-        setFile(uploadedFile);
-        setIsProcessing(true);
-        setParsedRows([]);
-        setSyncStats(null);
+  setFile(uploadedFile);
+  setIsProcessing(true);
+  setParsedRows([]);
+  setSyncStats(null);
 
-        try {
-            const rows = await readXlsxFile(uploadedFile);
+  try {
+  const rows = await readXlsxFile(uploadedFile);
 
-            if (rows.length === 0) return;
+  if (rows.length === 0) return;
 
-            const header = rows[0].map((c: any) => String(c).toLowerCase().trim());
+  const header = rows[0].map((c: any) => String(c).toLowerCase().trim());
 
-            const colMap = {
-                question: header.findIndex(h => h.includes('question')),
-                optA: header.findIndex(h => h.includes('option a')),
-                optB: header.findIndex(h => h.includes('option b')),
-                optC: header.findIndex(h => h.includes('option c')),
-                optD: header.findIndex(h => h.includes('option d')),
-                answer: header.findIndex(h => h.includes('answer')), // Expect 'A', 'B', 'C', 'D'
-                difficulty: header.findIndex(h => h.includes('difficulty')),
-                image: header.findIndex(h => h.includes('image') || h.includes('diagram'))
-            };
+  const colMap = {
+  question: header.findIndex(h => h.includes('question')),
+  optA: header.findIndex(h => h.includes('option a')),
+  optB: header.findIndex(h => h.includes('option b')),
+  optC: header.findIndex(h => h.includes('option c')),
+  optD: header.findIndex(h => h.includes('option d')),
+  answer: header.findIndex(h => h.includes('answer')), // Expect 'A', 'B', 'C', 'D'
+  difficulty: header.findIndex(h => h.includes('difficulty')),
+  image: header.findIndex(h => h.includes('image') || h.includes('diagram'))
+  };
 
-            // Validate Header
-            if (Object.values({ ...colMap, image: 0 }).some(idx => idx === -1)) { // Image is optional, others required
-                const missing = Object.entries(colMap).filter(([k, v]) => k !== 'image' && v === -1).map(([k]) => k);
-                if (missing.length > 0) throw new Error(`Invalid Header. Missing: ${missing.join(', ')}`);
-            }
+  // Validate Header
+  if (Object.values({ ...colMap, image: 0 }).some(idx => idx === -1)) { // Image is optional, others required
+  const missing = Object.entries(colMap).filter(([k, v]) => k !== 'image' && v === -1).map(([k]) => k);
+  if (missing.length > 0) throw new Error(`Invalid Header. Missing: ${missing.join(', ')}`);
+  }
 
-            const parsed: ParsedQuestion[] = rows.slice(1).map((row, index) => {
-                const qText = String(row[colMap.question] || '').trim();
-                const opts = [
-                    String(row[colMap.optA] || '').trim(),
-                    String(row[colMap.optB] || '').trim(),
-                    String(row[colMap.optC] || '').trim(),
-                    String(row[colMap.optD] || '').trim(),
-                ] as [string, string, string, string];
+  const parsed: ParsedQuestion[] = rows.slice(1).map((row, index) => {
+  const qText = String(row[colMap.question] || '').trim();
+  const opts = [
+  String(row[colMap.optA] || '').trim(),
+  String(row[colMap.optB] || '').trim(),
+  String(row[colMap.optC] || '').trim(),
+  String(row[colMap.optD] || '').trim(),
+  ] as [string, string, string, string];
 
-                const ansRaw = String(row[colMap.answer] || '').toUpperCase().trim();
-                const diffRaw = String(row[colMap.difficulty] || '').toLowerCase().trim();
-                const imageFileRaw = colMap.image !== -1 ? String(row[colMap.image] || '').trim() : '';
+  const ansRaw = String(row[colMap.answer] || '').toUpperCase().trim();
+  const diffRaw = String(row[colMap.difficulty] || '').toLowerCase().trim();
+  const imageFileRaw = colMap.image !== -1 ? String(row[colMap.image] || '').trim() : '';
 
-                // Validation
-                const errors: string[] = [];
-                if (!qText) errors.push("Missing Question Text");
-                if (opts.some(o => !o)) errors.push("Missing Options");
+  // Validation
+  const errors: string[] = [];
+  if (!qText) errors.push("Missing Question Text");
+  if (opts.some(o => !o)) errors.push("Missing Options");
 
-                // Map Answer (A/B/C/D) to Index (0-3)
-                let correctIdx = -1;
-                if (['A', 'B', 'C', 'D'].includes(ansRaw)) {
-                    correctIdx = ansRaw.charCodeAt(0) - 65;
-                } else {
-                    // Try to match text?
-                    const matchIdx = opts.findIndex(o => o.toUpperCase() === ansRaw);
-                    if (matchIdx !== -1) correctIdx = matchIdx;
-                    else errors.push(`Invalid Answer: ${ansRaw}`);
-                }
+  // Map Answer (A/B/C/D) to Index (0-3)
+  let correctIdx = -1;
+  if (['A', 'B', 'C', 'D'].includes(ansRaw)) {
+  correctIdx = ansRaw.charCodeAt(0) - 65;
+  } else {
+  // Try to match text?
+  const matchIdx = opts.findIndex(o => o.toUpperCase() === ansRaw);
+  if (matchIdx !== -1) correctIdx = matchIdx;
+  else errors.push(`Invalid Answer: ${ansRaw}`);
+  }
 
-                // Map Difficulty
-                let difficulty: 'Easy' | 'Medium' | 'Hard' = 'Medium';
-                if (['easy', 'medium', 'hard'].includes(diffRaw)) {
-                    difficulty = (diffRaw.charAt(0).toUpperCase() + diffRaw.slice(1)) as any;
-                } else if (diffRaw) {
-                    errors.push(`Invalid Difficulty: ${diffRaw}`);
-                }
+  // Map Difficulty
+  let difficulty: 'Easy' | 'Medium' | 'Hard' = 'Medium';
+  if (['easy', 'medium', 'hard'].includes(diffRaw)) {
+  difficulty = (diffRaw.charAt(0).toUpperCase() + diffRaw.slice(1)) as any;
+  } else if (diffRaw) {
+  errors.push(`Invalid Difficulty: ${diffRaw}`);
+  }
 
-                return {
-                    id: index + 1,
-                    questionText: qText,
-                    options: opts,
-                    correctOptionIndex: correctIdx,
-                    difficulty,
-                    isValid: errors.length === 0,
-                    errors,
-                    diagramFileName: imageFileRaw
-                };
-            });
+  return {
+  id: index + 1,
+  questionText: qText,
+  options: opts,
+  correctOptionIndex: correctIdx,
+  difficulty,
+  isValid: errors.length === 0,
+  errors,
+  diagramFileName: imageFileRaw
+  };
+  });
 
-            setParsedRows(parsed);
-            // Attempt auto-match if images already uploaded
-            if (diagramFiles.length > 0) {
-                matchDiagrams(parsed, diagramFiles);
-            }
+  setParsedRows(parsed);
+  // Attempt auto-match if images already uploaded
+  if (diagramFiles.length > 0) {
+  matchDiagrams(parsed, diagramFiles);
+  }
 
-        } catch (error: any) {
-            alert(`Error parsing file: ${error.message}`);
-        } finally {
-            setIsProcessing(false);
-        }
-    };
+  } catch (error: any) {
+  alert(`Error parsing file: ${error.message}`);
+  } finally {
+  setIsProcessing(false);
+  }
+  };
 
-    // --- IMAGE HANDLING ---
-    const [diagramFiles, setDiagramFiles] = useState<File[]>([]);
+  // --- IMAGE HANDLING ---
+  const [diagramFiles, setDiagramFiles] = useState<File[]>([]);
 
-    const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files) {
-            const newFiles = Array.from(e.target.files);
-            setDiagramFiles(prev => [...prev, ...newFiles]);
-            // Re-match logic
-            matchDiagrams(parsedRows, [...diagramFiles, ...newFiles]);
-        }
-    };
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  if (e.target.files) {
+  const newFiles = Array.from(e.target.files);
+  setDiagramFiles(prev => [...prev, ...newFiles]);
+  // Re-match logic
+  matchDiagrams(parsedRows, [...diagramFiles, ...newFiles]);
+  }
+  };
 
-    const matchDiagrams = (rows: ParsedQuestion[], files: File[]) => {
-        const updatedRows = rows.map(row => {
-            if (!row.diagramFileName) return row;
-            // Case insensitive match
-            const match = files.find(f => f.name.toLowerCase() === row.diagramFileName!.toLowerCase());
-            return { ...row, diagramFile: match };
-        });
-        setParsedRows(updatedRows);
-    };
+  const matchDiagrams = (rows: ParsedQuestion[], files: File[]) => {
+  const updatedRows = rows.map(row => {
+  if (!row.diagramFileName) return row;
+  // Case insensitive match
+  const match = files.find(f => f.name.toLowerCase() === row.diagramFileName!.toLowerCase());
+  return { ...row, diagramFile: match };
+  });
+  setParsedRows(updatedRows);
+  };
 
-    const clearImages = () => {
-        setDiagramFiles([]);
-        setParsedRows(parsedRows.map(r => ({ ...r, diagramFile: undefined })));
-    };
+  const clearImages = () => {
+  setDiagramFiles([]);
+  setParsedRows(parsedRows.map(r => ({ ...r, diagramFile: undefined })));
+  };
 
-    // --- SYNC LOGIC ---
-    const handleSync = async () => {
-        if (!isTaxonomyComplete || parsedRows.length === 0) return;
+  // --- SYNC LOGIC ---
+  const handleSync = async () => {
+  if (!isTaxonomyComplete || parsedRows.length === 0) return;
 
-        setIsSyncing(true);
-        const validRows = parsedRows.filter(r => r.isValid);
-        let successCount = 0;
-        let failCount = 0;
+  setIsSyncing(true);
+  const validRows = parsedRows.filter(r => r.isValid);
+  let successCount = 0;
+  let failCount = 0;
 
-        const { data: { session } } = await supabase.auth.getSession();
-        if (!session?.user) {
-            alert("No user session found");
-            setIsSyncing(false);
-            return;
-        }
+  const { data: { session } } = await supabase.auth.getSession();
+  if (!session?.user) {
+  alert("No user session found");
+  setIsSyncing(false);
+  return;
+  }
 
-        const batchId = `BATCH-${Date.now()}`;
-        const topicLabel = getTopic(selectedExam, selectedTopic)?.label || selectedTopic;
-        const subtopicLabel = 'General';
+  const batchId = `BATCH-${Date.now()}`;
+  const topicLabel = getTopic(selectedExam, selectedTopic)?.label || selectedTopic;
+  const subtopicLabel = 'General';
 
-        // Process in chunks of 10
-        const CHUNK_SIZE = 10;
-        for (let i = 0; i < validRows.length; i += CHUNK_SIZE) {
-            const chunk = validRows.slice(i, i + CHUNK_SIZE);
+  // Process in chunks of 10
+  const CHUNK_SIZE = 10;
+  for (let i = 0; i < validRows.length; i += CHUNK_SIZE) {
+  const chunk = validRows.slice(i, i + CHUNK_SIZE);
 
-            // Upload Images for this chunk first (Parallel)
-            const chunkWithUrls = await Promise.all(chunk.map(async (row) => {
-                let imageUrl = null;
-                if (row.diagramFile) {
-                    try {
-                        const fileExt = row.diagramFile.name.split('.').pop();
-                        const fileName = `seed_${session.user.id.slice(0, 5)}_${Date.now()}_${row.id}.${fileExt}`;
-                        const { data, error } = await supabase.storage
-                            .from('question-assets') // Bucket must exist
-                            .upload(fileName, row.diagramFile);
+  // Upload Images for this chunk first (Parallel)
+  const chunkWithUrls = await Promise.all(chunk.map(async (row) => {
+  let imageUrl = null;
+  if (row.diagramFile) {
+  try {
+  const fileExt = row.diagramFile.name.split('.').pop();
+  const fileName = `seed_${session.user.id.slice(0, 5)}_${Date.now()}_${row.id}.${fileExt}`;
+  const { data, error } = await supabase.storage
+  .from('question-assets') // Bucket must exist
+  .upload(fileName, row.diagramFile);
 
-                        if (!error && data) {
-                            const { data: { publicUrl } } = supabase.storage
-                                .from('question-assets')
-                                .getPublicUrl(fileName);
-                            imageUrl = publicUrl;
-                        } else {
-                            console.error(`Failed to upload image for Q${row.id}:`, error);
-                        }
-                    } catch (e) {
-                        console.error(`Exception uploading image for Q${row.id}`, e);
-                    }
-                }
-                return { ...row, imageUrl };
-            }));
-
-
-            const payload = chunkWithUrls.map(row => ({
-                question_id: `seed-${session.user.id.slice(0, 5)}-${Date.now()}-${row.id}`,
-                exam_profile: selectedExam,
-                topic: topicLabel,
-                subtopic: subtopicLabel,
-                difficulty: row.difficulty,
-                fsm_tag: 'general',
-                question_data: {
-                    questionText: row.questionText,
-                    options: row.options.map(text => ({ text })),
-                    correctOptionIndex: row.correctOptionIndex,
-                    timeTargets: { jee_main: 60, cat: 60 },
-                    visualDescription: null,
-                    diagramRequired: !!row.imageUrl, // Flag if diagram exists
-                    image_url: row.imageUrl || null, // Add URL
-                    source: 'admin_upload',
-                    batch_id: batchId,
-                    upload_row_index: row.id,
-                    class_level: selectedClass,
-                    subject: selectedSubject
-                },
-                created_by: session.user.id,
-                times_served: 0
-            }));
-
-            const { error } = await supabase.from('cached_questions').insert(payload);
-
-            if (error) {
-                console.error("Batch insert error:", error);
-                failCount += chunk.length;
-            } else {
-                successCount += chunk.length;
-            }
-        }
-
-        setSyncStats({ total: validRows.length, success: successCount, failed: failCount });
-        setIsSyncing(false);
-    };
-
-    return (
-        <div className="space-y-6">
-            <div className="flex justify-between items-end gap-4 flex-wrap">
-                <div className="flex flex-col gap-1">
-                    <p className="label-uppercase">Seeding</p>
-                    <h2 className="text-[20px] leading-[1.2] font-semibold tracking-tight text-[var(--color-ink-1)] flex items-center gap-2">
-                        <FileSpreadsheet className="w-5 h-5 text-[var(--color-ink-3)]" />
-                        Bulk question seeding
-                    </h2>
-                    <p className="text-[13px] text-[var(--color-ink-3)] mt-1">Upload Excel/CSV to seed static questions for AI augmentation.</p>
-                </div>
-                {syncStats && (
-                    <div className="bg-[var(--color-accent)] ring-hairline px-4 py-2 rounded-[10px] flex items-center gap-4">
-                        <span className="text-[var(--color-accent-foreground)] font-semibold text-[13px] num-tabular">Batch: {syncStats.success} / {syncStats.total} uploaded</span>
-                        <Button size="sm" variant="ghost" onClick={() => { setSyncStats(null); setParsedRows([]); setFile(null); clearImages(); }}>Clear</Button>
-                    </div>
-                )}
-            </div>
-
-            {/* Step 1: Taxonomy */}
-            <Card>
-                <CardHeader>
-                    <CardTitle className="text-lg">1. Select Target Context (Required)</CardTitle>
-                </CardHeader>
-                <CardContent className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                    {/* 1. Exam */}
-                    <div className="space-y-2">
-                        <label className="text-sm font-medium">Exam Profile</label>
-                        <Select
-                            value={selectedExam}
-                            onChange={(e) => setSelectedExam(e.target.value)}
-                            options={[{ value: '', label: '-- Select --' }, ...examOptions]}
-                        />
-                    </div>
-
-                    {/* 2. Class */}
-                    <div className="space-y-2">
-                        <label className="text-sm font-medium">Class</label>
-                        <Select
-                            value={selectedClass}
-                            onChange={(e) => setSelectedClass(e.target.value)}
-                            options={[
-                                { value: '', label: '-- Select --' },
-                                { value: '11', label: 'Class 11 (1st Year)' },
-                                { value: '12', label: 'Class 12 (2nd Year)' }
-                            ]}
-                        />
-                    </div>
-
-                    {/* 3. Subject */}
-                    <div className="space-y-2">
-                        <label className="text-sm font-medium">Subject</label>
-                        <Select
-                            value={selectedSubject}
-                            onChange={(e) => setSelectedSubject(e.target.value)}
-                            options={[
-                                { value: '', label: '-- Select --' },
-                                ...getUniqueSubjects(selectedExam)
-                            ]}
-                            disabled={!selectedExam}
-                        />
-                    </div>
-
-                    {/* 4. Chapter (Topic) */}
-                    <div className="space-y-2">
-                        <label className="text-sm font-medium">Chapter</label>
-                        <Select
-                            value={selectedTopic}
-                            onChange={(e) => setSelectedTopic(e.target.value)}
-                            options={[
-                                { value: '', label: '-- Select --' },
-                                ...getFilteredTopics(selectedExam, selectedClass, selectedSubject)
-                            ]}
-                            disabled={!selectedSubject || !selectedClass}
-                        />
-                    </div>
-                </CardContent>
-            </Card>
-
-            {/* Step 2: Upload */}
-            <Card className={!isTaxonomyComplete ? 'opacity-50 pointer-events-none' : ''}>
-                <CardHeader>
-                    <CardTitle className="text-lg">2. Upload Spreadsheet</CardTitle>
-                    <CardDescription>
-                        Columns: <strong>Question, Option A...D, Answer, Difficulty, Image (Filename)</strong>
-                    </CardDescription>
-                </CardHeader>
-                <CardContent>
-                    {!file ? (
-                        <div className="border-2 border-dashed border-[var(--color-ink-5)] rounded-[14px] p-10 text-center hover:bg-[var(--color-muted)] transition-colors">
-                            <input
-                                type="file"
-                                accept=".xlsx, .csv"
-                                onChange={handleFileUpload}
-                                className="hidden"
-                                id="file-upload"
-                            />
-                            <label htmlFor="file-upload" className="cursor-pointer flex flex-col items-center gap-2">
-                                <Upload className="w-8 h-8 text-[var(--color-ink-3)]" />
-                                <span className="text-[14px] font-semibold tracking-tight text-[var(--color-ink-1)]">Click to upload .xlsx or .csv</span>
-                            </label>
-                        </div>
-                    ) : (
-                        <div className="flex items-center justify-between bg-[var(--color-muted)] p-4 rounded-[14px]">
-                            <div className="flex items-center gap-3">
-                                <div className="bg-[var(--color-accent)] text-[var(--color-accent-foreground)] inline-flex h-9 w-9 items-center justify-center rounded-[10px]">
-                                    <FileSpreadsheet className="w-4 h-4" />
-                                </div>
-                                <div>
-                                    <p className="font-semibold text-[13px] tracking-tight text-[var(--color-ink-1)]">{file.name}</p>
-                                    <p className="text-[11px] text-[var(--color-ink-3)] num-tabular">{(file.size / 1024).toFixed(1)} KB</p>
-                                </div>
-                            </div>
-                            <Button variant="ghost" size="sm" onClick={() => { setFile(null); setParsedRows([]); }}>
-                                <X className="w-4 h-4" />
-                            </Button>
-                        </div>
-                    )}
-                </CardContent>
-            </Card>
-
-            {/* Step 3: Upload Diagrams */}
-            <Card className={!isTaxonomyComplete || !file ? 'opacity-50 pointer-events-none' : ''}>
-                <CardHeader>
-                    <CardTitle className="text-lg">3. Upload Diagrams (Optional)</CardTitle>
-                    <CardDescription>
-                        Drag & Drop multiple images matching the filenames in 'Image' column.
-                    </CardDescription>
-                </CardHeader>
-                <CardContent>
-                    <div className="border-2 border-dashed border-[var(--color-ink-5)] bg-[var(--color-muted)] rounded-[14px] p-6 text-center hover:bg-[var(--color-ink-5)] transition-colors">
-                        <input
-                            type="file"
-                            multiple
-                            accept="image/*"
-                            onChange={handleImageUpload}
-                            className="hidden"
-                            id="image-upload"
-                        />
-                        <label htmlFor="image-upload" className="cursor-pointer flex flex-col items-center gap-2">
-                            <Upload className="w-6 h-6 text-[var(--color-ink-3)] mb-1" />
-                            <span className="font-semibold text-[14px] tracking-tight text-[var(--color-ink-1)]">
-                                {diagramFiles.length > 0 ? `${diagramFiles.length} images selected` : 'Select images'}
-                            </span>
-                            {diagramFiles.length === 0 && <span className="text-[12px] text-[var(--color-ink-3)]">Click to browse multiple files</span>}
-                        </label>
-                        {diagramFiles.length > 0 && (
-                            <div className="mt-4 flex flex-wrap gap-2 justify-center">
-                                {diagramFiles.slice(0, 5).map((f, i) => (
-                                    <span key={i} className="text-[11px] bg-[var(--color-card)] ring-hairline px-2 py-1 rounded-[6px] text-[var(--color-ink-2)] num-tabular">{f.name}</span>
-                                ))}
-                                {diagramFiles.length > 5 && <span className="text-[11px] text-[var(--color-ink-3)]">+{diagramFiles.length - 5} more</span>}
-                                <Button size="sm" variant="outline" onClick={clearImages} className="ml-2 h-6 text-[11px] text-[var(--color-destructive)]">Clear all</Button>
-                            </div>
-                        )}
-                    </div>
-                </CardContent>
-            </Card>
+  if (!error && data) {
+  const { data: { publicUrl } } = supabase.storage
+  .from('question-assets')
+  .getPublicUrl(fileName);
+  imageUrl = publicUrl;
+  } else {
+  console.error(`Failed to upload image for Q${row.id}:`, error);
+  }
+  } catch (e) {
+  console.error(`Exception uploading image for Q${row.id}`, e);
+  }
+  }
+  return { ...row, imageUrl };
+  }));
 
 
-            {/* Step 4: Preview & Sync */}
-            {parsedRows.length > 0 && (
-                <div className="space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                    <div className="flex justify-between items-center">
-                        <h3 className="font-bold text-lg">
-                            Preview ({parsedRows.filter(r => r.isValid).length} valid, {parsedRows.filter(r => !r.isValid).length} invalid)
-                        </h3>
-                        <Button
-                            onClick={handleSync}
-                            disabled={isSyncing || parsedRows.every(r => !r.isValid)}
-                            className="bg-primary hover:bg-primary/90 text-white gap-2"
-                        >
-                            {isSyncing ? 'Syncing...' : <><Save className="w-4 h-4" /> Sync to Database</>}
-                        </Button>
-                    </div>
+  const payload = chunkWithUrls.map(row => ({
+  question_id: `seed-${session.user.id.slice(0, 5)}-${Date.now()}-${row.id}`,
+  exam_profile: selectedExam,
+  topic: topicLabel,
+  subtopic: subtopicLabel,
+  difficulty: row.difficulty,
+  fsm_tag: 'general',
+  question_data: {
+  questionText: row.questionText,
+  options: row.options.map(text => ({ text })),
+  correctOptionIndex: row.correctOptionIndex,
+  timeTargets: { jee_main: 60, cat: 60 },
+  visualDescription: null,
+  diagramRequired: !!row.imageUrl, // Flag if diagram exists
+  image_url: row.imageUrl || null, // Add URL
+  source: 'admin_upload',
+  batch_id: batchId,
+  upload_row_index: row.id,
+  class_level: selectedClass,
+  subject: selectedSubject
+  },
+  created_by: session.user.id,
+  times_served: 0
+  }));
 
-                    <div className="rounded-[18px] overflow-hidden bg-card ring-hairline">
-                        <div className="max-h-[500px] overflow-auto">
-                            <table className="w-full text-[13px] text-left">
-                                <thead className="bg-[var(--color-muted)] sticky top-0">
-                                    <tr>
-                                        <th className="px-4 py-3 label-uppercase">Status</th>
-                                        <th className="px-4 py-3 label-uppercase">Image</th>
-                                        <th className="px-4 py-3 label-uppercase">Question</th>
-                                        <th className="px-4 py-3 label-uppercase">Correct</th>
-                                        <th className="px-4 py-3 label-uppercase">Difficulty</th>
-                                        <th className="px-4 py-3 label-uppercase">Issues</th>
-                                    </tr>
-                                </thead>
-                                <tbody className="divide-y divide-[var(--color-ink-5)]">
-                                    {parsedRows.map((row) => (
-                                        <tr key={row.id} className={row.isValid ? 'hover:bg-[var(--color-muted)] transition-colors' : 'bg-[#fde7e5] hover:bg-[#fbd0cd] transition-colors'}>
-                                            <td className="px-4 py-3">
-                                                {row.isValid
-                                                    ? <CheckCircle className="w-4 h-4 text-[var(--color-primary)]" />
-                                                    : <AlertCircle className="w-4 h-4 text-[var(--color-destructive)]" />
-                                                }
-                                            </td>
-                                            <td className="px-4 py-3">
-                                                {row.diagramFileName ? (
-                                                    row.diagramFile ? (
-                                                        <span className="text-[11px] flex items-center gap-1 text-[#3d7a0f] font-medium">
-                                                            <CheckCircle className="w-3 h-3" /> Found
-                                                        </span>
-                                                    ) : (
-                                                        <span className="text-[11px] flex items-center gap-1 text-[var(--color-accent-warm-foreground)] font-medium" title={`Expected: ${row.diagramFileName}`}>
-                                                            <AlertCircle className="w-3 h-3" /> Missing
-                                                        </span>
-                                                    )
-                                                ) : <span className="text-[11px] text-[var(--color-ink-3)]">-</span>}
-                                            </td>
-                                            <td className="px-4 py-3 max-w-md truncate text-[var(--color-ink-1)]" title={row.questionText}>
-                                                {row.questionText || <span className="text-[var(--color-ink-3)] italic">(Empty)</span>}
-                                            </td>
-                                            <td className="px-4 py-3 font-mono num-tabular text-[var(--color-ink-1)]">
-                                                {row.correctOptionIndex !== -1 ? String.fromCharCode(65 + row.correctOptionIndex) : '-'}
-                                            </td>
-                                            <td className="px-4 py-3">
-                                                <span className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-[6px] text-[11px] font-semibold tracking-tight bg-[var(--color-muted)] ${
-                                                    row.difficulty === 'Easy' ? 'text-[#3d7a0f]' :
-                                                    row.difficulty === 'Medium' ? 'text-[var(--color-accent-warm-foreground)]' :
-                                                    'text-[var(--color-destructive)]'
-                                                }`}>
-                                                    <span aria-hidden className={`h-1.5 w-1.5 rounded-full ${
-                                                        row.difficulty === 'Easy' ? 'bg-[var(--color-primary)]' :
-                                                        row.difficulty === 'Medium' ? 'bg-[var(--color-accent-warm)]' :
-                                                        'bg-[var(--color-destructive)]'
-                                                    }`} />
-                                                    {row.difficulty}
-                                                </span>
-                                            </td>
-                                            <td className="px-4 py-3 text-[var(--color-destructive)] font-medium text-[11px]">
-                                                {row.errors.join(', ')}
-                                                {row.diagramFileName && !row.diagramFile && (
-                                                    <span className="block text-[var(--color-accent-warm-foreground)]">Image file missing</span>
-                                                )}
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            )}
-        </div>
-    );
+  const { error } = await supabase.from('cached_questions').insert(payload);
+
+  if (error) {
+  console.error("Batch insert error:", error);
+  failCount += chunk.length;
+  } else {
+  successCount += chunk.length;
+  }
+  }
+
+  setSyncStats({ total: validRows.length, success: successCount, failed: failCount });
+  setIsSyncing(false);
+  };
+
+  return (
+  <div className="space-y-6">
+  <div className="flex justify-between items-end gap-4 flex-wrap">
+  <div className="flex flex-col gap-1">
+  <p className="label-uppercase">Seeding</p>
+  <h2 className="text-[20px] leading-[1.2] font-semibold tracking-tight text-[var(--color-ink-1)] flex items-center gap-2">
+  <FileSpreadsheet className="w-5 h-5 text-[var(--color-ink-3)]" />
+  Bulk question seeding
+  </h2>
+  <p className="text-[13px] text-[var(--color-ink-3)] mt-1">Upload Excel/CSV to seed static questions for AI augmentation.</p>
+  </div>
+  {syncStats && (
+  <div className="bg-[var(--color-accent)] ring-hairline px-4 py-2 rounded-[10px] flex items-center gap-4">
+  <span className="text-[var(--color-accent-foreground)] font-semibold text-[13px] num-tabular">Batch: {syncStats.success} / {syncStats.total} uploaded</span>
+  <Button size="sm" variant="ghost" onClick={() => { setSyncStats(null); setParsedRows([]); setFile(null); clearImages(); }}>Clear</Button>
+  </div>
+  )}
+  </div>
+
+  {/* Step 1: Taxonomy */}
+  <Card>
+  <CardHeader>
+  <CardTitle className="text-lg">1. Select Target Context (Required)</CardTitle>
+  </CardHeader>
+  <CardContent className="grid grid-cols-1 md:grid-cols-4 gap-4">
+  {/* 1. Exam */}
+  <div className="space-y-2">
+  <label className="text-sm font-medium">Exam Profile</label>
+  <Select
+  value={selectedExam}
+  onChange={(e) => setSelectedExam(e.target.value)}
+  options={[{ value: '', label: '-- Select --' }, ...examOptions]}
+  />
+  </div>
+
+  {/* 2. Class */}
+  <div className="space-y-2">
+  <label className="text-sm font-medium">Class</label>
+  <Select
+  value={selectedClass}
+  onChange={(e) => setSelectedClass(e.target.value)}
+  options={[
+  { value: '', label: '-- Select --' },
+  { value: '11', label: 'Class 11 (1st Year)' },
+  { value: '12', label: 'Class 12 (2nd Year)' }
+  ]}
+  />
+  </div>
+
+  {/* 3. Subject */}
+  <div className="space-y-2">
+  <label className="text-sm font-medium">Subject</label>
+  <Select
+  value={selectedSubject}
+  onChange={(e) => setSelectedSubject(e.target.value)}
+  options={[
+  { value: '', label: '-- Select --' },
+  ...getUniqueSubjects(selectedExam)
+  ]}
+  disabled={!selectedExam}
+  />
+  </div>
+
+  {/* 4. Chapter (Topic) */}
+  <div className="space-y-2">
+  <label className="text-sm font-medium">Chapter</label>
+  <Select
+  value={selectedTopic}
+  onChange={(e) => setSelectedTopic(e.target.value)}
+  options={[
+  { value: '', label: '-- Select --' },
+  ...getFilteredTopics(selectedExam, selectedClass, selectedSubject)
+  ]}
+  disabled={!selectedSubject || !selectedClass}
+  />
+  </div>
+  </CardContent>
+  </Card>
+
+  {/* Step 2: Upload */}
+  <Card className={!isTaxonomyComplete ? 'opacity-50 pointer-events-none' : ''}>
+  <CardHeader>
+  <CardTitle className="text-lg">2. Upload Spreadsheet</CardTitle>
+  <CardDescription>
+  Columns: <strong>Question, Option A...D, Answer, Difficulty, Image (Filename)</strong>
+  </CardDescription>
+  </CardHeader>
+  <CardContent>
+  {!file ? (
+  <div className="border-2 border-dashed border-[var(--color-ink-5)] rounded-[14px] p-10 text-center hover:bg-[var(--color-muted)] transition-colors">
+  <input
+  type="file"
+  accept=".xlsx, .csv"
+  onChange={handleFileUpload}
+  className="hidden"
+  id="file-upload"
+  />
+  <label htmlFor="file-upload" className="cursor-pointer flex flex-col items-center gap-2">
+  <Upload className="w-8 h-8 text-[var(--color-ink-3)]" />
+  <span className="text-[14px] font-semibold tracking-tight text-[var(--color-ink-1)]">Click to upload .xlsx or .csv</span>
+  </label>
+  </div>
+  ) : (
+  <div className="flex items-center justify-between bg-[var(--color-muted)] p-4 rounded-[14px]">
+  <div className="flex items-center gap-3">
+  <div className="bg-[var(--color-accent)] text-[var(--color-accent-foreground)] inline-flex h-9 w-9 items-center justify-center rounded-[10px]">
+  <FileSpreadsheet className="w-4 h-4" />
+  </div>
+  <div>
+  <p className="font-semibold text-[13px] tracking-tight text-[var(--color-ink-1)]">{file.name}</p>
+  <p className="text-[11px] text-[var(--color-ink-3)] num-tabular">{(file.size / 1024).toFixed(1)} KB</p>
+  </div>
+  </div>
+  <Button variant="ghost" size="sm" onClick={() => { setFile(null); setParsedRows([]); }}>
+  <X className="w-4 h-4" />
+  </Button>
+  </div>
+  )}
+  </CardContent>
+  </Card>
+
+  {/* Step 3: Upload Diagrams */}
+  <Card className={!isTaxonomyComplete || !file ? 'opacity-50 pointer-events-none' : ''}>
+  <CardHeader>
+  <CardTitle className="text-lg">3. Upload Diagrams (Optional)</CardTitle>
+  <CardDescription>
+  Drag & Drop multiple images matching the filenames in 'Image' column.
+  </CardDescription>
+  </CardHeader>
+  <CardContent>
+  <div className="border-2 border-dashed border-[var(--color-ink-5)] bg-[var(--color-muted)] rounded-[14px] p-6 text-center hover:bg-[var(--color-ink-5)] transition-colors">
+  <input
+  type="file"
+  multiple
+  accept="image/*"
+  onChange={handleImageUpload}
+  className="hidden"
+  id="image-upload"
+  />
+  <label htmlFor="image-upload" className="cursor-pointer flex flex-col items-center gap-2">
+  <Upload className="w-6 h-6 text-[var(--color-ink-3)] mb-1" />
+  <span className="font-semibold text-[14px] tracking-tight text-[var(--color-ink-1)]">
+  {diagramFiles.length > 0 ? `${diagramFiles.length} images selected` : 'Select images'}
+  </span>
+  {diagramFiles.length === 0 && <span className="text-[12px] text-[var(--color-ink-3)]">Click to browse multiple files</span>}
+  </label>
+  {diagramFiles.length > 0 && (
+  <div className="mt-4 flex flex-wrap gap-2 justify-center">
+  {diagramFiles.slice(0, 5).map((f, i) => (
+  <span key={i} className="text-[11px] bg-[var(--color-card)] ring-hairline px-2 py-1 rounded-[6px] text-[var(--color-ink-2)] num-tabular">{f.name}</span>
+  ))}
+  {diagramFiles.length > 5 && <span className="text-[11px] text-[var(--color-ink-3)]">+{diagramFiles.length - 5} more</span>}
+  <Button size="sm" variant="outline" onClick={clearImages} className="ml-2 h-6 text-[11px] text-[var(--color-destructive)]">Clear all</Button>
+  </div>
+  )}
+  </div>
+  </CardContent>
+  </Card>
+
+
+  {/* Step 4: Preview & Sync */}
+  {parsedRows.length > 0 && (
+  <div className="space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
+  <div className="flex justify-between items-center">
+  <h3 className="font-bold text-lg">
+  Preview ({parsedRows.filter(r => r.isValid).length} valid, {parsedRows.filter(r => !r.isValid).length} invalid)
+  </h3>
+  <Button
+  onClick={handleSync}
+  disabled={isSyncing || parsedRows.every(r => !r.isValid)}
+  className="bg-primary hover:bg-primary/90 text-white gap-2"
+  >
+  {isSyncing ? 'Syncing...' : <><Save className="w-4 h-4" /> Sync to Database</>}
+  </Button>
+  </div>
+
+  <div className="rounded-[18px] overflow-hidden bg-card ring-hairline">
+  <div className="max-h-[500px] overflow-auto">
+  <table className="w-full text-[13px] text-left">
+  <thead className="bg-[var(--color-muted)] sticky top-0">
+  <tr>
+  <th className="px-4 py-3 label-uppercase">Status</th>
+  <th className="px-4 py-3 label-uppercase">Image</th>
+  <th className="px-4 py-3 label-uppercase">Question</th>
+  <th className="px-4 py-3 label-uppercase">Correct</th>
+  <th className="px-4 py-3 label-uppercase">Difficulty</th>
+  <th className="px-4 py-3 label-uppercase">Issues</th>
+  </tr>
+  </thead>
+  <tbody className="divide-y divide-[var(--color-ink-5)]">
+  {parsedRows.map((row) => (
+  <tr key={row.id} className={row.isValid ? 'hover:bg-[var(--color-muted)] transition-colors' : 'bg-[#fde7e5] hover:bg-[#fbd0cd] transition-colors'}>
+  <td className="px-4 py-3">
+  {row.isValid
+  ? <CheckCircle className="w-4 h-4 text-[var(--color-primary)]" />
+  : <AlertCircle className="w-4 h-4 text-[var(--color-destructive)]" />
+  }
+  </td>
+  <td className="px-4 py-3">
+  {row.diagramFileName ? (
+  row.diagramFile ? (
+  <span className="text-[11px] flex items-center gap-1 text-[#3d7a0f] font-medium">
+  <CheckCircle className="w-3 h-3" /> Found
+  </span>
+  ) : (
+  <span className="text-[11px] flex items-center gap-1 text-[var(--color-accent-warm-foreground)] font-medium" title={`Expected: ${row.diagramFileName}`}>
+  <AlertCircle className="w-3 h-3" /> Missing
+  </span>
+  )
+  ) : <span className="text-[11px] text-[var(--color-ink-3)]">-</span>}
+  </td>
+  <td className="px-4 py-3 max-w-md truncate text-[var(--color-ink-1)]" title={row.questionText}>
+  {row.questionText || <span className="text-[var(--color-ink-3)] italic">(Empty)</span>}
+  </td>
+  <td className="px-4 py-3 font-mono num-tabular text-[var(--color-ink-1)]">
+  {row.correctOptionIndex !== -1 ? String.fromCharCode(65 + row.correctOptionIndex) : '-'}
+  </td>
+  <td className="px-4 py-3">
+  <span className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-[6px] text-[11px] font-semibold tracking-tight bg-[var(--color-muted)] ${
+  row.difficulty === 'Easy' ? 'text-[#3d7a0f]' :
+  row.difficulty === 'Medium' ? 'text-[var(--color-accent-warm-foreground)]' :
+  'text-[var(--color-destructive)]'
+  }`}>
+  <span aria-hidden className={`h-1.5 w-1.5 rounded-full ${
+  row.difficulty === 'Easy' ? 'bg-[var(--color-primary)]' :
+  row.difficulty === 'Medium' ? 'bg-[var(--color-accent-warm)]' :
+  'bg-[var(--color-destructive)]'
+  }`} />
+  {row.difficulty}
+  </span>
+  </td>
+  <td className="px-4 py-3 text-[var(--color-destructive)] font-medium text-[11px]">
+  {row.errors.join(', ')}
+  {row.diagramFileName && !row.diagramFile && (
+  <span className="block text-[var(--color-accent-warm-foreground)]">Image file missing</span>
+  )}
+  </td>
+  </tr>
+  ))}
+  </tbody>
+  </table>
+  </div>
+  </div>
+  </div>
+  )}
+  </div>
+  );
 };
