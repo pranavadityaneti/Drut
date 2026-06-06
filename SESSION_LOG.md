@@ -1,0 +1,172 @@
+# Drut — Session Log
+
+> **Updated every ~30 min during active work, and ALWAYS before a session ends.**
+> Each new context window picks up by reading the most recent session entry.
+
+---
+
+## Format for each session entry
+
+```markdown
+## Session: YYYY-MM-DD → YYYY-MM-DD (worktree: <branch-name>)
+
+### Major work completed
+- One bullet per substantive change
+
+### Decisions
+- Decision and rationale, especially anything that shapes future work
+
+### Errors encountered
+- Cross-ref to ERRORS.md entries
+
+### Open threads
+- Cross-ref to forlater.md items
+- What's blocked / awaiting Pranav's input
+
+### Files modified (high-level)
+- Grouped by area, one line each
+```
+
+---
+
+## Session: 2026-06-03 → 2026-06-04 (worktree: keen-payne-fa2500)
+
+### Major work completed
+- **Mobile WhatsApp OTP authentication** — login + verify screens, both edge functions (`send-whatsapp-otp`, `verify-whatsapp-otp`) deployed to Supabase, WATI template (`otp_verification`, Authentication category) approved by Meta
+- **Profile setup wizard** — 5 screens collecting name, city, phone/email, year_in_school, target_exams, target_exam_year, school, coaching, referral_source, avatar
+- **Profile screen rewrite** — surfaces all wizard fields dynamically
+- **Account Settings** — change phone (OTP-verified), change email (silent), soft-delete with 7-day grace
+- **Exam Preferences rewrite** — matches new wizard schema
+- **UI cleanup** — removed bell icon, Notifications menu, About menu, fake sprint stats
+- **Onboarding carousel** — restored icons (was showing literal "Icon" text)
+- **InterventionModal fixes** — fixed DEEP tab crash (`full_solution.phases` → `fullSolution.phases`), hid "Try Similar" Coming Soon button
+- **OTP security cleanup** — removed client-side AsyncStorage fallback, TEST_NUMBERS, synthetic password derivation, dev-mode Alert (all server-side now)
+- **calculateTargetTime wired** in SessionEngine (60s EAPCET vs hardcoded 45s)
+- **Avatar upload RN-safe** — expo-file-system + base64-arraybuffer (`new File()` doesn't work in RN)
+- **5 P0 practice flow fixes**:
+  1. `topic='mixed'` → pass `subject` for "All chapters"
+  2. Trusted-source filter propagation (`questionCacheService` now includes `verification_status` + `source_type`)
+  3. Force-generate fallback when batch empty
+  4. `timeTargets` read first, `calculateTargetTime` as fallback
+  5. Exam picker filters by user's `target_exams` + uses snake_case values (was passing display labels — root cause of practice not finding questions)
+
+### Decisions
+- **Practice scope (Option 3)** — year_in_school as `11`/`12`/`Reappear` + conditional toggle for Class 11 students who want both years' content
+- **Dual-track AP/TS EAPCET** (not single-track) — for user clarity, even though syllabus is 95% identical and cross-state quotas were abolished in 2025
+- **Phone capture required** for email signups; **email required** for WhatsApp signups
+- **Target exam year format** — year only (2026/2027/2028/Not sure yet), not month/day
+- **City/school/exam_year required**, coaching optional
+- **Hard delete on account** — soft delete with 7-day grace, recoverable via login within window
+- **WhatsApp template** — `otp_verification` with body `{{1}} is your verification code...`, Authentication category (gets one-tap "Copy code" button automatically)
+- **RAG architecture** — infrastructure exists (`textbook_chunks` + embeddings) but `generate-batch` edge function has placeholder comment instead of actual retrieval code. **`textbook_chunks` is empty (0 rows)** — building RAG without ingestion = wasted effort
+
+### Errors encountered (see ERRORS.md)
+- Metro can't resolve `./index` in monorepo (SDK 56 requires literal entry file)
+- React Native blob upload fails (`new File()` doesn't exist; use ArrayBuffer path)
+- `verify-whatsapp-otp` edge function returned "Internal server error" (paginated listUsers issue)
+
+### Open threads (see forlater.md)
+- ~~Pranav weighing: disable live AI vs ingest textbooks vs wire RAG~~ — RESOLVED: did all three. Live AI disabled, RAG wired + deployed, textbook ingestion is Pranav's queued task.
+- ~~1,083 EAPCET-related questions in cache but only 316 verified → cache is thin~~ — Cache cleanup + normalization revealed actual state: **890 ap_eapcet + 106 ts_eapcet + 228 eamcet = 1,224 EAPCET-relevant questions**. Much better than the 316 number from the partial-sample audit.
+- `tsc --noEmit` strategy — worktree has pre-existing type errors. Mobile Metro bundle compilation used as validation gate.
+
+### Late additions (2026-06-04 evening)
+- Disabled live AI generation via `ALLOW_LIVE_AI_FALLBACK = false` in shared questionCacheService
+- Mobile `forceGenerateOne` gated on the same flag
+- Created `_shared/rag.ts` with `retrieveTextbookContext()` helper using existing `match_syllabus_content` RPC
+- Rewrote `generate-batch` and `generate-question` edge functions with RAG retrieval; both deployed
+- Generated questions stamped with `verification_status: 'v3-verified-rag'` when grounded, `'v3-unverified-ai'` otherwise
+- Cache cleanup via SQL: normalized AP EAPCET (18 rows) + TG EAPCET/tg_eapcet (33 rows) → ap_eapcet/ts_eapcet. Deleted 1,186 CAT + JEE Main contamination rows.
+
+### Files modified (high-level)
+
+**Mobile app**:
+- `apps/mobile/app/(public)/`: login, signup, phone-login, verify-otp, onboarding, _layout, profile-setup/* (all 5 screens)
+- `apps/mobile/app/(tabs)/`: dashboard, practice, sprint, profile/index, profile/account-settings, profile/exam-preferences, profile/change-phone (new), profile/change-email (new), profile/delete-account (new), profile/edit-profile, profile/help-support
+- `apps/mobile/components/`: SessionEngine, SessionSummary, QuestionCard, practice/InterventionModal
+- `apps/mobile/hooks/`: usePracticeQuestions
+- `apps/mobile/contexts/`: AuthContext (existing), ProfileSetupContext (new)
+- `apps/mobile/utils/uploadAvatarFromUri.ts` (new)
+- `apps/mobile/index.js` (new — SDK 56 entry file)
+- `apps/mobile/app.json` — name/slug to "Drut"/"drut", SDK 56 plugins
+- `apps/mobile/package.json` — added @react-native-async-storage/async-storage, base64-arraybuffer; bumped to SDK 56
+
+**Shared package**:
+- `packages/shared/src/services/profileService.ts` — avatar upload accepts ArrayBuffer; real email lookup
+- `packages/shared/src/services/questionCacheService.ts` — propagate verification_status + source_type
+- `packages/shared/src/services/sprintService.ts` — added ap_eapcet/ts_eapcet to EXAM_BASE_TIMES
+- `packages/shared/src/services/authService.ts` — fixed resetPasswordForEmail crash in RN
+- `packages/shared/src/lib/supabase.ts` — initSupabase() for RN AsyncStorage
+
+**Edge functions (deployed)**:
+- `apps/web/supabase/functions/send-whatsapp-otp/` (new)
+- `apps/web/supabase/functions/verify-whatsapp-otp/` (new)
+
+**DB**:
+- `phone_otps` table created via SQL (RLS: service-role only)
+- `WATI_API_KEY` set as Supabase secret
+
+**Docs**:
+- `~/.claude/CLAUDE.md` (replaced with comprehensive ruleset)
+- `textbook_question_generation_guide.md` (new, at worktree root)
+
+---
+
+## Session: 2026-06-05 (worktree: keen-payne-fa2500 + main repo)
+
+### Major work completed
+- **admin.drut.club setup** — vercel.json redirects root `/` on admin host to `/admin`. First attempt used regex with negative lookahead → Vercel rejected (path-to-regexp doesn't support `(?!...)`). Simplified to root-only redirect. Cherry-picked to main, deployed, verified 307 → /admin works.
+- **Phase A — Board/Subject dropdown unification across 4 files** (split into two commits):
+  - Commit `a70e567`: `TextbookManager.tsx` — Subject `Maths` → `Mathematics`, Board dropdown rebuilt with 5 canonical values (NCERT, BIEAP, TSBIE, CBSE, ICSE). Default state `Ncert` → `NCERT`. Inline comments flag the case-sensitivity contract with rag.ts.
+  - Commit `6cf558b`: `PracticeSetup.tsx`, `SprintSetup.tsx`, `KnowledgeBase.tsx`, `metadata.json` — all four reachable board call sites unified to `'NCERT'` (was `'Ncert'`). KnowledgeBase dropdown rebuilt with same 5 values as TextbookManager. Dropped `'State'` catch-all. metadata.json description updated for EAPCET-only scope.
+- **Vercel cache investigation** — first Phase A deploy registered "success" but bundle hash unchanged. Diagnosed as either build-cache stale-dist OR auto-skip-monorepo misfire. Confirmed fixed on second deploy (3-file change forced fresh build; bundle hash changed `Dj2hSAtY` → `W_3oIqEc`).
+- **Destructive textbook cleanup** (Pranav's explicit triple-confirm):
+  - DB: 25 rows in `textbooks` + 9,812 cascaded `textbook_chunks` deleted
+  - knowledge_nodes: 230 orphan chapter nodes (with `metadata.textbook_id`) deleted; 10 manually-tagged folder/board nodes preserved
+  - Storage: 28 files in `textbooks` bucket deleted via Dashboard UI (SQL blocked by Supabase's `storage.protect_delete()` guardrail, as expected)
+  - `cached_questions` (1,224 rows) preserved untouched
+- **5-agent audit workflow** found 30+ legacy literals (`eamcet`, `'Maths'`, `'Ncert'`) across 26 files. 4 of those normalized this session; rest queued.
+
+### Decisions
+- **Cleanup-before-rebuild** — Pranav explicit instruction: "I am confused to the core. Let me remove all textbooks and do it from scratch." Approved triple-confirm pattern, dashboard UI for storage, SQL for DB.
+- **Per-state board mapping deferred** — `ap_eapcet → BIEAP` + `ts_eapcet → TSBIE` (with NCERT fallback) is the right end state per the audit. Requires multi-board RAG support first. Phase B candidate.
+- **metadata.json edit was functionally a no-op** — file isn't referenced anywhere; edit made for tidiness only. Flagged for deletion in forlater.
+- **3 file changes from broader audit (KnowledgeBase + PracticeSetup + SprintSetup) accepted as Phase A expansion** — Pranav explicitly approved scope expansion when audit found my initial audit missed those files.
+- **All other out-of-scope items deferred** — legacy `eamcet` rename across 20+ files, multi-board RAG, marketing copy fixes, etc. — queued in forlater.md.
+- **Cherry-pick to main** — used same pattern for both commits (commit on feature branch, cherry-pick to main, push). Cherry-pick #2 conflicted on the board line (main had `// Simplified map` suffix); resolved by taking new version + new comment block.
+
+### Errors encountered (see ERRORS.md)
+- Vercel rejected redirect pattern: `invalid-route-source-pattern` (regex negative lookahead unsupported)
+- Vercel "build success" but bundle stale (first Phase A deploy) — diagnosed as monorepo auto-skip or build-cache; fixed by next push
+- Supabase `storage.protect_delete()` blocked direct SQL DELETE on storage.objects (correct guardrail; required UI path)
+- SQL operator precedence: `o.metadata->>'size'::int` → cast attached to literal not extraction. Fixed with parens + bigint.
+
+### Open threads (see forlater.md)
+- **Pranav needs to re-upload textbooks** via fixed dropdowns. Source PDFs are local. Recommend: AP first (since you confirmed AP files are good), then TG (currently zero), then NCERT.
+- **Chunking improvements (Phase B-E)** queued — page numbers, de-noising, structure-aware chunking, equation handling, re-chunk pipeline. Critical for AI question quality from re-uploaded books.
+- **Vercel cache resilience** — added `VERCEL_FORCE_NO_BUILD_CACHE=1` to forlater as a guardrail option for pre-launch.
+- **Out-of-scope literal cleanup** — 6 items queued from audit (eamcet rename in 20+ files, marketing copy, etc.)
+
+### Files modified (high-level)
+
+**Web admin + user flows**:
+- `apps/web/components/admin/TextbookManager.tsx` — Subject + Board dropdowns canonical
+- `apps/web/components/admin/KnowledgeBase.tsx` — Board dropdown unified with TextbookManager (5 values)
+- `apps/web/components/practice/PracticeSetup.tsx` — `'Ncert'` → `'NCERT'` + TODO comment
+- `apps/web/components/sprint/SprintSetup.tsx` — same
+- `apps/web/metadata.json` — description for EAPCET-only scope (functionally no-op; file is dead config)
+
+**Infra/config**:
+- `vercel.json` — admin.drut.club host-based redirect (root → /admin), --legacy-peer-deps in installCommand
+
+**DB (production state)**:
+- `public.textbooks`: 25 → 0
+- `public.textbook_chunks`: 9,812 → 0
+- `public.knowledge_nodes` (with textbook_id): 230 → 0
+- `storage.objects` in textbooks bucket: 28 → 0
+- `public.cached_questions`: 1,224 (preserved)
+
+**Logs**:
+- `SESSION_LOG.md` (this entry)
+- `forlater.md` (updated with new deferred items)
+- `ERRORS.md` (4 new entries from this session)

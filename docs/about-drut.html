@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Drut &middot; A prep tech platform for India's competitive exams</title>
+<meta name="description" content="Drut is a practice platform for students writing India's competitive entrance examinations. Unlimited textbook-grounded questions per chapter. Shortcut training. Forgetting-curve protection. MVP focus: AP and TS EAPCET." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..900,0..100,0..1&family=Crimson+Pro:ital,wght@0,200..900;1,200..900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+    :root {
+        /* Paper */
+        --paper: #FBF8F2;
+        --paper-tint: #F4EFE4;
+        --paper-tint-deep: #E9E0CB;
+
+        /* Ink */
+        --ink: #1A1A1A;
+        --ink-soft: #2C2A26;
+        --ink-mute: #5F574A;
+        --ink-trace: #8A8073;
+
+        /* Accents */
+        --saffron: #B8410A;
+        --saffron-deep: #8C2F05;
+        --teal: #1C5E6F;
+        --rule: #D6CCB6;
+        --rule-soft: #E8DFC9;
+
+        /* Typography */
+        --display: 'Fraunces', 'Times New Roman', Georgia, serif;
+        --body: 'Crimson Pro', 'Times New Roman', Georgia, serif;
+        --mono: 'JetBrains Mono', 'SF Mono', Menlo, monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+        background: var(--paper);
+        color: var(--ink);
+        font-family: var(--body);
+        font-size: 19px;
+        line-height: 1.62;
+        font-feature-settings: "kern" 1, "liga" 1, "onum" 1;
+        text-rendering: geometricPrecision;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        position: relative;
+        overflow-x: hidden;
+    }
+
+    body::before {
+        content: '';
+        position: fixed;
+        inset: 0;
+        background-image:
+            radial-gradient(ellipse at top left, rgba(184,65,10,0.025) 0%, transparent 45%),
+            radial-gradient(ellipse at bottom right, rgba(28,94,111,0.018) 0%, transparent 50%);
+        pointer-events: none;
+        z-index: 0;
+    }
+
+    body::after {
+        content: '';
+        position: fixed;
+        inset: 0;
+        background-image: radial-gradient(circle at 25% 25%, rgba(0,0,0,0.012) 0.5px, transparent 1px),
+                          radial-gradient(circle at 75% 75%, rgba(0,0,0,0.012) 0.5px, transparent 1px);
+        background-size: 3px 3px, 5px 5px;
+        pointer-events: none;
+        z-index: 0;
+    }
+
+    .page {
+        position: relative;
+        z-index: 1;
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 56px 48px 120px;
+    }
+
+    @media (max-width: 720px) {
+        .page { padding: 32px 22px 80px; }
+        body { font-size: 18px; line-height: 1.6; }
+    }
+
+    .masthead {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        align-items: center;
+        gap: 24px;
+        padding-bottom: 18px;
+        border-bottom: 1px solid var(--ink);
+        margin-bottom: 56px;
+        font-family: var(--mono);
+        font-size: 11px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--ink-soft);
+    }
+    .masthead .left { text-align: left; }
+    .masthead .center { font-family: var(--display); font-weight: 700; font-size: 14px; letter-spacing: 0.32em; color: var(--ink); }
+    .masthead .right { text-align: right; }
+
+    .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 9fr) minmax(0, 3fr);
+        gap: 72px;
+        margin-bottom: 128px;
+        align-items: end;
+    }
+    .hero .word {
+        font-family: var(--display);
+        font-weight: 300;
+        font-variation-settings: "SOFT" 100, "WONK" 0;
+        font-size: clamp(64px, 14vw, 220px);
+        line-height: 0.86;
+        letter-spacing: -0.045em;
+        color: var(--ink);
+        padding-bottom: 6px;
+        position: relative;
+    }
+    .hero .word::after {
+        content: '.';
+        color: var(--saffron);
+        font-weight: 400;
+    }
+    .hero .stake {
+        font-family: var(--display);
+        font-style: italic;
+        font-weight: 400;
+        font-size: clamp(20px, 2.4vw, 26px);
+        line-height: 1.32;
+        color: var(--ink-soft);
+        padding-bottom: 16px;
+        border-left: 1px solid var(--saffron);
+        padding-left: 22px;
+    }
+    @media (max-width: 880px) {
+        .hero { grid-template-columns: 1fr; gap: 32px; margin-bottom: 88px; }
+        .hero .stake { border-left: none; border-top: 1px solid var(--saffron); padding-left: 0; padding-top: 18px; }
+    }
+
+    .dek {
+        font-family: var(--display);
+        font-weight: 300;
+        font-size: clamp(28px, 3.5vw, 44px);
+        line-height: 1.22;
+        letter-spacing: -0.018em;
+        color: var(--ink);
+        max-width: 920px;
+        margin-bottom: 96px;
+        position: relative;
+        padding-left: 28px;
+    }
+    .dek::before {
+        content: '';
+        position: absolute;
+        left: 0; top: 0.6em;
+        width: 6px; height: 6px;
+        background: var(--saffron);
+        border-radius: 50%;
+    }
+    .dek em { font-style: italic; color: var(--saffron-deep); }
+
+    section {
+        margin-bottom: 112px;
+        position: relative;
+    }
+
+    .roman {
+        font-family: var(--mono);
+        font-size: 11px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--ink-mute);
+        margin-bottom: 10px;
+        display: inline-block;
+    }
+    .roman::before {
+        content: '§';
+        margin-right: 8px;
+        color: var(--saffron);
+        font-family: var(--display);
+        font-size: 14px;
+    }
+
+    .section-title {
+        font-family: var(--display);
+        font-weight: 400;
+        font-size: clamp(34px, 4.8vw, 64px);
+        line-height: 1.04;
+        letter-spacing: -0.022em;
+        color: var(--ink);
+        margin-bottom: 36px;
+        max-width: 880px;
+    }
+    .section-title em { font-style: italic; }
+
+    .col-body {
+        display: grid;
+        grid-template-columns: minmax(0, 3fr) minmax(0, 7fr);
+        gap: 64px;
+    }
+    .col-body .marginalia {
+        font-family: var(--mono);
+        font-size: 12px;
+        line-height: 1.55;
+        color: var(--ink-mute);
+        letter-spacing: 0.01em;
+        padding-top: 10px;
+        border-top: 1px solid var(--rule);
+    }
+    .col-body .marginalia .label {
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        font-size: 10px;
+        color: var(--saffron-deep);
+        margin-bottom: 6px;
+        display: block;
+    }
+    .col-body p, .col-body .body-text {
+        font-size: 20px;
+        line-height: 1.65;
+        max-width: 680px;
+        color: var(--ink);
+    }
+    .col-body p + p { margin-top: 1.1em; }
+    @media (max-width: 880px) {
+        .col-body { grid-template-columns: 1fr; gap: 28px; }
+    }
+
+    .pull {
+        font-family: var(--display);
+        font-weight: 300;
+        font-style: italic;
+        font-size: clamp(28px, 3.8vw, 48px);
+        line-height: 1.18;
+        letter-spacing: -0.018em;
+        color: var(--ink);
+        max-width: 920px;
+        margin: 64px auto;
+        padding: 32px 0 32px 48px;
+        border-left: 3px solid var(--saffron);
+        position: relative;
+    }
+    .pull::before {
+        content: '"';
+        position: absolute;
+        left: -8px; top: -28px;
+        font-family: var(--display);
+        font-size: 140px;
+        line-height: 1;
+        color: var(--saffron);
+        opacity: 0.25;
+    }
+
+    .stats {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 48px;
+        margin: 56px 0 24px;
+        padding: 36px 0;
+        border-top: 1px solid var(--ink);
+        border-bottom: 1px solid var(--rule);
+    }
+    .stat .n {
+        font-family: var(--display);
+        font-weight: 300;
+        font-size: clamp(40px, 5vw, 68px);
+        line-height: 1;
+        letter-spacing: -0.03em;
+        color: var(--ink);
+        margin-bottom: 8px;
+    }
+    .stat .n em { color: var(--saffron); font-style: normal; font-weight: 400; }
+    .stat .l {
+        font-family: var(--mono);
+        font-size: 11px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--ink-mute);
+        line-height: 1.5;
+    }
+    @media (max-width: 720px) {
+        .stats { grid-template-columns: repeat(2, 1fr); gap: 32px; padding: 28px 0; }
+    }
+
+    .feature-list {
+        list-style: none;
+        margin: 32px 0;
+    }
+    .feature-list li {
+        display: grid;
+        grid-template-columns: 56px 1fr;
+        gap: 16px;
+        padding: 22px 0;
+        border-top: 1px solid var(--rule-soft);
+        align-items: baseline;
+    }
+    .feature-list li:last-child { border-bottom: 1px solid var(--rule-soft); }
+    .feature-list .idx {
+        font-family: var(--mono);
+        font-size: 11px;
+        letter-spacing: 0.15em;
+        color: var(--saffron);
+        padding-top: 4px;
+    }
+    .feature-list .name {
+        font-family: var(--display);
+        font-weight: 500;
+        font-size: 22px;
+        letter-spacing: -0.01em;
+        margin-bottom: 2px;
+        display: block;
+        color: var(--ink);
+    }
+    .feature-list .desc {
+        color: var(--ink-soft);
+        font-size: 17px;
+        line-height: 1.55;
+        max-width: 720px;
+    }
+
+    .roadmap {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0;
+        margin: 32px 0;
+    }
+    .roadmap-row {
+        display: grid;
+        grid-template-columns: 160px 1fr;
+        gap: 32px;
+        padding: 28px 0;
+        border-top: 1px solid var(--ink);
+        align-items: baseline;
+    }
+    .roadmap-row:last-child { border-bottom: 1px solid var(--ink); }
+    .roadmap-when {
+        font-family: var(--mono);
+        font-size: 12px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--saffron-deep);
+        padding-top: 6px;
+    }
+    .roadmap-what h3 {
+        font-family: var(--display);
+        font-weight: 500;
+        font-size: 26px;
+        letter-spacing: -0.012em;
+        margin-bottom: 6px;
+        color: var(--ink);
+    }
+    .roadmap-what p {
+        color: var(--ink-soft);
+        font-size: 18px;
+        line-height: 1.55;
+        max-width: 720px;
+    }
+    @media (max-width: 720px) {
+        .roadmap-row { grid-template-columns: 1fr; gap: 6px; padding: 22px 0; }
+    }
+
+    .vs {
+        margin: 48px 0;
+        border-top: 2px solid var(--ink);
+    }
+    .vs-row {
+        display: grid;
+        grid-template-columns: minmax(180px, 1fr) minmax(0, 2fr) minmax(0, 2fr);
+        gap: 36px;
+        padding: 28px 0;
+        border-bottom: 1px solid var(--rule);
+        align-items: start;
+    }
+    .vs-row .who {
+        font-family: var(--display);
+        font-weight: 600;
+        font-size: 22px;
+        letter-spacing: -0.005em;
+        color: var(--ink);
+        padding-top: 2px;
+    }
+    .vs-row .who .sub {
+        display: block;
+        font-family: var(--mono);
+        font-weight: 400;
+        font-size: 11px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--ink-mute);
+        margin-top: 4px;
+    }
+    .vs-col { font-size: 17px; line-height: 1.55; color: var(--ink-soft); }
+    .vs-col .head {
+        font-family: var(--mono);
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        color: var(--saffron-deep);
+        margin-bottom: 8px;
+        display: block;
+    }
+    .vs-col.them { color: var(--ink-soft); }
+    .vs-col.us { color: var(--ink); font-weight: 500; }
+    @media (max-width: 880px) {
+        .vs-row { grid-template-columns: 1fr; gap: 10px; padding: 24px 0; }
+    }
+
+    .datum-list {
+        list-style: none;
+        margin: 32px 0;
+        max-width: 920px;
+    }
+    .datum-list li {
+        padding: 18px 0;
+        border-top: 1px solid var(--rule-soft);
+        display: grid;
+        grid-template-columns: 240px 1fr;
+        gap: 28px;
+        align-items: baseline;
+    }
+    .datum-list li:last-child { border-bottom: 1px solid var(--rule-soft); }
+    .datum-list .term {
+        font-family: var(--display);
+        font-weight: 500;
+        font-size: 19px;
+        letter-spacing: -0.005em;
+        color: var(--ink);
+    }
+    .datum-list .term .gloss {
+        display: block;
+        font-family: var(--mono);
+        font-size: 10px;
+        font-weight: 400;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        color: var(--saffron);
+        margin-top: 3px;
+    }
+    .datum-list .term .gloss.future { color: var(--teal); }
+    .datum-list .def {
+        font-size: 18px;
+        color: var(--ink-soft);
+        line-height: 1.55;
+    }
+    @media (max-width: 720px) {
+        .datum-list li { grid-template-columns: 1fr; gap: 4px; padding: 16px 0; }
+    }
+
+    .closing {
+        margin-top: 120px;
+        padding-top: 48px;
+        border-top: 1px solid var(--ink);
+        text-align: center;
+    }
+    .closing .sig {
+        font-family: var(--display);
+        font-style: italic;
+        font-weight: 300;
+        font-size: clamp(28px, 4vw, 44px);
+        line-height: 1.3;
+        max-width: 760px;
+        margin: 0 auto 32px;
+        color: var(--ink);
+    }
+    .closing .meta {
+        font-family: var(--mono);
+        font-size: 11px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--ink-mute);
+    }
+
+    .asterism {
+        text-align: center;
+        font-family: var(--display);
+        font-size: 22px;
+        color: var(--ink-mute);
+        letter-spacing: 0.6em;
+        margin: 56px 0;
+        opacity: 0.7;
+    }
+
+    .accent { color: var(--saffron-deep); font-weight: 500; }
+    .small-caps {
+        font-variant-caps: all-small-caps;
+        letter-spacing: 0.08em;
+        font-weight: 500;
+        color: var(--ink-soft);
+    }
+
+    .dropcap::first-letter {
+        font-family: var(--display);
+        font-weight: 400;
+        font-size: 5.2em;
+        line-height: 0.84;
+        float: left;
+        margin: 0.06em 0.12em 0 -0.04em;
+        color: var(--saffron);
+        font-style: normal;
+    }
+
+    .tag {
+        display: inline-block;
+        font-family: var(--mono);
+        font-size: 10px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--ink-soft);
+        padding: 4px 10px;
+        border: 1px solid var(--rule);
+        border-radius: 20px;
+        margin-right: 6px;
+    }
+    .tag.saffron { color: var(--saffron-deep); border-color: var(--saffron); }
+    .tag.teal { color: var(--teal); border-color: var(--teal); }
+
+    /* Exam-roster grid (new section) */
+    .exam-roster {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 16px;
+        margin: 32px 0 12px;
+    }
+    .exam-card {
+        padding: 18px 22px;
+        border: 1px solid var(--rule);
+        background: var(--paper);
+        position: relative;
+    }
+    .exam-card.mvp {
+        border-color: var(--saffron);
+        background: linear-gradient(180deg, rgba(184,65,10,0.04) 0%, var(--paper) 100%);
+    }
+    .exam-card .scope {
+        font-family: var(--mono);
+        font-size: 9px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--ink-mute);
+        margin-bottom: 6px;
+    }
+    .exam-card.mvp .scope { color: var(--saffron-deep); }
+    .exam-card .name {
+        font-family: var(--display);
+        font-weight: 500;
+        font-size: 19px;
+        letter-spacing: -0.005em;
+        color: var(--ink);
+        margin-bottom: 2px;
+    }
+    .exam-card .who {
+        font-size: 14px;
+        color: var(--ink-mute);
+        line-height: 1.4;
+    }
+    .exam-card.mvp::after {
+        content: 'MVP';
+        position: absolute;
+        top: 14px; right: 18px;
+        font-family: var(--mono);
+        font-size: 9px;
+        letter-spacing: 0.18em;
+        color: var(--saffron);
+        background: var(--paper);
+        padding: 2px 8px;
+        border: 1px solid var(--saffron);
+    }
+
+    @keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+    .masthead, .hero > *, .dek { animation: rise 0.9s cubic-bezier(0.2,0.6,0.2,1) both; }
+    .hero .word { animation-delay: 0.10s; }
+    .hero .stake { animation-delay: 0.30s; }
+    .dek { animation-delay: 0.55s; }
+
+    @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after { animation: none !important; transition: none !important; }
+        html { scroll-behavior: auto; }
+    }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+    <!-- ============== MASTHEAD ============== -->
+    <header class="masthead">
+        <div class="left">An explanatory document</div>
+        <div class="center">DRUT</div>
+        <div class="right">Pre-launch &middot; June 2026</div>
+    </header>
+
+    <!-- ============== HERO ============== -->
+    <div class="hero">
+        <div class="word">Drut</div>
+        <div class="stake">
+            A practice platform for India's competitive-exam aspirants &mdash; built on the principle that you do not remember a concept until you have practiced it more times than you wanted to.
+        </div>
+    </div>
+
+    <!-- ============== DEK ============== -->
+    <div class="dek">
+        Drut is <em>prep tech</em>. We give students unlimited textbook-grounded practice questions for every chapter of their syllabus, surface the shortcuts that make competitive exams winnable, and hold them accountable to the patterns they pretended to understand. <em>Master what you practiced. Practice what you forgot.</em>
+    </div>
+
+    <!-- ============== I. WHAT IS DRUT ============== -->
+    <section>
+        <span class="roman">I &middot; What Drut is</span>
+        <h2 class="section-title">A practice platform<em>, not a tutor.</em></h2>
+        <div class="col-body">
+            <aside class="marginalia">
+                <span class="label">A distinction worth making</span>
+                A tutor is someone you go to for answers. A practice platform is something you return to so the answer becomes automatic. India's exam aspirants do not lose to understanding; they lose to time, to forgetting, and to the fifteenth question they have never seen. Drut is built for that fifteenth question.
+            </aside>
+            <div class="body-text">
+                <p class="dropcap">Drut is a prep tech platform. We serve students preparing for India's competitive entrance examinations &mdash; state engineering and medical exams, national exams like JEE Main, JEE Advanced, NEET, BITSAT and CUET, and in time, exams as broad as CAT. The platform is exam-agnostic at its core; the content is exam-specific.</p>
+                <p>For our MVP we have narrowed deliberately to a single audience: students writing the <span class="accent">Andhra Pradesh and Telangana EAPCET</span> &mdash; about six hundred and sixty thousand aspirants in 2024 alone. This is the audience we serve at launch. Every other exam on the platform's roadmap inherits the same architecture, the same textbook-grounded practice loop, and the same forgetting-protection signals.</p>
+                <p>We are not an AI tutor. We do not pretend to teach. What we do is open a particular student's textbook to a particular page, generate as many questions as that student needs to internalize the concept on it, watch which shortcuts they actually use, and refuse to let them move on until the pattern sticks.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============== EXAM ROSTER ============== -->
+    <section>
+        <span class="roman">II &middot; Exams on the platform</span>
+        <h2 class="section-title">One platform<em>. Built to carry every exam India studies for.</em></h2>
+        <p style="max-width: 880px; font-size: 19px; color: var(--ink-soft); margin-bottom: 12px;">
+            The architecture &mdash; textbook ingestion, chunked retrieval, pattern-aware question generation, debt tracking, sprint pacing &mdash; is the same regardless of the exam. The cost of adding an exam is the cost of ingesting its prescribed textbooks. The MVP is narrow on purpose; the platform is not.
+        </p>
+
+        <div class="exam-roster">
+            <div class="exam-card mvp">
+                <div class="scope">State engineering &middot; June 2026</div>
+                <div class="name">AP EAPCET</div>
+                <div class="who">Andhra Pradesh &middot; ~3.05L candidates</div>
+            </div>
+            <div class="exam-card mvp">
+                <div class="scope">State engineering &middot; June 2026</div>
+                <div class="name">TS EAPCET</div>
+                <div class="who">Telangana &middot; ~3.55L candidates</div>
+            </div>
+            <div class="exam-card">
+                <div class="scope">Medical &middot; National</div>
+                <div class="name">NEET-UG</div>
+                <div class="who">~23.3L candidates &middot; needs Biology</div>
+            </div>
+            <div class="exam-card">
+                <div class="scope">Engineering &middot; National</div>
+                <div class="name">JEE Main</div>
+                <div class="who">~14.2L candidates</div>
+            </div>
+            <div class="exam-card">
+                <div class="scope">Engineering &middot; IIT</div>
+                <div class="name">JEE Advanced</div>
+                <div class="who">~1.8L qualifiers</div>
+            </div>
+            <div class="exam-card">
+                <div class="scope">General university</div>
+                <div class="name">CUET-UG</div>
+                <div class="who">~11.1L candidates</div>
+            </div>
+            <div class="exam-card">
+                <div class="scope">State engineering</div>
+                <div class="name">MH-CET</div>
+                <div class="who">Maharashtra &middot; ~3.15L candidates</div>
+            </div>
+            <div class="exam-card">
+                <div class="scope">State engineering</div>
+                <div class="name">GUJCET</div>
+                <div class="who">Gujarat</div>
+            </div>
+            <div class="exam-card">
+                <div class="scope">State engineering</div>
+                <div class="name">WBJEE</div>
+                <div class="who">West Bengal &middot; ~1.4L candidates</div>
+            </div>
+            <div class="exam-card">
+                <div class="scope">State engineering</div>
+                <div class="name">KCET</div>
+                <div class="who">Karnataka</div>
+            </div>
+            <div class="exam-card">
+                <div class="scope">Private engineering</div>
+                <div class="name">BITSAT &middot; VITEEE &middot; SRMJEEE</div>
+                <div class="who">BITS, VIT, SRM</div>
+            </div>
+            <div class="exam-card">
+                <div class="scope">Management</div>
+                <div class="name">CAT</div>
+                <div class="who">IIM &middot; ~3.3L candidates</div>
+            </div>
+        </div>
+        <p style="max-width: 880px; font-size: 16px; color: var(--ink-mute); margin-top: 14px; font-style: italic;">
+            Cards marked MVP are live at June 2026 launch. All others are on the platform's expansion path, gated on textbook ingestion and exam-specific tuning. We will not ship them all at once; we will ship them one by one, after the regional moat is secure.
+        </p>
+    </section>
+
+    <!-- ============== STATS STRIP ============== -->
+    <div class="stats">
+        <div class="stat"><div class="n"><em>85</em></div><div class="l">Textbooks ingested<br/>NCERT &middot; BIEAP &middot; TSBIE pending</div></div>
+        <div class="stat"><div class="n">7,204</div><div class="l">Page-aware text chunks<br/>768-dim vector embeddings</div></div>
+        <div class="stat"><div class="n">7,100<span style="color: var(--saffron); font-weight: 400;">+</span></div><div class="l">Practice questions ready<br/>97% textbook-grounded</div></div>
+        <div class="stat"><div class="n">&infin;</div><div class="l">Per chapter, on demand<br/>The bottleneck is the textbook, not us</div></div>
+    </div>
+
+    <!-- ============== III. WHAT IS BUILT TODAY ============== -->
+    <section>
+        <span class="roman">III &middot; What is built today</span>
+        <h2 class="section-title">A working pipeline, in production.</h2>
+        <div class="col-body">
+            <aside class="marginalia">
+                <span class="label">Stack</span>
+                React on Vercel. Supabase Postgres with pgvector. Gemini 2.5 Pro for table-of-contents extraction. Gemini 2.5 Flash for question generation. gemini-embedding-001 for the 768-dimensional vector space. Custom retrieval, custom chunking, custom intervention engine.
+                <br/><br/>
+                <span class="label">Why this matters</span>
+                The system runs end-to-end. A student request becomes an embedding becomes a retrieval becomes a textbook-anchored question in under fifteen seconds. Or, if pre-warmed in the cache, instantly.
+            </aside>
+            <div class="body-text">
+                <p>The ingestion pipeline accepts a PDF, extracts text per-page in the browser, sends only the text array to the server. The server strips repeating headers and footers by frequency analysis, chunks the cleaned text with page numbers preserved, embeds each chunk into a 768-dimensional vector, and stores them with chapter and subject metadata.</p>
+                <p>Retrieval works as follows. A student asks for practice on <em>Functions</em> in <span class="small-caps">NCERT Class 11 Mathematics</span>. The system embeds the query string. Vector similarity against the 7,204 chunks returns the top five. Those chunks are stitched into a context block, sent to Gemini Flash with a prompt that demands a multiple-choice question whose every numerical value, every formula, every concept must trace to the provided context.</p>
+                <p>The generated question is stamped <span class="accent">v3-verified-rag</span> &mdash; meaning anchored to a textbook page &mdash; or <span class="accent">v3-unverified-ai</span> when retrieval found nothing. Students never see the second category in production.</p>
+                <p>A pre-warming pass has already run across every chapter on the platform: thirty grounded questions per chapter, ahead of time. The cache is full. Students hit it instantly, then can keep going. <em>Finite, then infinite.</em></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============== PULL QUOTE ============== -->
+    <div class="pull">
+        Other platforms are curriculum-led &mdash; they teach the concept and move on. <em>Drut is exam-led &mdash; the curriculum is the second Monday in May, the timer is sixty seconds, and the only thing that matters is whether the student can recognise the pattern under pressure.</em>
+    </div>
+
+    <!-- ============== IV. PRACTICE ============== -->
+    <section>
+        <span class="roman">IV &middot; Practice</span>
+        <h2 class="section-title">Unlimited questions<em>. Per chapter. Per session.</em></h2>
+        <p style="max-width: 880px; font-size: 19px; color: var(--ink-soft); margin-bottom: 8px;">
+            Practice is the core of the platform. The student picks an exam, a subject, one or several chapters, a difficulty, a question count &mdash; and Drut keeps generating fresh, textbook-grounded questions for as long as the student wants to keep going. The bottleneck is the syllabus, not the question bank.
+        </p>
+
+        <ol class="feature-list">
+            <li>
+                <div class="idx">i</div>
+                <div>
+                    <span class="name">Finite to infinite</span>
+                    <span class="desc">Pre-generated cache for instant first questions; live retrieval-and-generation for the rest. A student can practice the same chapter on Monday and Friday and never see the same question twice. Every question is anchored to a page of their actual textbook.</span>
+                </div>
+            </li>
+            <li>
+                <div class="idx">ii</div>
+                <div>
+                    <span class="name">Multi-chapter selection</span>
+                    <span class="desc">Checkboxes against the actual chapters extracted from the student's syllabus. Not a fixed taxonomy. <em>Chapter 5: Laws of Motion</em> from NCERT, not <em>Newtonian Mechanics</em>.</span>
+                </div>
+            </li>
+            <li>
+                <div class="idx">iii</div>
+                <div>
+                    <span class="name">Difficulty bands &middot; Easy, Medium, Hard, Mixed</span>
+                    <span class="desc">Mixed serves the student a realistic distribution. Hard surfaces previous-year-paper style discriminators. Easy lets a beginner build streaks before they take on the difficult ones.</span>
+                </div>
+            </li>
+            <li>
+                <div class="idx">iv</div>
+                <div>
+                    <span class="name">The Fastest Safe Method (FSM)</span>
+                    <span class="desc">Competitive exams are time-bound. Knowing how to solve a problem is not the same as knowing how to solve it in sixty seconds. When the student gets a question wrong &mdash; or right, but slowly &mdash; a small intervention appears. It names the optimal shortcut (the <em>inclusion-exclusion trick</em>, the <em>partial-fraction shortcut</em>, the <em>vector-projection identity</em>) and shows the abbreviated path. That named shortcut is what the system tracks.</span>
+                </div>
+            </li>
+            <li>
+                <div class="idx">v</div>
+                <div>
+                    <span class="name">Full step-by-step, on demand</span>
+                    <span class="desc">Alongside the FSM, the student can open the complete worked solution &mdash; every step, every justification &mdash; so the concept is reinforced without compromising the timing discipline. The shortcut for the next question; the full method for the long-term memory.</span>
+                </div>
+            </li>
+            <li>
+                <div class="idx">vi</div>
+                <div>
+                    <span class="name">Skip-with-debt</span>
+                    <span class="desc">If a student closes the intervention without acknowledging the optimal path, the system records mastery debt against that FSM tag. The debt resurfaces in subsequent sessions, prompts after prompts, until the student practices it. We do not let a student avoid the patterns they pretended to understand.</span>
+                </div>
+            </li>
+            <li>
+                <div class="idx">vii</div>
+                <div>
+                    <span class="name">Exam-realistic timing</span>
+                    <span class="desc">EAPCET allots sixty seconds per question. JEE Main allots one hundred and twenty. CAT runs on a different rhythm. Drut times sessions to the actual exam pattern of the student's target exam &mdash; not "average reading time" or some abstract benchmark.</span>
+                </div>
+            </li>
+            <li>
+                <div class="idx">viii</div>
+                <div>
+                    <span class="name">Pause and resume</span>
+                    <span class="desc">Practice sessions persist across devices and disconnections. A student can step away mid-session and continue exactly where they left off.</span>
+                </div>
+            </li>
+            <li>
+                <div class="idx">ix</div>
+                <div>
+                    <span class="name">Trusted-source filter, always on</span>
+                    <span class="desc">Students only see questions whose verification status is one of: previous-year paper, textbook-RAG-grounded, or curator-verified. Unverified AI never reaches the practice queue.</span>
+                </div>
+            </li>
+        </ol>
+    </section>
+
+    <!-- ============== V. SPRINT ============== -->
+    <section>
+        <span class="roman">V &middot; Sprint</span>
+        <h2 class="section-title">A timer that runs<em>, even between questions.</em></h2>
+        <div class="col-body">
+            <aside class="marginalia">
+                <span class="label">Why Sprint exists</span>
+                Knowing a topic and performing on it inside three hours, with the clock visible, are two different skills. The real exams are stressful precisely because the timer does not stop when the student hesitates. Sprint trains for that pressure.
+                <br/><br/>
+                <span class="label">Cadence</span>
+                Recommended: one Sprint per chapter per week. Build up to full-syllabus Sprints in the month before the exam.
+            </aside>
+            <div class="body-text">
+                <p>Sprint is the high-pressure counterpart to Practice. The clock runs in the background even when the student is staring at a question. There is no pause button. There is no intervention modal mid-session. Sprint waits until the run is over before offering review.</p>
+                <p>Sprint timings mirror the actual exam: sixty seconds per question for EAPCET, one hundred and twenty for JEE Main, the appropriate ratio for whichever exam the student is preparing for. Some Sprints are topical &mdash; one chapter, fifteen questions, fifteen minutes. Some are full-syllabus &mdash; 160 questions, three hours, the actual exam shape.</p>
+                <p>What makes Drut Sprint unlike a mock test from a coaching center is the post-session report. The system reconstructs every question against the student's full history. Was this question hit a debt tag? Was the wrong answer the same wrong answer they gave last month? Did they speed up under pressure, or did they panic and skim? The report is not "you scored 87 out of 160." It is "you scored 87 out of 160 and lost twenty-two marks on patterns we already flagged for revision; here is the chapter to drill before next Sunday."</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============== VI. ANALYTICS ============== -->
+    <section>
+        <span class="roman">VI &middot; What we measure</span>
+        <h2 class="section-title">Per student, per pattern, per chapter<em>, per attempt.</em></h2>
+        <p style="max-width: 880px; font-size: 19px; color: var(--ink-soft); margin-bottom: 32px;">
+            For every question a student attempts, Drut records the atoms: correct or wrong, time taken, option chosen, intervention triggered, FSM acknowledged, chapter and subject of origin. From those atoms the platform derives a layered set of signals. Some are live today. Some are designed for what we measure next.
+        </p>
+
+        <ul class="datum-list">
+            <li>
+                <div class="term">Streak<span class="gloss">consecutive days practiced</span></div>
+                <div class="def">The simplest loyalty signal. Visible to the student and, when enabled, to a parent dashboard. The compounding habit a competitive-exam aspirant needs in the months before their paper.</div>
+            </li>
+            <li>
+                <div class="term">Topic Focus<span class="gloss">live accuracy on the current subtopic</span></div>
+                <div class="def">Live percentage on the chapter the student is currently practicing. Updates after every question. The student sees, in real time, whether they are getting better.</div>
+            </li>
+            <li>
+                <div class="term">Pattern Mastery<span class="gloss">named FSM, acknowledged and reproduced</span></div>
+                <div class="def">For each named technique &mdash; the <em>inclusion-exclusion trick</em>, the <em>partial-fraction shortcut</em>, the <em>vector-projection identity</em> &mdash; the system tracks how many times the student has produced it correctly under timed conditions. Patterns progress from <em>introduced</em> to <em>verified</em> to <em>mastered</em>.</div>
+            </li>
+            <li>
+                <div class="term">Speed<span class="gloss">average seconds per correct answer</span></div>
+                <div class="def">Trended over a fourteen-day window. Visible alongside accuracy. Slow and right is acceptable for a learner. Fast and wrong is dangerous. Fast and right is the exam-ready state.</div>
+            </li>
+            <li>
+                <div class="term">Pace<span class="gloss">distribution, not just average</span></div>
+                <div class="def">A histogram of time-per-question. Reveals the student who averages sixty seconds but actually answers half in twenty and half in ninety &mdash; a fragile profile under exam pressure. Average speed lies; the distribution does not.</div>
+            </li>
+            <li>
+                <div class="term">Focus Areas<span class="gloss">bottom-three weakest subtopics</span></div>
+                <div class="def">Ranked by accuracy across the student's last ninety attempts. The home screen always carries three actionable suggestions: <em>here is what to drill next, and why.</em></div>
+            </li>
+            <li>
+                <div class="term">Learning Velocity<span class="gloss">volume and accuracy, last 30 days</span></div>
+                <div class="def">A simple chart. Volume and accuracy on one axis, time on the other. Parents see this most. It is the answer to "is my child working, and is it working."</div>
+            </li>
+            <li>
+                <div class="term">Debt Collector<span class="gloss">unpaid FSM tags resurfacing</span></div>
+                <div class="def">A ranked queue of patterns where the student previously skipped past an intervention. The system holds the debt. Until the student demonstrates the shortcut under timed conditions, the chapter keeps reappearing &mdash; softly at first, then insistently.</div>
+            </li>
+        </ul>
+
+        <h3 style="font-family: var(--display); font-weight: 400; font-size: clamp(26px, 3.2vw, 36px); letter-spacing: -0.014em; color: var(--ink); margin: 64px 0 12px; max-width: 880px;">
+            What we are adding next.
+        </h3>
+        <p style="max-width: 880px; font-size: 18px; color: var(--ink-soft); margin-bottom: 16px;">
+            The signals below are designed for the next analytics release. Each is intended to surface what the basic accuracy chart hides: <em>did the student actually remember this, or did they get lucky last week?</em>
+        </p>
+
+        <ul class="datum-list">
+            <li>
+                <div class="term">Retention Pulse<span class="gloss future">forgetting curve, per pattern</span></div>
+                <div class="def">For each FSM the student "mastered" weeks ago, predict the probability they still remember it today. Surface the patterns at risk before the student notices the decay. The spaced-repetition queue follows from this signal.</div>
+            </li>
+            <li>
+                <div class="term">Cold-start Recall<span class="gloss future">performance on a topic not seen for 7+ days</span></div>
+                <div class="def">The real measure of mastery is not how a student does on a topic they practiced yesterday, but how they do on a topic they have not touched for a week. Cold-start Recall is that measurement &mdash; and it is the one most likely to be honest.</div>
+            </li>
+            <li>
+                <div class="term">Mistake Taxonomy<span class="gloss future">conceptual, careless, time-pressure</span></div>
+                <div class="def">Not every wrong answer is the same wrong answer. The system distinguishes a wrong answer caused by misunderstanding (conceptual), by arithmetic slip (careless), and by running out of clock (time). The remedy for each is different. The student sees which one they keep doing.</div>
+            </li>
+            <li>
+                <div class="term">Exam Readiness Score<span class="gloss future">composite estimate of marks if the exam were today</span></div>
+                <div class="def">A running estimate of the student's mark on a full-paper attempt of their target exam, derived from accuracy, speed, FSM coverage, and Retention Pulse against the syllabus weightage. Not a leaderboard. A diagnostic.</div>
+            </li>
+            <li>
+                <div class="term">Time-to-Mastery<span class="gloss future">attempts till consistent correct</span></div>
+                <div class="def">For each pattern, how many practice attempts the student needed to reach reliable mastery. Becomes a per-student learning-rate profile over time &mdash; useful to the platform's adaptive engine, and to the parent who wants to know whether their child is improving in the way that matters.</div>
+            </li>
+            <li>
+                <div class="term">Negative-Marking Risk<span class="gloss future">guess-rate against the exam's penalty</span></div>
+                <div class="def">Most Indian competitive exams penalize wrong answers. The system tracks the gap between the student's accuracy on the questions they attempted and what their accuracy would have been if they had skipped the bottom-confidence quartile. Tells the student when to leave a question blank.</div>
+            </li>
+            <li>
+                <div class="term">Concept Graph Coverage<span class="gloss future">prerequisite chain mastery</span></div>
+                <div class="def">A subtopic in calculus depends on derivatives; derivatives depend on functions; functions depend on sets. When a student struggles with the latter, the system traces back the dependency chain and surfaces the actual missing prerequisite, not the symptom.</div>
+            </li>
+            <li>
+                <div class="term">Weekly Parent Brief<span class="gloss future">a written summary, in plain language</span></div>
+                <div class="def">A short written report sent every week to a parent's email or WhatsApp. Practice volume, accuracy direction, two patterns mastered, one chapter to revise this Sunday. Not a dashboard. A letter.</div>
+            </li>
+        </ul>
+    </section>
+
+    <!-- ============== VII. WHY THE DATA MATTERS ============== -->
+    <section>
+        <span class="roman">VII &middot; Why these signals help a child</span>
+        <h2 class="section-title">Three things separate Drut's analytics from a scoreboard.</h2>
+        <div class="col-body">
+            <aside class="marginalia">
+                <span class="label">For parents</span>
+                A weekly summary in plain language: "your daughter practiced 240 questions this week, accuracy improved on 6 subtopics, speed declined on 1, here is the chapter to revise before Sunday." No coaching-center receipt. No vague reassurance. The actual chapter, the actual page.
+            </aside>
+            <div class="body-text">
+                <p><strong>One.</strong> The granularity is per-student, per-pattern, per-chapter. Not "Math: 47 percent." That number is useless. Drut tells the student: <em>You solve Sets union problems at 71 percent. But the inclusion-exclusion shortcut you got wrong nine out of twelve times &mdash; let us drill that one technique for three minutes.</em></p>
+                <p><strong>Two.</strong> Every datum is tied to a textbook page. When the system says "your accuracy on Application of Derivatives is sliding," it can open <span class="small-caps">NCERT Class 12 Mathematics Part I, page 197</span>, the exact paragraph that defines the technique the student forgot. The student sees the source, not a paraphrase of the source.</p>
+                <p><strong>Three.</strong> Most edtech surfaces what you got right. Drut surfaces what you skipped past, what you almost knew, what you need to revisit. The Debt Collector and Retention Pulse are, in some sense, the entire product. They are the parts that respect the student's intelligence &mdash; that say, <em>you and I both know you guessed that one; let us address it.</em></p>
+            </div>
+        </div>
+    </section>
+
+    <div class="asterism">* * *</div>
+
+    <!-- ============== VIII. BEYOND JUNE ============== -->
+    <section>
+        <span class="roman">VIII &middot; Beyond June, beyond the MVP</span>
+        <h2 class="section-title">A focused expansion<em>, in order.</em></h2>
+        <p style="max-width: 880px; font-size: 19px; color: var(--ink-soft); margin-bottom: 24px;">
+            We are committed to depth before breadth. The June beta ships AP and TS EAPCET. Every subsequent exam is layered on without breaking the regional moat. The platform is built for many exams; we will ship them one by one.
+        </p>
+
+        <div class="roadmap">
+            <div class="roadmap-row">
+                <div class="roadmap-when">June 2026 &middot; Beta</div>
+                <div class="roadmap-what">
+                    <h3>AP + TS EAPCET, closed beta</h3>
+                    <p>Five hundred waitlist members receive access. NCERT and BIEAP textbooks fully indexed; TSBIE in the same window. Practice and Sprint both live. Analytics from day one. Web first, mobile in parallel.</p>
+                </div>
+            </div>
+            <div class="roadmap-row">
+                <div class="roadmap-when">July 2026 &middot; Public</div>
+                <div class="roadmap-what">
+                    <h3>Public launch &middot; AP + TS EAPCET, Telugu-medium toggle</h3>
+                    <p>Telugu UI translation. Telugu-medium question generation toggle. Marketing across Andhra Pradesh and Telangana &mdash; YouTube, Telegram groups, school networks. Pricing tier under &#8377;500 per month &mdash; an order of magnitude below offline coaching, within reach of a middle-class family.</p>
+                </div>
+            </div>
+            <div class="roadmap-row">
+                <div class="roadmap-when">Aug — Sep 2026</div>
+                <div class="roadmap-what">
+                    <h3>NEET-UG expansion</h3>
+                    <p>NCERT Biology Class 11 and 12 ingested &mdash; roughly seven additional textbooks. Existing Physics and Chemistry chunks already cover half of NEET. With Biology, Drut serves the largest single Indian exam audience by volume: more than twenty-three lakh students annually. We compete on practice depth, not on content volume.</p>
+                </div>
+            </div>
+            <div class="roadmap-row">
+                <div class="roadmap-when">Q4 2026</div>
+                <div class="roadmap-what">
+                    <h3>Parent dashboard &middot; Coaching-center partnerships</h3>
+                    <p>A weekly written summary for parents in their preferred language. Pilot partnerships with offline coaching centers in Hyderabad and Vijayawada &mdash; Drut as the after-class drill companion their students use at home.</p>
+                </div>
+            </div>
+            <div class="roadmap-row">
+                <div class="roadmap-when">2027 &middot; first half</div>
+                <div class="roadmap-what">
+                    <h3>State engineering expansion &middot; MH-CET, KCET, WBJEE, GUJCET</h3>
+                    <p>Each addition requires the state's prescribed textbooks &mdash; the same ingestion pipeline that handled BIEAP. Selected by candidate volume and language overlap. Not all at once; one state at a time, with the local language layer added in step with the content.</p>
+                </div>
+            </div>
+            <div class="roadmap-row">
+                <div class="roadmap-when">2027 &middot; second half</div>
+                <div class="roadmap-what">
+                    <h3>JEE Main &middot; JEE Advanced &middot; BITSAT, VITEEE, SRMJEEE</h3>
+                    <p>National engineering. NCERT-based, so the content is largely in place; the question generation engine needs to be tuned for JEE-pattern (one-hundred-and-twenty-second per question, deeper conceptual elimination) and Advanced-level mathematical depth. Sprint pacing already supports the alternative timer.</p>
+                </div>
+            </div>
+            <div class="roadmap-row">
+                <div class="roadmap-when">2028 and beyond</div>
+                <div class="roadmap-what">
+                    <h3>CAT &middot; Quantitative Aptitude, DI, Verbal &middot; Adjacent management exams</h3>
+                    <p>CAT is a different content base &mdash; not NCERT-anchored, so the ingestion is from CAT-specific source material. But the practice-platform mechanics &mdash; finite-to-infinite questions, FSM training, skip-with-debt, Sprint pacing &mdash; transfer directly. The same architecture serves a new domain.</p>
+                </div>
+            </div>
+            <div class="roadmap-row">
+                <div class="roadmap-when">Long-horizon</div>
+                <div class="roadmap-what">
+                    <h3>Spaced repetition engine &middot; Adaptive difficulty &middot; First-week diagnostic</h3>
+                    <p>A real spaced-repetition engine built around the FSM-debt and Retention Pulse signals. Per-student adaptive difficulty that holds the student in the productive-struggle zone. A first-week diagnostic that places a student precisely on the syllabus and recommends a six-month plan.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============== IX. DIFFERENTIATION ============== -->
+    <section>
+        <span class="roman">IX &middot; How Drut is different</span>
+        <h2 class="section-title">Other platforms deliver content<em>. Drut delivers practice.</em></h2>
+        <p style="max-width: 880px; font-size: 19px; color: var(--ink-soft); margin-bottom: 16px;">
+            The honest answer is that Drut occupies a position no major Indian player has chosen to defend: a practice platform first, content second, brand last. Every alternative below makes a different choice &mdash; and we think their choices leave room.
+        </p>
+
+        <div class="vs">
+            <div class="vs-row">
+                <div class="who">Khan Academy<span class="sub">Free &middot; curriculum-led &middot; English-default with translated India tracks</span></div>
+                <div class="vs-col them"><span class="head">Their model</span>Free, conceptually exhaustive, globally pedagogical. Each chapter unit carries eight to twelve adaptive practice exercises, plus quizzes and a unit test, with each exercise drawing from an effectively unlimited generated question pool. Excellent at teaching <em>what a derivative is</em>. Designed to build understanding of concepts, not to win a timed entrance exam. Untimed. No named-shortcut catalogue. No skip-with-debt mechanic. The India tracks mirror NCERT structure but follow Khan's global pedagogy, not the discipline of EAPCET or JEE.</div>
+                <div class="vs-col us"><span class="head">Drut</span>Exam-led, not curriculum-led. Every question is generated against the student's <em>actual prescribed textbook</em> &mdash; NCERT, BIEAP, or TSBIE, page-anchored, verifiable. Questions follow the format of the student's actual exam. Sessions are timed to the exam's actual cadence &mdash; sixty seconds for EAPCET, one hundred and twenty for JEE Main. Shortcuts have names; the Debt Collector refuses to let a student avoid the patterns they pretended to understand. Khan teaches the concept. Drut trains the exam.</div>
+            </div>
+            <div class="vs-row">
+                <div class="who">Physics Wallah<span class="sub">Hindi-medium JEE / NEET, &#8377;4,000/yr, 78L+ subscribers</span></div>
+                <div class="vs-col them"><span class="head">Their model</span>Content delivery at scale. One Alakh Pandey video reaches a million students with a single piece of guidance. Massive video library, Hindi-medium brand recognition, mass-market broadcast pedagogy. Their unit economics depend on the broadcast.</div>
+                <div class="vs-col us"><span class="head">Drut</span>Practice delivery at depth. Students do not consume Drut; they use it. The session a friend just finished was tuned to their debt collector, not to yours. PW is a Hindi-belt JEE/NEET company. Drut is a multi-exam practice platform that ships its MVP for AP/TS EAPCET. Different products, different students, different battlefield.</div>
+            </div>
+            <div class="vs-row">
+                <div class="who">Offline coaching<span class="sub">FIITJEE, Sri Chaitanya, Narayana, Aakash &middot; &#8377;50,000 — 1,00,000/yr</span></div>
+                <div class="vs-col them"><span class="head">Their model</span>Cohort-based classroom. Forty to sixty students in a room, fixed schedule, one human teacher's voice on every topic. Cost: a meaningful fraction of a middle-class family's annual income. Travel time: hours per week. Schedule: rigid. Practice volume: a finite set of printed worksheets between classes.</div>
+                <div class="vs-col us"><span class="head">Drut</span>Individual session. Unlimited practice on demand, anywhere, twenty-four hours a day. One-twentieth the annual cost. Offline coaching gets the student to a classroom. Drut comes home with them and stays open at midnight when the doubt resurfaces.</div>
+            </div>
+            <div class="vs-row">
+                <div class="who">Byju's, Vedantu, Unacademy<span class="sub">Pan-India, multi-exam, video-led subscription</span></div>
+                <div class="vs-col them"><span class="head">Their model</span>National brand, multi-exam coverage, multi-subscription pricing. Built for breadth. Operationally complex. Spread thin per exam. Practice is incidental to the video library; questions are a finite worksheet, not a generative system.</div>
+                <div class="vs-col us"><span class="head">Drut</span>Practice is the entire product. The question generation engine does not run out. The platform architecture supports every Indian competitive exam in time, but does not pretend to serve them all today.</div>
+            </div>
+        </div>
+
+        <p style="max-width: 880px; font-size: 19px; color: var(--ink-soft); margin-top: 32px;">
+            The shared thread across every competitor is that they optimize for content delivery. Drut optimizes for the next question the student should see, the next pattern they should not be allowed to forget, and the next minute of practice that will actually move accuracy. Every other measure &mdash; brand, breadth, content volume &mdash; is downstream of that single discipline.
+        </p>
+    </section>
+
+    <!-- ============== CLOSING ============== -->
+    <div class="closing">
+        <div class="sig">
+            A textbook your child already owns. A practice book that never runs out of questions. A platform that refuses to let them forget what they already learned.
+        </div>
+        <div class="meta">Drut &middot; June 2026 &middot; Pre-launch, beta opening soon</div>
+    </div>
+
+</div>
+
+</body>
+</html>
