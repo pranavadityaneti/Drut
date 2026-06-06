@@ -4,120 +4,120 @@ import { QuestionData } from '@drut/shared';
 import { Card, CardContent } from '../ui/Card';
 
 interface InterventionModalProps {
-    questionData: QuestionData;
-    isCorrect: boolean;
-    isFast: boolean;
-    timeTaken: number;
-    targetTime: number;
-    onProveIt: () => void;
-    onSkip: () => void;
+ questionData: QuestionData;
+ isCorrect: boolean;
+ isFast: boolean;
+ timeTaken: number;
+ targetTime: number;
+ onProveIt: () => void;
+ onSkip: () => void;
 }
 
 export const InterventionModal: React.FC<InterventionModalProps> = ({
-    questionData,
-    isCorrect,
-    isFast,
-    timeTaken,
-    targetTime,
-    onProveIt,
-    onSkip,
+ questionData,
+ isCorrect,
+ isFast,
+ timeTaken,
+ targetTime,
+ onProveIt,
+ onSkip,
 }) => {
-    const getFailureReason = () => {
-        if (!isCorrect && !isFast) {
-            return {
-                title: 'Incorrect & Slow',
-                description: `You answered incorrectly and took ${timeTaken}s (target: ${targetTime}s).`,
-                icon: '❌',
-                bgColor: 'bg-red-50',
-                borderColor: 'border-red-200',
-                color: 'text-red-600',
-            };
-        } else if (!isCorrect) {
-            return {
-                title: 'Incorrect Answer',
-                description: 'Your answer was wrong. Review the solution below.',
-                icon: '❌',
-                bgColor: 'bg-red-50',
-                borderColor: 'border-red-200',
-                color: 'text-red-600',
-            };
-        } else {
-            return {
-                title: 'Too Slow',
-                description: `You took ${timeTaken}s but the target is ${targetTime}s.`,
-                icon: '⏱️',
-                bgColor: 'bg-amber-50',
-                borderColor: 'border-amber-200',
-                color: 'text-amber-600',
-            };
-        }
-    };
+ const getFailureReason = () => {
+ if (!isCorrect && !isFast) {
+ return {
+ title: 'Incorrect & Slow',
+ description: `You answered incorrectly and took ${timeTaken}s (target: ${targetTime}s).`,
+ icon: '',
+ bgColor: 'bg-[#fde7e5]',
+ borderColor: 'border-[#fde7e5]',
+ color: 'text-[var(--color-destructive)]',
+ };
+ } else if (!isCorrect) {
+ return {
+ title: 'Incorrect Answer',
+ description: 'Your answer was wrong. Review the solution below.',
+ icon: '',
+ bgColor: 'bg-[#fde7e5]',
+ borderColor: 'border-[#fde7e5]',
+ color: 'text-[var(--color-destructive)]',
+ };
+ } else {
+ return {
+ title: 'Too Slow',
+ description: `You took ${timeTaken}s but the target is ${targetTime}s.`,
+ icon: '️',
+ bgColor: 'bg-[var(--color-accent-warm-soft)]',
+ borderColor: 'border-[var(--color-accent-warm-soft)]',
+ color: 'text-[var(--color-accent-warm-foreground)]',
+ };
+ }
+ };
 
-    const failure = getFailureReason();
-    const optimalPath = questionData?.theOptimalPath || { exists: false, steps: [], preconditions: '', sanityCheck: '' };
+ const failure = getFailureReason();
+ const optimalPath = questionData?.theOptimalPath || { exists: false, steps: [], preconditions: '', sanityCheck: '' };
 
-    return (
-        <div className="space-y-4">
-            {/* Feedback Header - Inline card */}
-            <Card className={`${failure.bgColor} ${failure.borderColor}`}>
-                <CardContent className="p-4">
-                    <div className="flex items-center gap-3">
-                        <span className="text-2xl">{failure.icon}</span>
-                        <div>
-                            <h2 className={`text-lg font-bold ${failure.color}`}>
-                                {failure.title}
-                            </h2>
-                            <p className="text-muted-foreground text-sm">
-                                {failure.description}
-                            </p>
-                        </div>
-                    </div>
-                </CardContent>
-            </Card>
+ return (
+ <div className="space-y-4">
+ {/* Feedback Header - Inline card */}
+ <Card className={`${failure.bgColor} ${failure.borderColor}`}>
+ <CardContent className="p-4">
+ <div className="flex items-center gap-3">
+ <span className="text-2xl">{failure.icon}</span>
+ <div>
+ <h2 className={`text-lg font-bold ${failure.color}`}>
+ {failure.title}
+ </h2>
+ <p className="text-muted-foreground text-sm">
+ {failure.description}
+ </p>
+ </div>
+ </div>
+ </CardContent>
+ </Card>
 
-            {/* FSM Solution - Inline card */}
-            <Card>
-                <CardContent className="p-5">
-                    <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                        <span className="text-emerald-600">💡</span>
-                        The Optimal Path
-                    </h3>
+ {/* FSM Solution - Inline card */}
+ <Card>
+ <CardContent className="p-5">
+ <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+ <span className="text-[#3d7a0f]"></span>
+ The Optimal Path
+ </h3>
 
-                    {optimalPath.exists ? (
-                        <FsmPanel
-                            patternTrigger={optimalPath.preconditions || 'This question type'}
-                            steps={optimalPath.steps.map((step) => ({ step }))}
-                            safetyChecks={
-                                optimalPath.sanityCheck
-                                    ? [optimalPath.sanityCheck]
-                                    : []
-                            }
-                            whenToUse="Use this method when you need to solve quickly with high accuracy"
-                        />
-                    ) : (
-                        <div className="p-4 bg-muted rounded-lg text-muted-foreground">
-                            No optimal path available for this question type.
-                        </div>
-                    )}
-                </CardContent>
-            </Card>
+ {optimalPath.exists ? (
+ <FsmPanel
+ patternTrigger={optimalPath.preconditions || 'This question type'}
+ steps={optimalPath.steps.map((step) => ({ step }))}
+ safetyChecks={
+ optimalPath.sanityCheck
+ ? [optimalPath.sanityCheck]
+ : []
+ }
+ whenToUse="Use this method when you need to solve quickly with high accuracy"
+ />
+) : (
+ <div className="p-4 bg-muted rounded-lg text-muted-foreground">
+ No optimal path available for this question type.
+ </div>
+)}
+ </CardContent>
+ </Card>
 
-            {/* Actions - Right aligned */}
-            <div className="flex justify-end gap-3">
-                <button
-                    onClick={onSkip}
-                    className="px-4 py-2 text-muted-foreground hover:text-foreground transition-colors text-sm"
-                >
-                    Skip for now
-                </button>
+ {/* Actions - Right aligned */}
+ <div className="flex justify-end gap-3">
+ <button
+ onClick={onSkip}
+ className="px-4 py-2 text-muted-foreground hover:text-foreground transition-colors text-sm"
+ >
+ Skip for now
+ </button>
 
-                <button
-                    onClick={onProveIt}
-                    className="px-6 py-3 bg-emerald-500 text-white rounded-lg font-semibold hover:bg-emerald-600 transition-colors"
-                >
-                    Prove It 💪
-                </button>
-            </div>
-        </div>
-    );
+ <button
+ onClick={onProveIt}
+ className="px-6 py-3 bg-[#3d7a0f] text-white rounded-lg font-semibold hover:bg-[#3d7a0f] transition-colors"
+ >
+ Prove It
+ </button>
+ </div>
+ </div>
+);
 };
