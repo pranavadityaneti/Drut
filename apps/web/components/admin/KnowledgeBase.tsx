@@ -210,19 +210,19 @@ export const KnowledgeBase: React.FC = () => {
     return (
         <div className="space-y-6">
             {/* Breadcrumbs */}
-            <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4 overflow-x-auto pb-2">
+            <div className="flex items-center gap-1.5 text-[12px] text-[var(--color-ink-3)] mb-4 overflow-x-auto pb-2 num-tabular">
                 <button
                     onClick={handleRootClick}
-                    className={`flex items-center hover:text-primary whitespace-nowrap ${path.length === 0 ? 'font-bold text-primary' : ''}`}
+                    className={`flex items-center hover:text-[var(--color-ink-1)] whitespace-nowrap transition-colors ${path.length === 0 ? 'font-semibold text-[var(--color-ink-1)]' : ''}`}
                 >
-                    <Home className="h-4 w-4 mr-1" /> Root
+                    <Home className="h-3.5 w-3.5 mr-1" /> Root
                 </button>
                 {path.map((item, idx) => (
                     <React.Fragment key={item.id}>
-                        <ChevronRight className="h-4 w-4 flex-shrink-0" />
+                        <ChevronRight className="h-3.5 w-3.5 flex-shrink-0 text-[var(--color-ink-4)]" />
                         <button
                             onClick={() => handleBreadcrumbClick(idx)}
-                            className={`hover:text-primary whitespace-nowrap ${idx === path.length - 1 ? 'font-bold text-primary' : ''}`}
+                            className={`hover:text-[var(--color-ink-1)] whitespace-nowrap transition-colors ${idx === path.length - 1 ? 'font-semibold text-[var(--color-ink-1)]' : ''}`}
                         >
                             {item.name}
                         </button>
@@ -232,11 +232,14 @@ export const KnowledgeBase: React.FC = () => {
 
             {/* Folder Grid */}
             <div className="space-y-4">
-                <div className="flex justify-between items-center">
-                    <h2 className="text-xl font-semibold tracking-tight">
-                        {currentFolder ? currentFolder.name : 'Knowledge Base'}
-                    </h2>
-                    <Button onClick={() => setIsCreateOpen(true)} size="sm" className="gap-2">
+                <div className="flex justify-between items-end gap-3 flex-wrap">
+                    <div className="flex flex-col gap-1">
+                        <p className="label-uppercase">{currentFolder ? currentFolder.node_type : 'Root'}</p>
+                        <h2 className="text-[20px] leading-[1.2] font-semibold tracking-tight text-[var(--color-ink-1)]">
+                            {currentFolder ? currentFolder.name : 'Knowledge base'}
+                        </h2>
+                    </div>
+                    <Button onClick={() => setIsCreateOpen(true)} size="sm" variant="ink">
                         <FolderPlus className="h-4 w-4" />
                         Add {getNextNodeType().charAt(0).toUpperCase() + getNextNodeType().slice(1)}
                     </Button>
@@ -251,18 +254,17 @@ export const KnowledgeBase: React.FC = () => {
                                 {nodes.map((node) => (
                                     <Card
                                         key={node.id}
-                                        className="cursor-pointer hover:border-primary/50 transition-all hover:shadow-md group relative"
+                                        className="cursor-pointer transition-shadow card-hover group relative"
                                     >
                                         <div onClick={() => handleNavigate(node)}>
-                                            <CardHeader className="flex flex-row items-center gap-4 pb-2">
+                                            <CardHeader className="flex flex-row items-center gap-3 pb-2">
                                                 <FolderIcon type={node.node_type} />
-                                                <div>
-                                                    <CardTitle className="text-lg">{node.name}</CardTitle>
-                                                    <CardDescription className="capitalize text-xs flex gap-2">
-                                                        <span>{node.node_type}</span>
-                                                        {/* Show Tag safely */}
+                                                <div className="min-w-0">
+                                                    <CardTitle className="text-[15px] tracking-tight truncate">{node.name}</CardTitle>
+                                                    <CardDescription className="text-[11px] flex gap-1.5 items-center mt-1">
+                                                        <span className="label-uppercase">{node.node_type}</span>
                                                         {(node.metadata?.board || node.metadata?.class || node.metadata?.subject) && (
-                                                            <span className="bg-slate-100 px-1 rounded text-slate-600">
+                                                            <span className="bg-[var(--color-muted)] px-1.5 py-0.5 rounded-[4px] text-[var(--color-ink-2)] num-tabular text-[10px] font-medium">
                                                                 {node.metadata.board || node.metadata.class || node.metadata.subject}
                                                             </span>
                                                         )}
@@ -272,25 +274,25 @@ export const KnowledgeBase: React.FC = () => {
                                         </div>
 
                                         {/* Actions (visible on hover) */}
-                                        <div className="absolute top-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                                            <Button variant="ghost" size="icon" className="h-8 w-8" onClick={(e) => {
+                                        <div className="absolute top-2 right-2 flex gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
+                                            <Button variant="ghost" size="icon" className="h-7 w-7" onClick={(e) => {
                                                 e.stopPropagation();
                                                 handleEditStart(node);
                                             }}>
-                                                <Edit className="h-4 w-4 text-muted-foreground" />
+                                                <Edit className="h-3.5 w-3.5 text-[var(--color-ink-3)]" />
                                             </Button>
-                                            <Button variant="ghost" size="icon" className="h-8 w-8 hover:text-red-500" onClick={(e) => {
+                                            <Button variant="ghost" size="icon" className="h-7 w-7 hover:text-[var(--color-destructive)]" onClick={(e) => {
                                                 e.stopPropagation();
                                                 handleDeleteNode(node.id);
                                             }}>
-                                                <Trash2 className="h-4 w-4" />
+                                                <Trash2 className="h-3.5 w-3.5" />
                                             </Button>
                                         </div>
                                     </Card>
                                 ))}
                             </div>
                         ) : (
-                            !canUploadHere && <div className="text-center p-12 text-muted-foreground border-2 border-dashed rounded-xl">No folders yet. Create one to get started.</div>
+                            !canUploadHere && <div className="text-center p-12 text-[var(--color-ink-3)] text-[13px] border-2 border-dashed border-[var(--color-ink-5)] rounded-[18px]">No folders yet. Create one to get started.</div>
                         )}
                     </>
                 )}
@@ -373,16 +375,18 @@ export const KnowledgeBase: React.FC = () => {
 };
 
 const FolderIcon = ({ type }: { type: string }) => {
-    let colorClass = "bg-slate-100 text-slate-500";
-    if (type === 'board') colorClass = "bg-blue-50 text-blue-600";
-    if (type === 'class') colorClass = "bg-emerald-50 text-emerald-600";
-    if (type === 'subject') colorClass = "bg-amber-50 text-amber-600";
-    if (type === 'topic') colorClass = "bg-violet-50 text-violet-600";
-    if (type === 'folder' || type === 'workbook') colorClass = "bg-pink-50 text-pink-600";
+    // Editorial palette: depth implied by ink ramp rather than rainbow.
+    // 'board' (top of tree) -> accent lime wash; 'topic'/'folder' -> coral wash.
+    let colorClass = "bg-[var(--color-muted)] text-[var(--color-ink-2)]";
+    if (type === 'board') colorClass = "bg-[var(--color-accent)] text-[var(--color-accent-foreground)]";
+    if (type === 'class') colorClass = "bg-[var(--color-muted)] text-[var(--color-ink-1)]";
+    if (type === 'subject') colorClass = "bg-[var(--color-muted)] text-[var(--color-ink-2)]";
+    if (type === 'topic' || type === 'folder' || type === 'workbook')
+        colorClass = "bg-[var(--color-accent-warm-soft)] text-[var(--color-accent-warm-foreground)]";
 
     return (
-        <div className={`p-3 rounded-full transition-colors ${colorClass}`}>
-            <Folder className="h-8 w-8 fill-current opacity-80" />
+        <div className={`inline-flex items-center justify-center h-11 w-11 rounded-[12px] transition-colors ${colorClass}`}>
+            <Folder className="h-5 w-5" strokeWidth={2} />
         </div>
     );
 };
@@ -636,7 +640,7 @@ const LeafFileManager: React.FC<{ context: any, pathLabels: string[] }> = ({ con
                     </div>
 
                     <Button variant="outline" className="w-full gap-2" onClick={() => setIsLinkOpen(true)}>
-                        <span>🔗 Add Link / Video</span>
+                        Add Link / Video
                     </Button>
                 </CardContent>
             </Card>
@@ -649,22 +653,22 @@ const LeafFileManager: React.FC<{ context: any, pathLabels: string[] }> = ({ con
                     {!loading && textbooks.length === 0 && <div className="text-center text-muted-foreground p-8">Empty folder.</div>}
                     <div className="space-y-2">
                         {textbooks.map(tb => (
-                            <div key={tb.id} className="flex items-center justify-between p-3 border rounded bg-card">
-                                <div className="flex items-center gap-3">
-                                    <FileText className={`h-5 w-5 ${(tb as any).content_type === 'workbook' ? 'text-pink-500' : (tb as any).content_type === 'video' ? 'text-red-500' : 'text-blue-500'}`} />
-                                    <div>
-                                        <div className="font-medium text-sm truncate max-w-[200px]">{tb.title}</div>
-                                        <div className="text-xs text-muted-foreground flex gap-2 items-center">
-                                            <span className="bg-slate-100 px-1.5 py-0.5 rounded uppercase text-[10px]">{(tb as any).content_type || 'textbook'}</span>
+                            <div key={tb.id} className="flex items-center justify-between p-3 ring-hairline rounded-[12px] bg-card transition-shadow card-hover">
+                                <div className="flex items-center gap-3 min-w-0">
+                                    <FileText className={`h-4 w-4 shrink-0 ${(tb as any).content_type === 'workbook' ? 'text-[var(--color-accent-warm)]' : (tb as any).content_type === 'video' ? 'text-[var(--color-destructive)]' : 'text-[var(--color-ink-3)]'}`} />
+                                    <div className="min-w-0">
+                                        <div className="font-semibold text-[13px] tracking-tight truncate max-w-[260px] text-[var(--color-ink-1)]">{tb.title}</div>
+                                        <div className="text-[11px] text-[var(--color-ink-3)] flex gap-2 items-center mt-0.5 num-tabular">
+                                            <span className="bg-[var(--color-muted)] px-1.5 py-0.5 rounded-[4px] uppercase text-[10px] font-semibold tracking-wider text-[var(--color-ink-2)]">{(tb as any).content_type || 'textbook'}</span>
                                             <span>{new Date(tb.uploaded_at).toLocaleDateString()}</span>
-                                            {tb.status === 'ready' && <span className="text-green-600 flex items-center gap-1"><CheckCircle className="h-3 w-3" /> Ready</span>}
-                                            {tb.status === 'processing' && <span className="text-blue-600 flex items-center gap-1"><Loader2 className="h-3 w-3 animate-spin" /> Processing</span>}
-                                            {tb.status === 'error' && <span className="text-red-600 flex items-center gap-1">Error</span>}
+                                            {tb.status === 'ready' && <span className="text-[#3d7a0f] flex items-center gap-1 font-medium"><CheckCircle className="h-3 w-3" /> Ready</span>}
+                                            {tb.status === 'processing' && <span className="text-[var(--color-ink-2)] flex items-center gap-1 font-medium"><Loader2 className="h-3 w-3 animate-spin" /> Processing</span>}
+                                            {tb.status === 'error' && <span className="text-[var(--color-destructive)] flex items-center gap-1 font-medium">Error</span>}
                                         </div>
                                     </div>
                                 </div>
-                                <Button variant="ghost" size="sm" onClick={() => handleDelete(tb.id, tb.file_path)}>
-                                    <Trash2 className="h-4 w-4 text-red-400" />
+                                <Button variant="ghost" size="sm" onClick={() => handleDelete(tb.id, tb.file_path)} className="hover:text-[var(--color-destructive)]">
+                                    <Trash2 className="h-4 w-4" />
                                 </Button>
                             </div>
                         ))}

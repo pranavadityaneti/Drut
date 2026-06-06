@@ -302,17 +302,18 @@ export const QuestionSeeding: React.FC = () => {
 
     return (
         <div className="space-y-6">
-            <div className="flex justify-between items-center">
-                <div>
-                    <h2 className="text-2xl font-bold flex items-center gap-2">
-                        <FileSpreadsheet className="w-6 h-6 text-emerald-600" />
-                        Bulk Question Seeding
+            <div className="flex justify-between items-end gap-4 flex-wrap">
+                <div className="flex flex-col gap-1">
+                    <p className="label-uppercase">Seeding</p>
+                    <h2 className="text-[20px] leading-[1.2] font-semibold tracking-tight text-[var(--color-ink-1)] flex items-center gap-2">
+                        <FileSpreadsheet className="w-5 h-5 text-[var(--color-ink-3)]" />
+                        Bulk question seeding
                     </h2>
-                    <p className="text-muted-foreground">Upload Excel/CSV to seed static questions for AI augmentation.</p>
+                    <p className="text-[13px] text-[var(--color-ink-3)] mt-1">Upload Excel/CSV to seed static questions for AI augmentation.</p>
                 </div>
                 {syncStats && (
-                    <div className="bg-emerald-50 border border-emerald-200 px-4 py-2 rounded-lg flex items-center gap-4">
-                        <span className="text-emerald-800 font-bold">Batch: {syncStats.success} / {syncStats.total} Uploaded</span>
+                    <div className="bg-[var(--color-accent)] ring-hairline px-4 py-2 rounded-[10px] flex items-center gap-4">
+                        <span className="text-[var(--color-accent-foreground)] font-semibold text-[13px] num-tabular">Batch: {syncStats.success} / {syncStats.total} uploaded</span>
                         <Button size="sm" variant="ghost" onClick={() => { setSyncStats(null); setParsedRows([]); setFile(null); clearImages(); }}>Clear</Button>
                     </div>
                 )}
@@ -388,7 +389,7 @@ export const QuestionSeeding: React.FC = () => {
                 </CardHeader>
                 <CardContent>
                     {!file ? (
-                        <div className="border-2 border-dashed border-gray-300 rounded-xl p-10 text-center hover:bg-gray-50 transition-colors">
+                        <div className="border-2 border-dashed border-[var(--color-ink-5)] rounded-[14px] p-10 text-center hover:bg-[var(--color-muted)] transition-colors">
                             <input
                                 type="file"
                                 accept=".xlsx, .csv"
@@ -397,19 +398,19 @@ export const QuestionSeeding: React.FC = () => {
                                 id="file-upload"
                             />
                             <label htmlFor="file-upload" className="cursor-pointer flex flex-col items-center gap-2">
-                                <Upload className="w-10 h-10 text-gray-400" />
-                                <span className="font-medium text-gray-700">Click to upload .xlsx or .csv</span>
+                                <Upload className="w-8 h-8 text-[var(--color-ink-3)]" />
+                                <span className="text-[14px] font-semibold tracking-tight text-[var(--color-ink-1)]">Click to upload .xlsx or .csv</span>
                             </label>
                         </div>
                     ) : (
-                        <div className="flex items-center justify-between bg-muted/50 p-4 rounded-lg">
+                        <div className="flex items-center justify-between bg-[var(--color-muted)] p-4 rounded-[14px]">
                             <div className="flex items-center gap-3">
-                                <div className="bg-emerald-100 p-2 rounded">
-                                    <FileSpreadsheet className="w-6 h-6 text-emerald-600" />
+                                <div className="bg-[var(--color-accent)] text-[var(--color-accent-foreground)] inline-flex h-9 w-9 items-center justify-center rounded-[10px]">
+                                    <FileSpreadsheet className="w-4 h-4" />
                                 </div>
                                 <div>
-                                    <p className="font-medium">{file.name}</p>
-                                    <p className="text-xs text-muted-foreground">{(file.size / 1024).toFixed(1)} KB</p>
+                                    <p className="font-semibold text-[13px] tracking-tight text-[var(--color-ink-1)]">{file.name}</p>
+                                    <p className="text-[11px] text-[var(--color-ink-3)] num-tabular">{(file.size / 1024).toFixed(1)} KB</p>
                                 </div>
                             </div>
                             <Button variant="ghost" size="sm" onClick={() => { setFile(null); setParsedRows([]); }}>
@@ -429,7 +430,7 @@ export const QuestionSeeding: React.FC = () => {
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <div className="border-2 border-dashed border-blue-200 bg-blue-50/50 rounded-xl p-6 text-center hover:bg-blue-50 transition-colors">
+                    <div className="border-2 border-dashed border-[var(--color-ink-5)] bg-[var(--color-muted)] rounded-[14px] p-6 text-center hover:bg-[var(--color-ink-5)] transition-colors">
                         <input
                             type="file"
                             multiple
@@ -439,21 +440,19 @@ export const QuestionSeeding: React.FC = () => {
                             id="image-upload"
                         />
                         <label htmlFor="image-upload" className="cursor-pointer flex flex-col items-center gap-2">
-                            <div className="flex items-center gap-2 mb-2">
-                                <span className="text-2xl">🖼️</span>
-                                <span className="font-bold text-blue-700">
-                                    {diagramFiles.length > 0 ? `${diagramFiles.length} Images Selected` : 'Select Images'}
-                                </span>
-                            </div>
-                            {diagramFiles.length === 0 && <span className="text-sm text-blue-600">Click to browse multiple files</span>}
+                            <Upload className="w-6 h-6 text-[var(--color-ink-3)] mb-1" />
+                            <span className="font-semibold text-[14px] tracking-tight text-[var(--color-ink-1)]">
+                                {diagramFiles.length > 0 ? `${diagramFiles.length} images selected` : 'Select images'}
+                            </span>
+                            {diagramFiles.length === 0 && <span className="text-[12px] text-[var(--color-ink-3)]">Click to browse multiple files</span>}
                         </label>
                         {diagramFiles.length > 0 && (
                             <div className="mt-4 flex flex-wrap gap-2 justify-center">
                                 {diagramFiles.slice(0, 5).map((f, i) => (
-                                    <span key={i} className="text-xs bg-white border px-2 py-1 rounded shadow-sm">{f.name}</span>
+                                    <span key={i} className="text-[11px] bg-[var(--color-card)] ring-hairline px-2 py-1 rounded-[6px] text-[var(--color-ink-2)] num-tabular">{f.name}</span>
                                 ))}
-                                {diagramFiles.length > 5 && <span className="text-xs text-muted-foreground">+{diagramFiles.length - 5} more</span>}
-                                <Button size="sm" variant="outline" onClick={clearImages} className="ml-2 h-6 text-xs text-red-500">Clear All</Button>
+                                {diagramFiles.length > 5 && <span className="text-[11px] text-[var(--color-ink-3)]">+{diagramFiles.length - 5} more</span>}
+                                <Button size="sm" variant="outline" onClick={clearImages} className="ml-2 h-6 text-[11px] text-[var(--color-destructive)]">Clear all</Button>
                             </div>
                         )}
                     </div>
@@ -477,59 +476,65 @@ export const QuestionSeeding: React.FC = () => {
                         </Button>
                     </div>
 
-                    <div className="border rounded-lg overflow-hidden bg-white dark:bg-slate-950 shadow-sm">
+                    <div className="rounded-[18px] overflow-hidden bg-card ring-hairline">
                         <div className="max-h-[500px] overflow-auto">
-                            <table className="w-full text-sm text-left">
-                                <thead className="text-xs uppercase bg-muted/50 sticky top-0 backdrop-blur-sm">
+                            <table className="w-full text-[13px] text-left">
+                                <thead className="bg-[var(--color-muted)] sticky top-0">
                                     <tr>
-                                        <th className="px-4 py-3">Status</th>
-                                        <th className="px-4 py-3">Image</th>
-                                        <th className="px-4 py-3">Question</th>
-                                        <th className="px-4 py-3">Correct</th>
-                                        <th className="px-4 py-3">Difficulty</th>
-                                        <th className="px-4 py-3">Issues</th>
+                                        <th className="px-4 py-3 label-uppercase">Status</th>
+                                        <th className="px-4 py-3 label-uppercase">Image</th>
+                                        <th className="px-4 py-3 label-uppercase">Question</th>
+                                        <th className="px-4 py-3 label-uppercase">Correct</th>
+                                        <th className="px-4 py-3 label-uppercase">Difficulty</th>
+                                        <th className="px-4 py-3 label-uppercase">Issues</th>
                                     </tr>
                                 </thead>
-                                <tbody className="divide-y divide-border">
+                                <tbody className="divide-y divide-[var(--color-ink-5)]">
                                     {parsedRows.map((row) => (
-                                        <tr key={row.id} className={row.isValid ? 'hover:bg-muted/30' : 'bg-red-50 hover:bg-red-100 dark:bg-red-900/10'}>
+                                        <tr key={row.id} className={row.isValid ? 'hover:bg-[var(--color-muted)] transition-colors' : 'bg-[#fde7e5] hover:bg-[#fbd0cd] transition-colors'}>
                                             <td className="px-4 py-3">
                                                 {row.isValid
-                                                    ? <CheckCircle className="w-5 h-5 text-emerald-500" />
-                                                    : <AlertCircle className="w-5 h-5 text-red-500" />
+                                                    ? <CheckCircle className="w-4 h-4 text-[var(--color-primary)]" />
+                                                    : <AlertCircle className="w-4 h-4 text-[var(--color-destructive)]" />
                                                 }
                                             </td>
                                             <td className="px-4 py-3">
                                                 {row.diagramFileName ? (
                                                     row.diagramFile ? (
-                                                        <span className="text-xs flex items-center gap-1 text-emerald-600 font-medium">
+                                                        <span className="text-[11px] flex items-center gap-1 text-[#3d7a0f] font-medium">
                                                             <CheckCircle className="w-3 h-3" /> Found
                                                         </span>
                                                     ) : (
-                                                        <span className="text-xs flex items-center gap-1 text-orange-600 font-medium" title={`Expected: ${row.diagramFileName}`}>
+                                                        <span className="text-[11px] flex items-center gap-1 text-[var(--color-accent-warm-foreground)] font-medium" title={`Expected: ${row.diagramFileName}`}>
                                                             <AlertCircle className="w-3 h-3" /> Missing
                                                         </span>
                                                     )
-                                                ) : <span className="text-xs text-muted-foreground">-</span>}
+                                                ) : <span className="text-[11px] text-[var(--color-ink-3)]">-</span>}
                                             </td>
-                                            <td className="px-4 py-3 max-w-md truncate" title={row.questionText}>
-                                                {row.questionText || <span className="text-muted-foreground italic">(Empty)</span>}
+                                            <td className="px-4 py-3 max-w-md truncate text-[var(--color-ink-1)]" title={row.questionText}>
+                                                {row.questionText || <span className="text-[var(--color-ink-3)] italic">(Empty)</span>}
                                             </td>
-                                            <td className="px-4 py-3 font-mono">
+                                            <td className="px-4 py-3 font-mono num-tabular text-[var(--color-ink-1)]">
                                                 {row.correctOptionIndex !== -1 ? String.fromCharCode(65 + row.correctOptionIndex) : '-'}
                                             </td>
                                             <td className="px-4 py-3">
-                                                <span className={`px-2 py-1 rounded text-xs font-medium ${row.difficulty === 'Easy' ? 'bg-green-100 text-green-800' :
-                                                    row.difficulty === 'Medium' ? 'bg-yellow-100 text-yellow-800' :
-                                                        'bg-red-100 text-red-800'
-                                                    }`}>
+                                                <span className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-[6px] text-[11px] font-semibold tracking-tight bg-[var(--color-muted)] ${
+                                                    row.difficulty === 'Easy' ? 'text-[#3d7a0f]' :
+                                                    row.difficulty === 'Medium' ? 'text-[var(--color-accent-warm-foreground)]' :
+                                                    'text-[var(--color-destructive)]'
+                                                }`}>
+                                                    <span aria-hidden className={`h-1.5 w-1.5 rounded-full ${
+                                                        row.difficulty === 'Easy' ? 'bg-[var(--color-primary)]' :
+                                                        row.difficulty === 'Medium' ? 'bg-[var(--color-accent-warm)]' :
+                                                        'bg-[var(--color-destructive)]'
+                                                    }`} />
                                                     {row.difficulty}
                                                 </span>
                                             </td>
-                                            <td className="px-4 py-3 text-red-600 font-medium text-xs">
+                                            <td className="px-4 py-3 text-[var(--color-destructive)] font-medium text-[11px]">
                                                 {row.errors.join(', ')}
                                                 {row.diagramFileName && !row.diagramFile && (
-                                                    <span className="block text-orange-600">Image file missing</span>
+                                                    <span className="block text-[var(--color-accent-warm-foreground)]">Image file missing</span>
                                                 )}
                                             </td>
                                         </tr>

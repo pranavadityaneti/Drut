@@ -165,21 +165,25 @@ export const StagingManager: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <Card>
                     <CardContent className="pt-6">
-                        <div className="text-2xl font-bold">{stats.pending}</div>
-                        <p className="text-xs text-muted-foreground">Pending AI Review</p>
+                        <p className="label-uppercase">Pending</p>
+                        <div className="text-[28px] leading-none font-bold tracking-tight num-tabular text-[var(--color-ink-1)] mt-1.5">{stats.pending}</div>
+                        <p className="text-[11px] text-[var(--color-ink-3)] mt-2">Awaiting AI review</p>
                     </CardContent>
                 </Card>
                 <Card>
                     <CardContent className="pt-6">
-                        <div className="text-2xl font-bold text-green-600">{stats.ready}</div>
-                        <p className="text-xs text-muted-foreground">Ready to Publish</p>
+                        <p className="label-uppercase">Ready</p>
+                        <div className="text-[28px] leading-none font-bold tracking-tight num-tabular text-[#3d7a0f] mt-1.5">{stats.ready}</div>
+                        <p className="text-[11px] text-[var(--color-ink-3)] mt-2">Ready to publish</p>
                     </CardContent>
                 </Card>
-                <Card>
+                <Card className="relative overflow-hidden">
                     <CardContent className="pt-6">
-                        <div className="text-2xl font-bold text-blue-600">{stats.published}</div>
-                        <p className="text-xs text-muted-foreground">Published Live</p>
+                        <p className="label-uppercase">Published</p>
+                        <div className="text-[28px] leading-none font-bold tracking-tight num-tabular text-[var(--color-accent-warm)] mt-1.5">{stats.published}</div>
+                        <p className="text-[11px] text-[var(--color-ink-3)] mt-2">Live in the app</p>
                     </CardContent>
+                    <span aria-hidden className="absolute left-5 right-5 bottom-0 h-[2px] rounded-full bg-[var(--color-accent-warm)]" />
                 </Card>
             </div>
 
@@ -221,21 +225,21 @@ export const StagingManager: React.FC = () => {
                         <div
                             {...getRootProps()}
                             className={`
-                                p-12 text-center cursor-pointer rounded-lg transition-colors
-                                ${isDragActive ? 'bg-emerald-50 border-emerald-500' : 'bg-muted/50 hover:bg-muted'}
+                                p-12 text-center cursor-pointer rounded-[14px] transition-colors
+                                ${isDragActive ? 'bg-[var(--color-accent)] ring-hairline-strong' : 'bg-[var(--color-muted)] hover:bg-[var(--color-ink-5)]'}
                             `}
                         >
                             <input {...getInputProps()} />
                             {isUploading ? (
                                 <div className="flex flex-col items-center">
-                                    <Loader2 className="h-8 w-8 animate-spin text-emerald-600 mb-2" />
-                                    <p>Processing CSV...</p>
+                                    <Loader2 className="h-8 w-8 animate-spin text-[var(--color-primary)] mb-2" />
+                                    <p className="text-[13px] text-[var(--color-ink-2)]">Processing CSV…</p>
                                 </div>
                             ) : (
                                 <>
-                                    <Upload className="h-10 w-10 mx-auto text-gray-400 mb-4" />
-                                    <p className="font-medium">Drag & drop CSV here</p>
-                                    <p className="text-sm text-muted-foreground mt-2">
+                                    <Upload className="h-8 w-8 mx-auto text-[var(--color-ink-3)] mb-3" />
+                                    <p className="text-[14px] font-semibold tracking-tight text-[var(--color-ink-1)]">Drag &amp; drop CSV here</p>
+                                    <p className="text-[12px] text-[var(--color-ink-3)] mt-2">
                                         Columns: question_text, topic, subtopic (optional: options, correct_option)
                                     </p>
                                 </>
@@ -247,14 +251,14 @@ export const StagingManager: React.FC = () => {
 
             {view === 'list' && (
                 <Card>
-                    <div className="rounded-md border">
-                        <table className="min-w-full divide-y divide-border text-sm">
-                            <thead className="bg-muted/50">
+                    <div className="rounded-[18px] overflow-hidden">
+                        <table className="min-w-full divide-y divide-[var(--color-ink-5)] text-[13px]">
+                            <thead className="bg-[var(--color-muted)]">
                                 <tr>
-                                    <th className="px-4 py-3 text-left font-medium">Topic</th>
-                                    <th className="px-4 py-3 text-left font-medium w-1/3">Question</th>
-                                    <th className="px-4 py-3 text-left font-medium">Status</th>
-                                    <th className="px-4 py-3 text-right font-medium">Actions</th>
+                                    <th className="px-4 py-3 text-left label-uppercase">Topic</th>
+                                    <th className="px-4 py-3 text-left label-uppercase w-1/3">Question</th>
+                                    <th className="px-4 py-3 text-left label-uppercase">Status</th>
+                                    <th className="px-4 py-3 text-right label-uppercase">Actions</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-border">
@@ -264,43 +268,49 @@ export const StagingManager: React.FC = () => {
                                     <tr><td colSpan={4} className="p-8 text-center text-muted-foreground">No questions in staging.</td></tr>
                                 ) : (
                                     questions.map((q) => (
-                                        <tr key={q.id} className="hover:bg-muted/30">
+                                        <tr key={q.id} className="hover:bg-[var(--color-muted)] transition-colors">
                                             <td className="px-4 py-3 align-top">
-                                                <div className="font-medium">{q.topic}</div>
-                                                <div className="text-xs text-muted-foreground">{q.subtopic}</div>
+                                                <div className="font-semibold text-[13px] tracking-tight text-[var(--color-ink-1)]">{q.topic}</div>
+                                                <div className="text-[11px] text-[var(--color-ink-3)] mt-0.5">{q.subtopic}</div>
                                             </td>
                                             <td className="px-4 py-3 align-top">
-                                                <div className="line-clamp-2">{q.source_text}</div>
+                                                <div className="line-clamp-2 text-[13px] text-[var(--color-ink-1)]">{q.source_text}</div>
                                                 {q.enriched_data && (
-                                                    <span className="text-xs text-green-600 flex items-center gap-1 mt-1">
-                                                        <CheckCircle className="h-3 w-3" /> AI Solved
+                                                    <span className="text-[11px] text-[#3d7a0f] flex items-center gap-1 mt-1.5 font-medium">
+                                                        <CheckCircle className="h-3 w-3" /> AI solved
                                                     </span>
                                                 )}
                                             </td>
                                             <td className="px-4 py-3 align-top">
                                                 <span className={`
-                                                    inline-flex items-center px-2 py-1 rounded-full text-xs font-medium
-                                                    ${q.status === 'ready' ? 'bg-green-100 text-green-700' :
-                                                        q.status === 'published' ? 'bg-blue-100 text-blue-700' :
-                                                            q.status === 'error' ? 'bg-red-100 text-red-700' :
-                                                                'bg-yellow-100 text-yellow-700'}
+                                                    inline-flex items-center gap-1.5 px-2 py-0.5 rounded-[6px] text-[11px] font-semibold tracking-tight bg-[var(--color-muted)]
+                                                    ${q.status === 'ready' ? 'text-[#3d7a0f]' :
+                                                        q.status === 'published' ? 'text-[var(--color-accent-warm-foreground)]' :
+                                                            q.status === 'error' ? 'text-[var(--color-destructive)]' :
+                                                                'text-[var(--color-ink-2)]'}
                                                 `}>
+                                                    <span aria-hidden className={`h-1.5 w-1.5 rounded-full ${
+                                                        q.status === 'ready' ? 'bg-[var(--color-primary)]' :
+                                                        q.status === 'published' ? 'bg-[var(--color-accent-warm)]' :
+                                                        q.status === 'error' ? 'bg-[var(--color-destructive)]' :
+                                                        'bg-[var(--color-ink-3)]'
+                                                    }`} />
                                                     {q.status}
                                                 </span>
                                                 {q.status === 'error' && (
-                                                    <div className="text-xs text-red-500 mt-1 max-w-[150px] truncate" title={q.error_message}>
+                                                    <div className="text-[11px] text-[var(--color-destructive)] mt-1 max-w-[150px] truncate" title={q.error_message}>
                                                         {q.error_message}
                                                     </div>
                                                 )}
                                             </td>
                                             <td className="px-4 py-3 align-top text-right space-x-2">
                                                 {q.status === 'ready' && (
-                                                    <Button size="sm" onClick={() => handlePublish(q.id, q)}>
+                                                    <Button size="sm" variant="ink" onClick={() => handlePublish(q.id, q)}>
                                                         Publish
                                                     </Button>
                                                 )}
                                                 {q.status === 'published' && (
-                                                    <span className="text-xs text-muted-foreground">Live</span>
+                                                    <span className="label-uppercase">Live</span>
                                                 )}
                                             </td>
                                         </tr>
