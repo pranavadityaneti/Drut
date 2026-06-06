@@ -48,7 +48,7 @@ export const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) =
       {children}
       {isOpen && modalContent && (
          <div 
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm animate-in fade-in-0"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-[rgba(11,11,13,0.45)] backdrop-blur-sm animate-in fade-in-0"
             aria-labelledby="modal-title"
             role="dialog"
             aria-modal="true"
