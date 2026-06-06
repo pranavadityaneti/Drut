@@ -4,8 +4,7 @@ import { supabase } from '@drut/shared';
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from './ui/DropdownMenu';
 import { User } from '@drut/shared';
 import { MobileNav } from './MobileNav';
-
-
+import { ChevronDown, User as UserIcon, LogOut } from 'lucide-react';
 
 interface HeaderProps {
   currentPage: string;
@@ -42,58 +41,52 @@ export const Header: React.FC<HeaderProps> = ({
         onLogout={onLogout}
       />
 
-      <header className="sticky top-0 z-30 flex h-20 items-center bg-background/80 backdrop-blur-md px-4 lg:px-8 transition-all duration-200">
+      <header className="sticky top-0 z-30 flex h-16 items-center bg-[var(--color-background)] px-4 lg:px-8">
         <div className="flex w-full items-center justify-between">
 
-          {/* Left: Brand logo on mobile, empty space on desktop */}
+          {/* Left: brand on mobile, empty on desktop */}
           <div className="flex items-center gap-4 flex-1">
             <SidebarTrigger />
-            {/* Mobile: Show brand logo */}
             <div className="lg:hidden">
               <img src="/brand-logo.png" alt="Drut" className="h-7" />
             </div>
           </div>
 
-          {/* Right: User Profile with Dropdown - hidden on mobile */}
-          <div className="hidden lg:flex items-center gap-6">
-
-
+          {/* Right: profile dropdown (desktop only) */}
+          <div className="hidden lg:flex items-center gap-4">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <button className="flex items-center gap-3 pl-6 border-l border-gray-200 hover:opacity-80 transition-opacity">
+                <button className="flex items-center gap-2.5 px-2 py-1.5 rounded-[10px] hover:bg-[var(--color-muted)] transition-colors">
                   <img
                     src={avatarUrl}
                     alt="Profile"
-                    className="h-10 w-10 rounded-full border-2 border-white shadow-sm bg-gray-100"
+                    className="h-8 w-8 rounded-full bg-[var(--color-muted)]"
                   />
                   <div className="text-left">
-                    <p className="text-sm font-bold text-foreground leading-none">{userName}</p>
-                    <p className="text-xs text-gray-400 mt-1 leading-none">{user?.email || 'Loading...'}</p>
+                    <p className="text-[13px] font-semibold text-[var(--color-ink-1)] leading-tight tracking-tight">{userName}</p>
+                    <p className="text-[11px] text-[var(--color-ink-3)] leading-tight num-tabular">{user?.email || 'Loading...'}</p>
                   </div>
-                  <svg className="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
+                  <ChevronDown className="w-4 h-4 text-[var(--color-ink-3)]" />
                 </button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-48 rounded-2xl shadow-soft border-none p-2 bg-white">
+              <DropdownMenuContent
+                align="end"
+                className="w-52 rounded-[14px] p-1.5 bg-[var(--color-card)] ring-hairline border-none shadow-soft"
+              >
                 <DropdownMenuItem
                   onClick={() => setCurrentPage('profile')}
-                  className="rounded-xl cursor-pointer hover:bg-gray-100 p-3 transition-colors flex items-center gap-3"
+                  className="rounded-[10px] cursor-pointer hover:bg-[var(--color-muted)] p-2.5 transition-colors flex items-center gap-3"
                 >
-                  <svg className="w-5 h-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                  </svg>
-                  <span className="font-medium text-gray-700">My Profile</span>
+                  <UserIcon className="w-4 h-4 text-[var(--color-ink-3)]" />
+                  <span className="text-[13px] font-medium text-[var(--color-ink-1)]">My Profile</span>
                 </DropdownMenuItem>
-                <div className="h-px bg-gray-100 my-1" />
+                <div className="h-px bg-[var(--color-ink-5)] my-1" />
                 <DropdownMenuItem
                   onClick={onLogout}
-                  className="rounded-xl cursor-pointer text-red-500 hover:bg-red-50 p-3 transition-colors flex items-center gap-3"
+                  className="rounded-[10px] cursor-pointer text-[var(--color-destructive)] hover:bg-[#fde7e5]/60 p-2.5 transition-colors flex items-center gap-3"
                 >
-                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                  </svg>
-                  <span className="font-medium">Sign out</span>
+                  <LogOut className="w-4 h-4" />
+                  <span className="text-[13px] font-medium">Sign out</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
