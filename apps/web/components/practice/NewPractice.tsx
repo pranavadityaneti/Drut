@@ -231,7 +231,7 @@ export const NewPractice: React.FC = () => {
 
                 if (err.message?.includes('QUOTA_EXCEEDED') || err.message?.includes('429')) {
                     setError(
-                        '⚠️ API quota limit reached. Showing questions from cache. New questions will be available soon.'
+                        'API quota limit reached. Showing questions from cache. New questions will be available soon.'
                     );
                 }
             } finally {
@@ -390,7 +390,7 @@ export const NewPractice: React.FC = () => {
 
                 if (err.message?.includes('QUOTA_EXCEEDED') || err.message?.includes('429')) {
                     setError(
-                        "⚠️ API quota limit reached. We're showing you questions from cache. New questions will be available soon."
+                        "API quota limit reached. We're showing you questions from cache. New questions will be available soon."
                     );
                 } else {
                     setError(err.message || 'An unknown error occurred.');
@@ -494,9 +494,8 @@ export const NewPractice: React.FC = () => {
         questionCacheRef.current = {};
 
         // Show toast notification
-        const difficultyEmoji = { Easy: '🌱', Medium: '⚡', Hard: '🔥' };
         addToast(
-            `${difficultyEmoji[newDifficulty]} Difficulty set to ${newDifficulty}`,
+            `Difficulty set to ${newDifficulty}`,
             'info',
             2500
         );
@@ -698,44 +697,38 @@ export const NewPractice: React.FC = () => {
     }
 
     if (!examProfile || !topic) {
-        return <div className="flex justify-center p-10"><span className="loading loading-spinner"></span> Loading session...</div>;
+        return (
+            <div className="flex items-center justify-center gap-3 p-10 text-[var(--color-ink-3)] text-[14px]">
+                <span className="inline-block h-4 w-4 rounded-full border-2 border-[var(--color-ink-5)] border-t-[var(--color-ink-1)] animate-spin" />
+                Loading session…
+            </div>
+        );
     }
 
     const WorkspaceArea = () => {
         if (isLoading) {
             return (
-                <div className="flex flex-col items-center justify-center text-center p-12 bg-card border rounded-xl h-full min-h-[300px]">
-                    <svg
-                        className="animate-spin h-10 w-10 text-emerald-600 mb-4"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                    >
-                        <circle
-                            className="opacity-25"
-                            cx="12"
-                            cy="12"
-                            r="10"
-                            stroke="currentColor"
-                            strokeWidth="4"
-                        ></circle>
-                        <path
-                            className="opacity-75"
-                            fill="currentColor"
-                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                        ></path>
-                    </svg>
-                    <p className="font-semibold">Generating Question...</p>
-                    <p className="text-sm text-muted-foreground">This may take a few seconds.</p>
+                <div className="flex flex-col items-center justify-center text-center p-12 bg-card ring-hairline rounded-[1.25rem] h-full min-h-[300px]">
+                    <span
+                        className="inline-block h-10 w-10 mb-4 rounded-full border-[3px] border-[var(--color-ink-5)] border-t-[var(--color-primary-deep)] animate-spin"
+                        aria-hidden
+                    />
+                    <p className="label-uppercase">Generating</p>
+                    <p className="text-[16px] font-semibold tracking-tight text-[var(--color-ink-1)] mt-1">Question incoming</p>
+                    <p className="text-[12px] text-[var(--color-ink-3)] mt-2">This may take a few seconds.</p>
                 </div>
             );
         }
 
         if (error) {
             return (
-                <div className="p-6 bg-red-50 border border-red-200 text-red-800 rounded-lg text-center">
-                    <h4 className="font-bold text-lg mb-2">Generation Failed</h4>
-                    <p>{error}</p>
+                <div className="relative p-6 bg-[var(--color-muted)] ring-hairline-strong rounded-[14px] overflow-hidden">
+                    <span
+                        aria-hidden
+                        className="absolute left-0 top-4 bottom-4 w-[3px] rounded-r-full bg-[var(--color-destructive)]"
+                    />
+                    <p className="label-uppercase text-[var(--color-destructive)]">Generation failed</p>
+                    <p className="text-[14px] text-[var(--color-ink-1)] mt-1.5 leading-relaxed">{error}</p>
                 </div>
             );
         }
@@ -825,9 +818,10 @@ export const NewPractice: React.FC = () => {
                         <div className="flex justify-end">
                             <button
                                 onClick={handleNextAfterFeedback}
-                                className="px-6 py-3 bg-emerald-500 text-white rounded-lg font-medium hover:bg-emerald-600 transition-colors"
+                                className="px-5 h-10 inline-flex items-center justify-center gap-2 bg-[var(--color-primary-deep)] text-white rounded-[8px] text-[14px] font-semibold tracking-tight hover:opacity-90 transition-opacity"
                             >
-                                Continue Practice →
+                                Continue practice
+                                <span aria-hidden>→</span>
                             </button>
                         </div>
                     </>
@@ -838,9 +832,10 @@ export const NewPractice: React.FC = () => {
                     <div className="flex justify-end pt-4">
                         <button
                             onClick={() => setPracticeState('reinforce')}
-                            className="px-6 py-3 bg-emerald-500 text-white rounded-lg font-medium hover:bg-emerald-600 transition-colors"
+                            className="px-5 h-10 inline-flex items-center justify-center gap-2 bg-[var(--color-primary-deep)] text-white rounded-[8px] text-[14px] font-semibold tracking-tight hover:opacity-90 transition-opacity"
                         >
-                            Continue →
+                            Continue
+                            <span aria-hidden>→</span>
                         </button>
                     </div>
                 )}
@@ -864,11 +859,11 @@ export const NewPractice: React.FC = () => {
     return (
         <div className="space-y-6">
             {/* Top Navigation Bar - Always flex-row, wraps on small screens */}
-            <div className="flex flex-wrap justify-between items-center gap-x-8 gap-y-3 pb-4 border-b">
+            <div className="flex flex-wrap justify-between items-center gap-x-8 gap-y-3 pb-4 border-b border-[var(--color-ink-5)]">
                 {/* Left: Topic & Subtopic */}
                 <div className="flex items-center gap-4">
                     <div className="flex items-center gap-2">
-                        <span className="text-sm font-medium text-muted-foreground">
+                        <span className="text-[12px] font-medium text-[var(--color-ink-3)]">
                             Topic:
                         </span>
                         <Select
@@ -918,11 +913,11 @@ export const NewPractice: React.FC = () => {
 
                 {/* Right: Question Number & Difficulty */}
                 <div className="flex items-center gap-4">
-                    <span className="text-sm text-muted-foreground font-medium">
+                    <span className="text-[13px] font-semibold text-[var(--color-ink-2)] num-tabular">
                         Question {currentQuestionIndex + 1}
                     </span>
                     <div className="flex items-center gap-2">
-                        <span className="text-sm font-medium text-muted-foreground">
+                        <span className="text-[12px] font-medium text-[var(--color-ink-3)]">
                             Difficulty:
                         </span>
                         <Select
