@@ -45,9 +45,14 @@ export const SolutionView: React.FC<SolutionViewProps> = ({ question }) => {
   const correctOptionText = question.options?.[correctOptionIndex]?.text || "Option " + String.fromCharCode(65 + correctOptionIndex);
   const correctOptionLetter = String.fromCharCode(65 + correctOptionIndex);
 
-  // Fallback to legacy structure if new one is missing
-  const optimalPath = question.optimal_path || (question as any).fastestSafeMethod;
-  const fullSolution = question.full_solution || (question as any).fullStepByStep;
+  // Fallback chain (canonical → intermediate → oldest legacy):
+  //   theOptimalPath is the canonical name on QuestionData today
+  //   optimal_path was an intermediate name that was renamed
+  //   fastestSafeMethod was the oldest pre-FSM-rename name
+  // Same pattern for fullStepByStep (canonical) ← full_solution (intermediate).
+  // Cached questions in old shapes still load gracefully via the casts.
+  const optimalPath = question.theOptimalPath || (question as any).optimal_path || (question as any).fastestSafeMethod;
+  const fullSolution = question.fullStepByStep || (question as any).full_solution;
 
   // Check if this is purely legacy data (no TAR/DEEP structure)
   const isLegacy = !optimalPath && !fullSolution;
@@ -66,7 +71,7 @@ export const SolutionView: React.FC<SolutionViewProps> = ({ question }) => {
             <CheckCircleIcon /> Correct Answer: ({correctOptionLetter}) {correctOptionText}
           </div>
           <div className="p-4 bg-slate-50 rounded-lg text-slate-700 leading-relaxed">
-            <MarkdownRenderer content={question.solution || "Step-by-step solution available below."} />
+            <MarkdownRenderer content={(question as any).solution || "Step-by-step solution available below."} />
           </div>
         </CardContent>
       </Card>
