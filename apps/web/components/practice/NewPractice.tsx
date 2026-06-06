@@ -74,6 +74,11 @@ export const NewPractice: React.FC = () => {
         classLevel?: string;
         board?: string;
         subject?: string;
+        // Matches the `language?` parameter on getQuestionsForUser in
+        // packages/shared/src/services/questionCacheService.ts. The runtime
+        // code already reads setupConfig.language (line ~326); this field
+        // closes the type gap.
+        language?: 'English' | 'Telugu' | 'Hindi';
     } | null>(null);
 
     // Mastery Loop state
