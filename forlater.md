@@ -38,8 +38,15 @@
     - Why deferred: Pranav called for separate dedicated session
     - Originated: SolutionView rebuild session, 2026-06-06
 
-42. **NewPractice editorial styling joint pass** *(deferred from PR #8, 2026-06-06)*
-    - What: Phase-11 commit `f532fbb` wanted to rewrite NewPractice.tsx (1850-line restyle) but conflicted with PR #4's `language?: 'English' | 'Telugu' | 'Hindi'` setupConfig type addition. PR #8 kept main's version; the editorial styling never landed for this file.
+42. **NewPractice editorial styling joint pass** *(deferred from PR #8, 2026-06-06; closed by PR #15 2026-06-07)* — ~~deferred~~ DONE
+    - PR #15 applied a targeted editorial pass on NewPractice's orchestrator surfaces (loading state, error card, top nav, continue buttons, emoji removal) while preserving PR #4's `language?` setupConfig field.
+
+45. **UI redesign — make it engaging, not dull** *(added 2026-06-07)*
+    - What: The current editorial system shipped via PRs #1–#15 on 2026-06-06 feels dull and not engaging when used in practice. Hairline cards + warm paper + monochrome ink ramp + coral accent produced a calm magazine aesthetic that doesn't match the energy a competitive-exam practice app needs to sustain student attention.
+    - Pranav's words: "It's dull and sad. We'll rework when I am bored of building the main architecture."
+    - When: After the main architecture is solid — RAG-grounded question sourcing works end-to-end, seeded questions surface correctly, intervention shows both Quick Method and Full Solution methods, fallback paths are visible not silent. Do NOT restart UI work until the core practice loop is reliable.
+    - Scope: full visual revisit, not a tweak. Likely means trading the editorial system for something with more visual energy — stronger color contrast, more hierarchy, considered motion that pulls attention, possibly imagery / illustration / icon systems beyond lucide line icons.
+    - Originated: Practice flow testing, 2026-06-07
     - Scope: re-apply editorial styling (hairline cards, ink ramp, lime accents, no emojis) section by section while preserving PR #4 type fix and any other type-correct refinements
     - Approach: hand-merge in dedicated session — review phase-11's intended changes (visible in `ui/editorial-redesign` reference branch), apply only the styling deltas
     - Originated: PR #8 editorial revamp, 2026-06-06
