@@ -1,25 +1,41 @@
 /**
- * SpeedPulse Component
- * 
- * Hero component with semi-circle gauge showing Speed Rating (0-100)
- * Modern design with CardMenu and larger numbers
+ * SpeedPulse — editorial refresh.
+ *
+ * Semi-circle gauge restyled: ink-5 background arc, lime fill arc with
+ * dashed-stroke ticks, radial tick marks. Center numeral is display-h1
+ * tabular. Rating badge below uses the new neutral-fill + colored-dot
+ * pattern. On hover the gauge arc "draws in" via stroke-dashoffset.
  */
 
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/Card';
 import { CardMenu } from '../ui/CardMenu';
 import { cn } from '@drut/shared';
-import { Zap, TrendingUp } from 'lucide-react';
+import { Zap } from 'lucide-react';
 
 interface SpeedPulseProps {
-    score: number; // 0-100
+    score: number;
     rating: 'Rookie' | 'Learner' | 'Pro' | 'Elite';
-    trend?: number; // +/- percentage
+    trend?: number;
     verifiedCount: number;
     totalCount: number;
     className?: string;
     onRefresh?: () => void;
 }
+
+const ratingDot: Record<SpeedPulseProps['rating'], string> = {
+    Rookie: 'bg-[var(--color-ink-3)]',
+    Learner: 'bg-[var(--color-primary)]',
+    Pro: 'bg-[var(--color-primary)]',
+    Elite: 'bg-[var(--color-accent-warm)]',
+};
+
+const trendCopy = (score: number) => {
+    if (score < 30) return 'Every pattern mastered is a step forward.';
+    if (score < 60) return "You're building momentum.";
+    if (score < 85) return 'Approaching mastery.';
+    return 'Elite. You set the bar now.';
+};
 
 export const SpeedPulse: React.FC<SpeedPulseProps> = ({
     score,
@@ -30,35 +46,29 @@ export const SpeedPulse: React.FC<SpeedPulseProps> = ({
     className,
     onRefresh,
 }) => {
-    // Rating colors (Brand-based)
-    const ratingConfig: Record<string, { color: string; bg: string; style?: React.CSSProperties }> = {
-        Rookie: { color: 'text-muted-foreground', bg: 'bg-muted' },
-        Learner: { color: 'text-blue-600', bg: 'bg-blue-100' },
-        Pro: { color: '', bg: '', style: { color: '#5cbb21', backgroundColor: '#f6fbe8' } },
-        Elite: { color: 'text-amber-600', bg: 'bg-amber-100' },
-    };
-
-    const config = ratingConfig[rating];
+    // Semi-circle arc length ≈ π * r (r = 80) ≈ 251.2
+    const arcLength = 251.2;
+    const progressLength = (score / 100) * arcLength;
 
     return (
-        <Card className={className}>
+        <Card className={cn("group", className)}>
             <CardHeader className="pb-2">
                 <div className="flex items-center justify-between">
-                    <CardTitle className="flex items-center gap-2 text-base">
-                        <Zap className="w-5 h-5" style={{ color: '#5cbb21' }} />
-                        Speed Pulse
+                    <CardTitle className="flex items-center gap-2 text-[14px] tracking-tight">
+                        <Zap className="w-4 h-4 text-[var(--color-primary)]" />
+                        Speed pulse
                     </CardTitle>
                     <CardMenu
                         onRefresh={onRefresh}
                         infoTitle="About Speed Pulse"
                         infoContent={
                             <>
-                                <p className="mb-2">Your Speed Score measures how well you're mastering patterns quickly and accurately.</p>
+                                <p className="mb-2">Speed Pulse measures how well you're mastering patterns quickly and accurately.</p>
                                 <ul className="list-disc list-inside space-y-1">
-                                    <li><strong>0-30:</strong> Rookie - Just getting started</li>
-                                    <li><strong>31-60:</strong> Learner - Building momentum</li>
-                                    <li><strong>61-85:</strong> Pro - Strong progress</li>
-                                    <li><strong>86-100:</strong> Elite - Master level</li>
+                                    <li><strong>0–30:</strong> Rookie — just starting</li>
+                                    <li><strong>31–60:</strong> Learner — building momentum</li>
+                                    <li><strong>61–85:</strong> Pro — strong progress</li>
+                                    <li><strong>86–100:</strong> Elite — master level</li>
                                 </ul>
                             </>
                         }
@@ -68,94 +78,98 @@ export const SpeedPulse: React.FC<SpeedPulseProps> = ({
 
             <CardContent>
                 <div className="flex flex-col items-center">
-                    {/* Semi-circle Gauge */}
-                    <div className="relative w-48 h-24 mb-4">
+                    {/* Semi-circle gauge */}
+                    <div className="relative w-56 h-28 mb-3">
                         <svg viewBox="0 0 200 100" className="w-full h-full">
                             {/* Background arc */}
                             <path
                                 d="M 20 95 A 80 80 0 0 1 180 95"
                                 fill="none"
-                                stroke="#e5e7eb"
-                                strokeWidth="12"
+                                stroke="var(--color-ink-5)"
+                                strokeWidth="10"
                                 strokeLinecap="round"
                             />
 
-                            {/* Progress arc - Drut Green */}
+                            {/* Progress arc — draws in on hover */}
                             <path
                                 d="M 20 95 A 80 80 0 0 1 180 95"
                                 fill="none"
-                                stroke="#5cbb21"
-                                strokeWidth="12"
+                                stroke="var(--color-primary)"
+                                strokeWidth="10"
                                 strokeLinecap="round"
-                                strokeDasharray={`${(score / 100) * 251.2} 251.2`}
-                                className="transition-all duration-1000"
+                                strokeDasharray={`${progressLength} ${arcLength}`}
+                                style={{
+                                    strokeDashoffset: progressLength,
+                                    transition: 'stroke-dashoffset 800ms ease-out',
+                                }}
+                                className="group-hover:[stroke-dashoffset:0]"
                             />
+
+                            {/* Radial tick marks at 0, 25, 50, 75, 100 */}
+                            {[0, 25, 50, 75, 100].map((tick) => {
+                                const angle = Math.PI * (1 - tick / 100);
+                                const x1 = 100 + 70 * Math.cos(angle);
+                                const y1 = 95 - 70 * Math.sin(angle);
+                                const x2 = 100 + 78 * Math.cos(angle);
+                                const y2 = 95 - 78 * Math.sin(angle);
+                                return (
+                                    <line
+                                        key={tick}
+                                        x1={x1} y1={y1} x2={x2} y2={y2}
+                                        stroke="var(--color-ink-4)"
+                                        strokeWidth="1"
+                                        strokeLinecap="round"
+                                    />
+                                );
+                            })}
                         </svg>
 
                         {/* Center score */}
                         <div className="absolute inset-0 flex flex-col items-center justify-end pb-1">
-                            <span className="text-5xl font-bold text-foreground">
+                            <span className="text-[44px] leading-none font-bold tracking-[-0.025em] num-tabular text-[var(--color-ink-1)]">
                                 {score}
                             </span>
                         </div>
                     </div>
 
-                    {/* Rating badge */}
-                    <span
-                        className={cn(
-                            "px-4 py-1.5 rounded-full text-sm font-medium mb-4",
-                            config.bg,
-                            config.color
-                        )}
-                        style={config.style}
-                    >
+                    {/* Rating badge — neutral fill, colored dot */}
+                    <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-[6px] text-[11px] font-semibold tracking-tight bg-[var(--color-muted)] text-[var(--color-ink-1)] mb-4">
+                        <span className={cn("h-1.5 w-1.5 rounded-full", ratingDot[rating])} aria-hidden />
                         {rating}
                     </span>
 
                     {/* Stats row */}
-                    <div className="flex items-center gap-6 text-sm">
+                    <div className="flex items-center gap-6 text-[12px]">
                         <div className="text-center">
-                            <div className="text-xl font-semibold text-foreground">{verifiedCount}</div>
-                            <div className="text-muted-foreground text-xs">Verified</div>
+                            <div className="text-[17px] font-semibold num-tabular text-[var(--color-ink-1)]">{verifiedCount}</div>
+                            <div className="label-uppercase mt-0.5">Verified</div>
                         </div>
-                        <div className="w-px h-8 bg-border" />
+                        <div className="w-px h-7 bg-[var(--color-ink-5)]" aria-hidden />
                         <div className="text-center">
-                            <div className="text-xl font-semibold text-foreground">{totalCount}</div>
-                            <div className="text-muted-foreground text-xs">Total Seen</div>
+                            <div className="text-[17px] font-semibold num-tabular text-[var(--color-ink-1)]">{totalCount}</div>
+                            <div className="label-uppercase mt-0.5">Seen</div>
                         </div>
                         {trend !== 0 && (
                             <>
-                                <div className="w-px h-8 bg-border" />
-                                <div className="flex items-center gap-1">
-                                    <TrendingUp className={cn(
-                                        "w-4 h-4",
-                                        trend > 0 ? "" : "text-red-500"
-                                    )} style={trend > 0 ? { color: '#5cbb21' } : undefined} />
-                                    <span
-                                        className={cn(
-                                            "font-medium",
-                                            trend > 0 ? "" : "text-red-500"
-                                        )}
-                                        style={trend > 0 ? { color: '#5cbb21' } : undefined}
-                                    >
+                                <div className="w-px h-7 bg-[var(--color-ink-5)]" aria-hidden />
+                                <div className="text-center">
+                                    <div className={cn(
+                                        "text-[17px] font-semibold num-tabular",
+                                        trend > 0 ? "text-[#3d7a0f]" : "text-[var(--color-destructive)]"
+                                    )}>
                                         {trend > 0 ? '+' : ''}{trend}%
-                                    </span>
+                                    </div>
+                                    <div className="label-uppercase mt-0.5">Trend</div>
                                 </div>
                             </>
                         )}
                     </div>
 
-                    {/* Motivational text */}
-                    <p className="mt-3 text-center text-muted-foreground text-xs">
+                    <p className="mt-3 text-center text-[12px] text-[var(--color-ink-3)] max-w-[28ch] leading-relaxed">
                         {totalCount === 0 ? (
-                            <span className="text-primary font-medium">Start Your Speed Journey</span>
+                            <span className="text-[var(--color-primary)] font-medium">Start your speed journey</span>
                         ) : (
-                            <>
-                                {score < 30 && "Keep practicing! Every pattern mastered is a step forward."}
-                                {score >= 30 && score < 60 && "Great progress! You're building momentum."}
-                                {score >= 60 && score < 85 && "Impressive! You're approaching mastery."}
-                                {score >= 85 && "Elite status! You're a speed demon!"}
-                            </>
+                            trendCopy(score)
                         )}
                     </p>
                 </div>

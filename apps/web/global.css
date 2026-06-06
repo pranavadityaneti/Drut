@@ -258,6 +258,50 @@ body {
     background-size: 18px 18px;
 }
 
+/* === Hover micro-motion keyframes === */
+
+/* Shimmer sweep — used on KPI progress bar over its filled region */
+@keyframes shimmer {
+    from { transform: translateX(0); opacity: 1; }
+    to   { transform: translateX(400%); opacity: 0; }
+}
+
+/* Subtle vertical drift for halftone ornaments / dot patterns on hover */
+@keyframes halftone-drift {
+    from { background-position: 0 0; }
+    to   { background-position: 0 6px; }
+}
+
+/* === StaminaCurve hover === */
+/* Recharts emits SVG with stable class names (.recharts-area-area,
+   .recharts-dot). We hook into those via the wrapper .stamina-curve class
+   so the chart matches the same hover-signature idiom as the other widgets:
+   - area fill brightens slightly
+   - data points scale up and shift to the coral accent
+   transform-box: fill-box pins each circle's transform-origin to its own
+   center, so scale grows from the dot rather than flying off the (0,0) axis. */
+.stamina-curve .recharts-area-area {
+    transition: fill-opacity 350ms ease-out;
+}
+.stamina-curve .recharts-dot {
+    transform-box: fill-box;
+    transform-origin: center;
+    transition: transform 300ms ease-out, fill 300ms ease;
+}
+.stamina-curve:hover .recharts-area-area {
+    fill-opacity: 1.4;
+}
+.stamina-curve:hover .recharts-dot {
+    transform: scale(1.4);
+    fill: var(--color-accent-warm) !important;
+}
+.stamina-curve .recharts-line-curve {
+    transition: stroke-width 300ms ease;
+}
+.stamina-curve:hover .recharts-line-curve {
+    stroke-width: 2.5;
+}
+
 /* === Dashed chart line (used as a stroke-dasharray helper in SVG via class) ===
    Recharts strokeDasharray is passed as a prop, but we expose a CSS var so any
    custom SVG can opt in via stroke-dasharray: var(--dash-editorial). */

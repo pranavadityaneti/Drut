@@ -163,52 +163,68 @@ export const Dashboard: React.FC = () => {
         />
       </div>
 
-      {/* 
+      {/*
         ROW 3: Sprint Summary + Stamina Curve
         Two columns on desktop
       */}
       <div className="grid grid-cols-1 gap-4 md:gap-8 lg:grid-cols-2">
-        {/* Sprint Summary - Left Side */}
-        <Card className="h-full">
+        {/* Sprint Summary — Left Side */}
+        <Card className="h-full group">
           <CardHeader className="pb-2">
-            <CardTitle className="flex items-center gap-2 text-base">
-              <Zap className="w-4 h-4 text-amber-500" />
-              Sprint Summary
+            <CardTitle className="flex items-center gap-2 text-[14px] tracking-tight">
+              <Zap className="w-4 h-4 text-[var(--color-ink-3)]" />
+              Sprint summary
             </CardTitle>
           </CardHeader>
           <CardContent>
             {sprintSummary ? (
-              <div className="grid grid-cols-3 gap-2 md:gap-4">
-                <div className="text-center p-3 md:p-4 bg-muted/50 rounded-lg">
-                  <p className="text-xl md:text-2xl font-bold text-foreground">{sprintSummary.totalSprints}</p>
-                  <p className="text-xs text-muted-foreground">Total Sprints</p>
+              <div className="grid grid-cols-3 gap-3">
+                <div className="relative p-4 rounded-[14px] bg-[var(--color-muted)]">
+                  <p className="label-uppercase">Total</p>
+                  <p className="text-[26px] leading-none font-bold tracking-[-0.02em] num-tabular text-[var(--color-ink-1)] mt-1.5">
+                    {sprintSummary.totalSprints}
+                  </p>
+                  <p className="text-[11px] text-[var(--color-ink-3)] mt-1.5">Sprints completed</p>
                 </div>
-                <div className="text-center p-3 md:p-4 rounded-lg" style={{ backgroundColor: '#f6fbe8' }}>
-                  <p className="text-xl md:text-2xl font-bold" style={{ color: '#5cbb21' }}>{sprintSummary.bestScore}%</p>
-                  <p className="text-xs text-muted-foreground">Best Score</p>
+                <div className="relative p-4 rounded-[14px] bg-[var(--color-muted)] ring-hairline-strong overflow-hidden">
+                  <p className="label-uppercase">Best score</p>
+                  <p className="text-[26px] leading-none font-bold tracking-[-0.02em] num-tabular text-[var(--color-accent-warm)] mt-1.5">
+                    {sprintSummary.bestScore}%
+                  </p>
+                  <p className="text-[11px] text-[var(--color-ink-3)] mt-1.5">Personal best</p>
+                  {/* Coral underline (featured slot) */}
+                  <span
+                    aria-hidden
+                    className="absolute left-4 right-4 bottom-0 h-[2px] rounded-full bg-[var(--color-accent-warm)] origin-center scale-x-[0.5] transition-transform duration-400 ease-out group-hover:scale-x-100"
+                  />
                 </div>
-                <div className="text-center p-3 md:p-4 bg-blue-50 rounded-lg">
-                  <p className="text-xl md:text-2xl font-bold text-blue-600">{sprintSummary.avgAccuracy}%</p>
-                  <p className="text-xs text-muted-foreground">Avg Accuracy</p>
+                <div className="relative p-4 rounded-[14px] bg-[var(--color-muted)]">
+                  <p className="label-uppercase">Avg accuracy</p>
+                  <p className="text-[26px] leading-none font-bold tracking-[-0.02em] num-tabular text-[var(--color-ink-1)] mt-1.5">
+                    {sprintSummary.avgAccuracy}%
+                  </p>
+                  <p className="text-[11px] text-[var(--color-ink-3)] mt-1.5">Across sprints</p>
                 </div>
               </div>
             ) : (
               <div className="flex flex-col items-center justify-center h-32 text-center">
-                <Zap className="w-8 h-8 text-muted-foreground/30 mb-2" />
-                <p className="text-sm text-muted-foreground">
-                  Start Your Sprint Journey
+                <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[var(--color-muted)] text-[var(--color-ink-3)] mb-2">
+                  <Zap className="w-4 h-4" />
+                </span>
+                <p className="text-[13px] text-[var(--color-ink-3)]">
+                  Start a sprint to see your summary.
                 </p>
               </div>
             )}
           </CardContent>
         </Card>
 
-        {/* Stamina Curve - Right Side */}
+        {/* Stamina Curve — Right Side */}
         <Card className="h-full">
           <CardHeader className="pb-2">
-            <CardTitle className="flex items-center gap-2 text-base">
-              <Activity className="w-4 h-4 text-blue-600" />
-              Stamina Curve
+            <CardTitle className="flex items-center gap-2 text-[14px] tracking-tight">
+              <Activity className="w-4 h-4 text-[var(--color-ink-3)]" />
+              Stamina curve
             </CardTitle>
           </CardHeader>
           <CardContent>

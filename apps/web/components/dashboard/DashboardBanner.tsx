@@ -1,15 +1,22 @@
+/**
+ * DashboardBanner — editorial refresh.
+ *
+ * Editorial banner card: neutral hairline, halftone corner ornament, single
+ * icon chip + h2 title + supporting paragraph, ink CTA on the right. Drops
+ * the background image, backdrop blur, rotated trophy SVG, and all emoji
+ * from generated titles.
+ */
+
 import React, { useEffect, useState } from 'react';
 import { Card, CardContent } from '../ui/Card';
 import { Button } from '../ui/Button';
-import { ArrowRight, Target, Trophy, Flame, Zap, Award } from 'lucide-react';
+import { ArrowRight, Target, Trophy, Flame, Zap } from 'lucide-react';
 import {
     fetchWeakestSubtopics,
-    WeakestSubtopic,
     fetchUserStreak,
     fetchSprintPerformance,
-    SprintPerformance
-} from '@drut/shared'; // from ../../services/analyticsService';
-import { log } from '@drut/shared'; // from ../../lib/log';
+} from '@drut/shared';
+import { log } from '@drut/shared';
 
 interface DashboardBannerProps {
     userName: string;
@@ -30,7 +37,6 @@ export const DashboardBanner: React.FC<DashboardBannerProps> = ({ userName }) =>
     useEffect(() => {
         const load = async () => {
             try {
-                // Fetch all necessary data points for logic
                 const [weakestList, streak, sprints] = await Promise.all([
                     fetchWeakestSubtopics(1),
                     fetchUserStreak(),
@@ -38,22 +44,27 @@ export const DashboardBanner: React.FC<DashboardBannerProps> = ({ userName }) =>
                 ]);
 
                 const weakest = weakestList?.[0] || null;
-                const recentSprint = sprints?.[0] || null; // Ascending order? Need to check. get_sprint_performance is DESC usually.
+                const recentSprint = sprints?.[0] || null;
 
-                // Logic to determine Banner Content (Priority-based)
                 let selectedContent: BannerContent;
 
-                // 1. Weakness First (Critical to fix)
                 if (weakest && weakest.accuracy < 60) {
                     selectedContent = {
-                        title: "Turn Weakness into Strength",
+                        title: "Turn weakness into strength",
                         message: (
                             <span>
-                                Your accuracy in <span className="font-bold text-emerald-800">{weakest.subtopic}</span> is only <span className="font-bold text-red-600">{Math.round(weakest.accuracy)}%</span>.
-                                Let's fix that right now.
+                                Your accuracy in{' '}
+                                <span className="font-semibold text-[var(--color-ink-1)]">
+                                    {weakest.subtopic}
+                                </span>{' '}
+                                is{' '}
+                                <span className="font-semibold text-[var(--color-destructive)]">
+                                    {Math.round(weakest.accuracy)}%
+                                </span>
+                                . Let's close that gap.
                             </span>
                         ),
-                        ctaText: "Fix Weak Areas",
+                        ctaText: "Fix weak areas",
                         ctaAction: () => {
                             localStorage.setItem('selectedSubtopic', weakest.subtopic);
                             window.location.href = '/practice';
@@ -61,32 +72,29 @@ export const DashboardBanner: React.FC<DashboardBannerProps> = ({ userName }) =>
                         icon: Target
                     };
                 }
-                // 2. High Streak (Motivation)
                 else if (streak > 2) {
                     selectedContent = {
-                        title: `${streak} Day Streak! 🔥`,
-                        message: "You're on fire! Keep the momentum going to build a solid learning habit.",
-                        ctaText: "Continue Streak",
+                        title: `${streak} day streak`,
+                        message: "You're on a roll. Keep the daily session going to lock in the habit.",
+                        ctaText: "Continue streak",
                         ctaAction: () => window.location.href = '/practice',
                         icon: Flame
                     };
                 }
-                // 3. High Performance (Challenge)
                 else if (recentSprint && recentSprint.accuracy > 85) {
                     selectedContent = {
-                        title: "Crushing It! 🚀",
-                        message: `You scored ${Math.round(recentSprint.accuracy)}% in your last sprint. Ready to challenge yourself with something harder?`,
-                        ctaText: "Start Hard Sprint",
+                        title: "On a tear",
+                        message: `You scored ${Math.round(recentSprint.accuracy)}% in your last sprint. Ready to push the difficulty?`,
+                        ctaText: "Start hard sprint",
                         ctaAction: () => window.location.href = '/sprint',
                         icon: Trophy
                     };
                 }
-                // 4. Default / Generic (Basics)
                 else {
                     selectedContent = {
                         title: `Welcome, ${userName.split(' ')[0]}`,
-                        message: "Consistency is key. Start your daily practice session to master new patterns.",
-                        ctaText: "Start Practicing",
+                        message: "Consistency does the heavy lifting. Start a session and start chipping away.",
+                        ctaText: "Start practicing",
                         ctaAction: () => window.location.href = '/practice',
                         icon: Zap
                     };
@@ -105,55 +113,54 @@ export const DashboardBanner: React.FC<DashboardBannerProps> = ({ userName }) =>
 
     if (loading || !content) {
         return (
-            <Card className="border-0 shadow-lg mb-8 h-48 animate-pulse bg-slate-100" />
+            <Card className="mb-8 h-32 animate-pulse" />
         );
     }
 
     const Icon = content.icon;
 
     return (
-        <Card className="border-0 shadow-xl overflow-hidden relative mb-8">
-            {/* Background Image */}
+        <Card className="group relative overflow-hidden mb-8">
+            {/* Halftone corner ornament (top-right) */}
             <div
-                className="absolute inset-0 z-0 bg-cover bg-center"
+                aria-hidden
+                className="pointer-events-none absolute top-0 right-0 h-40 w-60 transition-transform duration-700 ease-out group-hover:translate-x-2 group-hover:-translate-y-1"
                 style={{
-                    backgroundImage: "url('/dashboard_banner_bg.png')",
+                    backgroundImage: 'radial-gradient(circle at center, rgba(11, 11, 13, 0.22) 1px, transparent 1.4px)',
+                    backgroundSize: '6px 6px',
+                    WebkitMaskImage: 'radial-gradient(ellipse at top right, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0) 65%)',
+                    maskImage: 'radial-gradient(ellipse at top right, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0) 65%)',
                 }}
             />
 
-            {/* Overlay for better text readability if needed, but keeping it light for the provided image */}
-            <div className="absolute inset-0 z-0 bg-white/30 backdrop-blur-[2px]"></div>
-
-            <CardContent className="p-8 sm:p-10 relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
-                <div className="flex-1 text-center md:text-left">
-                    <div className="flex items-center justify-center md:justify-start gap-3 mb-2">
-                        <div className="p-2 bg-emerald-100/80 rounded-full text-emerald-800 backdrop-blur-sm">
-                            <Icon className="w-5 h-5" />
-                        </div>
-                        <h2 className="text-3xl font-bold text-slate-900 tracking-tight">
-                            {content.title}
-                        </h2>
+            <CardContent className="relative z-10 p-7 md:p-8 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+                <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-3 mb-2">
+                        <span className="inline-flex h-9 w-9 items-center justify-center rounded-[12px] bg-[var(--color-accent)] text-[var(--color-accent-foreground)]">
+                            <Icon className="w-4 h-4" />
+                        </span>
+                        <p className="label-uppercase">Focus for today</p>
                     </div>
-                    <p className="text-slate-700 text-lg leading-relaxed max-w-2xl font-medium">
+                    <h2 className="text-[26px] md:text-[28px] leading-[1.15] font-bold tracking-[-0.015em] text-[var(--color-ink-1)]">
+                        {content.title}
+                    </h2>
+                    <p className="text-[14px] text-[var(--color-ink-3)] mt-2 max-w-[64ch] leading-relaxed">
                         {content.message}
                     </p>
                 </div>
 
-                <div className="flex-shrink-0">
+                <div className="shrink-0">
                     <Button
-                        className="bg-slate-900 text-white hover:bg-slate-800 border-0 px-8 py-6 text-lg font-semibold shadow-lg transition-transform hover:scale-105"
                         onClick={content.ctaAction}
+                        variant="ink"
+                        size="lg"
+                        className="h-11 px-5 text-[14px]"
                     >
                         {content.ctaText}
-                        <ArrowRight className="w-5 h-5 ml-2" />
+                        <ArrowRight className="w-4 h-4" />
                     </Button>
                 </div>
             </CardContent>
-
-            {/* Decorative Trophy/Effects */}
-            <div className="absolute top-1/2 right-10 -translate-y-1/2 opacity-10 hidden xl:block pointer-events-none rotate-12 mix-blend-multiply">
-                <Trophy className="w-64 h-64 text-emerald-900" />
-            </div>
         </Card>
     );
 };
