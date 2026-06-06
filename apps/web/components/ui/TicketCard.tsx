@@ -12,7 +12,13 @@ import { cn } from "@drut/shared";
  * Used by WeakSpots, DebtCollector, MasteryGrid items (in later phases).
  */
 
-interface TicketCardProps extends React.HTMLAttributes<HTMLDivElement> {
+// HTML `id` and `title` are omitted from the underlying div props because
+// TicketCard repurposes both prop names for its own visible slots:
+//   - `id` becomes the ticket identifier slot (a ReactNode like "#OPS-129")
+//   - `title` becomes the main card heading slot (a ReactNode)
+// If consumers ever need DOM-level id or tooltip title, pass them via
+// a wrapper or use a different prop.
+interface TicketCardProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'id' | 'title'> {
     icon?: React.ReactNode;        // small subject icon (lucide-react node, etc.)
     title: React.ReactNode;
     id?: React.ReactNode;          // e.g. "#OPS-129"
