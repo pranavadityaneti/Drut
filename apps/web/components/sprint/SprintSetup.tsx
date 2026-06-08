@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { EXAM_TAXONOMY, TopicDef } from '../../../../packages/shared/src/lib/taxonomy';
-import { authService, fetchChapterSources } from '@drut/shared';
+import { authService, fetchChapterSources, getPrimaryBoardForExam, classMatchesSelection } from '@drut/shared';
 import type { ChapterSource } from '@drut/shared';
 // @ts-ignore
 import { supabase } from '@drut/shared';
@@ -36,10 +36,12 @@ export const SprintSetup: React.FC<SprintSetupProps> = ({ onStart }) => {
  // Dynamic Syllabus State
  const [dynamicTopics, setDynamicTopics] = useState<any[]>([]);
 
- // Chapter sources (3-step picker) — see PracticeSetup.tsx for full notes
+ // Picker v2 state — see PracticeSetup.tsx for full notes. Board is derived
+ // from exam (not user-picked). Class includes "Both" option. NCERT checkbox
+ // augments the chapter pool when state board is the primary source.
  const [chapterSources, setChapterSources] = useState<ChapterSource[]>([]);
- const [selectedBoard, setSelectedBoard] = useState<string>('');
- const [selectedClass, setSelectedClass] = useState<string>('');
+ const [selectedClass, setSelectedClass] = useState<string>('Class 11');
+ const [includeNcert, setIncludeNcert] = useState<boolean>(false);
 
  useEffect(() => {
  const init = async () => {
@@ -146,25 +148,37 @@ export const SprintSetup: React.FC<SprintSetupProps> = ({ onStart }) => {
   loadSources();
  }, [selectedSubject]);
 
- // Board / Class / Chapter derivation
- const availableBoards = Array.from(new Set(chapterSources.map(s => s.board))).sort();
- const availableClasses = Array.from(new Set(
-  chapterSources.filter(s => !selectedBoard || s.board === selectedBoard).map(s => s.class_name)
- )).sort();
- const selectedSourceForChapters = chapterSources.find(
-  s => s.board === selectedBoard && s.class_name === selectedClass
- );
- const sourceChapters = selectedSourceForChapters?.chapters ?? [];
+ // Picker v2 derivation — see PracticeSetup.tsx for full notes
+ const primaryBoard = getPrimaryBoardForExam(selectedExam);
+ const primaryHasContent = chapterSources.some(s => s.board === primaryBoard);
+ const effectivePrimaryBoard = primaryHasContent ? primaryBoard : 'NCERT';
+ const stateBoardFellBack = primaryBoard !== 'NCERT' && !primaryHasContent;
+ const effectiveBoards = (() => {
+  const set = new Set<string>([effectivePrimaryBoard]);
+  if (includeNcert && effectivePrimaryBoard !== 'NCERT') set.add('NCERT');
+  return Array.from(set);
+ })();
 
- // Auto-select Board / Class
+ interface DisplayChapter { id: string; name: string; label: string; board: string; classNameOfSource: string; }
+ const displayedChapters: DisplayChapter[] = chapterSources
+  .filter(s => effectiveBoards.includes(s.board))
+  .filter(s => classMatchesSelection(s.class_name, selectedClass))
+  .flatMap(s => s.chapters.map(c => ({
+   id: c.id,
+   name: c.name,
+   label: (selectedClass === 'Both' || includeNcert)
+    ? `${c.name} (${s.class_name}${effectiveBoards.length > 1 ? `, ${s.board}` : ''})`
+    : c.name,
+   board: s.board,
+   classNameOfSource: s.class_name,
+  })))
+  .sort((a, b) => a.label.localeCompare(b.label));
+
  useEffect(() => {
-  if (availableBoards.length === 0) { if (selectedBoard) setSelectedBoard(''); return; }
-  if (!selectedBoard || !availableBoards.includes(selectedBoard)) setSelectedBoard(availableBoards[0]);
- }, [availableBoards.join('|')]);
- useEffect(() => {
-  if (availableClasses.length === 0) { if (selectedClass) setSelectedClass(''); return; }
-  if (!selectedClass || !availableClasses.includes(selectedClass)) setSelectedClass(availableClasses[0]);
- }, [availableClasses.join('|')]);
+  if (selectedTopic && !displayedChapters.some(c => c.name === selectedTopic) && selectedTopic !== 'all') {
+   setSelectedTopic('');
+  }
+ }, [selectedClass, includeNcert, chapterSources.length]);
 
  // Subject Extraction
  const isDynamic = dynamicTopics.length > 0;
@@ -243,11 +257,13 @@ export const SprintSetup: React.FC<SprintSetupProps> = ({ onStart }) => {
  const handleStart = () => {
  if (!selectedExam || !selectedTopic) return;
 
- // Board: prefer explicit Board pill from new 3-step picker; fall back to
- // the previous heuristic only when chapter sources aren't loaded.
+ // Board derived from picked chapter's source (picker v2 — no Board pill)
+ const pickedChapterMeta = displayedChapters.find(c => c.name === selectedTopic);
  const isStateBoard = selectedExam.includes('eapcet') || selectedExam.includes('eamcet');
- const board = selectedBoard || (isStateBoard ? 'NCERT' : 'CBSE');
- const classLevel = selectedClass || userClass;
+ const board = pickedChapterMeta?.board
+  || effectivePrimaryBoard
+  || (isStateBoard ? 'NCERT' : 'CBSE');
+ const classLevel = pickedChapterMeta?.classNameOfSource || selectedClass || userClass;
 
  onStart({
  examProfile: selectedExam,
@@ -317,61 +333,60 @@ export const SprintSetup: React.FC<SprintSetupProps> = ({ onStart }) => {
  </div>
  </div>
 
- {/* 3. Board → Class → Chapter picker (when knowledge_nodes data available) */}
+ {/* Picker v2: Class (with Both) → Chapter, plus optional NCERT-include checkbox */}
  {chapterSources.length > 0 ? (
   <>
    <div>
-    <label className="text-sm font-semibold text-[var(--color-ink-1)] mb-3 block">Board</label>
+    <label className="text-sm font-semibold text-[var(--color-ink-1)] mb-3 block">Class</label>
     <div className="flex flex-wrap gap-3">
-     {availableBoards.map(board => {
-      const isSelected = selectedBoard === board;
+     {(['Class 11', 'Class 12', 'Both'] as const).map(cls => {
+      const isSelected = selectedClass === cls;
       return (
-       <button key={board}
-        onClick={() => { setSelectedBoard(board); setSelectedClass(''); setSelectedTopic(''); }}
+       <button key={cls}
+        onClick={() => { setSelectedClass(cls); setSelectedTopic(''); }}
         className={`px-5 py-2.5 rounded-lg border text-sm font-medium transition-all duration-200 ${isSelected ? 'border-[var(--color-primary)] bg-[var(--color-accent)] text-[#3d7a0f] ring-1 ring-[var(--color-primary)]' : 'border-slate-200 text-[var(--color-ink-2)] hover:border-slate-300 hover:bg-[var(--color-muted)]'}`}>
-        {board}
+        {cls}
        </button>
       );
      })}
     </div>
    </div>
-   {selectedBoard && (
-    <div>
-     <label className="text-sm font-semibold text-[var(--color-ink-1)] mb-3 block">Class</label>
-     <div className="flex flex-wrap gap-3">
-      {availableClasses.map(cls => {
-       const isSelected = selectedClass === cls;
-       return (
-        <button key={cls}
-         onClick={() => { setSelectedClass(cls); setSelectedTopic(''); }}
-         className={`px-5 py-2.5 rounded-lg border text-sm font-medium transition-all duration-200 ${isSelected ? 'border-[var(--color-primary)] bg-[var(--color-accent)] text-[#3d7a0f] ring-1 ring-[var(--color-primary)]' : 'border-slate-200 text-[var(--color-ink-2)] hover:border-slate-300 hover:bg-[var(--color-muted)]'}`}>
-         {cls}
-        </button>
-       );
-      })}
-     </div>
-    </div>
+   {effectivePrimaryBoard !== 'NCERT' && (
+    <label className="flex items-center gap-3 cursor-pointer select-none">
+     <input
+      type="checkbox"
+      checked={includeNcert}
+      onChange={(e) => { setIncludeNcert(e.target.checked); setSelectedTopic(''); }}
+      className="w-4 h-4 accent-[var(--color-primary)]"
+     />
+     <span className="text-sm text-[var(--color-ink-2)]">
+      Also practice NCERT national-level questions for extra rigor
+     </span>
+    </label>
    )}
-   {selectedBoard && selectedClass && (
-    <div className="space-y-2">
-     <label className="text-sm font-semibold text-[var(--color-ink-1)]">Chapter</label>
-     <div className="relative">
-      <select
-       value={selectedTopic}
-       onChange={(e) => setSelectedTopic(e.target.value)}
-       className="w-full appearance-none bg-white border border-slate-200 text-[var(--color-ink-2)] text-sm rounded-xl p-3.5 pr-10 outline-none focus:border-[var(--color-primary)] focus:ring-1 focus:ring-emerald-500 transition-all cursor-pointer disabled:bg-[var(--color-muted)] disabled:text-[var(--color-ink-3)]"
-       disabled={sourceChapters.length === 0}
-      >
-       <option value="" disabled>Select Chapter...</option>
-       <option value="all">All Chapters</option>
-       {sourceChapters.map(c => (
-        <option key={c.id} value={c.name}>{c.name}</option>
-       ))}
-      </select>
-      <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--color-ink-3)] pointer-events-none" size={16} />
-     </div>
+   <p className="text-xs text-[var(--color-ink-3)] -mt-2">
+    {stateBoardFellBack
+     ? `Showing NCERT questions — your state board (${primaryBoard}) doesn't have ${selectedSubject || 'this subject'} textbooks loaded yet.`
+     : `Source: ${effectiveBoards.join(' + ')} ${effectivePrimaryBoard === 'NCERT' ? '(national curriculum)' : '(your state board)'}`}
+   </p>
+   <div className="space-y-2">
+    <label className="text-sm font-semibold text-[var(--color-ink-1)]">Chapter</label>
+    <div className="relative">
+     <select
+      value={selectedTopic}
+      onChange={(e) => setSelectedTopic(e.target.value)}
+      className="w-full appearance-none bg-white border border-slate-200 text-[var(--color-ink-2)] text-sm rounded-xl p-3.5 pr-10 outline-none focus:border-[var(--color-primary)] focus:ring-1 focus:ring-emerald-500 transition-all cursor-pointer disabled:bg-[var(--color-muted)] disabled:text-[var(--color-ink-3)]"
+      disabled={displayedChapters.length === 0}
+     >
+      <option value="" disabled>Select Chapter...</option>
+      <option value="all">All Chapters</option>
+      {displayedChapters.map(c => (
+       <option key={c.id} value={c.name}>{c.label}</option>
+      ))}
+     </select>
+     <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--color-ink-3)] pointer-events-none" size={16} />
     </div>
-   )}
+   </div>
   </>
  ) : (
   /* Legacy fallback dropdown when no knowledge_nodes data available */

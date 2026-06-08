@@ -16,6 +16,38 @@ export interface ChapterEntry {
     metadata?: any;
 }
 
+/**
+ * Map an exam profile to its primary state board.
+ *
+ * The Board picker was removed from the practice/sprint setup (PR v2)
+ * because the exam choice implies the board:
+ *   - AP EAPCET → BIEAP (Andhra Pradesh state board)
+ *   - TS EAPCET → TSBIE (Telangana state board)
+ *   - Everything else (JEE/NEET/CAT/…) → NCERT (national)
+ *
+ * When the primary board has no chapters ingested for the selected
+ * subject (e.g., BIEAP Chemistry not yet ingested), the picker silently
+ * falls back to NCERT and surfaces a small footnote to the user.
+ */
+export function getPrimaryBoardForExam(examProfile: string): string {
+    if (examProfile === 'ap_eapcet') return 'BIEAP';
+    if (examProfile === 'ts_eapcet') return 'TSBIE';
+    return 'NCERT';
+}
+
+/**
+ * Class naming differs by board: NCERT uses "Class 11" / "Class 12",
+ * state boards (BIEAP/TSBIE) use "1st Year" / "2nd Year". The picker
+ * surfaces a normalized "Class 11" / "Class 12" / "Both" choice; this
+ * helper matches a source's class_name against that selection.
+ */
+export function classMatchesSelection(sourceClass: string, selection: string): boolean {
+    if (selection === 'Both') return true;
+    if (selection === 'Class 11') return sourceClass === 'Class 11' || sourceClass === '1st Year';
+    if (selection === 'Class 12') return sourceClass === 'Class 12' || sourceClass === '2nd Year';
+    return sourceClass === selection;
+}
+
 export interface ChapterSource {
     subject_id: string;          // knowledge_nodes.id of the subject node
     subject: string;             // e.g., "Mathematics"
