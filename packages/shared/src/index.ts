@@ -61,6 +61,11 @@ export * from './services/sprintService';
 import * as sprintService from './services/sprintService';
 export { sprintService };
 
+// Chapter source resolution (for the 3-step Board → Class → Chapter picker)
+export * from './services/chapterService';
+import * as chapterService from './services/chapterService';
+export { chapterService };
+
 // Variant Generator (Server-side only)
 // export * from './services/variantGenerator';
 // import * as variantGenerator from './services/variantGenerator';
