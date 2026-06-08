@@ -19,12 +19,22 @@ export const login = async (email: string, password: string): Promise<{ user: Us
     return { user: data.user };
 };
 
-export const signup = async (email: string, password: string): Promise<{ user: User | null }> => {
+/**
+ * Sign up a new user.
+ *
+ * Returns `sessionEstablished: true` when Supabase logged the user in
+ * immediately (e.g., email confirmation disabled in project settings, or
+ * a phone/social provider that auto-confirms). Returns `false` when the
+ * user needs to verify their email before the session activates — in that
+ * case, the caller should show a "check your email" screen instead of
+ * routing the user into the app.
+ */
+export const signup = async (email: string, password: string): Promise<{ user: User | null; sessionEstablished: boolean }> => {
     const supabase = getSupabase();
     if (!supabase) throw new Error("Supabase client is not available.");
     const { data, error } = await supabase.auth.signUp({ email, password });
     if (error) throw new Error(error.message);
-    return { user: data.user };
+    return { user: data.user, sessionEstablished: !!data.session };
 };
 
 export const loginWithGoogle = async () => {
