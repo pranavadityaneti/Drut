@@ -69,17 +69,11 @@ export default function EditProfileScreen() {
             const asset = result.assets[0];
             setAvatarUri(asset.uri);
 
-            // Upload immediately
+            // Upload immediately via the RN-safe helper
             setUploading(true);
             try {
-                // For mobile, we need to convert URI to blob and upload
-                const response = await fetch(asset.uri);
-                const blob = await response.blob();
-
-                // Create a File-like object for the upload function
-                const file = new File([blob], 'avatar.jpg', { type: 'image/jpeg' });
-
-                const newUrl = await profileService.uploadAvatar(file);
+                const { uploadAvatarFromUri } = await import('../../../utils/uploadAvatarFromUri');
+                const newUrl = await uploadAvatarFromUri(asset.uri);
                 setAvatarUri(newUrl);
                 Alert.alert('Success', 'Profile photo updated!');
             } catch (err: any) {
