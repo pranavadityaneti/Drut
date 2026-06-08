@@ -30,18 +30,13 @@ export async function uploadAvatarFromUri(uri: string): Promise<string> {
     // Decode to ArrayBuffer
     const arrayBuffer = decode(base64);
 
-    // Upload via shared service.
-    //
-    // profileService.uploadAvatar's signature today expects a browser File.
-    // React Native can't construct File reliably from a local URI, so we
-    // pass an ArrayBuffer-backed shape that the underlying Supabase storage
-    // client accepts at runtime. Cast away the type mismatch for now;
-    // forlater item will widen the signature properly in the Cat 5 shared
-    // service consolidation.
+    // Upload via shared service. Cat 5 widened uploadAvatar's signature
+    // to accept this RN-friendly `{ data, name, type, size }` shape alongside
+    // browser File, so no cast is needed.
     return profileService.uploadAvatar({
         data: arrayBuffer,
         name: `avatar.${ext}`,
         type: mimeType,
         size: fileInfo.size || arrayBuffer.byteLength,
-    } as any);
+    });
 }

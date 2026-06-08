@@ -1,12 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Alert } from 'react-native';
-import { getQuestionsForUser, authService, isValidQuestionForTopic, getSupabase } from '@drut/shared';
-
-// Local stub — the canonical export lives in keen-payne's
-// questionCacheService.ts and will land via Cat 5 shared-services
-// consolidation. Keeping the cache-only behaviour explicit here for now
-// (matches the flag's default value on main: false).
-const ALLOW_LIVE_AI_FALLBACK = false;
+import { getQuestionsForUser, authService, isValidQuestionForTopic, getSupabase, ALLOW_LIVE_AI_FALLBACK } from '@drut/shared';
 
 // Verification statuses that mean the question was curated/verified upstream.
 // Any question with a status in this list (substring match) bypasses the
