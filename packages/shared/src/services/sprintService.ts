@@ -147,6 +147,8 @@ const EXAM_BASE_TIMES: Record<string, number> = {
     jee_advanced: 180,  // 3 minutes (harder questions)
     mht_cet: 54,        // ~1 minute
     eamcet: 60,
+    ap_eapcet: 60,      // alias — same exam pattern as EAMCET
+    ts_eapcet: 60,      // alias — same exam pattern as EAMCET
     wbjee: 90,
     kcet: 60,
     gujcet: 60,

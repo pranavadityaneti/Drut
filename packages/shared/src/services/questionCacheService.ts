@@ -4,6 +4,18 @@ import { QuestionData } from '../types';
 import { generateQuestionsBatch } from './vertexBackendService';
 import { log } from '../lib/log';
 
+/**
+ * Feature flag — gates live AI question generation.
+ *
+ * Set to `false` during beta to prevent ungrounded Gemini output reaching users.
+ * Flip to `true` once textbooks are ingested (RAG retrieval will then ground
+ * generated questions in NCERT content via the generate-batch edge function).
+ *
+ * When false: cache misses surface as "No questions available" instead of
+ * falling back to unverified AI.
+ */
+export const ALLOW_LIVE_AI_FALLBACK = false;
+
 export interface CachedQuestion {
   id: string;
   question_id: string;
@@ -81,10 +93,12 @@ export async function getQuestionsForUser(
       log.info(`[cache] Found ${unseenQuestions.length} unseen cached questions`);
       metadata.cached = unseenQuestions.length;
 
-      // Map cached questions to QuestionData with uuid and fsmTag
-      const cachedQs = unseenQuestions.map((cq: CachedQuestion): QuestionData => {
-        const qd = cq.question_data as unknown as QuestionData;
-        return {
+      // Map cached questions to QuestionData with uuid and fsmTag.
+      // We propagate `verification_status` and `source_type` so the mobile
+      // trust filter can bypass keyword validation for curated questions.
+      const cachedQs = unseenQuestions.map((cq: any): QuestionData => {
+        const qd = (cq.question_data || {}) as unknown as QuestionData;
+        const result: any = {
           uuid: cq.id,
           fsmTag: cq.fsm_tag || `${subtopic}-legacy`,
           questionText: qd.questionText,
@@ -97,7 +111,12 @@ export async function getQuestionsForUser(
           diagramUrl: (qd as any).diagramUrl || undefined,
           diagramRequired: (qd as any).diagramRequired || false,
           difficulty: (qd as any).difficulty || difficulty,
+          // Trust signals — propagated from top-level cached_questions columns
+          // (or from the question_data JSONB as a fallback for older rows).
+          verification_status: cq.verification_status || (qd as any).verification_status,
+          source_type: cq.source_type || (qd as any).source_type,
         };
+        return result;
       });
       questions.push(...cachedQs);
 
@@ -112,7 +131,11 @@ export async function getQuestionsForUser(
 
     let generationError: Error | null = null;
 
-    if (needed > 0) {
+    if (needed > 0 && !ALLOW_LIVE_AI_FALLBACK) {
+      log.warn(`[cache] Cache short by ${needed} questions but ALLOW_LIVE_AI_FALLBACK is OFF — returning what we have.`);
+    }
+
+    if (needed > 0 && ALLOW_LIVE_AI_FALLBACK) {
       log.info(`[cache] Need to generate ${needed} new questions`);
 
       try {

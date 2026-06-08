@@ -35,11 +35,24 @@ export async function getProfile(): Promise<UserProfile | null> {
         // Generate a customer ID from the user's UUID (first 8 characters, uppercase)
         const customerId = `DRT-${user.id.substring(0, 8).toUpperCase()}`;
 
+        // Prefer the "real" email the user entered in the wizard.
+        // user.email is the synthetic `<phone>@phone.drut.club` for WhatsApp signups,
+        // which we never want to surface in the UI.
+        const isSyntheticEmail = (user.email || '').endsWith('@phone.drut.club');
+        const realEmail = user.user_metadata?.email_address
+            || (isSyntheticEmail ? '' : (user.email || ''));
+
+        // Prefer the user-entered phone (from wizard) over Supabase Auth's phone field
+        const realPhone = user.user_metadata?.phone_number
+            || user.user_metadata?.phone
+            || user.phone
+            || null;
+
         return {
             id: user.id,
-            email: user.email || '',
+            email: realEmail,
             fullName: user.user_metadata?.full_name || user.user_metadata?.name || '',
-            phone: user.user_metadata?.phone || user.phone || null,
+            phone: realPhone,
             avatarUrl: user.user_metadata?.avatar_url || null,
             customerId,
             class: user.user_metadata?.class,
@@ -85,7 +98,19 @@ export async function updateProfile(updates: {
     }
 }
 
-export const uploadAvatar = async (file: File): Promise<string> => {
+/**
+ * Avatar upload payload. Web uses File; React Native passes ArrayBuffer
+ * plus metadata since native File/Blob construction doesn't work reliably.
+ */
+export type AvatarUploadInput =
+    | File
+    | { data: ArrayBuffer; name: string; type: string; size: number };
+
+function isFile(input: AvatarUploadInput): input is File {
+    return typeof File !== 'undefined' && input instanceof File;
+}
+
+export const uploadAvatar = async (input: AvatarUploadInput): Promise<string> => {
     const supabase = getSupabase();
     if (!supabase) {
         log.error('[profile] Supabase client not available.');
@@ -98,22 +123,32 @@ export const uploadAvatar = async (file: File): Promise<string> => {
         throw new Error("User not authenticated");
     }
 
+    // Normalize input metadata
+    const size = isFile(input) ? input.size : input.size;
+    const type = isFile(input) ? input.type : input.type;
+    const name = isFile(input) ? input.name : input.name;
+    const body: File | ArrayBuffer = isFile(input) ? input : input.data;
+
     // Validate file size (max 1MB)
-    if (file.size > 1024 * 1024) {
+    if (size > 1024 * 1024) {
         throw new Error("File size must be less than 1MB");
     }
 
     // Validate file type
-    if (!file.type.match(/^image\/(png|jpeg|jpg)$/)) {
+    if (!type.match(/^image\/(png|jpeg|jpg)$/)) {
         throw new Error("Only PNG and JPG images are allowed");
     }
 
-    const fileExt = file.name.split('.').pop();
+    const fileExt = name.split('.').pop() || 'jpg';
     const filePath = `${user.id}.${fileExt}`;
 
     const { error: uploadError } = await supabase.storage
         .from(AVATARS_BUCKET)
-        .upload(filePath, file, { upsert: true, cacheControl: '3600' });
+        .upload(filePath, body, {
+            upsert: true,
+            cacheControl: '3600',
+            contentType: type,
+        });
 
     if (uploadError) {
         log.error('[profile] avatar upload failed', uploadError);

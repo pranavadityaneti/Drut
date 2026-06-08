@@ -21,6 +21,7 @@ import { WaitlistModern } from './components/WaitlistModern';
 import { WaitlistClassic } from './components/WaitlistClassic';
 import { AdminDashboard } from './components/admin/AdminDashboard';
 import { ModalProvider } from './components/ui/Modal';
+import { ErrorBoundary } from './components/ui/ErrorBoundary';
 import { PrivacyPolicy } from './components/legal/PrivacyPolicy';
 import { TermsAndConditions } from './components/legal/TermsAndConditions';
 import { Onboarding } from './components/Onboarding';
@@ -49,25 +50,20 @@ function App() {
   const [healthStatus, setHealthStatus] = useState<HealthStatus | null>(null);
 
   useEffect(() => {
-    const checkHealth = async () => {
+    const checkHealth = () => {
       const isDevToolsOpen = runtimeHealth.checkDevTools();
-      // Note: The instruction's `status: HealthStatus = isDevToolsOpen ? 'degraded' : 'ok';`
-      // conflicts with the HealthStatus type definition (an object).
-      // Assuming the intent is to update the devtoolsPatched property within HealthStatus.
-      // For faithful reproduction, I'll create a HealthStatus object.
       const status: HealthStatus = {
-        devtoolsPatched: !isDevToolsOpen, // Assuming checkDevTools returns true if open (not patched)
-        supabaseReady: true, // Defaulting other properties for now
+        devtoolsPatched: !isDevToolsOpen,
+        supabaseReady: true,
         monacoLazy: true,
       };
-      setHealthStatus(status); // Changed from setHealth to setHealthStatus
-      log.info('Runtime Health:', JSON.stringify(status, null, 2));
+      setHealthStatus(status);
+      if (IS_DEBUG_MODE) {
+        log.info('Runtime Health:', JSON.stringify(status, null, 2));
+      }
     };
     checkHealth();
-    // The original log.info was outside the if(IS_DEBUG_MODE) block, but the instruction places it
-    // after checkHealth() call, which would make `status` undefined.
-    // Moving it inside checkHealth for syntactic correctness and logical flow.
-    // log.info('Runtime Health:', JSON.stringify(status, null, 2)); // This line was problematic as `status` was not defined here.
+
     const checkUser = async () => {
       try {
         const currentUser = await getCurrentUser();
@@ -221,7 +217,11 @@ const AuthenticatedLayout: React.FC<{
               {page === 'sprint' && <Sprint />}
               {page === 'profile' && <Profile />}
               {page === 'help-support' && <HelpSupport />}
-              {page === 'admin' && <AdminDashboard />}
+              {page === 'admin' && (
+                <ErrorBoundary label="Admin Dashboard">
+                  <AdminDashboard />
+                </ErrorBoundary>
+              )}
             </div>
           </main>
           <footer className="py-4 text-center text-sm text-muted-foreground border-t bg-card">
