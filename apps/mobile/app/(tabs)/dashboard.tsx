@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, RefreshControl, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useRouter } from 'expo-router';
 import { Colors, Layout } from '../../constants/Colors';
-import { useDashboardData } from '@drut/shared';
-import { Settings, Bell, Zap, TrendingUp, Target, ChevronRight } from 'lucide-react-native';
+import { useDashboardData, analyticsService } from '@drut/shared';
+import { Zap, TrendingUp, Target, ChevronRight } from 'lucide-react-native';
+import { useAuth } from '../../contexts/AuthContext';
 
 export default function DashboardScreen() {
+    const router = useRouter();
     const { loading, data, error, refetch } = useDashboardData();
+    const { user } = useAuth(); // Fresh user from AuthContext (reflects latest metadata)
     const [greeting, setGreeting] = useState('Good Morning');
+    const [streak, setStreak] = useState(0);
 
     useEffect(() => {
         const hours = new Date().getHours();
@@ -15,6 +20,11 @@ export default function DashboardScreen() {
         else if (hours < 18) setGreeting('Good Afternoon');
         else setGreeting('Good Evening');
     }, []);
+
+    // Fetch real streak
+    useEffect(() => {
+        analyticsService.fetchUserStreak().then(s => setStreak(s)).catch(() => setStreak(0));
+    }, [data]);
 
     const onRefresh = React.useCallback(() => {
         refetch();
@@ -38,17 +48,14 @@ export default function DashboardScreen() {
                 <View style={styles.header}>
                     <View>
                         <Text style={styles.greeting}>{greeting},</Text>
-                        <Text style={styles.username}>{data?.user?.user_metadata?.full_name || 'Champion'}</Text>
+                        <Text style={styles.username}>
+                            {(user?.user_metadata?.full_name ||
+                              data?.user?.user_metadata?.full_name ||
+                              ''
+                            ).split(' ')[0] || 'there'}
+                        </Text>
                     </View>
-                    <View style={styles.headerIcons}>
-                        <TouchableOpacity style={styles.iconButton}>
-                            <Bell size={24} color={Colors.text} />
-                            <View style={styles.badge} />
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.iconButton}>
-                            <Settings size={24} color={Colors.text} />
-                        </TouchableOpacity>
-                    </View>
+                    {/* Header icons removed for beta — notifications and settings */}
                 </View>
 
                 {/* Quick Stats Row */}
@@ -60,7 +67,7 @@ export default function DashboardScreen() {
                     </View>
                     <View style={[styles.statCard, { backgroundColor: '#fdf4ff' }]}>
                         <Zap size={24} color="#d946ef" />
-                        <Text style={styles.statValue}>{0}</Text>
+                        <Text style={styles.statValue}>{streak}</Text>
                         <Text style={styles.statLabel}>Day Streak</Text>
                     </View>
                     <View style={[styles.statCard, { backgroundColor: '#fff7ed' }]}>
@@ -71,7 +78,7 @@ export default function DashboardScreen() {
                 </View>
 
                 {/* Main CTA: Quick Sprint */}
-                <TouchableOpacity style={styles.sprintCard}>
+                <TouchableOpacity style={styles.sprintCard} onPress={() => router.push('/(tabs)/sprint')}>
                     <View style={styles.sprintTextContainer}>
                         <Text style={styles.sprintTitle}>Quick Sprint</Text>
                         <Text style={styles.sprintSubtitle}>10 intense questions to boost your speed.</Text>
@@ -88,7 +95,7 @@ export default function DashboardScreen() {
                 {/* Weak Areas */}
                 <View style={styles.sectionHeader}>
                     <Text style={styles.sectionTitle}>Topic Progress</Text>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => router.push('/(tabs)/practice')}>
                         <Text style={styles.seeAll}>See All</Text>
                     </TouchableOpacity>
                 </View>
@@ -99,7 +106,17 @@ export default function DashboardScreen() {
                             .sort((a, b) => a.progressPercent - b.progressPercent) // Show lowest progress first
                             .slice(0, 5)
                             .map((item: any, index: number) => (
-                                <TouchableOpacity key={index} style={styles.weaknessCard}>
+                                <TouchableOpacity
+                                    key={index}
+                                    style={styles.weaknessCard}
+                                    onPress={() => router.push({
+                                        pathname: '/(tabs)/practice',
+                                        params: {
+                                            presetSubject: item.topic.metadata?.subject || '',
+                                            presetChapter: item.topic.value || '',
+                                        },
+                                    })}
+                                >
                                     <View style={styles.weaknessIcon}>
                                         <Target size={20} color={Colors.error} />
                                     </View>

@@ -15,11 +15,16 @@ import {
     User,
     Settings,
     BookOpen,
-    Bell,
     HelpCircle,
-    Info,
     LogOut,
     ChevronRight,
+    MapPin,
+    Phone,
+    Mail,
+    GraduationCap,
+    Target,
+    Calendar,
+    Building2,
 } from 'lucide-react-native';
 import { Colors } from '../../../constants/Colors';
 import { profileService, authService, UserProfile } from '@drut/shared';
@@ -27,14 +32,36 @@ import { profileService, authService, UserProfile } from '@drut/shared';
 const MENU_ITEMS = [
     { id: 'account-settings', label: 'Account Settings', icon: Settings },
     { id: 'exam-preferences', label: 'Exam Preferences', icon: BookOpen },
-    { id: 'notifications', label: 'Notifications', icon: Bell },
     { id: 'help-support', label: 'Help & Support', icon: HelpCircle },
-    { id: 'about', label: 'About', icon: Info },
 ];
+
+// Friendly labels for stored values
+const EXAM_LABEL: Record<string, string> = {
+    ap_eapcet: 'AP EAPCET',
+    ts_eapcet: 'TS EAPCET',
+};
+
+const YEAR_IN_SCHOOL_LABEL: Record<string, string> = {
+    '11': 'Class 11',
+    '12': 'Class 12',
+    'Reappear': 'Reappear',
+};
+
+const REFERRAL_LABEL: Record<string, string> = {
+    friend: 'Friend / Word of mouth',
+    instagram: 'Instagram',
+    youtube: 'YouTube',
+    google: 'Google Search',
+    coaching: 'Coaching Center',
+    other: 'Other',
+    prefer_not_to_say: 'Prefer not to say',
+};
 
 export default function ProfileScreen() {
     const router = useRouter();
     const [profile, setProfile] = useState<UserProfile | null>(null);
+    const [userMeta, setUserMeta] = useState<Record<string, any> | null>(null);
+    const [userEmail, setUserEmail] = useState<string>('');
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -43,9 +70,21 @@ export default function ProfileScreen() {
 
     const loadProfile = async () => {
         setLoading(true);
-        const data = await profileService.getProfile();
-        setProfile(data);
-        setLoading(false);
+        try {
+            const [data, user] = await Promise.all([
+                profileService.getProfile(),
+                authService.getCurrentUser(),
+            ]);
+            setProfile(data);
+            setUserMeta(user?.user_metadata || null);
+            // Use real email if signed up via email; for WhatsApp users use email_address from metadata
+            setUserEmail(
+                user?.user_metadata?.email_address ||
+                (user?.email?.endsWith('@phone.drut.club') ? '' : user?.email || '')
+            );
+        } finally {
+            setLoading(false);
+        }
     };
 
     const handleShowProfile = () => {
@@ -84,6 +123,43 @@ export default function ProfileScreen() {
         );
     }
 
+    // Derive friendly labels from raw metadata
+    const fullName = userMeta?.full_name || profile?.fullName || 'Set your name';
+    const city = userMeta?.city;
+    const phoneNumber = userMeta?.phone_number;
+    const school = userMeta?.school_name;
+    const coaching = userMeta?.coaching_center;
+    const yearInSchool = userMeta?.year_in_school;
+    const targetExams: string[] = Array.isArray(userMeta?.target_exams) ? userMeta!.target_exams : [];
+    const examYear = userMeta?.target_exam_year;
+    const referralSource = userMeta?.referral_source;
+
+    const targetExamLabel = targetExams.length === 2
+        ? 'AP + TS EAPCET'
+        : targetExams.length === 1
+            ? EXAM_LABEL[targetExams[0]] || targetExams[0]
+            : null;
+
+    const yearInSchoolLabel = yearInSchool ? YEAR_IN_SCHOOL_LABEL[yearInSchool] : null;
+    const examYearLabel = examYear === 'unknown' ? 'Not sure yet' : examYear;
+    const referralLabel = referralSource ? REFERRAL_LABEL[referralSource] : null;
+
+    // Contact rows (filter out empties)
+    const contactRows = [
+        userEmail && { icon: Mail, label: 'Email', value: userEmail },
+        phoneNumber && { icon: Phone, label: 'Phone', value: `+91 ${phoneNumber.replace(/^91/, '')}` },
+        city && { icon: MapPin, label: 'Location', value: city },
+    ].filter(Boolean) as Array<{ icon: any; label: string; value: string }>;
+
+    // Academic rows
+    const academicRows = [
+        yearInSchoolLabel && { icon: GraduationCap, label: 'Year', value: yearInSchoolLabel },
+        targetExamLabel && { icon: Target, label: 'Target Exam', value: targetExamLabel },
+        examYearLabel && { icon: Calendar, label: 'Exam Year', value: examYearLabel },
+        school && { icon: GraduationCap, label: 'School', value: school },
+        coaching && { icon: Building2, label: 'Coaching', value: coaching },
+    ].filter(Boolean) as Array<{ icon: any; label: string; value: string }>;
+
     return (
         <SafeAreaView style={styles.container} edges={['top']}>
             <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
@@ -102,13 +178,66 @@ export default function ProfileScreen() {
                         )}
                     </View>
                     <View style={styles.userInfo}>
-                        <Text style={styles.userName}>
-                            {profile?.fullName || 'Set your name'}
-                        </Text>
-                        <Text style={styles.showProfile}>Show profile</Text>
+                        <Text style={styles.userName}>{fullName}</Text>
+                        {city && <Text style={styles.userSubtitle}>{city}</Text>}
                     </View>
                     <ChevronRight size={24} color={Colors.textDim} />
                 </TouchableOpacity>
+
+                {/* Contact Info */}
+                {contactRows.length > 0 && (
+                    <>
+                        <Text style={styles.sectionTitle}>Contact</Text>
+                        <View style={styles.infoContainer}>
+                            {contactRows.map((row, index) => (
+                                <View
+                                    key={row.label}
+                                    style={[
+                                        styles.infoRow,
+                                        index < contactRows.length - 1 && styles.infoRowBorder,
+                                    ]}
+                                >
+                                    <row.icon size={20} color={Colors.primary} />
+                                    <View style={styles.infoTextContainer}>
+                                        <Text style={styles.infoLabel}>{row.label}</Text>
+                                        <Text style={styles.infoValue}>{row.value}</Text>
+                                    </View>
+                                </View>
+                            ))}
+                        </View>
+                    </>
+                )}
+
+                {/* EAPCET Profile */}
+                {academicRows.length > 0 && (
+                    <>
+                        <Text style={styles.sectionTitle}>EAPCET Profile</Text>
+                        <View style={styles.infoContainer}>
+                            {academicRows.map((row, index) => (
+                                <View
+                                    key={row.label}
+                                    style={[
+                                        styles.infoRow,
+                                        index < academicRows.length - 1 && styles.infoRowBorder,
+                                    ]}
+                                >
+                                    <row.icon size={20} color={Colors.primary} />
+                                    <View style={styles.infoTextContainer}>
+                                        <Text style={styles.infoLabel}>{row.label}</Text>
+                                        <Text style={styles.infoValue}>{row.value}</Text>
+                                    </View>
+                                </View>
+                            ))}
+                        </View>
+                    </>
+                )}
+
+                {/* Referral source (subtle, if set) */}
+                {referralLabel && (
+                    <Text style={styles.referralNote}>
+                        Found Drut via {referralLabel}
+                    </Text>
+                )}
 
                 {/* Settings Section */}
                 <Text style={styles.sectionTitle}>Settings</Text>
@@ -169,7 +298,7 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.white,
         borderRadius: 16,
         padding: 16,
-        marginBottom: 32,
+        marginBottom: 28,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.05,
@@ -201,21 +330,67 @@ const styles = StyleSheet.create({
         color: Colors.text,
         marginBottom: 4,
     },
-    showProfile: {
+    userSubtitle: {
         fontSize: 14,
         color: Colors.textDim,
     },
     sectionTitle: {
-        fontSize: 20,
-        fontWeight: '600',
+        fontSize: 16,
+        fontWeight: '700',
         color: Colors.text,
-        marginBottom: 16,
+        marginBottom: 12,
+        marginTop: 4,
+        textTransform: 'uppercase',
+        letterSpacing: 0.5,
+    },
+    infoContainer: {
+        backgroundColor: Colors.white,
+        borderRadius: 16,
+        overflow: 'hidden',
+        marginBottom: 28,
+        borderWidth: 1,
+        borderColor: Colors.border,
+    },
+    infoRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingVertical: 14,
+        paddingHorizontal: 16,
+        gap: 14,
+    },
+    infoRowBorder: {
+        borderBottomWidth: 1,
+        borderBottomColor: Colors.border,
+    },
+    infoTextContainer: {
+        flex: 1,
+    },
+    infoLabel: {
+        fontSize: 12,
+        color: Colors.textDim,
+        fontWeight: '600',
+        marginBottom: 2,
+    },
+    infoValue: {
+        fontSize: 15,
+        color: Colors.text,
+        fontWeight: '500',
+    },
+    referralNote: {
+        fontSize: 13,
+        color: Colors.textDim,
+        textAlign: 'center',
+        marginBottom: 28,
+        marginTop: -16,
+        fontStyle: 'italic',
     },
     menuContainer: {
         backgroundColor: Colors.white,
         borderRadius: 16,
         overflow: 'hidden',
-        marginBottom: 32,
+        marginBottom: 28,
+        borderWidth: 1,
+        borderColor: Colors.border,
     },
     menuItem: {
         flexDirection: 'row',
