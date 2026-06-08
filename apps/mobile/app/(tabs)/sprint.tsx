@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, ImageBackground, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
 import { Colors, Layout } from '../../constants/Colors';
 import { useRouter } from 'expo-router';
-import { Zap, Timer, Flame, Trophy, ArrowRight, BookOpen } from 'lucide-react-native';
-import { authService, EXAM_TAXONOMY } from '@drut/shared';
+import { Zap, Timer, Flame, ArrowRight, BookOpen } from 'lucide-react-native';
+import { authService, EXAM_TAXONOMY, analyticsService } from '@drut/shared';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const { width } = Dimensions.get('window');
 
+// Subjects used to rotate "Daily Mix" picks so the card actually delivers variety
+const MIX_SUBJECTS = ['Physics', 'Chemistry', 'Mathematics'] as const;
+
 export default function SprintScreen() {
     const router = useRouter();
     const insets = useSafeAreaInsets();
-    const [targetExam, setTargetExam] = useState<string>('ap_eapcet'); // Default (Aligned with Taxonomy)
+    const [targetExam, setTargetExam] = useState<string>('ap_eapcet');
+    const [streak, setStreak] = useState<number | null>(null);
 
     useEffect(() => {
         const loadProfile = async () => {
@@ -23,17 +27,25 @@ export default function SprintScreen() {
         loadProfile();
     }, []);
 
+    // Real streak (matches dashboard)
+    useEffect(() => {
+        analyticsService.fetchUserStreak()
+            .then(s => setStreak(s))
+            .catch(() => setStreak(0));
+    }, []);
+
     const startSprint = (subject?: string) => {
+        // Daily Mix (no subject passed) → rotate one randomly per tap.
+        // Users get variety across days/sessions instead of always-Physics.
+        const finalSubject = subject ||
+            MIX_SUBJECTS[Math.floor(Math.random() * MIX_SUBJECTS.length)];
         router.push({
             pathname: '/practice/session',
             params: {
                 exam: targetExam,
-                subject: subject || 'Physics', // Default to Physics if mixed (API needs subject usually, handle 'mixed' later or client side logic)
-                // For a true "Mixed" sprint, backend needs to support subject='mixed' or we pick one relevant to the user's exam
-                // For prototype, we'll default to Physics if global, or the specific subject passed.
-                topic: 'mixed',
-                mode: 'sprint'
-            }
+                subject: finalSubject,
+                mode: 'sprint',
+            },
         });
     };
 
@@ -45,10 +57,13 @@ export default function SprintScreen() {
                     <Text style={styles.headerTitle}>Sprint Arena</Text>
                     <Text style={styles.headerSubtitle}>Build speed & accuracy</Text>
                 </View>
-                <View style={styles.streakBadge}>
-                    <Flame size={20} color={Colors.primary} fill={Colors.primary} />
-                    <Text style={styles.streakText}>12</Text>
-                </View>
+                {/* Real streak — hidden until user has at least 1 day */}
+                {streak !== null && streak > 0 && (
+                    <View style={styles.streakBadge}>
+                        <Flame size={20} color={Colors.primary} fill={Colors.primary} />
+                        <Text style={styles.streakText}>{streak}</Text>
+                    </View>
+                )}
             </View>
 
             {/* Hero Card - Daily Sprint */}
@@ -63,7 +78,7 @@ export default function SprintScreen() {
                         <Text style={styles.heroLabel}>DAILY MIX</Text>
                     </View>
                     <Text style={styles.heroTitle}>Speed Challenge</Text>
-                    <Text style={styles.heroDesc}>10 Questions • 10 Minutes</Text>
+                    <Text style={styles.heroDesc}>10 Questions • A different subject each time</Text>
 
                     <View style={styles.heroButton}>
                         <Text style={styles.heroButtonText}>Start Now</Text>
@@ -78,7 +93,7 @@ export default function SprintScreen() {
             <View style={styles.section}>
                 <Text style={styles.sectionTitle}>Subject Sprints</Text>
                 <View style={styles.grid}>
-                    {['Physics', 'Chemistry', 'Math'].map((subject) => (
+                    {['Physics', 'Chemistry', 'Mathematics'].map((subject) => (
                         <TouchableOpacity
                             key={subject}
                             style={styles.subjectCard}
@@ -87,31 +102,16 @@ export default function SprintScreen() {
                             <View style={[styles.iconBox, { backgroundColor: getSubjectColor(subject) }]}>
                                 <BookOpen size={24} color="#FFF" />
                             </View>
-                            <Text style={styles.subjectTitle}>{subject}</Text>
+                            <Text style={styles.subjectTitle}>{subject === 'Mathematics' ? 'Math' : subject}</Text>
                             <Text style={styles.subjectDesc}>Random Mix</Text>
                         </TouchableOpacity>
                     ))}
                 </View>
             </View>
 
-            {/* Recent Performance (Placeholder) */}
-            <View style={styles.section}>
-                <Text style={styles.sectionTitle}>Your Speed Stats</Text>
-                <View style={styles.statsRow}>
-                    <View style={styles.statCard}>
-                        <Text style={styles.statValue}>45s</Text>
-                        <Text style={styles.statLabel}>Avg Time</Text>
-                    </View>
-                    <View style={styles.statCard}>
-                        <Text style={styles.statValue}>82%</Text>
-                        <Text style={styles.statLabel}>Accuracy</Text>
-                    </View>
-                    <View style={styles.statCard}>
-                        <Text style={styles.statValue}>Top 10%</Text>
-                        <Text style={styles.statLabel}>Rank</Text>
-                    </View>
-                </View>
-            </View>
+            {/* Speed Stats — REMOVED.
+                Was showing fake "45s / 82% / Top 10%" to every user including new ones.
+                Will be re-added with real analyticsService data once we have proper sprint analytics aggregation. */}
 
         </ScrollView>
     );
@@ -122,7 +122,8 @@ const getSubjectColor = (subject: string) => {
     switch (subject) {
         case 'Physics': return '#3b82f6'; // Blue
         case 'Chemistry': return '#10b981'; // Emerald
-        case 'Math': return '#f59e0b'; // Amber
+        case 'Math':
+        case 'Mathematics': return '#f59e0b'; // Amber
         default: return Colors.primary;
     }
 };
@@ -172,12 +173,12 @@ const styles = StyleSheet.create({
     },
     heroCard: {
         marginHorizontal: 24,
-        backgroundColor: '#1e293b', // Slate 800
+        backgroundColor: '#1e293b',
         borderRadius: 24,
         overflow: 'hidden',
         height: 200,
         marginBottom: 32,
-        shadowColor: "#000",
+        shadowColor: '#000',
         shadowOffset: { width: 0, height: 10 },
         shadowOpacity: 0.2,
         shadowRadius: 15,
@@ -258,8 +259,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderWidth: 1,
         borderColor: '#f1f5f9',
-        // Shadow
-        shadowColor: "#000",
+        shadowColor: '#000',
         shadowOffset: { width: 0, height: 4 },
         shadowOpacity: 0.05,
         shadowRadius: 8,
@@ -283,26 +283,4 @@ const styles = StyleSheet.create({
         fontSize: 12,
         color: Colors.textDim,
     },
-    statsRow: {
-        flexDirection: 'row',
-        gap: 12,
-    },
-    statCard: {
-        flex: 1,
-        backgroundColor: '#f8fafc',
-        padding: 16,
-        borderRadius: 16,
-        alignItems: 'center',
-    },
-    statValue: {
-        fontSize: 20,
-        fontWeight: '800',
-        color: Colors.text,
-        marginBottom: 4,
-    },
-    statLabel: {
-        fontSize: 12,
-        color: Colors.textDim,
-        fontWeight: '500',
-    }
 });
