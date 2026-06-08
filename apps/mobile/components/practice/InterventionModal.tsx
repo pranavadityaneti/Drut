@@ -13,20 +13,28 @@ interface InterventionModalProps {
 
 export const InterventionModal: React.FC<InterventionModalProps> = ({ visible, question, onTrySimilar, onContinue }) => {
     const [activeTab, setActiveTab] = useState<'optimal' | 'solution'>('optimal');
-    const [expandedPhase, setExpandedPhase] = useState<string>('DIAGNOSE'); // Accordion state
+    const [expandedPhase, setExpandedPhase] = useState<string>('DIAGNOSE');
+    const [showFullSteps, setShowFullSteps] = useState(false);
     const { height } = Dimensions.get('window');
 
-    const isLegacyData = !question?.optimal_path && !question?.full_solution;
+    // Support both old schema (optimal_path/full_solution) and new (theOptimalPath/fullStepByStep)
+    const optimalPath = question?.theOptimalPath || question?.optimal_path;
+    const fullSolution = question?.fullStepByStep || question?.full_solution;
+    const fsmExplanation = question?.fsm_explanation;
+    const hasOptimalPath = optimalPath && (optimalPath.exists || optimalPath.available || optimalPath.steps?.length > 0);
+    const hasFullSolution = fullSolution && (fullSolution.phases?.length > 0 || fullSolution.steps?.length > 0);
+    const isLegacyData = !optimalPath && !fullSolution;
 
     // Reset state when question changes
     React.useEffect(() => {
-        if (!isLegacyData && question?.optimal_path?.available) {
+        if (!isLegacyData && hasOptimalPath) {
             setActiveTab('optimal');
         } else {
             setActiveTab('solution');
         }
         setExpandedPhase('DIAGNOSE');
-    }, [question, visible, isLegacyData]);
+        setShowFullSteps(false);
+    }, [question, visible]);
 
     if (!visible || !question) return null;
 
@@ -49,17 +57,19 @@ export const InterventionModal: React.FC<InterventionModalProps> = ({ visible, q
     };
 
     const renderTAR = () => {
-        if (!question.optimal_path || !question.optimal_path.available) {
+        if (!hasOptimalPath) {
             return (
                 <View style={[styles.tabContent, { alignItems: 'center', paddingTop: 20 }]}>
                     <AlertTriangle size={32} color={Colors.textDim} />
                     <Text style={{ marginTop: 12, color: Colors.textDim, fontSize: 16 }}>Calculation Required</Text>
                     <Text style={{ textAlign: 'center', color: '#94a3b8', marginTop: 4 }}>
-                        No shortcut available for this problem. Use the D.E.E.P. method.
+                        No shortcut available for this problem. Use the Full Solution tab.
                     </Text>
                 </View>
             );
         }
+
+        const steps = optimalPath.steps || [];
 
         return (
             <View style={styles.tabContent}>
@@ -67,27 +77,131 @@ export const InterventionModal: React.FC<InterventionModalProps> = ({ visible, q
                     <Text style={{
                         fontSize: 12,
                         fontWeight: '700',
-                        color: '#64748b', // slate-500
+                        color: '#64748b',
                         textTransform: 'uppercase',
-                        letterSpacing: 1.5
+                        letterSpacing: 1.5,
                     }}>
-                        The T.A.R. Algorithm™
+                        The T.A.R. Algorithm
                     </Text>
                 </View>
-                {question.optimal_path.steps.map((step: string, i: number) => (
-                    <View key={i} style={styles.stepRow}>
-                        <View style={styles.stepNumber}><Text style={styles.stepNumberText}>{i + 1}</Text></View>
-                        <View style={{ flex: 1 }}>
-                            <LatexText text={step} fontSize={15} color={Colors.text} />
+                {steps.map((step: any, i: number) => {
+                    const stepText = typeof step === 'string' ? step : step.text || step.action || JSON.stringify(step);
+                    return (
+                        <View key={i} style={styles.stepRow}>
+                            <View style={styles.stepNumber}><Text style={styles.stepNumberText}>{i + 1}</Text></View>
+                            <View style={{ flex: 1 }}>
+                                <LatexText text={stepText} fontSize={15} color={Colors.text} />
+                            </View>
                         </View>
+                    );
+                })}
+
+                {/* Sanity Check */}
+                {optimalPath.sanityCheck && (
+                    <View style={{ marginTop: 8, padding: 12, backgroundColor: '#f0fdf4', borderRadius: 8, borderWidth: 1, borderColor: '#bbf7d0' }}>
+                        <Text style={{ fontSize: 12, fontWeight: '700', color: '#15803d', marginBottom: 4 }}>SANITY CHECK</Text>
+                        <LatexText text={optimalPath.sanityCheck} fontSize={14} color="#15803d" />
                     </View>
-                ))}
+                )}
+
+                {/* FSM Explanation */}
+                {fsmExplanation && (
+                    <View style={{ marginTop: 12, padding: 12, backgroundColor: '#eff6ff', borderRadius: 8, borderWidth: 1, borderColor: '#dbeafe' }}>
+                        <Text style={{ fontSize: 12, fontWeight: '700', color: '#1d4ed8', marginBottom: 4 }}>PATTERN</Text>
+                        <LatexText text={fsmExplanation} fontSize={14} color="#1e40af" />
+                    </View>
+                )}
+
+                {/* Full Step-by-Step Toggle */}
+                {hasFullSolution && (
+                    <View style={{ marginTop: 16 }}>
+                        <TouchableOpacity
+                            style={{
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                paddingVertical: 10,
+                                backgroundColor: '#f8fafc',
+                                borderRadius: 8,
+                                borderWidth: 1,
+                                borderColor: '#e2e8f0',
+                            }}
+                            onPress={() => setShowFullSteps(!showFullSteps)}
+                        >
+                            <BookOpen size={16} color={Colors.textDim} />
+                            <Text style={{ marginLeft: 8, fontSize: 14, fontWeight: '600', color: Colors.textDim }}>
+                                {showFullSteps ? 'Hide' : 'Show'} full step-by-step solution
+                            </Text>
+                        </TouchableOpacity>
+
+                        {showFullSteps && renderFullSteps()}
+                    </View>
+                )}
+            </View>
+        );
+    };
+
+    const renderFullSteps = () => {
+        // New schema: fullStepByStep.steps[]
+        const steps = fullSolution?.steps || [];
+        if (steps.length === 0) return null;
+
+        return (
+            <View style={{ marginTop: 12, gap: 10 }}>
+                {steps.map((step: any, i: number) => {
+                    const stepText = typeof step === 'string' ? step : step.text || step.explanation || JSON.stringify(step);
+                    return (
+                        <View key={i} style={styles.stepRow}>
+                            <View style={[styles.stepNumber, { backgroundColor: '#fef3c7' }]}>
+                                <Text style={[styles.stepNumberText, { color: '#b45309' }]}>{i + 1}</Text>
+                            </View>
+                            <View style={{ flex: 1 }}>
+                                <LatexText text={stepText} fontSize={14} color={Colors.text} />
+                            </View>
+                        </View>
+                    );
+                })}
             </View>
         );
     };
 
     const renderDEEP = () => {
-        if (!question.full_solution?.phases) return <Text>No full solution available.</Text>;
+        // Handle both old schema (phases) and new schema (steps)
+        if (!fullSolution?.phases && !fullSolution?.steps) return <Text style={{ color: Colors.textDim }}>No full solution available.</Text>;
+
+        // If only steps (new schema), render as numbered list
+        if (!fullSolution.phases && fullSolution.steps) {
+            return (
+                <View style={styles.tabContent}>
+                    <View style={{ marginBottom: 12, paddingBottom: 8, borderBottomWidth: 1, borderBottomColor: '#f1f5f9' }}>
+                        <Text style={{ fontSize: 12, fontWeight: '700', color: '#64748b', textTransform: 'uppercase', letterSpacing: 1.5 }}>
+                            Full Step-by-Step Solution
+                        </Text>
+                    </View>
+                    {fullSolution.steps.map((step: any, i: number) => {
+                        const stepText = typeof step === 'string' ? step : step.text || step.explanation || JSON.stringify(step);
+                        return (
+                            <View key={i} style={styles.stepRow}>
+                                <View style={[styles.stepNumber, { backgroundColor: '#fef3c7' }]}>
+                                    <Text style={[styles.stepNumberText, { color: '#b45309' }]}>{i + 1}</Text>
+                                </View>
+                                <View style={{ flex: 1 }}>
+                                    <LatexText text={stepText} fontSize={15} color={Colors.text} />
+                                </View>
+                            </View>
+                        );
+                    })}
+                    {fsmExplanation && (
+                        <View style={{ marginTop: 12, padding: 12, backgroundColor: '#eff6ff', borderRadius: 8, borderWidth: 1, borderColor: '#dbeafe' }}>
+                            <Text style={{ fontSize: 12, fontWeight: '700', color: '#1d4ed8', marginBottom: 4 }}>PATTERN</Text>
+                            <LatexText text={fsmExplanation} fontSize={14} color="#1e40af" />
+                        </View>
+                    )}
+                </View>
+            );
+        }
+
+        if (!fullSolution?.phases) return <Text style={{ color: Colors.textDim }}>No full solution available.</Text>;
 
         return (
             <View style={styles.tabContent}>
@@ -103,7 +217,7 @@ export const InterventionModal: React.FC<InterventionModalProps> = ({ visible, q
                     </Text>
                 </View>
 
-                {question.full_solution.phases.map((phase: any, index: number) => {
+                {fullSolution.phases.map((phase: any, index: number) => {
                     const isExpanded = expandedPhase === phase.label;
                     const getIcon = () => {
                         switch (phase.label) {
@@ -211,12 +325,10 @@ export const InterventionModal: React.FC<InterventionModalProps> = ({ visible, q
 
                     {/* Sticky Footer */}
                     <View style={styles.footer}>
-                        <TouchableOpacity style={styles.proveItButton} onPress={onTrySimilar}>
-                            <Play size={20} color="white" fill="white" />
-                            <Text style={styles.proveItText}>Try Similar</Text>
-                        </TouchableOpacity>
+                        {/* "Try Similar" button hidden until the mini-drill feature ships.
+                            Was showing Alert.alert('Coming Soon') — fake CTA broke trust. */}
 
-                        <TouchableOpacity style={styles.continueButton} onPress={onContinue}>
+                        <TouchableOpacity style={[styles.continueButton, { flex: 1 }]} onPress={onContinue}>
                             <Text style={styles.continueText}>Continue Practice</Text>
                             <ArrowRight size={18} color={Colors.textDim} />
                         </TouchableOpacity>
@@ -469,10 +581,9 @@ const styles = StyleSheet.create({
     },
     accordionContent: {
         padding: 14,
-        paddingTop: 0,
+        paddingTop: 12,
         borderTopWidth: 1,
         borderTopColor: '#f1f5f9',
         marginTop: 4,
-        paddingTop: 12
     }
 });

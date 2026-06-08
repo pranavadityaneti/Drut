@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, StyleSheet, ActivityIndicator, Alert, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ActivityIndicator, Alert, TouchableOpacity, Animated } from 'react-native';
 import { Colors } from '../constants/Colors';
 import { SessionHeader } from './SessionHeader';
 import { QuestionCard } from './QuestionCard';
 import { SessionSummary } from './SessionSummary';
 import { useRouter } from 'expo-router';
-import { getQuestionsForUser, authService, saveAttemptAndUpdateMastery } from '@drut/shared';
+import { authService, saveAttemptAndUpdateMastery, calculateTargetTime } from '@drut/shared';
 import { usePracticeQuestions } from '../hooks/usePracticeQuestions';
 import { InterventionModal } from './practice/InterventionModal';
+import { ChevronRight } from 'lucide-react-native';
 
-// Helper for Timer formatting
 const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
@@ -20,7 +20,9 @@ interface SessionEngineProps {
     config: {
         exam: string;
         subject: string;
-        topic?: string;
+        chapters?: string[];
+        difficulty?: 'Easy' | 'Medium' | 'Hard' | 'Mixed';
+        questionCount?: number;
         mode?: 'practice' | 'sprint';
     };
     onSessionComplete?: (results: any) => void;
@@ -28,30 +30,36 @@ interface SessionEngineProps {
 
 export const SessionEngine: React.FC<SessionEngineProps> = ({ config, onSessionComplete }) => {
     const router = useRouter();
+    const questionCount = config.questionCount || 10;
 
-    // State
-    const [difficulty, setDifficulty] = useState<'Easy' | 'Medium' | 'Hard'>('Medium');
-    const { questions, loading, loadingMore, error, loadMore } = usePracticeQuestions({
+    // Questions
+    const { questions, loading, loadingMore, error, loadMore, totalTarget } = usePracticeQuestions({
         config,
-        batchSize: 3,
-        difficulty // Pass to hook
+        batchSize: Math.min(5, questionCount),
     });
     const [currentIndex, setCurrentIndex] = useState(0);
     const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
     const [isSubmitted, setIsSubmitted] = useState(false);
 
-    // Results & Summary State
+    // Results & Summary
     const [results, setResults] = useState<any[]>([]);
     const [showSummary, setShowSummary] = useState(false);
 
-    // Timer State
-    const [timeElapsed, setTimeElapsed] = useState(0); // Current Question Time
-    const [sessionTime, setSessionTime] = useState(0); // Total Session Time
+    // Timer
+    const [timeElapsed, setTimeElapsed] = useState(0);
+    const [sessionTime, setSessionTime] = useState(0);
     const timerRef = useRef<NodeJS.Timeout | null>(null);
     const startQuestionTimeRef = useRef<number>(0);
     const startSessionTimeRef = useRef<number>(0);
 
-    // Start Timer when questions load
+    // Intervention
+    const [showIntervention, setShowIntervention] = useState(false);
+
+    // Success toast (correct answer — show Next button)
+    const [showCorrectNext, setShowCorrectNext] = useState(false);
+    const fadeAnim = useRef(new Animated.Value(0)).current;
+
+    // Start timer when questions load
     useEffect(() => {
         if (!loading && questions.length > 0) {
             startTimer();
@@ -59,10 +67,16 @@ export const SessionEngine: React.FC<SessionEngineProps> = ({ config, onSessionC
         return () => stopTimer();
     }, [loading]);
 
+    // Error handling
+    useEffect(() => {
+        if (error) {
+            Alert.alert('Error', error);
+            router.back();
+        }
+    }, [error]);
+
     const startTimer = (resetQuestion = false) => {
         if (timerRef.current) clearInterval(timerRef.current);
-
-        // Initialize start times based on current elapsed (to resume correctly)
         const now = Date.now();
 
         if (resetQuestion) {
@@ -85,17 +99,6 @@ export const SessionEngine: React.FC<SessionEngineProps> = ({ config, onSessionC
         if (timerRef.current) clearInterval(timerRef.current);
     };
 
-    // Error Handling
-    useEffect(() => {
-        if (error) {
-            Alert.alert('Error', error);
-            router.back();
-        }
-    }, [error]);
-
-    // Intervention State
-    const [showIntervention, setShowIntervention] = useState(false);
-
     const handleSelectOption = async (optionId: string) => {
         if (isSubmitted) return;
 
@@ -103,146 +106,131 @@ export const SessionEngine: React.FC<SessionEngineProps> = ({ config, onSessionC
         setIsSubmitted(true);
         stopTimer();
 
-        // Check correctness (Index based comparison)
         const currentQ = questions[currentIndex];
-
-        // Find index of selected option ID
         const selectedIndex = currentQ.options.findIndex((o: any) => o.id === optionId);
         const isCorrect = selectedIndex === currentQ.correctOptionIndex;
 
-        // Update Local Results
+        // Update results
         setResults(prev => [...prev, {
             questionId: currentQ.id,
             isCorrect,
-            timeTaken: timeElapsed
+            timeTaken: timeElapsed,
         }]);
 
-        // Server-Side Submission
-        // ----------------------------------------------------
+        // Save to server
         try {
-            // Find index of selected option
-            const selectedOptionIndex = currentQ.options.findIndex((o: any) => o.id === optionId);
-            const fsmTag = currentQ.fsmTag || `${config.topic || 'unknown'}-default`;
+            const topic = config.chapters?.[0] !== 'all' ? config.chapters?.[0] : 'mixed';
+            const fsmTag = currentQ.fsmTag || `${topic || 'unknown'}-default`;
+
+            // Target time priority:
+            //   1. Question's own `timeTargets[examProfile]` (AI-calibrated per question)
+            //   2. Fall back to per-exam / per-difficulty `calculateTargetTime` baseline
+            // This matches web's behavior — mobile previously ignored timeTargets,
+            // causing mastery FSM to mark too many questions as "slow".
+            const effectiveDifficulty: 'Easy' | 'Medium' | 'Hard' =
+                (currentQ.difficulty === 'Easy' || currentQ.difficulty === 'Hard')
+                    ? currentQ.difficulty
+                    : 'Medium';
+            const examKey = config.exam || 'default';
+            const perQuestionTargetSec = currentQ.timeTargets?.[examKey];
+            const targetTimeMs = typeof perQuestionTargetSec === 'number' && perQuestionTargetSec > 0
+                ? perQuestionTargetSec * 1000
+                : calculateTargetTime(examKey, effectiveDifficulty) * 1000;
 
             await saveAttemptAndUpdateMastery({
                 questionUuid: currentQ.uuid || currentQ.id,
-                fsmTag: fsmTag,
-                isCorrect: isCorrect,
+                fsmTag,
+                isCorrect,
                 timeMs: timeElapsed * 1000,
-                targetTimeMs: 45000,
-                selectedOptionIndex: selectedOptionIndex === -1 ? 0 : selectedOptionIndex,
+                targetTimeMs,
+                selectedOptionIndex: selectedIndex === -1 ? 0 : selectedIndex,
                 skipDrill: false,
             });
         } catch (err: any) {
-            // TRAP GHOST QUESTION ERROR
             if (err.message?.includes('foreign key constraint') || err.code === '23503' || err.message?.includes('409')) {
-                console.warn("[SessionEngine] Could not save mastery for Ghost Question. Continuing...");
+                console.warn('[SessionEngine] Ghost question — skipping mastery save');
             } else {
                 console.error('Failed to save progress:', err);
-                // Optional: Alert user or just keep going?
             }
         }
 
         if (!isCorrect) {
-            // SHOW INTERVENTION MODAL
+            // Show intervention modal
             setShowIntervention(true);
-            // DO NOT auto-advance
         } else {
-            // Correct answer? Auto-advance
-            setTimeout(() => {
-                advanceToNext();
-            }, 1000); // Faster advance for correct
+            // Show "Next" button (no auto-advance)
+            setShowCorrectNext(true);
+            Animated.timing(fadeAnim, {
+                toValue: 1,
+                duration: 300,
+                useNativeDriver: true,
+            }).start();
         }
     };
 
-    const advanceToNext = () => {
+    const advanceOrComplete = () => {
         setShowIntervention(false);
+        setShowCorrectNext(false);
+        fadeAnim.setValue(0);
 
-        // Check if we need to load more (Refill Logic)
-        // Improved for smaller batches: fetch earlier (when 1 or fewer left)
-        if (questions.length - currentIndex <= 1) {
-            console.log('Pre-fetching more questions...');
+        // Check if we've reached the question count
+        if (currentIndex + 1 >= questionCount) {
+            // Session complete
+            setShowSummary(true);
+            stopTimer();
+            if (onSessionComplete) onSessionComplete(results);
+            return;
+        }
+
+        // Pre-fetch more if running low
+        if (questions.length - (currentIndex + 1) <= 2) {
             loadMore();
         }
 
         if (currentIndex < questions.length - 1) {
-            // Next Question
             setCurrentIndex(prev => prev + 1);
             setSelectedAnswer(null);
             setIsSubmitted(false);
-            // Reset Question Timer AND Start
             startTimer(true);
+        } else if (loadingMore) {
+            // Waiting for more to load
+            setCurrentIndex(prev => prev + 1);
+            setSelectedAnswer(null);
+            setIsSubmitted(false);
         } else {
-            // We are at the end...
-            if (loadingMore) {
-                // Wait for more... user sees spinner logic below
-                setCurrentIndex(prev => prev + 1); // This will cause activeQuestions to be undefined momentarily, handled by check below
-                setSelectedAnswer(null);
-                setIsSubmitted(false);
-            } else {
-                // Really no more questions? Or just failed to load?
-                // For infinite scroll, this shouldn't happen ideally unless error or end of world.
-                // We can show "Generating..."
-                Alert.alert('Generating...', 'Please wait while we create more questions for you.');
-                loadMore();
-            }
+            // No more questions available
+            setShowSummary(true);
+            stopTimer();
+            if (onSessionComplete) onSessionComplete(results);
         }
     };
 
-
-    const handleTrySimilar = () => {
-        console.log("Trigger Mini-Practice Loop (Phase 2)");
-        Alert.alert("Coming Soon", "Try Similar Mode will trigger a 3-question drill.");
-    };
+    // Try Similar button is hidden in InterventionModal until the mini-drill ships.
+    // Keeping a no-op handler so the prop interface stays satisfied.
+    const handleTrySimilar = () => { };
 
     const handleContinue = () => {
-        advanceToNext();
+        advanceOrComplete();
     };
 
     const handleExit = () => {
-        // Manual "Finish" trigger
         Alert.alert(
             'Finish Practice?',
-            'See your summary report?',
+            `You've answered ${results.length} question${results.length === 1 ? '' : 's'}. See your summary?`,
             [
                 { text: 'Cancel', style: 'cancel' },
                 {
                     text: 'Finish', style: 'default', onPress: () => {
                         setShowSummary(true);
+                        stopTimer();
                         if (onSessionComplete) onSessionComplete(results);
                     }
-                }
+                },
             ]
         );
     };
 
-    const handleToggleDifficulty = () => {
-        Alert.alert(
-            'Select Difficulty',
-            `Current: ${difficulty}`,
-            [
-                { text: 'Easy', onPress: () => changeDifficulty('Easy') },
-                { text: 'Medium', onPress: () => changeDifficulty('Medium') },
-                { text: 'Hard', onPress: () => changeDifficulty('Hard') },
-                { text: 'Cancel', style: 'cancel' }
-            ]
-        );
-    };
-
-    const changeDifficulty = (level: 'Easy' | 'Medium' | 'Hard') => {
-        if (level === difficulty) return;
-        setDifficulty(level);
-        // The Hook will automatically reset and fetch new questions when `difficulty` changes.
-        // We just need to reset our local index.
-        setCurrentIndex(0);
-        setSelectedAnswer(null);
-        setIsSubmitted(false);
-        setTimeElapsed(0);
-    };
-
-    // ----------------------
-    // View States
-    // ----------------------
+    // --- View States ---
 
     if (loading) {
         return (
@@ -259,39 +247,56 @@ export const SessionEngine: React.FC<SessionEngineProps> = ({ config, onSessionC
         return (
             <SessionSummary
                 results={results}
-                totalQuestions={questions.length}
+                totalQuestions={questionCount}
                 onExit={() => router.back()}
             />
         );
     }
 
-    if (questions.length === 0) return null;
-
-    const activeQuestion = questions[currentIndex];
-
-    // Handle "Waiting for more questions" state
-    if (!activeQuestion && loadingMore) {
+    if (questions.length === 0) {
         return (
             <View style={styles.loadingContainer}>
-                <ActivityIndicator size="large" color={Colors.primary} />
-                <Text style={styles.loadingText}>Generating new questions...</Text>
+                <Text style={styles.loadingText}>No questions available for this selection.</Text>
+                <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
+                    <Text style={styles.backButtonText}>Go Back</Text>
+                </TouchableOpacity>
             </View>
         );
     }
 
-    if (!activeQuestion) return null;
+    const activeQuestion = questions[currentIndex];
+
+    // Waiting for more questions to load
+    if (!activeQuestion && loadingMore) {
+        return (
+            <View style={styles.loadingContainer}>
+                <ActivityIndicator size="large" color={Colors.primary} />
+                <Text style={styles.loadingText}>Loading next question...</Text>
+            </View>
+        );
+    }
+
+    if (!activeQuestion) {
+        // Reached end unexpectedly
+        return (
+            <SessionSummary
+                results={results}
+                totalQuestions={questionCount}
+                onExit={() => router.back()}
+            />
+        );
+    }
 
     return (
         <View style={styles.container}>
             <SessionHeader
                 currentIndex={currentIndex}
-                totalQuestions={questions.length}
+                totalQuestions={questionCount}
                 questionTime={formatTime(timeElapsed)}
                 sessionTime={formatTime(sessionTime)}
-                topic={config.topic}
-                difficulty={difficulty}
+                topic={config.chapters?.[0] !== 'all' ? config.chapters?.[0] : config.subject}
+                difficulty={config.difficulty || 'Medium'}
                 onExit={handleExit}
-                onToggleDifficulty={handleToggleDifficulty}
             />
 
             <QuestionCard
@@ -302,16 +307,25 @@ export const SessionEngine: React.FC<SessionEngineProps> = ({ config, onSessionC
                 onSelectAnswer={handleSelectOption}
             />
 
+            {/* Correct Answer → Next Button */}
+            {showCorrectNext && (
+                <Animated.View style={[styles.nextButtonContainer, { opacity: fadeAnim }]}>
+                    <TouchableOpacity style={styles.nextButton} onPress={advanceOrComplete}>
+                        <Text style={styles.nextButtonText}>
+                            {currentIndex + 1 >= questionCount ? 'See Results' : 'Next'}
+                        </Text>
+                        <ChevronRight size={20} color={Colors.white} />
+                    </TouchableOpacity>
+                </Animated.View>
+            )}
 
-
-            {/* INTERVENTION MODAL Overlay (New Phase 1) */}
+            {/* Intervention Modal */}
             <InterventionModal
                 visible={showIntervention}
                 question={activeQuestion}
                 onTrySimilar={handleTrySimilar}
                 onContinue={handleContinue}
             />
-
         </View>
     );
 };
@@ -326,10 +340,49 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: Colors.background,
+        padding: 24,
     },
     loadingText: {
         marginTop: 16,
         color: Colors.textDim,
         fontSize: 16,
-    }
+        textAlign: 'center',
+    },
+    backButton: {
+        marginTop: 20,
+        paddingVertical: 12,
+        paddingHorizontal: 24,
+        backgroundColor: Colors.primary,
+        borderRadius: 12,
+    },
+    backButtonText: {
+        color: Colors.white,
+        fontWeight: '600',
+        fontSize: 16,
+    },
+    nextButtonContainer: {
+        position: 'absolute',
+        bottom: 40,
+        left: 20,
+        right: 20,
+    },
+    nextButton: {
+        backgroundColor: Colors.primary,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: 16,
+        borderRadius: 16,
+        shadowColor: Colors.primary,
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.3,
+        shadowRadius: 8,
+        elevation: 4,
+        gap: 8,
+    },
+    nextButtonText: {
+        color: Colors.white,
+        fontSize: 18,
+        fontWeight: 'bold',
+    },
 });
