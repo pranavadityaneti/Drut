@@ -150,9 +150,12 @@ export const SprintSetup: React.FC<SprintSetupProps> = ({ onStart }) => {
 
  // Picker v2 derivation — see PracticeSetup.tsx for full notes
  const primaryBoard = getPrimaryBoardForExam(selectedExam);
- const primaryHasContent = chapterSources.some(s => s.board === primaryBoard);
- const effectivePrimaryBoard = primaryHasContent ? primaryBoard : 'NCERT';
- const stateBoardFellBack = primaryBoard !== 'NCERT' && !primaryHasContent;
+ // Class-aware fallback — see PracticeSetup for full rationale
+ const primaryHasContentForSelection = chapterSources.some(s =>
+  s.board === primaryBoard && classMatchesSelection(s.class_name, selectedClass)
+ );
+ const effectivePrimaryBoard = primaryHasContentForSelection ? primaryBoard : 'NCERT';
+ const stateBoardFellBack = primaryBoard !== 'NCERT' && !primaryHasContentForSelection;
  const effectiveBoards = (() => {
   const set = new Set<string>([effectivePrimaryBoard]);
   if (includeNcert && effectivePrimaryBoard !== 'NCERT') set.add('NCERT');
@@ -366,7 +369,7 @@ export const SprintSetup: React.FC<SprintSetupProps> = ({ onStart }) => {
    )}
    <p className="text-xs text-[var(--color-ink-3)] -mt-2">
     {stateBoardFellBack
-     ? `Showing NCERT questions — your state board (${primaryBoard}) doesn't have ${selectedSubject || 'this subject'} textbooks loaded yet.`
+     ? `Showing NCERT questions — your state board (${primaryBoard}) doesn't have ${selectedSubject || 'this subject'}${selectedClass !== 'Both' ? ` ${selectedClass}` : ''} textbooks loaded yet.`
      : `Source: ${effectiveBoards.join(' + ')} ${effectivePrimaryBoard === 'NCERT' ? '(national curriculum)' : '(your state board)'}`}
    </p>
    <div className="space-y-2">

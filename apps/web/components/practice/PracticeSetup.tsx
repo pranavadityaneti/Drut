@@ -182,9 +182,15 @@ export const PracticeSetup: React.FC<PracticeSetupProps> = ({ onStart }) => {
  // 3. effectiveBoards = [primaryBoard or fallback] + (includeNcert && primary !== NCERT ? [NCERT] : [])
  // 4. displayedChapters = chapters from effectiveBoards × selectedClass, with labels
  const primaryBoard = getPrimaryBoardForExam(selectedExam);
- const primaryHasContent = chapterSources.some(s => s.board === primaryBoard);
- const effectivePrimaryBoard = primaryHasContent ? primaryBoard : 'NCERT';
- const stateBoardFellBack = primaryBoard !== 'NCERT' && !primaryHasContent;
+ // Check that the primary board has content for THIS class specifically
+ // (not just the subject). BIEAP today has only 1st Year content — picking
+ // Class 12 should silently fall back to NCERT instead of showing an empty
+ // chapter dropdown.
+ const primaryHasContentForSelection = chapterSources.some(s =>
+  s.board === primaryBoard && classMatchesSelection(s.class_name, selectedClass)
+ );
+ const effectivePrimaryBoard = primaryHasContentForSelection ? primaryBoard : 'NCERT';
+ const stateBoardFellBack = primaryBoard !== 'NCERT' && !primaryHasContentForSelection;
 
  const effectiveBoards = (() => {
   const set = new Set<string>([effectivePrimaryBoard]);
@@ -405,7 +411,7 @@ export const PracticeSetup: React.FC<PracticeSetupProps> = ({ onStart }) => {
    {/* Source footnote — surfaces which board the questions are coming from */}
    <p className="text-xs text-[var(--color-ink-3)] -mt-2">
     {stateBoardFellBack
-     ? `Showing NCERT questions — your state board (${primaryBoard}) doesn't have ${selectedSubject || 'this subject'} textbooks loaded yet.`
+     ? `Showing NCERT questions — your state board (${primaryBoard}) doesn't have ${selectedSubject || 'this subject'}${selectedClass !== 'Both' ? ` ${selectedClass}` : ''} textbooks loaded yet.`
      : `Source: ${effectiveBoards.join(' + ')} ${effectivePrimaryBoard === 'NCERT' ? '(national curriculum)' : '(your state board)'}`}
    </p>
 

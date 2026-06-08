@@ -117,9 +117,13 @@ export default function PracticeScreen() {
 
     // Picker v2 derivation — see PracticeSetup.tsx for full notes
     const primaryBoard = useMemo(() => getPrimaryBoardForExam(selectedExamValue), [selectedExamValue]);
-    const primaryHasContent = useMemo(() => chapterSources.some(s => s.board === primaryBoard), [chapterSources, primaryBoard]);
-    const effectivePrimaryBoard = primaryHasContent ? primaryBoard : 'NCERT';
-    const stateBoardFellBack = primaryBoard !== 'NCERT' && !primaryHasContent;
+    // Class-aware fallback — see PracticeSetup.tsx for rationale
+    const primaryHasContentForSelection = useMemo(
+        () => chapterSources.some(s => s.board === primaryBoard && classMatchesSelection(s.class_name, selectedClass)),
+        [chapterSources, primaryBoard, selectedClass]
+    );
+    const effectivePrimaryBoard = primaryHasContentForSelection ? primaryBoard : 'NCERT';
+    const stateBoardFellBack = primaryBoard !== 'NCERT' && !primaryHasContentForSelection;
     const effectiveBoards = useMemo(() => {
         const set = new Set<string>([effectivePrimaryBoard]);
         if (includeNcert && effectivePrimaryBoard !== 'NCERT') set.add('NCERT');
@@ -314,7 +318,7 @@ export default function PracticeScreen() {
                     <View style={styles.section}>
                         <Text style={{ fontSize: 11, color: Colors.textDim, fontStyle: 'italic' }}>
                             {stateBoardFellBack
-                                ? `Showing NCERT questions — your state board (${primaryBoard}) doesn't have ${selectedSubject} textbooks loaded yet.`
+                                ? `Showing NCERT questions — your state board (${primaryBoard}) doesn't have ${selectedSubject}${selectedClass !== 'Both' ? ` ${selectedClass}` : ''} textbooks loaded yet.`
                                 : `Source: ${effectiveBoards.join(' + ')} ${effectivePrimaryBoard === 'NCERT' ? '(national curriculum)' : '(your state board)'}`}
                         </Text>
                     </View>
