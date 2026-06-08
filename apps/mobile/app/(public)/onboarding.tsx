@@ -2,31 +2,31 @@ import React, { useRef, useState } from 'react';
 import { View, Text, StyleSheet, Dimensions, FlatList, TouchableOpacity, SafeAreaView, NativeSyntheticEvent, NativeScrollEvent } from 'react-native';
 import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { Colors, Layout } from '../../constants/Colors';
-// import { BrainCircuit, Target, Zap, ChevronRight, Check } from 'lucide-react-native';
+import { Colors } from '../../constants/Colors';
+import { BrainCircuit, Target, Zap, ChevronRight, Check } from 'lucide-react-native';
 
-const { width, height } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
 const SLIDES = [
     {
         id: '1',
         title: 'Master Your Weakness',
-        description: 'Our AI pinpoints exactly what you don’t know and helps you fix it fast.',
-        // icon: <Target size={80} color={Colors.primary} />,
+        description: "Our AI pinpoints exactly what you don't know and helps you fix it fast.",
+        Icon: Target,
         color: '#ebf9e3', // Light green bg
     },
     {
         id: '2',
         title: 'Sprint to Success',
         description: 'Short, intense practice sessions designed to boost your stamina and speed.',
-        // icon: <Zap size={80} color={Colors.primary} />,
+        Icon: Zap,
         color: '#f0fdf4',
     },
     {
         id: '3',
         title: 'Exam Ready',
         description: 'Simulate real exam conditions and track your readiness in real-time.',
-        // icon: <BrainCircuit size={80} color={Colors.primary} />,
+        Icon: BrainCircuit,
         color: '#ecfccb', // Lime tint
     },
 ];
@@ -76,18 +76,20 @@ export default function OnboardingScreen() {
                 onScroll={handleScroll}
                 scrollEventThrottle={16}
                 keyExtractor={(item) => item.id}
-                renderItem={({ item }) => (
-                    <View style={[styles.slide, { width }]}>
-                        <View style={[styles.imageContainer, { backgroundColor: item.color }]}>
-                            {/* {item.icon} */}
-                            <Text>Icon</Text>
+                renderItem={({ item }) => {
+                    const SlideIcon = item.Icon;
+                    return (
+                        <View style={[styles.slide, { width }]}>
+                            <View style={[styles.imageContainer, { backgroundColor: item.color }]}>
+                                <SlideIcon size={96} color={Colors.primary} strokeWidth={1.8} />
+                            </View>
+                            <View style={styles.textContainer}>
+                                <Text style={styles.title}>{item.title}</Text>
+                                <Text style={styles.description}>{item.description}</Text>
+                            </View>
                         </View>
-                        <View style={styles.textContainer}>
-                            <Text style={styles.title}>{item.title}</Text>
-                            <Text style={styles.description}>{item.description}</Text>
-                        </View>
-                    </View>
-                )}
+                    );
+                }}
             />
 
             {/* Footer Controls */}
@@ -110,11 +112,11 @@ export default function OnboardingScreen() {
                     <Text style={styles.nextButtonText}>
                         {currentIndex === SLIDES.length - 1 ? 'Get Started' : 'Next'}
                     </Text>
-                    {/* {currentIndex === SLIDES.length - 1 ? (
+                    {currentIndex === SLIDES.length - 1 ? (
                         <Check size={20} color={Colors.white} style={{ marginLeft: 8 }} />
                     ) : (
                         <ChevronRight size={20} color={Colors.white} style={{ marginLeft: 8 }} />
-                    )} */}
+                    )}
                 </TouchableOpacity>
             </View>
         </View>
@@ -145,7 +147,7 @@ const styles = StyleSheet.create({
     imageContainer: {
         width: width * 0.8,
         height: width * 0.8,
-        borderRadius: 40, // Large rounded corners
+        borderRadius: 40,
         alignItems: 'center',
         justifyContent: 'center',
         marginBottom: 40,
@@ -160,7 +162,7 @@ const styles = StyleSheet.create({
         color: Colors.text,
         marginBottom: 12,
         textAlign: 'center',
-        fontFamily: 'System', // Use system font for now
+        fontFamily: 'System',
     },
     description: {
         fontSize: 16,
@@ -192,7 +194,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#E0E0E0',
     },
     nextButton: {
-        backgroundColor: Colors.text, // Black button like reference
+        backgroundColor: Colors.text,
         paddingVertical: 16,
         paddingHorizontal: 32,
         borderRadius: 30,

@@ -1,30 +1,54 @@
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, ActivityIndicator, Alert, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { Colors } from '../../constants/Colors';
-import { ArrowLeft, Mail, Lock, Eye, EyeOff, MessageCircle } from 'lucide-react-native';
+import { Colors, Layout } from '../../constants/Colors';
+import { ArrowLeft, Mail, Lock, Eye, EyeOff, User } from 'lucide-react-native';
 import { useState } from 'react';
 import { authService } from '@drut/shared';
 
-export default function LoginScreen() {
+export default function SignupScreen() {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
+    const [fullName, setFullName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
 
-    const handleLogin = async () => {
+    const handleSignup = async () => {
+        if (!fullName.trim()) {
+            Alert.alert('Error', 'Please enter your full name.');
+            return;
+        }
         if (!email || !password) {
             Alert.alert('Error', 'Please enter both email and password.');
+            return;
+        }
+        if (password.length < 6) {
+            Alert.alert('Error', 'Password must be at least 6 characters.');
             return;
         }
 
         setLoading(true);
         try {
-            await authService.login(email, password);
-            router.replace('/(tabs)/dashboard');
+            const result = await authService.signup(email, password);
+
+            if (result.sessionEstablished && result.user) {
+                // Update user metadata with full name (rest of profile collected in wizard)
+                await authService.updateUser({
+                    data: { full_name: fullName.trim() },
+                });
+                // Send to profile-setup wizard (collects class, exam, school, etc.)
+                router.replace('/(public)/profile-setup/welcome');
+            } else {
+                // Email confirmation required
+                Alert.alert(
+                    'Check Your Email',
+                    'We sent you a confirmation link. Please verify your email to continue.',
+                    [{ text: 'OK', onPress: () => router.replace('/(public)/login') }]
+                );
+            }
         } catch (err: any) {
-            Alert.alert('Login Failed', err.message);
+            Alert.alert('Signup Failed', err.message);
         } finally {
             setLoading(false);
         }
@@ -46,30 +70,27 @@ export default function LoginScreen() {
                 <View style={styles.header}>
                     <View style={styles.iconContainer}>
                         <View style={styles.iconCircle} />
-                        <Text style={styles.emoji}>👋</Text>
+                        <Text style={styles.emoji}>🚀</Text>
                     </View>
-                    <Text style={styles.title}>Welcome back!</Text>
-                    <Text style={styles.subtitle}>Log in to continue your progress.</Text>
+                    <Text style={styles.title}>Create Account</Text>
+                    <Text style={styles.subtitle}>Join Drut and start acing your exams.</Text>
                 </View>
 
-                {/* Phone Login — Primary */}
-                <TouchableOpacity
-                    style={styles.phoneButton}
-                    onPress={() => router.push('/(public)/phone-login')}
-                >
-                    <MessageCircle size={22} color="#25D366" />
-                    <Text style={styles.phoneButtonText}>Login with WhatsApp OTP</Text>
-                </TouchableOpacity>
-
-                {/* Divider */}
-                <View style={styles.dividerContainer}>
-                    <View style={styles.divider} />
-                    <Text style={styles.dividerText}>or use email</Text>
-                    <View style={styles.divider} />
-                </View>
-
-                {/* Email Form */}
+                {/* Form */}
                 <View style={styles.form}>
+                    {/* Full Name */}
+                    <View style={styles.inputContainer}>
+                        <User size={20} color={Colors.textDim} style={styles.inputIcon} />
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Full name"
+                            placeholderTextColor={Colors.textDim}
+                            value={fullName}
+                            onChangeText={setFullName}
+                            autoCapitalize="words"
+                        />
+                    </View>
+
                     {/* Email */}
                     <View style={styles.inputContainer}>
                         <Mail size={20} color={Colors.textDim} style={styles.inputIcon} />
@@ -89,7 +110,7 @@ export default function LoginScreen() {
                         <Lock size={20} color={Colors.textDim} style={styles.inputIcon} />
                         <TextInput
                             style={styles.input}
-                            placeholder="Password"
+                            placeholder="Password (min 6 chars)"
                             placeholderTextColor={Colors.textDim}
                             value={password}
                             onChangeText={setPassword}
@@ -104,28 +125,24 @@ export default function LoginScreen() {
                         </TouchableOpacity>
                     </View>
 
-                    <TouchableOpacity style={styles.forgotButton}>
-                        <Text style={styles.forgotText}>Forgot password?</Text>
-                    </TouchableOpacity>
-
-                    {/* Login Button */}
+                    {/* Signup Button */}
                     <TouchableOpacity
-                        style={[styles.loginButton, loading && styles.loginButtonDisabled]}
-                        onPress={handleLogin}
+                        style={[styles.signupButton, loading && styles.signupButtonDisabled]}
+                        onPress={handleSignup}
                         disabled={loading}
                     >
                         {loading ? (
                             <ActivityIndicator color={Colors.text} />
                         ) : (
-                            <Text style={styles.loginButtonText}>Log In with Email</Text>
+                            <Text style={styles.signupButtonText}>Create Account</Text>
                         )}
                     </TouchableOpacity>
 
                     {/* Footer */}
                     <View style={styles.footer}>
-                        <Text style={styles.footerText}>Don't have an account? </Text>
-                        <TouchableOpacity onPress={() => router.push('/(public)/signup')}>
-                            <Text style={styles.signUpText}>Sign up</Text>
+                        <Text style={styles.footerText}>Already have an account? </Text>
+                        <TouchableOpacity onPress={() => router.push('/(public)/login')}>
+                            <Text style={styles.loginText}>Log in</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -149,7 +166,7 @@ const styles = StyleSheet.create({
     },
     header: {
         alignItems: 'center',
-        marginBottom: 32,
+        marginBottom: 40,
     },
     iconContainer: {
         marginBottom: 20,
@@ -178,41 +195,6 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: Colors.textDim,
     },
-    phoneButton: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
-        gap: 12,
-        height: 56,
-        borderRadius: 28,
-        backgroundColor: '#1A1A1A',
-        marginBottom: 8,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.15,
-        shadowRadius: 8,
-        elevation: 4,
-    },
-    phoneButtonText: {
-        fontSize: 17,
-        fontWeight: '700',
-        color: '#FFFFFF',
-    },
-    dividerContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginVertical: 24,
-    },
-    divider: {
-        flex: 1,
-        height: 1,
-        backgroundColor: Colors.border,
-    },
-    dividerText: {
-        marginHorizontal: 16,
-        color: Colors.textDim,
-        fontSize: 14,
-    },
     form: {
         gap: 16,
     },
@@ -234,14 +216,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: Colors.text,
     },
-    forgotButton: {
-        alignSelf: 'flex-end',
-    },
-    forgotText: {
-        color: Colors.textDim,
-        fontSize: 14,
-    },
-    loginButton: {
+    signupButton: {
         backgroundColor: Colors.secondary,
         height: 56,
         borderRadius: 28,
@@ -254,10 +229,10 @@ const styles = StyleSheet.create({
         shadowRadius: 8,
         elevation: 4,
     },
-    loginButtonDisabled: {
+    signupButtonDisabled: {
         opacity: 0.7,
     },
-    loginButtonText: {
+    signupButtonText: {
         fontSize: 18,
         fontWeight: 'bold',
         color: '#1A1A1A',
@@ -265,14 +240,13 @@ const styles = StyleSheet.create({
     footer: {
         flexDirection: 'row',
         justifyContent: 'center',
-        marginTop: 'auto',
-        paddingTop: 24,
+        marginTop: 24,
     },
     footerText: {
         color: Colors.textDim,
         fontSize: 16,
     },
-    signUpText: {
+    loginText: {
         color: Colors.primary,
         fontWeight: 'bold',
         fontSize: 16,
