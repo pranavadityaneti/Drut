@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { EXAM_TAXONOMY, TopicDef } from '../../../../packages/shared/src/lib/taxonomy';
-import { authService } from '@drut/shared';
+import { authService, fetchChapterSources } from '@drut/shared';
+import type { ChapterSource } from '@drut/shared';
 // @ts-ignore
 import { supabase } from '@drut/shared'; // Ensure we can import supabase client
 const { getCurrentUser } = authService;
@@ -36,6 +37,13 @@ export const PracticeSetup: React.FC<PracticeSetupProps> = ({ onStart }) => {
 
  // Dynamic Data
  const [dynamicTopics, setDynamicTopics] = useState<any[]>([]);
+
+ // Chapter sources from fetchChapterSources — drives the 3-step Board → Class → Chapter
+ // picker. Populated when the selected subject has chapters in knowledge_nodes (EAPCET).
+ // When empty, falls back to the legacy flat-dropdown path below.
+ const [chapterSources, setChapterSources] = useState<ChapterSource[]>([]);
+ const [selectedBoard, setSelectedBoard] = useState<string>('');
+ const [selectedClass, setSelectedClass] = useState<string>('');
 
  useEffect(() => {
  const init = async () => {
@@ -150,9 +158,52 @@ export const PracticeSetup: React.FC<PracticeSetupProps> = ({ onStart }) => {
  fetchDynamic();
  }, [selectedExam, selectedSubject]);
 
+ // Fetch grouped chapter sources for the 3-step picker (Board → Class → Chapter)
+ useEffect(() => {
+  const loadSources = async () => {
+   if (!selectedSubject) {
+    setChapterSources([]);
+    return;
+   }
+   const sources = await fetchChapterSources(selectedSubject);
+   setChapterSources(sources);
+  };
+  loadSources();
+ }, [selectedSubject]);
 
  // Derived Logic
  const examDef = EXAM_TAXONOMY.find(e => e.value === selectedExam);
+
+ // Board / Class / Chapter derivation from chapterSources
+ const availableBoards = Array.from(new Set(chapterSources.map(s => s.board))).sort();
+ const availableClasses = Array.from(new Set(
+  chapterSources.filter(s => !selectedBoard || s.board === selectedBoard).map(s => s.class_name)
+ )).sort();
+ const selectedSourceForChapters = chapterSources.find(
+  s => s.board === selectedBoard && s.class_name === selectedClass
+ );
+ const sourceChapters = selectedSourceForChapters?.chapters ?? [];
+
+ // Auto-select Board / Class when there's only one option, or reset when filters narrow
+ useEffect(() => {
+  if (availableBoards.length === 0) {
+   if (selectedBoard) setSelectedBoard('');
+   return;
+  }
+  if (!selectedBoard || !availableBoards.includes(selectedBoard)) {
+   setSelectedBoard(availableBoards[0]);
+  }
+ }, [availableBoards.join('|')]);
+
+ useEffect(() => {
+  if (availableClasses.length === 0) {
+   if (selectedClass) setSelectedClass('');
+   return;
+  }
+  if (!selectedClass || !availableClasses.includes(selectedClass)) {
+   setSelectedClass(availableClasses[0]);
+  }
+ }, [availableClasses.join('|')]);
 
  // Subject Extraction
  // Use static definition for available Subjects (safe bet as textbooks follow these)
@@ -213,25 +264,24 @@ export const PracticeSetup: React.FC<PracticeSetupProps> = ({ onStart }) => {
  const handleStart = () => {
  if (!selectedExam || !selectedTopic) return;
 
- // Board inference
+ // Board: prefer the user's explicit Board pill choice from the new 3-step
+ // picker. Falls back to the previous heuristic only when chapter sources
+ // weren't loaded (e.g., non-EAPCET exams that still use static taxonomy).
  const isStateBoard = selectedExam.includes('eapcet') || selectedExam.includes('eamcet');
- // Board value is case-sensitive — must match textbooks.board column AND
- // filter_board param in match_syllabus_content RPC (see _shared/rag.ts).
- // 'NCERT' (uppercase) is the canonical form set in TextbookManager dropdown.
- // TODO(phase-B): per-state mapping — ap_eapcet→BIEAP, ts_eapcet→TSBIE,
- // with NCERT as fallback. Requires multi-board RAG support first.
- const board = isStateBoard ? 'NCERT' : 'CBSE';
+ const board = selectedBoard || (isStateBoard ? 'NCERT' : 'CBSE');
+
+ // Class: prefer the explicit Class pill choice; fall back to user profile class
+ const classLevel = selectedClass || userClass;
 
  onStart({
  examProfile: selectedExam,
  topic: selectedTopic,
- // Subtopic is always mixed/all now
  subtopic: 'mixed',
  difficulty: difficulty,
- classLevel: userClass,
+ classLevel: classLevel,
  board: board,
  subject: selectedSubject,
- language: language // Add Language
+ language: language
  });
  };
 
@@ -273,10 +323,7 @@ export const PracticeSetup: React.FC<PracticeSetupProps> = ({ onStart }) => {
  </div>
  </div>
 
- {/* 2. Subject & Topic Selection */}
- <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-
- {/* Subject Dropdown */}
+ {/* 2. Subject */}
  <div className="space-y-2">
  <label className="text-sm font-semibold text-[var(--color-ink-1)]">Subject</label>
  <div className="relative">
@@ -295,25 +342,98 @@ export const PracticeSetup: React.FC<PracticeSetupProps> = ({ onStart }) => {
  </div>
  </div>
 
- {/* Topic Dropdown */}
- <div className="space-y-2">
- <label className="text-sm font-semibold text-[var(--color-ink-1)]">Chapter/Topic</label>
- <div className="relative">
- <select
- value={selectedTopic}
- onChange={(e) => setSelectedTopic(e.target.value)}
- className="w-full appearance-none bg-white border border-slate-200 text-[var(--color-ink-2)] text-sm rounded-xl p-3.5 pr-10 outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all cursor-pointer disabled:bg-[var(--color-muted)] disabled:text-[var(--color-ink-3)]"
- disabled={!selectedSubject || filteredTopics.length === 0}
- >
- <option value="" disabled>Select Chapter...</option>
- {filteredTopics.map(t => (
- <option key={t.value} value={t.value}>{t.label}</option>
-))}
- </select>
- <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--color-ink-3)] pointer-events-none" size={16} />
- </div>
- </div>
- </div>
+ {/* 3. Board → Class → Chapter picker (when knowledge_nodes data available) */}
+ {chapterSources.length > 0 ? (
+  <>
+   {/* Board pills */}
+   <div>
+    <label className="text-sm font-semibold text-[var(--color-ink-1)] mb-3 block">Board</label>
+    <div className="flex flex-wrap gap-3">
+     {availableBoards.map(board => {
+      const isSelected = selectedBoard === board;
+      return (
+       <button
+        key={board}
+        onClick={() => { setSelectedBoard(board); setSelectedClass(''); setSelectedTopic(''); }}
+        className={`px-5 py-2.5 rounded-lg border text-sm font-medium transition-all duration-200 ${isSelected
+         ? 'border-[var(--color-primary)] bg-[var(--color-accent)] text-[#3d7a0f] ring-1 ring-[var(--color-primary)]'
+         : 'border-slate-200 text-[var(--color-ink-2)] hover:border-slate-300 hover:bg-[var(--color-muted)]'
+         }`}
+       >
+        {board}
+       </button>
+      );
+     })}
+    </div>
+   </div>
+
+   {/* Class pills */}
+   {selectedBoard && (
+    <div>
+     <label className="text-sm font-semibold text-[var(--color-ink-1)] mb-3 block">Class</label>
+     <div className="flex flex-wrap gap-3">
+      {availableClasses.map(cls => {
+       const isSelected = selectedClass === cls;
+       return (
+        <button
+         key={cls}
+         onClick={() => { setSelectedClass(cls); setSelectedTopic(''); }}
+         className={`px-5 py-2.5 rounded-lg border text-sm font-medium transition-all duration-200 ${isSelected
+          ? 'border-[var(--color-primary)] bg-[var(--color-accent)] text-[#3d7a0f] ring-1 ring-[var(--color-primary)]'
+          : 'border-slate-200 text-[var(--color-ink-2)] hover:border-slate-300 hover:bg-[var(--color-muted)]'
+          }`}
+        >
+         {cls}
+        </button>
+       );
+      })}
+     </div>
+    </div>
+   )}
+
+   {/* Chapter dropdown (filtered to selected board × class × subject) */}
+   {selectedBoard && selectedClass && (
+    <div className="space-y-2">
+     <label className="text-sm font-semibold text-[var(--color-ink-1)]">Chapter</label>
+     <div className="relative">
+      <select
+       value={selectedTopic}
+       onChange={(e) => setSelectedTopic(e.target.value)}
+       className="w-full appearance-none bg-white border border-slate-200 text-[var(--color-ink-2)] text-sm rounded-xl p-3.5 pr-10 outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all cursor-pointer disabled:bg-[var(--color-muted)] disabled:text-[var(--color-ink-3)]"
+       disabled={sourceChapters.length === 0}
+      >
+       <option value="" disabled>Select Chapter...</option>
+       <option value="all">All Chapters</option>
+       {sourceChapters.map(c => (
+        <option key={c.id} value={c.name}>{c.name}</option>
+       ))}
+      </select>
+      <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--color-ink-3)] pointer-events-none" size={16} />
+     </div>
+    </div>
+   )}
+  </>
+ ) : (
+  /* Legacy fallback dropdown when no knowledge_nodes data is available
+     (e.g., non-EAPCET exams that still use static EXAM_TAXONOMY) */
+  <div className="space-y-2">
+   <label className="text-sm font-semibold text-[var(--color-ink-1)]">Chapter/Topic</label>
+   <div className="relative">
+    <select
+     value={selectedTopic}
+     onChange={(e) => setSelectedTopic(e.target.value)}
+     className="w-full appearance-none bg-white border border-slate-200 text-[var(--color-ink-2)] text-sm rounded-xl p-3.5 pr-10 outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all cursor-pointer disabled:bg-[var(--color-muted)] disabled:text-[var(--color-ink-3)]"
+     disabled={!selectedSubject || filteredTopics.length === 0}
+    >
+     <option value="" disabled>Select Chapter...</option>
+     {filteredTopics.map(t => (
+      <option key={t.value} value={t.value}>{t.label}</option>
+     ))}
+    </select>
+    <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--color-ink-3)] pointer-events-none" size={16} />
+   </div>
+  </div>
+ )}
 
 
 
