@@ -25,7 +25,10 @@ ALTER TABLE phone_otps ENABLE ROW LEVEL SECURITY;
 
 -- Only service role (edge functions) can access this table
 -- No client-side access — OTPs are managed entirely server-side
-CREATE POLICY "Service role only" ON phone_otps
+-- DROP first so this migration is re-runnable (Postgres CREATE POLICY
+-- doesn't support IF NOT EXISTS in this version).
+DROP POLICY IF EXISTS "Service role only" ON public.phone_otps;
+CREATE POLICY "Service role only" ON public.phone_otps
     FOR ALL
     USING (auth.role() = 'service_role')
     WITH CHECK (auth.role() = 'service_role');
