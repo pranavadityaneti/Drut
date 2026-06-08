@@ -3,7 +3,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Colors, Layout } from '../../constants/Colors';
-import { authService, EXAM_TAXONOMY, fetchChapterSources } from '@drut/shared';
+import { authService, EXAM_TAXONOMY, fetchChapterSources, getPrimaryBoardForExam, classMatchesSelection } from '@drut/shared';
 import type { ChapterSource } from '@drut/shared';
 // @ts-ignore
 import { supabase } from '@drut/shared';
@@ -49,12 +49,13 @@ export default function PracticeScreen() {
     const [dynamicTopics, setDynamicTopics] = useState<any[]>([]);
     const [userClass, setUserClass] = useState<'11' | '12' | 'Both'>('Both');
 
-    // 3-step picker state (Board → Class → Chapter). Backed by fetchChapterSources
-    // — chapters are grouped by (board × class × subject) so we no longer flatten
-    // 8 different "Chapter 1"s from different textbooks into one list.
+    // Picker v2 state (see PracticeSetup.tsx for full notes).
+    // Board is derived from exam (BIEAP/TSBIE/NCERT) — no Board pill.
+    // Class supports "Both" for cross-class practice.
+    // NCERT-include checkbox augments chapter list when state board is primary.
     const [chapterSources, setChapterSources] = useState<ChapterSource[]>([]);
-    const [selectedBoard, setSelectedBoard] = useState<string>('');
-    const [selectedClass, setSelectedClass] = useState<string>('');
+    const [selectedClass, setSelectedClass] = useState<string>('Class 11');
+    const [includeNcert, setIncludeNcert] = useState<boolean>(false);
 
     // Fetch chapter sources grouped by (board × class × subject) for current subject
     useEffect(() => {
@@ -114,41 +115,43 @@ export default function PracticeScreen() {
         loadUser();
     }, []);
 
-    // Derived for 3-step picker
-    const availableBoards = useMemo(() => Array.from(new Set(chapterSources.map(s => s.board))).sort(), [chapterSources]);
-    const availableClasses = useMemo(() => Array.from(new Set(
-        chapterSources.filter(s => !selectedBoard || s.board === selectedBoard).map(s => s.class_name)
-    )).sort(), [chapterSources, selectedBoard]);
-    const selectedSourceForChapters = useMemo(
-        () => chapterSources.find(s => s.board === selectedBoard && s.class_name === selectedClass),
-        [chapterSources, selectedBoard, selectedClass]
-    );
+    // Picker v2 derivation — see PracticeSetup.tsx for full notes
+    const primaryBoard = useMemo(() => getPrimaryBoardForExam(selectedExamValue), [selectedExamValue]);
+    const primaryHasContent = useMemo(() => chapterSources.some(s => s.board === primaryBoard), [chapterSources, primaryBoard]);
+    const effectivePrimaryBoard = primaryHasContent ? primaryBoard : 'NCERT';
+    const stateBoardFellBack = primaryBoard !== 'NCERT' && !primaryHasContent;
+    const effectiveBoards = useMemo(() => {
+        const set = new Set<string>([effectivePrimaryBoard]);
+        if (includeNcert && effectivePrimaryBoard !== 'NCERT') set.add('NCERT');
+        return Array.from(set);
+    }, [effectivePrimaryBoard, includeNcert]);
 
-    // Auto-select Board / Class when narrowed
-    useEffect(() => {
-        if (availableBoards.length === 0) { if (selectedBoard) setSelectedBoard(''); return; }
-        if (!selectedBoard || !availableBoards.includes(selectedBoard)) setSelectedBoard(availableBoards[0]);
-    }, [availableBoards.join('|')]);
-    useEffect(() => {
-        if (availableClasses.length === 0) { if (selectedClass) setSelectedClass(''); return; }
-        if (!selectedClass || !availableClasses.includes(selectedClass)) setSelectedClass(availableClasses[0]);
-    }, [availableClasses.join('|')]);
+    interface DisplayChapter { id: string; name: string; label: string; board: string; classNameOfSource: string; }
+    const displayedChapters: DisplayChapter[] = useMemo(() => chapterSources
+        .filter(s => effectiveBoards.includes(s.board))
+        .filter(s => classMatchesSelection(s.class_name, selectedClass))
+        .flatMap(s => s.chapters.map(c => ({
+            id: c.id,
+            name: c.name,
+            label: (selectedClass === 'Both' || includeNcert)
+                ? `${c.name} (${s.class_name}${effectiveBoards.length > 1 ? `, ${s.board}` : ''})`
+                : c.name,
+            board: s.board,
+            classNameOfSource: s.class_name,
+        })))
+        .sort((a, b) => a.label.localeCompare(b.label)), [chapterSources, effectiveBoards, selectedClass, includeNcert]);
 
-    // Filter chapters — when Board + Class are picked, use that single source's
-    // chapters; otherwise fall back to the flat (subject + class) filter for
-    // backward compatibility (non-EAPCET exams that have no knowledge_nodes data).
+    // Filter chapters — picker v2 uses displayedChapters (already class+board
+    // filtered + labeled). Fall back to flat taxonomy+dynamic filter for legacy
+    // cases (non-EAPCET exams with no knowledge_nodes data).
     const filteredChapters = useMemo(() => {
-        if (selectedSourceForChapters) {
-            return selectedSourceForChapters.chapters.map(c => ({
-                label: c.name,
-                value: c.name,
-            })).sort((a, b) => a.label.localeCompare(b.label));
+        if (displayedChapters.length > 0) {
+            return displayedChapters.map(c => ({ label: c.label, value: c.name }));
         }
 
-        // Legacy fallback (no Board/Class picked yet OR no chapter sources)
+        // Legacy fallback (no chapter sources)
         const taxonomyTopics = EXAM_TAXONOMY.find(e => e.value === selectedExamValue)?.topics || [];
         const combined = [...taxonomyTopics, ...dynamicTopics];
-
         const filtered = combined.filter(t => {
             if (!t.subject) return false;
             if (userClass === '11' && t.class_level && t.class_level !== '11') return false;
@@ -158,11 +161,10 @@ export default function PracticeScreen() {
             if (sSub.startsWith('math') && tSub.startsWith('math')) return true;
             return tSub === sSub;
         });
-
         const uniqueMap = new Map();
         filtered.forEach(t => uniqueMap.set(t.value, t));
         return Array.from(uniqueMap.values()).sort((a, b) => a.label.localeCompare(b.label));
-    }, [selectedSourceForChapters, selectedExamValue, selectedSubject, dynamicTopics, userClass]);
+    }, [displayedChapters, selectedExamValue, selectedSubject, dynamicTopics, userClass]);
 
     // Reset chapters when subject changes
     useEffect(() => {
@@ -211,10 +213,15 @@ export default function PracticeScreen() {
                 difficulty: difficulty,
                 questionCount: String(questionCount),
                 mode: 'practice',
-                // Pass the user's explicit Board pill choice through to the session.
-                // The session route forwards this to backend RAG filtering. Falls
-                // back to 'NCERT' if no Board picked (legacy non-EAPCET path).
-                board: selectedBoard || 'NCERT',
+                // Board derived from picked chapter's source (picker v2).
+                // For multi-chapter selections, use the first picked chapter's board
+                // (mixed-board selection is intentionally simplified to the first
+                // pick; advanced UX could surface this as a warning later).
+                board: (() => {
+                    const picked = selectedChapters.find(ch => ch !== 'all');
+                    const meta = displayedChapters.find(c => c.name === picked);
+                    return meta?.board || effectivePrimaryBoard;
+                })(),
             },
         });
     };
@@ -265,32 +272,12 @@ export default function PracticeScreen() {
                     </ScrollView>
                 </View>
 
-                {/* Board pills (3-step picker, when knowledge_nodes data available) */}
-                {availableBoards.length > 0 && (
-                    <View style={styles.section}>
-                        <Text style={styles.label}>Board</Text>
-                        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.chipRow}>
-                            {availableBoards.map(board => (
-                                <TouchableOpacity
-                                    key={board}
-                                    style={[styles.chip, selectedBoard === board && styles.chipSelected]}
-                                    onPress={() => { setSelectedBoard(board); setSelectedClass(''); setSelectedChapters(['all']); }}
-                                >
-                                    <Text style={[styles.chipText, selectedBoard === board && styles.chipTextSelected]}>
-                                        {board}
-                                    </Text>
-                                </TouchableOpacity>
-                            ))}
-                        </ScrollView>
-                    </View>
-                )}
-
-                {/* Class pills (filtered by board) */}
-                {selectedBoard && availableClasses.length > 0 && (
+                {/* Class pills (Class 11 / Class 12 / Both — picker v2) */}
+                {chapterSources.length > 0 && (
                     <View style={styles.section}>
                         <Text style={styles.label}>Class</Text>
                         <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.chipRow}>
-                            {availableClasses.map(cls => (
+                            {(['Class 11', 'Class 12', 'Both'] as const).map(cls => (
                                 <TouchableOpacity
                                     key={cls}
                                     style={[styles.chip, selectedClass === cls && styles.chipSelected]}
@@ -302,6 +289,34 @@ export default function PracticeScreen() {
                                 </TouchableOpacity>
                             ))}
                         </ScrollView>
+                    </View>
+                )}
+
+                {/* NCERT-include checkbox (hidden when primary board is already NCERT) */}
+                {chapterSources.length > 0 && effectivePrimaryBoard !== 'NCERT' && (
+                    <View style={styles.section}>
+                        <TouchableOpacity
+                            style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}
+                            onPress={() => { setIncludeNcert(!includeNcert); setSelectedChapters(['all']); }}
+                        >
+                            <View style={[styles.checkbox, includeNcert && styles.checkboxChecked]}>
+                                {includeNcert && <Check size={14} color={Colors.white} />}
+                            </View>
+                            <Text style={{ color: Colors.text, fontSize: 14, flex: 1 }}>
+                                Also practice NCERT national-level questions for extra rigor
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+                )}
+
+                {/* Source footnote */}
+                {chapterSources.length > 0 && (
+                    <View style={styles.section}>
+                        <Text style={{ fontSize: 11, color: Colors.textDim, fontStyle: 'italic' }}>
+                            {stateBoardFellBack
+                                ? `Showing NCERT questions — your state board (${primaryBoard}) doesn't have ${selectedSubject} textbooks loaded yet.`
+                                : `Source: ${effectiveBoards.join(' + ')} ${effectivePrimaryBoard === 'NCERT' ? '(national curriculum)' : '(your state board)'}`}
+                        </Text>
                     </View>
                 )}
 
