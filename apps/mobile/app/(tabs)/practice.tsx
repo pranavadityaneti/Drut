@@ -3,7 +3,8 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Colors, Layout } from '../../constants/Colors';
-import { authService, EXAM_TAXONOMY } from '@drut/shared';
+import { authService, EXAM_TAXONOMY, fetchChapterSources } from '@drut/shared';
+import type { ChapterSource } from '@drut/shared';
 // @ts-ignore
 import { supabase } from '@drut/shared';
 import { Check, ChevronDown, ChevronUp } from 'lucide-react-native';
@@ -48,26 +49,35 @@ export default function PracticeScreen() {
     const [dynamicTopics, setDynamicTopics] = useState<any[]>([]);
     const [userClass, setUserClass] = useState<'11' | '12' | 'Both'>('Both');
 
-    // Fetch topics from DB
-    useEffect(() => {
-        const fetchTopics = async () => {
-            const { data } = await supabase
-                .from('knowledge_nodes')
-                .select('name, metadata')
-                .eq('node_type', 'topic')
-                .limit(1000);
+    // 3-step picker state (Board → Class → Chapter). Backed by fetchChapterSources
+    // — chapters are grouped by (board × class × subject) so we no longer flatten
+    // 8 different "Chapter 1"s from different textbooks into one list.
+    const [chapterSources, setChapterSources] = useState<ChapterSource[]>([]);
+    const [selectedBoard, setSelectedBoard] = useState<string>('');
+    const [selectedClass, setSelectedClass] = useState<string>('');
 
-            if (data) {
-                setDynamicTopics(data.map((d: any) => ({
-                    label: d.name,
-                    value: d.name,
-                    subject: d.metadata?.subject || 'Unknown',
-                    class_level: d.metadata?.class_level,
-                })));
+    // Fetch chapter sources grouped by (board × class × subject) for current subject
+    useEffect(() => {
+        const loadSources = async () => {
+            if (!selectedSubject) {
+                setChapterSources([]);
+                return;
             }
+            const sources = await fetchChapterSources(selectedSubject);
+            setChapterSources(sources);
+
+            // Also populate the legacy dynamicTopics shape so the multi-select
+            // chapter list below keeps working when no Board/Class is picked yet.
+            const flat = sources.flatMap(s => s.chapters.map(c => ({
+                label: c.name,
+                value: c.name,
+                subject: s.subject,
+                class_level: s.class_name === 'Class 11' || s.class_name === '1st Year' ? '11' : '12',
+            })));
+            setDynamicTopics(flat);
         };
-        fetchTopics();
-    }, []);
+        loadSources();
+    }, [selectedSubject]);
 
     // Get user class + restrict exam picker to user's enrolled exams
     useEffect(() => {
@@ -104,30 +114,55 @@ export default function PracticeScreen() {
         loadUser();
     }, []);
 
-    // Filter chapters based on subject and class
+    // Derived for 3-step picker
+    const availableBoards = useMemo(() => Array.from(new Set(chapterSources.map(s => s.board))).sort(), [chapterSources]);
+    const availableClasses = useMemo(() => Array.from(new Set(
+        chapterSources.filter(s => !selectedBoard || s.board === selectedBoard).map(s => s.class_name)
+    )).sort(), [chapterSources, selectedBoard]);
+    const selectedSourceForChapters = useMemo(
+        () => chapterSources.find(s => s.board === selectedBoard && s.class_name === selectedClass),
+        [chapterSources, selectedBoard, selectedClass]
+    );
+
+    // Auto-select Board / Class when narrowed
+    useEffect(() => {
+        if (availableBoards.length === 0) { if (selectedBoard) setSelectedBoard(''); return; }
+        if (!selectedBoard || !availableBoards.includes(selectedBoard)) setSelectedBoard(availableBoards[0]);
+    }, [availableBoards.join('|')]);
+    useEffect(() => {
+        if (availableClasses.length === 0) { if (selectedClass) setSelectedClass(''); return; }
+        if (!selectedClass || !availableClasses.includes(selectedClass)) setSelectedClass(availableClasses[0]);
+    }, [availableClasses.join('|')]);
+
+    // Filter chapters — when Board + Class are picked, use that single source's
+    // chapters; otherwise fall back to the flat (subject + class) filter for
+    // backward compatibility (non-EAPCET exams that have no knowledge_nodes data).
     const filteredChapters = useMemo(() => {
+        if (selectedSourceForChapters) {
+            return selectedSourceForChapters.chapters.map(c => ({
+                label: c.name,
+                value: c.name,
+            })).sort((a, b) => a.label.localeCompare(b.label));
+        }
+
+        // Legacy fallback (no Board/Class picked yet OR no chapter sources)
         const taxonomyTopics = EXAM_TAXONOMY.find(e => e.value === selectedExamValue)?.topics || [];
         const combined = [...taxonomyTopics, ...dynamicTopics];
 
         const filtered = combined.filter(t => {
             if (!t.subject) return false;
-
-            // Class filtering
             if (userClass === '11' && t.class_level && t.class_level !== '11') return false;
             if (userClass === '12' && t.class_level && t.class_level !== '12') return false;
-
-            // Subject match
             const tSub = t.subject.toLowerCase();
             const sSub = selectedSubject.toLowerCase();
             if (sSub.startsWith('math') && tSub.startsWith('math')) return true;
             return tSub === sSub;
         });
 
-        // Deduplicate
         const uniqueMap = new Map();
         filtered.forEach(t => uniqueMap.set(t.value, t));
         return Array.from(uniqueMap.values()).sort((a, b) => a.label.localeCompare(b.label));
-    }, [selectedExamValue, selectedSubject, dynamicTopics, userClass]);
+    }, [selectedSourceForChapters, selectedExamValue, selectedSubject, dynamicTopics, userClass]);
 
     // Reset chapters when subject changes
     useEffect(() => {
@@ -176,6 +211,10 @@ export default function PracticeScreen() {
                 difficulty: difficulty,
                 questionCount: String(questionCount),
                 mode: 'practice',
+                // Pass the user's explicit Board pill choice through to the session.
+                // The session route forwards this to backend RAG filtering. Falls
+                // back to 'NCERT' if no Board picked (legacy non-EAPCET path).
+                board: selectedBoard || 'NCERT',
             },
         });
     };
@@ -226,7 +265,47 @@ export default function PracticeScreen() {
                     </ScrollView>
                 </View>
 
-                {/* Chapter Selector (Multi-select) */}
+                {/* Board pills (3-step picker, when knowledge_nodes data available) */}
+                {availableBoards.length > 0 && (
+                    <View style={styles.section}>
+                        <Text style={styles.label}>Board</Text>
+                        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.chipRow}>
+                            {availableBoards.map(board => (
+                                <TouchableOpacity
+                                    key={board}
+                                    style={[styles.chip, selectedBoard === board && styles.chipSelected]}
+                                    onPress={() => { setSelectedBoard(board); setSelectedClass(''); setSelectedChapters(['all']); }}
+                                >
+                                    <Text style={[styles.chipText, selectedBoard === board && styles.chipTextSelected]}>
+                                        {board}
+                                    </Text>
+                                </TouchableOpacity>
+                            ))}
+                        </ScrollView>
+                    </View>
+                )}
+
+                {/* Class pills (filtered by board) */}
+                {selectedBoard && availableClasses.length > 0 && (
+                    <View style={styles.section}>
+                        <Text style={styles.label}>Class</Text>
+                        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.chipRow}>
+                            {availableClasses.map(cls => (
+                                <TouchableOpacity
+                                    key={cls}
+                                    style={[styles.chip, selectedClass === cls && styles.chipSelected]}
+                                    onPress={() => { setSelectedClass(cls); setSelectedChapters(['all']); }}
+                                >
+                                    <Text style={[styles.chipText, selectedClass === cls && styles.chipTextSelected]}>
+                                        {cls}
+                                    </Text>
+                                </TouchableOpacity>
+                            ))}
+                        </ScrollView>
+                    </View>
+                )}
+
+                {/* Chapter Selector (Multi-select, filtered to selected board × class × subject) */}
                 <View style={styles.section}>
                     <Text style={styles.label}>Chapters</Text>
                     <TouchableOpacity
