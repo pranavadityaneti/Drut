@@ -1,0 +1,61 @@
+-- Migration 038: Recognize `manual-curated` as a canonical verification_status value
+--
+-- Context (2026-06-08):
+--   The strategic pivot (docs/practice-mode-architecture-v2.md) introduces a
+--   new question source: human-curated batches generated in Claude.ai with a
+--   chapter PDF attached, reviewed batch-by-batch by Pranav, then bulk-uploaded
+--   via the admin Bulk Import UI (next PR).
+--
+--   These rows need a verification_status that signals "human-reviewed, not
+--   ungrounded AI, not RAG-grounded AI, not PYQ" — slotting between PYQ
+--   (highest trust) and RAG (medium trust). The new value: `manual-curated`.
+--
+-- Pre-migration probe (run 2026-06-08, recorded here for audit):
+--   Q1: information_schema.columns →
+--       data_type = 'text', udt_name = 'text', is_nullable = 'YES'
+--   Q2: pg_constraint with contype = 'c' touching verification_status →
+--       0 rows
+--   Q3: pg_enum lookup for udt_name = 'text' → not applicable (not an enum)
+--
+-- Conclusion: `verification_status` is a plain nullable TEXT column with no
+-- CHECK constraint and no enum backing. The new value `manual-curated` is
+-- therefore IMPLICITLY ACCEPTED at the database layer with no schema change.
+--
+-- This file exists for the audit trail: it captures the decision and the
+-- probe results so a future reader knows `manual-curated` is canonical,
+-- not arbitrary text the admin UI invented.
+--
+-- ============================================================
+-- DDL: none.
+-- ============================================================
+--
+-- (no statements — this migration is documentation-only.)
+--
+-- ============================================================
+-- Canonical verification_status values after this migration
+-- ============================================================
+--   v3-verified-pyq          — Previous Year Question (real exam paper).
+--                              Highest trust. Source: PYQ ingestion.
+--   manual-curated           — NEW. Human-reviewed Claude.ai-generated batch
+--                              uploaded via admin Bulk Import. Trust:
+--                              between PYQ and RAG. Source label format:
+--                              claude-chat-<YYYY-MM-DD>-<board>-<class>-<subject>-ch<N>
+--   manual                   — Older human-uploaded content (admin CSV pre-pivot).
+--   v3-verified-textbook     — Older textbook-grounded curation.
+--   v3-verified-rag          — RAG-grounded AI generation (current ALLOW_LIVE_AI
+--                              path is disabled — no new rows being created).
+--   v3-unverified-ai         — Ungrounded AI fallback.
+--   2.6 / SubjectFallback    — Legacy values from earlier experiments.
+--   NULL                     — Permitted (see migration 037 residue).
+--
+-- ============================================================
+-- Verification (optional, run to confirm the column is still TEXT)
+-- ============================================================
+--
+-- SELECT column_name, data_type, udt_name, is_nullable
+-- FROM information_schema.columns
+-- WHERE table_schema = 'public'
+--   AND table_name = 'cached_questions'
+--   AND column_name = 'verification_status';
+--
+-- Expected: text / text / YES (unchanged from the pre-migration probe).
