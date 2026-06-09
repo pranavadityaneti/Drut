@@ -48,6 +48,35 @@ const BulkImportTimeTargetsSchema = z
   })
   .strict();
 
+/**
+ * Visual representation of the question, if any.
+ *
+ *   - 'none'   — pure text + LaTeX question, no visual.
+ *   - 'svg'    — inline SVG markup. Rendered directly by the question
+ *                card. For graphs, geometry, circuits, ray diagrams,
+ *                free-body diagrams. Constraints documented in the
+ *                Claude.ai prompt (basic elements only, no <style>, no
+ *                external font/CSS, no <script>).
+ *   - 'smiles' — SMILES notation (chemical structure). Rendered by
+ *                RDKit-JS in the client. For organic chemistry
+ *                molecules where SVG would be unreliable.
+ */
+const BulkImportVisualSchema = z.discriminatedUnion('type', [
+  z.object({ type: z.literal('none') }).strict(),
+  z
+    .object({
+      type: z.literal('svg'),
+      svg: z.string().min(1, 'svg markup must be non-empty'),
+    })
+    .strict(),
+  z
+    .object({
+      type: z.literal('smiles'),
+      smiles: z.string().min(1, 'SMILES notation must be non-empty'),
+    })
+    .strict(),
+]);
+
 export const BulkImportQuestionSchema = z
   .object({
     questionText: z.string().min(1, 'questionText must be non-empty'),
@@ -76,7 +105,7 @@ export const BulkImportQuestionSchema = z
     timeTargets: BulkImportTimeTargetsSchema,
     theOptimalPath: BulkImportTARSchema,
     fullStepByStep: BulkImportDEEPSchema,
-    visualDescription: z.string().nullable(),
+    visual: BulkImportVisualSchema,
   })
   .strict();
 
