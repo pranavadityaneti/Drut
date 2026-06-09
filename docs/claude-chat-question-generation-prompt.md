@@ -147,9 +147,11 @@ OUTPUT SCHEMA (strict JSON array):
         "**PROOF:** [Verify the answer makes mathematical/physical sense]"
       ]
     },
-    "visualDescription": null               // null unless the question needs a diagram;
-                                            // if needed, describe the diagram in plain
-                                            // text for a separate diagram-generation pass
+    "visual": { "type": "none" }            // see DIAGRAMS section below for the
+                                            // three accepted shapes:
+                                            //   { "type": "none" }                          ← pure text/math
+                                            //   { "type": "svg",    "svg":    "<svg>..." } ← graphs, geometry, circuits
+                                            //   { "type": "smiles", "smiles": "CC..." }    ← organic molecules
   },
   ...
 ]
@@ -179,6 +181,76 @@ D.E.E.P. RULES (Full Solution / depth):
 - EXTRACT: show given/find/constraints as a table or list
 - EXECUTE: every algebraic/logical step shown
 - PROOF: dimensional check, plausibility, edge case verification
+
+DIAGRAMS — when and how to attach a visual:
+
+The "visual" field is a tagged union with three accepted shapes. Pick
+the shape that matches what the question genuinely needs. When uncertain,
+prefer "none" and describe the figure in plain text within questionText
+(e.g., "Consider a particle moving in a circular path of radius r…").
+Only output svg or smiles when the figure is REQUIRED for the question
+to make sense.
+
+CASE 1 — Pure text + LaTeX (most common):
+  "visual": { "type": "none" }
+
+CASE 2 — Graphs, geometry, circuits, ray diagrams, free-body diagrams:
+  "visual": {
+    "type": "svg",
+    "svg": "<svg viewBox='0 0 400 300' xmlns='http://www.w3.org/2000/svg'>...</svg>"
+  }
+
+  SVG constraints (the renderer enforces these; markup that violates
+  them will be rejected or sanitized):
+    - viewBox: prefer 400×300 (landscape) for graphs/circuits, 300×300
+      (square) for geometry; clamp final width to ≤ 600px equivalent
+    - Allowed elements ONLY: <svg>, <g>, <rect>, <circle>, <line>,
+      <path>, <text>, <polyline>, <polygon>, <ellipse>, <defs>,
+      <marker> (for arrowheads), <linearGradient>, <stop>
+    - NO <style> tags, NO external CSS/font references, NO <script>,
+      NO <foreignObject>, NO <image href="...">
+    - Use inline attributes only: stroke="#1a1a1a", stroke-width="1.5",
+      fill="transparent" or fill="#f5f5f5", font-size="13"
+    - Embed LaTeX-style math inside <text> elements using Unicode
+      subscript/superscript where possible (e.g. v₀, x², θ₁); avoid
+      MathML — not supported by the renderer
+    - Use solid black/grey strokes. Avoid color unless it carries
+      meaning (e.g. red arrow for force vector vs. blue for velocity);
+      stick to the editorial palette: "#1a1a1a", "#666", "#c63a3a"
+      (accent red), "#0e8a5f" (accent green)
+    - Arrowheads: define one <marker id="arrow"> in <defs>, reference
+      via marker-end="url(#arrow)"
+    - Keep SVG payloads under ~3KB each; complex diagrams should be
+      simplified, not stretched into hundreds of paths
+
+CASE 3 — Organic chemistry molecules (and only these):
+  "visual": {
+    "type": "smiles",
+    "smiles": "CC(=O)Oc1ccccc1C(=O)O"
+  }
+
+  SMILES rules:
+    - Use canonical SMILES syntax (RDKit-compatible)
+    - Aromatic rings as lowercase (e.g., c1ccccc1 for benzene)
+    - Stereochemistry: include @/@@ and /\ where stereochemistry is part
+      of the question (e.g., distinguishing (R) vs (S))
+    - The client renders via RDKit-JS; if RDKit can't parse it, the
+      question fails ingestion
+    - Use SMILES for organic structures, reaction educts, products,
+      named intermediates. Do NOT use SMILES for crystal lattices,
+      orbitals, or anything that isn't a 2D molecular graph
+
+When in doubt:
+  - Mechanics with a free-body diagram → svg (3-4 force arrows + a box)
+  - Geometry problem with a triangle/circle → svg
+  - Function graph → svg
+  - Circuit (R, L, C, battery, switch) → svg
+  - Ray optics (mirror, lens, ray paths) → svg
+  - Organic chemistry molecule → smiles
+  - Periodic table reference → none (describe in text)
+  - 3D crystal structure → none (describe in text; defer to v3 renderer)
+  - Spectroscopy plot → svg (axes + curve)
+  - Phasor diagram → svg
 
 DISTRACTOR DESIGN:
 Each wrong option should map to a specific student mistake. Annotate

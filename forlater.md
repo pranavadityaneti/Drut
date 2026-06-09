@@ -51,6 +51,21 @@
     - Approach: hand-merge in dedicated session — review phase-11's intended changes (visible in `ui/editorial-redesign` reference branch), apply only the styling deltas
     - Originated: PR #8 editorial revamp, 2026-06-06
 
+47. **RDKit-JS + SVG renderer for Bulk Import questions** *(added 2026-06-09)*
+    - Context: Strategy A + D from the diagram-strategy decision (2026-06-09). Schema `visual` discriminated union now accepts `{type: 'svg', svg}` for graphs/geometry/circuits/ray-diagrams and `{type: 'smiles', smiles}` for organic chemistry molecules. The schema is shipped; the RENDERER hasn't been built yet.
+    - **Action when ready** (folded into PR #2b — admin Bulk Import UI):
+      1. Install RDKit-JS in `apps/web` (`npm i @rdkit/rdkit`) — ~5MB WASM, lazy-loaded.
+      2. Create `apps/web/components/practice/QuestionVisual.tsx` — discriminated component:
+         - `type: 'none'` → render nothing
+         - `type: 'svg'` → sanitize markup (allowlist of SVG elements + attributes per the prompt's DIAGRAMS constraints) and inline via dangerouslySetInnerHTML on a wrapper div
+         - `type: 'svg'` sanitization: use existing `packages/shared/src/lib/svgSanitizer.ts` if its allowlist matches our prompt constraints, otherwise write a tighter sanitizer scoped to the Bulk Import allowlist (rect, circle, line, path, text, polyline, polygon, ellipse, g, defs, marker, linearGradient, stop)
+         - `type: 'smiles'` → lazy-load RDKit, call `RDKit.get_mol(smiles).get_svg(width, height)`, render the returned SVG via the same sanitization pass as Case 2
+      3. Wire `QuestionVisual` into `QuestionCard.tsx` (web + mobile if applicable)
+      4. BulkImport.tsx preview should also render the visual inline (small thumbnail) so Pranav can spot-check before upload
+    - **NOT urgent until PR #2b lands**. Track here so the work isn't forgotten when admin UI shipping starts.
+    - **Sanitization scope**: even though the prompt constrains Claude to a safe subset, do not skip sanitization at render time. The sanitizer is the security boundary, not the prompt.
+    - Originated: 2026-06-09 diagram strategy decision (Strategy A + D).
+
 46. **Manually classify 11 `Thermodynamics` orphan rows** *(added 2026-06-08)*
     - Context: Migration 037 backfilled `cached_questions.subject` from EXAM_TAXONOMY across 7 passes. 1,184 of 1,224 orphan rows recovered (97%). 40 remain NULL by intentional design (see `docs/practice-mode-architecture-v2.md` § "Migration 037 residue").
     - **11 `Thermodynamics` rows** — Physics-vs-Chemistry collision. EAMCET has a chapter named "Thermodynamics" in both subjects. Probe (2026-06-08) showed ~9 are Physics-flavor (Carnot engines, P-V diagrams, ideal-gas processes, adiabatic γ=5/3, one mis-labeled mechanics question) and 2 lean Chemistry (standard enthalpy of formation of H₂O). No `question_data->>'subject'` set for any. 5 of the 11 are `v3-verified-pyq` (real exam papers — high value).
