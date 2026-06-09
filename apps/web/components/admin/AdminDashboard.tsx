@@ -3,7 +3,8 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '../ui/Tabs';
 import { KnowledgeBase } from './KnowledgeBase';
 import { StagingManager } from './StagingManager';
 import { QuestionSeeding } from './QuestionSeeding';
-import { BookOpen, Database, FileSpreadsheet } from 'lucide-react';
+import { BulkImport } from './BulkImport';
+import { BookOpen, Database, FileSpreadsheet, Upload } from 'lucide-react';
 
 /**
  * AdminDashboard — editorial refresh.
@@ -42,6 +43,10 @@ export const AdminDashboard: React.FC = () => {
                         <FileSpreadsheet className="h-4 w-4" />
                         Seeding
                     </TabsTrigger>
+                    <TabsTrigger value="bulk-import">
+                        <Upload className="h-4 w-4" />
+                        Bulk Import
+                    </TabsTrigger>
                 </TabsList>
 
                 <TabsContent value="textbooks" className="min-h-[500px]">
@@ -52,6 +57,9 @@ export const AdminDashboard: React.FC = () => {
                 </TabsContent>
                 <TabsContent value="seeding" className="min-h-[500px]">
                     <QuestionSeeding />
+                </TabsContent>
+                <TabsContent value="bulk-import" className="min-h-[500px]">
+                    <BulkImport />
                 </TabsContent>
             </Tabs>
         </div>
