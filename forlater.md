@@ -51,6 +51,23 @@
     - Approach: hand-merge in dedicated session — review phase-11's intended changes (visible in `ui/editorial-redesign` reference branch), apply only the styling deltas
     - Originated: PR #8 editorial revamp, 2026-06-06
 
+46. **Manually classify 11 `Thermodynamics` orphan rows** *(added 2026-06-08)*
+    - Context: Migration 037 backfilled `cached_questions.subject` from EXAM_TAXONOMY across 7 passes. 1,184 of 1,224 orphan rows recovered (97%). 40 remain NULL by intentional design (see `docs/practice-mode-architecture-v2.md` § "Migration 037 residue").
+    - **11 `Thermodynamics` rows** — Physics-vs-Chemistry collision. EAMCET has a chapter named "Thermodynamics" in both subjects. Probe (2026-06-08) showed ~9 are Physics-flavor (Carnot engines, P-V diagrams, ideal-gas processes, adiabatic γ=5/3, one mis-labeled mechanics question) and 2 lean Chemistry (standard enthalpy of formation of H₂O). No `question_data->>'subject'` set for any. 5 of the 11 are `v3-verified-pyq` (real exam papers — high value).
+    - **Pranav decision 2026-06-08**: leave NULL until manual classification. Don't introduce knowingly-wrong labels. Cost: these rows are invisible to subject-scoped queries but still served via `topic = 'Thermodynamics'` filters.
+    - **Action when ready**:
+      ```sql
+      SELECT id, source, verification_status,
+             LEFT(question_data->>'questionText', 200) AS preview
+      FROM public.cached_questions
+      WHERE subject IS NULL AND topic = 'Thermodynamics';
+      ```
+      Read each preview, tag as `Physics` or `Chemistry`, then `UPDATE` per id.
+    - **29 meta-filter rows** — `All Chapters` (12), `mixed` (9), `all` (8). Uploaded as cross-chapter filter sentinels; no single subject possible. Will stay NULL permanently. NOT actionable.
+    - **Migration 037 step 3 (`SET NOT NULL`) dropped from plan.** Column stays nullable forever. Admin Bulk Import (next PR) sets `subject` explicitly so no new NULL rows enter.
+    - **Backup table**: `public.cached_questions_backup_20260608` (RLS-locked, service-role only) holds pre-migration state. **Drop after ~2026-06-15** if nothing surfaces.
+    - Originated: Migration 037 EXAM_TAXONOMY backfill session, 2026-06-08.
+
 ### 🟡 P3 — Nice-to-have
 8. **Restore "Practice Again" button** in `SessionSummary.tsx` (currently commented out).
 9. **Wire "Try Similar" mini-drill** — currently hidden in InterventionModal. Web has `handleProveIt` calling `getQuestionByFsmTag`.
