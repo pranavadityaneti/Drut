@@ -112,6 +112,85 @@
 
 ---
 
+## Session: 2026-06-06 → 2026-06-08 (worktree: unruffled-vaughan-c3f74d)
+
+### Major work completed
+
+**Migrations + DB**
+- **Migration 034** — `Unit N:` → `Chapter N:` normalization (audit-trail file for already-applied work; PR #17)
+- **Migration 035** — case-variant chapter title normalization (10 explicit UPDATEs; PR #18)
+- **Migration 036** — idempotency patch for phone_otps policy (`DROP POLICY IF EXISTS` first; PR #22)
+- **Migration 037** — add explicit `subject` column to `cached_questions`; PR #33 schema, then EXAM_TAXONOMY-based backfill applied 2026-06-08
+- **Migration 037 backfill results**: 1,184 of 1,224 orphan rows recovered (97%) across 7 passes. 40 stay NULL by design (11 Thermodynamics collision + 29 meta-filter sentinels). Step 3 (`SET NOT NULL`) **dropped from plan** — would have required mis-labeling or DELETE-CASCADE through 4 FKs (`user_question_history`, `sprint_question_attempts`, `question_explanations`, `cached_questions.parent_question_id`).
+- **Backup table** `public.cached_questions_backup_20260608` (RLS-locked, service-role only) holds pre-migration state. Drop ~2026-06-15 if stable.
+
+**Keen-payne worktree consolidation (PRs #19–25)**
+- Category 1 — easy wins (no conflicts)
+- Category 2a — Expo SDK 54 → 56, RN 0.81 → 0.85, TS 5.9 → 6.0
+- Category 2b — mobile auth rebuild (signup, phone-OTP login, profile-setup)
+- Category 3 — mobile profile tab rebuild (edit-profile, settings, dashboard wiring)
+- Category 4 — mobile practice + sprint rebuild (multi-chapter, finite sessions, trusted sources)
+- Category 5 — shared services + web App.tsx
+- All synthetic commits author-rewritten to Pranav Aditya / netipranavaditya@gmail.com
+
+**Chapter Picker (PRs #26–30)**
+- Shared chapterService (PR #26)
+- Web 3-step Board → Class → Chapter picker (PR #27)
+- Mobile 3-step picker (PR #28)
+- Picker v2: board derived from exam, "Both" class option, NCERT-include toggle (PR #29)
+- Class-level NCERT fallback fix — Class 12 dropdown stops appearing empty (PR #30)
+
+**Docs (PRs #31, #32, #34)**
+- `docs/claude-chat-question-generation-prompt.md` — master prompt for Claude.ai bulk question generation (PR #31)
+- `docs/practice-mode-architecture-v2.md` — Practice Mode Architecture v2 capturing the strategic pivot (PR #32)
+- Architecture v2 + `forlater.md` #46 update after migration 037 completion (PR #34)
+
+### Decisions
+
+- **Strategic pivot** — Server-side batched RAG question generation **retired for MVP**. Questions generated out-of-band in Claude.ai chat with chapter PDFs, human-reviewed, bulk-uploaded via new admin import. Server-side AI shrinks to on-demand solution generation only. `ALLOW_LIVE_AI_FALLBACK` stays `false`. Rationale: question quality is the bottleneck, not throughput.
+- **`cached_questions.subject` stays nullable forever** — 40 legacy NULL rows are honest (Thermo collision + meta-filters). NOT NULL would force corruption or destructive CASCADE.
+- **11 Thermodynamics rows left NULL** — no per-row evidence to disambiguate Physics vs Chemistry. Manual classification deferred to `forlater.md` #46 (post-beta).
+- **Migration 038 ships separately before admin UI** (Pranav choice 2026-06-08) — clean schema/UI separation.
+- **Picker v2** — board derived from exam (not user-selected), "Both" class option, NCERT-include toggle. One picker for web + mobile.
+- **EXAM_TAXONOMY in `packages/shared/src/lib/taxonomy.ts` is the canonical subject→chapter map.** Backfill used it as authoritative source. Future writers MUST set `subject` explicitly.
+
+### Errors encountered (see ERRORS.md if added)
+- GitHub Push Protection caught Supabase PAT in keen-payne HANDOFF.md — fixed by redacting, amending commit, GC'ing unreachable.
+- Migration 036 `CREATE POLICY` not idempotent — fixed in PR #22 with `DROP POLICY IF EXISTS` first.
+- Class 12 empty chapter dropdown for AP EAPCET + Maths/Physics — BIEAP textbooks only have 1st Year ingested; fixed in PR #30 with class-aware NCERT fallback.
+- Migration 037 backfill first-draft had three landmines flagged by adversarial review: broken Diagnostic 6 SQL (correlated subquery on outer alias), naïve fuzzy match would corrupt subjects with name-colliding chapters (Vectors, Probability, Waves), naïve DELETE would cascade through user_question_history. All fixed before any production change.
+
+### Open threads (see forlater.md)
+- **#46 (new)** — Manual classification of 11 Thermodynamics rows post-beta.
+- **Backup table cleanup** — drop `cached_questions_backup_20260608` ~2026-06-15 if stable.
+- **Migration 038** — add `manual-curated` to `verification_status`. Pranav approved for next session. Prerequisite for admin UI.
+- **Migration 039** — update `get_unseen_questions` RPC to filter by `subject` + sort by source priority. Must handle `subject IS NULL` defensively.
+- **Admin Bulk Import UI** — the next substantive PR (after 038). Spec in architecture v2 doc § "Admin Bulk Import — UI shape".
+- **Pranav's parallel work** — generating questions in Claude.ai with chapter PDFs using `docs/claude-chat-question-generation-prompt.md`.
+
+### Files modified (high-level)
+
+**DB (production state after migration 037 backfill)**:
+- `public.cached_questions.subject` column added + populated for 7,094 of 7,134 rows
+- `public.cached_questions_backup_20260608` snapshot table (RLS-locked, service-role only)
+- Final subject distribution: Physics 3,139 / Mathematics 2,617 / Chemistry 1,338 / NULL 40
+
+**Repo (migration files added — audit trail)**:
+- `apps/web/supabase/migrations/034_normalize_unit_to_chapter.sql`
+- `apps/web/supabase/migrations/035_normalize_case_variants.sql`
+- `apps/web/supabase/migrations/036_*` (with idempotent CREATE POLICY)
+- `apps/web/supabase/migrations/037_cached_questions_subject_column.sql`
+
+**Docs**:
+- `docs/claude-chat-question-generation-prompt.md` (new)
+- `docs/practice-mode-architecture-v2.md` (new, then updated for 037 completion)
+- `forlater.md` #46 added; #42 marked done
+- `SESSION_LOG.md` (this entry)
+
+**Mobile + web app code** — full picker rollouts + class-level fallback fix; details in PRs #19–30.
+
+---
+
 ## Session: 2026-06-05 (worktree: keen-payne-fa2500 + main repo)
 
 ### Major work completed
