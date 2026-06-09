@@ -1,5 +1,12 @@
-import React, { useState, useCallback } from 'react';
-import { Upload, AlertCircle, CheckCircle2, Copy } from 'lucide-react';
+import React, { useState, useCallback, useMemo } from 'react';
+import {
+  Upload,
+  AlertCircle,
+  CheckCircle2,
+  Copy,
+  Pencil,
+  RotateCcw,
+} from 'lucide-react';
 import { BulkImportPayloadSchema, type BulkImportQuestion } from '@drut/shared';
 import type { ZodIssue } from 'zod';
 
@@ -34,6 +41,62 @@ type ParseResult =
   | { status: 'success'; fileName: string; questions: BulkImportQuestion[] }
   | { status: 'error'; fileName: string; errors: ParseError[] };
 
+// =====================================================================
+// Batch tagging — metadata that goes onto every row in a batch.
+// Source label is auto-derived from the other fields + today's date but
+// can be overridden with a manual edit.
+// =====================================================================
+
+type BatchSubject = 'Mathematics' | 'Physics' | 'Chemistry';
+type BatchClass = 'Class 11' | 'Class 12' | '1st Year' | '2nd Year';
+type BatchBoard = 'BIEAP' | 'TSBIE' | 'NCERT';
+
+const SUBJECT_OPTIONS: BatchSubject[] = ['Mathematics', 'Physics', 'Chemistry'];
+const CLASS_OPTIONS: BatchClass[] = ['Class 11', 'Class 12', '1st Year', '2nd Year'];
+const BOARD_OPTIONS: BatchBoard[] = ['BIEAP', 'TSBIE', 'NCERT'];
+
+interface BatchTags {
+  subject: BatchSubject | '';
+  className: BatchClass | '';
+  board: BatchBoard | '';
+  chapter: string; // free-form (e.g. "ch1" or "Chapter 1: Functions")
+  examProfiles: {
+    ap_eapcet: boolean;
+    ts_eapcet: boolean;
+    jee_main: boolean;
+  };
+  // null = use auto-derived; string = manual override (admin clicked Edit)
+  sourceLabelOverride: string | null;
+}
+
+const DEFAULT_TAGS: BatchTags = {
+  subject: '',
+  className: '',
+  board: '',
+  chapter: '',
+  examProfiles: { ap_eapcet: true, ts_eapcet: true, jee_main: false },
+  sourceLabelOverride: null,
+};
+
+function computeSourceLabel(tags: BatchTags, today: string): string {
+  const board = tags.board || 'BOARD';
+  const className = tags.className ? tags.className.replace(/\s/g, '') : 'CLASS';
+  const subject = tags.subject || 'SUBJECT';
+  const chapter = tags.chapter.trim() || 'batch';
+  return `claude-chat-${today}-${board}-${className}-${subject}-${chapter}`;
+}
+
+function isTagsComplete(tags: BatchTags): boolean {
+  if (!tags.subject || !tags.className || !tags.board || !tags.chapter.trim()) {
+    return false;
+  }
+  const hasExamProfile =
+    tags.examProfiles.ap_eapcet ||
+    tags.examProfiles.ts_eapcet ||
+    tags.examProfiles.jee_main;
+  return hasExamProfile;
+}
+
 function zodIssuesToParseErrors(issues: ZodIssue[]): ParseError[] {
   return issues.map((issue) => {
     const [first, ...rest] = issue.path;
@@ -60,6 +123,16 @@ export const BulkImport: React.FC = () => {
   const [result, setResult] = useState<ParseResult>({ status: 'idle' });
   const [copied, setCopied] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
+  const [batchTags, setBatchTags] = useState<BatchTags>(DEFAULT_TAGS);
+  const [isEditingSourceLabel, setIsEditingSourceLabel] = useState(false);
+
+  // Today's date in YYYY-MM-DD — computed once per mount so the source
+  // label doesn't churn while the admin is filling the form.
+  const today = useMemo(() => new Date().toISOString().slice(0, 10), []);
+
+  const autoSourceLabel = computeSourceLabel(batchTags, today);
+  const sourceLabel = batchTags.sourceLabelOverride ?? autoSourceLabel;
+  const tagsComplete = isTagsComplete(batchTags);
 
   const handleFile = useCallback(async (file: File) => {
     setResult({ status: 'parsing', fileName: file.name });
@@ -253,6 +326,207 @@ export const BulkImport: React.FC = () => {
               … and {result.questions.length - 10} more.
             </p>
           )}
+
+          {/* Batch tagging form */}
+          <div className="mt-8 border border-[var(--color-line)] rounded-lg p-6 space-y-5">
+            <div className="flex items-baseline justify-between">
+              <h3 className="text-[16px] font-semibold tracking-[-0.01em] text-[var(--color-ink-1)]">
+                Batch tagging
+              </h3>
+              <span className="text-[12px] text-[var(--color-ink-3)]">
+                required before upload
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Subject */}
+              <label className="space-y-1.5">
+                <span className="block text-[12px] text-[var(--color-ink-2)] font-medium">
+                  Subject
+                </span>
+                <select
+                  value={batchTags.subject}
+                  onChange={(e) =>
+                    setBatchTags({ ...batchTags, subject: e.target.value as BatchSubject | '' })
+                  }
+                  className="w-full px-3 py-2 border border-[var(--color-line)] rounded text-[14px] bg-white text-[var(--color-ink-1)] focus:outline-none focus:border-[var(--color-accent)]"
+                >
+                  <option value="">— select —</option>
+                  {SUBJECT_OPTIONS.map((s) => (
+                    <option key={s} value={s}>
+                      {s}
+                    </option>
+                  ))}
+                </select>
+              </label>
+
+              {/* Class */}
+              <label className="space-y-1.5">
+                <span className="block text-[12px] text-[var(--color-ink-2)] font-medium">
+                  Class
+                </span>
+                <select
+                  value={batchTags.className}
+                  onChange={(e) =>
+                    setBatchTags({ ...batchTags, className: e.target.value as BatchClass | '' })
+                  }
+                  className="w-full px-3 py-2 border border-[var(--color-line)] rounded text-[14px] bg-white text-[var(--color-ink-1)] focus:outline-none focus:border-[var(--color-accent)]"
+                >
+                  <option value="">— select —</option>
+                  {CLASS_OPTIONS.map((c) => (
+                    <option key={c} value={c}>
+                      {c}
+                    </option>
+                  ))}
+                </select>
+              </label>
+
+              {/* Board */}
+              <label className="space-y-1.5">
+                <span className="block text-[12px] text-[var(--color-ink-2)] font-medium">
+                  Board
+                </span>
+                <select
+                  value={batchTags.board}
+                  onChange={(e) =>
+                    setBatchTags({ ...batchTags, board: e.target.value as BatchBoard | '' })
+                  }
+                  className="w-full px-3 py-2 border border-[var(--color-line)] rounded text-[14px] bg-white text-[var(--color-ink-1)] focus:outline-none focus:border-[var(--color-accent)]"
+                >
+                  <option value="">— select —</option>
+                  {BOARD_OPTIONS.map((b) => (
+                    <option key={b} value={b}>
+                      {b}
+                    </option>
+                  ))}
+                </select>
+              </label>
+
+              {/* Chapter */}
+              <label className="space-y-1.5">
+                <span className="block text-[12px] text-[var(--color-ink-2)] font-medium">
+                  Chapter
+                </span>
+                <input
+                  type="text"
+                  value={batchTags.chapter}
+                  onChange={(e) => setBatchTags({ ...batchTags, chapter: e.target.value })}
+                  placeholder='e.g. "ch1" or "Chapter 1: Functions"'
+                  className="w-full px-3 py-2 border border-[var(--color-line)] rounded text-[14px] bg-white text-[var(--color-ink-1)] placeholder-[var(--color-ink-3)] focus:outline-none focus:border-[var(--color-accent)]"
+                />
+              </label>
+            </div>
+
+            {/* Target exams */}
+            <div className="space-y-1.5">
+              <span className="block text-[12px] text-[var(--color-ink-2)] font-medium">
+                Target exams
+              </span>
+              <div className="flex flex-wrap gap-4">
+                {(
+                  [
+                    { key: 'ap_eapcet', label: 'AP EAPCET' },
+                    { key: 'ts_eapcet', label: 'TG EAPCET' },
+                    { key: 'jee_main', label: 'JEE Main' },
+                  ] as const
+                ).map(({ key, label }) => (
+                  <label key={key} className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={batchTags.examProfiles[key]}
+                      onChange={(e) =>
+                        setBatchTags({
+                          ...batchTags,
+                          examProfiles: {
+                            ...batchTags.examProfiles,
+                            [key]: e.target.checked,
+                          },
+                        })
+                      }
+                      className="h-4 w-4 border-[var(--color-line)] rounded text-[var(--color-accent)] focus:ring-[var(--color-accent)]"
+                    />
+                    <span className="text-[14px] text-[var(--color-ink-1)]">{label}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+
+            {/* Verification status (read-only) */}
+            <div className="space-y-1.5">
+              <span className="block text-[12px] text-[var(--color-ink-2)] font-medium">
+                Verification status
+              </span>
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-[var(--color-paper-2)] border border-[var(--color-line)] rounded text-[13px]">
+                <code className="font-mono text-[var(--color-ink-1)]">manual-curated</code>
+                <span className="text-[12px] text-[var(--color-ink-3)]">forced for this flow</span>
+              </div>
+            </div>
+
+            {/* Source label */}
+            <div className="space-y-1.5">
+              <div className="flex items-center justify-between">
+                <span className="block text-[12px] text-[var(--color-ink-2)] font-medium">
+                  Source label
+                </span>
+                {!isEditingSourceLabel ? (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsEditingSourceLabel(true);
+                      setBatchTags({ ...batchTags, sourceLabelOverride: sourceLabel });
+                    }}
+                    className="flex items-center gap-1 text-[12px] text-[var(--color-ink-3)] hover:text-[var(--color-ink-1)]"
+                  >
+                    <Pencil className="h-3 w-3" />
+                    Edit
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsEditingSourceLabel(false);
+                      setBatchTags({ ...batchTags, sourceLabelOverride: null });
+                    }}
+                    className="flex items-center gap-1 text-[12px] text-[var(--color-ink-3)] hover:text-[var(--color-ink-1)]"
+                  >
+                    <RotateCcw className="h-3 w-3" />
+                    Reset to auto
+                  </button>
+                )}
+              </div>
+              {!isEditingSourceLabel ? (
+                <code className="block px-3 py-2 bg-[var(--color-paper-2)] border border-[var(--color-line)] rounded text-[13px] font-mono text-[var(--color-ink-1)] break-all">
+                  {sourceLabel}
+                </code>
+              ) : (
+                <input
+                  type="text"
+                  value={batchTags.sourceLabelOverride ?? ''}
+                  onChange={(e) =>
+                    setBatchTags({ ...batchTags, sourceLabelOverride: e.target.value })
+                  }
+                  className="w-full px-3 py-2 border border-[var(--color-line)] rounded text-[13px] font-mono bg-white text-[var(--color-ink-1)] focus:outline-none focus:border-[var(--color-accent)]"
+                />
+              )}
+            </div>
+
+            {/* Confirm — disabled pending PR #4 */}
+            <div className="pt-2 border-t border-[var(--color-line)] flex items-center justify-between">
+              <p className="text-[12px] text-[var(--color-ink-3)]">
+                {tagsComplete
+                  ? `Ready to upload ${result.questions.length} questions — confirm path lands in PR #4.`
+                  : 'Complete all required fields above to enable upload.'}
+              </p>
+              <button
+                type="button"
+                disabled
+                className="px-4 py-2 bg-[var(--color-ink-3)] text-white rounded text-[14px] font-medium opacity-50 cursor-not-allowed"
+                title="Insert path ships in PR #4"
+              >
+                Confirm upload
+              </button>
+            </div>
+          </div>
         </div>
       )}
 
