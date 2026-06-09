@@ -16,10 +16,14 @@ generation (Quick Method + Full Solution) per `docs/learning-framework.md`.
 2. Upload the textbook PDF for ONE chapter (e.g., BIEAP Maths 1A Chapter 1: Functions)
 3. Copy the full **PROMPT TO PASTE** block below into the chat
 4. Fill in the bracketed metadata at the top (subject, class, board, chapter)
-5. Send. Claude generates 50 questions at a time and pauses for review.
-6. Spot-check each batch. Continue if good; refine if not.
-7. After all batches done, copy the final JSON array
-8. Open Drut admin → Bulk Import → paste JSON → tag the batch → confirm
+5. Send. **First Claude enumerates subtopics + proposes a per-subtopic
+   question distribution.** Review the list; approve, edit, or push back.
+6. After you approve the subtopic plan, Claude generates 50 questions at
+   a time and pauses between batches. Each batch report includes
+   cumulative subtopic counts vs. target so you can see balance.
+7. Spot-check each batch. Continue if good; refine if not.
+8. After all batches done, copy the final JSON array.
+9. Open Drut admin → Bulk Import → paste JSON → tag the batch → confirm.
 
 ---
 
@@ -45,8 +49,47 @@ Every question must trace directly to content in the attached textbook:
   units, constants, and conventions
 - If a concept isn't in this chapter, do NOT generate a question on it
 
-QUANTITY: Generate 500 questions total, in batches of 50.
+STEP 1 — SUBTOPIC ENUMERATION (run this FIRST, before any question generation):
+
+Read the attached chapter PDF and identify the major subtopics covered
+in the chapter. Output ONLY a numbered list in this format:
+
+  Subtopics for [Chapter title]:
+    1. <Subtopic name> — ~<page-range> (<approx pages>)
+    2. <Subtopic name> — ~<page-range> (<approx pages>)
+    ...
+  Proposed distribution (500 questions):
+    1. <Subtopic name>: <N> questions
+    2. <Subtopic name>: <N> questions
+    ...
+  Total: 500
+
+Subtopic names should:
+- Be concise (2–6 words)
+- Match terminology used in the chapter (use the textbook's headings
+  where possible)
+- Be specific enough to anchor questions ("Equation of a Plane" not
+  "Planes"; "Domain of a Rational Function" not "Functions")
+- Be mutually exclusive and collectively cover the chapter
+
+Distribution rule:
+- Default to roughly uniform: 500 / N_subtopics per subtopic
+- Weight by textbook coverage (pages × density) — give a heavier subtopic
+  more questions, a lighter one fewer
+- Targets must sum to exactly 500
+
+Then STOP and wait for my approval of the subtopic list AND distribution
+before generating any questions.
+
+STEP 2 — QUANTITY: Generate 500 questions total, in batches of 50.
 Between batches: pause and confirm with me before continuing.
+
+Distribute each batch ACROSS subtopics so the cumulative count tracks
+the approved distribution:
+- For batch N, allocate questions proportional to remaining targets
+- Never let one subtopic dominate >25% of a batch unless all others are
+  already at target
+- Tag every question with its subtopic (see OUTPUT SCHEMA below)
 
 DIFFICULTY MIX (across all 500):
 - 30% Easy   (150 questions) — direct recall, single-step
@@ -77,6 +120,7 @@ OUTPUT SCHEMA (strict JSON array):
     ],
     "correctOptionIndex": 0,                // 0-based, MUST be 0–3
     "difficulty": "Easy",                   // Easy | Medium | Hard
+    "subtopic": "Equation of a Plane",      // EXACT match of one of the enumerated subtopics
     "fsmTag": "kebab-case-pattern-id",      // e.g., "domain-of-rational-function"
     "concepts": ["concept-tag-1", "concept-tag-2"],  // 1–3 lowercase tags
     "sourcePages": [12, 13],                // textbook pages this question pulls from
@@ -111,6 +155,9 @@ OUTPUT SCHEMA (strict JSON array):
 ]
 
 NAMING CONVENTIONS:
+- subtopic: human-readable, matches one of the enumerated subtopics from
+  Step 1 EXACTLY (no abbreviations, no variants). The admin import will
+  reject questions whose subtopic doesn't match the approved list.
 - fsmTag: lowercase kebab-case, descriptive of the SOLUTION PATTERN not
   the topic. Example: "completing-the-square" not "quadratic-equations".
   Group questions with the same solution shape under the same fsmTag.
@@ -143,11 +190,22 @@ output, but use it to design):
 - D: arithmetic slip (right method, wrong calculation)
 
 After each batch of 50, respond with:
-- "Batch N complete. Total so far: M/500. Continue? (Yes/No)"
+- "Batch N complete. Total so far: M/500."
+- "Cumulative subtopic distribution:"
+- "  1. <Subtopic name>: X / Y (target)"
+- "  2. <Subtopic name>: X / Y (target)"
+- "  ..."
+- "Difficulty mix this batch: Easy <a>, Medium <b>, Hard <c>"
+- "Continue? (Yes/No)"
 - Then wait for my reply before the next batch.
 
-START with Batch 1 of 50. Cover the chapter's foundational concepts first
-(early-chapter material), build to advanced. Don't front-load Hard.
+If a subtopic has reached its target and other subtopics are below 50%
+of theirs, the next batch must shift focus. Do not over-allocate.
+
+START with Step 1 (subtopic enumeration). Wait for my approval of the
+list AND distribution before starting Batch 1. When generating, cover
+each subtopic's foundational concepts first (early-chapter material),
+build to advanced within that subtopic. Don't front-load Hard.
 ```
 
 ---
