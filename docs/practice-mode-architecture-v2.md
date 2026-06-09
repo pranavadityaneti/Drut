@@ -202,14 +202,51 @@ mean "no difficulty filter" in the RPC. Defer; track as forlater item.
 
 ## Migration plan (ordered)
 
-| # | What | Risk | Recovery |
+| # | What | Status | Recovery |
 |---|---|---|---|
-| 037 | Add `subject` column to `cached_questions`, backfill, set NOT NULL | Low — additive | Drop column |
-| 038 | Add `manual-curated` to verification_status (if it's an enum) OR accept new string value (if it's a text column) | Low | Revert |
-| 039 | Update `get_unseen_questions` RPC to filter by `subject` + sort by source priority | Medium — query plan change | Revert RPC |
+| 037 | Add `subject` column to `cached_questions` + EXAM_TAXONOMY-based backfill | ✓ Applied 2026-06-08 | Snapshot in `public.cached_questions_backup_20260608` (RLS-locked; drop ~2026-06-15 once stable) |
+| 037-step-3 | `ALTER COLUMN subject SET NOT NULL` | ✗ **Dropped from plan** — see "Migration 037 residue" below | n/a |
+| 038 | Add `manual-curated` to verification_status (if it's an enum) OR accept new string value (if it's a text column) | Pending | Revert |
+| 039 | Update `get_unseen_questions` RPC to filter by `subject` + sort by source priority. **Must handle `subject IS NULL`** (40 legacy rows) defensively. | Pending | Revert RPC |
 
 Migration 037 ships before admin Bulk Import (admin import sets subject
 explicitly; can't do that without the column).
+
+### Migration 037 residue — 40 rows stay NULL forever
+
+EXAM_TAXONOMY backfill recovered **1,184 of 1,224 orphan rows (97%)** across
+three passes:
+- Pass 1: exact label match against the 79 unambiguous EXAM_TAXONOMY chapters
+- Pass 2: `Thermodynamics` tiebreak via `question_data->>'subject'`
+- Pass 3: subject-name-as-topic (`Physics`, `Chemistry`)
+
+Plus inference passes (4–7) for variant/short-form/snake-case topic names
+that aren't in EXAM_TAXONOMY but are unambiguously one subject (e.g.
+`Algebra`, `Trigonometry`, `Coordination Compounds`, `Magnetism`).
+
+The remaining **40 rows stay NULL by design**:
+- **11 `Thermodynamics`** — Physics-vs-Chemistry collision; no per-row
+  evidence to disambiguate (~9 are Physics-flavor, 2 lean Chemistry, 0
+  have `question_data->>'subject'` set). Flagged in `forlater.md` #46
+  for manual classification post-beta.
+- **29 meta-filter sentinels** — `All Chapters` (12), `mixed` (9),
+  `all` (8). Uploaded as cross-chapter filters; never had a single
+  subject. Will stay NULL permanently.
+
+**Why `SET NOT NULL` was dropped:** the 40 NULLs are honest. Forcing
+NOT NULL would require either (a) knowingly mis-labeling the 11
+Thermodynamics rows or (b) deleting them — which would cascade through
+`user_question_history`, `sprint_question_attempts`,
+`question_explanations`, and `cached_questions.parent_question_id` via
+their `ON DELETE CASCADE` FKs. Neither is acceptable. Admin Bulk Import
+(next PR) sets `subject` explicitly, so no new NULL rows enter the
+table.
+
+**Migration 039 implication:** the `get_unseen_questions` RPC update must
+filter defensively — e.g. surface NULL-subject rows when querying by
+`topic` even if the subject filter is set — so the 40 legacy rows
+remain reachable via chapter-scoped queries while staying invisible to
+pure subject filters.
 
 ---
 
