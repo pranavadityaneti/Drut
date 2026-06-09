@@ -92,3 +92,11 @@ export * from './hooks/useDashboardData';
 // Validation
 export * from './lib/clientValidator';
 export * from './lib/taxonomy/physicsRules';
+export {
+  BulkImportQuestionSchema,
+  BulkImportPayloadSchema,
+} from './lib/questionSchema';
+export type {
+  BulkImportQuestion,
+  BulkImportPayload,
+} from './lib/questionSchema';
