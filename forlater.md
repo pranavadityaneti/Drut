@@ -51,6 +51,21 @@
     - Approach: hand-merge in dedicated session — review phase-11's intended changes (visible in `ui/editorial-redesign` reference branch), apply only the styling deltas
     - Originated: PR #8 editorial revamp, 2026-06-06
 
+48. **DB-level admin enforcement for admin-bulk-import (replace email-allowlist constant)** *(added 2026-06-09)*
+    - Context: The `admin-bulk-import` edge function (PR #4b) uses a hardcoded email allowlist in `apps/web/supabase/functions/_shared/admin-allowlist.ts`. Adversarial review flagged this as the only line of defense — service role bypasses RLS, so a compromised email check exposes the entire `cached_questions` write surface (and via service role, every other table). Pranav accepted the trade-off for closed beta (1–2 admins, 6-day timeline). Mitigation post-beta:
+    - **Action when ready**:
+      1. New migration: `CREATE TABLE public.admin_users(user_id uuid PK REFERENCES auth.users(id), email text, can_bulk_import boolean DEFAULT true, revoked_at timestamptz, granted_at timestamptz DEFAULT now())`. RLS: only service role can write; admins can SELECT their own row.
+      2. New Postgres RPC `check_admin_can_bulk_import(user_id uuid) RETURNS boolean` — checks `revoked_at IS NULL AND can_bulk_import` in the admin_users table.
+      3. Modify `admin-bulk-import/index.ts`:
+         - Use the **anon client + user's JWT** to call the RPC FIRST.
+         - Only on `true` do we swap to the service role client for the upsert.
+         - Remove the hardcoded `ADMIN_EMAILS` constant; trust the DB.
+      4. Seed the table with current admins via a migration: `INSERT INTO admin_users (user_id, email) SELECT id, email FROM auth.users WHERE email IN (...);`
+    - **Revocation flow post-upgrade**: `UPDATE admin_users SET revoked_at = now() WHERE email = '...'`. No redeploy required.
+    - **NOT urgent** — closed beta has 2 admins (Pranav + himself) and the email check works. Re-evaluate post-launch if admin count grows or revocation becomes a real concern.
+    - Files referenced: `_shared/admin-allowlist.ts` (delete), `admin-bulk-import/index.ts` (rewrite auth check), new migration `041_admin_users_table.sql`.
+    - Originated: PR #4b adversarial review, 2026-06-09.
+
 47. **RDKit-JS + SVG renderer for Bulk Import questions** *(added 2026-06-09)*
     - Context: Strategy A + D from the diagram-strategy decision (2026-06-09). Schema `visual` discriminated union now accepts `{type: 'svg', svg}` for graphs/geometry/circuits/ray-diagrams and `{type: 'smiles', smiles}` for organic chemistry molecules. The schema is shipped; the RENDERER hasn't been built yet.
     - **Action when ready** (folded into PR #2b — admin Bulk Import UI):
