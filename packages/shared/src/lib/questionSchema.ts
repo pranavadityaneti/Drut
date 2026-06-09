@@ -59,6 +59,9 @@ export const BulkImportQuestionSchema = z
     fsmTag: z
       .string()
       .regex(FSM_TAG_REGEX, 'fsmTag must be lowercase kebab-case'),
+    subtopic: z
+      .string()
+      .min(1, 'subtopic must be non-empty (matches one of the chapter\'s enumerated subtopics)'),
     concepts: z
       .array(
         z
