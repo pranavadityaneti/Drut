@@ -1,0 +1,2670 @@
+[
+  {
+    "questionText": "The SI system, with its standard scheme of symbols, units and abbreviations, was developed and recommended for international usage by:",
+    "options": [
+      {
+        "text": "The General Conference on Weights and Measures in 1971"
+      },
+      {
+        "text": "The International Bureau of Standards in 1889"
+      },
+      {
+        "text": "The Royal Society in 1960"
+      },
+      {
+        "text": "The National Physical Laboratory in 1983"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Easy",
+    "subtopic": "The International System of Units",
+    "fsmTag": "si-history-recall",
+    "concepts": [
+      "si-units"
+    ],
+    "sourcePages": [
+      16,
+      17
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Recall of the SI system's origin (Section 2.2).",
+        "**EXTRACT:** Asked: which body recommended SI, and when.",
+        "**EXECUTE:** The textbook: the SI 'was developed and recommended by General Conference on Weights and Measures in 1971 for international usage in scientific, technical, industrial and commercial work.'",
+        "**PROOF:** 1889 (option B) is the year of the kilogram prototype; 1983 (option D) is the year of the current metre definition — both real dates attached to the wrong event."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "According to the textbook's Table 2.1, the kilogram is defined as:",
+    "options": [
+      {
+        "text": "The mass of one litre of pure water at 4 °C"
+      },
+      {
+        "text": "The mass of the international prototype — a platinum-iridium alloy cylinder kept at the International Bureau of Weights and Measures at Sèvres, near Paris (1889)"
+      },
+      {
+        "text": "The mass of exactly $6.02 \\times 10^{23}$ atoms of carbon-12"
+      },
+      {
+        "text": "The mass corresponding to a fixed value of Planck's constant"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Easy",
+    "subtopic": "The International System of Units",
+    "fsmTag": "kilogram-definition-recall",
+    "concepts": [
+      "kilogram-definition",
+      "si-base-units"
+    ],
+    "sourcePages": [
+      17
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Definition recall from Table 2.1.",
+        "**EXTRACT:** Asked: the kilogram's definition as given in this textbook.",
+        "**EXECUTE:** Table 2.1: 'The kilogram is equal to the mass of the international prototype of the kilogram (a platinum-iridium alloy cylinder) kept at international Bureau of Weights and Measures, at Sevres, near Paris, France. (1889)'.",
+        "**PROOF:** Option A is the historical pre-1889 idea the prototype replaced; option D describes a later redefinition not present in this textbook. The question anchors to the textbook's stated definition."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Which pairing of SI base quantity and base unit is INCORRECT?",
+    "options": [
+      {
+        "text": "Thermodynamic temperature — kelvin"
+      },
+      {
+        "text": "Amount of substance — mole"
+      },
+      {
+        "text": "Luminous intensity — mole"
+      },
+      {
+        "text": "Electric current — ampere"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Medium",
+    "subtopic": "The International System of Units",
+    "fsmTag": "quantity-unit-pairing",
+    "concepts": [
+      "si-base-units"
+    ],
+    "sourcePages": [
+      17
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When matching base quantities to base units.",
+      "steps": [
+        "**Trigger:** A pairing list with one quantity given the wrong unit.",
+        "**Action:** Recall Table 2.1's seven pairings; luminous intensity pairs with the candela.",
+        "**Result:** 'Luminous intensity — mole' is wrong — option C."
+      ],
+      "sanityCheck": "The mole already belongs to amount of substance (option B), so it cannot also serve luminous intensity."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Base quantity–unit matching (Table 2.1).",
+        "**EXTRACT:** Find the mismatched pair.",
+        "**EXECUTE:** Table 2.1 pairs: length–metre, mass–kilogram, time–second, electric current–ampere, thermodynamic temperature–kelvin, amount of substance–mole, luminous intensity–candela. Option C assigns the mole to luminous intensity; the correct unit is the candela (cd).",
+        "**PROOF:** Options A, B and D reproduce Table 2.1 exactly; only option C deviates."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "In the CGS system of units, the base units for length, mass and time respectively are:",
+    "options": [
+      {
+        "text": "metre, kilogram, second"
+      },
+      {
+        "text": "centimetre, kilogram, minute"
+      },
+      {
+        "text": "foot, pound, second"
+      },
+      {
+        "text": "centimetre, gram, second"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Medium",
+    "subtopic": "The International System of Units",
+    "fsmTag": "unit-system-identification",
+    "concepts": [
+      "cgs-system",
+      "unit-systems"
+    ],
+    "sourcePages": [
+      16
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Recall of the three pre-SI unit systems (Section 2.2).",
+        "**EXTRACT:** Asked: the CGS base units.",
+        "**EXECUTE:** The textbook: 'In CGS system they were centimetre, gram and second respectively.' Option A is the MKS triplet; option C is the FPS (British) triplet; option B mixes systems.",
+        "**PROOF:** The acronym CGS itself encodes Centimetre-Gram-Second."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "1 angstrom (Å) equals:",
+    "options": [
+      {
+        "text": "$10^{-15}$ m"
+      },
+      {
+        "text": "$10^{-12}$ m"
+      },
+      {
+        "text": "$10^{-10}$ m"
+      },
+      {
+        "text": "$10^{-8}$ m"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Easy",
+    "subtopic": "Measurement of Length",
+    "fsmTag": "length-unit-value-recall",
+    "concepts": [
+      "angstrom",
+      "small-distance-units"
+    ],
+    "sourcePages": [
+      20,
+      21
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Unit-value recall; companion trap to the fermi.",
+        "**EXTRACT:** Asked: 1 Å in metres.",
+        "**EXECUTE:** Section 2.3.2: '1 angstrom = 1 Å = $10^{-10}$ m'. It is the convenient unit on the atomic scale — atomic sizes are of order 1 Å.",
+        "**PROOF:** Option A is the fermi (nuclear scale, $10^5$ times smaller); the angstrom sits at the atomic scale, $10^{-10}$ m."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The astronomical unit (AU) is defined as:",
+    "options": [
+      {
+        "text": "The distance light travels in one year"
+      },
+      {
+        "text": "The radius of the Sun"
+      },
+      {
+        "text": "The distance at which 1 AU subtends an angle of 1 arc second"
+      },
+      {
+        "text": "The average distance of the Sun from the Earth, equal to $1.496 \\times 10^{11}$ m"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Easy",
+    "subtopic": "Measurement of Length",
+    "fsmTag": "length-unit-definition-recall",
+    "concepts": [
+      "astronomical-unit",
+      "large-distance-units"
+    ],
+    "sourcePages": [
+      19,
+      21
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Definition recall (Sections 2.3.1 and 2.3.3).",
+        "**EXTRACT:** Asked: the definition of the AU.",
+        "**EXECUTE:** The textbook: '1 astronomical unit = 1 AU (average distance of the Sun from the Earth) $= 1.496 \\times 10^{11}$ m.'",
+        "**PROOF:** Option A defines the light year; option C garbles the parsec definition (and is circular); option B is unrelated. Only option B matches the chapter."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The light year is a unit of:",
+    "options": [
+      {
+        "text": "Time"
+      },
+      {
+        "text": "Speed"
+      },
+      {
+        "text": "Luminous intensity"
+      },
+      {
+        "text": "Distance"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Easy",
+    "subtopic": "Measurement of Length",
+    "fsmTag": "unit-quantity-classification",
+    "concepts": [
+      "light-year",
+      "large-distance-units"
+    ],
+    "sourcePages": [
+      21
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When a unit's name suggests the wrong quantity.",
+      "steps": [
+        "**Trigger:** 'Year' in the name tempts the answer 'time'.",
+        "**Action:** Recall the definition: the DISTANCE light travels in one year.",
+        "**Result:** A unit of distance — option D."
+      ],
+      "sanityCheck": "Its value, $9.46 \\times 10^{15}$ m, is in metres — a length."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Unit classification with a deliberately misleading name.",
+        "**EXTRACT:** Asked: what quantity the light year measures.",
+        "**EXECUTE:** Section 2.3.3: '1 light year = 1 ly = $9.46 \\times 10^{15}$ m (distance that light travels with velocity of $3 \\times 10^8$ m s⁻¹ in 1 year)'. Speed × time = distance; the name encodes the recipe, not the quantity.",
+        "**PROOF:** The tabulated value carries the unit metre, settling the classification."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "In the oleic acid experiment for estimating molecular size, a film of oleic acid of volume $5 \\times 10^{-6}$ cm³ spreads into a circular layer of area 50 cm² on water. Assuming the film is one molecule thick, the size of an oleic acid molecule is:",
+    "options": [
+      {
+        "text": "$10^{-7}$ m"
+      },
+      {
+        "text": "$10^{-9}$ m"
+      },
+      {
+        "text": "$10^{-5}$ m"
+      },
+      {
+        "text": "$10^{-11}$ m"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Medium",
+    "subtopic": "Measurement of Length",
+    "fsmTag": "film-thickness-estimation",
+    "concepts": [
+      "oleic-acid-experiment",
+      "molecular-size",
+      "unit-conversion"
+    ],
+    "sourcePages": [
+      20
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When a volume spreads into a mono-molecular film of known area.",
+      "steps": [
+        "**Trigger:** Volume V spreading into film of area A, one molecule thick.",
+        "**Action:** Thickness $t = V/A$, then convert cm to m.",
+        "**Result:** $t = 5\\times10^{-6}/50 = 10^{-7}$ cm $= 10^{-9}$ m — option B."
+      ],
+      "sanityCheck": "The textbook states oleic acid has 'large molecular size of the order of $10^{-9}$ m' — the answer must land there."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Mono-molecular film method (Section 2.3.2). The film's thickness equals one molecular diameter.",
+        "**EXTRACT:** $V = 5\\times10^{-6}$ cm³; $A = 50$ cm². Find $t = V/A$ in metres.",
+        "**EXECUTE:** $t = \\dfrac{5\\times10^{-6}\\ \\mathrm{cm^3}}{50\\ \\mathrm{cm^2}} = 10^{-7}$ cm. Converting: $10^{-7}$ cm $= 10^{-7} \\times 10^{-2}$ m $= 10^{-9}$ m.",
+        "**PROOF:** Matches the chapter's stated order of molecular size ($10^{-9}$ m). Option A forgets the cm→m conversion; option D applies the conversion twice; option C botches the division."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The nearest star is 4.29 light years away. Given 1 ly $= 9.46 \\times 10^{15}$ m and 1 parsec $= 3.08 \\times 10^{16}$ m, this distance in parsecs is approximately:",
+    "options": [
+      {
+        "text": "4.29 parsec"
+      },
+      {
+        "text": "0.76 parsec"
+      },
+      {
+        "text": "1.32 parsec"
+      },
+      {
+        "text": "13.2 parsec"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Hard",
+    "subtopic": "Measurement of Length",
+    "fsmTag": "unit-conversion-chain",
+    "concepts": [
+      "parsec",
+      "light-year",
+      "unit-conversion"
+    ],
+    "sourcePages": [
+      21
+    ],
+    "timeTargets": {
+      "ap_eapcet": 90,
+      "ts_eapcet": 90,
+      "jee_main": 120
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When converting between two non-SI units via their metre values.",
+      "steps": [
+        "**Trigger:** Distance in unit X asked in unit Y, both given in metres.",
+        "**Action:** Multiply by X's metre value, divide by Y's: $4.29 \\times \\dfrac{9.46\\times10^{15}}{3.08\\times10^{16}}$.",
+        "**Result:** $4.29 \\times 0.307 \\approx 1.32$ parsec — option C."
+      ],
+      "sanityCheck": "1 parsec ≈ 3.26 ly, so the parsec count must be about a third of the light-year count: $4.29/3.26 \\approx 1.3$. Consistent."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Chained unit conversion using the chapter's tabulated values.",
+        "**EXTRACT:** $d = 4.29$ ly; 1 ly $= 9.46\\times10^{15}$ m; 1 pc $= 3.08\\times10^{16}$ m.",
+        "**EXECUTE:** In metres: $d = 4.29 \\times 9.46\\times10^{15} = 4.058\\times10^{16}$ m. In parsecs: $d = \\dfrac{4.058\\times10^{16}}{3.08\\times10^{16}} = 1.318 \\approx 1.32$ pc.",
+        "**PROOF:** Option B is the reciprocal mistake ($3.08/4.058$ misapplied); option A assumes ly = pc; option D misplaces a decimal. The sanity ratio 1 pc ≈ 3.26 ly confirms ~1.32."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The masses of objects in the universe vary over a very wide range — from about $10^{-30}$ kg to about $10^{55}$ kg. These two extremes correspond respectively to:",
+    "options": [
+      {
+        "text": "An electron and the known universe"
+      },
+      {
+        "text": "A proton and the Sun"
+      },
+      {
+        "text": "A hydrogen atom and the Milky Way"
+      },
+      {
+        "text": "An electron and the Earth"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Easy",
+    "subtopic": "Measurement of Mass and Time",
+    "fsmTag": "range-of-masses-recall",
+    "concepts": [
+      "range-of-masses"
+    ],
+    "sourcePages": [
+      21,
+      22
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Recall of the chapter's range-of-masses bookends (Section 2.4.1).",
+        "**EXTRACT:** Asked: what sits at $10^{-30}$ kg and $10^{55}$ kg.",
+        "**EXECUTE:** The textbook: masses 'may vary from tiny mass of the order of $10^{-30}$ kg of an electron to the huge mass of about $10^{55}$ kg of the known universe.'",
+        "**PROOF:** The Sun is ~$2\\times10^{30}$ kg and the Earth ~$10^{25}$ kg — far short of $10^{55}$; only the known universe fits the upper bookend."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "For measuring the small masses of atomic and sub-atomic particles, the appropriate technique mentioned in the chapter is:",
+    "options": [
+      {
+        "text": "A common balance, as used in a grocery shop"
+      },
+      {
+        "text": "The gravitational method based on Newton's law of gravitation"
+      },
+      {
+        "text": "A mass spectrograph, in which the radius of the trajectory is proportional to the mass of a charged particle in uniform electric and magnetic fields"
+      },
+      {
+        "text": "Comparison with the platinum-iridium prototype kilogram"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Easy",
+    "subtopic": "Measurement of Mass and Time",
+    "fsmTag": "mass-measurement-method-matching",
+    "concepts": [
+      "mass-spectrograph",
+      "mass-measurement"
+    ],
+    "sourcePages": [
+      21,
+      22
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When matching a mass scale to its measurement technique.",
+      "steps": [
+        "**Trigger:** Atomic/sub-atomic masses → far below any balance's reach.",
+        "**Action:** Match scale to method: everyday → balance; planetary → gravitational; atomic → mass spectrograph.",
+        "**Result:** Mass spectrograph — option C."
+      ],
+      "sanityCheck": "The gravitational method (option B) is the chapter's technique for LARGE masses like planets and stars — the opposite extreme."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Method–scale matching (Section 2.4).",
+        "**EXTRACT:** Asked: technique for atomic/sub-atomic masses.",
+        "**EXECUTE:** The textbook: 'For measurement of small masses of atomic/sub-atomic particles etc., we make use of mass spectrograph in which radius of the trajectory is proportional to the mass of a charged particle moving in uniform electric and magnetic fields.'",
+        "**PROOF:** Options A and B are the chapter's methods for everyday and astronomical masses respectively; option D is how standard kilograms are calibrated, not how particle masses are found."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The cesium atomic clocks used to maintain the national standard of time are accurate to about 1 part in $10^{13}$. This means they lose or gain no more than approximately:",
+    "options": [
+      {
+        "text": "3 ms in one year"
+      },
+      {
+        "text": "3 µs in one day"
+      },
+      {
+        "text": "1 s in one year"
+      },
+      {
+        "text": "3 µs in one year"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Medium",
+    "subtopic": "Measurement of Mass and Time",
+    "fsmTag": "clock-accuracy-recall",
+    "concepts": [
+      "cesium-clock",
+      "accuracy"
+    ],
+    "sourcePages": [
+      22
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When a fractional accuracy must be converted to drift per year.",
+      "steps": [
+        "**Trigger:** Accuracy quoted as 1 part in $10^{13}$.",
+        "**Action:** Multiply by seconds in a year: $10^{-13} \\times 3.15\\times10^{7}\\ \\mathrm{s} \\approx 3\\times10^{-6}$ s.",
+        "**Result:** About 3 µs per year — option D."
+      ],
+      "sanityCheck": "The textbook states the same figure directly: 'they lose or gain no more than 3 µs in one year.'"
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Fractional accuracy → absolute drift conversion (Section 2.5).",
+        "**EXTRACT:** Fractional uncertainty $10^{-13}$; interval = 1 year $\\approx 3.15\\times10^{7}$ s.",
+        "**EXECUTE:** Drift $= 10^{-13} \\times 3.15\\times10^{7}$ s $= 3.15\\times10^{-6}$ s $\\approx 3$ µs per year. The textbook: the clocks 'lose or gain no more than 3 µs (micro second) in one year.'",
+        "**PROOF:** Option A is off by 10³ (ms vs µs); option C would be accuracy of only 1 part in $3\\times10^{7}$; option B compresses the interval to a day, inflating the implied drift rate by ~365."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A standard laboratory metre scale has graduations at 1 mm spacing. The least count of this scale is:",
+    "options": [
+      {
+        "text": "1 cm"
+      },
+      {
+        "text": "0.5 mm"
+      },
+      {
+        "text": "1 mm"
+      },
+      {
+        "text": "0.01 cm"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Easy",
+    "subtopic": "Accuracy, Precision and Types of Errors",
+    "fsmTag": "least-count-identification",
+    "concepts": [
+      "least-count",
+      "resolution"
+    ],
+    "sourcePages": [
+      24
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Definition application: least count = smallest value the instrument can measure (Section 2.6).",
+        "**EXTRACT:** Scale graduated at 1 mm intervals.",
+        "**EXECUTE:** 'The smallest value that can be measured by the measuring instrument is called its least count.' For a metre scale, the textbook notes 'it may have graduations at 1 mm division scale spacing or interval' — its least count is 1 mm.",
+        "**PROOF:** Option D (0.01 cm = 0.1 mm) is the vernier callipers' least count per the chapter; the bare metre scale cannot resolve below its 1 mm graduation."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "An observer, while reading a metre scale, always positions their head slightly to the right of the line of sight, producing a parallax shift in every reading. This is an example of:",
+    "options": [
+      {
+        "text": "Random error"
+      },
+      {
+        "text": "Least count error"
+      },
+      {
+        "text": "Instrumental error"
+      },
+      {
+        "text": "Personal error (a systematic error)"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Medium",
+    "subtopic": "Accuracy, Precision and Types of Errors",
+    "fsmTag": "error-type-classification",
+    "concepts": [
+      "personal-error",
+      "systematic-errors",
+      "parallax"
+    ],
+    "sourcePages": [
+      23,
+      24
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When an error traces to the observer's consistent habit.",
+      "steps": [
+        "**Trigger:** A bias caused by the OBSERVER, repeated identically every time.",
+        "**Action:** Constant-direction + observer-caused → personal error, a category of systematic error.",
+        "**Result:** Option D."
+      ],
+      "sanityCheck": "'Always to the right' fixes the error's direction — the signature of systematic, not random, error."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Error-source classification (Section 2.6).",
+        "**EXTRACT:** Cause: observer habitually holds head off-axis → consistent parallax shift.",
+        "**EXECUTE:** The textbook's third systematic category: 'Personal errors... arise due to an individual's bias, lack of proper setting of the apparatus or individual's carelessness in taking observations... For example, if you, by habit, always hold your head a bit too far to the right while reading the position of a needle on the scale, you will introduce an error due to parallax.'",
+        "**PROOF:** The error is observer-caused (not the instrument — rules out C) and unidirectional (rules out A); the least count (B) is unrelated to head position."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Which of the following is the textbook's prescription for reducing the LEAST COUNT error of a measurement?",
+    "options": [
+      {
+        "text": "Apply a zero correction to the instrument"
+      },
+      {
+        "text": "Use instruments of higher precision and improve experimental techniques"
+      },
+      {
+        "text": "Increase the size of the quantity being measured"
+      },
+      {
+        "text": "Convert all readings to SI units before averaging"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Medium",
+    "subtopic": "Accuracy, Precision and Types of Errors",
+    "fsmTag": "error-reduction-strategy",
+    "concepts": [
+      "least-count-error",
+      "precision"
+    ],
+    "sourcePages": [
+      24
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Error-mitigation recall (Section 2.6, least count error).",
+        "**EXTRACT:** Asked: how to reduce least count error.",
+        "**EXECUTE:** The textbook: 'Using instruments of higher precision, improving experimental techniques, etc., we can reduce the least count error. Repeating the observations several times and taking the arithmetic mean of all the observations, the mean value would be very close to the true value.' Option B states the prescription.",
+        "**PROOF:** A zero correction (option A) fixes a zero error, not resolution; options C and D do not change the instrument's resolution at all."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The absolute error $|\\Delta a|$ of an individual measurement is:",
+    "options": [
+      {
+        "text": "Always positive"
+      },
+      {
+        "text": "Always negative"
+      },
+      {
+        "text": "Positive or negative depending on whether the reading overestimates or underestimates"
+      },
+      {
+        "text": "Always zero for a well-calibrated instrument"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Easy",
+    "subtopic": "Absolute, Relative and Percentage Error",
+    "fsmTag": "absolute-error-sign",
+    "concepts": [
+      "absolute-error"
+    ],
+    "sourcePages": [
+      24,
+      25
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Sign property of the absolute error (Section 2.6.1).",
+        "**EXTRACT:** Asked: the sign of $|\\Delta a|$.",
+        "**EXECUTE:** The textbook: 'The $\\Delta a$ calculated above may be positive in certain cases and negative in some other cases. But absolute error $|\\Delta a|$ will always be positive.' The deviation $\\Delta a = a_i - a_{mean}$ carries a sign; its MAGNITUDE — the absolute error — does not.",
+        "**PROOF:** Option C describes the signed deviation $\\Delta a$, not the absolute error $|\\Delta a|$; the modulus bars in the symbol settle it."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The mean absolute error $\\Delta a_{mean}$ of n measurements is given by:",
+    "options": [
+      {
+        "text": "$(\\Delta a_1 + \\Delta a_2 + ... + \\Delta a_n)/n$, keeping the signs of the deviations"
+      },
+      {
+        "text": "$\\sqrt{\\Delta a_1^2 + \\Delta a_2^2 + ... + \\Delta a_n^2}$"
+      },
+      {
+        "text": "The largest of $|\\Delta a_1|, |\\Delta a_2|, ..., |\\Delta a_n|$"
+      },
+      {
+        "text": "$(|\\Delta a_1| + |\\Delta a_2| + ... + |\\Delta a_n|)/n$"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Easy",
+    "subtopic": "Absolute, Relative and Percentage Error",
+    "fsmTag": "mean-absolute-error-formula",
+    "concepts": [
+      "mean-absolute-error"
+    ],
+    "sourcePages": [
+      25
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Formula recall (Section 2.6.1).",
+        "**EXTRACT:** Asked: the definition of $\\Delta a_{mean}$.",
+        "**EXECUTE:** 'The arithmetic mean of all the absolute errors is taken as the final or mean absolute error... $\\Delta a_{mean} = (|\\Delta a_1| + |\\Delta a_2| + |\\Delta a_3| + ... + |\\Delta a_n|)/n$.' The absolute-value bars are essential: with signs kept (option A), positive and negative deviations cancel and the mean deviation from the mean is identically zero.",
+        "**PROOF:** Option A always evaluates to 0 (by definition of the mean) — useless as an error estimate. Option B is a root-sum-square the chapter does not use."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Four measurements of a time interval give 2.4 s, 2.5 s, 2.7 s and 2.4 s. The result should be reported as:",
+    "options": [
+      {
+        "text": "$(2.5 \\pm 0.4)$ s"
+      },
+      {
+        "text": "$(2.5 \\pm 0.1)$ s"
+      },
+      {
+        "text": "$(2.7 \\pm 0.1)$ s"
+      },
+      {
+        "text": "$(2.5 \\pm 0.025)$ s"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Medium",
+    "subtopic": "Absolute, Relative and Percentage Error",
+    "fsmTag": "mean-absolute-error-pipeline",
+    "concepts": [
+      "mean-absolute-error",
+      "measurement-reporting"
+    ],
+    "sourcePages": [
+      24,
+      25
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When repeated readings must be condensed into value ± error.",
+      "steps": [
+        "**Trigger:** A set of repeated readings, report format asked.",
+        "**Action:** Mean of readings, then mean of |deviations|.",
+        "**Result:** Mean $= 10.0/4 = 2.5$ s; $\\Delta_{mean} = (0.1+0.0+0.2+0.1)/4 = 0.1$ s → $(2.5 \\pm 0.1)$ s — option B."
+      ],
+      "sanityCheck": "The error (0.1 s) is comfortably smaller than the spread of readings (0.3 s) but non-zero — the expected shape."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Mean and mean-absolute-error pipeline with the report format $a_{mean} \\pm \\Delta a_{mean}$ (Section 2.6.1).",
+        "**EXTRACT:** Readings: 2.4, 2.5, 2.7, 2.4 s (n = 4).",
+        "**EXECUTE:** Mean $= (2.4+2.5+2.7+2.4)/4 = 10.0/4 = 2.5$ s. Deviations: $-0.1, 0.0, +0.2, -0.1$. Absolute errors: 0.1, 0.0, 0.2, 0.1. Mean absolute error $= 0.4/4 = 0.1$ s. Report: $(2.5 \\pm 0.1)$ s.",
+        "**PROOF:** Option A uses the SUM of absolute errors instead of their mean; option C reports a single reading instead of the mean; option D divides the error by n a second time."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A length is reported as $a = (5.0 \\pm 0.2)$ cm. The percentage error in this measurement is:",
+    "options": [
+      {
+        "text": "0.2%"
+      },
+      {
+        "text": "2%"
+      },
+      {
+        "text": "4%"
+      },
+      {
+        "text": "0.04%"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Medium",
+    "subtopic": "Absolute, Relative and Percentage Error",
+    "fsmTag": "percentage-error-conversion",
+    "concepts": [
+      "percentage-error",
+      "relative-error"
+    ],
+    "sourcePages": [
+      25
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When value ± error is given and percentage error is asked.",
+      "steps": [
+        "**Trigger:** Form $a \\pm \\Delta a$.",
+        "**Action:** Percentage error $= (\\Delta a / a) \\times 100$.",
+        "**Result:** $(0.2/5.0)\\times100 = 4\\%$ — option C."
+      ],
+      "sanityCheck": "0.2 out of 5.0 is one part in 25 — exactly 4 per 100."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Direct application of the percentage-error definition (Section 2.6.1).",
+        "**EXTRACT:** $a_{mean} = 5.0$ cm; $\\Delta a_{mean} = 0.2$ cm.",
+        "**EXECUTE:** Relative error $= 0.2/5.0 = 0.04$. Percentage error $= 0.04 \\times 100 = 4\\%$.",
+        "**PROOF:** Option A quotes the absolute error with a % sign attached; option B halves the result (dividing by 10 instead of 5); option D reports the relative error mislabeled as a percentage."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Four readings of a mass are 9.7 g, 10.2 g, 10.5 g and 9.6 g. The percentage error of the measurement is:",
+    "options": [
+      {
+        "text": "1.4%"
+      },
+      {
+        "text": "0.35%"
+      },
+      {
+        "text": "5%"
+      },
+      {
+        "text": "3.5%"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Hard",
+    "subtopic": "Absolute, Relative and Percentage Error",
+    "fsmTag": "mean-absolute-error-pipeline",
+    "concepts": [
+      "mean-absolute-error",
+      "percentage-error"
+    ],
+    "sourcePages": [
+      24,
+      25
+    ],
+    "timeTargets": {
+      "ap_eapcet": 90,
+      "ts_eapcet": 90,
+      "jee_main": 120
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When percentage error must come from raw repeated readings.",
+      "steps": [
+        "**Trigger:** Raw readings, percentage error asked.",
+        "**Action:** Mean → |deviations| → mean absolute error → ÷ mean → ×100.",
+        "**Result:** Mean 10.0; $\\Delta_{mean} = 1.4/4 = 0.35$; $(0.35/10.0)\\times100 = 3.5\\%$ — option D."
+      ],
+      "sanityCheck": "Deviations reach 0.5 on 10.0 (5%); the mean error must be somewhat below that. 3.5% fits; 5% (the max deviation) would overstate."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Full pipeline with deliberately unequal deviations; the distractors are intermediate quantities from the pipeline itself.",
+        "**EXTRACT:** Readings: 9.7, 10.2, 10.5, 9.6 g (n = 4).",
+        "**EXECUTE:** Mean $= (9.7+10.2+10.5+9.6)/4 = 40.0/4 = 10.0$ g. Deviations: $-0.3, +0.2, +0.5, -0.4$. Absolute errors: 0.3, 0.2, 0.5, 0.4. Mean absolute error $= 1.4/4 = 0.35$ g. Relative error $= 0.35/10.0 = 0.035$. Percentage error $= 3.5\\%$.",
+        "**PROOF:** Option A is the SUM of absolute errors (1.4) read as a percentage; option B is the mean absolute error itself mislabeled; option C uses only the largest single deviation (0.5 → 5%)."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "When two quantities are multiplied or divided, the rule for combining errors is:",
+    "options": [
+      {
+        "text": "The absolute errors of the two quantities add"
+      },
+      {
+        "text": "The relative errors of the two quantities add"
+      },
+      {
+        "text": "The relative errors of the two quantities multiply"
+      },
+      {
+        "text": "The larger of the two relative errors is taken"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Easy",
+    "subtopic": "Combination of Errors",
+    "fsmTag": "relative-errors-add",
+    "concepts": [
+      "error-combination",
+      "product-quotient-rule"
+    ],
+    "sourcePages": [
+      26,
+      27
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Rule recall for products and quotients (Section 2.6.2b) — the partner rule to the sum/difference case.",
+        "**EXTRACT:** Asked: the combination rule for $Z = AB$ or $Z = A/B$.",
+        "**EXECUTE:** 'When two quantities are multiplied or divided, the relative error in the result is the sum of the relative errors in the multipliers': $\\Delta Z/Z = \\Delta A/A + \\Delta B/B$.",
+        "**PROOF:** Option A is the rule for sums and differences; options C and D are inventions. Pairing: add ABSOLUTE errors for ±, add RELATIVE errors for ×/÷."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Two rods of lengths $L_1 = (12.4 \\pm 0.1)$ cm and $L_2 = (7.3 \\pm 0.2)$ cm are placed end to end. The combined length is:",
+    "options": [
+      {
+        "text": "$(19.7 \\pm 0.1)$ cm"
+      },
+      {
+        "text": "$(19.7 \\pm 0.2)$ cm"
+      },
+      {
+        "text": "$(19.7 \\pm 0.3)$ cm"
+      },
+      {
+        "text": "$(5.1 \\pm 0.3)$ cm"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Medium",
+    "subtopic": "Combination of Errors",
+    "fsmTag": "absolute-errors-add",
+    "concepts": [
+      "error-combination",
+      "sum-difference-rule"
+    ],
+    "sourcePages": [
+      26
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When two measured lengths are added.",
+      "steps": [
+        "**Trigger:** $Z = A + B$ with errors given.",
+        "**Action:** Add the values AND add the absolute errors.",
+        "**Result:** $12.4 + 7.3 = 19.7$ cm; $0.1 + 0.2 = 0.3$ cm → $(19.7 \\pm 0.3)$ cm — option C."
+      ],
+      "sanityCheck": "The combined error must be at least as large as the larger individual error (0.2 cm); 0.3 cm qualifies."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Error in a sum (Section 2.6.2a) — Batch 1 tested the difference; this is the addition counterpart.",
+        "**EXTRACT:** $L_1 = 12.4$ cm, $\\Delta L_1 = 0.1$ cm; $L_2 = 7.3$ cm, $\\Delta L_2 = 0.2$ cm. Find $L_1 + L_2$ with error.",
+        "**EXECUTE:** Value: $12.4 + 7.3 = 19.7$ cm. Maximum error: $\\Delta Z = \\Delta L_1 + \\Delta L_2 = 0.1 + 0.2 = 0.3$ cm. Result: $(19.7 \\pm 0.3)$ cm.",
+        "**PROOF:** Options A and B each carry over only one rod's error; option D subtracts the lengths (wrong operation) while adding errors."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A physical quantity is given by $P = \\dfrac{a^2\\, b^3}{c\\, \\sqrt{d}}$. The percentage errors of measurement in $a$, $b$, $c$ and $d$ are 2%, 1%, 3% and 4% respectively. The percentage error in $P$ is:",
+    "options": [
+      {
+        "text": "10%"
+      },
+      {
+        "text": "8%"
+      },
+      {
+        "text": "14%"
+      },
+      {
+        "text": "12%"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Hard",
+    "subtopic": "Combination of Errors",
+    "fsmTag": "composite-power-error",
+    "concepts": [
+      "error-combination",
+      "power-rule"
+    ],
+    "sourcePages": [
+      27
+    ],
+    "timeTargets": {
+      "ap_eapcet": 90,
+      "ts_eapcet": 90,
+      "jee_main": 120
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When Z is a product of powers including roots.",
+      "steps": [
+        "**Trigger:** Composite expression with exponents 2, 3, −1, −1/2.",
+        "**Action:** Sum |exponent| × (percentage error) over all variables; a square root contributes with coefficient 1/2.",
+        "**Result:** $2(2) + 3(1) + 1(3) + \\tfrac{1}{2}(4) = 4+3+3+2 = 12\\%$ — option D."
+      ],
+      "sanityCheck": "Every term is positive (denominator terms ADD); the √d term contributes only half of d's 4%."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** General power-combination rule with a fractional exponent (Section 2.6.2c).",
+        "**EXTRACT:** $P = a^2 b^3 c^{-1} d^{-1/2}$; errors: $a$ 2%, $b$ 1%, $c$ 3%, $d$ 4%.",
+        "**EXECUTE:** $\\dfrac{\\Delta P}{P} = 2\\dfrac{\\Delta a}{a} + 3\\dfrac{\\Delta b}{b} + \\dfrac{\\Delta c}{c} + \\dfrac{1}{2}\\dfrac{\\Delta d}{d} = 2(2\\%) + 3(1\\%) + 3\\% + \\dfrac{1}{2}(4\\%) = 4\\% + 3\\% + 3\\% + 2\\% = 12\\%$.",
+        "**PROOF:** Option A drops the $\\sqrt{d}$ term's 2%; option C doubles it (treating $\\sqrt{d}$ as $d^2$); option B forgets the $c$ term. All four contributions must appear, each weighted by |exponent|."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "In a pendulum experiment to determine $g = 4\\pi^2 L/T^2$, the length is measured as $L = 25.0$ cm with 1 mm accuracy, and the time for 50 oscillations is measured as 100 s with a watch of 1 s resolution. The percentage error in $g$ is approximately:",
+    "options": [
+      {
+        "text": "1.4%"
+      },
+      {
+        "text": "0.6%"
+      },
+      {
+        "text": "2.4%"
+      },
+      {
+        "text": "3.4%"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Hard",
+    "subtopic": "Combination of Errors",
+    "fsmTag": "least-count-error-propagation",
+    "concepts": [
+      "error-combination",
+      "least-count-error",
+      "pendulum"
+    ],
+    "sourcePages": [
+      27
+    ],
+    "timeTargets": {
+      "ap_eapcet": 90,
+      "ts_eapcet": 90,
+      "jee_main": 120
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When least counts of length and time instruments propagate into g.",
+      "steps": [
+        "**Trigger:** $g = 4\\pi^2 L/T^2$ with least-count errors in L and total time t.",
+        "**Action:** $\\frac{\\Delta g}{g} = \\frac{\\Delta L}{L} + 2\\frac{\\Delta T}{T}$, and since $T = t/n$, $\\frac{\\Delta T}{T} = \\frac{\\Delta t}{t}$.",
+        "**Result:** $\\frac{0.1}{25.0} + 2\\cdot\\frac{1}{100} = 0.004 + 0.020 = 0.024 = 2.4\\%$ — option C."
+      ],
+      "sanityCheck": "The timing term (2%) dominates the length term (0.4%) — typical of school pendulum experiments, and the reason the period's factor of 2 matters."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Least-count error propagation into a derived quantity — the structure of textbook Example 2.12 with different numbers.",
+        "**EXTRACT:** $L = 25.0$ cm, $\\Delta L = 0.1$ cm (1 mm). $t = 100$ s for $n = 50$ oscillations, $\\Delta t = 1$ s. $g = 4\\pi^2 L/T^2$.",
+        "**EXECUTE:** Period $T = t/n$ and $\\Delta T = \\Delta t/n$, so $\\dfrac{\\Delta T}{T} = \\dfrac{\\Delta t}{t} = \\dfrac{1}{100} = 0.01$. Then $\\dfrac{\\Delta g}{g} = \\dfrac{\\Delta L}{L} + 2\\dfrac{\\Delta T}{T} = \\dfrac{0.1}{25.0} + 2(0.01) = 0.004 + 0.020 = 0.024 \\approx 2.4\\%$.",
+        "**PROOF:** Option A forgets the factor 2 on the time term ($0.4\\% + 1\\% = 1.4\\%$); option B keeps only the length term plus a slip; option D adds an extra 1% by double-counting. The exact constant $4\\pi^2$ contributes no error."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A stopwatch with least count 0.2 s is used to time 25 oscillations of a pendulum; the total time recorded is 50.0 s. The absolute error in the PERIOD (time for one oscillation) is:",
+    "options": [
+      {
+        "text": "0.2 s"
+      },
+      {
+        "text": "0.04 s"
+      },
+      {
+        "text": "0.008 s"
+      },
+      {
+        "text": "0.0008 s"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Medium",
+    "subtopic": "Combination of Errors",
+    "fsmTag": "error-division-by-count",
+    "concepts": [
+      "least-count-error",
+      "period-measurement"
+    ],
+    "sourcePages": [
+      27
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When one timing of n oscillations yields the period.",
+      "steps": [
+        "**Trigger:** Total time t for n oscillations, watch least count Δt.",
+        "**Action:** $T = t/n$ and $\\Delta T = \\Delta t/n$ — the count n is exact, so the error divides by n too.",
+        "**Result:** $\\Delta T = 0.2/25 = 0.008$ s — option C."
+      ],
+      "sanityCheck": "This is precisely why one times MANY oscillations: the watch's 0.2 s error shrinks 25-fold per oscillation."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Error in a quantity divided by an exact integer (Section 2.6.2; the $T = t/n$, $\\Delta T = \\Delta t/n$ step inside textbook Example 2.12).",
+        "**EXTRACT:** $n = 25$ (exact), $t = 50.0$ s, $\\Delta t = 0.2$ s. Find $\\Delta T$ where $T = t/n$.",
+        "**EXECUTE:** $T = 50.0/25 = 2.0$ s. Since n is an exact count with no error, $\\Delta T = \\Delta t / n = 0.2/25 = 0.008$ s.",
+        "**PROOF:** Option A assigns the watch's full error to a single period; option B divides by 5 instead of 25; option D divides by n twice. Relative check: $\\Delta T/T = 0.008/2.0 = 0.4\\% = \\Delta t/t = 0.2/50.0$. Consistent."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The length and breadth of a rectangular sheet are $l = (10.0 \\pm 0.1)$ cm and $b = (5.0 \\pm 0.1)$ cm. The area of the sheet, with its error, is:",
+    "options": [
+      {
+        "text": "$(50.0 \\pm 0.2)\\ \\mathrm{cm^2}$"
+      },
+      {
+        "text": "$(50.0 \\pm 1.5)\\ \\mathrm{cm^2}$"
+      },
+      {
+        "text": "$(50.0 \\pm 0.01)\\ \\mathrm{cm^2}$"
+      },
+      {
+        "text": "$(50.0 \\pm 3.0)\\ \\mathrm{cm^2}$"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Medium",
+    "subtopic": "Combination of Errors",
+    "fsmTag": "relative-errors-add",
+    "concepts": [
+      "error-combination",
+      "product-rule",
+      "area"
+    ],
+    "sourcePages": [
+      26,
+      27
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When the error of a PRODUCT must be reported in absolute form.",
+      "steps": [
+        "**Trigger:** $A = l \\times b$, absolute error of A asked.",
+        "**Action:** Add relative errors, then convert back: $\\Delta A = A \\times (\\frac{\\Delta l}{l} + \\frac{\\Delta b}{b})$.",
+        "**Result:** $\\Delta A = 50.0 \\times (0.01 + 0.02) = 1.5\\ \\mathrm{cm^2}$ → $(50.0 \\pm 1.5)\\ \\mathrm{cm^2}$ — option B."
+      ],
+      "sanityCheck": "3% of 50 is 1.5 — the percentage route and the absolute route must agree."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Product rule with a final conversion from relative back to absolute error — the step students most often skip.",
+        "**EXTRACT:** $l = 10.0$ cm, $\\Delta l = 0.1$ cm; $b = 5.0$ cm, $\\Delta b = 0.1$ cm. Find $A \\pm \\Delta A$.",
+        "**EXECUTE:** $A = 10.0 \\times 5.0 = 50.0\\ \\mathrm{cm^2}$. Relative errors: $\\Delta l/l = 0.01$; $\\Delta b/b = 0.02$. $\\Delta A/A = 0.01 + 0.02 = 0.03$. Absolute error: $\\Delta A = 0.03 \\times 50.0 = 1.5\\ \\mathrm{cm^2}$.",
+        "**PROOF:** Option A adds the absolute errors of l and b directly (0.1+0.1) — the sum/difference rule applied to a product; option C multiplies the absolute errors; option D doubles the correct answer."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A quantity is defined as $Z = \\dfrac{A^{3/2}\\, B}{C^2}$. If the percentage errors in $A$, $B$ and $C$ are 2%, 1% and 1% respectively, the percentage error in $Z$ is:",
+    "options": [
+      {
+        "text": "4%"
+      },
+      {
+        "text": "3%"
+      },
+      {
+        "text": "5%"
+      },
+      {
+        "text": "6%"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Hard",
+    "subtopic": "Combination of Errors",
+    "fsmTag": "composite-power-error",
+    "concepts": [
+      "error-combination",
+      "power-rule"
+    ],
+    "sourcePages": [
+      27
+    ],
+    "timeTargets": {
+      "ap_eapcet": 90,
+      "ts_eapcet": 90,
+      "jee_main": 120
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When Z is a product of powers with a fractional exponent in the numerator.",
+      "steps": [
+        "**Trigger:** $Z = A^{3/2} B / C^2$.",
+        "**Action:** Weight each percentage error by |exponent| and add: $\\tfrac{3}{2}(2\\%) + 1(1\\%) + 2(1\\%)$.",
+        "**Result:** $3\\% + 1\\% + 2\\% = 6\\%$ — option D."
+      ],
+      "sanityCheck": "All contributions add (denominator included); A's fractional exponent still yields a whole-number term: $\\tfrac{3}{2}\\times2 = 3$."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** General power rule $Z = A^p B^q / C^r \\Rightarrow \\Delta Z/Z = p\\frac{\\Delta A}{A} + q\\frac{\\Delta B}{B} + r\\frac{\\Delta C}{C}$ (Section 2.6.2c).",
+        "**EXTRACT:** $p = 3/2$, $q = 1$, $r = 2$; errors 2%, 1%, 1%.",
+        "**EXECUTE:** $\\dfrac{\\Delta Z}{Z} = \\dfrac{3}{2}(2\\%) + 1(1\\%) + 2(1\\%) = 3\\% + 1\\% + 2\\% = 6\\%$.",
+        "**PROOF:** Option A treats $A^{3/2}$ as $A^1$ ($2+1+1$); option C uses $C^1$ instead of $C^2$; option B subtracts the denominator's contribution — errors never subtract."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The number of significant figures in 0.06900 is:",
+    "options": [
+      {
+        "text": "5"
+      },
+      {
+        "text": "4"
+      },
+      {
+        "text": "3"
+      },
+      {
+        "text": "2"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Easy",
+    "subtopic": "Significant Figures",
+    "fsmTag": "sig-fig-counting",
+    "concepts": [
+      "significant-figures",
+      "leading-zeros",
+      "trailing-zeros"
+    ],
+    "sourcePages": [
+      28
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When a number has both leading and trailing zeros.",
+      "steps": [
+        "**Trigger:** Leading zeros AND trailing zeros after the decimal point in one number.",
+        "**Action:** Drop leading zeros (never significant); keep trailing zeros after the decimal (always significant).",
+        "**Result:** 6, 9, 0, 0 → 4 significant figures — option B."
+      ],
+      "sanityCheck": "Scientific notation $6.900 \\times 10^{-2}$ shows the 4 digits explicitly."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Combined application of the two zero rules (Section 2.7); the textbook uses 0.06900 as its own illustration.",
+        "**EXTRACT:** Number: 0.06900.",
+        "**EXECUTE:** The leading 0.0 are placeholders — not significant. The digits 6 and 9 are significant. The two trailing zeros come after the decimal point — significant. Total: 4.",
+        "**PROOF:** Option A counts a leading zero; option D drops the trailing zeros, conflating 0.06900 (precision to 5 decimal places) with 0.069."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Which of the following numbers has the LEAST number of significant figures?",
+    "options": [
+      {
+        "text": "0.007 m"
+      },
+      {
+        "text": "0.0070 m"
+      },
+      {
+        "text": "$7.00 \\times 10^{-3}$ m"
+      },
+      {
+        "text": "0.700 m"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Medium",
+    "subtopic": "Significant Figures",
+    "fsmTag": "sig-fig-counting",
+    "concepts": [
+      "significant-figures",
+      "leading-zeros",
+      "scientific-notation"
+    ],
+    "sourcePages": [
+      28
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When near-identical numbers differ only in zeros.",
+      "steps": [
+        "**Trigger:** Variants of '7' dressed with different zeros.",
+        "**Action:** Count: 0.007 → 1; 0.0070 → 2; $7.00\\times10^{-3}$ → 3; 0.700 → 3.",
+        "**Result:** 0.007 has the least (1) — option A."
+      ],
+      "sanityCheck": "Each added trailing zero after the decimal adds exactly one significant figure; leading zeros add none."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Comparative counting where only the zero patterns differ (Section 2.7).",
+        "**EXTRACT:** Candidates: 0.007, 0.0070, $7.00\\times10^{-3}$, 0.700.",
+        "**EXECUTE:** 0.007: only the 7 is significant → 1. 0.0070: the 7 and the trailing zero → 2. $7.00\\times10^{-3}$: all mantissa digits count → 3. 0.700: 7, 0, 0 → 3.",
+        "**PROOF:** Note 0.0070 ≠ 0.007 in information content even though they are numerically equal — the trailing zero claims precision to the fourth decimal place. The textbook makes exactly this distinction."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "In the formula $T = 2\\pi\\sqrt{L/g}$, the number of significant figures in the factor 2 is:",
+    "options": [
+      {
+        "text": "1"
+      },
+      {
+        "text": "2"
+      },
+      {
+        "text": "Infinite, because it is an exact number"
+      },
+      {
+        "text": "Zero, because it is dimensionless"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Medium",
+    "subtopic": "Significant Figures",
+    "fsmTag": "exact-number-sig-figs",
+    "concepts": [
+      "significant-figures",
+      "exact-numbers"
+    ],
+    "sourcePages": [
+      29,
+      30
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Status of exact mathematical factors in significant-figure accounting (Section 2.7.2).",
+        "**EXTRACT:** Asked: significant figures in the exact factor 2 of $T = 2\\pi\\sqrt{L/g}$.",
+        "**EXECUTE:** The textbook: 'the multiplying or dividing factors which are neither rounded numbers nor numbers representing measured values are exact and have infinite number of significant digits.' Its example is precisely the 2 in $T = 2\\pi\\sqrt{L/g}$. Such factors never limit the precision of a result.",
+        "**PROOF:** If the 2 had one significant figure (option A), every pendulum-period calculation would collapse to 1 significant figure — absurd. Exactness, not dimensionlessness (option D), is what grants infinite significant figures."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Two masses are measured as 2.342 g and 2.31 g. Their difference, expressed with due regard to significant figures, is:",
+    "options": [
+      {
+        "text": "0.032 g"
+      },
+      {
+        "text": "0.0320 g"
+      },
+      {
+        "text": "0.03 g"
+      },
+      {
+        "text": "0.0 g"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Hard",
+    "subtopic": "Significant Figures",
+    "fsmTag": "subtraction-precision-loss",
+    "concepts": [
+      "significant-figures",
+      "addition-rule",
+      "precision-loss"
+    ],
+    "sourcePages": [
+      29
+    ],
+    "timeTargets": {
+      "ap_eapcet": 90,
+      "ts_eapcet": 90,
+      "jee_main": 120
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When subtracting two nearly equal measured values.",
+      "steps": [
+        "**Trigger:** Difference of close values with unequal decimal places.",
+        "**Action:** Subtract, then keep only as many DECIMAL PLACES as the least-precise input (2.31 → 2 dp).",
+        "**Result:** $2.342 - 2.31 = 0.032 \\to 0.03$ g — option C."
+      ],
+      "sanityCheck": "Four significant figures in, ONE significant figure out — subtraction of close values destroys precision. That collapse is the point of the question."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** The addition/subtraction rule (decimal places, not sig figs) in its most punishing case: nearly equal operands (Section 2.7.1).",
+        "**EXTRACT:** 2.342 g (3 dp) − 2.31 g (2 dp). Least decimal places = 2.",
+        "**EXECUTE:** Raw difference: $2.342 - 2.31 = 0.032$ g. Rounding to 2 decimal places: 0.03 g — a result with just one significant figure.",
+        "**PROOF:** Option A retains a third decimal the less-precise input cannot support; option B even adds a fourth; option D over-rounds to 1 decimal place. The textbook makes the same point with its 0.307 m − 0.304 m = 0.003 m illustration: subtraction of close numbers erodes significant figures."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Rounded to three significant figures, 2.746 becomes:",
+    "options": [
+      {
+        "text": "2.74"
+      },
+      {
+        "text": "2.75"
+      },
+      {
+        "text": "2.7"
+      },
+      {
+        "text": "2.8"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Easy",
+    "subtopic": "Arithmetic Operations and Rounding Off",
+    "fsmTag": "rounding-basic-rule",
+    "concepts": [
+      "rounding",
+      "significant-figures"
+    ],
+    "sourcePages": [
+      29,
+      30
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When the dropped digit is greater than 5.",
+      "steps": [
+        "**Trigger:** Digit to drop is 6 (> 5).",
+        "**Action:** Raise the preceding digit by 1.",
+        "**Result:** 2.74|6 → 2.75 — option B."
+      ],
+      "sanityCheck": "2.746 is closer to 2.75 than to 2.74 — rounding up minimizes the rounding error."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** The basic rounding rule (Section 2.7.2): 'the preceding digit is raised by 1 if the insignificant digit to be dropped... is more than 5, and is left unchanged if the latter is less than 5.'",
+        "**EXTRACT:** 2.746 → 3 significant figures; the digit to drop is 6.",
+        "**EXECUTE:** 6 > 5, so the preceding 4 is raised to 5: result 2.75.",
+        "**PROOF:** Option A leaves the 4 unchanged (the rule for a dropped digit < 5); options C and D round to two significant figures instead of three."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Using the textbook's convention for a dropped digit of exactly 5, the number 2.735 rounded to three significant figures becomes:",
+    "options": [
+      {
+        "text": "2.74"
+      },
+      {
+        "text": "2.73"
+      },
+      {
+        "text": "2.7"
+      },
+      {
+        "text": "2.735"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Medium",
+    "subtopic": "Arithmetic Operations and Rounding Off",
+    "fsmTag": "round-half-to-even",
+    "concepts": [
+      "rounding",
+      "significant-figures"
+    ],
+    "sourcePages": [
+      29,
+      30
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When the dropped digit is exactly 5 and the preceding digit is odd.",
+      "steps": [
+        "**Trigger:** Drop an exact 5; the preceding digit is 3 — ODD.",
+        "**Action:** Raise an odd preceding digit by 1 (leave it only if even).",
+        "**Result:** 2.73|5 → 2.74 — option A."
+      ],
+      "sanityCheck": "Companion case: 16.45 → 16.4 because 4 is even. The convention treats odd and even preceding digits oppositely, eliminating systematic upward bias."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Round-half-to-even, odd branch (Section 2.7.2): 'if the insignificant digit to be dropped is 5, the preceding digit is left unchanged if it is even, and raised by 1 if it is odd.'",
+        "**EXTRACT:** 2.735 → 3 significant figures; drop the trailing 5; preceding digit is 3 (odd).",
+        "**EXECUTE:** Odd preceding digit → raise by 1: 2.74.",
+        "**PROOF:** Option B applies the even-branch rule to an odd digit; option C loses a significant figure; option D refuses to round. Together with Batch 1's 16.45 → 16.4, this covers both branches of the convention."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The quotient $4.327 / 2.51$, reported to the correct number of significant figures, is:",
+    "options": [
+      {
+        "text": "1.724"
+      },
+      {
+        "text": "1.7"
+      },
+      {
+        "text": "1.7239"
+      },
+      {
+        "text": "1.72"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Medium",
+    "subtopic": "Arithmetic Operations and Rounding Off",
+    "fsmTag": "multiplication-sig-fig-rule",
+    "concepts": [
+      "significant-figures",
+      "division-rule"
+    ],
+    "sourcePages": [
+      29
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When dividing measured values with different sig-fig counts.",
+      "steps": [
+        "**Trigger:** Quotient of a 4-sig-fig and a 3-sig-fig number.",
+        "**Action:** Keep as many significant figures as the LEAST precise input (3).",
+        "**Result:** $4.327/2.51 = 1.7239... \\to 1.72$ — option D."
+      ],
+      "sanityCheck": "Estimate: $4.3/2.5 \\approx 1.7$ — the answer must sit near 1.72, not 17.2 or 0.172."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Division under the multiplication/division rule (Section 2.7.1): retain the significant figures of the least-precise factor.",
+        "**EXTRACT:** 4.327 → 4 sig figs; 2.51 → 3 sig figs. Limit = 3.",
+        "**EXECUTE:** $4.327 / 2.51 = 1.72390...$ Rounding to 3 significant figures: 1.72.",
+        "**PROOF:** Option A keeps 4 sig figs (limited by the wrong operand); option C reports raw calculator output; option B over-rounds to 2. Cross-check: $1.72 \\times 2.51 = 4.317$, within rounding distance of 4.327."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Evaluate $(1.2 + 2.31) \\times 1.4$ with due regard to significant figures at each stage. The result is:",
+    "options": [
+      {
+        "text": "4.914"
+      },
+      {
+        "text": "4.91"
+      },
+      {
+        "text": "4.9"
+      },
+      {
+        "text": "5"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Hard",
+    "subtopic": "Arithmetic Operations and Rounding Off",
+    "fsmTag": "mixed-operation-sig-figs",
+    "concepts": [
+      "significant-figures",
+      "addition-rule",
+      "multiplication-rule"
+    ],
+    "sourcePages": [
+      29
+    ],
+    "timeTargets": {
+      "ap_eapcet": 90,
+      "ts_eapcet": 90,
+      "jee_main": 120
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When addition and multiplication rules must be applied in sequence.",
+      "steps": [
+        "**Trigger:** A sum feeding a product.",
+        "**Action:** Addition stage → decimal-places rule (1.2 has 1 dp). Multiplication stage → sig-figs rule (1.4 has 2 sf).",
+        "**Result:** $1.2+2.31 = 3.51 \\to 3.5$; $3.5 \\times 1.4 = 4.9$ — option C."
+      ],
+      "sanityCheck": "Skipping intermediate rounding: $3.51 \\times 1.4 = 4.914 \\to 4.9$ at 2 sig figs — same final answer, confirming robustness."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Two-stage problem testing that the student applies the RIGHT rule at each stage: decimal places for +, significant figures for ×.",
+        "**EXTRACT:** Stage 1: $1.2 + 2.31$ (least decimal places = 1). Stage 2: result × 1.4 (least sig figs = 2).",
+        "**EXECUTE:** Stage 1: $1.2 + 2.31 = 3.51$, rounded to 1 decimal place → 3.5. Stage 2: $3.5 \\times 1.4 = 4.90$, retained to 2 significant figures → 4.9.",
+        "**PROOF:** Option A is the raw unrounded value; option B applies a 3-sig-fig limit that no operand justifies; option D over-rounds to 1 sig fig. Computing without intermediate rounding ($3.51 \\times 1.4 = 4.914 \\to 4.9$) lands on the same answer."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Which of the following physical quantities is dimensionless?",
+    "options": [
+      {
+        "text": "Plane angle"
+      },
+      {
+        "text": "Mass density"
+      },
+      {
+        "text": "Force"
+      },
+      {
+        "text": "Acceleration"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Easy",
+    "subtopic": "Dimensions of Physical Quantities",
+    "fsmTag": "dimensionless-identification",
+    "concepts": [
+      "dimensionless-quantities",
+      "plane-angle"
+    ],
+    "sourcePages": [
+      17,
+      31
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When one option is defined as a ratio of like quantities.",
+      "steps": [
+        "**Trigger:** Plane angle = arc length / radius — a ratio of two lengths.",
+        "**Action:** Like dimensions cancel: $[L]/[L] = 1$.",
+        "**Result:** Plane angle is dimensionless — option A."
+      ],
+      "sanityCheck": "The radian carries no M, L or T — confirmed by the chapter's statement that radian and steradian are dimensionless."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Identification of a dimensionless quantity among dimensioned ones.",
+        "**EXTRACT:** Candidates with dimensions: density $[ML^{-3}T^0]$, force $[MLT^{-2}]$, acceleration $[M^0LT^{-2}]$; plane angle $= ds/r$.",
+        "**EXECUTE:** $[\\text{plane angle}] = [L]/[L] = 1$ — no dimensions in any base quantity. The other three all carry non-zero exponents.",
+        "**PROOF:** Section 2.2 states that the radian (unit of plane angle) is a dimensionless unit; Sections 2.8–2.9 give the non-trivial formulas of the other three."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Reading the dimensional formula of force, $[\\mathrm{M\\,L\\,T^{-2}}]$, the dimension of force IN TIME is:",
+    "options": [
+      {
+        "text": "$+2$"
+      },
+      {
+        "text": "$-2$"
+      },
+      {
+        "text": "$1$"
+      },
+      {
+        "text": "$0$"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Medium",
+    "subtopic": "Dimensions of Physical Quantities",
+    "fsmTag": "dimension-exponent-reading",
+    "concepts": [
+      "dimensions",
+      "force"
+    ],
+    "sourcePages": [
+      31
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When the exponent of one base quantity must be read off.",
+      "steps": [
+        "**Trigger:** Asked for 'the dimension in time' of a quantity.",
+        "**Action:** Read the exponent of T in the dimensional formula, sign included.",
+        "**Result:** In $[\\mathrm{MLT^{-2}}]$, the T-exponent is $-2$ — option B."
+      ],
+      "sanityCheck": "Force involves acceleration (per time, twice), so time appears in the denominator twice: exponent $-2$."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Interpreting 'dimensions' as exponents — the chapter's core definition: 'The dimensions of a physical quantity are the powers (or exponents) to which the base quantities are raised.'",
+        "**EXTRACT:** $[F] = [\\mathrm{M^1 L^1 T^{-2}}]$. Asked: the exponent of T.",
+        "**EXECUTE:** The textbook reads this formula as: 'the force has one dimension in mass, one dimension in length, and −2 dimensions in time.' The dimension in time is $-2$.",
+        "**PROOF:** Option A drops the sign — the critical error this question hunts; option D would mean force is time-independent, contradicted by its unit kg m s⁻²."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "According to the chapter, the dimensions of a physical quantity are defined as:",
+    "options": [
+      {
+        "text": "The SI units in which the quantity is conventionally expressed"
+      },
+      {
+        "text": "The numerical magnitude of the quantity in base units"
+      },
+      {
+        "text": "The number of base quantities appearing in its formula"
+      },
+      {
+        "text": "The powers (or exponents) to which the base quantities are raised to represent that quantity"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Medium",
+    "subtopic": "Dimensions of Physical Quantities",
+    "fsmTag": "dimension-definition-recall",
+    "concepts": [
+      "dimensions",
+      "base-quantities"
+    ],
+    "sourcePages": [
+      31
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Definition recall (Section 2.8).",
+        "**EXTRACT:** Asked: the chapter's definition of dimensions.",
+        "**EXECUTE:** 'The dimensions of a physical quantity are the powers (or exponents) to which the base quantities are raised to represent that quantity.' The textbook also notes that magnitudes are NOT considered — 'it is the quality of the type of the physical quantity that enters' — ruling out option B.",
+        "**PROOF:** Units (option A) change between systems while dimensions do not; counting base quantities (option C) would make force and momentum identical (both use M, L, T) despite different dimensions."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The dimensional formula of speed is:",
+    "options": [
+      {
+        "text": "$[\\mathrm{M^0\\, L\\, T^{-1}}]$"
+      },
+      {
+        "text": "$[\\mathrm{M^0\\, L\\, T^{-2}}]$"
+      },
+      {
+        "text": "$[\\mathrm{M\\, L\\, T^{-1}}]$"
+      },
+      {
+        "text": "$[\\mathrm{M^0\\, L^{-1}\\, T}]$"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Easy",
+    "subtopic": "Dimensional Formulae and Equations",
+    "fsmTag": "dimensional-formula-recall",
+    "concepts": [
+      "dimensional-formula",
+      "speed"
+    ],
+    "sourcePages": [
+      32
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When the quantity is distance per unit time.",
+      "steps": [
+        "**Trigger:** Speed = distance/time.",
+        "**Action:** $[L]/[T]$.",
+        "**Result:** $[\\mathrm{M^0 L T^{-1}}]$ — option A."
+      ],
+      "sanityCheck": "m/s: no mass, length to the first power, time to the minus one."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Dimensional-formula recall; Section 2.9 lists it verbatim: 'that of speed or velocity is $[M^0 L T^{-1}]$.'",
+        "**EXTRACT:** Asked: dimensional formula of speed.",
+        "**EXECUTE:** Speed = distance/time → $[L]/[T] = [\\mathrm{M^0 L T^{-1}}]$.",
+        "**PROOF:** Option B is acceleration; option C smuggles in a mass dimension (momentum's formula); option D inverts the ratio (slowness, not speed)."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The dimensional EQUATION of force is correctly written as:",
+    "options": [
+      {
+        "text": "$[F] = [\\mathrm{M\\, L\\, T^{-2}}]$"
+      },
+      {
+        "text": "$F = \\mathrm{M\\, L\\, T^{-2}}$"
+      },
+      {
+        "text": "$F = ma$"
+      },
+      {
+        "text": "$[F] = \\mathrm{kg\\, m\\, s^{-2}}$"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Medium",
+    "subtopic": "Dimensional Formulae and Equations",
+    "fsmTag": "dimensional-equation-construction",
+    "concepts": [
+      "dimensional-equation",
+      "force"
+    ],
+    "sourcePages": [
+      32
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When the notation of a dimensional equation matters.",
+      "steps": [
+        "**Trigger:** Asked for the dimensional EQUATION (not formula, not physical law).",
+        "**Action:** Equate the bracketed quantity to its bracketed dimensional formula.",
+        "**Result:** $[F] = [\\mathrm{M L T^{-2}}]$ — option A."
+      ],
+      "sanityCheck": "Square brackets on BOTH sides — 'the dimensions of' force equal 'the dimensions' M L T⁻²."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Notation discipline for dimensional equations (Section 2.9): 'An equation obtained by equating a physical quantity with its dimensional formula is called the dimensional equation.' The textbook's own list includes $[F] = [M\\,L\\,T^{-2}]$.",
+        "**EXTRACT:** Asked: the correctly written dimensional equation of force.",
+        "**EXECUTE:** The brackets [ ] mean 'the dimensions of'. Option B equates the quantity itself (not its dimensions) to a dimensional formula — notationally wrong. Option C is Newton's second law, a physical equation. Option D equates dimensions to UNITS, mixing the two concepts the chapter keeps separate.",
+        "**PROOF:** Only option A has the form [quantity] = [dimensional formula] that the chapter defines."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The dimensional formula $[\\mathrm{M^0\\, L^3\\, T^0}]$ corresponds to which physical quantity?",
+    "options": [
+      {
+        "text": "Volume"
+      },
+      {
+        "text": "Mass density"
+      },
+      {
+        "text": "Area"
+      },
+      {
+        "text": "Acceleration"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Medium",
+    "subtopic": "Dimensional Formulae and Equations",
+    "fsmTag": "dimensional-formula-reverse-lookup",
+    "concepts": [
+      "dimensional-formula",
+      "volume"
+    ],
+    "sourcePages": [
+      32
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When a formula must be matched back to its quantity.",
+      "steps": [
+        "**Trigger:** Pure $[L^3]$ with zero M and T exponents.",
+        "**Action:** Three powers of length and nothing else = length × breadth × height.",
+        "**Result:** Volume — option A."
+      ],
+      "sanityCheck": "m³ is the SI unit of volume; area would be $[L^2]$."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Reverse lookup: from dimensional formula to quantity (Section 2.9, which states 'the dimensional formula of the volume is $[M^0 L^3 T^0]$').",
+        "**EXTRACT:** Given: $[\\mathrm{M^0 L^3 T^0}]$.",
+        "**EXECUTE:** Zero mass dimension, zero time dimension, three length dimensions — the product of three lengths. That is volume.",
+        "**PROOF:** Area is $[M^0L^2T^0]$ (one power short); density is $[ML^{-3}T^0]$ (mass present, length inverted); acceleration is $[M^0LT^{-2}]$ (time present). Only volume fits."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Which of the following operations is dimensionally meaningless?",
+    "options": [
+      {
+        "text": "Adding a force of 5 N to a velocity of 3 m/s"
+      },
+      {
+        "text": "Dividing a distance by a time"
+      },
+      {
+        "text": "Multiplying a mass by an acceleration"
+      },
+      {
+        "text": "Equating two expressions that both have the dimensions of length"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Medium",
+    "subtopic": "Checking Dimensional Consistency",
+    "fsmTag": "homogeneity-violation-identification",
+    "concepts": [
+      "homogeneity-principle",
+      "dimensional-consistency"
+    ],
+    "sourcePages": [
+      32
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When one option mixes dimensions under addition.",
+      "steps": [
+        "**Trigger:** ADDITION of unlike-dimensioned quantities.",
+        "**Action:** Apply the homogeneity rule: only same-dimension quantities may be added or subtracted.",
+        "**Result:** Force + velocity ($[MLT^{-2}]$ + $[LT^{-1}]$) is meaningless — option A."
+      ],
+      "sanityCheck": "Multiplication and division of unlike quantities are always allowed (they create derived quantities); it is addition that homogeneity restricts."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Locating the homogeneity violation among legitimate operations.",
+        "**EXTRACT:** Operations: add force+velocity; divide distance/time; multiply mass×acceleration; equate two lengths.",
+        "**EXECUTE:** The principle (Section 2.10.1): 'only those physical quantities can be added or subtracted which have the same dimensions.' Force $[MLT^{-2}]$ and velocity $[LT^{-1}]$ differ → their sum is meaningless. Division and multiplication across different dimensions are how derived quantities are BUILT (speed, force themselves); equating like dimensions is exactly what a consistent equation does.",
+        "**PROOF:** Options B and C produce speed and force respectively — both legitimate chapter quantities; option D describes every valid physics equation."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Checking the formula $T = 2\\pi\\sqrt{L/g}$ for dimensional consistency: the dimensions of $\\sqrt{L/g}$ are:",
+    "options": [
+      {
+        "text": "$[\\mathrm{T^2}]$"
+      },
+      {
+        "text": "$[\\mathrm{T}]$"
+      },
+      {
+        "text": "$[\\mathrm{T^{-1}}]$"
+      },
+      {
+        "text": "$[\\mathrm{L\\, T^{-1}}]$"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Medium",
+    "subtopic": "Checking Dimensional Consistency",
+    "fsmTag": "homogeneity-check",
+    "concepts": [
+      "dimensional-consistency",
+      "pendulum"
+    ],
+    "sourcePages": [
+      32,
+      33
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When a square root of a quotient must be checked.",
+      "steps": [
+        "**Trigger:** $\\sqrt{L/g}$ inside a period formula.",
+        "**Action:** $[L/g] = [L]/[LT^{-2}] = [T^2]$; the square root halves the exponents.",
+        "**Result:** $\\sqrt{[T^2]} = [T]$ — option B, consistent with the left side."
+      ],
+      "sanityCheck": "$2\\pi$ is dimensionless, so the right side has dimension [T] — matching the period. The formula passes."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Consistency check on the pendulum formula — the canonical verification exercise of Section 2.10.1.",
+        "**EXTRACT:** $[L] = [\\mathrm{L}]$; $[g] = [\\mathrm{LT^{-2}}]$. Find $[\\sqrt{L/g}]$.",
+        "**EXECUTE:** $\\left[\\dfrac{L}{g}\\right] = \\dfrac{[\\mathrm{L}]}{[\\mathrm{LT^{-2}}]} = [\\mathrm{T^2}]$. Taking the square root halves every exponent: $[\\mathrm{T}]$.",
+        "**PROOF:** Left side $[T]$ = right side $[T]$ — the equation is dimensionally consistent. Option A forgets the square root; option C inverts (that is $\\sqrt{g/L}$, an angular-frequency-type quantity); option D never cancelled the lengths."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A student writes the distance fallen from rest as $x = v_0 t + a t^2$ (omitting the factor $\\tfrac{1}{2}$). A dimensional consistency check on this equation will:",
+    "options": [
+      {
+        "text": "Fail, because the factor 1/2 is missing"
+      },
+      {
+        "text": "Pass, and thereby prove the equation is correct"
+      },
+      {
+        "text": "Pass, even though the equation is physically wrong — the check cannot detect missing dimensionless factors"
+      },
+      {
+        "text": "Fail, because $v_0 t$ and $a t^2$ have different dimensions"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Hard",
+    "subtopic": "Checking Dimensional Consistency",
+    "fsmTag": "consistency-test-limits",
+    "concepts": [
+      "dimensional-consistency",
+      "limitations-of-dimensional-analysis"
+    ],
+    "sourcePages": [
+      32,
+      33
+    ],
+    "timeTargets": {
+      "ap_eapcet": 90,
+      "ts_eapcet": 90,
+      "jee_main": 120
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When a candidate equation differs from the true one only by a pure number.",
+      "steps": [
+        "**Trigger:** Equation missing only a dimensionless factor (1/2).",
+        "**Action:** Check dimensions: $[v_0 t] = [L]$, $[a t^2] = [L]$, $[x] = [L]$ — all match; pure numbers are invisible to the check.",
+        "**Result:** The check passes but proves nothing about correctness — option C."
+      ],
+      "sanityCheck": "This is the concrete case behind the chapter's warning: 'a dimensionally correct equation need not be actually an exact (correct) equation.'"
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** The blind spot of the consistency test, instantiated on a concrete equation.",
+        "**EXTRACT:** Candidate: $x = v_0 t + a t^2$. True relation: $x = v_0 t + \\tfrac{1}{2} a t^2$.",
+        "**EXECUTE:** Dimensions: $[v_0 t] = [LT^{-1}][T] = [L]$; $[a t^2] = [LT^{-2}][T^2] = [L]$; $[x] = [L]$. Every term matches — the equation is dimensionally consistent. Yet it is physically wrong by a factor of 2 in the second term. Dimensionless numbers carry no dimensions, so no dimensional test can see them.",
+        "**PROOF:** Options A and D claim a failure that does not occur; option B commits the fallacy the chapter explicitly warns against — passing the test 'is not proved right'."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The textbook compares checking dimensional consistency with checking consistency of units. Its conclusion is that the dimensional check:",
+    "options": [
+      {
+        "text": "Is more rigorous and can detect errors the unit check misses"
+      },
+      {
+        "text": "Tells no more and no less than a unit-consistency check, but avoids committing to a particular choice of units"
+      },
+      {
+        "text": "Is weaker, because units carry more information than dimensions"
+      },
+      {
+        "text": "Applies only to mechanical quantities, while unit checks apply universally"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Medium",
+    "subtopic": "Checking Dimensional Consistency",
+    "fsmTag": "dimensions-vs-units-statement",
+    "concepts": [
+      "dimensional-consistency",
+      "units"
+    ],
+    "sourcePages": [
+      33
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Statement recall on the equivalence of dimension and unit checks (Section 2.10.1).",
+        "**EXTRACT:** Asked: the chapter's comparison verdict.",
+        "**EXECUTE:** 'A test of consistency of dimensions tells us no more and no less than a test of consistency of units, but has the advantage that we need not commit ourselves to a particular choice of units, and we need not worry about conversions among multiples and sub-multiples of the units.'",
+        "**PROOF:** The two checks have equal logical power (rules out A and C); the difference is purely practical convenience. Option D invents a restriction the chapter never makes."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "For the method of dimensions to deduce a relation among physical quantities, the chapter requires that:",
+    "options": [
+      {
+        "text": "The dependence is of the product type, on up to three physical quantities (or linearly independent variables)"
+      },
+      {
+        "text": "All quantities involved are mechanical"
+      },
+      {
+        "text": "The dimensionless constant is known in advance"
+      },
+      {
+        "text": "At least one quantity is dimensionless"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Medium",
+    "subtopic": "Deducing Relations Among Physical Quantities",
+    "fsmTag": "dimensional-method-prerequisites",
+    "concepts": [
+      "dimensional-analysis",
+      "deducing-relations"
+    ],
+    "sourcePages": [
+      33,
+      34
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Prerequisite recall for the deduction method (Section 2.10.2).",
+        "**EXTRACT:** Asked: the method's stated requirement.",
+        "**EXECUTE:** 'For this we should know the dependence of the physical quantity on other quantities (upto three physical quantities or linearly independent variables) and consider it as a product type of the dependence.' Three unknowns is the natural ceiling because mechanics offers three independent dimensions (M, L, T) — three equations to solve for the exponents.",
+        "**PROOF:** Option C inverts the situation (the constant is what the method CANNOT find); options B and D invent restrictions absent from the chapter."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The period of a simple pendulum satisfies $T = k\\sqrt{l/g}$. If the length of the pendulum is made 4 times larger (g unchanged), the period becomes:",
+    "options": [
+      {
+        "text": "4 times the original"
+      },
+      {
+        "text": "Unchanged"
+      },
+      {
+        "text": "Half the original"
+      },
+      {
+        "text": "2 times the original"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Medium",
+    "subtopic": "Deducing Relations Among Physical Quantities",
+    "fsmTag": "deduced-relation-scaling",
+    "concepts": [
+      "dimensional-analysis",
+      "pendulum",
+      "scaling"
+    ],
+    "sourcePages": [
+      33,
+      34
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When a variable inside a square-root relation is scaled.",
+      "steps": [
+        "**Trigger:** $T \\propto \\sqrt{l}$ and $l \\to 4l$.",
+        "**Action:** $\\sqrt{4} = 2$.",
+        "**Result:** Period doubles — option D."
+      ],
+      "sanityCheck": "The square root tames the factor: quadrupling under a square root yields doubling, not quadrupling."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Scaling consequence of the dimensionally deduced relation $T = k\\sqrt{l/g}$ (Section 2.10.2).",
+        "**EXTRACT:** $l' = 4l$, $g$ fixed. Find $T'/T$.",
+        "**EXECUTE:** $\\dfrac{T'}{T} = \\sqrt{\\dfrac{l'}{l}} = \\sqrt{4} = 2$. The period doubles.",
+        "**PROOF:** Option A applies the factor linearly, ignoring the square root; option C inverts the dependence (confusing $l$ with $g$); option B would require $T$ independent of $l$, contradicting the exponent 1/2."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A simple pendulum is taken to a planet where the acceleration due to gravity is larger than on Earth. According to $T = k\\sqrt{l/g}$, its period (for the same length) will:",
+    "options": [
+      {
+        "text": "Increase, since $T \\propto g$"
+      },
+      {
+        "text": "Remain the same, since the period depends only on length"
+      },
+      {
+        "text": "Decrease, since $T \\propto 1/\\sqrt{g}$"
+      },
+      {
+        "text": "Become zero"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Medium",
+    "subtopic": "Deducing Relations Among Physical Quantities",
+    "fsmTag": "deduced-relation-scaling",
+    "concepts": [
+      "dimensional-analysis",
+      "pendulum",
+      "scaling"
+    ],
+    "sourcePages": [
+      33,
+      34
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When g changes in the deduced pendulum relation.",
+      "steps": [
+        "**Trigger:** $T = k\\sqrt{l/g}$ with $g$ in the denominator under a root.",
+        "**Action:** Larger denominator → smaller quotient → smaller root.",
+        "**Result:** Period decreases as $1/\\sqrt{g}$ — option C."
+      ],
+      "sanityCheck": "Stronger gravity pulls the bob back faster — quicker swings, shorter period. Physical intuition matches the formula."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Sign-of-dependence reading from the deduced relation; tests that the exponent $y = -1/2$ on g is understood, not just computed.",
+        "**EXTRACT:** $T = k\\, l^{1/2} g^{-1/2}$; $g$ increases, $l$ fixed.",
+        "**EXECUTE:** The negative exponent means an INVERSE dependence: $T \\propto 1/\\sqrt{g}$. Larger $g$ → smaller $T$. The period decreases.",
+        "**PROOF:** Option A flips the exponent's sign; option B contradicts the deduced formula (g appears in it); option D is the absurd limit $g \\to \\infty$."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A quantity $v$ with the dimensions of speed $[\\mathrm{L\\,T^{-1}}]$ is assumed to depend only on a length $l$ and the acceleration due to gravity $g$, as $v = k\\, l^x g^y$. The exponents are:",
+    "options": [
+      {
+        "text": "$x = 1,\\; y = -1$"
+      },
+      {
+        "text": "$x = \\tfrac{1}{2},\\; y = \\tfrac{1}{2}$"
+      },
+      {
+        "text": "$x = -\\tfrac{1}{2},\\; y = \\tfrac{1}{2}$"
+      },
+      {
+        "text": "$x = \\tfrac{1}{2},\\; y = -\\tfrac{1}{2}$"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Hard",
+    "subtopic": "Deducing Relations Among Physical Quantities",
+    "fsmTag": "exponent-matching-deduction",
+    "concepts": [
+      "dimensional-analysis",
+      "exponent-matching"
+    ],
+    "sourcePages": [
+      33,
+      34
+    ],
+    "timeTargets": {
+      "ap_eapcet": 90,
+      "ts_eapcet": 90,
+      "jee_main": 120
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When target dimensions are $[LT^{-1}]$ and the building blocks are l and g.",
+      "steps": [
+        "**Trigger:** $[LT^{-1}] = [L]^x [LT^{-2}]^y$.",
+        "**Action:** Match exponents: T: $-2y = -1 \\Rightarrow y = \\tfrac{1}{2}$; L: $x + y = 1 \\Rightarrow x = \\tfrac{1}{2}$.",
+        "**Result:** $v = k\\sqrt{l g}$, i.e. $x = y = \\tfrac{1}{2}$ — option B."
+      ],
+      "sanityCheck": "Check: $\\sqrt{\\mathrm{m \\cdot m\\,s^{-2}}} = \\sqrt{\\mathrm{m^2 s^{-2}}} = \\mathrm{m\\,s^{-1}}$. Correct."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Exponent-matching deduction with a velocity-dimensioned target — same method as the pendulum (Section 2.10.2), different target dimensions.",
+        "**EXTRACT:** $[v] = [\\mathrm{L T^{-1}}]$; $[l^x] = [\\mathrm{L}^x]$; $[g^y] = [\\mathrm{L}^y \\mathrm{T}^{-2y}]$.",
+        "**EXECUTE:** $[\\mathrm{L^1 T^{-1}}] = [\\mathrm{L}^{x+y}\\, \\mathrm{T}^{-2y}]$. Matching T: $-2y = -1 \\Rightarrow y = \\tfrac{1}{2}$. Matching L: $x + y = 1 \\Rightarrow x = 1 - \\tfrac{1}{2} = \\tfrac{1}{2}$. So $v = k\\sqrt{lg}$.",
+        "**PROOF:** Option D is the pendulum's exponent pair carried over by habit — it would give dimensions $[T]$... actually $l^{1/2}g^{-1/2}$ has dimension $[\\mathrm{T}]$, a period, not a speed. Option A gives $[L][L^{-1}T^{2}] = [T^2]$ — also wrong. Only option B reproduces $[LT^{-1}]$."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Which of the following relations CANNOT be deduced by the method of dimensions, even in principle?",
+    "options": [
+      {
+        "text": "$x = v_0\\, t + \\tfrac{1}{2} a t^2$ for uniformly accelerated motion"
+      },
+      {
+        "text": "$T = k\\sqrt{l/g}$ for a simple pendulum"
+      },
+      {
+        "text": "$v = k\\sqrt{lg}$ for a speed depending on a length and g"
+      },
+      {
+        "text": "A relation of the form $Z = k\\, A^p B^q$ with known dependence on A and B"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Hard",
+    "subtopic": "Deducing Relations Among Physical Quantities",
+    "fsmTag": "dimensional-method-limitations",
+    "concepts": [
+      "dimensional-analysis",
+      "limitations-of-dimensional-analysis"
+    ],
+    "sourcePages": [
+      33,
+      34
+    ],
+    "timeTargets": {
+      "ap_eapcet": 90,
+      "ts_eapcet": 90,
+      "jee_main": 120
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When one candidate relation is a SUM of terms.",
+      "steps": [
+        "**Trigger:** $x = v_0 t + \\tfrac{1}{2}at^2$ — two added terms, not a single product.",
+        "**Action:** The method requires PRODUCT-type dependence; sums of terms (and their coefficients) are beyond it.",
+        "**Result:** The kinematic sum cannot be deduced — option A."
+      ],
+      "sanityCheck": "The method can VERIFY that equation's consistency (the chapter does exactly that) — but verifying is not deducing."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Boundary of the deduction method (Section 2.10.2).",
+        "**EXTRACT:** Which relation falls outside product-type dependence?",
+        "**EXECUTE:** The chapter requires that we 'consider it as a product type of the dependence' $Z = k\\,A^p B^q C^r$. Options B, C and D all have this single-product shape and are deducible up to the constant k. Option A is a SUM of two terms with a specific coefficient (1/2) — dimensional analysis can neither generate the two-term structure nor fix the 1/2.",
+        "**PROOF:** Section 2.10.1 uses this very equation only for consistency CHECKING, never deduction — the chapter's own division of labour between the two applications."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  }
+]

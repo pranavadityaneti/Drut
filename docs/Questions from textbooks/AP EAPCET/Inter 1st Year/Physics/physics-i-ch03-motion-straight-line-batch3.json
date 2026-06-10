@@ -1,0 +1,1455 @@
+[
+  {
+    "questionText": "In which of the following cases can the moving body be treated as a POINT OBJECT?",
+    "options": [
+      { "text": "A spinning cricket ball turning sharply on hitting the ground" },
+      { "text": "A tumbling beaker that has slipped off the edge of a table" },
+      { "text": "A railway carriage moving without jerks between two stations far apart" },
+      { "text": "A monkey climbing up and down a short pole" }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Easy",
+    "subtopic": "Position, Path Length and Displacement",
+    "fsmTag": "point-object-approximation",
+    "concepts": ["point-object", "approximation-validity"],
+    "sourcePages": [39, 58],
+    "timeTargets": { "ap_eapcet": 40, "ts_eapcet": 40, "jee_main": 55 },
+    "theOptimalPath": { "exists": false, "steps": [] },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Validity of the point-object approximation (Section 3.1: valid when the size of the object is much smaller than the distance it moves in a reasonable duration).",
+        "**EXTRACT:** Compare each object's size with the scale of its journey.",
+        "**EXECUTE:** A railway carriage (tens of metres) travelling many kilometres between stations satisfies size << distance. The carriage's internal extent is irrelevant to describing its trip.",
+        "**PROOF:** Option A fails because the sharp turn happens over a distance comparable to the ball's own size, and its spin matters; option B's tumbling beaker rotates while falling about one table-height - size and orientation matter; option D's pole is only a few monkey-lengths tall. Only option C has motion on a scale that dwarfs the object."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "An object is located on the x-axis to the LEFT of the origin, with the positive direction chosen to the right. Its position coordinate is:",
+    "options": [
+      { "text": "negative" },
+      { "text": "positive" },
+      { "text": "zero" },
+      { "text": "undefined until the object moves" }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Easy",
+    "subtopic": "Position, Path Length and Displacement",
+    "fsmTag": "position-coordinate-sign",
+    "concepts": ["position-coordinate", "sign-convention"],
+    "sourcePages": [41],
+    "timeTargets": { "ap_eapcet": 25, "ts_eapcet": 25, "jee_main": 35 },
+    "theOptimalPath": { "exists": false, "steps": [] },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Sign convention for position coordinates (Section 3.2: positions to the right of O are positive, to the left negative).",
+        "**EXTRACT:** Object left of origin; right is positive.",
+        "**EXECUTE:** Left of the origin means the coordinate is negative - like the point R at $-120$ m in the chapter's Fig. 3.1.",
+        "**PROOF:** Option B contradicts the stated convention; option C would place the object AT the origin; option D confuses position (defined at every instant, moving or not) with velocity. Option A."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "Two children A and B leave their school O and walk home along the same straight road. On the position-time graph, A's line starts at $t = 0$ with a gentle slope; B's line starts later (at $t = t_0 > 0$) but with a steeper slope. Which child walks FASTER?",
+    "options": [
+      { "text": "A, because she started earlier" },
+      { "text": "B, because the slope of B's x-t line is greater" },
+      { "text": "Both walk equally fast, since both lines are straight" },
+      { "text": "Cannot be decided from an x-t graph" }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Medium",
+    "subtopic": "Position, Path Length and Displacement",
+    "fsmTag": "xt-graph-slope-comparison",
+    "concepts": ["position-time-graph", "slope", "speed-comparison"],
+    "sourcePages": [42, 43, 58],
+    "timeTargets": { "ap_eapcet": 50, "ts_eapcet": 50, "jee_main": 70 },
+    "theOptimalPath": { "exists": false, "steps": [] },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Comparing speeds from x-t slopes (the two-children exercise structure of the chapter's additional problems).",
+        "**EXTRACT:** A: early start, gentle slope. B: late start, steeper slope.",
+        "**EXECUTE:** Speed corresponds to the SLOPE of the x-t line, not the starting time. Steeper line = more distance per unit time = faster. B is faster.",
+        "**PROOF:** Option A rewards punctuality, not speed - starting early changes the intercept, not the slope; option C ignores that two straight lines can have different slopes; option D denies the central skill the chapter builds (Fig. 3.2(b)). Slope wins - option B."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "A particle moves in a SINGLE sweep (no reversal) from $x = +4$ m to $x = -6$ m. Which statement about its path length and displacement is correct?",
+    "options": [
+      { "text": "Path length 10 m; displacement $+10$ m" },
+      { "text": "Path length 2 m; displacement $-2$ m" },
+      { "text": "Path length 10 m; displacement $-2$ m" },
+      { "text": "Path length 10 m; displacement $-10$ m, and the two magnitudes are equal because the motion never reversed" }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Medium",
+    "subtopic": "Position, Path Length and Displacement",
+    "fsmTag": "no-reversal-crossing-origin",
+    "concepts": ["path-length", "displacement", "sign-convention"],
+    "sourcePages": [41, 42],
+    "timeTargets": { "ap_eapcet": 55, "ts_eapcet": 55, "jee_main": 75 },
+    "theOptimalPath": { "exists": false, "steps": [] },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Path versus displacement when the journey CROSSES the origin but never reverses - crossing zero is not a reversal.",
+        "**EXTRACT:** From $+4$ m to $-6$ m, one continuous sweep in the $-x$ direction.",
+        "**EXECUTE:** Displacement $= -6 - 4 = -10$ m. Path length $= |{-10}| = 10$ m (no cancellation, since the direction never changed). Magnitudes equal, as they must be for no-reversal motion.",
+        "**PROOF:** Option A flips the displacement's sign; option B subtracts magnitudes ($6 - 4$), treating the origin as a barrier; option C invents a smaller displacement while keeping the full path - inconsistent for a no-reversal sweep. Passing through $x = 0$ is kinematically uneventful - option D."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "A man walking in a narrow lane takes 5 steps forward and 3 steps backward, then again 5 forward and 3 backward, and so on. Each step is 1 m long and takes 1 s. A pit lies 9 m from his starting point. The time after which he first reaches the pit ($x = 9$ m) is:",
+    "options": [
+      { "text": "37 s" },
+      { "text": "29 s" },
+      { "text": "21 s" },
+      { "text": "24 s" }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Hard",
+    "subtopic": "Position, Path Length and Displacement",
+    "fsmTag": "cyclic-walk-tracking",
+    "concepts": ["path-length", "displacement", "cyclic-motion"],
+    "sourcePages": [41, 42, 58],
+    "timeTargets": { "ap_eapcet": 110, "ts_eapcet": 110, "jee_main": 155 },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Cyclic forward-backward walk approaching a target.",
+      "steps": [
+        "**Trigger:** Net-gain-per-cycle motion with a target reached DURING a forward phase - never extrapolate the net rate to the end.",
+        "**Action:** Track cycle peaks: each 8 s cycle nets $+2$ m, but the PEAK reached during cycle $k$ is $2(k-1) + 5$ m. Find the first peak $\\geq 9$: $2(k-1) + 5 \\geq 9 \\Rightarrow k = 3$.",
+        "**Result:** Cycle 3 starts at $x = 4$ m at $t = 16$ s; he needs 5 more forward steps to reach 9 m: $t = 16 + 5 = 21$ s - option C."
+      ],
+      "sanityCheck": "Walking the timeline: $x = 5$ at 5 s, $2$ at 8 s, $7$ at 13 s, $4$ at 16 s, then $9$ at 21 s - he falls in during the third forward phase."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** The drunkard-walk trap (the chapter's narrow-lane exercise structure): the naive net-rate answer ignores that the pit is reached mid-phase.",
+        "**EXTRACT:** Cycle: $+5$ m (5 s), $-3$ m (3 s) - net $+2$ m per 8 s. Target: 9 m.",
+        "**EXECUTE:** End-of-phase positions: $5$ (5 s), $2$ (8 s), $7$ (13 s), $4$ (16 s). From $x = 4$ m at 16 s he steps forward: $5, 6, 7, 8, 9$ m at $17, 18, 19, 20, 21$ s. He reaches the pit at $t = 21$ s and falls in - the later backward steps never happen.",
+        "**PROOF:** Option A ($37$ s) is the textbook's answer for its ORIGINAL 13-m-pit version of this problem, recalled instead of recomputed for a 9 m pit; option B miscounts one cycle ($29 = 21 + 8$); option D stops at a phase boundary ($24$ s) instead of mid-phase. The step-by-step timeline pins $t = 21$ s - option C."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "Why can a position-time graph NEVER be a vertical straight line (perpendicular to the time axis)?",
+    "options": [
+      { "text": "Because it would mean the object occupies many positions at the same instant, requiring infinite speed" },
+      { "text": "Because position can never decrease with time" },
+      { "text": "Because graphs must always pass through the origin" },
+      { "text": "Because time cannot be plotted on the horizontal axis" }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Medium",
+    "subtopic": "Position, Path Length and Displacement",
+    "fsmTag": "xt-graph-physical-constraints",
+    "concepts": ["position-time-graph", "physical-realizability"],
+    "sourcePages": [42, 48],
+    "timeTargets": { "ap_eapcet": 50, "ts_eapcet": 50, "jee_main": 70 },
+    "theOptimalPath": { "exists": false, "steps": [] },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Physical constraints on x-t graphs (the chapter notes that realistic graphs must be smooth: velocity cannot change abruptly, and position is single-valued in time).",
+        "**EXTRACT:** A vertical line at some instant $t_0$ assigns EVERY position to that one instant.",
+        "**EXECUTE:** One object cannot be at many places at one time; equivalently, traversing a finite distance in zero time requires infinite velocity. Both readings make the vertical segment unphysical.",
+        "**PROOF:** Option B is simply false - position decreases whenever motion is in the $-x$ direction (Fig. 3.5(b)); option C is false - the intercept depends on the initial position; option D is a convention, not a law, and the standard convention does put time horizontally. The single-valuedness/infinite-speed argument is option A."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "A bus covers 150 km in 3 hours. Its average speed is:",
+    "options": [
+      { "text": "450 km/h" },
+      { "text": "50 km/h" },
+      { "text": "75 km/h" },
+      { "text": "153 km/h" }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Easy",
+    "subtopic": "Average Velocity and Average Speed",
+    "fsmTag": "average-speed-direct",
+    "concepts": ["average-speed"],
+    "sourcePages": [43, 44],
+    "timeTargets": { "ap_eapcet": 25, "ts_eapcet": 25, "jee_main": 35 },
+    "theOptimalPath": { "exists": false, "steps": [] },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Direct application of average speed = total path length / total time (Eq. 3.2).",
+        "**EXTRACT:** Path 150 km; time 3 h.",
+        "**EXECUTE:** Average speed $= 150/3 = 50$ km/h.",
+        "**PROOF:** Option A multiplies instead of dividing; option C divides by 2; option D adds the numbers. Division gives 50 km/h - option B."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "A particle starts at $x = 0$ and ends at $x = 20$ m after 10 s, wandering back and forth in between. Its average velocity over the 10 s is:",
+    "options": [
+      { "text": "impossible to find without knowing the details of the wandering" },
+      { "text": "greater than 2 m/s because of the extra wandering" },
+      { "text": "less than 2 m/s because wandering wastes time" },
+      { "text": "exactly 2 m/s, because average velocity depends only on the endpoints and the elapsed time" }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Easy",
+    "subtopic": "Average Velocity and Average Speed",
+    "fsmTag": "endpoint-dependence-average-velocity",
+    "concepts": ["average-velocity", "endpoint-dependence"],
+    "sourcePages": [43],
+    "timeTargets": { "ap_eapcet": 40, "ts_eapcet": 40, "jee_main": 55 },
+    "theOptimalPath": { "exists": false, "steps": [] },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Endpoint property of average velocity.",
+        "**EXTRACT:** $\\Delta x = 20$ m, $\\Delta t = 10$ s; intermediate motion unknown.",
+        "**EXECUTE:** $\\bar{v} = \\Delta x/\\Delta t = 20/10 = 2$ m/s, regardless of the wandering - displacement depends only on the end points.",
+        "**PROOF:** Options A, B and C all assume the route matters; it would matter for the average SPEED (which grows with wandering), but average VELOCITY uses only the net displacement. Exactly 2 m/s - option D."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "A van covers half the distance of a trip at 30 km/h and the other half at 70 km/h. Its average speed is:",
+    "options": [
+      { "text": "50 km/h" },
+      { "text": "40 km/h" },
+      { "text": "42 km/h" },
+      { "text": "58 km/h" }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Medium",
+    "subtopic": "Average Velocity and Average Speed",
+    "fsmTag": "harmonic-mean-speed",
+    "concepts": ["average-speed", "harmonic-mean"],
+    "sourcePages": [43, 44],
+    "timeTargets": { "ap_eapcet": 60, "ts_eapcet": 60, "jee_main": 85 },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Equal distances at two speeds.",
+      "steps": [
+        "**Trigger:** Half distance at $v_1$, half at $v_2$.",
+        "**Action:** Harmonic mean: $\\dfrac{2 v_1 v_2}{v_1 + v_2}$.",
+        "**Result:** $\\dfrac{2 \\times 30 \\times 70}{100} = 42$ km/h - option C."
+      ],
+      "sanityCheck": "Below the arithmetic mean 50 and pulled toward the slower 30 - as the longer time at 30 km/h demands."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Equal-distance two-speed trip - harmonic mean.",
+        "**EXTRACT:** Each half $d$; $t_1 = d/30$, $t_2 = d/70$.",
+        "**EXECUTE:** Average $= \\dfrac{2d}{d/30 + d/70} = \\dfrac{2}{\\frac{7 + 3}{210}} = \\dfrac{2 \\times 210}{10} = 42$ km/h.",
+        "**PROOF:** Option A is the arithmetic mean - the standard trap; option B over-corrects below the harmonic mean; option D weights toward the faster leg (the opposite of what time-weighting does). 42 km/h - option C."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "A runner runs for three EQUAL intervals of time at speeds 10 km/h, 20 km/h and 30 km/h. Her average speed over the whole run is:",
+    "options": [
+      { "text": "20 km/h" },
+      { "text": "16.4 km/h" },
+      { "text": "18 km/h" },
+      { "text": "22 km/h" }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Medium",
+    "subtopic": "Average Velocity and Average Speed",
+    "fsmTag": "time-weighted-mean-speed",
+    "concepts": ["average-speed", "time-weighted-mean"],
+    "sourcePages": [43, 44],
+    "timeTargets": { "ap_eapcet": 55, "ts_eapcet": 55, "jee_main": 75 },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Equal TIMES at several speeds.",
+      "steps": [
+        "**Trigger:** Equal time intervals - speeds average ARITHMETICALLY.",
+        "**Action:** $(10 + 20 + 30)/3$.",
+        "**Result:** 20 km/h - option A."
+      ],
+      "sanityCheck": "Equal times weight each speed equally; the harmonic mean (16.4) belongs to the equal-DISTANCE case instead."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Equal-time multi-speed average.",
+        "**EXTRACT:** Each interval $t$; distances $10t, 20t, 30t$.",
+        "**EXECUTE:** Average $= \\dfrac{10t + 20t + 30t}{3t} = \\dfrac{60}{3} = 20$ km/h.",
+        "**PROOF:** Option B is the three-speed harmonic mean ($3/(1/10 + 1/20 + 1/30) = 16.36$), which belongs to equal distances; options C and D bracket the answer without derivation paths. Equal times make it the plain mean - option A."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "A car covers the first 30 km of a 100 km trip at 30 km/h and the remaining 70 km at 70 km/h. Its average speed for the trip is:",
+    "options": [
+      { "text": "42 km/h" },
+      { "text": "55 km/h" },
+      { "text": "60 km/h" },
+      { "text": "50 km/h" }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Medium",
+    "subtopic": "Average Velocity and Average Speed",
+    "fsmTag": "unequal-segments-average-speed",
+    "concepts": ["average-speed", "segment-analysis"],
+    "sourcePages": [43, 44],
+    "timeTargets": { "ap_eapcet": 60, "ts_eapcet": 60, "jee_main": 85 },
+    "theOptimalPath": { "exists": false, "steps": [] },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Unequal segments - neither the harmonic-mean nor the arithmetic-mean shortcut applies; compute times honestly.",
+        "**EXTRACT:** Segment 1: 30 km at 30 km/h. Segment 2: 70 km at 70 km/h.",
+        "**EXECUTE:** $t_1 = 30/30 = 1$ h; $t_2 = 70/70 = 1$ h. Average $= 100/(1+1) = 50$ km/h.",
+        "**PROOF:** Option A applies the equal-distance harmonic formula ($2 \\times 30 \\times 70/100$) to UNEQUAL distances; option B is a near-arithmetic guess; option C reports a distance-weighted mean of the speeds ($0.3 \\times 30 + 0.7 \\times 70 = 58$, rounded up). The legs happen to take equal TIMES here, so the true average is the plain mean of the speeds: 50 km/h - option D."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "The position of a particle is $x = 3t^2$ (x in metres, t in seconds). Its AVERAGE velocity over the interval from $t = 1$ s to $t = 3$ s is:",
+    "options": [
+      { "text": "18 m/s" },
+      { "text": "12 m/s" },
+      { "text": "6 m/s" },
+      { "text": "9 m/s" }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Medium",
+    "subtopic": "Average Velocity and Average Speed",
+    "fsmTag": "average-velocity-from-function",
+    "concepts": ["average-velocity", "position-function"],
+    "sourcePages": [43, 46],
+    "timeTargets": { "ap_eapcet": 55, "ts_eapcet": 55, "jee_main": 80 },
+    "theOptimalPath": { "exists": false, "steps": [] },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Average velocity from a position FUNCTION - endpoint values, not the derivative.",
+        "**EXTRACT:** $x(1) = 3$ m; $x(3) = 27$ m.",
+        "**EXECUTE:** $\\bar{v} = \\dfrac{x(3) - x(1)}{3 - 1} = \\dfrac{27 - 3}{2} = 12$ m/s.",
+        "**PROOF:** Option A is the INSTANTANEOUS velocity at $t = 3$ ($v = 6t = 18$); option C is the instantaneous velocity at $t = 1$; option D divides $27$ by $3$ (forgets to subtract $x(1)$ and uses the clock reading). Note 12 is also $v$ at the midpoint $t = 2$ - the constant-acceleration midpoint property at work. Option B."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "A jogger moves in one fixed direction with an average speed of 6 m/s for 5 s, and then 4 m/s for the next 10 s. Her average speed for the whole 15 s is:",
+    "options": [
+      { "text": "5.0 m/s" },
+      { "text": "4.2 m/s" },
+      { "text": "4.67 m/s" },
+      { "text": "3.3 m/s" }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Medium",
+    "subtopic": "Average Velocity and Average Speed",
+    "fsmTag": "segment-time-weighted-average",
+    "concepts": ["average-speed", "time-weighted-mean"],
+    "sourcePages": [43, 44],
+    "timeTargets": { "ap_eapcet": 55, "ts_eapcet": 55, "jee_main": 80 },
+    "theOptimalPath": { "exists": false, "steps": [] },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Time-weighted average over unequal durations.",
+        "**EXTRACT:** Leg 1: 6 m/s for 5 s (30 m). Leg 2: 4 m/s for 10 s (40 m).",
+        "**EXECUTE:** Average $= \\dfrac{30 + 40}{15} = \\dfrac{70}{15} = 4.67$ m/s.",
+        "**PROOF:** Option A is the unweighted mean of 6 and 4 - ignores that twice as long was spent at 4 m/s; option B is a near-miss with no derivation; option D underweights the faster leg entirely. The weighted sum $\\frac{5 \\times 6 + 10 \\times 4}{15}$ confirms 4.67 m/s - option C."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "A trucker drives from a depot to a port at 60 km/h and returns along the same road at 40 km/h. The entire round trip takes 5 hours of driving. The one-way distance between the depot and the port is:",
+    "options": [
+      { "text": "100 km" },
+      { "text": "240 km" },
+      { "text": "125 km" },
+      { "text": "120 km" }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Hard",
+    "subtopic": "Average Velocity and Average Speed",
+    "fsmTag": "round-trip-distance-from-time",
+    "concepts": ["average-speed", "harmonic-mean", "round-trip"],
+    "sourcePages": [43, 44],
+    "timeTargets": { "ap_eapcet": 95, "ts_eapcet": 95, "jee_main": 135 },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Round trip with both leg speeds and the total time known.",
+      "steps": [
+        "**Trigger:** Same road both ways at $v_1, v_2$ with total time $T$ - the harmonic mean gives the round-trip rate.",
+        "**Action:** Average speed $= \\dfrac{2 \\times 60 \\times 40}{100} = 48$ km/h; round-trip distance $= 48 \\times 5 = 240$ km.",
+        "**Result:** One-way distance $= 240/2 = 120$ km - option D."
+      ],
+      "sanityCheck": "Check times: $120/60 = 2$ h out, $120/40 = 3$ h back - total 5 h exactly."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Solve for distance from a two-speed round trip with known total time.",
+        "**EXTRACT:** Out at 60 km/h, back at 40 km/h, total 5 h; one-way distance $d$.",
+        "**EXECUTE:** $\\dfrac{d}{60} + \\dfrac{d}{40} = 5 \\Rightarrow d\\left(\\dfrac{2 + 3}{120}\\right) = 5 \\Rightarrow \\dfrac{5d}{120} = 5 \\Rightarrow d = 120$ km.",
+        "**PROOF:** Option A ($100$ km) uses the RETURN-leg speed as if it were the whole-trip average: $40 \\times 5 = 200$ km round trip, halved to 100 km; option B ($240$ km) is the correct ROUND-TRIP distance reported as one-way; option C ($125$ km) uses the arithmetic-mean speed 50 km/h: $50 \\times 5 = 250$ km round trip, halved to 125 km. The time check ($120/60 + 120/40 = 2 + 3 = 5$ h) seals 120 km - option D."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "A particle is in motion during an entire interval (it never stays at rest). Which of these CAN still be zero for that interval?",
+    "options": [
+      { "text": "Its average velocity" },
+      { "text": "Its average speed" },
+      { "text": "Its path length" },
+      { "text": "Its instantaneous speed at every instant" }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Easy",
+    "subtopic": "Average Velocity and Average Speed",
+    "fsmTag": "zero-average-velocity-moving-particle",
+    "concepts": ["average-velocity", "round-trip"],
+    "sourcePages": [43, 44],
+    "timeTargets": { "ap_eapcet": 40, "ts_eapcet": 40, "jee_main": 55 },
+    "theOptimalPath": { "exists": false, "steps": [] },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Which kinematic quantity can vanish despite genuine motion.",
+        "**EXTRACT:** The particle moves throughout - path length grows continuously.",
+        "**EXECUTE:** A round trip gives $\\Delta x = 0$, hence average velocity zero, even though the particle moved the whole time.",
+        "**PROOF:** Option B fails - average speed is path/time and the path is positive for a moving particle; option C fails for the same reason; option D would mean the particle is at rest at every instant, contradicting the premise. Only the signed average can cancel - option A."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "The position of a particle is $x = 10 + 2t$ (x in metres, t in seconds). Its instantaneous velocity at $t = 5$ s is:",
+    "options": [
+      { "text": "20 m/s" },
+      { "text": "2 m/s" },
+      { "text": "4 m/s" },
+      { "text": "10 m/s" }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Easy",
+    "subtopic": "Instantaneous Velocity and Speed",
+    "fsmTag": "uniform-motion-constant-slope",
+    "concepts": ["instantaneous-velocity", "uniform-motion"],
+    "sourcePages": [44, 46],
+    "timeTargets": { "ap_eapcet": 35, "ts_eapcet": 35, "jee_main": 50 },
+    "theOptimalPath": { "exists": false, "steps": [] },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Derivative of a linear position function with a non-zero intercept.",
+        "**EXTRACT:** $x = 10 + 2t$; find $v(5)$.",
+        "**EXECUTE:** $v = dx/dt = 2$ m/s at every instant - the intercept 10 m is the initial position and contributes nothing to the velocity.",
+        "**PROOF:** Option A reports the position $x(5) = 20$ m; option C doubles the slope (differentiates $2t$ as if it were $2t^2$'s term); option D reports the intercept. Constant slope 2 - option B."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "The position of a particle is $x = 4t^2 - 8t$ (x in metres, t in seconds). The instant at which its velocity becomes zero is:",
+    "options": [
+      { "text": "$t = 4$ s" },
+      { "text": "$t = 2$ s" },
+      { "text": "$t = 8$ s" },
+      { "text": "$t = 1$ s" }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Medium",
+    "subtopic": "Instantaneous Velocity and Speed",
+    "fsmTag": "velocity-zero-from-derivative",
+    "concepts": ["instantaneous-velocity", "differentiation", "turning-point"],
+    "sourcePages": [44, 46],
+    "timeTargets": { "ap_eapcet": 50, "ts_eapcet": 50, "jee_main": 70 },
+    "theOptimalPath": { "exists": false, "steps": [] },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Find the turning instant by setting the derivative to zero.",
+        "**EXTRACT:** $x = 4t^2 - 8t$.",
+        "**EXECUTE:** $v = \\dfrac{dx}{dt} = 8t - 8$. $v = 0 \\Rightarrow t = 1$ s.",
+        "**PROOF:** Option B solves $x = 0$ instead of $v = 0$ ($4t^2 = 8t \\Rightarrow t = 2$) - position zero is not rest; option A picks the coefficient 4; option C picks the coefficient 8. Setting the VELOCITY to zero gives $t = 1$ s - option D."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "For which of these position functions does the average velocity over EVERY interval equal the instantaneous velocity at EVERY instant?",
+    "options": [
+      { "text": "$x = 3t + 2$" },
+      { "text": "$x = t^2$" },
+      { "text": "$x = 0.05 t^3$" },
+      { "text": "$x = 4t - 2t^2$" }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Medium",
+    "subtopic": "Instantaneous Velocity and Speed",
+    "fsmTag": "uniform-motion-velocity-identity",
+    "concepts": ["uniform-motion", "average-velocity", "instantaneous-velocity"],
+    "sourcePages": [46],
+    "timeTargets": { "ap_eapcet": 55, "ts_eapcet": 55, "jee_main": 75 },
+    "theOptimalPath": { "exists": false, "steps": [] },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** The identity 'average = instantaneous everywhere' characterises UNIFORM motion - a linear x(t).",
+        "**EXTRACT:** Test which candidate has constant slope.",
+        "**EXECUTE:** $x = 3t + 2$ has $v = 3$ at every instant; over any interval $\\bar{v} = 3$ as well. The other three have time-varying derivatives ($2t$, $0.15t^2$, $4 - 4t$), so a secant slope cannot match the tangent everywhere.",
+        "**PROOF:** Options B and C are accelerating motions (average over an interval equals the instantaneous value only at special interior points); option D even reverses direction at $t = 1$ s. Only the straight-line x-t graph - option A - makes the secant and tangent identical for all choices."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "The position of a particle is $x = 2t^3$ (x in metres, t in seconds). The ratio of its instantaneous velocity at $t = 2$ s to that at $t = 1$ s is:",
+    "options": [
+      { "text": "$2 : 1$" },
+      { "text": "$8 : 1$" },
+      { "text": "$4 : 1$" },
+      { "text": "$6 : 1$" }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Medium",
+    "subtopic": "Instantaneous Velocity and Speed",
+    "fsmTag": "polynomial-differentiation",
+    "concepts": ["instantaneous-velocity", "differentiation", "scaling"],
+    "sourcePages": [45, 46],
+    "timeTargets": { "ap_eapcet": 55, "ts_eapcet": 55, "jee_main": 75 },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Power-law position function; ratio of velocities asked.",
+      "steps": [
+        "**Trigger:** $x \\propto t^3$ - the velocity scales as $t^2$; constants cancel in a ratio.",
+        "**Action:** $\\dfrac{v(2)}{v(1)} = \\dfrac{2^2}{1^2}$.",
+        "**Result:** $4 : 1$ - option C."
+      ],
+      "sanityCheck": "Explicitly: $v = 6t^2$, so $v(2) = 24$ and $v(1) = 6$; ratio 4 - consistent."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Scaling of the derivative of a power law.",
+        "**EXTRACT:** $x = 2t^3 \\Rightarrow v = 6t^2$.",
+        "**EXECUTE:** $v(2) = 6 \\times 4 = 24$ m/s; $v(1) = 6$ m/s. Ratio $24 : 6 = 4 : 1$.",
+        "**PROOF:** Option A scales velocity linearly with time (one power too few); option B scales it as $t^3$ (uses the POSITION ratio $16:2$); option D reports the coefficient 6. The derivative drops exactly one power of $t$: ratio $4:1$ - option C."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "At a certain instant, the tangent to a particle's position-time graph is exactly HORIZONTAL (parallel to the time axis). At that instant the particle:",
+    "options": [
+      { "text": "has maximum velocity" },
+      { "text": "has infinite acceleration" },
+      { "text": "is permanently at rest from then on" },
+      { "text": "has zero instantaneous velocity" }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Easy",
+    "subtopic": "Instantaneous Velocity and Speed",
+    "fsmTag": "horizontal-tangent-zero-velocity",
+    "concepts": ["instantaneous-velocity", "tangent", "turning-point"],
+    "sourcePages": [44, 45],
+    "timeTargets": { "ap_eapcet": 35, "ts_eapcet": 35, "jee_main": 50 },
+    "theOptimalPath": { "exists": false, "steps": [] },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Reading a single tangent on an x-t graph.",
+        "**EXTRACT:** Horizontal tangent = zero slope at that instant.",
+        "**EXECUTE:** Instantaneous velocity is the tangent's slope; zero slope means $v = 0$ at that moment (typically a turning point of the motion).",
+        "**PROOF:** Option A inverts the rule (maximum velocity is the STEEPEST tangent); option B confuses x-t with v-t reading; option C overreaches - the particle may immediately resume moving (a thrown ball at its apex). Momentarily zero velocity - option D."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "The position of a particle is $x = 2t^3 - 12t^2 + 18t + 5$ (x in metres, t in seconds). The particle is momentarily at rest twice during its motion. The DISTANCE between the two positions where it comes to rest is:",
+    "options": [
+      { "text": "2 m" },
+      { "text": "8 m" },
+      { "text": "13 m" },
+      { "text": "4 m" }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Medium",
+    "subtopic": "Instantaneous Velocity and Speed",
+    "fsmTag": "double-rest-position-separation",
+    "concepts": ["instantaneous-velocity", "turning-point", "cubic-position"],
+    "sourcePages": [44, 46],
+    "timeTargets": { "ap_eapcet": 75, "ts_eapcet": 75, "jee_main": 110 },
+    "theOptimalPath": { "exists": false, "steps": [] },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Chained problem: find both rest instants from the derivative, evaluate the position at each, and take the separation.",
+        "**EXTRACT:** $x = 2t^3 - 12t^2 + 18t + 5$; $v = \\dfrac{dx}{dt} = 6t^2 - 24t + 18 = 6(t - 1)(t - 3)$.",
+        "**EXECUTE:** Rest at $t = 1$ s and $t = 3$ s. Positions: $x(1) = 2 - 12 + 18 + 5 = 13$ m; $x(3) = 54 - 108 + 54 + 5 = 5$ m. Distance between the rest positions $= |13 - 5| = 8$ m.",
+        "**PROOF:** Option A ($2$ m) reports the TIME gap between the rest instants as a distance; option C ($13$ m) reports the first rest position alone, forgetting to subtract the second; option D ($4$ m) adds the two rest TIMES ($1 + 3$) and reads the sum as metres. Evaluating the cubic at both rest instants and subtracting gives $13 - 5 = 8$ m - option B."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "A vehicle is said to undergo RETARDATION when:",
+    "options": [
+      { "text": "its acceleration is directed opposite to its velocity, so its speed decreases" },
+      { "text": "its acceleration is zero" },
+      { "text": "its velocity is negative" },
+      { "text": "its acceleration is negative regardless of the velocity's direction" }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Easy",
+    "subtopic": "Acceleration",
+    "fsmTag": "retardation-definition",
+    "concepts": ["retardation", "acceleration-sign"],
+    "sourcePages": [47, 56],
+    "timeTargets": { "ap_eapcet": 35, "ts_eapcet": 35, "jee_main": 50 },
+    "theOptimalPath": { "exists": false, "steps": [] },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Definition of retardation in terms of relative directions (Points to Ponder 4).",
+        "**EXTRACT:** Retardation = decreasing speed.",
+        "**EXECUTE:** Speed decreases exactly when the acceleration points opposite to the velocity - whatever the axis convention.",
+        "**PROOF:** Option B is uniform motion, not slowing; option C is just motion in the negative direction (possibly speeding up); option D is the Batch-wide trap: a NEGATIVE acceleration SPEEDS UP a particle whose velocity is also negative (a falling stone with up positive). The direction-relative definition is option A."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "The velocity-time graph of a car is a straight line parallel to the time axis at $v = 15$ m/s. The acceleration of the car is:",
+    "options": [
+      { "text": "15 m/s$^2$" },
+      { "text": "1.5 m/s$^2$" },
+      { "text": "zero" },
+      { "text": "cannot be found from a v-t graph" }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Easy",
+    "subtopic": "Acceleration",
+    "fsmTag": "vt-slope-acceleration",
+    "concepts": ["velocity-time-graph", "acceleration"],
+    "sourcePages": [46, 47],
+    "timeTargets": { "ap_eapcet": 30, "ts_eapcet": 30, "jee_main": 45 },
+    "theOptimalPath": { "exists": false, "steps": [] },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Acceleration as the slope of the v-t graph.",
+        "**EXTRACT:** Horizontal v-t line at 15 m/s.",
+        "**EXECUTE:** Slope zero $\\Rightarrow a = 0$. The car cruises at constant velocity.",
+        "**PROOF:** Option A reports the velocity VALUE as an acceleration (wrong units); option B scales it arbitrarily; option D denies the central reading rule (acceleration at an instant is the slope of the tangent to the v-t curve). Flat line, zero slope - option C."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "The velocity of a particle varies as $v = 5 + 3t$ (v in m/s, t in seconds). Its acceleration is:",
+    "options": [
+      { "text": "5 m/s$^2$" },
+      { "text": "8 m/s$^2$" },
+      { "text": "$3t$ m/s$^2$" },
+      { "text": "3 m/s$^2$, constant" }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Medium",
+    "subtopic": "Acceleration",
+    "fsmTag": "acceleration-from-velocity-function",
+    "concepts": ["acceleration", "differentiation"],
+    "sourcePages": [46, 47],
+    "timeTargets": { "ap_eapcet": 45, "ts_eapcet": 45, "jee_main": 60 },
+    "theOptimalPath": { "exists": false, "steps": [] },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Acceleration as the derivative of a linear velocity function (Eq. 3.5).",
+        "**EXTRACT:** $v = 5 + 3t$.",
+        "**EXECUTE:** $a = \\dfrac{dv}{dt} = 3$ m/s$^2$ - the same at every instant. The intercept 5 m/s is the initial velocity.",
+        "**PROOF:** Option A reports the initial velocity as an acceleration; option B evaluates $v$ at $t = 1$ s and mislabels it; option C differentiates incorrectly (leaves a $t$ behind, as if $v$ contained $\\tfrac{3}{2}t^2$). The slope of a linear v-t relation is its constant coefficient: 3 m/s$^2$ - option D."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "A car's velocity increases from 36 km/h to 72 km/h in 5 seconds. Its average acceleration is:",
+    "options": [
+      { "text": "7.2 m/s$^2$" },
+      { "text": "2 m/s$^2$" },
+      { "text": "36 m/s$^2$" },
+      { "text": "10 m/s$^2$" }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Medium",
+    "subtopic": "Acceleration",
+    "fsmTag": "acceleration-with-unit-conversion",
+    "concepts": ["average-acceleration", "unit-conversion"],
+    "sourcePages": [46],
+    "timeTargets": { "ap_eapcet": 55, "ts_eapcet": 55, "jee_main": 75 },
+    "theOptimalPath": { "exists": false, "steps": [] },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Average acceleration with a km/h-to-m/s conversion gate.",
+        "**EXTRACT:** $v_1 = 36$ km/h $= 10$ m/s; $v_2 = 72$ km/h $= 20$ m/s; $\\Delta t = 5$ s.",
+        "**EXECUTE:** $\\bar{a} = \\dfrac{20 - 10}{5} = 2$ m/s$^2$.",
+        "**PROOF:** Option A skips the unit conversion ($\\frac{72 - 36}{5} = 7.2$) - the signature trap; option C reports the km/h difference itself; option D reports $\\Delta v$ in m/s without dividing by time. Convert first, then divide: 2 m/s$^2$ - option B."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "A train slows uniformly from 20 m/s to rest in 4 s. The distance it covers while stopping is:",
+    "options": [
+      { "text": "80 m" },
+      { "text": "20 m" },
+      { "text": "40 m" },
+      { "text": "60 m" }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Medium",
+    "subtopic": "Acceleration",
+    "fsmTag": "mean-velocity-displacement",
+    "concepts": ["deceleration", "average-velocity"],
+    "sourcePages": [46, 48],
+    "timeTargets": { "ap_eapcet": 50, "ts_eapcet": 50, "jee_main": 70 },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Uniform slowing between two known velocities over a known time.",
+      "steps": [
+        "**Trigger:** Uniform change between $v_0$ and 0 - use the mean velocity.",
+        "**Action:** $x = \\dfrac{v_0 + 0}{2} \\times t$.",
+        "**Result:** $10 \\times 4 = 40$ m - option C."
+      ],
+      "sanityCheck": "Bracketing: less than $20 \\times 4 = 80$ m (constant full speed) and more than 0; the uniform-slowing midpoint is exact."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Stopping distance from time, via the average-velocity identity.",
+        "**EXTRACT:** $v_0 = 20$ m/s, $v = 0$, $t = 4$ s.",
+        "**EXECUTE:** $\\bar{v} = (20 + 0)/2 = 10$ m/s; $x = 10 \\times 4 = 40$ m.",
+        "**PROOF:** Option A uses the initial speed throughout ($20 \\times 4$); option B confuses the answer with the initial speed value; option D has no consistent path ($15 \\times 4$ would need a wrong mean). Cross-check via $a = -5$ m/s$^2$: $x = 20(4) - \\tfrac{1}{2}(5)(16) = 80 - 40 = 40$ m - option C."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "The acceleration of a particle decreases linearly with time from 6 m/s$^2$ at $t = 0$ to zero at $t = 6$ s. The particle starts from rest. Its velocity at $t = 6$ s (the area under the a-t graph) is:",
+    "options": [
+      { "text": "18 m/s" },
+      { "text": "36 m/s" },
+      { "text": "6 m/s" },
+      { "text": "12 m/s" }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Medium",
+    "subtopic": "Acceleration",
+    "fsmTag": "at-area-velocity-change",
+    "concepts": ["acceleration-time-graph", "area", "velocity-change"],
+    "sourcePages": [46, 47],
+    "timeTargets": { "ap_eapcet": 60, "ts_eapcet": 60, "jee_main": 85 },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "a-t graph is a simple geometric shape.",
+      "steps": [
+        "**Trigger:** Triangular a-t profile - velocity change is the triangle's area.",
+        "**Action:** $\\Delta v = \\tfrac{1}{2} \\times \\text{base} \\times \\text{height} = \\tfrac{1}{2} \\times 6 \\times 6$.",
+        "**Result:** $v = 0 + 18 = 18$ m/s - option A."
+      ],
+      "sanityCheck": "Must be less than the constant-6 rectangle value ($36$ m/s) since the acceleration fades - 18 is exactly half, as a triangle demands."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Velocity as the accumulated area under a linearly decreasing a-t graph.",
+        "**EXTRACT:** Triangle: height 6 m/s$^2$ at $t = 0$, falling to 0 at $t = 6$ s; start from rest.",
+        "**EXECUTE:** $\\Delta v = \\tfrac{1}{2}(6)(6) = 18$ m/s. From rest: $v(6) = 18$ m/s.",
+        "**PROOF:** Option B treats the profile as a constant-6 rectangle (forgets the fade-out); option C reports the initial acceleration; option D halves the correct answer (an extra half). The triangle's area is 18 - option A."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "A particle moves with velocity $+10$ m/s for the first 4 s. Its velocity then decreases uniformly, reaching $-10$ m/s at $t = 8$ s. Over the full 8 seconds, its DISPLACEMENT and PATH LENGTH are respectively:",
+    "options": [
+      { "text": "60 m and 60 m" },
+      { "text": "40 m and 80 m" },
+      { "text": "0 m and 60 m" },
+      { "text": "40 m and 60 m" }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Hard",
+    "subtopic": "Acceleration",
+    "fsmTag": "vt-area-with-sign-change",
+    "concepts": ["velocity-time-graph", "area-displacement", "direction-reversal"],
+    "sourcePages": [47, 48],
+    "timeTargets": { "ap_eapcet": 100, "ts_eapcet": 100, "jee_main": 145 },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "v-t graph crosses the time axis within the interval.",
+      "steps": [
+        "**Trigger:** Velocity changes sign - displacement and path SPLIT at the crossing.",
+        "**Action:** Find the zero-crossing ($v$ falls from $+10$ at 4 s to $-10$ at 8 s, crossing zero at $t = 6$ s). Sum SIGNED areas for displacement, UNSIGNED for path.",
+        "**Result:** Displacement $= 40 + 10 - 10 = 40$ m; path $= 40 + 10 + 10 = 60$ m - option D."
+      ],
+      "sanityCheck": "Path must exceed |displacement| whenever a reversal occurs: $60 > 40$ - consistent."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Signed versus unsigned area under a v-t graph that crosses the axis.",
+        "**EXTRACT:** Segment 1: rectangle $+10 \\times 4 = +40$ m. Segment 2: linear from $+10$ (4 s) to $-10$ (8 s), crossing zero at 6 s: triangle above the axis $\\tfrac{1}{2}(2)(10) = +10$ m, triangle below $\\tfrac{1}{2}(2)(10) = -10$ m.",
+        "**EXECUTE:** Displacement $= 40 + 10 - 10 = 40$ m. Path length $= 40 + 10 + 10 = 60$ m.",
+        "**PROOF:** Option A counts the final triangle as positive in BOTH quantities (misses the reversal); option B's path of 80 m assumes the SPEED stays 10 m/s for all 8 s ($10 \\times 8 = 80$), ignoring that the particle slows through zero; option C zeroes the displacement as if the areas cancelled entirely (only the post-crossing triangles cancel each other). The split at $t = 6$ s gives (40 m, 60 m) - option D."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "When the initial velocity $v_0$, acceleration $a$ and elapsed time $t$ are known, the displacement of a uniformly accelerated particle is given DIRECTLY by:",
+    "options": [
+      { "text": "$x = v_0 + \\tfrac{1}{2} a t$" },
+      { "text": "$x = v_0 t + \\tfrac{1}{2} a t^2$" },
+      { "text": "$v^2 = v_0^2 + 2 a x$" },
+      { "text": "$x = \\tfrac{1}{2}(v + v_0)\\, a$" }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Easy",
+    "subtopic": "Kinematic Equations for Uniformly Accelerated Motion",
+    "fsmTag": "kinematic-equation-selection",
+    "concepts": ["kinematic-equations", "equation-selection"],
+    "sourcePages": [48, 49],
+    "timeTargets": { "ap_eapcet": 30, "ts_eapcet": 30, "jee_main": 45 },
+    "theOptimalPath": { "exists": false, "steps": [] },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Equation selection by known quantities $\\{v_0, a, t\\} \\to x$.",
+        "**EXTRACT:** Need $x$ without knowing the final velocity $v$.",
+        "**EXECUTE:** Eq. (3.8): $x = v_0 t + \\tfrac{1}{2} a t^2$ uses exactly the given three quantities.",
+        "**PROOF:** Option A is dimensionally inconsistent (adds a velocity to acceleration-times-time); option C requires $v$ and does not contain $t$; option D is dimensionally wrong (velocity times acceleration is not a length). Option B."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "A body's velocity increases from 8 m/s to 20 m/s in 4 seconds under uniform acceleration. The acceleration is:",
+    "options": [
+      { "text": "7 m/s$^2$" },
+      { "text": "5 m/s$^2$" },
+      { "text": "12 m/s$^2$" },
+      { "text": "3 m/s$^2$" }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Easy",
+    "subtopic": "Kinematic Equations for Uniformly Accelerated Motion",
+    "fsmTag": "kinematic-equation-direct",
+    "concepts": ["kinematic-equations", "uniform-acceleration"],
+    "sourcePages": [48],
+    "timeTargets": { "ap_eapcet": 35, "ts_eapcet": 35, "jee_main": 50 },
+    "theOptimalPath": { "exists": false, "steps": [] },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Solve $v = v_0 + at$ for $a$.",
+        "**EXTRACT:** $v_0 = 8$ m/s, $v = 20$ m/s, $t = 4$ s.",
+        "**EXECUTE:** $a = \\dfrac{v - v_0}{t} = \\dfrac{20 - 8}{4} = 3$ m/s$^2$.",
+        "**PROOF:** Option A averages the two velocities and divides by... ($28/4 = 7$) - adds instead of subtracting; option B divides the final velocity alone ($20/4$); option C reports $\\Delta v$ without dividing by time. The change 12 m/s over 4 s is 3 m/s$^2$ - option D."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "A particle moving at 12 m/s decelerates uniformly at 2 m/s$^2$. The distance it travels before its velocity drops to 6 m/s is:",
+    "options": [
+      { "text": "27 m" },
+      { "text": "36 m" },
+      { "text": "9 m" },
+      { "text": "54 m" }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Medium",
+    "subtopic": "Kinematic Equations for Uniformly Accelerated Motion",
+    "fsmTag": "v-squared-direct",
+    "concepts": ["kinematic-equations", "deceleration"],
+    "sourcePages": [48, 49],
+    "timeTargets": { "ap_eapcet": 60, "ts_eapcet": 60, "jee_main": 85 },
+    "theOptimalPath": { "exists": false, "steps": [] },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Time-free distance between two known speeds: $v^2 = v_0^2 + 2ax$.",
+        "**EXTRACT:** $v_0 = 12$ m/s, $v = 6$ m/s, $a = -2$ m/s$^2$.",
+        "**EXECUTE:** $36 = 144 + 2(-2)x \\Rightarrow -108 = -4x \\Rightarrow x = 27$ m.",
+        "**PROOF:** Option B uses $v_0^2/(2a) = 36$ - the FULL stopping distance, ignoring that the particle only slows to 6 m/s; option C uses $v^2/(2a) = 9$ - the remaining distance after this stretch; option D forgets the factor 2 ($108/2$). The difference of squares over $2a$ gives 27 m - option A."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "A metro starting from rest covers 36 m in the first 6 seconds with uniform acceleration. The acceleration is:",
+    "options": [
+      { "text": "6 m/s$^2$" },
+      { "text": "1 m/s$^2$" },
+      { "text": "2 m/s$^2$" },
+      { "text": "3 m/s$^2$" }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Medium",
+    "subtopic": "Kinematic Equations for Uniformly Accelerated Motion",
+    "fsmTag": "acceleration-from-rest-distance",
+    "concepts": ["kinematic-equations", "uniform-acceleration"],
+    "sourcePages": [48],
+    "timeTargets": { "ap_eapcet": 50, "ts_eapcet": 50, "jee_main": 70 },
+    "theOptimalPath": { "exists": false, "steps": [] },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Solve $x = \\tfrac{1}{2} a t^2$ (from rest) for $a$.",
+        "**EXTRACT:** $x = 36$ m, $t = 6$ s, $v_0 = 0$.",
+        "**EXECUTE:** $a = \\dfrac{2x}{t^2} = \\dfrac{72}{36} = 2$ m/s$^2$.",
+        "**PROOF:** Option B forgets the factor 2 ($36/36 = 1$); option A divides distance by time ($36/6$) - that gives the average velocity, not acceleration; option D ($3$) divides by $2t$ instead of $t^2$ ($36/12$), muddling where the 2 belongs. With the formula applied correctly: 2 m/s$^2$ - option C."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "A bullet moving at speed $v$ loses $\\tfrac{1}{20}$ of its speed while passing through one wooden plank. Assuming the retardation inside the wood is uniform (the same in every plank), the MINIMUM number of such planks required to stop the bullet completely is:",
+    "options": [
+      { "text": "20" },
+      { "text": "10" },
+      { "text": "It can never stop completely" },
+      { "text": "11" }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Hard",
+    "subtopic": "Kinematic Equations for Uniformly Accelerated Motion",
+    "fsmTag": "plank-penetration-v-squared",
+    "concepts": ["kinematic-equations", "v-squared-budget", "penetration"],
+    "sourcePages": [49, 57],
+    "timeTargets": { "ap_eapcet": 110, "ts_eapcet": 110, "jee_main": 160 },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Equal thickness planks, same retardation in each - each plank consumes an equal slice of $v^2$.",
+      "steps": [
+        "**Trigger:** 'Loses a fraction of speed per plank, how many to stop' - budget $v^2$, not $v$.",
+        "**Action:** One plank: $v^2 - (\\tfrac{19}{20}v)^2 = v^2 \\left(1 - \\tfrac{361}{400}\\right) = \\tfrac{39}{400} v^2$. Number $= \\dfrac{v^2}{(39/400) v^2} = \\dfrac{400}{39} \\approx 10.26$.",
+        "**Result:** Not an integer - the bullet exits the 10th plank still moving; it stops inside the 11th. Minimum 11 planks - option D."
+      ],
+      "sanityCheck": "10 planks consume only $10 \\times 39/400 = 390/400$ of the $v^2$ budget - 2.5% remains, so an 11th plank is genuinely needed."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Penetration problem on a $v^2$ budget - $v^2 = v_0^2 + 2ax$ makes the LOSS OF $v^2$ (not of $v$) proportional to distance for uniform retardation.",
+        "**EXTRACT:** After one plank: $v_1 = \\tfrac{19}{20} v$. Per-plank $v^2$ loss: $v^2(1 - 361/400) = \\tfrac{39}{400}v^2$.",
+        "**EXECUTE:** Planks needed $n = \\dfrac{v^2}{(39/400)v^2} = \\dfrac{400}{39} = 10.26$. Since 10 planks leave the bullet still moving, the answer rounds UP: $n = 11$.",
+        "**PROOF:** Option A assumes each plank removes $\\tfrac{1}{20}$ of the ORIGINAL speed linearly ($20 \\times \\tfrac{1}{20} = 1$) - speed does not fall linearly with distance; option B truncates 10.26 downward, leaving the bullet moving after plank 10; option C is the Zeno-style trap - each plank removes a smaller and smaller slice of SPEED, so it feels like the bullet lingers forever, but each plank removes a FIXED slice ($\\tfrac{39}{400}$) of the original $v^2$, so the budget runs out in finitely many planks. Rounding the $v^2$ budget UP gives 11 - option D."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "A body passes point P with velocity 4 m/s and, moving with uniform acceleration in a straight line, passes point Q, 24 m away, with velocity 8 m/s. Its acceleration is:",
+    "options": [
+      { "text": "2 m/s$^2$" },
+      { "text": "1 m/s$^2$" },
+      { "text": "0.5 m/s$^2$" },
+      { "text": "4 m/s$^2$" }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Medium",
+    "subtopic": "Kinematic Equations for Uniformly Accelerated Motion",
+    "fsmTag": "two-point-measurement",
+    "concepts": ["kinematic-equations", "velocity-displacement"],
+    "sourcePages": [48, 49],
+    "timeTargets": { "ap_eapcet": 60, "ts_eapcet": 60, "jee_main": 85 },
+    "theOptimalPath": { "exists": false, "steps": [] },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Two-point speed measurement - the time-free equation isolates $a$.",
+        "**EXTRACT:** $v_0 = 4$ m/s at P; $v = 8$ m/s at Q; $x = 24$ m.",
+        "**EXECUTE:** $v^2 = v_0^2 + 2ax \\Rightarrow 64 = 16 + 48a \\Rightarrow a = \\dfrac{48}{48} = 1$ m/s$^2$.",
+        "**PROOF:** Option A forgets the factor 2 ($48/24$); option C doubles the denominator ($48/96$); option D divides the velocity change by... ($4/\\ldots$) - it reports $\\Delta v = 4$ m/s as the acceleration. The difference of squares 48 over $2 \\times 24$ gives exactly 1 m/s$^2$ - option B."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "A particle starts from rest, accelerates uniformly at $a$ for a time $t_1$, then immediately decelerates uniformly at $2a$, coming to rest again. If the whole journey takes 9 seconds, the duration $t_1$ of the acceleration phase is:",
+    "options": [
+      { "text": "3 s" },
+      { "text": "4.5 s" },
+      { "text": "6 s" },
+      { "text": "7.5 s" }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Hard",
+    "subtopic": "Kinematic Equations for Uniformly Accelerated Motion",
+    "fsmTag": "accelerate-decelerate-time-split",
+    "concepts": ["kinematic-equations", "two-stage-motion", "velocity-matching"],
+    "sourcePages": [48, 49],
+    "timeTargets": { "ap_eapcet": 95, "ts_eapcet": 95, "jee_main": 135 },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Rest-to-rest motion with two constant-acceleration phases.",
+      "steps": [
+        "**Trigger:** Rest-to-rest with accelerations $a$ then $2a$ - the peak velocity is shared by both phases.",
+        "**Action:** $v_{peak} = a t_1 = 2a t_2 \\Rightarrow t_2 = t_1/2$. Times are INVERSELY proportional to the acceleration magnitudes.",
+        "**Result:** $t_1 + \\tfrac{t_1}{2} = 9 \\Rightarrow t_1 = 6$ s - option C."
+      ],
+      "sanityCheck": "The gentler phase ($a$) must last LONGER than the harsher one ($2a$): $6 > 3$ - consistent, and $6 + 3 = 9$ s."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Velocity-matching across two phases - the peak velocity built up by phase 1 must be destroyed by phase 2.",
+        "**EXTRACT:** Phase 1: from rest, $+a$, duration $t_1$, ending at $v_{peak} = a t_1$. Phase 2: $-2a$, duration $t_2$, ending at rest: $v_{peak} = 2a t_2$.",
+        "**EXECUTE:** $a t_1 = 2 a t_2 \\Rightarrow t_2 = t_1/2$. Total: $t_1 + t_1/2 = 9 \\Rightarrow \\tfrac{3t_1}{2} = 9 \\Rightarrow t_1 = 6$ s.",
+        "**PROOF:** Option B splits the 9 s equally - ignores that the deceleration is twice as strong and so needs only half the time; option A gives the DECELERATION phase's duration ($t_2 = 3$ s) as $t_1$; option D would leave only $t_2 = 1.5$ s of braking, which would require a deceleration of $5a$ (since $7.5a = a_{dec} \\times 1.5$), not the stated $2a$. The inverse-proportionality split (6 s, 3 s) is option C."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "A body starts from rest and moves with uniform acceleration. The distance it covers in the second 2-second interval (from $t = 2$ s to $t = 4$ s) is how many times the distance covered in the first 2-second interval (from $t = 0$ to $t = 2$ s)?",
+    "options": [
+      { "text": "3 times" },
+      { "text": "2 times" },
+      { "text": "4 times" },
+      { "text": "$\\tfrac{5}{3}$ times" }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Hard",
+    "subtopic": "Kinematic Equations for Uniformly Accelerated Motion",
+    "fsmTag": "interval-distance-ratio",
+    "concepts": ["kinematic-equations", "galileo-odd-numbers", "interval-analysis"],
+    "sourcePages": [48, 51],
+    "timeTargets": { "ap_eapcet": 75, "ts_eapcet": 75, "jee_main": 105 },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "From rest, constant acceleration, equal consecutive intervals.",
+      "steps": [
+        "**Trigger:** Consecutive EQUAL intervals from rest - Galileo's odd numbers apply to ANY interval size, not just seconds.",
+        "**Action:** Interval distances go as $1 : 3 : 5 : \\ldots$ regardless of the interval length.",
+        "**Result:** Second interval / first interval $= 3$ - option A."
+      ],
+      "sanityCheck": "Explicit check: $x(2) = 2a$, $x(4) = 8a$; intervals $2a$ and $6a$; ratio 3."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Galileo's odd-number law applied to 2-second blocks - the law depends only on the intervals being equal, not on their length.",
+        "**EXTRACT:** $x(t) = \\tfrac{1}{2} a t^2$. First block: $x(2) - x(0) = 2a$. Second block: $x(4) - x(2) = 8a - 2a = 6a$.",
+        "**EXECUTE:** Ratio $= 6a / 2a = 3$.",
+        "**PROOF:** Option B assumes the distance grows like the velocity (linearly); option C uses the CUMULATIVE ratio $x(4)/x(2) = 4$; option D ($5/3$) confuses the 2-second BLOCKS with per-SECOND slices - the 3rd and 2nd individual seconds' distances stand as $5:3$. Grouping the per-second slices $1, 3, 5, 7$ into blocks gives $(1+3) = 4$ and $(5+7) = 12$, ratio 3 - consistent with $6a/2a$. Option A."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "Free fall (with air resistance neglected) is an example of:",
+    "options": [
+      { "text": "uniform motion with constant velocity" },
+      { "text": "motion with uniformly increasing acceleration" },
+      { "text": "motion with acceleration that depends on the mass of the body" },
+      { "text": "uniformly accelerated motion - the velocity changes by equal amounts in equal time intervals" }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Easy",
+    "subtopic": "Free Fall and Motion Under Gravity",
+    "fsmTag": "free-fall-uniform-acceleration",
+    "concepts": ["free-fall", "uniform-acceleration"],
+    "sourcePages": [50],
+    "timeTargets": { "ap_eapcet": 35, "ts_eapcet": 35, "jee_main": 50 },
+    "theOptimalPath": { "exists": false, "steps": [] },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Classification of free fall (Example 3.5: free fall is a case of motion with uniform acceleration).",
+        "**EXTRACT:** Near the Earth's surface, $g \\approx 9.8$ m/s$^2$, constant when height is small compared to the Earth's radius.",
+        "**EXECUTE:** Constant acceleration means the velocity grows by 9.8 m/s every second - uniformly accelerated motion.",
+        "**PROOF:** Option A fails - the velocity changes continuously; option B promotes the acceleration itself to changing, but $g$ stays fixed; option C contradicts the foundational fact that (without air resistance) all bodies fall with the SAME $g$ regardless of mass. Option D."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "A ball is thrown vertically upward with a speed of 50 m/s. Taking $g = 10$ m/s$^2$, the time it takes to reach its highest point is:",
+    "options": [
+      { "text": "10 s" },
+      { "text": "5 s" },
+      { "text": "2.5 s" },
+      { "text": "25 s" }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Easy",
+    "subtopic": "Free Fall and Motion Under Gravity",
+    "fsmTag": "rise-time-direct",
+    "concepts": ["vertical-throw", "rise-time"],
+    "sourcePages": [49, 50],
+    "timeTargets": { "ap_eapcet": 35, "ts_eapcet": 35, "jee_main": 50 },
+    "theOptimalPath": { "exists": false, "steps": [] },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Rise time: velocity reaches zero at the top, $v = v_0 - gt$.",
+        "**EXTRACT:** $v_0 = 50$ m/s, $g = 10$ m/s$^2$.",
+        "**EXECUTE:** $0 = 50 - 10t \\Rightarrow t = 5$ s.",
+        "**PROOF:** Option A doubles the rise time (that is the TOTAL flight time back to the hand); option C halves it; option D squares wrongly ($50^2/(2 \\times 50)$). Gravity strips 10 m/s each second from 50 m/s: 5 s - option B."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "A stone is thrown vertically upward with a speed of 20 m/s, so its maximum height is 20 m (g = 10 m/s$^2$). Its SPEED when it is at half the maximum height (10 m) is:",
+    "options": [
+      { "text": "10 m/s" },
+      { "text": "5 m/s" },
+      { "text": "$10\\sqrt{2} \\approx 14.1$ m/s" },
+      { "text": "15 m/s" }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Hard",
+    "subtopic": "Free Fall and Motion Under Gravity",
+    "fsmTag": "speed-at-fractional-height",
+    "concepts": ["vertical-throw", "v-squared-height-relation"],
+    "sourcePages": [49, 50],
+    "timeTargets": { "ap_eapcet": 70, "ts_eapcet": 70, "jee_main": 100 },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Speed at a fraction of the maximum height.",
+      "steps": [
+        "**Trigger:** Half the max height - $v^2$ (not $v$) varies linearly with height.",
+        "**Action:** At height $h_{max}/2$, half the $v_0^2$ budget remains: $v^2 = v_0^2/2$.",
+        "**Result:** $v = \\dfrac{v_0}{\\sqrt{2}} = \\dfrac{20}{\\sqrt 2} = 10\\sqrt{2} \\approx 14.1$ m/s - option C."
+      ],
+      "sanityCheck": "Must lie between $v_0/2 = 10$ (the linear-thinking trap) and $v_0 = 20$; $14.1$ does."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Speed at a fractional height - the quadratic (not linear) decay of speed with height.",
+        "**EXTRACT:** $v_0 = 20$ m/s, $h = 10$ m, $g = 10$ m/s$^2$.",
+        "**EXECUTE:** $v^2 = v_0^2 - 2gh = 400 - 200 = 200 \\Rightarrow v = \\sqrt{200} = 10\\sqrt{2} \\approx 14.1$ m/s.",
+        "**PROOF:** Option A assumes speed halves at half height (linear decay) - but it is $v^2$ that halves; option B quarters the speed; option D interpolates linearly between 20 and 10 with no basis. The square-root of half the budget: $14.1$ m/s - option C."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "A ball dropped from the top of a tower reaches the ground in 4 seconds. Taking $g = 10$ m/s$^2$, the height of the tower is:",
+    "options": [
+      { "text": "80 m" },
+      { "text": "40 m" },
+      { "text": "160 m" },
+      { "text": "20 m" }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Medium",
+    "subtopic": "Free Fall and Motion Under Gravity",
+    "fsmTag": "height-from-fall-time",
+    "concepts": ["free-fall", "fall-time"],
+    "sourcePages": [50, 51],
+    "timeTargets": { "ap_eapcet": 45, "ts_eapcet": 45, "jee_main": 60 },
+    "theOptimalPath": { "exists": false, "steps": [] },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Height from fall time: $h = \\tfrac{1}{2} g t^2$.",
+        "**EXTRACT:** $t = 4$ s, $g = 10$ m/s$^2$, dropped from rest.",
+        "**EXECUTE:** $h = \\tfrac{1}{2} \\times 10 \\times 16 = 80$ m.",
+        "**PROOF:** Option B halves the correct answer (uses $\\tfrac{1}{4}gt^2$); option C forgets the $\\tfrac{1}{2}$ ($gt^2 = 160$); option D uses $\\tfrac{1}{2}g t$ (drops one power of $t$, wrong dimensions). Impact-speed check: $v = gt = 40$ m/s and $v^2 = 1600 = 2 \\times 10 \\times 80$ - consistent. Option A."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "A ball thrown vertically upward returns to the thrower's hand 6 seconds after release. Taking $g = 10$ m/s$^2$, the speed with which it was thrown is:",
+    "options": [
+      { "text": "60 m/s" },
+      { "text": "15 m/s" },
+      { "text": "20 m/s" },
+      { "text": "30 m/s" }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Medium",
+    "subtopic": "Free Fall and Motion Under Gravity",
+    "fsmTag": "launch-speed-from-flight-time",
+    "concepts": ["vertical-throw", "time-of-flight", "symmetry"],
+    "sourcePages": [49, 50],
+    "timeTargets": { "ap_eapcet": 50, "ts_eapcet": 50, "jee_main": 70 },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Throw and catch at the same level.",
+      "steps": [
+        "**Trigger:** Total flight time given, launch speed asked - symmetry halves the problem.",
+        "**Action:** Rise time $= 6/2 = 3$ s; $v_0 = g \\times t_{rise}$.",
+        "**Result:** $10 \\times 3 = 30$ m/s - option D."
+      ],
+      "sanityCheck": "A 30 m/s throw rises for 3 s to 45 m and falls back in another 3 s - total 6 s, as given."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Inverse flight-time problem using up-down symmetry.",
+        "**EXTRACT:** Total flight 6 s; same launch and catch level; $g = 10$ m/s$^2$.",
+        "**EXECUTE:** By symmetry the rise takes 3 s. At the top $v = 0$: $0 = v_0 - 10 \\times 3 \\Rightarrow v_0 = 30$ m/s.",
+        "**PROOF:** Option A uses the full 6 s in $v_0 = gt$ (forgets the split); option B halves the correct answer; option C has no consistent path (it would need $g \\approx 6.7$). The symmetric split gives 30 m/s - option D."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "A ball is thrown vertically upward with a speed of 10 m/s and caught back at the same height (g = 10 m/s$^2$). For the COMPLETE flight, the magnitude of its displacement and the total distance travelled are respectively:",
+    "options": [
+      { "text": "10 m and 10 m" },
+      { "text": "0 m and 10 m" },
+      { "text": "5 m and 10 m" },
+      { "text": "0 m and 5 m" }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Easy",
+    "subtopic": "Free Fall and Motion Under Gravity",
+    "fsmTag": "flight-displacement-vs-distance",
+    "concepts": ["vertical-throw", "displacement", "path-length"],
+    "sourcePages": [42, 49, 50],
+    "timeTargets": { "ap_eapcet": 45, "ts_eapcet": 45, "jee_main": 60 },
+    "theOptimalPath": { "exists": false, "steps": [] },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Displacement versus distance for an up-down flight - a free-fall instance of the round-trip rule.",
+        "**EXTRACT:** $v_0 = 10$ m/s; max height $h = v_0^2/2g = 100/20 = 5$ m; returns to start.",
+        "**EXECUTE:** Displacement $= 0$ (same start and end point). Distance $= 2h = 10$ m (5 m up + 5 m down).",
+        "**PROOF:** Option A uses the round-trip distance for both; option C reports the one-way height as the displacement; option D halves the distance (forgets the downward leg). The pair (0, 10 m) - option B."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "A stone is thrown vertically upward with a speed of 30 m/s (g = 10 m/s$^2$). Exactly 1 second AFTER it passes its highest point, its velocity is:",
+    "options": [
+      { "text": "$+10$ m/s (upward)" },
+      { "text": "zero" },
+      { "text": "$-10$ m/s (downward, speed 10 m/s)" },
+      { "text": "$-30$ m/s (downward, speed 30 m/s)" }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Medium",
+    "subtopic": "Free Fall and Motion Under Gravity",
+    "fsmTag": "post-apex-velocity",
+    "concepts": ["vertical-throw", "turning-point", "uniform-acceleration"],
+    "sourcePages": [49, 50],
+    "timeTargets": { "ap_eapcet": 50, "ts_eapcet": 50, "jee_main": 70 },
+    "theOptimalPath": { "exists": false, "steps": [] },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Velocity a fixed time after the apex - gravity keeps acting through the top.",
+        "**EXTRACT:** At the apex $v = 0$. One second later, with $a = -g$.",
+        "**EXECUTE:** $v = 0 - 10 \\times 1 = -10$ m/s: moving downward with speed 10 m/s. (The launch speed 30 m/s is irrelevant to this step - it only sets WHEN the apex occurs.)",
+        "**PROOF:** Option A has the ball still rising after the top - impossible; option B freezes it at the apex (the zero-velocity instant lasts no time); option D jumps to the speed it will have 3 s after the apex (when it returns to the hand). One second of free fall from rest: 10 m/s downward - option C."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "A body dropped from rest from a height H covers exactly HALF of H during the LAST second of its fall (g = 10 m/s$^2$). The total time of its fall is:",
+    "options": [
+      { "text": "$\\sqrt{2}$ s" },
+      { "text": "$2$ s" },
+      { "text": "$1 + \\sqrt{2} \\approx 2.41$ s" },
+      { "text": "$2 + \\sqrt{2} \\approx 3.41$ s" }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Hard",
+    "subtopic": "Free Fall and Motion Under Gravity",
+    "fsmTag": "last-second-half-height",
+    "concepts": ["free-fall", "quadratic-equation", "time-height-relation"],
+    "sourcePages": [50, 51],
+    "timeTargets": { "ap_eapcet": 110, "ts_eapcet": 110, "jee_main": 160 },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Fall from rest; a height fraction tied to the final second.",
+      "steps": [
+        "**Trigger:** 'Half the height in the last second' - compare cumulative distances at $t$ and $t-1$.",
+        "**Action:** First half takes the time to fall $H/2$: $\\tfrac{1}{2}g(t-1)^2 = \\tfrac{H}{2} = \\tfrac{1}{2} \\cdot \\tfrac{1}{2} g t^2 \\Rightarrow (t-1)^2 = \\tfrac{t^2}{2} \\Rightarrow t - 1 = \\tfrac{t}{\\sqrt 2}$.",
+        "**Result:** $t\\left(1 - \\tfrac{1}{\\sqrt 2}\\right) = 1 \\Rightarrow t = \\dfrac{\\sqrt 2}{\\sqrt 2 - 1} = 2 + \\sqrt{2} \\approx 3.41$ s - option D."
+      ],
+      "sanityCheck": "Check: $t = 3.414$ s, $t - 1 = 2.414$ s; squares 11.66 and 5.83 - indeed half. H works out to $\\approx 58.3$ m."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Last-second fraction problem - two cumulative-distance equations, one ratio.",
+        "**EXTRACT:** $H = \\tfrac{1}{2} g t^2$; distance up to $t - 1$: $\\tfrac{1}{2} g (t-1)^2 = H/2$ (the first half).",
+        "**EXECUTE:** Dividing the equations: $\\dfrac{(t-1)^2}{t^2} = \\dfrac{1}{2} \\Rightarrow \\dfrac{t-1}{t} = \\dfrac{1}{\\sqrt 2} \\Rightarrow t = \\dfrac{1}{1 - 1/\\sqrt{2}} = \\dfrac{\\sqrt 2}{\\sqrt 2 - 1}$. Rationalising: $t = \\dfrac{\\sqrt 2 (\\sqrt 2 + 1)}{(\\sqrt 2 - 1)(\\sqrt 2 + 1)} = \\dfrac{2 + \\sqrt 2}{1} = 2 + \\sqrt{2} \\approx 3.41$ s.",
+        "**PROOF:** Option A is the ratio factor $\\sqrt 2$ alone; option B ($2$ s) assumes equal halves take equal times, making the 'last second' simply half of a 2-second fall; option C ($1 + \\sqrt 2 \\approx 2.41$) is exactly $t - 1$ - the time to fall the FIRST half reported as the total fall time. Substituting 3.414 s back: total $58.3$ m, first $2.414$ s covers $29.1$ m - exactly half. Option D."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "A ball is dropped from the top of a tall building. One second later, a second ball is dropped from the same point. Three seconds after the SECOND ball is released (g = 10 m/s$^2$, neither has landed), the separation between the two balls is:",
+    "options": [
+      { "text": "35 m" },
+      { "text": "45 m" },
+      { "text": "80 m" },
+      { "text": "5 m" }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Hard",
+    "subtopic": "Free Fall and Motion Under Gravity",
+    "fsmTag": "staggered-drop-separation",
+    "concepts": ["free-fall", "two-body-comparison", "time-offset"],
+    "sourcePages": [50, 51],
+    "timeTargets": { "ap_eapcet": 95, "ts_eapcet": 95, "jee_main": 135 },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Two identical drops offset by a time delay.",
+      "steps": [
+        "**Trigger:** Same start point, staggered release - compare fall distances at one instant.",
+        "**Action:** At the chosen instant, ball 1 has fallen for 4 s, ball 2 for 3 s: separation $= \\tfrac{1}{2}g(4^2 - 3^2) = 5 \\times 7$.",
+        "**Result:** 35 m - option A."
+      ],
+      "sanityCheck": "The separation GROWS with time (the older ball is always faster): 5 m at ball 2's release, then 15, 25, 35 m - the odd-number progression."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Two staggered free falls compared at a single instant.",
+        "**EXTRACT:** At the evaluation instant: ball 1 in flight $4$ s; ball 2 in flight $3$ s.",
+        "**EXECUTE:** Ball 1: $\\tfrac{1}{2}(10)(16) = 80$ m. Ball 2: $\\tfrac{1}{2}(10)(9) = 45$ m. Separation $= 80 - 45 = 35$ m.",
+        "**PROOF:** Option B reports ball 2's fall distance as the separation; option C reports ball 1's; option D ($5$ m) is the separation at the moment ball 2 was released ($\\tfrac{1}{2}g \\cdot 1^2$), frozen as if the gap stayed constant - but the separation between staggered drops GROWS. $80 - 45 = 35$ m - option A."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "Two cars travel along the same straight road in the same direction, both at exactly 60 km/h. The velocity of either car relative to the other is:",
+    "options": [
+      { "text": "120 km/h" },
+      { "text": "60 km/h" },
+      { "text": "zero" },
+      { "text": "30 km/h" }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Easy",
+    "subtopic": "Relative Velocity",
+    "fsmTag": "zero-relative-velocity",
+    "concepts": ["relative-velocity"],
+    "sourcePages": [52, 53],
+    "timeTargets": { "ap_eapcet": 30, "ts_eapcet": 30, "jee_main": 45 },
+    "theOptimalPath": { "exists": false, "steps": [] },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Relative velocity of equal velocities (the chapter's case (a)).",
+        "**EXTRACT:** $v_A = v_B = 60$ km/h, same direction.",
+        "**EXECUTE:** $v_{BA} = v_B - v_A = 0$. Each driver sees the other car holding a fixed position alongside.",
+        "**PROOF:** Option A adds the speeds (opposite-direction formula); option B reports either car's ground speed; option D averages for no reason. Equal velocities - zero relative velocity - option C; this is the chapter's parallel-x-t-lines case."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "Two trains, 120 m and 80 m long, run on parallel tracks in OPPOSITE directions at 10 m/s and 15 m/s respectively. The time they take to completely cross each other (from front meeting front to rear clearing rear) is:",
+    "options": [
+      { "text": "8 s" },
+      { "text": "40 s" },
+      { "text": "13.3 s" },
+      { "text": "4.8 s" }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Medium",
+    "subtopic": "Relative Velocity",
+    "fsmTag": "opposite-crossing-with-lengths",
+    "concepts": ["relative-velocity", "extended-bodies", "closing-speed"],
+    "sourcePages": [53, 54],
+    "timeTargets": { "ap_eapcet": 70, "ts_eapcet": 70, "jee_main": 100 },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Opposite directions, both lengths known.",
+      "steps": [
+        "**Trigger:** Trains crossing in OPPOSITE directions - speeds add, lengths add.",
+        "**Action:** time $= \\dfrac{L_1 + L_2}{v_1 + v_2} = \\dfrac{120 + 80}{10 + 15}$.",
+        "**Result:** $200/25 = 8$ s - option A."
+      ],
+      "sanityCheck": "Compare: the same trains moving the SAME way would need $200/5 = 40$ s - opposite motion is five times quicker, as the added speeds suggest."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Crossing time for extended bodies in opposite directions.",
+        "**EXTRACT:** $L_1 + L_2 = 200$ m; closing speed $= 10 + 15 = 25$ m/s.",
+        "**EXECUTE:** $t = 200/25 = 8$ s.",
+        "**PROOF:** Option B subtracts the speeds ($200/5 = 40$) - the same-direction formula; option C ($13.3$) divides the combined length by 15 m/s only; option D ($4.8$) uses only the FIRST train's length over the closing speed ($120/25$), forgetting the second train must clear too. Sum of lengths over sum of speeds: 8 s - option A."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "A moving walkway in an airport moves at 1.0 m/s. A passenger on it walks in the direction of its motion at 1.5 m/s RELATIVE TO THE WALKWAY. If the walkway is 30 m long, the time the passenger takes to traverse it is:",
+    "options": [
+      { "text": "30 s" },
+      { "text": "20 s" },
+      { "text": "60 s" },
+      { "text": "12 s" }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Medium",
+    "subtopic": "Relative Velocity",
+    "fsmTag": "frame-velocity-addition",
+    "concepts": ["relative-velocity", "frame-transformation"],
+    "sourcePages": [52, 53],
+    "timeTargets": { "ap_eapcet": 55, "ts_eapcet": 55, "jee_main": 80 },
+    "theOptimalPath": { "exists": false, "steps": [] },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Velocity addition across frames - walker relative to ground = walker relative to walkway + walkway relative to ground.",
+        "**EXTRACT:** $v_{walkway} = 1.0$ m/s; $v_{man,walkway} = +1.5$ m/s; length 30 m (fixed in the ground frame).",
+        "**EXECUTE:** Ground speed $= 1.5 + 1.0 = 2.5$ m/s. Time $= 30/2.5 = 12$ s.",
+        "**PROOF:** Option A uses the walkway's speed alone ($30/1$); option B uses the walking speed alone ($30/1.5$); option C divides by the speed DIFFERENCE ($30/0.5$) as if he walked against the walkway. Adding the velocities (same direction) gives 12 s - option D."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "The position-time graphs of two objects A and B are two straight lines that INTERSECT at a point P. The physical meaning of P is:",
+    "options": [
+      { "text": "A and B have equal velocities at that instant" },
+      { "text": "A and B are at the same position at the same instant - they meet there" },
+      { "text": "A and B collide and must stop at P" },
+      { "text": "the relative velocity of A with respect to B becomes zero at P" }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Medium",
+    "subtopic": "Relative Velocity",
+    "fsmTag": "xt-intersection-meeting",
+    "concepts": ["position-time-graph", "meeting-point", "relative-velocity"],
+    "sourcePages": [53],
+    "timeTargets": { "ap_eapcet": 50, "ts_eapcet": 50, "jee_main": 70 },
+    "theOptimalPath": { "exists": false, "steps": [] },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Reading an intersection of two x-t lines (Fig. 3.17: position-time graphs of two objects with unequal velocities, showing the time of meeting).",
+        "**EXTRACT:** At P both graphs share one $(t, x)$ pair.",
+        "**EXECUTE:** Same time coordinate and same position coordinate means the objects are at the same place at the same moment - they meet (one overtakes or passes the other).",
+        "**PROOF:** Option A confuses intersection of LINES with equality of SLOPES - the lines cross precisely because the slopes differ; option C adds an unphysical collision rule (parallel tracks, overtaking - the chapter's trains pass each other unharmed); option D would require the lines to become PARALLEL at P, the opposite of crossing. Meeting point - option B."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "Car A starts from a point with constant velocity 20 m/s. At the same instant, car B starts from rest at the same point in the same direction with constant acceleration 2 m/s$^2$. The MAXIMUM separation between the cars before B catches up with A is:",
+    "options": [
+      { "text": "200 m" },
+      { "text": "50 m" },
+      { "text": "400 m" },
+      { "text": "100 m" }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Hard",
+    "subtopic": "Relative Velocity",
+    "fsmTag": "max-separation-equal-velocity",
+    "concepts": ["relative-velocity", "extremum-condition", "chase-problem"],
+    "sourcePages": [53, 54],
+    "timeTargets": { "ap_eapcet": 110, "ts_eapcet": 110, "jee_main": 155 },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Constant-velocity leader, uniformly accelerating chaser from the same start.",
+      "steps": [
+        "**Trigger:** 'Maximum separation' in a chase - the gap stops growing when the VELOCITIES become equal.",
+        "**Action:** $2t = 20 \\Rightarrow t = 10$ s. Separation $= 20t - \\tfrac{1}{2}(2)t^2 = 200 - 100$.",
+        "**Result:** 100 m - option D."
+      ],
+      "sanityCheck": "Before $t = 10$ s, A is faster (gap grows); after, B is faster (gap shrinks); B catches A at $t = 20$ s. The extremum at equal velocities is the heart of the problem."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Chase with an accelerating pursuer - the separation extremum occurs at velocity equality (where the relative velocity changes sign).",
+        "**EXTRACT:** $x_A = 20t$; $x_B = t^2$. Separation $S(t) = 20t - t^2$.",
+        "**EXECUTE:** $\\dfrac{dS}{dt} = 20 - 2t = 0 \\Rightarrow t = 10$ s (equivalently: $v_B = 2t = 20 = v_A$). $S(10) = 200 - 100 = 100$ m.",
+        "**PROOF:** Option A reports A's distance at $t = 10$ s, not the gap; option B ($50$ m) comes from forgetting the $\\tfrac{1}{2}$ in B's distance - maximising $S = 20t - 2t^2$ instead, whose vertex at $t = 5$ s gives 50 m; option C is the catch-up distance ($x = 400$ m at $t = 20$ s when B draws level). The vertex of $20t - t^2$ at $t = 10$ s gives 100 m - option D."
+      ]
+    },
+    "visual": { "type": "none" }
+  }
+]

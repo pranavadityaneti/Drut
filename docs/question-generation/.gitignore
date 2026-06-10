@@ -1,0 +1,3 @@
+# Textbook PDFs: 348MB, copyrighted content — local ground truth only.
+# Re-download anytime with: bash scripts/download-textbooks.sh
+textbooks/

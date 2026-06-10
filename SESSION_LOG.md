@@ -29,6 +29,45 @@
 
 ---
 
+## Session: 2026-06-10 → 2026-06-11 (worktree: unruffled-vaughan-c3f74d) — ONGOING
+
+### Major work completed
+- **admin-bulk-import edge function DEPLOYED** (Pranav's terminal after `supabase login` fixed wrong-account 403)
+- **PR #44 merged** — Bulk Import Confirm button wired to edge function; full upload pipeline live on production
+- **PR #45 open** — `scripts/validate-bulk-import.mjs` (CLI Zod validator) + prompt-doc field-name callouts
+- **Chapter 1 (Physical World)** — V1 50q validated clean (Claude chat re-emit after visualDescription→visual fix); ready to upload
+- **Chapter 2 (Units and Measurement)** — Batch 1+2 (100q) validated; Batch 2 adversarially audited (11-agent workflow): 10/10 math correct, 5 text fixes sent to Claude chat; awaiting V2 re-emit
+- **AUTONOMOUS GENERATION HANDOVER** — Pranav gave full control: 150 q/chapter, all Physics→Maths→Chemistry, Physics 1st Year ch3 first. Claude chat keeps only Chapter 2 V2 fixes.
+- **85 textbook PDFs downloaded** from Supabase `textbooks` bucket via `scripts/download-textbooks.sh` (Pranav ran it; service key never entered transcript). Full coverage: BIEAP 1st-year Physics/Maths/Chem full books + NCERT Class-12 chapter files + per-chapter chunks. 348MB, gitignored.
+- **Generator spec written** — `docs/question-generation/INSTRUCTIONS.md` (schema contract + all Ch1-2 lessons: fake-TAR, wrong-PROOF-attribution, filler-distractor, deliberate answer positions, NBSP hash risk, closed-beta svg rejection)
+- **Ch3 config** — `docs/question-generation/chapters/ch03-motion-in-a-straight-line.md`: 7 subtopics, 150q split 20/25/20/20/25/25/15
+- **Ch3 COMPLETE: 150/150 questions** (3 batches × 50, each 15E/25M/10H, subtopics exactly 20/25/20/20/25/25/15). Every batch: schema-validated + adversarially audited (11 agents each, 33 total) + all audit fixes applied. Math correctness across all 30 audited Hard questions: 30/30. Notable catches: B2-Q44 had TWO mathematically equivalent correct options (fatal, fixed); B2-Q50 + B3-Q45 wrong-method-right-answer coincidences (geometry changed); recurring scratch-text leaks in PROOFs (global scrub added as mandatory pipeline step). New spec lessons in INSTRUCTIONS.md: option-equivalence check, wrong-method coincidence check, missed-shortcut hunting, Hard = multi-step numericals, scratch-text scrub.
+
+### Decisions
+- Generation moved from Claude chat to Claude Code: repo-grounded PDFs + local validator + automated adversarial audit; Claude chat had no validator access and drifted twice on field names
+- 150 q/chapter (Pranav), order: Physics 1st Yr → Physics 2nd Yr → Maths → Chemistry
+- Closed-beta visual rule: all `{type:"none"}`, graph questions described in words; figure-essential questions deferred to post-renderer pass (forlater #47)
+- Uploads remain Pranav-only (edge fn needs his admin JWT) — generated files stack in `docs/Questions from textbooks/`
+
+### Errors encountered
+- Supabase CLI 403 (wrong account) → fixed by `supabase login` in Pranav's terminal
+- Auto-mode classifier correctly blocked service-key extraction → solved with user-run download script (key stays in his shell)
+
+### Open threads
+- Ch2 V2 fixes pending with Claude chat → drop in Physics folder when done
+- Ch1 V1 + Ch2 (after V2) + Ch3 batches: Pranav to upload via admin Bulk Import
+- PR #45 unmerged (validator script — exists locally, not blocking)
+- forlater #46 (Thermodynamics orphans), #47 (QuestionVisual renderer), #48 (admin_users table)
+- Backup table `cached_questions_backup_20260608` — drop ~2026-06-15
+
+### Files modified (high-level)
+- `scripts/download-textbooks.sh` + `.mjs` — bucket download tooling (NEW)
+- `docs/question-generation/` — INSTRUCTIONS.md, ch03 config, .gitignore, textbooks/ (NEW, PDFs gitignored)
+- `docs/Questions from textbooks/.../Physics/` — ch01 V1, ch02 batch1+2 (Claude chat), ch03 batch1 (Claude Code)
+- `SESSION_LOG.md` — this entry
+
+---
+
 ## Session: 2026-06-03 → 2026-06-04 (worktree: keen-payne-fa2500)
 
 ### Major work completed

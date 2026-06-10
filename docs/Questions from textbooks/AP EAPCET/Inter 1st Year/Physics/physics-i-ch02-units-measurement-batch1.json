@@ -1,0 +1,2666 @@
+[
+  {
+    "questionText": "Which of the following is NOT an SI base unit?",
+    "options": [
+      {
+        "text": "kelvin"
+      },
+      {
+        "text": "newton"
+      },
+      {
+        "text": "candela"
+      },
+      {
+        "text": "mole"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Easy",
+    "subtopic": "The International System of Units",
+    "fsmTag": "si-base-unit-identification",
+    "concepts": [
+      "si-base-units",
+      "derived-units"
+    ],
+    "sourcePages": [
+      16,
+      17
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When asked to pick the non-base unit from a list.",
+      "steps": [
+        "**Trigger:** Spot any unit expressible as a combination of others.",
+        "**Action:** Recall the seven SI base units: m, kg, s, A, K, mol, cd.",
+        "**Result:** newton (kg m s⁻²) is derived — option B."
+      ],
+      "sanityCheck": "Force = mass × acceleration, so its unit must be composite."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Classification of SI units into base vs derived.",
+        "**EXTRACT:** Candidates: kelvin, newton, candela, mole.",
+        "**EXECUTE:** Table 2.1 lists the seven SI base units: metre, kilogram, second, ampere, kelvin, mole, candela. The newton is the unit of force, a derived quantity (mass × acceleration → kg m s⁻²).",
+        "**PROOF:** Kelvin (temperature), candela (luminous intensity) and mole (amount of substance) all appear in Table 2.1; newton does not."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The number of base units in the SI system is:",
+    "options": [
+      {
+        "text": "3"
+      },
+      {
+        "text": "5"
+      },
+      {
+        "text": "7"
+      },
+      {
+        "text": "9"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Easy",
+    "subtopic": "The International System of Units",
+    "fsmTag": "si-base-unit-count",
+    "concepts": [
+      "si-base-units"
+    ],
+    "sourcePages": [
+      17
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Direct recall of the SI structure.",
+        "**EXTRACT:** Asked: count of SI base units.",
+        "**EXECUTE:** Section 2.2: 'In SI, there are seven base units as given in Table 2.1.' Besides these, two supplementary dimensionless units (radian, steradian) are defined, but they are not base units. Option A (3) corresponds to the older CGS/MKS triplet of length, mass, time.",
+        "**PROOF:** Listing them confirms seven: m, kg, s, A, K, mol, cd."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The plane angle $d\\theta$ and the solid angle $d\\Omega$ are defined respectively as the ratios $ds/r$ and $dA/r^2$. Which of the following statements about their units is correct?",
+    "options": [
+      {
+        "text": "Radian and steradian are both SI base units."
+      },
+      {
+        "text": "Radian and steradian are both dimensionless."
+      },
+      {
+        "text": "Radian is dimensionless but steradian has the dimension [L]."
+      },
+      {
+        "text": "Radian has the dimension [L] and steradian the dimension [L²]."
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Medium",
+    "subtopic": "The International System of Units",
+    "fsmTag": "plane-solid-angle-dimensionless",
+    "concepts": [
+      "radian",
+      "steradian",
+      "dimensionless-quantities"
+    ],
+    "sourcePages": [
+      17
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Question gives angle definitions as ratios.",
+      "steps": [
+        "**Trigger:** See angle defined as a ratio of two lengths (or area to length squared).",
+        "**Action:** A ratio of like dimensions cancels: [L]/[L] = 1, [L²]/[L²] = 1.",
+        "**Result:** Both are dimensionless — option B."
+      ],
+      "sanityCheck": "The textbook states both 'are dimensionless quantities' explicitly."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Dimensional reasoning on the definitions of plane and solid angle.",
+        "**EXTRACT:** $d\\theta = ds/r$ (arc length / radius); $d\\Omega = dA/r^2$ (intercepted area / radius squared).",
+        "**EXECUTE:** $[ds/r] = [L]/[L] = 1$; $[dA/r^2] = [L^2]/[L^2] = 1$. Both ratios are pure numbers. The textbook: 'The unit for plane angle is radian... and the unit for the solid angle is steradian... Both these are dimensionless quantities.' They are supplementary units, not base units, so option A fails.",
+        "**PROOF:** Any quantity defined as a ratio of quantities with identical dimensions must be dimensionless."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The SI unit 'metre' is currently defined as:",
+    "options": [
+      {
+        "text": "The length of the path travelled by light in vacuum during a time interval of 1/299,792,458 of a second"
+      },
+      {
+        "text": "One ten-millionth of the distance from the equator to the North Pole"
+      },
+      {
+        "text": "The length of a platinum-iridium bar kept at Sèvres, near Paris"
+      },
+      {
+        "text": "1,650,763.73 wavelengths of the orange-red light emitted by krypton-86"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Medium",
+    "subtopic": "The International System of Units",
+    "fsmTag": "metre-definition-recall",
+    "concepts": [
+      "metre-definition",
+      "si-base-units"
+    ],
+    "sourcePages": [
+      17
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Definition recall from Table 2.1. The distractors are historically real but superseded definitions of the metre.",
+        "**EXTRACT:** Asked: the current (1983) definition of the metre per the textbook.",
+        "**EXECUTE:** Table 2.1: 'The metre is the length of the path travelled by light in vacuum during a time interval of 1/299,792,458 of a second. (1983)'. Options B, C and D were earlier definitions, all replaced.",
+        "**PROOF:** The 1983 definition fixes the speed of light at exactly 299,792,458 m/s, making option A self-consistent with that constant."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Match the unit to its value in metres: 1 parsec equals approximately:",
+    "options": [
+      {
+        "text": "$1.496 \\times 10^{11}$ m"
+      },
+      {
+        "text": "$9.46 \\times 10^{15}$ m"
+      },
+      {
+        "text": "$3.08 \\times 10^{16}$ m"
+      },
+      {
+        "text": "$3.08 \\times 10^{13}$ m"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Easy",
+    "subtopic": "Measurement of Length",
+    "fsmTag": "length-unit-value-recall",
+    "concepts": [
+      "parsec",
+      "large-distance-units"
+    ],
+    "sourcePages": [
+      21
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Unit-value recall for large-distance units; the distractors are the values of the AU and the light year.",
+        "**EXTRACT:** Asked: 1 parsec in metres.",
+        "**EXECUTE:** Section 2.3.3: 1 parsec = $3.08 \\times 10^{16}$ m. Option A is 1 AU ($1.496 \\times 10^{11}$ m); option B is 1 light year ($9.46 \\times 10^{15}$ m); option D has the right mantissa with a wrong exponent.",
+        "**PROOF:** A parsec must exceed a light year (1 pc ≈ 3.26 ly), and $3.08\\times10^{16} > 9.46\\times10^{15}$. Consistent."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The unit of length convenient on the nuclear scale is the fermi. 1 fermi equals:",
+    "options": [
+      {
+        "text": "$10^{-10}$ m"
+      },
+      {
+        "text": "$10^{-12}$ m"
+      },
+      {
+        "text": "$10^{-9}$ m"
+      },
+      {
+        "text": "$10^{-15}$ m"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Easy",
+    "subtopic": "Measurement of Length",
+    "fsmTag": "length-unit-value-recall",
+    "concepts": [
+      "fermi",
+      "small-distance-units"
+    ],
+    "sourcePages": [
+      21
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Unit-value recall; the chief trap is option A, the angstrom.",
+        "**EXTRACT:** Asked: 1 fermi in metres.",
+        "**EXECUTE:** Section 2.3.3: 1 fermi = 1 f = $10^{-15}$ m. The angstrom (1 Å = $10^{-10}$ m) is the atomic-scale unit; the fermi is the nuclear-scale unit.",
+        "**PROOF:** Nuclear sizes (~$10^{-15}$ m) are about $10^5$ times smaller than atomic sizes (~$10^{-10}$ m), matching the chapter's range-of-lengths discussion."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A distant planet is observed from two diametrically opposite points on Earth, separated by a baseline $b = 1.2 \\times 10^{7}$ m. The measured parallax angle is $\\theta = 4.0 \\times 10^{-4}$ rad. The distance of the planet from Earth is approximately:",
+    "options": [
+      {
+        "text": "$3.0 \\times 10^{10}$ m"
+      },
+      {
+        "text": "$4.8 \\times 10^{3}$ m"
+      },
+      {
+        "text": "$3.0 \\times 10^{7}$ m"
+      },
+      {
+        "text": "$2.1 \\times 10^{10}$ m"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Medium",
+    "subtopic": "Measurement of Length",
+    "fsmTag": "parallax-distance-formula",
+    "concepts": [
+      "parallax-method",
+      "large-distances"
+    ],
+    "sourcePages": [
+      18,
+      19
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When a baseline and a parallax angle (in radians) are given.",
+      "steps": [
+        "**Trigger:** Baseline $b$ + parallax angle $\\theta$ in radians.",
+        "**Action:** Apply $D = b/\\theta$.",
+        "**Result:** $D = 1.2\\times10^{7} / 4.0\\times10^{-4} = 3.0\\times10^{10}$ m — option A."
+      ],
+      "sanityCheck": "Dividing by a small angle must give a distance much larger than the baseline; $3.0\\times10^{10} \\gg 1.2\\times10^{7}$. Consistent."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Parallax-method distance determination (Section 2.3.1).",
+        "**EXTRACT:** Given: $b = 1.2\\times10^{7}$ m, $\\theta = 4.0\\times10^{-4}$ rad. Find: distance $D$.",
+        "**EXECUTE:** For a small parallax angle, the baseline is an arc of a circle of radius $D$: $\\theta = b/D$, so $D = b/\\theta = \\dfrac{1.2\\times10^{7}}{4.0\\times10^{-4}} = 3.0\\times10^{10}$ m.",
+        "**PROOF:** Units: m / rad = m (radian is dimensionless). Option B comes from multiplying instead of dividing; option C from forgetting to convert a kilometre baseline; option D from an arithmetic slip ($1.2/4 = 0.3$, exponent mishandled)."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A planet at a distance $D = 8.0 \\times 10^{11}$ m from Earth subtends an angular diameter of $\\alpha = 2.0 \\times 10^{-5}$ rad. The actual diameter of the planet is:",
+    "options": [
+      {
+        "text": "$4.0 \\times 10^{16}$ m"
+      },
+      {
+        "text": "$1.6 \\times 10^{7}$ m"
+      },
+      {
+        "text": "$1.6 \\times 10^{6}$ m"
+      },
+      {
+        "text": "$2.5 \\times 10^{-17}$ m"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Medium",
+    "subtopic": "Measurement of Length",
+    "fsmTag": "angular-size-formula",
+    "concepts": [
+      "angular-diameter",
+      "parallax-method"
+    ],
+    "sourcePages": [
+      19
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When an angular size and a distance are given.",
+      "steps": [
+        "**Trigger:** Angular diameter $\\alpha$ (rad) + distance $D$.",
+        "**Action:** Apply $d = \\alpha D$.",
+        "**Result:** $d = 2.0\\times10^{-5} \\times 8.0\\times10^{11} = 1.6\\times10^{7}$ m — option B."
+      ],
+      "sanityCheck": "A planetary diameter of order $10^{7}$ m is physically plausible (Earth's is $1.28\\times10^{7}$ m)."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Angular-size relation, the inverse use of the parallax geometry (textbook Example on Jupiter, Section 2.3.1).",
+        "**EXTRACT:** Given: $D = 8.0\\times10^{11}$ m, $\\alpha = 2.0\\times10^{-5}$ rad. Find: diameter $d$.",
+        "**EXECUTE:** $d = \\alpha D = (2.0\\times10^{-5})(8.0\\times10^{11}) = 16\\times10^{6} = 1.6\\times10^{7}$ m.",
+        "**PROOF:** Exponents: $-5 + 11 = 6$; mantissa $2.0 \\times 8.0 = 16$. Option A divides instead of multiplying with an exponent error; option C drops a factor of 10; option D inverts the formula ($\\alpha/D$)."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A parsec is defined as the distance at which an arc of length 1 AU subtends an angle of 1 second of arc. Given 1 AU $= 1.496 \\times 10^{11}$ m and $1'' = 4.85 \\times 10^{-6}$ rad, the value of 1 parsec works out to approximately:",
+    "options": [
+      {
+        "text": "$7.3 \\times 10^{5}$ m"
+      },
+      {
+        "text": "$3.08 \\times 10^{16}$ m"
+      },
+      {
+        "text": "$9.46 \\times 10^{15}$ m"
+      },
+      {
+        "text": "$3.08 \\times 10^{18}$ m"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Hard",
+    "subtopic": "Measurement of Length",
+    "fsmTag": "parsec-from-definition",
+    "concepts": [
+      "parsec",
+      "parallax-method",
+      "unit-conversion"
+    ],
+    "sourcePages": [
+      19,
+      21
+    ],
+    "timeTargets": {
+      "ap_eapcet": 90,
+      "ts_eapcet": 90,
+      "jee_main": 120
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When a unit is defined via 'length subtending angle θ'.",
+      "steps": [
+        "**Trigger:** 'Distance at which length $b$ subtends angle $\\theta$'.",
+        "**Action:** Apply $D = b/\\theta$ with $\\theta$ in radians.",
+        "**Result:** $D = 1.496\\times10^{11} / 4.85\\times10^{-6} \\approx 3.08\\times10^{16}$ m — option B."
+      ],
+      "sanityCheck": "The result must reproduce the textbook's listed parsec value, $3.08\\times10^{16}$ m. It does."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Derivation of a named unit from its parallax definition. Tests both the formula $D=b/\\theta$ and careful exponent arithmetic.",
+        "**EXTRACT:** Given: $b = 1$ AU $= 1.496\\times10^{11}$ m; $\\theta = 1'' = 4.85\\times10^{-6}$ rad. Find: $D$ in metres.",
+        "**EXECUTE:** $D = \\dfrac{b}{\\theta} = \\dfrac{1.496\\times10^{11}}{4.85\\times10^{-6}} = \\dfrac{1.496}{4.85}\\times10^{17} \\approx 0.3084\\times10^{17} = 3.08\\times10^{16}$ m.",
+        "**PROOF:** Matches the value listed in Section 2.3.3 (1 parsec $= 3.08\\times10^{16}$ m). Option A multiplies instead of dividing; option C is the light year; option D misplaces the exponent by 2."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The value of the unified atomic mass unit (1 u) is:",
+    "options": [
+      {
+        "text": "$1.66 \\times 10^{-27}$ kg"
+      },
+      {
+        "text": "$1.66 \\times 10^{-24}$ kg"
+      },
+      {
+        "text": "$9.1 \\times 10^{-31}$ kg"
+      },
+      {
+        "text": "$1.6 \\times 10^{-19}$ kg"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Easy",
+    "subtopic": "Measurement of Mass and Time",
+    "fsmTag": "amu-value-recall",
+    "concepts": [
+      "unified-atomic-mass-unit",
+      "mass-measurement"
+    ],
+    "sourcePages": [
+      21,
+      22
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Constant-value recall.",
+        "**EXTRACT:** Asked: 1 u in kg.",
+        "**EXECUTE:** Section 2.4: 1 unified atomic mass unit = 1 u = (1/12) of the mass of an atom of carbon-12, $= 1.66 \\times 10^{-27}$ kg.",
+        "**PROOF:** Option B is the same mantissa in grams mistakenly labelled kg; option C is the electron mass; option D is the numerical value of the electronic charge with kg units attached — both classic confusions."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "In the cesium atomic clock, the second is defined as the time needed for how many vibrations (periods of radiation) of the cesium-133 atom?",
+    "options": [
+      {
+        "text": "9,192,631,770"
+      },
+      {
+        "text": "299,792,458"
+      },
+      {
+        "text": "6,023,000,000"
+      },
+      {
+        "text": "1,650,763.73"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Medium",
+    "subtopic": "Measurement of Mass and Time",
+    "fsmTag": "second-definition-recall",
+    "concepts": [
+      "cesium-clock",
+      "second-definition"
+    ],
+    "sourcePages": [
+      17,
+      22
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Definition-constant recall, with distractors drawn from other famous constants.",
+        "**EXTRACT:** Asked: the number of cesium-133 radiation periods that define one second.",
+        "**EXECUTE:** Table 2.1 / Section 2.5: 'The second is the duration of 9,192,631,770 periods of the radiation corresponding to the transition between the two hyperfine levels of the ground state of the cesium-133 atom.'",
+        "**PROOF:** Option B is the speed of light in m/s (the metre's defining constant); option D is the krypton-86 wavelength count from the obsolete metre definition. Both belong to length, not time."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Which of the following is NOT a source of systematic error in a measurement?",
+    "options": [
+      {
+        "text": "Zero error in a vernier callipers"
+      },
+      {
+        "text": "Unpredictable fluctuations in temperature and voltage supply during the experiment"
+      },
+      {
+        "text": "Imperfection in experimental technique, such as measuring body temperature under the armpit"
+      },
+      {
+        "text": "Personal bias of the observer, such as always holding the head a bit too far to one side while reading a scale"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Easy",
+    "subtopic": "Accuracy, Precision and Types of Errors",
+    "fsmTag": "error-type-classification",
+    "concepts": [
+      "systematic-errors",
+      "random-errors"
+    ],
+    "sourcePages": [
+      23,
+      24
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When asked to separate systematic from random errors.",
+      "steps": [
+        "**Trigger:** Spot the cause that is irregular and unpredictable.",
+        "**Action:** Systematic errors have a fixed direction (instrumental / technique / personal); random errors fluctuate.",
+        "**Result:** Unpredictable fluctuations → random error — option B."
+      ],
+      "sanityCheck": "The other three map exactly onto the textbook's three systematic categories."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Classification of error sources (Section 2.6).",
+        "**EXTRACT:** Identify which option is random rather than systematic.",
+        "**EXECUTE:** The textbook lists three sources of systematic error: (a) instrumental errors (e.g., zero error), (b) imperfection in experimental technique or procedure (its example is precisely the armpit temperature), (c) personal errors (its example is the observer's head position causing parallax). Random errors 'occur irregularly... due to random and unpredictable fluctuations in experimental conditions (e.g. unpredictable fluctuations in temperature, voltage supply...)'.",
+        "**PROOF:** Option B is verbatim the textbook's random-error illustration."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The true value of a certain length is 3.678 cm. Instrument A (resolution 0.1 cm) measures it as 3.5 cm; instrument B (resolution 0.01 cm) measures it as 3.38 cm. Which statement is correct?",
+    "options": [
+      {
+        "text": "A is more accurate, and also more precise, than B."
+      },
+      {
+        "text": "B is more accurate, A is more precise."
+      },
+      {
+        "text": "A is more accurate, B is more precise."
+      },
+      {
+        "text": "A and B are equally accurate since both differ from the true value."
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Medium",
+    "subtopic": "Accuracy, Precision and Types of Errors",
+    "fsmTag": "accuracy-vs-precision",
+    "concepts": [
+      "accuracy",
+      "precision",
+      "resolution"
+    ],
+    "sourcePages": [
+      22,
+      23
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When two instruments give readings of a known true value with different resolutions.",
+      "steps": [
+        "**Trigger:** True value + two readings of differing resolution.",
+        "**Action:** Accuracy = closeness to true value; precision = resolution of the instrument.",
+        "**Result:** |3.5 − 3.678| = 0.178 < |3.38 − 3.678| = 0.298, so A is more accurate; B has finer resolution, so B is more precise — option C."
+      ],
+      "sanityCheck": "Higher precision does not guarantee higher accuracy — exactly the textbook's point with these numbers."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Accuracy-vs-precision discrimination (Section 2.6). This mirrors the textbook's own illustration.",
+        "**EXTRACT:** True value 3.678 cm; A reads 3.5 cm (resolution 0.1 cm); B reads 3.38 cm (resolution 0.01 cm).",
+        "**EXECUTE:** Deviation of A from truth: $|3.5 - 3.678| = 0.178$ cm. Deviation of B: $|3.38 - 3.678| = 0.298$ cm. A is closer to the true value → more accurate. B reads to a finer decimal → higher precision.",
+        "**PROOF:** The textbook states the same conclusion: the first measurement 'has more accuracy... but less precision', while the second 'is less accurate' but has 'greater precision'."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A vernier callipers shows a non-zero reading even when its two jaws are fully closed. The error introduced in every measurement made with this instrument is classified as:",
+    "options": [
+      {
+        "text": "A random error"
+      },
+      {
+        "text": "A least count error that decreases on repeating observations"
+      },
+      {
+        "text": "A systematic (instrumental) error"
+      },
+      {
+        "text": "A gross error due to observer carelessness"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Medium",
+    "subtopic": "Accuracy, Precision and Types of Errors",
+    "fsmTag": "error-type-classification",
+    "concepts": [
+      "zero-error",
+      "systematic-errors",
+      "instrumental-errors"
+    ],
+    "sourcePages": [
+      23
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When an instrument defect shifts every reading the same way.",
+      "steps": [
+        "**Trigger:** A built-in offset present in all readings (zero error).",
+        "**Action:** A constant-direction, instrument-caused error → systematic, instrumental.",
+        "**Result:** Option C."
+      ],
+      "sanityCheck": "Repetition cannot remove it (rules out random/least-count averaging); only correction or calibration can."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Classification of zero error.",
+        "**EXTRACT:** Defect: jaws closed but reading non-zero → constant offset in all measurements.",
+        "**EXECUTE:** Section 2.6 lists instrumental errors arising from 'imperfect design or calibration of the measuring instrument, zero error in the instrument, etc.' as the first category of systematic errors. Because the offset has a fixed sign and magnitude, averaging repeated readings does not reduce it — distinguishing it from random errors.",
+        "**PROOF:** Option C matches the textbook category; the error can be eliminated by applying a zero correction, which is the hallmark of a systematic error."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Which of the following statements about errors in measurement is INCORRECT?",
+    "options": [
+      {
+        "text": "Systematic errors can in principle be reduced by improving instruments and removing personal bias."
+      },
+      {
+        "text": "Random errors can be reduced by repeating the observations a large number of times and taking the arithmetic mean."
+      },
+      {
+        "text": "The least count error is the error associated with the resolution of the instrument."
+      },
+      {
+        "text": "Repeating observations many times and averaging eliminates systematic errors."
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Hard",
+    "subtopic": "Accuracy, Precision and Types of Errors",
+    "fsmTag": "error-statements-trap",
+    "concepts": [
+      "systematic-errors",
+      "random-errors",
+      "least-count-error"
+    ],
+    "sourcePages": [
+      23,
+      24
+    ],
+    "timeTargets": {
+      "ap_eapcet": 90,
+      "ts_eapcet": 90,
+      "jee_main": 120
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Multi-claim trap on the error taxonomy of Section 2.6.",
+        "**EXTRACT:** Find the statement contradicting the chapter.",
+        "**EXECUTE:** (A) True — the textbook says systematic errors 'can be minimised by improving experimental techniques, selecting better instruments and removing personal bias'. (B) True — 'random errors... can be reduced by repeating the observation a large number of times and taking the arithmetic mean'. (C) True — 'the smallest division on the scale of the measuring instrument is called its least count', and least count error is associated with the instrument's resolution. (D) False — averaging reduces RANDOM errors only. A systematic error pushes every reading the same way, so its mean is just as shifted as any single reading.",
+        "**PROOF:** A constant offset $\\epsilon$ added to every reading survives averaging: mean of $(a_i + \\epsilon)$ is $\\bar{a} + \\epsilon$. Option D is therefore wrong and is the answer."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The relative error of a measured quantity $a$ is defined as:",
+    "options": [
+      {
+        "text": "$\\Delta a_{mean} \\times a_{mean}$"
+      },
+      {
+        "text": "$\\Delta a_{mean} \\times 100$"
+      },
+      {
+        "text": "$a_{mean} / \\Delta a_{mean}$"
+      },
+      {
+        "text": "$\\Delta a_{mean} / a_{mean}$"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Easy",
+    "subtopic": "Absolute, Relative and Percentage Error",
+    "fsmTag": "relative-error-definition",
+    "concepts": [
+      "relative-error",
+      "mean-absolute-error"
+    ],
+    "sourcePages": [
+      25
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Definition recall (Section 2.6.1).",
+        "**EXTRACT:** Asked: formula for relative error.",
+        "**EXECUTE:** 'The relative error is the ratio of the mean absolute error $\\Delta a_{mean}$ to the mean value $a_{mean}$ of the quantity measured. Relative error $= \\Delta a_{mean}/a_{mean}$.' The percentage error is this ratio × 100 (option B is incomplete — it multiplies the absolute, not relative, error by 100).",
+        "**PROOF:** Relative error must be dimensionless; only the ratio in option D (same units top and bottom) achieves that."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Five measurements of the period of a pendulum give 2.1 s, 2.2 s, 1.9 s, 2.0 s and 1.8 s. The percentage error in the measurement is:",
+    "options": [
+      {
+        "text": "12%"
+      },
+      {
+        "text": "2%"
+      },
+      {
+        "text": "6%"
+      },
+      {
+        "text": "0.6%"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Medium",
+    "subtopic": "Absolute, Relative and Percentage Error",
+    "fsmTag": "mean-absolute-error-pipeline",
+    "concepts": [
+      "mean-absolute-error",
+      "percentage-error"
+    ],
+    "sourcePages": [
+      24,
+      25
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When n readings are given and a percentage error is asked.",
+      "steps": [
+        "**Trigger:** A list of repeated readings.",
+        "**Action:** Compute mean → absolute deviations → their mean → divide by mean → ×100.",
+        "**Result:** Mean 2.0 s, mean absolute error 0.12 s, percentage error 6% — option C."
+      ],
+      "sanityCheck": "Spread of readings (~±0.2 on 2.0) is about 10%, so a ~6% mean error is plausible."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Full error pipeline: arithmetic mean → absolute errors → mean absolute error → relative → percentage (Section 2.6.1).",
+        "**EXTRACT:** Readings: 2.1, 2.2, 1.9, 2.0, 1.8 s (n = 5).",
+        "**EXECUTE:** Mean $= (2.1+2.2+1.9+2.0+1.8)/5 = 10.0/5 = 2.0$ s. Absolute errors: $|2.1-2.0|=0.1$, $|2.2-2.0|=0.2$, $|1.9-2.0|=0.1$, $|2.0-2.0|=0.0$, $|1.8-2.0|=0.2$. Mean absolute error $= (0.1+0.2+0.1+0.0+0.2)/5 = 0.6/5 = 0.12$ s. Relative error $= 0.12/2.0 = 0.06$. Percentage error $= 6\\%$.",
+        "**PROOF:** Option A (12%) doubles by forgetting to divide by the mean of 2.0; option B treats 0.04 of one deviation; option D slips a factor of 10."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Percentage error is related to relative error as:",
+    "options": [
+      {
+        "text": "Percentage error = relative error × 100"
+      },
+      {
+        "text": "Percentage error = relative error / 100"
+      },
+      {
+        "text": "Percentage error = (relative error)²"
+      },
+      {
+        "text": "Percentage error = 100 / relative error"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Easy",
+    "subtopic": "Absolute, Relative and Percentage Error",
+    "fsmTag": "percentage-error-conversion",
+    "concepts": [
+      "percentage-error",
+      "relative-error"
+    ],
+    "sourcePages": [
+      25
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Definition recall.",
+        "**EXTRACT:** Asked: relation between percentage and relative error.",
+        "**EXECUTE:** Section 2.6.1: 'When the relative error is expressed in per cent, it is called the percentage error ($\\delta a$). Thus, Percentage error $\\delta a = (\\Delta a_{mean}/a_{mean}) \\times 100\\%$.'",
+        "**PROOF:** A relative error of 0.06 corresponds to 6% — multiplication by 100, as in option A."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A length is measured several times; the mean value is 4.25 cm and the mean absolute error is 0.05 cm. The correct way to report the measurement is:",
+    "options": [
+      {
+        "text": "$l = 4.25$ cm exactly"
+      },
+      {
+        "text": "$l = (4.25 \\pm 0.05)$ cm"
+      },
+      {
+        "text": "$l = 4.25 \\times 0.05$ cm"
+      },
+      {
+        "text": "$l = (0.05 \\pm 4.25)$ cm"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Medium",
+    "subtopic": "Absolute, Relative and Percentage Error",
+    "fsmTag": "measurement-reporting-format",
+    "concepts": [
+      "mean-absolute-error",
+      "measurement-reporting"
+    ],
+    "sourcePages": [
+      25
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Reporting convention for a measured value with its uncertainty.",
+        "**EXTRACT:** Mean $a_{mean} = 4.25$ cm; mean absolute error $\\Delta a_{mean} = 0.05$ cm.",
+        "**EXECUTE:** Section 2.6.1: a single measurement should be reported as $a = a_{mean} \\pm \\Delta a_{mean}$, meaning the true value is likely to lie between $a_{mean} - \\Delta a_{mean}$ and $a_{mean} + \\Delta a_{mean}$, i.e., between 4.20 cm and 4.30 cm.",
+        "**PROOF:** Option B conveys both the best estimate and the uncertainty interval; the others either discard the uncertainty or scramble the roles of value and error."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Two measurements are reported: $L_1 = (1.0 \\pm 0.01)$ m and $L_2 = (10.0 \\pm 0.05)$ m. Which measurement is more accurate, judged by relative error?",
+    "options": [
+      {
+        "text": "$L_1$, because its absolute error (0.01 m) is smaller"
+      },
+      {
+        "text": "$L_2$, because its relative error (0.5%) is smaller than that of $L_1$ (1%)"
+      },
+      {
+        "text": "Both are equally accurate, since accuracy depends only on the instrument"
+      },
+      {
+        "text": "$L_1$, because shorter lengths are always measured more accurately"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Hard",
+    "subtopic": "Absolute, Relative and Percentage Error",
+    "fsmTag": "relative-error-comparison",
+    "concepts": [
+      "relative-error",
+      "accuracy"
+    ],
+    "sourcePages": [
+      25
+    ],
+    "timeTargets": {
+      "ap_eapcet": 90,
+      "ts_eapcet": 90,
+      "jee_main": 120
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When two measurements with different magnitudes and errors are compared for accuracy.",
+      "steps": [
+        "**Trigger:** Compare measurements of different sizes.",
+        "**Action:** Compute relative error $\\Delta a/a$ for each; smaller wins.",
+        "**Result:** $0.01/1.0 = 1\\%$ vs $0.05/10.0 = 0.5\\%$ → $L_2$ more accurate — option B."
+      ],
+      "sanityCheck": "An error of 5 cm on 10 m is proportionally smaller than 1 cm on 1 m, despite being larger in absolute terms."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Accuracy comparison via relative error — the textbook's reason for introducing relative error in the first place: absolute error alone cannot compare measurements of different magnitudes.",
+        "**EXTRACT:** $L_1 = 1.0$ m, $\\Delta L_1 = 0.01$ m; $L_2 = 10.0$ m, $\\Delta L_2 = 0.05$ m.",
+        "**EXECUTE:** Relative error of $L_1$: $0.01/1.0 = 0.01 = 1\\%$. Relative error of $L_2$: $0.05/10.0 = 0.005 = 0.5\\%$. The smaller relative error indicates the more accurate measurement → $L_2$.",
+        "**PROOF:** Option A is the classic trap (comparing absolute errors across different magnitudes); options C and D assert rules the chapter does not contain."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "When two quantities are added or subtracted, the absolute error in the final result is:",
+    "options": [
+      {
+        "text": "The difference of the absolute errors in the individual quantities"
+      },
+      {
+        "text": "The product of the absolute errors"
+      },
+      {
+        "text": "The sum of the absolute errors in the individual quantities"
+      },
+      {
+        "text": "The sum of the relative errors in the individual quantities"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Easy",
+    "subtopic": "Combination of Errors",
+    "fsmTag": "absolute-errors-add",
+    "concepts": [
+      "error-combination",
+      "sum-difference-rule"
+    ],
+    "sourcePages": [
+      26
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Rule recall for error combination under addition/subtraction (Section 2.6.2a).",
+        "**EXTRACT:** Asked: the rule for $Z = A \\pm B$.",
+        "**EXECUTE:** 'When two quantities are added or subtracted, the absolute error in the final result is the sum of the absolute errors in the individual quantities': $\\Delta Z = \\Delta A + \\Delta B$. Note this holds for BOTH addition and subtraction — errors never cancel.",
+        "**PROOF:** Worst case: both individual errors push the same way, giving $\\Delta A + \\Delta B$. Option A would wrongly let errors cancel in subtraction; option D confuses this with the product/quotient rule."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The temperatures of two bodies are measured as $t_1 = (35.0 \\pm 0.4)\\,°C$ and $t_2 = (60.0 \\pm 0.3)\\,°C$. The temperature difference $t_2 - t_1$, with its error, is:",
+    "options": [
+      {
+        "text": "$(25.0 \\pm 0.1)\\,°C$"
+      },
+      {
+        "text": "$(25.0 \\pm 0.35)\\,°C$"
+      },
+      {
+        "text": "$(95.0 \\pm 0.7)\\,°C$"
+      },
+      {
+        "text": "$(25.0 \\pm 0.7)\\,°C$"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Medium",
+    "subtopic": "Combination of Errors",
+    "fsmTag": "absolute-errors-add",
+    "concepts": [
+      "error-combination",
+      "sum-difference-rule"
+    ],
+    "sourcePages": [
+      26
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When a difference of two measured quantities with errors is asked.",
+      "steps": [
+        "**Trigger:** $Z = A - B$ with $\\pm$ errors given.",
+        "**Action:** Subtract the values, ADD the absolute errors.",
+        "**Result:** $t = 25.0\\,°C$, $\\Delta t = 0.4 + 0.3 = 0.7\\,°C$ — option D."
+      ],
+      "sanityCheck": "Errors in a difference never subtract; if they did (option A), a difference could be known better than either input, which is impossible."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Difference with error propagation — same structure as textbook Example 2.8.",
+        "**EXTRACT:** $t_1 = 35.0\\,°C$, $\\Delta t_1 = 0.4\\,°C$; $t_2 = 60.0\\,°C$, $\\Delta t_2 = 0.3\\,°C$. Find $t_2 - t_1 \\pm \\Delta t$.",
+        "**EXECUTE:** Value: $60.0 - 35.0 = 25.0\\,°C$. Error: $\\Delta t = \\Delta t_1 + \\Delta t_2 = 0.4 + 0.3 = 0.7\\,°C$. Result: $(25.0 \\pm 0.7)\\,°C$.",
+        "**PROOF:** Option A subtracts the errors (the classic mistake); option C adds the temperatures instead of subtracting; option B averages the errors."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A resistance is determined as $R = V/I$ with $V = (200 \\pm 8)$ V and $I = (5.0 \\pm 0.1)$ A. The percentage error in $R$ is:",
+    "options": [
+      {
+        "text": "2%"
+      },
+      {
+        "text": "4%"
+      },
+      {
+        "text": "8%"
+      },
+      {
+        "text": "6%"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Medium",
+    "subtopic": "Combination of Errors",
+    "fsmTag": "relative-errors-add",
+    "concepts": [
+      "error-combination",
+      "quotient-rule",
+      "percentage-error"
+    ],
+    "sourcePages": [
+      26,
+      27
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When a quantity is a product or quotient of measured quantities.",
+      "steps": [
+        "**Trigger:** $Z = A/B$ (or $AB$) with errors given.",
+        "**Action:** Add the relative (percentage) errors: $\\frac{\\Delta R}{R} = \\frac{\\Delta V}{V} + \\frac{\\Delta I}{I}$.",
+        "**Result:** $\\frac{8}{200} + \\frac{0.1}{5.0} = 4\\% + 2\\% = 6\\%$ — option D."
+      ],
+      "sanityCheck": "The combined error must exceed each individual error; 6% > 4% and 6% > 2%. Consistent."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Quotient error rule (Section 2.6.2b); same structure as textbook Example 2.9 with different numbers.",
+        "**EXTRACT:** $V = 200$ V, $\\Delta V = 8$ V; $I = 5.0$ A, $\\Delta I = 0.1$ A. Find percentage error in $R = V/I$.",
+        "**EXECUTE:** 'When two quantities are multiplied or divided, the relative error in the result is the sum of the relative errors in the multipliers.' $\\Delta V/V = 8/200 = 0.04 = 4\\%$. $\\Delta I/I = 0.1/5.0 = 0.02 = 2\\%$. $\\Delta R/R = 4\\% + 2\\% = 6\\%$.",
+        "**PROOF:** Option A takes only the current's error; option B only the voltage's; option C doubles the current error before adding (formula confusion with a squared term)."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The side of a cube is measured with a 2% error. The error in the determination of the cube's volume is:",
+    "options": [
+      {
+        "text": "2%"
+      },
+      {
+        "text": "0.67%"
+      },
+      {
+        "text": "8%"
+      },
+      {
+        "text": "6%"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Medium",
+    "subtopic": "Combination of Errors",
+    "fsmTag": "power-multiplies-relative-error",
+    "concepts": [
+      "error-combination",
+      "power-rule"
+    ],
+    "sourcePages": [
+      27
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When a measured quantity is raised to a power.",
+      "steps": [
+        "**Trigger:** $Z = A^k$; here $V = a^3$.",
+        "**Action:** Multiply the relative error by the power: $\\Delta V/V = 3\\,\\Delta a/a$.",
+        "**Result:** $3 \\times 2\\% = 6\\%$ — option D."
+      ],
+      "sanityCheck": "The power rule is just the product rule applied k times: $a \\cdot a \\cdot a$ contributes the 2% three times."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Power rule for error propagation (Section 2.6.2c).",
+        "**EXTRACT:** $\\Delta a/a = 2\\%$; $V = a^3$. Find $\\Delta V/V$.",
+        "**EXECUTE:** 'The relative error in a physical quantity raised to the power k is k times the relative error in the individual quantity.' Thus $\\Delta V/V = 3 \\times (\\Delta a/a) = 3 \\times 2\\% = 6\\%$.",
+        "**PROOF:** Option A ignores the cube; option C uses $k=4$ (slip); option B divides by 3 instead of multiplying (inverted rule)."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A quantity is given by $Z = \\dfrac{A^4 \\, B^{1/3}}{C \\, D^{3/2}}$. The measured percentage errors in $A$, $B$, $C$ and $D$ are 1%, 3%, 2% and 2% respectively. The percentage error in $Z$ is:",
+    "options": [
+      {
+        "text": "8%"
+      },
+      {
+        "text": "12%"
+      },
+      {
+        "text": "10%"
+      },
+      {
+        "text": "4%"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Hard",
+    "subtopic": "Combination of Errors",
+    "fsmTag": "composite-power-error",
+    "concepts": [
+      "error-combination",
+      "power-rule",
+      "quotient-rule"
+    ],
+    "sourcePages": [
+      27
+    ],
+    "timeTargets": {
+      "ap_eapcet": 90,
+      "ts_eapcet": 90,
+      "jee_main": 120
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When Z is a general product of powers $A^p B^q / C^r$.",
+      "steps": [
+        "**Trigger:** Composite expression with exponents on every variable.",
+        "**Action:** $\\frac{\\Delta Z}{Z} = p\\frac{\\Delta A}{A} + q\\frac{\\Delta B}{B} + r\\frac{\\Delta C}{C} + s\\frac{\\Delta D}{D}$ — all errors ADD, with coefficients $|$exponent$|$.",
+        "**Result:** $4(1) + \\tfrac{1}{3}(3) + 1(2) + \\tfrac{3}{2}(2) = 4+1+2+3 = 10\\%$ — option C."
+      ],
+      "sanityCheck": "Denominator exponents contribute positively too (errors never cancel); each term is individually sensible."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** General power-combination rule, the structure of textbook Example 2.11.",
+        "**EXTRACT:** Exponents: $A^4$, $B^{1/3}$, $C^{-1}$, $D^{-3/2}$. Percentage errors: $a = 1\\%$, $b = 3\\%$, $c = 2\\%$, $d = 2\\%$.",
+        "**EXECUTE:** 'If $Z = A^p B^q / C^r$, then $\\Delta Z/Z = p(\\Delta A/A) + q(\\Delta B/B) + r(\\Delta C/C)$.' Extending to four variables: $\\Delta Z/Z = 4(1\\%) + \\frac{1}{3}(3\\%) + 1(2\\%) + \\frac{3}{2}(2\\%) = 4\\% + 1\\% + 2\\% + 3\\% = 10\\%$.",
+        "**PROOF:** Option A forgets the $C$ term; option B doubles the $A$ contribution to 8 and miscounts; option D treats only the largest single term. The full sum is 10%."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The acceleration due to gravity is determined using a simple pendulum via $g = 4\\pi^2 L / T^2$. If the percentage error in measuring the length $L$ is 0.5% and that in the period $T$ is 1%, the percentage error in $g$ is:",
+    "options": [
+      {
+        "text": "1.5%"
+      },
+      {
+        "text": "2.5%"
+      },
+      {
+        "text": "3.0%"
+      },
+      {
+        "text": "0.5%"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Medium",
+    "subtopic": "Combination of Errors",
+    "fsmTag": "composite-power-error",
+    "concepts": [
+      "error-combination",
+      "power-rule",
+      "pendulum"
+    ],
+    "sourcePages": [
+      27
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When a derived quantity contains a squared measured variable.",
+      "steps": [
+        "**Trigger:** $g \\propto L/T^2$ with errors in $L$ and $T$.",
+        "**Action:** $\\frac{\\Delta g}{g} = \\frac{\\Delta L}{L} + 2\\frac{\\Delta T}{T}$ (the exponent 2 doubles T's contribution).",
+        "**Result:** $0.5\\% + 2(1\\%) = 2.5\\%$ — option B."
+      ],
+      "sanityCheck": "The constant $4\\pi^2$ is exact and contributes no error; only L and T matter."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Error propagation through $g = 4\\pi^2 L/T^2$ — the structure of textbook Example 2.12.",
+        "**EXTRACT:** $\\Delta L/L = 0.5\\%$; $\\Delta T/T = 1\\%$. Find $\\Delta g/g$.",
+        "**EXECUTE:** $g \\propto L^1 T^{-2}$, so $\\Delta g/g = (\\Delta L/L) + 2(\\Delta T/T) = 0.5\\% + 2 \\times 1\\% = 2.5\\%$.",
+        "**PROOF:** Option A forgets the factor 2 on the period term; option C triples T's error; option D drops the T term entirely."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The density of a cube is determined by measuring its mass $m$ and the length of its side $a$, using $\\rho = m/a^3$. If the percentage errors are 1% in mass and 2% in side length, the maximum percentage error in the density is:",
+    "options": [
+      {
+        "text": "3%"
+      },
+      {
+        "text": "5%"
+      },
+      {
+        "text": "7%"
+      },
+      {
+        "text": "9%"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Hard",
+    "subtopic": "Combination of Errors",
+    "fsmTag": "composite-power-error",
+    "concepts": [
+      "error-combination",
+      "power-rule",
+      "density"
+    ],
+    "sourcePages": [
+      26,
+      27
+    ],
+    "timeTargets": {
+      "ap_eapcet": 90,
+      "ts_eapcet": 90,
+      "jee_main": 120
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When a quotient contains a cubed measured variable.",
+      "steps": [
+        "**Trigger:** $\\rho = m/a^3$ with errors in $m$ and $a$.",
+        "**Action:** $\\frac{\\Delta\\rho}{\\rho} = \\frac{\\Delta m}{m} + 3\\frac{\\Delta a}{a}$.",
+        "**Result:** $1\\% + 3(2\\%) = 7\\%$ — option C."
+      ],
+      "sanityCheck": "The cube triples the side-length error; the side dominates the total, as expected when its exponent is largest."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Quotient + power error combination. The trap: students who treat $a^3$ as a single measured quantity forget the factor 3.",
+        "**EXTRACT:** $\\Delta m/m = 1\\%$; $\\Delta a/a = 2\\%$; $\\rho = m \\, a^{-3}$.",
+        "**EXECUTE:** $\\Delta\\rho/\\rho = (\\Delta m/m) + 3(\\Delta a/a) = 1\\% + 3 \\times 2\\% = 1\\% + 6\\% = 7\\%$.",
+        "**PROOF:** Option A adds the raw percentages without the power factor; option B uses a factor 2 instead of 3; option D uses factor 4. Dimensional sanity: all terms are pure percentages, correctly summed."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The number of significant figures in 0.002308 is:",
+    "options": [
+      {
+        "text": "7"
+      },
+      {
+        "text": "6"
+      },
+      {
+        "text": "4"
+      },
+      {
+        "text": "3"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Easy",
+    "subtopic": "Significant Figures",
+    "fsmTag": "sig-fig-counting",
+    "concepts": [
+      "significant-figures",
+      "leading-zeros"
+    ],
+    "sourcePages": [
+      28
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When counting significant figures in a decimal less than 1.",
+      "steps": [
+        "**Trigger:** Leading zeros before the first non-zero digit.",
+        "**Action:** Ignore all leading zeros; count from the first non-zero digit, including any zeros between or after non-zero digits.",
+        "**Result:** 2, 3, 0, 8 → 4 significant figures — option C."
+      ],
+      "sanityCheck": "Writing it as $2.308 \\times 10^{-3}$ exposes the 4 significant digits directly."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Significant-figure counting with leading zeros (Section 2.7).",
+        "**EXTRACT:** Number: 0.002308.",
+        "**EXECUTE:** The textbook: 'If the number is less than 1, the zero(s) on the right of decimal point but to the left of the first non-zero digit are not significant.' The leading 0.00 contributes nothing. Significant digits: 2, 3, 0 (a zero between non-zero digits IS significant), 8. Count = 4.",
+        "**PROOF:** In scientific notation $2.308 \\times 10^{-3}$ the count is unambiguous: 4. Options A and B wrongly count leading zeros; option D drops the embedded zero."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The number of significant figures in 4.700 m is:",
+    "options": [
+      {
+        "text": "2"
+      },
+      {
+        "text": "3"
+      },
+      {
+        "text": "4"
+      },
+      {
+        "text": "5"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Easy",
+    "subtopic": "Significant Figures",
+    "fsmTag": "sig-fig-counting",
+    "concepts": [
+      "significant-figures",
+      "trailing-zeros"
+    ],
+    "sourcePages": [
+      28
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When a number contains trailing zeros after a decimal point.",
+      "steps": [
+        "**Trigger:** Trailing zeros to the right of a decimal point.",
+        "**Action:** Such zeros ARE significant.",
+        "**Result:** 4, 7, 0, 0 → 4 significant figures — option C."
+      ],
+      "sanityCheck": "Writing 4.700 instead of 4.7 is a deliberate claim of precision to the third decimal — those zeros carry information."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Trailing-zero rule (Section 2.7).",
+        "**EXTRACT:** Number: 4.700 m.",
+        "**EXECUTE:** The textbook: 'The trailing zero(s) in a number with a decimal point are significant.' Thus 4.700 m has 4 significant figures: 4, 7, 0, 0. Equivalently $4.700 \\times 10^0$ m.",
+        "**PROOF:** The textbook makes the same point with 4.700 m = 470.0 cm = 4700 mm: expressed with a decimal point, the count stays 4."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Which of the following numbers has exactly 4 significant figures?",
+    "options": [
+      {
+        "text": "0.0025"
+      },
+      {
+        "text": "2.0050"
+      },
+      {
+        "text": "23.00"
+      },
+      {
+        "text": "0.250"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Medium",
+    "subtopic": "Significant Figures",
+    "fsmTag": "sig-fig-counting",
+    "concepts": [
+      "significant-figures",
+      "trailing-zeros",
+      "leading-zeros"
+    ],
+    "sourcePages": [
+      28
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Comparative significant-figure counting across all four options — every rule from Section 2.7 is exercised at once.",
+        "**EXTRACT:** Candidates: 0.0025, 2.0050, 23.00, 0.250.",
+        "**EXECUTE:** 0.0025 → leading zeros not significant → 2 sig figs (2, 5). 2.0050 → all digits incl. embedded and trailing zeros → 5 sig figs. 23.00 → trailing zeros after decimal significant → 4 sig figs (2, 3, 0, 0). 0.250 → 3 sig figs (2, 5, 0).",
+        "**PROOF:** Only 23.00 yields exactly 4. Each distractor exercises a different miscount: treating leading zeros as significant (A), off-by-one on embedded zeros (B), or padding the count (D)."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A length is recorded as 5.608 cm. When the same length is expressed as 0.05608 m or 56.08 mm, the number of significant figures:",
+    "options": [
+      {
+        "text": "Changes with the unit: 4 in cm, 5 in m, 4 in mm"
+      },
+      {
+        "text": "Remains 4 in every representation, since a change of units does not change significant figures"
+      },
+      {
+        "text": "Becomes 3 in metres because leading zeros reduce the count"
+      },
+      {
+        "text": "Cannot be determined without knowing the instrument's least count"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Medium",
+    "subtopic": "Significant Figures",
+    "fsmTag": "sig-fig-unit-invariance",
+    "concepts": [
+      "significant-figures",
+      "unit-conversion"
+    ],
+    "sourcePages": [
+      28
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When the same measurement is rewritten in different units.",
+      "steps": [
+        "**Trigger:** Unit change on a fixed measurement.",
+        "**Action:** Significant figures are a property of the measurement, not the unit; leading zeros introduced by conversion are never significant.",
+        "**Result:** 4 significant figures in all three forms — option B."
+      ],
+      "sanityCheck": "5.608, 0.05608 and 56.08 all contain the same four meaningful digits: 5, 6, 0, 8."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Unit-invariance of significant figures (Section 2.7).",
+        "**EXTRACT:** 5.608 cm = 0.05608 m = 56.08 mm.",
+        "**EXECUTE:** The textbook's rule (illustrated there with 2.308 cm): 'a change of units should not change the number of significant digits.' In 0.05608 m, the leading 0.0 are placeholders from conversion, not significant; the digits 5, 6, 0, 8 remain. All three forms: 4 sig figs.",
+        "**PROOF:** Scientific notation makes it explicit: $5.608\\times10^{0}$ cm $= 5.608\\times10^{-2}$ m $= 5.608\\times10^{1}$ mm — same mantissa, same 4 digits."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Each side of a cube is measured to be 5.402 m. The total surface area and volume of the cube, expressed to the appropriate number of significant figures, are:",
+    "options": [
+      {
+        "text": "$175.0896\\ \\mathrm{m^2}$ and $157.6390\\ \\mathrm{m^3}$"
+      },
+      {
+        "text": "$175.1\\ \\mathrm{m^2}$ and $157.6\\ \\mathrm{m^3}$"
+      },
+      {
+        "text": "$175\\ \\mathrm{m^2}$ and $158\\ \\mathrm{m^3}$"
+      },
+      {
+        "text": "$175.09\\ \\mathrm{m^2}$ and $157.64\\ \\mathrm{m^3}$"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Hard",
+    "subtopic": "Significant Figures",
+    "fsmTag": "sig-fig-result-rounding",
+    "concepts": [
+      "significant-figures",
+      "multiplication-rule",
+      "rounding"
+    ],
+    "sourcePages": [
+      29,
+      30
+    ],
+    "timeTargets": {
+      "ap_eapcet": 90,
+      "ts_eapcet": 90,
+      "jee_main": 120
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When a derived result must carry the precision of the input.",
+      "steps": [
+        "**Trigger:** Input with n significant figures feeding a product/power.",
+        "**Action:** Compute fully, then round the result to n significant figures (here n = 4).",
+        "**Result:** SA $= 6(5.402)^2 = 175.1\\ \\mathrm{m^2}$; V $= (5.402)^3 = 157.6\\ \\mathrm{m^3}$ — option B."
+      ],
+      "sanityCheck": "The exact multiplier 6 has infinite significant figures and does not limit the count."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Significant figures in multiplication/powers — the structure of textbook Example 2.13 with new numbers.",
+        "**EXTRACT:** Side $a = 5.402$ m → 4 significant figures. Find SA $= 6a^2$ and V $= a^3$ to appropriate sig figs.",
+        "**EXECUTE:** $a^2 = 29.181604\\ \\mathrm{m^2}$; SA $= 6 \\times 29.181604 = 175.089624\\ \\mathrm{m^2}$. $a^3 = 29.181604 \\times 5.402 = 157.6390...\\ \\mathrm{m^3}$. The input has 4 sig figs, so both results are rounded to 4: SA $= 175.1\\ \\mathrm{m^2}$, V $= 157.6\\ \\mathrm{m^3}$.",
+        "**PROOF:** Option A reports the raw calculator output (more precision than the data justifies); option C rounds to 3 sig figs; option D rounds to 5. Only option B respects the 4-sig-fig input."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Three masses 532.41 g, 318.2 g and 0.402 g are added. The sum, expressed with due regard to significant figures, is:",
+    "options": [
+      {
+        "text": "851.012 g"
+      },
+      {
+        "text": "851.01 g"
+      },
+      {
+        "text": "851.0 g"
+      },
+      {
+        "text": "851 g"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Medium",
+    "subtopic": "Arithmetic Operations and Rounding Off",
+    "fsmTag": "addition-decimal-places-rule",
+    "concepts": [
+      "significant-figures",
+      "addition-rule"
+    ],
+    "sourcePages": [
+      29
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When adding or subtracting measured values.",
+      "steps": [
+        "**Trigger:** Addition/subtraction of values with different decimal places.",
+        "**Action:** Keep as many DECIMAL PLACES as the least-precise input (here 318.2 g → 1 decimal place). Do not count significant figures.",
+        "**Result:** $532.41 + 318.2 + 0.402 = 851.012 \\to 851.0$ g — option C."
+      ],
+      "sanityCheck": "The least-precise term is uncertain in its first decimal, so the sum cannot honestly claim more than one decimal."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Addition rule for significant figures (Section 2.7.1): 'In addition or subtraction, the final result should retain as many decimal places as are there in the number with the least decimal places.'",
+        "**EXTRACT:** 532.41 (2 dp), 318.2 (1 dp), 0.402 (3 dp). Least decimal places = 1.",
+        "**EXECUTE:** Raw sum: $532.41 + 318.2 + 0.402 = 851.012$ g. Round to 1 decimal place: 851.0 g.",
+        "**PROOF:** Options A and B retain unjustified decimals; option D throws away a justified one. The rule for addition is decimal places, NOT total significant figures — the classic confusion with the multiplication rule."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Using the textbook's convention for rounding when the digit to be dropped is exactly 5 (with nothing after it), the number 16.45 rounded to three significant figures becomes:",
+    "options": [
+      {
+        "text": "16.5"
+      },
+      {
+        "text": "16.4"
+      },
+      {
+        "text": "16.0"
+      },
+      {
+        "text": "17.0"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Easy",
+    "subtopic": "Arithmetic Operations and Rounding Off",
+    "fsmTag": "round-half-to-even",
+    "concepts": [
+      "rounding",
+      "significant-figures"
+    ],
+    "sourcePages": [
+      29,
+      30
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When the dropped digit is exactly 5.",
+      "steps": [
+        "**Trigger:** Digit to drop is 5; preceding digit is EVEN.",
+        "**Action:** Leave the even preceding digit unchanged (raise it only if odd).",
+        "**Result:** 16.4|5 → preceding digit 4 is even → 16.4 — option B."
+      ],
+      "sanityCheck": "Counter-case: 16.35 would round UP to 16.4 because 3 is odd. The convention avoids a systematic upward bias."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** The round-half-to-even convention (Section 2.7.2): 'if the insignificant digit to be dropped is 5, the preceding digit is left unchanged if it is even, and raised by 1 if it is odd.'",
+        "**EXTRACT:** Number 16.45; round to 3 significant figures, i.e., drop the final 5.",
+        "**EXECUTE:** The digit preceding the 5 is 4 — even. So it stays unchanged: 16.4.",
+        "**PROOF:** Option A applies the school 'always round 5 up' habit, which the textbook explicitly replaces with the even-digit convention for an exact trailing 5."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The product $2.31 \\times 0.14$, reported to the correct number of significant figures, is:",
+    "options": [
+      {
+        "text": "0.3234"
+      },
+      {
+        "text": "0.323"
+      },
+      {
+        "text": "0.3"
+      },
+      {
+        "text": "0.32"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Medium",
+    "subtopic": "Arithmetic Operations and Rounding Off",
+    "fsmTag": "multiplication-sig-fig-rule",
+    "concepts": [
+      "significant-figures",
+      "multiplication-rule"
+    ],
+    "sourcePages": [
+      29
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When multiplying or dividing measured values.",
+      "steps": [
+        "**Trigger:** Product/quotient of values with different sig-fig counts.",
+        "**Action:** Keep as many SIGNIFICANT FIGURES as the input with the fewest (here 0.14 → 2 sig figs).",
+        "**Result:** $2.31 \\times 0.14 = 0.3234 \\to 0.32$ — option D."
+      ],
+      "sanityCheck": "The least-precise factor knows only 2 digits; the product cannot know more."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Multiplication rule (Section 2.7.1): 'In multiplication or division, the final result should retain as many significant figures as are there in the original number with the least significant figures.'",
+        "**EXTRACT:** 2.31 → 3 sig figs; 0.14 → 2 sig figs. Limit = 2 sig figs.",
+        "**EXECUTE:** Raw product: $2.31 \\times 0.14 = 0.3234$. Round to 2 significant figures: 0.32.",
+        "**PROOF:** Option A keeps the full calculator output; option B keeps 3 sig figs (uses the wrong factor as the limit); option C over-rounds to 1. Note the contrast with addition, where DECIMAL PLACES (not sig figs) govern."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The dimensions of volume are:",
+    "options": [
+      {
+        "text": "$[\\mathrm{M^0\\, L^3\\, T^0}]$"
+      },
+      {
+        "text": "$[\\mathrm{M\\, L^3\\, T^0}]$"
+      },
+      {
+        "text": "$[\\mathrm{M^0\\, L^2\\, T^0}]$"
+      },
+      {
+        "text": "$[\\mathrm{M^0\\, L^3\\, T^{-1}}]$"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Easy",
+    "subtopic": "Dimensions of Physical Quantities",
+    "fsmTag": "dimensional-formula-construction",
+    "concepts": [
+      "dimensions",
+      "volume"
+    ],
+    "sourcePages": [
+      31
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When a quantity is a simple product of base quantities.",
+      "steps": [
+        "**Trigger:** Volume = length × breadth × height.",
+        "**Action:** Multiply dimensions: $[L][L][L] = [L^3]$; no mass or time enters.",
+        "**Result:** $[\\mathrm{M^0 L^3 T^0}]$ — option A."
+      ],
+      "sanityCheck": "Cubic metres confirm pure length-cubed."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Dimensional construction from the definition (Section 2.8, the textbook's own first example).",
+        "**EXTRACT:** Volume = product of three lengths.",
+        "**EXECUTE:** $[V] = [L] \\times [L] \\times [L] = [L^3]$. Volume is 'independent of mass and time', so it has 'zero dimension in mass $[M^0]$, zero dimension in time $[T^0]$ and three dimensions in length'.",
+        "**PROOF:** SI unit m³ contains no kg and no s — exponents of M and T must be zero. Options B, C, D each corrupt one exponent."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The number of base quantities used as the 'dimensions of the physical world' is:",
+    "options": [
+      {
+        "text": "3 — length, mass and time"
+      },
+      {
+        "text": "7 — length, mass, time, electric current, thermodynamic temperature, luminous intensity, and amount of substance"
+      },
+      {
+        "text": "5 — length, mass, time, charge and temperature"
+      },
+      {
+        "text": "9 — the seven base quantities plus plane angle and solid angle"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Easy",
+    "subtopic": "Dimensions of Physical Quantities",
+    "fsmTag": "dimension-count-recall",
+    "concepts": [
+      "dimensions",
+      "base-quantities"
+    ],
+    "sourcePages": [
+      31
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Recall of the dimensional alphabet (Section 2.8).",
+        "**EXTRACT:** Asked: how many base quantities serve as dimensions.",
+        "**EXECUTE:** 'We shall call these base quantities as the seven dimensions of the physical world': [L], [M], [T], [A], [K], [cd], [mol]. Option A lists only the mechanical trio; option D wrongly promotes the dimensionless supplementary units (radian, steradian) to dimensions.",
+        "**PROOF:** The seven dimensions correspond one-to-one with the seven SI base units of Table 2.1."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Starting from force = mass × acceleration, the dimensions of force are:",
+    "options": [
+      {
+        "text": "$[\\mathrm{M\\, L\\, T^{-1}}]$"
+      },
+      {
+        "text": "$[\\mathrm{M\\, L^2\\, T^{-2}}]$"
+      },
+      {
+        "text": "$[\\mathrm{M\\, L\\, T^{-2}}]$"
+      },
+      {
+        "text": "$[\\mathrm{M\\, L^{-1}\\, T^{-2}}]$"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Medium",
+    "subtopic": "Dimensions of Physical Quantities",
+    "fsmTag": "dimensional-formula-construction",
+    "concepts": [
+      "dimensions",
+      "force"
+    ],
+    "sourcePages": [
+      31
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When a quantity is defined as a product of known-dimension quantities.",
+      "steps": [
+        "**Trigger:** Force = mass × acceleration.",
+        "**Action:** $[M] \\times [LT^{-2}]$.",
+        "**Result:** $[\\mathrm{M L T^{-2}}]$ — option C."
+      ],
+      "sanityCheck": "The newton is kg·m·s⁻², matching exponent for exponent."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Dimensional construction by substitution (Section 2.8's worked case).",
+        "**EXTRACT:** Force = mass × acceleration; acceleration = length/(time)².",
+        "**EXECUTE:** $[F] = [M] \\times [L]/[T^2] = [\\mathrm{M L T^{-2}}]$. The textbook reads this off as: 'the force has one dimension in mass, one dimension in length, and −2 dimensions in time.'",
+        "**PROOF:** Option A is momentum's formula ($[MLT^{-1}]$); option B is energy/work ($[ML^2T^{-2}]$); option D is pressure ($[ML^{-1}T^{-2}]$) — each a near-neighbour confusion."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Which one of the following quantities has dimensions DIFFERENT from the other three?",
+    "options": [
+      {
+        "text": "Average velocity"
+      },
+      {
+        "text": "Speed"
+      },
+      {
+        "text": "Initial velocity"
+      },
+      {
+        "text": "Acceleration"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Medium",
+    "subtopic": "Dimensions of Physical Quantities",
+    "fsmTag": "odd-dimension-out",
+    "concepts": [
+      "dimensions",
+      "velocity",
+      "acceleration"
+    ],
+    "sourcePages": [
+      31
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When asked to find the dimensional odd-one-out.",
+      "steps": [
+        "**Trigger:** Three rate-of-position quantities and one rate-of-velocity quantity.",
+        "**Action:** Velocity-type → $[LT^{-1}]$; acceleration → $[LT^{-2}]$.",
+        "**Result:** Acceleration differs — option D."
+      ],
+      "sanityCheck": "m/s vs m/s² — the units differ by one power of time."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Dimensional equivalence classes (Section 2.8).",
+        "**EXTRACT:** Candidates: average velocity, speed, initial velocity, acceleration.",
+        "**EXECUTE:** The textbook: 'a change in velocity, initial velocity, average velocity, final velocity, and speed are all equivalent in this context... their dimensions are $[L]/[T]$ or $[LT^{-1}]$.' Acceleration = velocity/time → $[LT^{-2}]$.",
+        "**PROOF:** Only acceleration carries $T^{-2}$; the other three share $[LT^{-1}]$ exactly as the chapter groups them."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The dimensional formula of mass density is:",
+    "options": [
+      {
+        "text": "$[\\mathrm{M\\, L^{-3}\\, T^0}]$"
+      },
+      {
+        "text": "$[\\mathrm{M\\, L^3\\, T^0}]$"
+      },
+      {
+        "text": "$[\\mathrm{M^0\\, L^{-3}\\, T^0}]$"
+      },
+      {
+        "text": "$[\\mathrm{M\\, L^{-2}\\, T^0}]$"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Easy",
+    "subtopic": "Dimensional Formulae and Equations",
+    "fsmTag": "dimensional-formula-recall",
+    "concepts": [
+      "dimensional-formula",
+      "density"
+    ],
+    "sourcePages": [
+      32
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When a quantity is a simple quotient of base quantities.",
+      "steps": [
+        "**Trigger:** Density = mass / volume.",
+        "**Action:** $[M]/[L^3]$.",
+        "**Result:** $[\\mathrm{M L^{-3} T^0}]$ — option A."
+      ],
+      "sanityCheck": "kg/m³ — one power of mass, minus three of length, no time."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Dimensional-formula recall; Section 2.9 lists this one explicitly.",
+        "**EXTRACT:** Asked: dimensional formula of mass density.",
+        "**EXECUTE:** Density = mass/volume → $[M]/[L^3] = [\\mathrm{M L^{-3} T^0}]$. The textbook states: '$[M L^{-3} T^0]$ [is the dimensional formula] of mass density.'",
+        "**PROOF:** Option B inverts the sign of the length exponent (the most common slip); option C drops the mass; option D uses an area instead of a volume in the denominator."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The dimensional formula of acceleration is:",
+    "options": [
+      {
+        "text": "$[\\mathrm{M^0\\, L\\, T^{-1}}]$"
+      },
+      {
+        "text": "$[\\mathrm{M^0\\, L\\, T^{-2}}]$"
+      },
+      {
+        "text": "$[\\mathrm{M\\, L\\, T^{-2}}]$"
+      },
+      {
+        "text": "$[\\mathrm{M^0\\, L^2\\, T^{-2}}]$"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Medium",
+    "subtopic": "Dimensional Formulae and Equations",
+    "fsmTag": "dimensional-formula-recall",
+    "concepts": [
+      "dimensional-formula",
+      "acceleration"
+    ],
+    "sourcePages": [
+      32
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When the quantity is velocity per unit time.",
+      "steps": [
+        "**Trigger:** Acceleration = velocity / time.",
+        "**Action:** $[LT^{-1}]/[T]$.",
+        "**Result:** $[\\mathrm{M^0 L T^{-2}}]$ — option B."
+      ],
+      "sanityCheck": "m/s² has no kg, one m, s to the minus two."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Dimensional-formula recall; Section 2.9 lists it: '$[M^0 L T^{-2}]$ is the dimensional formula of acceleration.'",
+        "**EXTRACT:** Asked: dimensional formula of acceleration.",
+        "**EXECUTE:** Acceleration = change in velocity / time = $[LT^{-1}]/[T] = [\\mathrm{M^0 L T^{-2}}]$.",
+        "**PROOF:** Option A is velocity; option C is force (adds a mass dimension acceleration does not have); option D is the formula for energy per unit mass. The zero mass exponent is the discriminating detail between B and C."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A dimensional equation is obtained by:",
+    "options": [
+      {
+        "text": "Equating a physical quantity with its dimensional formula, e.g. $[v] = [\\mathrm{M^0\\, L\\, T^{-1}}]$"
+      },
+      {
+        "text": "Equating the numerical values of a quantity in two different unit systems"
+      },
+      {
+        "text": "Setting all dimensional exponents equal to 1"
+      },
+      {
+        "text": "Replacing every quantity in a formula by its SI unit symbol"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Medium",
+    "subtopic": "Dimensional Formulae and Equations",
+    "fsmTag": "dimensional-equation-definition",
+    "concepts": [
+      "dimensional-equation",
+      "dimensional-formula"
+    ],
+    "sourcePages": [
+      32
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Definition recall (Section 2.9).",
+        "**EXTRACT:** Asked: what constitutes a dimensional equation.",
+        "**EXECUTE:** 'An equation obtained by equating a physical quantity with its dimensional formula is called the dimensional equation of the physical quantity.' Examples from the text: $[V] = [M^0 L^3 T^0]$, $[v] = [M^0 L T^{-1}]$, $[F] = [M L T^{-2}]$, $[\\rho] = [M L^{-3} T^0]$.",
+        "**PROOF:** Option A reproduces the definition with the textbook's own example for speed; the others describe operations the chapter never defines."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The kinematic equation $x = x_0 + v_0 t + \\tfrac{1}{2} a t^2$ is dimensionally consistent because:",
+    "options": [
+      {
+        "text": "Every term on both sides has the dimension of length $[L]$"
+      },
+      {
+        "text": "Every term on both sides has the dimension of velocity $[L T^{-1}]$"
+      },
+      {
+        "text": "The factor $\\tfrac{1}{2}$ compensates the dimensions of $a t^2$"
+      },
+      {
+        "text": "Time appears in every term"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Medium",
+    "subtopic": "Checking Dimensional Consistency",
+    "fsmTag": "homogeneity-check",
+    "concepts": [
+      "dimensional-consistency",
+      "homogeneity-principle"
+    ],
+    "sourcePages": [
+      32,
+      33
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When verifying an equation term by term.",
+      "steps": [
+        "**Trigger:** Sum of terms claimed equal to a length.",
+        "**Action:** Reduce each term: $[x_0] = [L]$; $[v_0 t] = [LT^{-1}][T] = [L]$; $[\\tfrac{1}{2}at^2] = [LT^{-2}][T^2] = [L]$.",
+        "**Result:** All terms $[L]$ → consistent — option A."
+      ],
+      "sanityCheck": "Pure numbers like 1/2 are dimensionless and never affect the check."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Dimensional-consistency verification — the textbook's own worked check (Section 2.10.1).",
+        "**EXTRACT:** Equation: $x = x_0 + v_0 t + \\tfrac{1}{2} a t^2$. Verify each term's dimensions.",
+        "**EXECUTE:** $[x] = [L]$. $[x_0] = [L]$. $[v_0 t] = [L T^{-1}][T] = [L]$. $[(1/2) a t^2] = [L T^{-2}][T^2] = [L]$. 'As each term on the right hand side of this equation has the same dimension, namely that of length, which is same as the dimension of left hand side... this equation is a dimensionally correct equation.'",
+        "**PROOF:** Option C is explicitly wrong: dimensionless numerical factors play no role in dimensional analysis. Options B and D state false criteria."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The principle of homogeneity of dimensions states that:",
+    "options": [
+      {
+        "text": "All physical quantities must be expressed in SI units before any calculation"
+      },
+      {
+        "text": "Only quantities with the same dimensions can be added to, subtracted from, or equated with each other"
+      },
+      {
+        "text": "Every physical equation must contain all seven base dimensions"
+      },
+      {
+        "text": "Dimensionless quantities cannot appear in a valid physical equation"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Medium",
+    "subtopic": "Checking Dimensional Consistency",
+    "fsmTag": "homogeneity-principle-recall",
+    "concepts": [
+      "homogeneity-principle",
+      "dimensional-consistency"
+    ],
+    "sourcePages": [
+      32
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Principle recall (Section 2.10.1).",
+        "**EXTRACT:** Asked: statement of the homogeneity principle.",
+        "**EXECUTE:** The textbook: 'only those physical quantities can be added or subtracted which have the same dimensions', and 'The same is true for equating: both sides of an equation must have the same dimensions.' Adding a velocity to a force is meaningless regardless of units.",
+        "**PROOF:** Option B captures it. Option A is about units, not dimensions; options C and D invent restrictions the principle does not impose — dimensionless constants like $\\tfrac{1}{2}$ and $\\pi$ appear freely."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Which of the following statements about dimensional consistency is CORRECT?",
+    "options": [
+      {
+        "text": "If an equation passes the dimensional consistency test, it is proved to be exactly correct."
+      },
+      {
+        "text": "If an equation fails the dimensional consistency test, it may still be correct."
+      },
+      {
+        "text": "A dimensionally correct equation need not be an exact equation, but a dimensionally wrong equation must be wrong."
+      },
+      {
+        "text": "Dimensional consistency can determine the values of dimensionless constants in an equation."
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Hard",
+    "subtopic": "Checking Dimensional Consistency",
+    "fsmTag": "consistency-test-limits",
+    "concepts": [
+      "dimensional-consistency",
+      "limitations-of-dimensional-analysis"
+    ],
+    "sourcePages": [
+      33
+    ],
+    "timeTargets": {
+      "ap_eapcet": 90,
+      "ts_eapcet": 90,
+      "jee_main": 120
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** The logical status of the consistency test — necessary but not sufficient.",
+        "**EXTRACT:** Find the statement matching the chapter's careful wording.",
+        "**EXECUTE:** The textbook: 'if an equation fails this consistency test, it is proved wrong, but if it passes, it is not proved right. Thus, a dimensionally correct equation need not be actually an exact (correct) equation, but a dimensionally wrong (incorrect) or inconsistent equation must be wrong.' Option A overclaims (passing ≠ proof); option B contradicts the test's one guaranteed power; option D fails because dimensionless constants are invisible to dimensions.",
+        "**PROOF:** Example: $x = v_0 t + a t^2$ (missing the 1/2) is dimensionally consistent yet physically wrong — passing the test proves nothing about exactness. Option C is the chapter's statement."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Among the following equations relating distance $s$, velocities $u, v$, acceleration $a$ and time $t$, which one is dimensionally INCONSISTENT?",
+    "options": [
+      {
+        "text": "$v^2 = u^2 + 2as$"
+      },
+      {
+        "text": "$s = ut + \\tfrac{1}{2}at^2$"
+      },
+      {
+        "text": "$v = u + at^2$"
+      },
+      {
+        "text": "$v = u + at$"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Hard",
+    "subtopic": "Checking Dimensional Consistency",
+    "fsmTag": "find-inconsistent-equation",
+    "concepts": [
+      "dimensional-consistency",
+      "homogeneity-principle"
+    ],
+    "sourcePages": [
+      32,
+      33
+    ],
+    "timeTargets": {
+      "ap_eapcet": 90,
+      "ts_eapcet": 90,
+      "jee_main": 120
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When scanning candidate equations for a dimensional mismatch.",
+      "steps": [
+        "**Trigger:** A term where the powers of time do not match the left side.",
+        "**Action:** Check $[at^2] = [LT^{-2}][T^2] = [L]$ against $[v] = [LT^{-1}]$.",
+        "**Result:** $v = u + at^2$ equates a velocity to a length term → inconsistent — option C."
+      ],
+      "sanityCheck": "The other three reduce cleanly: $[L^2T^{-2}]$ on both sides of (A); $[L]$ in every term of (B); $[LT^{-1}]$ in every term of (D)."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Term-by-term homogeneity audit across four candidate equations.",
+        "**EXTRACT:** Dimensions: $[s]=[L]$, $[u]=[v]=[LT^{-1}]$, $[a]=[LT^{-2}]$, $[t]=[T]$.",
+        "**EXECUTE:** (A) $[v^2]=[L^2T^{-2}]$; $[u^2]=[L^2T^{-2}]$; $[2as]=[LT^{-2}][L]=[L^2T^{-2}]$ — consistent. (B) $[ut]=[L]$; $[\\tfrac{1}{2}at^2]=[L]$ — consistent. (C) $[at^2]=[LT^{-2}][T^2]=[L]$, but $[v]=[LT^{-1}]$ — a velocity cannot equal a velocity plus a length: INCONSISTENT. (D) $[at]=[LT^{-2}][T]=[LT^{-1}]$ — consistent.",
+        "**PROOF:** Only option C violates homogeneity; by the chapter's rule it 'must be wrong'."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Using the method of dimensions, the period $T$ of a simple pendulum is found to depend on its length $l$ and the acceleration due to gravity $g$ as:",
+    "options": [
+      {
+        "text": "$T = k\\,\\sqrt{l/g}$"
+      },
+      {
+        "text": "$T = k\\,\\sqrt{g/l}$"
+      },
+      {
+        "text": "$T = k\\,l\\,g$"
+      },
+      {
+        "text": "$T = k\\,l^2/g$"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Medium",
+    "subtopic": "Deducing Relations Among Physical Quantities",
+    "fsmTag": "pendulum-dimensional-deduction",
+    "concepts": [
+      "dimensional-analysis",
+      "pendulum",
+      "deducing-relations"
+    ],
+    "sourcePages": [
+      33,
+      34
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When T must be built from l and g alone.",
+      "steps": [
+        "**Trigger:** Need a time from a length and an acceleration.",
+        "**Action:** $\\sqrt{l/g}$ has dimensions $\\sqrt{[L]/[LT^{-2}]} = \\sqrt{[T^2]} = [T]$.",
+        "**Result:** $T = k\\sqrt{l/g}$ — option A."
+      ],
+      "sanityCheck": "$\\sqrt{g/l}$ gives $[T^{-1}]$ (a frequency, not a period) — option B is its reciprocal trap."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Deducing a relation by dimensions — textbook Example 2.17.",
+        "**EXTRACT:** $[T] = [T]$; $[l] = [L]$; $[g] = [LT^{-2}]$. Assume $T = k\\, l^x g^y$.",
+        "**EXECUTE:** $[T] = [L]^x [LT^{-2}]^y = [L^{x+y}\\,T^{-2y}]$. Matching: $x + y = 0$ and $-2y = 1$, so $y = -\\tfrac{1}{2}$, $x = \\tfrac{1}{2}$. Hence $T = k\\, l^{1/2} g^{-1/2} = k\\sqrt{l/g}$.",
+        "**PROOF:** Check: $\\sqrt{\\mathrm{m} / (\\mathrm{m\\,s^{-2}})} = \\sqrt{\\mathrm{s^2}} = \\mathrm{s}$. Options C and D fail dimensionally outright; B yields s⁻¹."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Suppose the period of a simple pendulum is assumed to depend on its length $l$, the mass of the bob $m$, and the acceleration due to gravity $g$, as $T = k\\, l^x\\, g^y\\, m^z$. Equating dimensions yields:",
+    "options": [
+      {
+        "text": "$x = 1,\\; y = -1,\\; z = 0$"
+      },
+      {
+        "text": "$x = \\tfrac{1}{2},\\; y = -\\tfrac{1}{2},\\; z = 0$"
+      },
+      {
+        "text": "$x = \\tfrac{1}{2},\\; y = -\\tfrac{1}{2},\\; z = 1$"
+      },
+      {
+        "text": "$x = -\\tfrac{1}{2},\\; y = \\tfrac{1}{2},\\; z = 0$"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Hard",
+    "subtopic": "Deducing Relations Among Physical Quantities",
+    "fsmTag": "pendulum-dimensional-deduction",
+    "concepts": [
+      "dimensional-analysis",
+      "pendulum",
+      "exponent-matching"
+    ],
+    "sourcePages": [
+      33,
+      34
+    ],
+    "timeTargets": {
+      "ap_eapcet": 90,
+      "ts_eapcet": 90,
+      "jee_main": 120
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When exponents must be solved by matching dimensions.",
+      "steps": [
+        "**Trigger:** $T = k\\,l^x g^y m^z$ with three unknown exponents.",
+        "**Action:** Match powers of M, L, T separately: $z = 0$; $x + y = 0$; $-2y = 1$.",
+        "**Result:** $x = \\tfrac{1}{2}$, $y = -\\tfrac{1}{2}$, $z = 0$ — option B."
+      ],
+      "sanityCheck": "$z = 0$ reproduces the famous fact that a pendulum's period is independent of the bob's mass."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Full exponent-matching deduction — textbook Example 2.17 in its complete three-variable form.",
+        "**EXTRACT:** $[T] = [T^1]$; $[l^x] = [L^x]$; $[g^y] = [L^y T^{-2y}]$; $[m^z] = [M^z]$.",
+        "**EXECUTE:** $[T^1] = [M^z\\, L^{x+y}\\, T^{-2y}]$. Power of M: $z = 0$. Power of T: $-2y = 1 \\Rightarrow y = -\\tfrac{1}{2}$. Power of L: $x + y = 0 \\Rightarrow x = \\tfrac{1}{2}$.",
+        "**PROOF:** The result $T = k\\sqrt{l/g}$ with no mass dependence matches the textbook's conclusion. Option D swaps the signs of x and y (giving a frequency); option C asserts a mass dependence that the M-exponent match forbids."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Which of the following is a recognised LIMITATION of the method of dimensions in deducing physical relations?",
+    "options": [
+      {
+        "text": "It cannot determine the value of the dimensionless constant in the relation."
+      },
+      {
+        "text": "It cannot be applied to mechanical quantities at all."
+      },
+      {
+        "text": "It works only when the answer is already known."
+      },
+      {
+        "text": "It fails whenever the relation involves more than one base dimension."
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Medium",
+    "subtopic": "Deducing Relations Among Physical Quantities",
+    "fsmTag": "dimensional-method-limitations",
+    "concepts": [
+      "dimensional-analysis",
+      "limitations-of-dimensional-analysis"
+    ],
+    "sourcePages": [
+      34
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Recall of the method's limitations (Section 2.10.2).",
+        "**EXTRACT:** Asked: a genuine limitation.",
+        "**EXECUTE:** In the pendulum deduction the constant $k$ remains undetermined: 'the value of the constant $k$ can not be obtained by the method of dimensions' — it must come from experiment or a fuller theory (where $k = 2\\pi$). The method also cannot handle sums of terms or non-product dependences, but options B, C, D state restrictions that are simply false: the chapter applies the method successfully to mechanical, multi-dimensional relations without knowing the answer in advance.",
+        "**PROOF:** $T = k\\sqrt{l/g}$ is dimensionally complete for ANY value of the dimensionless k — proof that dimensions alone cannot pin k down."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The period of a simple pendulum is deduced dimensionally as $T \\propto l^a\\, g^b$. The value of $a - b$ is:",
+    "options": [
+      {
+        "text": "0"
+      },
+      {
+        "text": "$\\tfrac{1}{2}$"
+      },
+      {
+        "text": "$-1$"
+      },
+      {
+        "text": "$1$"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Hard",
+    "subtopic": "Deducing Relations Among Physical Quantities",
+    "fsmTag": "pendulum-dimensional-deduction",
+    "concepts": [
+      "dimensional-analysis",
+      "exponent-matching",
+      "pendulum"
+    ],
+    "sourcePages": [
+      33,
+      34
+    ],
+    "timeTargets": {
+      "ap_eapcet": 90,
+      "ts_eapcet": 90,
+      "jee_main": 120
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When a combination of deduced exponents is asked rather than the exponents themselves.",
+      "steps": [
+        "**Trigger:** $T \\propto l^a g^b$; asked for $a - b$.",
+        "**Action:** Deduce $a = \\tfrac{1}{2}$, $b = -\\tfrac{1}{2}$ by exponent matching, then combine.",
+        "**Result:** $a - b = \\tfrac{1}{2} - (-\\tfrac{1}{2}) = 1$ — option D."
+      ],
+      "sanityCheck": "The sign trap: subtracting a negative. $a + b = 0$ but $a - b = 1$."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Two-step problem: dimensional deduction, then exponent arithmetic with a sign trap.",
+        "**EXTRACT:** $T \\propto l^a g^b$; $[l] = [L]$, $[g] = [LT^{-2}]$, $[T] = [T]$.",
+        "**EXECUTE:** $[T^1] = [L^{a+b}\\,T^{-2b}]$. Matching T: $-2b = 1 \\Rightarrow b = -\\tfrac{1}{2}$. Matching L: $a + b = 0 \\Rightarrow a = \\tfrac{1}{2}$. Therefore $a - b = \\tfrac{1}{2} - \\left(-\\tfrac{1}{2}\\right) = 1$.",
+        "**PROOF:** Option A is the value of $a + b$ (the natural confusion); option B gives just $a$; option C flips the subtraction order with a sign slip."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  }
+]

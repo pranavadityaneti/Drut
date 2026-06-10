@@ -1,0 +1,2566 @@
+[
+  {
+    "questionText": "The word 'Physics' originates from a Greek word that means:",
+    "options": [
+      {
+        "text": "Knowledge"
+      },
+      {
+        "text": "Nature"
+      },
+      {
+        "text": "Matter"
+      },
+      {
+        "text": "Universe"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Easy",
+    "subtopic": "What is Physics?",
+    "fsmTag": "etymology-recall",
+    "concepts": [
+      "physics-definition",
+      "etymology"
+    ],
+    "sourcePages": [
+      4
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Direct recall of etymology stated in the textbook.",
+        "**EXTRACT:** Asked: Greek meaning of the word 'Physics'.",
+        "**EXECUTE:** The textbook states: 'The word Physics comes from a Greek word meaning nature.' Its Sanskrit equivalent is 'Bhautiki'. The word meaning 'knowledge' is 'Vijnan' (Sanskrit) / 'Ilm' (Arabic), associated with the word Science, not Physics.",
+        "**PROOF:** Only option B matches the explicit textbook statement."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "According to the textbook, the two principal thrusts of physics are:",
+    "options": [
+      {
+        "text": "Observation and prediction"
+      },
+      {
+        "text": "Theory and experiment"
+      },
+      {
+        "text": "Unification and reduction"
+      },
+      {
+        "text": "Hypothesis and verification"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Easy",
+    "subtopic": "What is Physics?",
+    "fsmTag": "core-themes-recall",
+    "concepts": [
+      "unification",
+      "reduction"
+    ],
+    "sourcePages": [
+      2
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Direct recall of the two principal thrusts identified in Section 1.1.",
+        "**EXTRACT:** Asked: the pair of principal thrusts in physics.",
+        "**EXECUTE:** Section 1.1 states explicitly: 'Here we remark on two principal thrusts in physics: unification and reduction.' Other options describe the broader practice of science but are not the named 'two thrusts' of physics.",
+        "**PROOF:** Option C matches the textbook's explicit pair."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Reductionism, as a thrust in physics, is best described as the attempt to:",
+    "options": [
+      {
+        "text": "Derive the properties of a larger, more complex system from the properties and interactions of its constituent simpler parts."
+      },
+      {
+        "text": "Explain diverse physical phenomena in terms of a few universal laws."
+      },
+      {
+        "text": "Reduce the number of fundamental constants required in physical equations."
+      },
+      {
+        "text": "Simplify experiments by ignoring external influences such as friction and air resistance."
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Easy",
+    "subtopic": "What is Physics?",
+    "fsmTag": "reductionism-recall",
+    "concepts": [
+      "reductionism",
+      "unification"
+    ],
+    "sourcePages": [
+      2
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Definition-recall question. The trap is option B, which is the definition of unification (the other thrust), and option D, which describes the approximation strategy from Section 1.2.",
+        "**EXTRACT:** Asked: the definition of reductionism.",
+        "**EXECUTE:** Section 1.1: 'A related effort is to derive the properties of a bigger, more complex, system from the properties and interactions of its constituent simpler parts. This approach is called reductionism.' Example given: thermodynamics quantities (temperature, entropy) reduced to molecular kinetic theory.",
+        "**PROOF:** Option A is verbatim aligned with the textbook definition; B describes unification, D describes approximation."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Which of the following statements correctly distinguishes a hypothesis, an axiom, and a model, as discussed in the chapter?",
+    "options": [
+      {
+        "text": "A hypothesis is a self-evident truth; an axiom is a supposition; a model is a verified theory."
+      },
+      {
+        "text": "All three are interchangeable terms describing proven scientific laws."
+      },
+      {
+        "text": "A hypothesis is a supposition without assuming it is true; an axiom is a self-evident truth; a model is a theory proposed to explain observed phenomena."
+      },
+      {
+        "text": "A hypothesis must be derived mathematically; an axiom must be tested experimentally; a model must be falsified before publication."
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Medium",
+    "subtopic": "What is Physics?",
+    "fsmTag": "hypothesis-axiom-model-distinction",
+    "concepts": [
+      "hypothesis",
+      "axiom",
+      "model"
+    ],
+    "sourcePages": [
+      4
+    ],
+    "timeTargets": {
+      "ap_eapcet": 45,
+      "ts_eapcet": 45,
+      "jee_main": 75
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Three-way concept distinction. Each definition must be matched correctly; one swap renders the option wrong.",
+        "**EXTRACT:** Asked: which option correctly defines all three terms.",
+        "**EXECUTE:** From the 'Hypothesis, axioms and models' sidebar: 'A hypothesis is a supposition without assuming that it is true... An axiom is a self-evident truth while a model is a theory proposed to explain observed phenomena.' Option A swaps hypothesis and axiom. Option B is a category error. Option D fabricates criteria not in the text.",
+        "**PROOF:** Option C reproduces the textbook definitions in order."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The macroscopic domain of physics, as described in the chapter, includes phenomena at which of the following scales?",
+    "options": [
+      {
+        "text": "Nuclear, atomic and molecular scales"
+      },
+      {
+        "text": "Atomic and astronomical scales only"
+      },
+      {
+        "text": "Laboratory, terrestrial and astronomical scales"
+      },
+      {
+        "text": "Subatomic and elementary particle scales"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Easy",
+    "subtopic": "Scope and Excitement of Physics",
+    "fsmTag": "macroscopic-domain-recall",
+    "concepts": [
+      "macroscopic-domain",
+      "microscopic-domain"
+    ],
+    "sourcePages": [
+      3
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Domain-scope recall. Trap is option A, which lists the microscopic domain.",
+        "**EXTRACT:** Asked: scales included in the macroscopic domain.",
+        "**EXECUTE:** Section 1.2: 'The macroscopic domain includes phenomena at the laboratory, terrestrial and astronomical scales. The microscopic domain includes nuclear, atomic and molecular phenomena.'",
+        "**PROOF:** Option C is verbatim; A swaps to microscopic."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The motion of a current-carrying conductor in a magnetic field is a problem primarily of which sub-discipline of classical physics?",
+    "options": [
+      {
+        "text": "Electrodynamics"
+      },
+      {
+        "text": "Mechanics"
+      },
+      {
+        "text": "Optics"
+      },
+      {
+        "text": "Thermodynamics"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Easy",
+    "subtopic": "Scope and Excitement of Physics",
+    "fsmTag": "subdiscipline-match",
+    "concepts": [
+      "electrodynamics",
+      "classical-physics"
+    ],
+    "sourcePages": [
+      3
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Sub-discipline identification by phenomenon. Trap is option B (mechanics) — current-carrying conductors do involve forces, but the chapter classifies these explicitly under electrodynamics.",
+        "**EXTRACT:** Phenomenon = motion of current-carrying conductor in magnetic field.",
+        "**EXECUTE:** Section 1.2 lists under Electrodynamics: 'The motion of a current-carrying conductor in a magnetic field, the response of a circuit to an ac voltage (signal), the working of an antenna, the propagation of radio waves in the ionosphere, etc., are problems of electrodynamics.'",
+        "**PROOF:** Option A matches the textbook's explicit categorisation."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "According to the textbook, the approximate range of length scales studied in physics is:",
+    "options": [
+      {
+        "text": "$10^{-10}$ m to $10^{10}$ m"
+      },
+      {
+        "text": "$10^{-14}$ m to $10^{26}$ m"
+      },
+      {
+        "text": "$10^{-22}$ m to $10^{18}$ m"
+      },
+      {
+        "text": "$10^{-30}$ m to $10^{55}$ m"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Easy",
+    "subtopic": "Scope and Excitement of Physics",
+    "fsmTag": "length-scale-recall",
+    "concepts": [
+      "length-scale",
+      "orders-of-magnitude"
+    ],
+    "sourcePages": [
+      4
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Range-recall. Traps swap in time-scale numbers (option C) or mass-scale numbers (option D).",
+        "**EXTRACT:** Asked: length-scale range.",
+        "**EXECUTE:** Section 1.2: smallest length ~ $10^{-14}$ m (involving electrons, protons); largest ~ $10^{26}$ m (extent of observable universe).",
+        "**PROOF:** Option B matches the textbook range. Option C ($10^{-22}$ s to $10^{18}$ s) is the time range; option D ($10^{-30}$ kg to $10^{55}$ kg) is the mass range."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The 'mesoscopic' domain of physics, referenced in the chapter, deals with systems involving:",
+    "options": [
+      {
+        "text": "A single isolated atom"
+      },
+      {
+        "text": "Galaxies and galactic clusters"
+      },
+      {
+        "text": "Bulk macroscopic samples at the laboratory scale"
+      },
+      {
+        "text": "A few tens or hundreds of atoms"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Easy",
+    "subtopic": "Scope and Excitement of Physics",
+    "fsmTag": "mesoscopic-recall",
+    "concepts": [
+      "mesoscopic-physics"
+    ],
+    "sourcePages": [
+      3
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Definitional recall from the footnote on Section 1.2.",
+        "**EXTRACT:** Asked: what mesoscopic physics studies.",
+        "**EXECUTE:** Footnote on p.3: 'the domain intermediate between the macroscopic and the microscopic (the so-called mesoscopic physics), dealing with a few tens or hundreds of atoms, has emerged as an exciting field of research.'",
+        "**PROOF:** Option D matches; the others describe microscopic, astronomical, and macroscopic regimes respectively."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The equilibrium of a bent rod under a load is a problem of which branch of classical physics?",
+    "options": [
+      {
+        "text": "Electrodynamics"
+      },
+      {
+        "text": "Thermodynamics"
+      },
+      {
+        "text": "Mechanics"
+      },
+      {
+        "text": "Optics"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Medium",
+    "subtopic": "Scope and Excitement of Physics",
+    "fsmTag": "subdiscipline-match",
+    "concepts": [
+      "mechanics",
+      "deformable-bodies"
+    ],
+    "sourcePages": [
+      3
+    ],
+    "timeTargets": {
+      "ap_eapcet": 45,
+      "ts_eapcet": 45,
+      "jee_main": 75
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Sub-discipline identification — must distinguish a static-equilibrium problem from a thermal one.",
+        "**EXTRACT:** Phenomenon = equilibrium of a bent rod under a load.",
+        "**EXECUTE:** Section 1.2 describes Mechanics: 'Mechanics founded on Newton's laws of motion and the law of gravitation is concerned with the motion (or equilibrium) of particles, rigid and deformable bodies, and general systems of particles... the equilibrium of a bent rod under a load, etc., are problems of mechanics.'",
+        "**PROOF:** Option C matches the textbook's explicit example."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "According to the chapter, the approximate range of mass scales relevant to physics extends from:",
+    "options": [
+      {
+        "text": "$10^{-14}$ kg (mass of an electron) to $10^{26}$ kg (mass of the universe)"
+      },
+      {
+        "text": "$10^{-30}$ kg (mass of an electron) to $10^{55}$ kg (mass of the known observable universe)"
+      },
+      {
+        "text": "$10^{-22}$ kg to $10^{18}$ kg"
+      },
+      {
+        "text": "$10^{-40}$ kg to $10^{40}$ kg"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Medium",
+    "subtopic": "Scope and Excitement of Physics",
+    "fsmTag": "mass-scale-recall",
+    "concepts": [
+      "mass-scale",
+      "orders-of-magnitude"
+    ],
+    "sourcePages": [
+      4
+    ],
+    "timeTargets": {
+      "ap_eapcet": 45,
+      "ts_eapcet": 45,
+      "jee_main": 75
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Mass-scale recall, with a trap that swaps in length-scale orders of magnitude (option A) or time-scale orders (option C).",
+        "**EXTRACT:** Asked: range of mass scales in physics.",
+        "**EXECUTE:** Section 1.2: 'The range of masses goes from, say, $10^{-30}$ kg (mass of an electron) to $10^{55}$ kg (mass of known observable universe).'",
+        "**PROOF:** Option B matches; the other options confuse mass with length or time ranges."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Which of the following statements about the scope of physics is INCORRECT?",
+    "options": [
+      {
+        "text": "The range of length scales studied spans roughly 40 orders of magnitude."
+      },
+      {
+        "text": "Quantum theory is currently accepted as the proper framework for explaining microscopic phenomena."
+      },
+      {
+        "text": "Mesoscopic physics deals with systems containing a few tens or hundreds of atoms."
+      },
+      {
+        "text": "Classical physics adequately describes phenomena at nuclear and atomic scales."
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Hard",
+    "subtopic": "Scope and Excitement of Physics",
+    "fsmTag": "scope-multifact-trap",
+    "concepts": [
+      "classical-physics",
+      "quantum-theory",
+      "scope"
+    ],
+    "sourcePages": [
+      3,
+      4
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Multi-claim 'find the false statement' question. Each option must be evaluated against the chapter.",
+        "**EXTRACT:** Find the option that contradicts the chapter.",
+        "**EXECUTE:** (A) True: length-scale ratio is $\\sim 10^{40}$. (B) True: Section 1.2 — 'Quantum Theory is currently accepted as the proper framework for explaining microscopic phenomena.' (C) True: footnote definition of mesoscopic. (D) False: Section 1.2 explicitly says 'Classical physics is inadequate to handle this domain' (the microscopic domain).",
+        "**PROOF:** Option D is the false statement and is therefore the correct answer."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The discipline of thermodynamics historically arose from the need to understand and improve the working of:",
+    "options": [
+      {
+        "text": "Electric generators"
+      },
+      {
+        "text": "Heat engines (including the steam engine)"
+      },
+      {
+        "text": "Telegraph and wireless communication systems"
+      },
+      {
+        "text": "Refrigeration units in 19th-century laboratories"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Easy",
+    "subtopic": "Physics, Technology and Society",
+    "fsmTag": "technology-physics-origin",
+    "concepts": [
+      "thermodynamics",
+      "industrial-revolution",
+      "steam-engine"
+    ],
+    "sourcePages": [
+      5
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Direct recall — origin of thermodynamics.",
+        "**EXTRACT:** Asked: which technology drove the emergence of thermodynamics.",
+        "**EXECUTE:** Section 1.3: 'The discipline of thermodynamics arose from the need to understand and improve the working of heat engines. The steam engine, as we know, is inseparable from the Industrial Revolution.'",
+        "**PROOF:** Option B matches the textbook."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The wave theory of light is associated with:",
+    "options": [
+      {
+        "text": "Christiaan Huygens"
+      },
+      {
+        "text": "Isaac Newton"
+      },
+      {
+        "text": "James Clerk Maxwell"
+      },
+      {
+        "text": "Heinrich Hertz"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Easy",
+    "subtopic": "Physics, Technology and Society",
+    "fsmTag": "scientist-discovery-match",
+    "concepts": [
+      "wave-theory-of-light",
+      "huygens"
+    ],
+    "sourcePages": [
+      5
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When you see 'wave theory of light' as the contribution, recall the Table 1.1 row.",
+      "steps": [
+        "**Trigger:** See 'wave theory of light'.",
+        "**Action:** Map directly to Huygens (Holland).",
+        "**Result:** Option A."
+      ],
+      "sanityCheck": "Maxwell unified electromagnetism with optics (light is an EM wave) but did not originate the wave theory itself; Newton held the corpuscular view of light."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Scientist-discovery match.",
+        "**EXTRACT:** Asked: who is credited with the wave theory of light in Table 1.1.",
+        "**EXECUTE:** Table 1.1 row: Christiaan Huygens — Wave theory of light — Holland.",
+        "**PROOF:** Option A matches Table 1.1."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The discovery of the electron is credited to:",
+    "options": [
+      {
+        "text": "Ernest Rutherford"
+      },
+      {
+        "text": "Niels Bohr"
+      },
+      {
+        "text": "J.J. Thomson"
+      },
+      {
+        "text": "James Chadwick"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Easy",
+    "subtopic": "Physics, Technology and Society",
+    "fsmTag": "scientist-discovery-match",
+    "concepts": [
+      "electron-discovery",
+      "thomson"
+    ],
+    "sourcePages": [
+      5
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Question asks who discovered a specific particle listed in Table 1.1.",
+      "steps": [
+        "**Trigger:** See 'discovery of the electron'.",
+        "**Action:** Map to Table 1.1 → Thomson (UK).",
+        "**Result:** Option C."
+      ],
+      "sanityCheck": "Rutherford proposed the nuclear model; Bohr proposed the quantum model of the hydrogen atom; Chadwick discovered the neutron."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Particle-discoverer match.",
+        "**EXTRACT:** Asked: who discovered the electron.",
+        "**EXECUTE:** Table 1.1: J.J. Thomson — Electron — UK.",
+        "**PROOF:** Option C matches Table 1.1."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The contribution of Sir C.V. Raman to physics, as listed in the chapter, is:",
+    "options": [
+      {
+        "text": "Theory of thermal ionisation"
+      },
+      {
+        "text": "Quantum statistics of indistinguishable particles"
+      },
+      {
+        "text": "Wave nature of matter"
+      },
+      {
+        "text": "Inelastic scattering of light by molecules"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Easy",
+    "subtopic": "Physics, Technology and Society",
+    "fsmTag": "scientist-discovery-match",
+    "concepts": [
+      "raman-effect",
+      "indian-physicists"
+    ],
+    "sourcePages": [
+      5,
+      11
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Recall the Table 1.1 row for C.V. Raman plus the biographical note on p.11.",
+      "steps": [
+        "**Trigger:** See 'C.V. Raman'.",
+        "**Action:** Map to 'inelastic scattering of light by molecules' (the Raman Effect).",
+        "**Result:** Option D."
+      ],
+      "sanityCheck": "Thermal ionisation = M.N. Saha; quantum statistics = S.N. Bose; wave nature of matter = de Broglie. None of these is Raman."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Match of an Indian physicist to his discovery.",
+        "**EXTRACT:** Asked: Raman's contribution.",
+        "**EXECUTE:** Table 1.1: C.V. Raman — Inelastic scattering of light by molecules — India. The biographical note on p.11 confirms: 'The Raman Effect deals with scattering of light by molecules of a medium...'",
+        "**PROOF:** Option D matches both Table 1.1 and the biography sidebar."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Rocket propulsion is fundamentally based on:",
+    "options": [
+      {
+        "text": "Newton's laws of motion"
+      },
+      {
+        "text": "Bernoulli's principle"
+      },
+      {
+        "text": "Faraday's laws of electromagnetic induction"
+      },
+      {
+        "text": "The laws of thermodynamics alone"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Easy",
+    "subtopic": "Physics, Technology and Society",
+    "fsmTag": "technology-principle-match",
+    "concepts": [
+      "rocket-propulsion",
+      "newtons-laws"
+    ],
+    "sourcePages": [
+      7
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Match technology to underlying principle from Table 1.2.",
+      "steps": [
+        "**Trigger:** See 'rocket propulsion'.",
+        "**Action:** Map to Newton's laws of motion (third law in particular, action–reaction).",
+        "**Result:** Option A."
+      ],
+      "sanityCheck": "Bernoulli is for fluids in flight (aeroplane); Faraday is for generators."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Technology-principle match.",
+        "**EXTRACT:** Asked: which principle underlies a rocket.",
+        "**EXECUTE:** Table 1.2: Rocket propulsion — Newton's laws of motion. The propulsion arises from the ejection of gases (third law).",
+        "**PROOF:** Option A matches Table 1.2."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Optical fibres transmit light signals over long distances by exploiting:",
+    "options": [
+      {
+        "text": "Photoelectric effect"
+      },
+      {
+        "text": "Total internal reflection of light"
+      },
+      {
+        "text": "Thin-film optical interference"
+      },
+      {
+        "text": "Wave nature of electrons"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Easy",
+    "subtopic": "Physics, Technology and Society",
+    "fsmTag": "technology-principle-match",
+    "concepts": [
+      "optical-fibres",
+      "total-internal-reflection"
+    ],
+    "sourcePages": [
+      7
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Match technology to principle from Table 1.2.",
+      "steps": [
+        "**Trigger:** See 'optical fibres'.",
+        "**Action:** Map to total internal reflection of light.",
+        "**Result:** Option B."
+      ],
+      "sanityCheck": "Photoelectric effect is for photocells; thin-film interference is for non-reflecting coatings; wave nature of electrons is for the electron microscope."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Technology-principle match.",
+        "**EXTRACT:** Asked: working principle of optical fibres.",
+        "**EXECUTE:** Table 1.2: Optical fibres — Total internal reflection of light. Light traveling inside a fibre with a denser core repeatedly reflects internally at the core–cladding interface.",
+        "**PROOF:** Option B matches Table 1.2."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The phenomenon of neutron-induced fission of uranium, which became the basis of nuclear power reactors, was discovered in 1938 by:",
+    "options": [
+      {
+        "text": "Ernest Rutherford and James Chadwick"
+      },
+      {
+        "text": "Marie Curie and Pierre Curie"
+      },
+      {
+        "text": "Otto Hahn and Lise Meitner"
+      },
+      {
+        "text": "Enrico Fermi and Werner Heisenberg"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Easy",
+    "subtopic": "Physics, Technology and Society",
+    "fsmTag": "discovery-attribution",
+    "concepts": [
+      "nuclear-fission",
+      "hahn-meitner"
+    ],
+    "sourcePages": [
+      6
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Historical attribution — discovery and year.",
+        "**EXTRACT:** Asked: who discovered neutron-induced fission of uranium in 1938.",
+        "**EXECUTE:** Section 1.3: 'in 1938, Hahn and Meitner discovered the phenomenon of neutron-induced fission of uranium, which would serve as the basis of nuclear power reactors and nuclear weapons.'",
+        "**PROOF:** Option C matches. Fermi later worked on controlled nuclear fission (Table 1.1) but was not the discoverer of neutron-induced fission."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The Indian physicist whose work on quantum statistics led to the term 'boson' being adopted for particles with integer spin was:",
+    "options": [
+      {
+        "text": "S.N. Bose"
+      },
+      {
+        "text": "C.V. Raman"
+      },
+      {
+        "text": "M.N. Saha"
+      },
+      {
+        "text": "Homi J. Bhabha"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Medium",
+    "subtopic": "Physics, Technology and Society",
+    "fsmTag": "scientist-discovery-match",
+    "concepts": [
+      "quantum-statistics",
+      "bose-einstein",
+      "indian-physicists"
+    ],
+    "sourcePages": [
+      5,
+      9
+    ],
+    "timeTargets": {
+      "ap_eapcet": 45,
+      "ts_eapcet": 45,
+      "jee_main": 75
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Scientist-discovery match for Indian physicists, with all four distractors being Indian (so country is no clue).",
+        "**EXTRACT:** Asked: originator of the quantum statistics that named the 'boson'.",
+        "**EXECUTE:** Table 1.1: S.N. Bose — Quantum statistics — India. The biographical sidebar on p.9 confirms: 'Particles with integral spins are now known as bosons in honour of Bose.'",
+        "**PROOF:** Option A matches. Raman = Raman effect; Saha = thermal ionisation; Bhabha = cascade process of cosmic radiation."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The lift of an aeroplane wing is explained primarily by:",
+    "options": [
+      {
+        "text": "Newton's laws of motion"
+      },
+      {
+        "text": "Bernoulli's principle in fluid dynamics"
+      },
+      {
+        "text": "Faraday's laws of electromagnetic induction"
+      },
+      {
+        "text": "Magnetic confinement of plasma"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Medium",
+    "subtopic": "Physics, Technology and Society",
+    "fsmTag": "technology-principle-match",
+    "concepts": [
+      "aeroplane",
+      "bernoullis-principle",
+      "fluid-dynamics"
+    ],
+    "sourcePages": [
+      7
+    ],
+    "timeTargets": {
+      "ap_eapcet": 45,
+      "ts_eapcet": 45,
+      "jee_main": 75
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Technology-principle match; the trap is that aircraft motion involves Newton's laws too, but the chapter's Table 1.2 attributes 'aeroplane' specifically to Bernoulli's principle.",
+        "**EXTRACT:** Asked: principle behind an aeroplane (i.e., the lift).",
+        "**EXECUTE:** Table 1.2: Aeroplane — Bernoulli's principle in fluid dynamics. Pressure difference between upper and lower surfaces of the wing arises from the different air-flow speeds.",
+        "**PROOF:** Option B matches Table 1.2. Rocket propulsion (not aeroplane) is the Newton's-laws entry."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The cyclotron, an early particle accelerator, was developed by:",
+    "options": [
+      {
+        "text": "Niels Bohr"
+      },
+      {
+        "text": "Wolfgang Pauli"
+      },
+      {
+        "text": "Ernest Orlando Lawrence"
+      },
+      {
+        "text": "Paul Dirac"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Medium",
+    "subtopic": "Physics, Technology and Society",
+    "fsmTag": "scientist-discovery-match",
+    "concepts": [
+      "cyclotron",
+      "lawrence"
+    ],
+    "sourcePages": [
+      6
+    ],
+    "timeTargets": {
+      "ap_eapcet": 45,
+      "ts_eapcet": 45,
+      "jee_main": 75
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Recall Table 1.1.",
+      "steps": [
+        "**Trigger:** See 'cyclotron'.",
+        "**Action:** Map to Ernest Orlando Lawrence (USA).",
+        "**Result:** Option C."
+      ],
+      "sanityCheck": "Bohr → quantum model of hydrogen atom; Pauli → exclusion principle; Dirac → relativistic theory of electron."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Scientist-invention match.",
+        "**EXTRACT:** Asked: inventor of the cyclotron.",
+        "**EXECUTE:** Table 1.1: Ernest Orlando Lawrence — Cyclotron — USA.",
+        "**PROOF:** Option C matches."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "According to Table 1.2 in the chapter, a Bose-Einstein condensate is produced by:",
+    "options": [
+      {
+        "text": "Heating a dense gas of bosons until they coalesce into a single quantum state"
+      },
+      {
+        "text": "Compressing helium-4 at high pressure into a superfluid phase"
+      },
+      {
+        "text": "Magnetic confinement of plasma at thermonuclear temperatures"
+      },
+      {
+        "text": "Trapping and cooling atoms by laser beams and magnetic fields"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Medium",
+    "subtopic": "Physics, Technology and Society",
+    "fsmTag": "technology-principle-match",
+    "concepts": [
+      "bose-einstein-condensate",
+      "laser-cooling"
+    ],
+    "sourcePages": [
+      7
+    ],
+    "timeTargets": {
+      "ap_eapcet": 45,
+      "ts_eapcet": 45,
+      "jee_main": 75
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Technology-principle match; the trap is that the BEC IS a low-temperature phenomenon, but the production METHOD is what is asked.",
+        "**EXTRACT:** Asked: how is a BEC produced according to Table 1.2.",
+        "**EXECUTE:** Table 1.2: Bose-Einstein condensate — 'Trapping and cooling of atoms by laser beams and magnetic fields.' Option A is wrong because BEC requires cooling, not heating. Option C describes the Tokamak.",
+        "**PROOF:** Option D matches Table 1.2 verbatim."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Which of the following pairings of scientist and discovery, as listed in Table 1.1, is INCORRECT?",
+    "options": [
+      {
+        "text": "Hideki Yukawa — Theory of nuclear forces"
+      },
+      {
+        "text": "Lev Landau — Theory of condensed matter; Liquid helium"
+      },
+      {
+        "text": "Abdus Salam — Unification of weak and electromagnetic interactions"
+      },
+      {
+        "text": "Werner Heisenberg — Wave nature of matter"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Hard",
+    "subtopic": "Physics, Technology and Society",
+    "fsmTag": "scientist-discovery-multifact-trap",
+    "concepts": [
+      "scientist-discovery-match",
+      "uncertainty-principle",
+      "de-broglie"
+    ],
+    "sourcePages": [
+      5,
+      6
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Find the mismatched pairing. Each option must be checked against Table 1.1.",
+        "**EXTRACT:** Compare all four pairings to Table 1.1.",
+        "**EXECUTE:** (A) Yukawa — theory of nuclear forces. Correct per Table 1.1. (B) Landau — theory of condensed matter; liquid helium. Correct. (C) Salam — unification of weak and electromagnetic interactions. Correct. (D) Heisenberg — Table 1.1 entry is 'Quantum mechanics; Uncertainty principle'. The 'wave nature of matter' is Louis de Broglie's contribution.",
+        "**PROOF:** Option D is the incorrect pairing and is therefore the answer."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The gravitational force, as defined in the chapter, is:",
+    "options": [
+      {
+        "text": "The force of mutual attraction between any two objects by virtue of their electric charges"
+      },
+      {
+        "text": "The force of mutual attraction between any two objects by virtue of their masses"
+      },
+      {
+        "text": "A short-range force that acts only between massive objects in contact"
+      },
+      {
+        "text": "A force that can be either attractive or repulsive depending on the relative motion of the two objects"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Easy",
+    "subtopic": "Gravitational Force",
+    "fsmTag": "force-definition-recall",
+    "concepts": [
+      "gravitational-force",
+      "mass"
+    ],
+    "sourcePages": [
+      8
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Definition-recall.",
+        "**EXTRACT:** Asked: the chapter's definition of gravitational force.",
+        "**EXECUTE:** Section 1.4.1: 'The gravitational force is the force of mutual attraction between any two objects by virtue of their masses. It is a universal force.' Option A swaps mass for charge; C is wrong because gravity has infinite range and does not require contact; D is wrong because gravity is always attractive.",
+        "**PROOF:** Option B matches the textbook definition verbatim."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The range of the gravitational force is:",
+    "options": [
+      {
+        "text": "Infinite"
+      },
+      {
+        "text": "Approximately $10^{-15}$ m"
+      },
+      {
+        "text": "Approximately $10^{-16}$ m"
+      },
+      {
+        "text": "Limited to the size of the solar system"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Easy",
+    "subtopic": "Gravitational Force",
+    "fsmTag": "force-range-recall",
+    "concepts": [
+      "gravitational-force",
+      "range"
+    ],
+    "sourcePages": [
+      10
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Force-range recall from Table 1.3.",
+        "**EXTRACT:** Asked: range of gravitational force.",
+        "**EXECUTE:** Table 1.3: Gravitational force — Range: Infinite — Operates among: All objects in the universe.",
+        "**PROOF:** Option A matches Table 1.3. Options B and C are the ranges of strong and weak nuclear forces respectively."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Taking the strong nuclear force as the reference (relative strength = 1), the relative strength of the gravitational force is approximately:",
+    "options": [
+      {
+        "text": "$10^{-2}$"
+      },
+      {
+        "text": "$10^{-13}$"
+      },
+      {
+        "text": "$10^{-39}$"
+      },
+      {
+        "text": "$10^{-15}$"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Easy",
+    "subtopic": "Gravitational Force",
+    "fsmTag": "force-strength-recall",
+    "concepts": [
+      "gravitational-force",
+      "relative-strength"
+    ],
+    "sourcePages": [
+      10
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Relative-strength recall from Table 1.3. The trap is option B ($10^{-13}$, the weak nuclear force) and option D ($10^{-15}$, which is the range of the strong force, not a strength).",
+        "**EXTRACT:** Asked: relative strength of gravity (with strong = 1).",
+        "**EXECUTE:** Table 1.3: Gravitational $10^{-39}$, Weak $10^{-13}$, Electromagnetic $10^{-2}$, Strong $1$.",
+        "**PROOF:** Option C matches Table 1.3."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The gravitational force is always attractive (and never repulsive). The most fundamental reason for this, according to the chapter, is that:",
+    "options": [
+      {
+        "text": "Gravitational interactions are mediated by spin-2 particles."
+      },
+      {
+        "text": "Mass comes only in one variety (there is no negative mass), whereas charge comes in two varieties."
+      },
+      {
+        "text": "The gravitational force is much weaker than the electromagnetic force at all distances."
+      },
+      {
+        "text": "The gravitational constant $G$ is always positive."
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Medium",
+    "subtopic": "Gravitational Force",
+    "fsmTag": "force-property-explanation",
+    "concepts": [
+      "gravitational-force",
+      "mass-positivity"
+    ],
+    "sourcePages": [
+      9
+    ],
+    "timeTargets": {
+      "ap_eapcet": 45,
+      "ts_eapcet": 45,
+      "jee_main": 75
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Reason-recall. The chapter gives a specific causal explanation: the single-sign character of mass.",
+        "**EXTRACT:** Asked: why gravity is always attractive.",
+        "**EXECUTE:** Section 1.4.2: 'Gravity is always attractive, while electromagnetic force can be attractive or repulsive. Another way of putting it is that mass comes only in one variety (there is no negative mass), but charge comes in two varieties: positive and negative charge.' Option A is a topic from advanced quantum field theory and is not what the chapter says. Option C is true but not the reason. Option D is a circular restatement, not an underlying reason.",
+        "**PROOF:** Option B is the explanation the chapter actually gives."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The electromagnetic force, as introduced in the chapter, is the force between:",
+    "options": [
+      {
+        "text": "All objects in the universe"
+      },
+      {
+        "text": "Nucleons in the nucleus only"
+      },
+      {
+        "text": "Charged particles"
+      },
+      {
+        "text": "Electrons and neutrinos only"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Easy",
+    "subtopic": "Electromagnetic Force",
+    "fsmTag": "force-definition-recall",
+    "concepts": [
+      "electromagnetic-force",
+      "charged-particles"
+    ],
+    "sourcePages": [
+      8,
+      9
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Definition-recall; each distractor maps to a different fundamental force.",
+        "**EXTRACT:** Asked: between what particles does the EM force act.",
+        "**EXECUTE:** Section 1.4.2: 'Electromagnetic force is the force between charged particles.' Option A describes gravity; B describes the strong force; D describes typical participants in weak interactions.",
+        "**PROOF:** Option C matches the textbook."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The range of the electromagnetic force is:",
+    "options": [
+      {
+        "text": "Approximately $10^{-15}$ m"
+      },
+      {
+        "text": "Approximately $10^{-16}$ m"
+      },
+      {
+        "text": "About 100 times the size of a nucleus"
+      },
+      {
+        "text": "Infinite"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Easy",
+    "subtopic": "Electromagnetic Force",
+    "fsmTag": "force-range-recall",
+    "concepts": [
+      "electromagnetic-force",
+      "range"
+    ],
+    "sourcePages": [
+      10
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Force-range recall.",
+        "**EXTRACT:** Asked: range of EM force.",
+        "**EXECUTE:** Table 1.3: Electromagnetic force — Range: Infinite — Operates among: Charged particles.",
+        "**PROOF:** Option D matches Table 1.3. Options A and B are the ranges of strong and weak nuclear forces respectively."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "According to Coulomb's law, as discussed in Section 1.4.2, two stationary point charges of the same sign:",
+    "options": [
+      {
+        "text": "Repel each other"
+      },
+      {
+        "text": "Attract each other"
+      },
+      {
+        "text": "Exert no force on each other"
+      },
+      {
+        "text": "Attract at short distances and repel at long distances"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Easy",
+    "subtopic": "Electromagnetic Force",
+    "fsmTag": "coulomb-law-recall",
+    "concepts": [
+      "coulombs-law",
+      "like-charges"
+    ],
+    "sourcePages": [
+      9
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Sign convention for the Coulomb force between like charges.",
+        "**EXTRACT:** Asked: behaviour of two like charges.",
+        "**EXECUTE:** Section 1.4.2: 'In the simpler case when charges are at rest, the force is given by Coulomb's law: attractive for unlike charges and repulsive for like charges.'",
+        "**PROOF:** Option A matches."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Although the electromagnetic force between two protons is about $10^{36}$ times stronger than the gravitational force between them, gravity dominates phenomena at the scale of the earth and the solar system because:",
+    "options": [
+      {
+        "text": "The electromagnetic force has a finite range, while gravity has infinite range."
+      },
+      {
+        "text": "Bulk matter is mostly electrically neutral, so net electric forces are largely zero, leaving gravity as the dominant force at large scales."
+      },
+      {
+        "text": "Electromagnetic forces cancel due to the inverse-square law, while gravitational forces add up."
+      },
+      {
+        "text": "Gravitational forces become stronger than electromagnetic forces at distances comparable to atomic dimensions."
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Medium",
+    "subtopic": "Electromagnetic Force",
+    "fsmTag": "gravity-vs-em-dominance",
+    "concepts": [
+      "electromagnetic-force",
+      "gravity",
+      "matter-neutrality"
+    ],
+    "sourcePages": [
+      9
+    ],
+    "timeTargets": {
+      "ap_eapcet": 45,
+      "ts_eapcet": 45,
+      "jee_main": 75
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Conceptual question: why does the weaker force win at large scales? The answer is qualitative and is given explicitly in the chapter.",
+        "**EXTRACT:** Asked: why gravity dominates terrestrial phenomena despite being weaker.",
+        "**EXECUTE:** Section 1.4.2: 'Matter is mostly electrically neutral (net charge is zero). Thus, electric force is largely zero and gravitational force dominates terrestrial phenomena.' Option A is wrong — both gravity and EM have infinite range. Options C and D contradict the chapter.",
+        "**PROOF:** Option B is verbatim aligned with the chapter."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Which of the following statements about the electromagnetic force is INCORRECT?",
+    "options": [
+      {
+        "text": "It can be either attractive or repulsive depending on the nature of the charges."
+      },
+      {
+        "text": "Between two protons it is approximately $10^{36}$ times stronger than the gravitational force between them."
+      },
+      {
+        "text": "It requires an intervening material medium for its propagation."
+      },
+      {
+        "text": "It underlies macroscopic forces such as tension, friction and the spring force."
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Hard",
+    "subtopic": "Electromagnetic Force",
+    "fsmTag": "em-force-multifact-trap",
+    "concepts": [
+      "electromagnetic-force",
+      "no-medium",
+      "derived-forces"
+    ],
+    "sourcePages": [
+      8,
+      9
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Multi-claim trap — find the one statement that contradicts the chapter.",
+        "**EXTRACT:** Evaluate each statement.",
+        "**EXECUTE:** (A) True — Section 1.4.2: 'electromagnetic force can be attractive or repulsive.' (B) True — Section 1.4.2: 'The electric force between two protons... is $10^{36}$ times the gravitational force between them.' (C) False — Section 1.4.2 says explicitly: '[electromagnetic force] acts over large distances and does not need any intervening medium.' (D) True — Section 1.4.2: 'It underlies the macroscopic forces like tension, friction, spring force, etc.'",
+        "**PROOF:** Option C is the false statement. EM force does not require a medium."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The strong nuclear force is primarily responsible for:",
+    "options": [
+      {
+        "text": "Causing the $\\beta$-decay of unstable nuclei"
+      },
+      {
+        "text": "Binding electrons to the nucleus in an atom"
+      },
+      {
+        "text": "Binding protons and neutrons together inside a nucleus"
+      },
+      {
+        "text": "Producing the buoyancy of objects in fluids"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Easy",
+    "subtopic": "Strong Nuclear Force",
+    "fsmTag": "strong-force-definition",
+    "concepts": [
+      "strong-nuclear-force",
+      "nucleons"
+    ],
+    "sourcePages": [
+      9
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Question describes the role of a fundamental force.",
+      "steps": [
+        "**Trigger:** See 'binds protons and neutrons inside a nucleus'.",
+        "**Action:** Map to the strong nuclear force.",
+        "**Result:** Option C."
+      ],
+      "sanityCheck": "$\\beta$-decay is the weak force; electron–nucleus binding is electromagnetic; buoyancy is a macroscopic derived force."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Force-role identification.",
+        "**EXTRACT:** Asked: primary role of the strong nuclear force.",
+        "**EXECUTE:** Section 1.4.3: 'The strong nuclear force binds protons and neutrons in a nucleus. It is evident that without some attractive force, a nucleus will be unstable due to the electric repulsion between its protons.'",
+        "**PROOF:** Option C matches; the other roles belong to other forces."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The range of the strong nuclear force is approximately:",
+    "options": [
+      {
+        "text": "$10^{-10}$ m"
+      },
+      {
+        "text": "$10^{-15}$ m"
+      },
+      {
+        "text": "$10^{-16}$ m"
+      },
+      {
+        "text": "Infinite"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Easy",
+    "subtopic": "Strong Nuclear Force",
+    "fsmTag": "force-range-recall",
+    "concepts": [
+      "strong-nuclear-force",
+      "range"
+    ],
+    "sourcePages": [
+      10
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Range-recall. Trap is option C ($10^{-16}$ m, the weak-force range).",
+        "**EXTRACT:** Asked: range of the strong nuclear force.",
+        "**EXECUTE:** Section 1.4.3 and Table 1.3: 'Its range is, however, extremely small, of about nuclear dimensions ($10^{-15}$ m).'",
+        "**PROOF:** Option B matches the textbook."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Compared to the electromagnetic force, the strong nuclear force is approximately:",
+    "options": [
+      {
+        "text": "100 times stronger"
+      },
+      {
+        "text": "10 times weaker"
+      },
+      {
+        "text": "Equal in strength"
+      },
+      {
+        "text": "$10^{36}$ times stronger"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Easy",
+    "subtopic": "Strong Nuclear Force",
+    "fsmTag": "force-strength-ratio",
+    "concepts": [
+      "strong-nuclear-force",
+      "electromagnetic-force",
+      "relative-strength"
+    ],
+    "sourcePages": [
+      10
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Force-strength ratio recall. The trap is option D ($10^{36}$), which is the proton–proton EM-to-gravity ratio, not the strong-to-EM ratio.",
+        "**EXTRACT:** Asked: strength of strong nuclear force relative to EM.",
+        "**EXECUTE:** Section 1.4.3: 'The strong nuclear force is the strongest of all fundamental forces, about 100 times the electromagnetic force in strength.'",
+        "**PROOF:** Option A matches the chapter."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Which of the following particles does NOT experience the strong nuclear force?",
+    "options": [
+      {
+        "text": "Proton"
+      },
+      {
+        "text": "Neutron"
+      },
+      {
+        "text": "A nucleus of helium"
+      },
+      {
+        "text": "Electron"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Medium",
+    "subtopic": "Strong Nuclear Force",
+    "fsmTag": "strong-force-participants",
+    "concepts": [
+      "strong-nuclear-force",
+      "electron",
+      "nucleons"
+    ],
+    "sourcePages": [
+      10
+    ],
+    "timeTargets": {
+      "ap_eapcet": 45,
+      "ts_eapcet": 45,
+      "jee_main": 75
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Participant identification. Strong force acts between nucleons (and heavier elementary particles), but not electrons.",
+        "**EXTRACT:** Asked: which particle is not subject to the strong force.",
+        "**EXECUTE:** Section 1.4.3: 'It is charge-independent and acts equally between a proton and a proton, a neutron and a neutron, and a proton and a neutron... The electron, it must be noted, does not experience this force.'",
+        "**PROOF:** Option D matches the textbook's explicit exclusion."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The weak nuclear force appears most prominently in which of the following processes?",
+    "options": [
+      {
+        "text": "$\\beta$-decay of an atomic nucleus (in which an electron and a neutrino are emitted)"
+      },
+      {
+        "text": "Total internal reflection in optical fibres"
+      },
+      {
+        "text": "Photoelectric emission from a metal surface"
+      },
+      {
+        "text": "Inelastic scattering of light by molecules"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Easy",
+    "subtopic": "Weak Nuclear Force",
+    "fsmTag": "weak-force-process",
+    "concepts": [
+      "weak-nuclear-force",
+      "beta-decay"
+    ],
+    "sourcePages": [
+      10
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Question describes the process where a force appears.",
+      "steps": [
+        "**Trigger:** See '$\\beta$-decay' or 'emission of electron and neutrino'.",
+        "**Action:** Map to the weak nuclear force.",
+        "**Result:** Option A."
+      ],
+      "sanityCheck": "Total internal reflection, photoelectric emission, and Raman scattering are all electromagnetic phenomena."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Process-to-force identification.",
+        "**EXTRACT:** Asked: process associated with the weak nuclear force.",
+        "**EXECUTE:** Section 1.4.4: 'The weak nuclear force appears only in certain nuclear processes such as the $\\beta$-decay of a nucleus. In $\\beta$-decay, the nucleus emits an electron and an uncharged particle called neutrino.'",
+        "**PROOF:** Option A matches."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The range of the weak nuclear force is approximately:",
+    "options": [
+      {
+        "text": "Infinite"
+      },
+      {
+        "text": "$10^{-10}$ m"
+      },
+      {
+        "text": "$10^{-16}$ m"
+      },
+      {
+        "text": "$10^{-15}$ m"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Easy",
+    "subtopic": "Weak Nuclear Force",
+    "fsmTag": "force-range-recall",
+    "concepts": [
+      "weak-nuclear-force",
+      "range"
+    ],
+    "sourcePages": [
+      10
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Range-recall. The trap is option D ($10^{-15}$ m, the strong-force range).",
+        "**EXTRACT:** Asked: range of the weak nuclear force.",
+        "**EXECUTE:** Section 1.4.4 and Table 1.3: 'The range of weak nuclear force is exceedingly small, of the order of $10^{-16}$ m.'",
+        "**PROOF:** Option C matches the textbook."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Arrange the four fundamental forces in DECREASING order of their relative strength (with the strongest first):",
+    "options": [
+      {
+        "text": "Electromagnetic > Strong nuclear > Weak nuclear > Gravitational"
+      },
+      {
+        "text": "Strong nuclear > Electromagnetic > Weak nuclear > Gravitational"
+      },
+      {
+        "text": "Strong nuclear > Weak nuclear > Electromagnetic > Gravitational"
+      },
+      {
+        "text": "Gravitational > Electromagnetic > Weak nuclear > Strong nuclear"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Medium",
+    "subtopic": "Weak Nuclear Force",
+    "fsmTag": "force-strength-ordering",
+    "concepts": [
+      "fundamental-forces",
+      "relative-strength",
+      "ordering"
+    ],
+    "sourcePages": [
+      10
+    ],
+    "timeTargets": {
+      "ap_eapcet": 45,
+      "ts_eapcet": 45,
+      "jee_main": 75
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Strength-ordering using the four values from Table 1.3.",
+        "**EXTRACT:** Use the relative strengths: Gravity $10^{-39}$, Weak $10^{-13}$, EM $10^{-2}$, Strong $1$.",
+        "**EXECUTE:** Decreasing order: $1 > 10^{-2} > 10^{-13} > 10^{-39}$. That is Strong > EM > Weak > Gravity.",
+        "**PROOF:** Option B matches Table 1.3."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Newton's universal law of gravitation represents the unification of:",
+    "options": [
+      {
+        "text": "Terrestrial gravitation (e.g., the fall of an apple) and celestial gravitation (e.g., the motion of the moon and planets) under a single law"
+      },
+      {
+        "text": "Electric and magnetic phenomena"
+      },
+      {
+        "text": "Electromagnetism and optics"
+      },
+      {
+        "text": "The weak nuclear force and the electromagnetic force"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Easy",
+    "subtopic": "Unification of Forces",
+    "fsmTag": "unification-milestone-match",
+    "concepts": [
+      "newton",
+      "universal-gravitation",
+      "unification"
+    ],
+    "sourcePages": [
+      10
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Question asks what Newton unified.",
+      "steps": [
+        "**Trigger:** See 'Newton' + 'unification'.",
+        "**Action:** Map to terrestrial + celestial gravitation.",
+        "**Result:** Option A."
+      ],
+      "sanityCheck": "Oersted/Faraday → electric+magnetic; Maxwell → EM+optics; Salam et al. → electroweak."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Unification-milestone identification.",
+        "**EXTRACT:** Asked: what did Newton unify.",
+        "**EXECUTE:** Section 1.4.5: 'Newton unified terrestrial and celestial domains under a common law of gravitation.'",
+        "**PROOF:** Option A matches."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "James Clerk Maxwell's contribution to the unification of physical phenomena was the demonstration that:",
+    "options": [
+      {
+        "text": "Electric and magnetic effects are different aspects of the same phenomenon, but unrelated to optics"
+      },
+      {
+        "text": "Light is an electromagnetic wave, thereby unifying electromagnetism and optics"
+      },
+      {
+        "text": "The weak nuclear force and the electromagnetic force can be unified into a single electroweak force"
+      },
+      {
+        "text": "Gravitation and electromagnetism can be derived from a single set of field equations"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Easy",
+    "subtopic": "Unification of Forces",
+    "fsmTag": "unification-milestone-match",
+    "concepts": [
+      "maxwell",
+      "electromagnetism",
+      "light-as-em-wave"
+    ],
+    "sourcePages": [
+      10
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Question asks what Maxwell unified.",
+      "steps": [
+        "**Trigger:** See 'Maxwell' + 'unification'.",
+        "**Action:** Map to 'light is an electromagnetic wave' → unifies electromagnetism and optics.",
+        "**Result:** Option B."
+      ],
+      "sanityCheck": "Electroweak is Salam, Glashow, Weinberg — not Maxwell."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Unification-milestone identification.",
+        "**EXTRACT:** Asked: what did Maxwell unify.",
+        "**EXECUTE:** Section 1.4.5: 'Maxwell unified electromagnetism and optics with the discovery that light is an electromagnetic wave.' Table 1.1 corroborates: Maxwell — 'Electromagnetic theory; Light - an electromagnetic wave.'",
+        "**PROOF:** Option B matches."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Which of the following pairs of fundamental forces has already been unified into a single 'electroweak' interaction?",
+    "options": [
+      {
+        "text": "Gravitational force and electromagnetic force"
+      },
+      {
+        "text": "Strong nuclear force and electromagnetic force"
+      },
+      {
+        "text": "Electromagnetic force and weak nuclear force"
+      },
+      {
+        "text": "Strong nuclear force and weak nuclear force"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Medium",
+    "subtopic": "Unification of Forces",
+    "fsmTag": "electroweak-unification",
+    "concepts": [
+      "electroweak-unification",
+      "salam"
+    ],
+    "sourcePages": [
+      11
+    ],
+    "timeTargets": {
+      "ap_eapcet": 45,
+      "ts_eapcet": 45,
+      "jee_main": 75
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Unification-state identification.",
+        "**EXTRACT:** Asked: which pair has been unified into the electroweak force.",
+        "**EXECUTE:** Section 1.4.5: 'The electromagnetic and the weak nuclear force have now been unified and are seen as aspects of a single electro-weak force.' Table 1.1 attributes the achievement to Abdus Salam (with Glashow and Weinberg, though the chapter names only Salam).",
+        "**PROOF:** Option C matches the chapter."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Which of the following unifications has NOT yet been achieved by physicists, according to the chapter?",
+    "options": [
+      {
+        "text": "Unification of terrestrial and celestial gravitation under a single law"
+      },
+      {
+        "text": "Unification of electricity and magnetism into electromagnetism"
+      },
+      {
+        "text": "Unification of electromagnetism and optics by recognising light as an electromagnetic wave"
+      },
+      {
+        "text": "Unification of the gravitational force with the other fundamental forces"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Hard",
+    "subtopic": "Unification of Forces",
+    "fsmTag": "unification-status-trap",
+    "concepts": [
+      "unification",
+      "gravity",
+      "open-problems"
+    ],
+    "sourcePages": [
+      10,
+      11
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Multi-claim trap — three options describe completed unifications; one describes an open problem.",
+        "**EXTRACT:** Identify the unification still open.",
+        "**EXECUTE:** (A) Done by Newton. (B) Done by Oersted/Faraday and consolidated by Maxwell. (C) Done by Maxwell. (D) The chapter states: 'Einstein attempted to unify gravity and electromagnetism but could not succeed in this venture.' It also notes that 'Attempts have been (and are being) made to... unify the gravitational force with the rest of the fundamental forces. Many of these ideas are still speculative and inconclusive.'",
+        "**PROOF:** Option D is the unfinished unification."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "For a body moving under an external conservative force, which of the following quantities remains constant in time?",
+    "options": [
+      {
+        "text": "Kinetic energy alone"
+      },
+      {
+        "text": "Potential energy alone"
+      },
+      {
+        "text": "The sum of kinetic and potential energy (total mechanical energy)"
+      },
+      {
+        "text": "The speed of the body"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Easy",
+    "subtopic": "Nature of Physical Laws",
+    "fsmTag": "mechanical-energy-conservation",
+    "concepts": [
+      "conservation-of-mechanical-energy",
+      "conservative-force"
+    ],
+    "sourcePages": [
+      11
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Conservation-law recall.",
+        "**EXTRACT:** Asked: which quantity is constant for a body under a conservative force.",
+        "**EXECUTE:** Section 1.5: 'For motion under an external conservative force, the total mechanical energy i.e. the sum of kinetic and potential energy of a body is a constant.'",
+        "**PROOF:** Option C matches the textbook. KE and PE both change with time individually (e.g. in free fall) but their sum is fixed."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The mass-energy equivalence relation $E = mc^2$ is associated with:",
+    "options": [
+      {
+        "text": "Isaac Newton"
+      },
+      {
+        "text": "Albert Einstein"
+      },
+      {
+        "text": "Niels Bohr"
+      },
+      {
+        "text": "Werner Heisenberg"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Easy",
+    "subtopic": "Nature of Physical Laws",
+    "fsmTag": "scientist-discovery-match",
+    "concepts": [
+      "mass-energy-equivalence",
+      "einstein"
+    ],
+    "sourcePages": [
+      12
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Equation-to-scientist match.",
+        "**EXTRACT:** Asked: who is associated with $E=mc^2$.",
+        "**EXECUTE:** Section 1.5: 'According to Einstein's theory, mass $m$ is equivalent to energy $E$ given by the relation $E = mc^2$, where $c$ is speed of light in vacuum.' Table 1.1 also lists Einstein's contributions including theory of relativity.",
+        "**PROOF:** Option B matches."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Which of the following is NOT among the general conservation laws of nature listed in this chapter?",
+    "options": [
+      {
+        "text": "Conservation of energy"
+      },
+      {
+        "text": "Conservation of linear momentum"
+      },
+      {
+        "text": "Conservation of electric charge"
+      },
+      {
+        "text": "Conservation of velocity"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Easy",
+    "subtopic": "Nature of Physical Laws",
+    "fsmTag": "conservation-law-recall",
+    "concepts": [
+      "conservation-laws",
+      "velocity"
+    ],
+    "sourcePages": [
+      13
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Conservation-law identification. The trap is option D — velocity changes when momentum is conserved (e.g., in inelastic collisions, total momentum is conserved but velocities change).",
+        "**EXTRACT:** Asked: which is NOT a general conservation law.",
+        "**EXECUTE:** Section 1.5 Summary point 5: 'Some of the general conservation laws in nature include the laws of conservation of mass, energy, linear momentum, angular momentum, charge, parity, etc.' Velocity is not listed and is not generally conserved.",
+        "**PROOF:** Option D is the non-conservation answer."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The symmetry of the laws of nature with respect to translation in TIME (i.e., the fact that physical laws do not change with time) gives rise to the conservation of:",
+    "options": [
+      {
+        "text": "Energy"
+      },
+      {
+        "text": "Linear momentum"
+      },
+      {
+        "text": "Angular momentum"
+      },
+      {
+        "text": "Electric charge"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Medium",
+    "subtopic": "Nature of Physical Laws",
+    "fsmTag": "symmetry-conservation-mapping",
+    "concepts": [
+      "time-translation-symmetry",
+      "energy-conservation",
+      "noether"
+    ],
+    "sourcePages": [
+      13
+    ],
+    "timeTargets": {
+      "ap_eapcet": 45,
+      "ts_eapcet": 45,
+      "jee_main": 75
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Symmetry → conservation mapping. Three traps map to the other two spatial symmetries plus an unrelated conservation law.",
+        "**EXTRACT:** Asked: conservation law arising from time-translation symmetry.",
+        "**EXECUTE:** Section 1.5: 'this symmetry of nature with respect to translation (i.e. displacement) in time is equivalent to the law of conservation of energy.'",
+        "**PROOF:** Option A matches the chapter."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The isotropy of space (i.e., the absence of any intrinsically preferred direction in space) underlies the law of conservation of:",
+    "options": [
+      {
+        "text": "Energy"
+      },
+      {
+        "text": "Linear momentum"
+      },
+      {
+        "text": "Angular momentum"
+      },
+      {
+        "text": "Mass"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Medium",
+    "subtopic": "Nature of Physical Laws",
+    "fsmTag": "symmetry-conservation-mapping",
+    "concepts": [
+      "isotropy",
+      "angular-momentum-conservation"
+    ],
+    "sourcePages": [
+      13
+    ],
+    "timeTargets": {
+      "ap_eapcet": 45,
+      "ts_eapcet": 45,
+      "jee_main": 75
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Symmetry → conservation mapping. Trap option B is for HOMOGENEITY of space (translation), not isotropy (rotation).",
+        "**EXTRACT:** Asked: conservation law arising from isotropy of space.",
+        "**EXECUTE:** Section 1.5: 'isotropy of space (no intrinsically preferred direction in space) underlies the law of conservation of angular momentum.' Compare: homogeneity of space → linear momentum; homogeneity of time → energy.",
+        "**PROOF:** Option C matches the chapter."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "In 1931, Wolfgang Pauli predicted the existence of a then-undetected particle (later named the neutrino), emitted in $\\beta$-decay alongside the electron. The basis of his prediction was:",
+    "options": [
+      {
+        "text": "Direct experimental observation of the missing particle"
+      },
+      {
+        "text": "The application of the conservation laws of energy and momentum to $\\beta$-decay"
+      },
+      {
+        "text": "Symmetry arguments based on Maxwell's equations"
+      },
+      {
+        "text": "The principle of charge conservation alone"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Medium",
+    "subtopic": "Nature of Physical Laws",
+    "fsmTag": "conservation-law-application",
+    "concepts": [
+      "pauli",
+      "neutrino-prediction",
+      "conservation-of-energy"
+    ],
+    "sourcePages": [
+      13
+    ],
+    "timeTargets": {
+      "ap_eapcet": 45,
+      "ts_eapcet": 45,
+      "jee_main": 75
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Historical use of conservation laws to predict a new particle.",
+        "**EXTRACT:** Asked: basis of Pauli's 1931 neutrino prediction.",
+        "**EXECUTE:** Section 1.5: 'using the conservation laws of energy and momentum for $\\beta$-decay, Wolfgang Pauli (1900-1958) correctly predicted in 1931 the existence of a new particle (now called neutrino) emitted in $\\beta$-decay along with the electron.' Option A is wrong because the prediction preceded experimental detection. Option D is incomplete: Pauli used BOTH energy and momentum conservation, not charge alone.",
+        "**PROOF:** Option B matches the chapter."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Which of the following statements about conservation laws in physics is INCORRECT?",
+    "options": [
+      {
+        "text": "The conservation of linear momentum arises from the homogeneity of space (no preferred location)."
+      },
+      {
+        "text": "The conservation of angular momentum arises from the isotropy of space (no preferred direction)."
+      },
+      {
+        "text": "The conservation of energy arises from the homogeneity of time (laws of nature do not change with time)."
+      },
+      {
+        "text": "A conservation law can be rigorously proved by a sufficient number of confirming experiments."
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Hard",
+    "subtopic": "Nature of Physical Laws",
+    "fsmTag": "conservation-law-multifact-trap",
+    "concepts": [
+      "conservation-laws",
+      "symmetry",
+      "epistemology-of-science"
+    ],
+    "sourcePages": [
+      12,
+      13
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Multi-claim trap. Three options are correct symmetry–conservation correspondences from Section 1.5; one is an epistemological claim that the chapter explicitly contradicts.",
+        "**EXTRACT:** Identify the statement that contradicts the chapter.",
+        "**EXECUTE:** (A) True per Section 1.5. (B) True per Section 1.5. (C) True per Section 1.5. (D) False — the 'Conservation laws in physics' sidebar says explicitly: 'A conservation law is a hypothesis, based on observations and experiments. It is important to remember that a conservation law cannot be proved. It can be verified, or disproved, by experiments... a single experiment whose result goes against the law is enough to disprove it.' Verification is not the same as proof.",
+        "**PROOF:** Option D is the false statement and is therefore the answer."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  }
+]
