@@ -6,27 +6,16 @@ import {
   Copy,
   Pencil,
   RotateCcw,
+  Loader2,
 } from 'lucide-react';
-import { BulkImportPayloadSchema, type BulkImportQuestion } from '@drut/shared';
+import { BulkImportPayloadSchema, type BulkImportQuestion, supabase } from '@drut/shared';
 import type { ZodIssue } from 'zod';
 
 /**
- * BulkImport — admin tab for previewing Claude.ai-generated question batches.
+ * BulkImport — admin tab for importing Claude.ai-generated question batches.
  *
- * Scope (PR #2b of the Bulk Import roadmap):
- *   - Drop zone + click-to-upload (.json only)
- *   - Schema validation via @drut/shared BulkImportPayloadSchema
- *   - Read-only preview of first 10 questions on success
- *   - Error list + Copy-errors button on schema violation (whole-batch reject)
- *   - NO database writes. NO batch tagging form. NO confirm button.
- *   - NO visual rendering (svg / smiles) — PR #2c folds in QuestionVisual
- *     per forlater #47.
- *
- * Follow-up PRs:
- *   PR #2c — QuestionVisual renderer (RDKit-JS + sanitized SVG)
- *   PR #3  — batch tagging form (source label, exam profile, subject, class, board)
- *   PR #4  — dedup + insert via edge function
- *   PR #5  — RLS hardening (post-beta)
+ * Full pipeline: drop JSON -> validate -> tag -> upload via edge function.
+ * Edge function: admin-bulk-import (deployed to Supabase).
  */
 
 interface ParseError {
@@ -40,6 +29,31 @@ type ParseResult =
   | { status: 'parsing'; fileName: string }
   | { status: 'success'; fileName: string; questions: BulkImportQuestion[] }
   | { status: 'error'; fileName: string; errors: ParseError[] };
+
+// =====================================================================
+// Upload state — tracks the edge function call lifecycle.
+// =====================================================================
+
+interface UploadPerRow {
+  questionIndex: number;
+  examProfile: string;
+  hash: string;
+  status: 'inserted' | 'duplicate';
+}
+
+interface UploadResult {
+  inserted: number;
+  duplicates: number;
+  total: number;
+  sourceLabel: string;
+  perRow: UploadPerRow[];
+}
+
+type UploadState =
+  | { status: 'idle' }
+  | { status: 'uploading' }
+  | { status: 'done'; result: UploadResult }
+  | { status: 'error'; message: string };
 
 // =====================================================================
 // Batch tagging — metadata that goes onto every row in a batch.
@@ -125,6 +139,7 @@ export const BulkImport: React.FC = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [batchTags, setBatchTags] = useState<BatchTags>(DEFAULT_TAGS);
   const [isEditingSourceLabel, setIsEditingSourceLabel] = useState(false);
+  const [upload, setUpload] = useState<UploadState>({ status: 'idle' });
 
   // Today's date in YYYY-MM-DD — computed once per mount so the source
   // label doesn't churn while the admin is filling the form.
@@ -221,6 +236,46 @@ export const BulkImport: React.FC = () => {
     }
   };
 
+  const handleUpload = useCallback(async () => {
+    if (result.status !== 'success' || !tagsComplete) return;
+    setUpload({ status: 'uploading' });
+    try {
+      const { data, error } = await supabase.functions.invoke('admin-bulk-import', {
+        body: {
+          batchTags: {
+            subject: batchTags.subject,
+            className: batchTags.className,
+            board: batchTags.board,
+            chapter: batchTags.chapter.trim(),
+            examProfiles: batchTags.examProfiles,
+            sourceLabel,
+          },
+          questions: result.questions,
+        },
+      });
+
+      if (error) {
+        const msg = typeof error === 'object' && 'message' in error
+          ? (error as { message: string }).message
+          : String(error);
+        setUpload({ status: 'error', message: msg });
+        return;
+      }
+
+      if (data?.code) {
+        setUpload({ status: 'error', message: `${data.code}: ${data.error}` });
+        return;
+      }
+
+      setUpload({ status: 'done', result: data as UploadResult });
+    } catch (err) {
+      setUpload({
+        status: 'error',
+        message: err instanceof Error ? err.message : String(err),
+      });
+    }
+  }, [result, batchTags, sourceLabel, tagsComplete]);
+
   return (
     <div className="space-y-6">
       <div>
@@ -228,7 +283,7 @@ export const BulkImport: React.FC = () => {
           Bulk Import Questions
         </h2>
         <p className="text-[14px] text-[var(--color-ink-3)] mt-1">
-          Drop a Claude.ai-generated JSON batch to validate. No database writes from this screen yet — tagging + insert ship in follow-up PRs.
+          Drop a Claude.ai-generated JSON batch to validate, tag, and upload.
         </p>
       </div>
 
@@ -510,22 +565,88 @@ export const BulkImport: React.FC = () => {
               )}
             </div>
 
-            {/* Confirm — disabled pending PR #4 */}
+            {/* Confirm upload */}
             <div className="pt-2 border-t border-[var(--color-line)] flex items-center justify-between">
               <p className="text-[12px] text-[var(--color-ink-3)]">
-                {tagsComplete
-                  ? `Ready to upload ${result.questions.length} questions — confirm path lands in PR #4.`
-                  : 'Complete all required fields above to enable upload.'}
+                {upload.status === 'uploading'
+                  ? 'Uploading…'
+                  : upload.status === 'done'
+                    ? `Done — ${upload.result.inserted} inserted, ${upload.result.duplicates} duplicates.`
+                    : tagsComplete
+                      ? `Ready to upload ${result.questions.length} questions.`
+                      : 'Complete all required fields above to enable upload.'}
               </p>
               <button
                 type="button"
-                disabled
-                className="px-4 py-2 bg-[var(--color-ink-3)] text-white rounded text-[14px] font-medium opacity-50 cursor-not-allowed"
-                title="Insert path ships in PR #4"
+                disabled={!tagsComplete || upload.status === 'uploading' || upload.status === 'done'}
+                onClick={handleUpload}
+                className={`px-4 py-2 rounded text-[14px] font-medium flex items-center gap-2 ${
+                  !tagsComplete || upload.status === 'uploading' || upload.status === 'done'
+                    ? 'bg-[var(--color-ink-3)] text-white opacity-50 cursor-not-allowed'
+                    : 'bg-[var(--color-accent)] text-white hover:opacity-90 cursor-pointer'
+                }`}
               >
-                Confirm upload
+                {upload.status === 'uploading' && (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                )}
+                {upload.status === 'done' ? 'Uploaded' : 'Confirm upload'}
               </button>
             </div>
+
+            {/* Upload error */}
+            {upload.status === 'error' && (
+              <div className="flex items-start gap-2 p-3 bg-red-50 border border-red-200 rounded text-[13px] text-red-900">
+                <AlertCircle className="h-4 w-4 shrink-0 mt-0.5" />
+                <span>{upload.message}</span>
+              </div>
+            )}
+
+            {/* Upload result detail */}
+            {upload.status === 'done' && (
+              <div className="space-y-3">
+                <div className="flex items-center gap-2 text-[14px] text-green-700">
+                  <CheckCircle2 className="h-4 w-4" />
+                  <span>
+                    {upload.result.inserted} row{upload.result.inserted === 1 ? '' : 's'} inserted,{' '}
+                    {upload.result.duplicates} duplicate{upload.result.duplicates === 1 ? '' : 's'} skipped
+                    (total {upload.result.total}).
+                  </span>
+                </div>
+                {upload.result.perRow.length > 0 && (
+                  <details className="text-[12px]">
+                    <summary className="cursor-pointer text-[var(--color-ink-3)] hover:text-[var(--color-ink-1)]">
+                      Show per-row detail ({upload.result.perRow.length} rows)
+                    </summary>
+                    <div className="mt-2 border border-[var(--color-line)] rounded-lg overflow-hidden max-h-64 overflow-y-auto">
+                      <table className="w-full text-[12px]">
+                        <thead className="bg-[var(--color-paper-2)] sticky top-0">
+                          <tr>
+                            <th className="px-3 py-1.5 text-left font-medium text-[var(--color-ink-2)]">Q#</th>
+                            <th className="px-3 py-1.5 text-left font-medium text-[var(--color-ink-2)]">Exam</th>
+                            <th className="px-3 py-1.5 text-left font-medium text-[var(--color-ink-2)]">Status</th>
+                            <th className="px-3 py-1.5 text-left font-medium text-[var(--color-ink-2)] font-mono">Hash (first 12)</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {upload.result.perRow.map((row, i) => (
+                            <tr key={i} className="border-t border-[var(--color-line)]">
+                              <td className="px-3 py-1.5 text-[var(--color-ink-3)]">{row.questionIndex + 1}</td>
+                              <td className="px-3 py-1.5 text-[var(--color-ink-2)]">{row.examProfile}</td>
+                              <td className="px-3 py-1.5">
+                                <span className={row.status === 'inserted' ? 'text-green-700' : 'text-amber-600'}>
+                                  {row.status}
+                                </span>
+                              </td>
+                              <td className="px-3 py-1.5 font-mono text-[var(--color-ink-3)]">{row.hash.slice(0, 12)}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </details>
+                )}
+              </div>
+            )}
           </div>
         </div>
       )}
