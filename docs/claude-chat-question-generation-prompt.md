@@ -147,8 +147,10 @@ OUTPUT SCHEMA (strict JSON array):
         "**PROOF:** [Verify the answer makes mathematical/physical sense]"
       ]
     },
-    "visual": { "type": "none" }            // see DIAGRAMS section below for the
-                                            // three accepted shapes:
+    "visual": { "type": "none" }            // FIELD NAME IS "visual" — NOT "visualDescription".
+                                            // "visualDescription" is the deprecated old name and
+                                            // will be REJECTED by the strict schema validator.
+                                            // See DIAGRAMS section below for the three accepted shapes:
                                             //   { "type": "none" }                          ← pure text/math
                                             //   { "type": "svg",    "svg":    "<svg>..." } ← graphs, geometry, circuits
                                             //   { "type": "smiles", "smiles": "CC..." }    ← organic molecules
@@ -183,6 +185,13 @@ D.E.E.P. RULES (Full Solution / depth):
 - PROOF: dimensional check, plausibility, edge case verification
 
 DIAGRAMS — when and how to attach a visual:
+
+CRITICAL FIELD NAME — the field is **"visual"**, NOT "visualDescription".
+"visualDescription" is the OLD field name from an earlier draft of this
+prompt; it will be REJECTED by the validator (the schema is .strict() and
+treats unknown keys as errors). Every question must include a "visual"
+field with one of the three shapes below. For text-only questions, use
+exactly: "visual": { "type": "none" } — do NOT emit "visualDescription": null.
 
 The "visual" field is a tagged union with three accepted shapes. Pick
 the shape that matches what the question genuinely needs. When uncertain,
