@@ -1,0 +1,1464 @@
+[
+  {
+    "questionText": "Which of the following is a SCALAR quantity?",
+    "options": [
+      { "text": "Velocity" },
+      { "text": "Acceleration" },
+      { "text": "Speed" },
+      { "text": "Displacement" }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Easy",
+    "subtopic": "Scalars and Vectors",
+    "fsmTag": "scalar-vector-classification",
+    "concepts": ["scalar-vector", "speed"],
+    "sourcePages": [68],
+    "timeTargets": { "ap_eapcet": 25, "ts_eapcet": 25, "jee_main": 35 },
+    "theOptimalPath": { "exists": false, "steps": [] },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Classify each as scalar or vector (Section 4.2).",
+        "**EXTRACT:** Test velocity, acceleration, speed, displacement.",
+        "**EXECUTE:** Speed is the magnitude of velocity - a single number with no direction, hence a scalar.",
+        "**PROOF:** Velocity, acceleration and displacement all carry direction (vectors). Only speed is directionless - option C."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "If a vector is reversed in direction (its direction is flipped by 180°), its magnitude:",
+    "options": [
+      { "text": "doubles" },
+      { "text": "is unchanged" },
+      { "text": "becomes zero" },
+      { "text": "is halved" }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Easy",
+    "subtopic": "Scalars and Vectors",
+    "fsmTag": "reversal-magnitude-invariance",
+    "concepts": ["vector-direction", "magnitude"],
+    "sourcePages": [70],
+    "timeTargets": { "ap_eapcet": 25, "ts_eapcet": 25, "jee_main": 35 },
+    "theOptimalPath": { "exists": false, "steps": [] },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Effect of direction reversal on magnitude (Section 4.3: $-\\mathbf{A}$ has the same length as $\\mathbf{A}$).",
+        "**EXTRACT:** Reversal multiplies the vector by $-1$.",
+        "**EXECUTE:** $|-\\mathbf{A}| = |-1|\\,|\\mathbf{A}| = |\\mathbf{A}|$ - the magnitude is unchanged; only the direction flips.",
+        "**PROOF:** Options A and D would require a scaling factor other than $\\pm 1$; option C would need the vector to vanish. Reversal preserves magnitude - option B."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "The position vector of a point located at coordinates $(x, y)$ in a plane (origin at O) is:",
+    "options": [
+      { "text": "$x\\hat{i} + y\\hat{j}$" },
+      { "text": "$x\\hat{i} - y\\hat{j}$" },
+      { "text": "$\\sqrt{x^2 + y^2}$" },
+      { "text": "$y\\hat{i} + x\\hat{j}$" }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Medium",
+    "subtopic": "Scalars and Vectors",
+    "fsmTag": "position-vector-form",
+    "concepts": ["position-vector", "components"],
+    "sourcePages": [76],
+    "timeTargets": { "ap_eapcet": 35, "ts_eapcet": 35, "jee_main": 50 },
+    "theOptimalPath": { "exists": false, "steps": [] },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Form of the position vector (Section 4.7.1, Eq. 4.17): $\\mathbf{r} = x\\hat{i} + y\\hat{j}$.",
+        "**EXTRACT:** Coordinates $(x, y)$.",
+        "**EXECUTE:** The position vector points from the origin to the point, with x- and y-components equal to the coordinates: $\\mathbf{r} = x\\hat{i} + y\\hat{j}$.",
+        "**PROOF:** Option B flips the sign of the y-component; option C is the MAGNITUDE (a scalar), not the vector; option D swaps the components onto the wrong axes. The position vector is option A."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "Which of the following operations is NOT defined (is meaningless)?",
+    "options": [
+      { "text": "Adding two vectors" },
+      { "text": "Multiplying a vector by a scalar" },
+      { "text": "Adding a scalar to a vector" },
+      { "text": "Subtracting one vector from another" }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Hard",
+    "subtopic": "Scalars and Vectors",
+    "fsmTag": "vector-operation-validity-trap",
+    "concepts": ["vector-addition", "scalar-vector"],
+    "sourcePages": [70, 71],
+    "timeTargets": { "ap_eapcet": 70, "ts_eapcet": 70, "jee_main": 100 },
+    "theOptimalPath": { "exists": false, "steps": [] },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Which operation is undefined in vector algebra (Sections 4.3, 4.4).",
+        "**EXTRACT:** Test each operation.",
+        "**EXECUTE:** Adding a scalar (a pure number) to a vector (magnitude + direction) is meaningless - they are different kinds of object, like adding a temperature to a displacement.",
+        "**PROOF:** Vector + vector (A) is defined by the triangle law; scalar × vector (B) scales the vector; vector − vector (D) is $\\mathbf{A} + (-\\mathbf{B})$. Only scalar + vector has no definition - option C."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "The vector $3\\mathbf{A}$ (where $\\mathbf{A}$ is a non-zero vector) has:",
+    "options": [
+      { "text": "three times the magnitude of $\\mathbf{A}$ and the same direction" },
+      { "text": "three times the magnitude of $\\mathbf{A}$ and the opposite direction" },
+      { "text": "one-third the magnitude of $\\mathbf{A}$ and the same direction" },
+      { "text": "the same magnitude as $\\mathbf{A}$" }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Easy",
+    "subtopic": "Multiplication of Vectors by Real Numbers",
+    "fsmTag": "positive-scalar-multiplication",
+    "concepts": ["scalar-multiplication"],
+    "sourcePages": [70],
+    "timeTargets": { "ap_eapcet": 25, "ts_eapcet": 25, "jee_main": 35 },
+    "theOptimalPath": { "exists": false, "steps": [] },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Multiplication by a positive scalar (Section 4.3): magnitude scales, direction preserved.",
+        "**EXTRACT:** $\\lambda = 3 > 0$.",
+        "**EXECUTE:** $|3\\mathbf{A}| = 3|\\mathbf{A}|$ and the direction is the same as $\\mathbf{A}$ (positive $\\lambda$).",
+        "**PROOF:** Option B reverses the direction (would need negative $\\lambda$); option C inverts the factor to $1/3$; option D ignores the scaling. Three times longer, same direction - option A."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "A vector $\\mathbf{A}$ has magnitude 4 units. The magnitude of $-2\\mathbf{A}$ is:",
+    "options": [
+      { "text": "2 units" },
+      { "text": "$-8$ units" },
+      { "text": "4 units" },
+      { "text": "8 units" }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Medium",
+    "subtopic": "Multiplication of Vectors by Real Numbers",
+    "fsmTag": "negative-scalar-magnitude",
+    "concepts": ["scalar-multiplication", "magnitude"],
+    "sourcePages": [70],
+    "timeTargets": { "ap_eapcet": 35, "ts_eapcet": 35, "jee_main": 50 },
+    "theOptimalPath": { "exists": false, "steps": [] },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Magnitude under multiplication by a negative scalar (Section 4.3): $|\\lambda\\mathbf{A}| = |\\lambda|\\,|\\mathbf{A}|$.",
+        "**EXTRACT:** $\\lambda = -2$, $|\\mathbf{A}| = 4$.",
+        "**EXECUTE:** $|-2\\mathbf{A}| = |-2| \\times 4 = 2 \\times 4 = 8$ units. (The direction reverses, but magnitude is always non-negative.)",
+        "**PROOF:** Option A divides by 2; option B keeps the minus sign on the magnitude (a magnitude cannot be negative); option C ignores the factor 2. The magnitude is $|{-2}| \\times 4 = 8$ - option D."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "The unit vector $\\hat{n}$ along a vector $\\mathbf{A}$ is given by:",
+    "options": [
+      { "text": "$\\mathbf{A}/|\\mathbf{A}|$" },
+      { "text": "$\\mathbf{A} \\times |\\mathbf{A}|$" },
+      { "text": "$|\\mathbf{A}|/\\mathbf{A}$" },
+      { "text": "$\\mathbf{A} + |\\mathbf{A}|$" }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Medium",
+    "subtopic": "Multiplication of Vectors by Real Numbers",
+    "fsmTag": "unit-vector-construction",
+    "concepts": ["unit-vector", "scalar-multiplication"],
+    "sourcePages": [73, 85],
+    "timeTargets": { "ap_eapcet": 35, "ts_eapcet": 35, "jee_main": 50 },
+    "theOptimalPath": { "exists": false, "steps": [] },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Construction of the unit vector (Section 4.5, Eq. 4.10; Summary point 9): $\\hat{n} = \\mathbf{A}/|\\mathbf{A}|$.",
+        "**EXTRACT:** A unit vector has magnitude 1 and the direction of $\\mathbf{A}$.",
+        "**EXECUTE:** Dividing $\\mathbf{A}$ by its own magnitude scales it to length 1 while keeping its direction: $\\hat{n} = \\mathbf{A}/|\\mathbf{A}|$.",
+        "**PROOF:** Option B multiplies (lengthening, not normalising); option C divides a scalar by a vector (undefined); option D adds a scalar to a vector (meaningless). The normalisation is option A."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "The graphical method in which the tail of the second vector is placed at the head of the first, and the resultant joins the first tail to the second head, is the:",
+    "options": [
+      { "text": "resolution method" },
+      { "text": "triangle (head-to-tail) method" },
+      { "text": "component method" },
+      { "text": "scalar product method" }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Easy",
+    "subtopic": "Vector Addition and Subtraction",
+    "fsmTag": "triangle-method-identification",
+    "concepts": ["vector-addition", "triangle-law"],
+    "sourcePages": [70, 71],
+    "timeTargets": { "ap_eapcet": 30, "ts_eapcet": 30, "jee_main": 45 },
+    "theOptimalPath": { "exists": false, "steps": [] },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Identify the named graphical method (Section 4.4).",
+        "**EXTRACT:** Head-to-tail placement, resultant closes the triangle.",
+        "**EXECUTE:** This is the triangle (head-to-tail) method of vector addition.",
+        "**PROOF:** Resolution (option A) splits a vector into components; the component method (option C) adds via components, not graphically; the scalar product (option D) is a different operation entirely. Head-to-tail addition is the triangle method - option B."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "For any vector $\\mathbf{A}$, the sum $\\mathbf{A} + (-\\mathbf{A})$ equals:",
+    "options": [
+      { "text": "$2\\mathbf{A}$" },
+      { "text": "$\\mathbf{A}$" },
+      { "text": "$-2\\mathbf{A}$" },
+      { "text": "the null vector $\\mathbf{0}$" }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Medium",
+    "subtopic": "Vector Addition and Subtraction",
+    "fsmTag": "null-vector-from-opposite",
+    "concepts": ["null-vector", "vector-addition"],
+    "sourcePages": [71],
+    "timeTargets": { "ap_eapcet": 30, "ts_eapcet": 30, "jee_main": 45 },
+    "theOptimalPath": { "exists": false, "steps": [] },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Adding a vector to its negative (Section 4.4, Eq. 4.3).",
+        "**EXTRACT:** $\\mathbf{A}$ and $-\\mathbf{A}$ have equal magnitude, opposite direction.",
+        "**EXECUTE:** They cancel exactly: $\\mathbf{A} + (-\\mathbf{A}) = \\mathbf{0}$, the null (zero) vector.",
+        "**PROOF:** Option A would require adding two copies of $\\mathbf{A}$; option B ignores the second term; option C has the wrong sign and magnitude. Equal-and-opposite vectors sum to the null vector - option D."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "Two vectors of equal magnitude 6 units point in the SAME direction. The magnitude of their difference $\\mathbf{A} - \\mathbf{B}$ is:",
+    "options": [
+      { "text": "0" },
+      { "text": "12 units" },
+      { "text": "6 units" },
+      { "text": "3 units" }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Medium",
+    "subtopic": "Vector Addition and Subtraction",
+    "fsmTag": "difference-of-equal-vectors",
+    "concepts": ["vector-subtraction", "null-vector"],
+    "sourcePages": [71],
+    "timeTargets": { "ap_eapcet": 40, "ts_eapcet": 40, "jee_main": 55 },
+    "theOptimalPath": { "exists": false, "steps": [] },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Difference of two equal, parallel vectors (Section 4.4).",
+        "**EXTRACT:** $\\mathbf{A}$ and $\\mathbf{B}$ have the same magnitude (6) and the same direction, so $\\mathbf{A} = \\mathbf{B}$.",
+        "**EXECUTE:** $\\mathbf{A} - \\mathbf{B} = \\mathbf{A} - \\mathbf{A} = \\mathbf{0}$, magnitude 0.",
+        "**PROOF:** Option B is the magnitude of their SUM ($6 + 6$); option C reports one vector's magnitude; option D halves it. Equal parallel vectors have zero difference - option A."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "If two vectors $\\mathbf{A}$ and $\\mathbf{B}$ satisfy $|\\mathbf{A} + \\mathbf{B}| = |\\mathbf{A} - \\mathbf{B}|$, then the angle between $\\mathbf{A}$ and $\\mathbf{B}$ is:",
+    "options": [
+      { "text": "0°" },
+      { "text": "180°" },
+      { "text": "90°" },
+      { "text": "45°" }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Hard",
+    "subtopic": "Vector Addition and Subtraction",
+    "fsmTag": "equal-sum-difference-angle",
+    "concepts": ["vector-addition", "vector-subtraction", "law-of-cosines"],
+    "sourcePages": [71, 75, 89],
+    "timeTargets": { "ap_eapcet": 90, "ts_eapcet": 90, "jee_main": 130 },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When the magnitudes of the sum and difference are equal.",
+      "steps": [
+        "**Trigger:** $|\\mathbf{A}+\\mathbf{B}| = |\\mathbf{A}-\\mathbf{B}|$ - square both sides; the only surviving difference is the cross term $\\pm 2AB\\cos\\theta$.",
+        "**Action:** $A^2 + B^2 + 2AB\\cos\\theta = A^2 + B^2 - 2AB\\cos\\theta \\Rightarrow 4AB\\cos\\theta = 0$.",
+        "**Result:** $\\cos\\theta = 0 \\Rightarrow \\theta = 90°$ - option C."
+      ],
+      "sanityCheck": "Geometrically, the diagonals of a parallelogram are equal only when it is a rectangle - i.e. the sides are perpendicular."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Equate sum- and difference-magnitudes using the law of cosines (Eq. 4.24a).",
+        "**EXTRACT:** $|\\mathbf{A}+\\mathbf{B}|^2 = A^2+B^2+2AB\\cos\\theta$; $|\\mathbf{A}-\\mathbf{B}|^2 = A^2+B^2-2AB\\cos\\theta$.",
+        "**EXECUTE:** Setting them equal: $2AB\\cos\\theta = -2AB\\cos\\theta \\Rightarrow 4AB\\cos\\theta = 0 \\Rightarrow \\cos\\theta = 0 \\Rightarrow \\theta = 90°$.",
+        "**PROOF:** At 0° (option A) the sum is largest and the difference smallest - unequal; at 180° (option B) the reverse - unequal; at 45° (option D) $\\cos\\theta \\neq 0$ so they differ. Only $\\theta = 90°$ makes the cross terms vanish equally - option C."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "A vector $\\mathbf{A}$ makes an angle $\\theta$ with the x-axis. Its component along the x-axis is:",
+    "options": [
+      { "text": "$A\\sin\\theta$" },
+      { "text": "$A\\cos\\theta$" },
+      { "text": "$A\\tan\\theta$" },
+      { "text": "$A/\\cos\\theta$" }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Easy",
+    "subtopic": "Resolution of Vectors and Unit Vectors",
+    "fsmTag": "x-component-formula",
+    "concepts": ["resolution", "components"],
+    "sourcePages": [73],
+    "timeTargets": { "ap_eapcet": 25, "ts_eapcet": 25, "jee_main": 35 },
+    "theOptimalPath": { "exists": false, "steps": [] },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Rectangular component along the x-axis (Eq. 4.13): $A_x = A\\cos\\theta$.",
+        "**EXTRACT:** Angle $\\theta$ measured from the x-axis.",
+        "**EXECUTE:** The adjacent side of the component right triangle is $A\\cos\\theta$.",
+        "**PROOF:** $A\\sin\\theta$ (option A) is the y-component; $A\\tan\\theta$ (option C) and $A/\\cos\\theta$ (option D) are not components at all. The x-component is $A\\cos\\theta$ - option B."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "A vector of magnitude 5 units makes an angle of 53° with the x-axis (take $\\cos 53° = 0.6$, $\\sin 53° = 0.8$). Its x- and y-components are:",
+    "options": [
+      { "text": "3 and 4" },
+      { "text": "4 and 3" },
+      { "text": "5 and 5" },
+      { "text": "2.5 and 2.5" }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Easy",
+    "subtopic": "Resolution of Vectors and Unit Vectors",
+    "fsmTag": "component-resolution",
+    "concepts": ["resolution", "components"],
+    "sourcePages": [73],
+    "timeTargets": { "ap_eapcet": 35, "ts_eapcet": 35, "jee_main": 50 },
+    "theOptimalPath": { "exists": false, "steps": [] },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Resolve into components (Eq. 4.13): $A_x = A\\cos\\theta$, $A_y = A\\sin\\theta$.",
+        "**EXTRACT:** $A = 5$, $\\theta = 53°$.",
+        "**EXECUTE:** $A_x = 5 \\times 0.6 = 3$; $A_y = 5 \\times 0.8 = 4$.",
+        "**PROOF:** Option B swaps cos and sin; option C drops the trig factors; option D halves the magnitude. With cos on x and sin on y: (3, 4) - option A."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "A vector has components $A_x = 6$ and $A_y = 8$. Its magnitude is:",
+    "options": [
+      { "text": "14 units" },
+      { "text": "2 units" },
+      { "text": "48 units" },
+      { "text": "10 units" }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Medium",
+    "subtopic": "Resolution of Vectors and Unit Vectors",
+    "fsmTag": "magnitude-from-components",
+    "concepts": ["components", "magnitude"],
+    "sourcePages": [73],
+    "timeTargets": { "ap_eapcet": 35, "ts_eapcet": 35, "jee_main": 50 },
+    "theOptimalPath": { "exists": false, "steps": [] },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Magnitude from components (Eq. 4.14): $A = \\sqrt{A_x^2 + A_y^2}$.",
+        "**EXTRACT:** $A_x = 6$, $A_y = 8$.",
+        "**EXECUTE:** $A = \\sqrt{36 + 64} = \\sqrt{100} = 10$ units.",
+        "**PROOF:** Option A adds the components ($6 + 8$); option B subtracts them; option C multiplies them. The Pythagorean combination gives 10 - option D."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "The vector $\\mathbf{A} = \\hat{i} + \\hat{j}$ makes an angle with the x-axis of:",
+    "options": [
+      { "text": "0°" },
+      { "text": "45°" },
+      { "text": "90°" },
+      { "text": "30°" }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Medium",
+    "subtopic": "Resolution of Vectors and Unit Vectors",
+    "fsmTag": "angle-equal-unit-components",
+    "concepts": ["components", "direction-angle"],
+    "sourcePages": [73, 88],
+    "timeTargets": { "ap_eapcet": 35, "ts_eapcet": 35, "jee_main": 50 },
+    "theOptimalPath": { "exists": false, "steps": [] },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Direction from equal components (Eq. 4.15): $\\tan\\theta = A_y/A_x$.",
+        "**EXTRACT:** $A_x = 1$, $A_y = 1$.",
+        "**EXECUTE:** $\\tan\\theta = 1/1 = 1 \\Rightarrow \\theta = 45°$.",
+        "**PROOF:** Option A needs $A_y = 0$; option C needs $A_x = 0$; option D corresponds to $\\tan\\theta = 1/\\sqrt3$. Equal components give $\\tan^{-1}(1) = 45°$ - option B."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "A force of 20 N acts at 60° above the x-axis. Its x- and y-components are respectively:",
+    "options": [
+      { "text": "$10\\sqrt{3}$ N and 10 N" },
+      { "text": "20 N and 20 N" },
+      { "text": "10 N and $10\\sqrt{3}$ N" },
+      { "text": "10 N and 10 N" }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Medium",
+    "subtopic": "Resolution of Vectors and Unit Vectors",
+    "fsmTag": "component-resolution-60deg",
+    "concepts": ["resolution", "components"],
+    "sourcePages": [73],
+    "timeTargets": { "ap_eapcet": 45, "ts_eapcet": 45, "jee_main": 60 },
+    "theOptimalPath": { "exists": false, "steps": [] },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Resolve at 60° (Eq. 4.13): $A_x = A\\cos 60°$, $A_y = A\\sin 60°$.",
+        "**EXTRACT:** $A = 20$ N, $\\theta = 60°$, $\\cos 60° = 0.5$, $\\sin 60° = \\sqrt3/2$.",
+        "**EXECUTE:** $A_x = 20 \\times 0.5 = 10$ N; $A_y = 20 \\times \\dfrac{\\sqrt3}{2} = 10\\sqrt3$ N.",
+        "**PROOF:** Option A swaps cos and sin (uses cos for y); option B drops the trig factors; option D uses cos for both. The x-component is $10$ N and the y-component $10\\sqrt3$ N - option C."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "A vector in three dimensions has EQUAL components along the x-, y- and z-axes, and its magnitude is $6\\sqrt{3}$ units. Each component is:",
+    "options": [
+      { "text": "$2\\sqrt{3}$ units" },
+      { "text": "18 units" },
+      { "text": "6 units" },
+      { "text": "$6\\sqrt{3}$ units" }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Hard",
+    "subtopic": "Resolution of Vectors and Unit Vectors",
+    "fsmTag": "equal-3d-components-from-magnitude",
+    "concepts": ["components", "magnitude", "three-dimensions"],
+    "sourcePages": [74],
+    "timeTargets": { "ap_eapcet": 75, "ts_eapcet": 75, "jee_main": 105 },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Equal components in 3-D with known magnitude.",
+      "steps": [
+        "**Trigger:** Equal components $a$ along x, y, z - the magnitude is $\\sqrt{3a^2} = a\\sqrt3$.",
+        "**Action:** Set $a\\sqrt3 = 6\\sqrt3 \\Rightarrow a = 6$.",
+        "**Result:** Each component is 6 units - option C."
+      ],
+      "sanityCheck": "Check: $\\sqrt{6^2 + 6^2 + 6^2} = \\sqrt{108} = 6\\sqrt3$ - matches the given magnitude."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Find equal 3-D components from the magnitude (Eq. 4.16c).",
+        "**EXTRACT:** $A_x = A_y = A_z = a$; magnitude $= 6\\sqrt3$.",
+        "**EXECUTE:** $\\sqrt{a^2 + a^2 + a^2} = a\\sqrt3 = 6\\sqrt3 \\Rightarrow a = 6$.",
+        "**PROOF:** Option A (2√3) divides the magnitude by 3 instead of by $\\sqrt3$ ($6\\sqrt3/3 = 2\\sqrt3$); option B (18) MULTIPLIES the magnitude by $\\sqrt3$ instead of dividing ($6\\sqrt3 \\times \\sqrt3 = 18$); option D reports the full magnitude as one component. Solving $a\\sqrt3 = 6\\sqrt3$ gives $a = 6$ - option C."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "Two vectors of magnitudes 6 units and 8 units act in the SAME direction. The magnitude of their resultant is:",
+    "options": [
+      { "text": "2 units" },
+      { "text": "10 units" },
+      { "text": "48 units" },
+      { "text": "14 units" }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Easy",
+    "subtopic": "Analytical Vector Addition (Law of Cosines/Sines)",
+    "fsmTag": "parallel-resultant",
+    "concepts": ["resultant", "parallel-vectors"],
+    "sourcePages": [75],
+    "timeTargets": { "ap_eapcet": 30, "ts_eapcet": 30, "jee_main": 45 },
+    "theOptimalPath": { "exists": false, "steps": [] },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Resultant of parallel vectors ($\\theta = 0°$, $\\cos 0° = 1$).",
+        "**EXTRACT:** $A = 6$, $B = 8$, same direction.",
+        "**EXECUTE:** $R = \\sqrt{6^2 + 8^2 + 2(6)(8)(1)} = \\sqrt{36 + 64 + 96} = \\sqrt{196} = 14$, i.e. simply $6 + 8 = 14$ units.",
+        "**PROOF:** Option A subtracts them ($\\theta = 180°$); option B uses the perpendicular combination ($\\sqrt{36+64}$); option C multiplies them. Parallel vectors add directly to 14 - option D."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "The minimum possible magnitude of the resultant of two vectors of magnitudes 5 units and 3 units is:",
+    "options": [
+      { "text": "2 units" },
+      { "text": "8 units" },
+      { "text": "4 units" },
+      { "text": "0" }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Easy",
+    "subtopic": "Analytical Vector Addition (Law of Cosines/Sines)",
+    "fsmTag": "minimum-resultant",
+    "concepts": ["resultant", "antiparallel-vectors"],
+    "sourcePages": [75],
+    "timeTargets": { "ap_eapcet": 35, "ts_eapcet": 35, "jee_main": 50 },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Minimum resultant of two vectors of fixed magnitudes.",
+      "steps": [
+        "**Trigger:** 'Minimum resultant' - it occurs when the vectors are antiparallel ($\\theta = 180°$).",
+        "**Action:** $R_{min} = |A - B|$.",
+        "**Result:** $|5 - 3| = 2$ units - option A."
+      ],
+      "sanityCheck": "The resultant of two vectors ranges from $|A-B|$ to $A+B$; here from 2 to 8."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Extremes of the resultant (Eq. 4.24a): max at $\\theta = 0°$, min at $\\theta = 180°$.",
+        "**EXTRACT:** $A = 5$, $B = 3$.",
+        "**EXECUTE:** $R_{min} = |A - B| = |5 - 3| = 2$ units (vectors opposed).",
+        "**PROOF:** Option B is the MAXIMUM ($A + B = 8$); option C is an arbitrary midpoint; option D would require equal magnitudes to cancel. The minimum is $|5-3| = 2$ - option A."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "The maximum possible magnitude of the resultant of two vectors of magnitudes 7 units and 4 units is:",
+    "options": [
+      { "text": "3 units" },
+      { "text": "11 units" },
+      { "text": "$\\sqrt{65}$ units" },
+      { "text": "28 units" }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Medium",
+    "subtopic": "Analytical Vector Addition (Law of Cosines/Sines)",
+    "fsmTag": "maximum-resultant",
+    "concepts": ["resultant", "parallel-vectors"],
+    "sourcePages": [75],
+    "timeTargets": { "ap_eapcet": 35, "ts_eapcet": 35, "jee_main": 50 },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Maximum resultant of two vectors of fixed magnitudes.",
+      "steps": [
+        "**Trigger:** 'Maximum resultant' - it occurs when the vectors are parallel ($\\theta = 0°$).",
+        "**Action:** $R_{max} = A + B$.",
+        "**Result:** $7 + 4 = 11$ units - option B."
+      ],
+      "sanityCheck": "The resultant ranges from $|A-B| = 3$ to $A+B = 11$; the maximum is the upper bound."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Maximum of the resultant (parallel vectors, $\\cos 0° = 1$).",
+        "**EXTRACT:** $A = 7$, $B = 4$.",
+        "**EXECUTE:** $R_{max} = A + B = 7 + 4 = 11$ units.",
+        "**PROOF:** Option A is the MINIMUM ($|7-4| = 3$); option C is the perpendicular value ($\\sqrt{49+16}$); option D multiplies them. The maximum is $7 + 4 = 11$ - option B."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "Two vectors of equal magnitude 3 units act at right angles (90°) to each other. The angle their resultant makes with each vector is:",
+    "options": [
+      { "text": "30°" },
+      { "text": "60°" },
+      { "text": "90°" },
+      { "text": "45°" }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Medium",
+    "subtopic": "Analytical Vector Addition (Law of Cosines/Sines)",
+    "fsmTag": "resultant-direction-equal-perpendicular",
+    "concepts": ["resultant", "direction-angle", "law-of-sines"],
+    "sourcePages": [75],
+    "timeTargets": { "ap_eapcet": 50, "ts_eapcet": 50, "jee_main": 70 },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Two EQUAL vectors - the resultant bisects the angle between them.",
+      "steps": [
+        "**Trigger:** Equal magnitudes - the resultant lies along the angle bisector.",
+        "**Action:** Each vector makes half the included angle with the resultant: $90°/2$.",
+        "**Result:** $45°$ - option D."
+      ],
+      "sanityCheck": "By symmetry, equal vectors contribute equally, so the resultant must sit midway - confirmed by $\\tan\\alpha = \\dfrac{3\\sin 90°}{3 + 3\\cos 90°} = 1 \\Rightarrow 45°$."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Direction of the resultant (Eq. 4.24f): $\\tan\\alpha = \\dfrac{B\\sin\\theta}{A + B\\cos\\theta}$.",
+        "**EXTRACT:** $A = B = 3$, $\\theta = 90°$, $\\sin 90° = 1$, $\\cos 90° = 0$.",
+        "**EXECUTE:** $\\tan\\alpha = \\dfrac{3 \\times 1}{3 + 3 \\times 0} = \\dfrac{3}{3} = 1 \\Rightarrow \\alpha = 45°$.",
+        "**PROOF:** For equal vectors the resultant bisects the 90° angle, giving 45° to each; options A and B would arise from unequal vectors, and option C is the full included angle. The bisector angle is 45° - option D."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "Two vectors of EQUAL magnitude $F$ have a resultant whose magnitude is also $F$. The angle between the two vectors is:",
+    "options": [
+      { "text": "60°" },
+      { "text": "90°" },
+      { "text": "120°" },
+      { "text": "180°" }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Hard",
+    "subtopic": "Analytical Vector Addition (Law of Cosines/Sines)",
+    "fsmTag": "resultant-equals-component-angle",
+    "concepts": ["resultant", "law-of-cosines"],
+    "sourcePages": [75],
+    "timeTargets": { "ap_eapcet": 85, "ts_eapcet": 85, "jee_main": 120 },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Equal vectors whose resultant equals one of them.",
+      "steps": [
+        "**Trigger:** $R = F$ with $A = B = F$ - solve the law of cosines for $\\cos\\theta$.",
+        "**Action:** $F^2 = F^2 + F^2 + 2F^2\\cos\\theta \\Rightarrow \\cos\\theta = -\\tfrac{1}{2}$.",
+        "**Result:** $\\theta = 120°$ - option C."
+      ],
+      "sanityCheck": "$\\cos 120° = -0.5$, and the resultant of two equal vectors at 120° forms an equilateral arrangement of magnitude $F$ - consistent."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Use the law of cosines (Eq. 4.24a) with $R = A = B = F$.",
+        "**EXTRACT:** $R^2 = A^2 + B^2 + 2AB\\cos\\theta$ with all magnitudes $F$.",
+        "**EXECUTE:** $F^2 = F^2 + F^2 + 2F^2\\cos\\theta \\Rightarrow 0 = F^2 + 2F^2\\cos\\theta \\Rightarrow \\cos\\theta = -\\tfrac{1}{2} \\Rightarrow \\theta = 120°$.",
+        "**PROOF:** At 60° (option A) $R = F\\sqrt3 > F$; at 90° (option B) $R = F\\sqrt2 > F$; at 180° (option D) $R = 0$. Only at 120° does the resultant equal $F$ - option C."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "The average velocity of a particle moving in a plane over a time interval is defined as:",
+    "options": [
+      { "text": "the displacement divided by the time interval, $\\Delta\\mathbf{r}/\\Delta t$" },
+      { "text": "the total path length divided by the time interval" },
+      { "text": "the change in velocity divided by the time interval" },
+      { "text": "the instantaneous rate of change of position, $d\\mathbf{r}/dt$" }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Easy",
+    "subtopic": "Motion in a Plane (Position, Velocity, Acceleration)",
+    "fsmTag": "average-velocity-definition-2d",
+    "concepts": ["average-velocity", "displacement"],
+    "sourcePages": [76],
+    "timeTargets": { "ap_eapcet": 30, "ts_eapcet": 30, "jee_main": 45 },
+    "theOptimalPath": { "exists": false, "steps": [] },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Definition of average velocity in a plane (Eq. 4.27): $\\bar{\\mathbf{v}} = \\Delta\\mathbf{r}/\\Delta t$.",
+        "**EXTRACT:** Average velocity uses the net displacement vector.",
+        "**EXECUTE:** $\\bar{\\mathbf{v}} = \\dfrac{\\Delta\\mathbf{r}}{\\Delta t}$ - displacement over time.",
+        "**PROOF:** Option B defines average SPEED; option C defines average acceleration; option D is the INSTANTANEOUS velocity (limit as $\\Delta t \\to 0$), not the average. The average is $\\Delta\\mathbf{r}/\\Delta t$ - option A."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "A particle moves from position $\\mathbf{r}_1 = 2\\hat{i} + 3\\hat{j}$ m to $\\mathbf{r}_2 = 5\\hat{i} + 7\\hat{j}$ m. The magnitude of its displacement is:",
+    "options": [
+      { "text": "7 m" },
+      { "text": "17 m" },
+      { "text": "5 m" },
+      { "text": "$\\sqrt{74}$ m" }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Medium",
+    "subtopic": "Motion in a Plane (Position, Velocity, Acceleration)",
+    "fsmTag": "displacement-magnitude-from-positions",
+    "concepts": ["displacement", "position-vector", "magnitude"],
+    "sourcePages": [76],
+    "timeTargets": { "ap_eapcet": 50, "ts_eapcet": 50, "jee_main": 70 },
+    "theOptimalPath": { "exists": false, "steps": [] },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Displacement $\\Delta\\mathbf{r} = \\mathbf{r}_2 - \\mathbf{r}_1$ (Eq. 4.25), then its magnitude.",
+        "**EXTRACT:** $\\Delta\\mathbf{r} = (5-2)\\hat{i} + (7-3)\\hat{j} = 3\\hat{i} + 4\\hat{j}$ m.",
+        "**EXECUTE:** $|\\Delta\\mathbf{r}| = \\sqrt{3^2 + 4^2} = \\sqrt{9 + 16} = \\sqrt{25} = 5$ m.",
+        "**PROOF:** Option A adds the displacement components ($3 + 4$); option B adds all four coordinates without subtracting; option D forgets to subtract first and uses $\\sqrt{5^2 + 7^2}$. The displacement magnitude is 5 m - option C."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "A particle has position $\\mathbf{r} = (t^2)\\hat{i} + (2t)\\hat{j}$ m. Its velocity at $t = 3$ s is:",
+    "options": [
+      { "text": "$2t\\hat{i} + 2\\hat{j}$ m/s" },
+      { "text": "$6\\hat{i} + 2\\hat{j}$ m/s" },
+      { "text": "$9\\hat{i} + 6\\hat{j}$ m/s" },
+      { "text": "$6\\hat{i} + 6\\hat{j}$ m/s" }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Medium",
+    "subtopic": "Motion in a Plane (Position, Velocity, Acceleration)",
+    "fsmTag": "velocity-from-position-evaluate",
+    "concepts": ["instantaneous-velocity", "differentiation"],
+    "sourcePages": [77],
+    "timeTargets": { "ap_eapcet": 50, "ts_eapcet": 50, "jee_main": 70 },
+    "theOptimalPath": { "exists": false, "steps": [] },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Differentiate and evaluate (Eq. 4.30a): $v_x = dx/dt$, $v_y = dy/dt$.",
+        "**EXTRACT:** $x = t^2$, $y = 2t \\Rightarrow v_x = 2t$, $v_y = 2$.",
+        "**EXECUTE:** At $t = 3$: $v_x = 6$, $v_y = 2$, so $\\mathbf{v} = 6\\hat{i} + 2\\hat{j}$ m/s.",
+        "**PROOF:** Option A leaves the general expression unevaluated; option C reports the POSITION $\\mathbf{r}(3) = 9\\hat{i} + 6\\hat{j}$ instead of velocity; option D applies $2t$ to the y-term too. Evaluated velocity is $6\\hat{i} + 2\\hat{j}$ - option B."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "A particle has velocity $\\mathbf{v} = (3t)\\hat{i} + 4\\hat{j}$ m/s. Its acceleration is:",
+    "options": [
+      { "text": "$3\\hat{i}$ m/s$^2$" },
+      { "text": "zero" },
+      { "text": "$4\\hat{j}$ m/s$^2$" },
+      { "text": "$3t\\hat{i}$ m/s$^2$" }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Medium",
+    "subtopic": "Motion in a Plane (Position, Velocity, Acceleration)",
+    "fsmTag": "acceleration-from-velocity",
+    "concepts": ["acceleration", "differentiation"],
+    "sourcePages": [77],
+    "timeTargets": { "ap_eapcet": 45, "ts_eapcet": 45, "jee_main": 65 },
+    "theOptimalPath": { "exists": false, "steps": [] },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Acceleration is $d\\mathbf{v}/dt$ (Eq. 4.32c).",
+        "**EXTRACT:** $v_x = 3t$, $v_y = 4$.",
+        "**EXECUTE:** $a_x = \\dfrac{d}{dt}(3t) = 3$; $a_y = \\dfrac{d}{dt}(4) = 0$. So $\\mathbf{a} = 3\\hat{i}$ m/s$^2$, constant along x.",
+        "**PROOF:** Option B would require constant velocity; option C reports the constant y-velocity (4) as if it were acceleration; option D leaves the velocity term undifferentiated. The constant $3\\hat{i}$ is option A."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "A particle moves in the x-y plane with position $\\mathbf{r} = (t^2 - 4t)\\hat{i} + (3t)\\hat{j}$ m. The instant at which its velocity is directed entirely along the y-axis is:",
+    "options": [
+      { "text": "4 s" },
+      { "text": "$-2$ s" },
+      { "text": "0 s" },
+      { "text": "2 s" }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Hard",
+    "subtopic": "Motion in a Plane (Position, Velocity, Acceleration)",
+    "fsmTag": "velocity-along-yaxis-instant",
+    "concepts": ["instantaneous-velocity", "differentiation"],
+    "sourcePages": [77],
+    "timeTargets": { "ap_eapcet": 80, "ts_eapcet": 80, "jee_main": 115 },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Velocity along the y-axis means the x-velocity vanishes.",
+      "steps": [
+        "**Trigger:** 'Velocity along the y-axis' - set $v_x = 0$.",
+        "**Action:** $v_x = \\dfrac{d}{dt}(t^2 - 4t) = 2t - 4 = 0$.",
+        "**Result:** $t = 2$ s - option D."
+      ],
+      "sanityCheck": "$v_y = 3 \\neq 0$ at all times, so when $v_x = 0$ the velocity is purely along y - consistent."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** The velocity is along y exactly when its x-component is zero.",
+        "**EXTRACT:** $x = t^2 - 4t \\Rightarrow v_x = 2t - 4$.",
+        "**EXECUTE:** $v_x = 0 \\Rightarrow 2t - 4 = 0 \\Rightarrow t = 2$ s.",
+        "**PROOF:** Option A (4 s) solves $x = 0$ instead of $v_x = 0$ ($t^2 - 4t = 0 \\Rightarrow t = 4$, a root of the position); option B ($-2$ s) makes a sign error on the $-4t$ term (treats $x = t^2 + 4t$, giving $v_x = 2t + 4 = 0 \\Rightarrow t = -2$ s, unphysical); option C (0 s) is the other root of $x = 0$, where $v_x = -4 \\neq 0$. Solving $2t - 4 = 0$ gives 2 s - option D."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "The average acceleration of a particle whose velocity changes from $\\mathbf{v}_0$ to $\\mathbf{v}$ over a time $t$ is:",
+    "options": [
+      { "text": "$(\\mathbf{v} - \\mathbf{v}_0)/t$" },
+      { "text": "$(\\mathbf{v} + \\mathbf{v}_0)/t$" },
+      { "text": "$(\\mathbf{r} - \\mathbf{r}_0)/t$" },
+      { "text": "$\\mathbf{v}\\,t$" }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Easy",
+    "subtopic": "Motion with Constant Acceleration in a Plane",
+    "fsmTag": "average-acceleration-definition-2d",
+    "concepts": ["average-acceleration"],
+    "sourcePages": [78],
+    "timeTargets": { "ap_eapcet": 30, "ts_eapcet": 30, "jee_main": 45 },
+    "theOptimalPath": { "exists": false, "steps": [] },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Definition of average acceleration (Section 4.8): $\\mathbf{a} = (\\mathbf{v} - \\mathbf{v}_0)/t$.",
+        "**EXTRACT:** Change in velocity over time.",
+        "**EXECUTE:** $\\mathbf{a} = \\dfrac{\\mathbf{v} - \\mathbf{v}_0}{t}$.",
+        "**PROOF:** Option B adds the velocities; option C gives the average velocity (displacement over time); option D has wrong dimensions. The change-over-time is option A."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "A particle starts from the origin with $v_{0x} = 3$ m/s and accelerates with $a_x = 4$ m/s$^2$ along x. Its x-coordinate at $t = 2$ s is:",
+    "options": [
+      { "text": "6 m" },
+      { "text": "14 m" },
+      { "text": "22 m" },
+      { "text": "8 m" }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Medium",
+    "subtopic": "Motion with Constant Acceleration in a Plane",
+    "fsmTag": "x-coordinate-constant-accel",
+    "concepts": ["constant-acceleration", "kinematic-equations"],
+    "sourcePages": [79],
+    "timeTargets": { "ap_eapcet": 45, "ts_eapcet": 45, "jee_main": 65 },
+    "theOptimalPath": { "exists": false, "steps": [] },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** x-component of motion (Eq. 4.34b): $x = x_0 + v_{0x}t + \\tfrac{1}{2}a_x t^2$.",
+        "**EXTRACT:** $x_0 = 0$, $v_{0x} = 3$, $a_x = 4$, $t = 2$.",
+        "**EXECUTE:** $x = 3(2) + \\tfrac{1}{2}(4)(2^2) = 6 + 8 = 14$ m.",
+        "**PROOF:** Option A keeps only $v_{0x}t = 6$ (drops the acceleration term); option C forgets the $\\tfrac{1}{2}$ ($6 + 16 = 22$); option D keeps only $\\tfrac{1}{2}a_x t^2 = 8$ (drops the initial-velocity term). Both terms give 14 m - option B."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "A particle starts from the origin with velocity $\\mathbf{v}_0 = 5\\hat{i}$ m/s and constant acceleration $\\mathbf{a} = (3\\hat{i} + 2\\hat{j})$ m/s$^2$. Its speed at $t = 6$ s is approximately:",
+    "options": [
+      { "text": "35 m/s" },
+      { "text": "11 m/s" },
+      { "text": "26 m/s" },
+      { "text": "12 m/s" }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Medium",
+    "subtopic": "Motion with Constant Acceleration in a Plane",
+    "fsmTag": "speed-constant-accel-plane",
+    "concepts": ["constant-acceleration", "speed"],
+    "sourcePages": [78, 79],
+    "timeTargets": { "ap_eapcet": 65, "ts_eapcet": 65, "jee_main": 90 },
+    "theOptimalPath": { "exists": false, "steps": [] },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Velocity by components $\\mathbf{v} = \\mathbf{v}_0 + \\mathbf{a}t$, then speed (Example 4.5 structure).",
+        "**EXTRACT:** $v_x = 5 + 3t$, $v_y = 2t$.",
+        "**EXECUTE:** At $t = 6$: $v_x = 5 + 18 = 23$, $v_y = 12$. Speed $= \\sqrt{23^2 + 12^2} = \\sqrt{529 + 144} = \\sqrt{673} \\approx 26$ m/s.",
+        "**PROOF:** Option A adds the components ($23 + 12$); option B subtracts them ($23 - 12$); option D reports only $v_y$. The Pythagorean speed $\\sqrt{673} \\approx 26$ m/s is option C."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "A ball is projected horizontally with speed 20 m/s and is subject to gravity ($g = 10$ m/s$^2$ downward, taken as $\\mathbf{a} = -10\\hat{j}$). The time at which its velocity makes 45° below the horizontal is:",
+    "options": [
+      { "text": "1 s" },
+      { "text": "4 s" },
+      { "text": "0.5 s" },
+      { "text": "2 s" }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Hard",
+    "subtopic": "Motion with Constant Acceleration in a Plane",
+    "fsmTag": "velocity-angle-condition-time",
+    "concepts": ["constant-acceleration", "projectile-motion", "velocity-components"],
+    "sourcePages": [78, 80],
+    "timeTargets": { "ap_eapcet": 85, "ts_eapcet": 85, "jee_main": 120 },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Velocity at 45° to horizontal means equal magnitudes of the two components.",
+      "steps": [
+        "**Trigger:** 45° below horizontal - the downward speed equals the horizontal speed.",
+        "**Action:** $|v_y| = v_x \\Rightarrow 10t = 20$.",
+        "**Result:** $t = 2$ s - option D."
+      ],
+      "sanityCheck": "$\\tan 45° = |v_y|/v_x = 1$, so $|v_y| = v_x = 20$ m/s, reached when $10t = 20$ - consistent."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** The velocity makes 45° with the horizontal when $|v_y| = v_x$ (the components are equal).",
+        "**EXTRACT:** $v_x = 20$ m/s (constant); $v_y = -10t$ (from $a_y = -10$, starting at 0).",
+        "**EXECUTE:** $\\tan 45° = \\dfrac{|v_y|}{v_x} = 1 \\Rightarrow 10t = 20 \\Rightarrow t = 2$ s.",
+        "**PROOF:** Option A sets $10t = 10$ (uses half the horizontal speed); option B doubles the answer; option C sets $10t = 5$. Equating the component magnitudes gives $t = 2$ s - option D."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "If the velocity of A relative to B is $\\mathbf{v}_{AB}$, then the velocity of B relative to A is:",
+    "options": [
+      { "text": "$-\\mathbf{v}_{AB}$" },
+      { "text": "$\\mathbf{v}_{AB}$" },
+      { "text": "$2\\mathbf{v}_{AB}$" },
+      { "text": "zero" }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Easy",
+    "subtopic": "Relative Velocity in Two Dimensions",
+    "fsmTag": "relative-velocity-antisymmetry",
+    "concepts": ["relative-velocity"],
+    "sourcePages": [79],
+    "timeTargets": { "ap_eapcet": 30, "ts_eapcet": 30, "jee_main": 45 },
+    "theOptimalPath": { "exists": false, "steps": [] },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Antisymmetry of relative velocity (Eq. 4.35b): $\\mathbf{v}_{BA} = -\\mathbf{v}_{AB}$.",
+        "**EXTRACT:** $\\mathbf{v}_{AB} = \\mathbf{v}_A - \\mathbf{v}_B$; $\\mathbf{v}_{BA} = \\mathbf{v}_B - \\mathbf{v}_A$.",
+        "**EXECUTE:** $\\mathbf{v}_{BA} = -(\\mathbf{v}_A - \\mathbf{v}_B) = -\\mathbf{v}_{AB}$.",
+        "**PROOF:** Option B forgets the sign reversal; option C doubles it; option D would require both objects at rest relative to each other. The two relative velocities are negatives - option A."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "Rain falls vertically with a speed of 4 m/s. A man runs horizontally at 3 m/s. The speed of the rain relative to the man is:",
+    "options": [
+      { "text": "7 m/s" },
+      { "text": "1 m/s" },
+      { "text": "5 m/s" },
+      { "text": "$\\sqrt{7}$ m/s" }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Medium",
+    "subtopic": "Relative Velocity in Two Dimensions",
+    "fsmTag": "relative-speed-rain-runner",
+    "concepts": ["relative-velocity", "perpendicular-vectors"],
+    "sourcePages": [79, 80],
+    "timeTargets": { "ap_eapcet": 50, "ts_eapcet": 50, "jee_main": 70 },
+    "theOptimalPath": { "exists": false, "steps": [] },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Relative velocity $\\mathbf{v}_{rm} = \\mathbf{v}_r - \\mathbf{v}_m$; the rain (vertical) and man (horizontal) velocities are perpendicular.",
+        "**EXTRACT:** $v_r = 4$ m/s down, $v_m = 3$ m/s horizontal.",
+        "**EXECUTE:** Relative speed $= \\sqrt{4^2 + 3^2} = \\sqrt{16 + 9} = \\sqrt{25} = 5$ m/s.",
+        "**PROOF:** Option A adds the speeds; option B subtracts them; option D forgets to square ($\\sqrt{4+3}$). The perpendicular combination gives 5 m/s - option C."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "Two cars travel along the same straight road in the same direction at 25 m/s and 15 m/s. The speed of the faster car relative to the slower car is:",
+    "options": [
+      { "text": "40 m/s" },
+      { "text": "10 m/s" },
+      { "text": "20 m/s" },
+      { "text": "5 m/s" }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Medium",
+    "subtopic": "Relative Velocity in Two Dimensions",
+    "fsmTag": "relative-velocity-same-direction",
+    "concepts": ["relative-velocity"],
+    "sourcePages": [79],
+    "timeTargets": { "ap_eapcet": 40, "ts_eapcet": 40, "jee_main": 55 },
+    "theOptimalPath": { "exists": false, "steps": [] },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Relative velocity for same-direction motion: subtract the speeds.",
+        "**EXTRACT:** $v_1 = 25$ m/s, $v_2 = 15$ m/s, same direction.",
+        "**EXECUTE:** Relative speed $= 25 - 15 = 10$ m/s.",
+        "**PROOF:** Option A adds the speeds (valid only for OPPOSITE directions); option C and option D have no consistent derivation ($20$ is the mean, $5$ is a third of the difference). Same direction subtracts to 10 m/s - option B."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "A river flows at 5 m/s. A boat that can move at 10 m/s relative to the water wants to cross straight to the point directly opposite (zero downstream drift). The angle at which it must head, measured from the straight-across direction (pointing upstream), is:",
+    "options": [
+      { "text": "60°" },
+      { "text": "45°" },
+      { "text": "30°" },
+      { "text": "90°" }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Medium",
+    "subtopic": "Relative Velocity in Two Dimensions",
+    "fsmTag": "river-crossing-heading-angle",
+    "concepts": ["relative-velocity", "direction-angle"],
+    "sourcePages": [79, 80],
+    "timeTargets": { "ap_eapcet": 65, "ts_eapcet": 65, "jee_main": 90 },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Zero-drift crossing - the upstream component must cancel the current.",
+      "steps": [
+        "**Trigger:** 'Straight to the opposite point' - the boat's upstream component must exactly cancel the current.",
+        "**Action:** $v_{boat}\\sin\\theta = v_{current} \\Rightarrow \\sin\\theta = v_{current}/v_{boat}$.",
+        "**Result:** $\\sin\\theta = 5/10 = 0.5 \\Rightarrow \\theta = 30°$ upstream - option C."
+      ],
+      "sanityCheck": "The boat must point partly upstream so that its across-component carries it over while its upstream-component kills the drift."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Zero-drift river crossing (Section 4.9): cancel the current with the upstream component.",
+        "**EXTRACT:** $v_{current} = 5$ m/s, $v_{boat} = 10$ m/s relative to water.",
+        "**EXECUTE:** $\\sin\\theta = \\dfrac{v_{current}}{v_{boat}} = \\dfrac{5}{10} = 0.5 \\Rightarrow \\theta = 30°$ upstream of straight-across.",
+        "**PROOF:** Option A uses $\\cos\\theta = 0.5$ (the wrong trig function); option B uses $\\sin\\theta = 1/\\sqrt2$; option D would point straight upstream (no crossing). $\\sin^{-1}(0.5) = 30°$ - option C."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "An aeroplane flies due north at 40 km/h relative to the air, while the wind blows due east at 30 km/h. The plane's ground speed is:",
+    "options": [
+      { "text": "70 km/h" },
+      { "text": "10 km/h" },
+      { "text": "50 km/h" },
+      { "text": "35 km/h" }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Medium",
+    "subtopic": "Relative Velocity in Two Dimensions",
+    "fsmTag": "aircraft-wind-ground-speed",
+    "concepts": ["relative-velocity", "perpendicular-vectors"],
+    "sourcePages": [79, 80],
+    "timeTargets": { "ap_eapcet": 55, "ts_eapcet": 55, "jee_main": 75 },
+    "theOptimalPath": { "exists": false, "steps": [] },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Ground velocity = plane-relative-to-air + wind (perpendicular vectors).",
+        "**EXTRACT:** Plane $40\\hat{j}$ (north), wind $30\\hat{i}$ (east).",
+        "**EXECUTE:** Ground speed $= \\sqrt{40^2 + 30^2} = \\sqrt{1600 + 900} = \\sqrt{2500} = 50$ km/h.",
+        "**PROOF:** Option A adds the speeds; option B subtracts them; option D averages them. The perpendicular combination gives 50 km/h - option C."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "A river is 120 m wide and the current flows at 4 m/s. A boat can move at 3 m/s relative to the water. To cross the river in the MINIMUM possible time, the boat should head straight across, and that minimum crossing time is:",
+    "options": [
+      { "text": "40 s" },
+      { "text": "24 s" },
+      { "text": "30 s" },
+      { "text": "120 s" }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Hard",
+    "subtopic": "Relative Velocity in Two Dimensions",
+    "fsmTag": "river-minimum-crossing-time",
+    "concepts": ["relative-velocity", "independence-of-motions"],
+    "sourcePages": [79, 80],
+    "timeTargets": { "ap_eapcet": 90, "ts_eapcet": 90, "jee_main": 130 },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Minimum crossing time - head straight across so the full boat speed carries it over.",
+      "steps": [
+        "**Trigger:** 'Minimum time to cross' - the entire boat velocity should point across the river (the current only adds drift, not crossing speed).",
+        "**Action:** $t_{min} = \\dfrac{\\text{width}}{v_{boat}}$.",
+        "**Result:** $\\dfrac{120}{3} = 40$ s - option A."
+      ],
+      "sanityCheck": "Heading straight across maximises the across-component (the full 3 m/s); any upstream tilt would reduce it and lengthen the time. The 4 m/s current is irrelevant to the time."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Minimum crossing time (Section 4.9): point the boat straight across so its whole speed crosses the river.",
+        "**EXTRACT:** width 120 m, $v_{boat} = 3$ m/s across, current 4 m/s (along the bank).",
+        "**EXECUTE:** Crossing time depends only on the across-component: $t = 120/3 = 40$ s. The current is perpendicular to this and does not affect the time.",
+        "**PROOF:** Option B uses the resultant speed $5$ m/s ($120/5 = 24$ s) - but the resultant is partly downstream, not across; option C uses the current ($120/4 = 30$ s); option D (120 s) uses the wrong relative speed $v_{current} - v_{boat} = 4 - 3 = 1$ m/s ($120/1 = 120$ s). The minimum time is $120/3 = 40$ s - option A."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "During the flight of a projectile (air resistance neglected), the horizontal component of its velocity:",
+    "options": [
+      { "text": "increases steadily" },
+      { "text": "remains constant" },
+      { "text": "decreases steadily" },
+      { "text": "becomes zero at the highest point" }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Easy",
+    "subtopic": "Projectile Motion",
+    "fsmTag": "horizontal-velocity-constant",
+    "concepts": ["projectile-motion", "velocity-components"],
+    "sourcePages": [80],
+    "timeTargets": { "ap_eapcet": 30, "ts_eapcet": 30, "jee_main": 45 },
+    "theOptimalPath": { "exists": false, "steps": [] },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Horizontal motion of a projectile (Section 4.10, Eq. 4.39): $v_x = v_0\\cos\\theta_0$ is constant.",
+        "**EXTRACT:** There is no horizontal acceleration ($a_x = 0$).",
+        "**EXECUTE:** With zero horizontal force, $v_x$ stays at its initial value throughout the flight.",
+        "**PROOF:** Options A and C require a horizontal acceleration, which does not exist; option D confuses the horizontal component with the VERTICAL one (which IS zero at the top). The horizontal velocity remains constant - option B."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "On level ground, a projectile launched at 60° has the same horizontal range as one launched (with the same speed) at:",
+    "options": [
+      { "text": "30°" },
+      { "text": "45°" },
+      { "text": "60°" },
+      { "text": "90°" }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Easy",
+    "subtopic": "Projectile Motion",
+    "fsmTag": "complementary-angle-range",
+    "concepts": ["projectile-motion", "horizontal-range", "complementary-angles"],
+    "sourcePages": [81],
+    "timeTargets": { "ap_eapcet": 35, "ts_eapcet": 35, "jee_main": 50 },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Same speed; equal-range angle wanted.",
+      "steps": [
+        "**Trigger:** Equal range - the complementary angle gives the same $\\sin 2\\theta$.",
+        "**Action:** Complementary angle $= 90° - 60°$.",
+        "**Result:** $30°$ - option A."
+      ],
+      "sanityCheck": "$\\sin(2 \\times 60°) = \\sin 120° = \\sin 60° = \\sin(2 \\times 30°)$ - equal ranges."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Equal-range angles (Eq. 4.43a): $R \\propto \\sin 2\\theta_0$; angles summing to 90° give equal ranges.",
+        "**EXTRACT:** One angle is 60°.",
+        "**EXECUTE:** The complementary angle is $90° - 60° = 30°$, and $\\sin 120° = \\sin 60°$, so the ranges match.",
+        "**PROOF:** 45° (option B) gives the MAXIMUM range, not equal to 60°'s; 60° (option C) is the same angle, trivial; 90° (option D) gives zero range. The complementary angle is 30° - option A."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "A projectile is launched at 45° with a speed of 20 m/s on level ground (take $g = 10$ m/s$^2$). Its horizontal range is:",
+    "options": [
+      { "text": "20 m" },
+      { "text": "80 m" },
+      { "text": "40 m" },
+      { "text": "400 m" }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Easy",
+    "subtopic": "Projectile Motion",
+    "fsmTag": "range-45-direct",
+    "concepts": ["projectile-motion", "horizontal-range"],
+    "sourcePages": [81],
+    "timeTargets": { "ap_eapcet": 40, "ts_eapcet": 40, "jee_main": 55 },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "45° launch, so $\\sin 2\\theta_0 = 1$.",
+      "steps": [
+        "**Trigger:** 45° - range reduces to $v_0^2/g$.",
+        "**Action:** $R = v_0^2/g$.",
+        "**Result:** $20^2/10 = 400/10 = 40$ m - option C."
+      ],
+      "sanityCheck": "45° is the maximum-range angle, so 40 m is the farthest this speed can reach."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Range (Eq. 4.43a) with $\\sin 2\\theta_0 = \\sin 90° = 1$.",
+        "**EXTRACT:** $v_0 = 20$ m/s, $g = 10$.",
+        "**EXECUTE:** $R = \\dfrac{20^2 \\times 1}{10} = \\dfrac{400}{10} = 40$ m.",
+        "**PROOF:** Option A (20 m) halves it ($v_0^2/2g$); option B (80 m) doubles it ($2v_0^2/g$); option D (400 m) forgets to divide by $g$ entirely ($v_0^2\\sin 2\\theta_0 = 400$). The 45° range is $v_0^2/g = 40$ m - option C."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "A projectile is launched at 53° above the horizontal with a speed of 10 m/s (take $g = 10$ m/s$^2$, $\\sin 53° = 0.8$). Its maximum height is:",
+    "options": [
+      { "text": "1.8 m" },
+      { "text": "6.4 m" },
+      { "text": "3.2 m" },
+      { "text": "1.6 m" }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Medium",
+    "subtopic": "Projectile Motion",
+    "fsmTag": "maximum-height-53deg",
+    "concepts": ["projectile-motion", "maximum-height"],
+    "sourcePages": [81],
+    "timeTargets": { "ap_eapcet": 55, "ts_eapcet": 55, "jee_main": 80 },
+    "theOptimalPath": { "exists": false, "steps": [] },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Maximum height (Eq. 4.42): $h_m = (v_0\\sin\\theta_0)^2/2g$.",
+        "**EXTRACT:** $v_0 = 10$ m/s, $\\sin 53° = 0.8$, $g = 10$.",
+        "**EXECUTE:** $h_m = \\dfrac{(10 \\times 0.8)^2}{2 \\times 10} = \\dfrac{8^2}{20} = \\dfrac{64}{20} = 3.2$ m.",
+        "**PROOF:** Option A uses $\\cos 53° = 0.6$ ($(10 \\times 0.6)^2/20 = 1.8$); option B forgets the factor 2 in the denominator ($64/10 = 6.4$); option D halves the answer. The correct $\\sin^2$ height is 3.2 m - option C."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "A projectile is launched at 30° above the horizontal with a speed of 20 m/s (take $g = 10$ m/s$^2$). The time it takes to reach its highest point is:",
+    "options": [
+      { "text": "2 s" },
+      { "text": "0.5 s" },
+      { "text": "1.7 s" },
+      { "text": "1 s" }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Medium",
+    "subtopic": "Projectile Motion",
+    "fsmTag": "time-to-max-height",
+    "concepts": ["projectile-motion", "time-of-flight"],
+    "sourcePages": [81],
+    "timeTargets": { "ap_eapcet": 45, "ts_eapcet": 45, "jee_main": 65 },
+    "theOptimalPath": { "exists": false, "steps": [] },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Time to the highest point (Eq. 4.41a): $t_m = v_0\\sin\\theta_0/g$.",
+        "**EXTRACT:** $v_0 = 20$ m/s, $\\sin 30° = 0.5$, $g = 10$.",
+        "**EXECUTE:** $t_m = \\dfrac{20 \\times 0.5}{10} = \\dfrac{10}{10} = 1$ s.",
+        "**PROOF:** Option A is the FULL time of flight ($2t_m = 2$ s); option B halves the answer; option C uses $\\cos 30°$ instead of $\\sin 30°$ ($20 \\times 0.866/10 = 1.7$). The time to the top is 1 s - option D."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "A stone is thrown horizontally with a speed of 15 m/s from the top of a 20 m high tower (take $g = 10$ m/s$^2$). The horizontal distance from the foot of the tower at which it lands is:",
+    "options": [
+      { "text": "15 m" },
+      { "text": "30 m" },
+      { "text": "60 m" },
+      { "text": "21 m" }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Medium",
+    "subtopic": "Projectile Motion",
+    "fsmTag": "horizontal-projectile-range",
+    "concepts": ["projectile-motion", "independence-of-motions"],
+    "sourcePages": [81, 82],
+    "timeTargets": { "ap_eapcet": 60, "ts_eapcet": 60, "jee_main": 85 },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Horizontal launch - find fall time, then horizontal distance.",
+      "steps": [
+        "**Trigger:** Horizontal throw from a height - the fall time comes from the vertical drop, then range = horizontal speed × time.",
+        "**Action:** $t = \\sqrt{2h/g}$; range $= v_x t$.",
+        "**Result:** $t = \\sqrt{2 \\times 20/10} = 2$ s; range $= 15 \\times 2 = 30$ m - option B."
+      ],
+      "sanityCheck": "The vertical fall (20 m in 2 s) and horizontal travel (15 m/s × 2 s) are independent - the two combine to land the stone 30 m out."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Horizontal projectile - vertical free fall sets the time, horizontal motion sets the distance (Example 4.8 structure).",
+        "**EXTRACT:** $h = 20$ m, $v_x = 15$ m/s, $g = 10$.",
+        "**EXECUTE:** Fall time $t = \\sqrt{2 \\times 20/10} = \\sqrt{4} = 2$ s. Horizontal distance $= 15 \\times 2 = 30$ m.",
+        "**PROOF:** Option A (15 m) takes $t = 1$ s; option C (60 m) doubles the time to 4 s; option D (21 m) drops the factor 2 in the fall-time formula, using $t = \\sqrt{h/g} = \\sqrt2 \\approx 1.41$ s ($15 \\times 1.41 \\approx 21$). The correct $15 \\times 2 = 30$ m is option B."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "A projectile is launched at 37° above the horizontal with a speed of 20 m/s (take $g = 10$ m/s$^2$, $\\cos 37° = 0.8$, $\\sin 37° = 0.6$). Its vertical velocity component at $t = 1$ s is:",
+    "options": [
+      { "text": "12 m/s upward" },
+      { "text": "16 m/s upward" },
+      { "text": "8 m/s downward" },
+      { "text": "2 m/s upward" }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Medium",
+    "subtopic": "Projectile Motion",
+    "fsmTag": "vertical-velocity-at-time",
+    "concepts": ["projectile-motion", "velocity-components"],
+    "sourcePages": [80],
+    "timeTargets": { "ap_eapcet": 55, "ts_eapcet": 55, "jee_main": 80 },
+    "theOptimalPath": { "exists": false, "steps": [] },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Vertical velocity of a projectile (Eq. 4.39): $v_y = v_0\\sin\\theta_0 - g t$.",
+        "**EXTRACT:** $v_0 = 20$ m/s, $\\sin 37° = 0.6$, $g = 10$, $t = 1$ s.",
+        "**EXECUTE:** $v_y = 20 \\times 0.6 - 10 \\times 1 = 12 - 10 = 2$ m/s, still positive (upward).",
+        "**PROOF:** Option A reports the INITIAL vertical velocity ($v_0\\sin\\theta_0 = 12$, ignores gravity's effect over 1 s); option B uses $\\cos 37°$ for the vertical component ($20 \\times 0.8 = 16$); option C flips the sign. After 1 s the vertical velocity is $12 - 10 = 2$ m/s upward - option D."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "Two projectiles are fired from level ground with the same speed at angles of 30° and 60°. The ratio of their maximum heights ($h_{30°} : h_{60°}$) is:",
+    "options": [
+      { "text": "$1 : 3$" },
+      { "text": "$1 : \\sqrt{3}$" },
+      { "text": "$3 : 1$" },
+      { "text": "$1 : 1$" }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Hard",
+    "subtopic": "Projectile Motion",
+    "fsmTag": "max-height-ratio-angles",
+    "concepts": ["projectile-motion", "maximum-height"],
+    "sourcePages": [81],
+    "timeTargets": { "ap_eapcet": 80, "ts_eapcet": 80, "jee_main": 115 },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Same speed, two angles; height ratio wanted.",
+      "steps": [
+        "**Trigger:** Max-height ratio for equal speeds - $h \\propto \\sin^2\\theta$.",
+        "**Action:** $\\dfrac{h_{30}}{h_{60}} = \\dfrac{\\sin^2 30°}{\\sin^2 60°} = \\dfrac{(1/2)^2}{(\\sqrt3/2)^2}$.",
+        "**Result:** $\\dfrac{1/4}{3/4} = \\dfrac{1}{3}$, i.e. $1 : 3$ - option A."
+      ],
+      "sanityCheck": "The steeper 60° launch should reach higher, so $h_{30} < h_{60}$ - the ratio $1:3$ is consistent."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Max-height ratio (Eq. 4.42): $h \\propto \\sin^2\\theta_0$ for equal $v_0$.",
+        "**EXTRACT:** $\\sin 30° = 1/2$, $\\sin 60° = \\sqrt3/2$.",
+        "**EXECUTE:** $h_{30} : h_{60} = \\sin^2 30° : \\sin^2 60° = \\dfrac{1}{4} : \\dfrac{3}{4} = 1 : 3$.",
+        "**PROOF:** Option B uses $\\sin\\theta$ instead of $\\sin^2\\theta$ ($\\tfrac12 : \\tfrac{\\sqrt3}{2} = 1:\\sqrt3$); option C inverts the ratio (the lower angle cannot reach higher); option D ignores the angle dependence. The $\\sin^2$ ratio is $1 : 3$ - option A."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "An object is launched from the edge of a cliff at 30° above the horizontal with an initial speed of 30 m/s (take $g = 10$ m/s$^2$). It lands on the ground 20 m below the launch point. The horizontal distance it travels before landing is:",
+    "options": [
+      { "text": "$60\\sqrt{3}$ m" },
+      { "text": "60 m" },
+      { "text": "$30\\sqrt{3}$ m" },
+      { "text": "$120\\sqrt{3}$ m" }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Hard",
+    "subtopic": "Projectile Motion",
+    "fsmTag": "cliff-projectile-range",
+    "concepts": ["projectile-motion", "quadratic-equation", "independence-of-motions"],
+    "sourcePages": [81, 82, 89],
+    "timeTargets": { "ap_eapcet": 120, "ts_eapcet": 120, "jee_main": 170 },
+    "theOptimalPath": { "exists": false, "steps": [] },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Projectile launched from a height - solve the vertical quadratic for the flight time, then the horizontal distance (exercise: cliff 20 m, 30°, 30 m/s).",
+        "**EXTRACT:** Up positive, origin at the launch point: $v_{0x} = 30\\cos 30° = 15\\sqrt3$ m/s; $v_{0y} = 30\\sin 30° = +15$ m/s; the ground is 20 m below, at $y = -20$ m.",
+        "**EXECUTE:** Vertical: $-20 = 15t - 5t^2 \\Rightarrow 5t^2 - 15t - 20 = 0 \\Rightarrow t^2 - 3t - 4 = 0 \\Rightarrow (t-4)(t+1) = 0 \\Rightarrow t = 4$ s. Horizontal distance $= 15\\sqrt3 \\times 4 = 60\\sqrt3$ m.",
+        "**PROOF:** Option B drops the $\\sqrt3$ from the horizontal component (uses $v_x = 15$); option C uses only half the flight time ($t = 2$ s); option D doubles the flight time. Solving the vertical quadratic gives $t = 4$ s and a range of $60\\sqrt3$ m - option A."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "A particle moves in a circle with a constant angular speed of $\\pi$ rad/s. Its time period of revolution is:",
+    "options": [
+      { "text": "1 s" },
+      { "text": "4 s" },
+      { "text": "$2\\pi$ s" },
+      { "text": "2 s" }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Easy",
+    "subtopic": "Uniform Circular Motion",
+    "fsmTag": "period-from-angular-speed",
+    "concepts": ["uniform-circular-motion", "angular-speed", "time-period"],
+    "sourcePages": [84],
+    "timeTargets": { "ap_eapcet": 35, "ts_eapcet": 35, "jee_main": 50 },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Angular speed known; period wanted.",
+      "steps": [
+        "**Trigger:** Period from angular speed.",
+        "**Action:** $T = 2\\pi/\\omega$.",
+        "**Result:** $2\\pi/\\pi = 2$ s - option D."
+      ],
+      "sanityCheck": "$\\omega = \\pi$ rad/s means half a revolution ($\\pi$ rad) per second, so a full revolution ($2\\pi$ rad) takes 2 s."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Period and angular speed (Section 4.11, Eq. 4.48): $\\omega = 2\\pi/T$.",
+        "**EXTRACT:** $\\omega = \\pi$ rad/s.",
+        "**EXECUTE:** $T = \\dfrac{2\\pi}{\\omega} = \\dfrac{2\\pi}{\\pi} = 2$ s.",
+        "**PROOF:** Option A uses $\\pi/\\omega$ (drops the 2); option B inverts and scales wrongly; option C uses $2\\pi/1$ (treats $\\omega$ as 1). The period is $2\\pi/\\pi = 2$ s - option D."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "A particle in uniform circular motion completes 5 revolutions per second. Its angular speed is:",
+    "options": [
+      { "text": "$5\\pi$ rad/s" },
+      { "text": "10 rad/s" },
+      { "text": "$10\\pi$ rad/s" },
+      { "text": "$2\\pi/5$ rad/s" }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Medium",
+    "subtopic": "Uniform Circular Motion",
+    "fsmTag": "angular-speed-from-frequency",
+    "concepts": ["uniform-circular-motion", "angular-speed", "frequency"],
+    "sourcePages": [84],
+    "timeTargets": { "ap_eapcet": 40, "ts_eapcet": 40, "jee_main": 55 },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Frequency known; angular speed wanted.",
+      "steps": [
+        "**Trigger:** Revolutions per second is the frequency $\\nu$.",
+        "**Action:** $\\omega = 2\\pi\\nu$.",
+        "**Result:** $2\\pi \\times 5 = 10\\pi$ rad/s - option C."
+      ],
+      "sanityCheck": "Each revolution is $2\\pi$ rad; 5 per second gives $10\\pi$ rad/s."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Angular speed from frequency (Eq. 4.48): $\\omega = 2\\pi\\nu$.",
+        "**EXTRACT:** $\\nu = 5$ rev/s.",
+        "**EXECUTE:** $\\omega = 2\\pi \\times 5 = 10\\pi$ rad/s.",
+        "**PROOF:** Option A ($5\\pi$) uses $\\pi\\nu$ (drops the 2); option B (10) drops the $\\pi$ entirely ($2 \\times 5$); option D ($2\\pi/5$) DIVIDES by $\\nu$ instead of multiplying ($2\\pi/\\nu$). The correct $2\\pi\\nu = 10\\pi$ rad/s is option C."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "A particle moves in a circle of radius 0.25 m at a frequency of 2 revolutions per second. Its centripetal acceleration is:",
+    "options": [
+      { "text": "$2\\pi^2$ m/s$^2$" },
+      { "text": "$4\\pi^2$ m/s$^2$" },
+      { "text": "$16\\pi^2$ m/s$^2$" },
+      { "text": "$\\pi^2$ m/s$^2$" }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Medium",
+    "subtopic": "Uniform Circular Motion",
+    "fsmTag": "centripetal-from-frequency",
+    "concepts": ["uniform-circular-motion", "centripetal-acceleration", "frequency"],
+    "sourcePages": [84],
+    "timeTargets": { "ap_eapcet": 50, "ts_eapcet": 50, "jee_main": 70 },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Frequency and radius known; centripetal acceleration wanted.",
+      "steps": [
+        "**Trigger:** $a_c$ from frequency and radius - use the frequency form.",
+        "**Action:** $a_c = 4\\pi^2\\nu^2 R$.",
+        "**Result:** $4\\pi^2 \\times 2^2 \\times 0.25 = 4\\pi^2 \\times 4 \\times 0.25 = 4\\pi^2$ m/s$^2$ - option B."
+      ],
+      "sanityCheck": "Cross-check: $\\omega = 2\\pi\\nu = 4\\pi$ rad/s, $a_c = \\omega^2 R = 16\\pi^2 \\times 0.25 = 4\\pi^2$ m/s$^2$ - same answer."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Centripetal acceleration in frequency form (Eq. 4.49): $a_c = 4\\pi^2\\nu^2 R$.",
+        "**EXTRACT:** $\\nu = 2$ rev/s, $R = 0.25$ m.",
+        "**EXECUTE:** $a_c = 4\\pi^2 \\times 4 \\times 0.25 = 4\\pi^2$ m/s$^2 \\approx 39.5$ m/s$^2$.",
+        "**PROOF:** Option A halves the answer; option C reports $\\omega^2 = 16\\pi^2$ without multiplying by $R$; option D drops the factor 4 from $\\nu^2$. The full $4\\pi^2\\nu^2 R = 4\\pi^2$ m/s$^2$ is option B."
+      ]
+    },
+    "visual": { "type": "none" }
+  },
+  {
+    "questionText": "Two particles move in circular paths with the same angular speed, one on a circle of radius $R$ and the other on a circle of radius $2R$. The ratio of their centripetal accelerations (radius $R$ : radius $2R$) is:",
+    "options": [
+      { "text": "$2 : 1$" },
+      { "text": "$1 : 4$" },
+      { "text": "$1 : 1$" },
+      { "text": "$1 : 2$" }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Hard",
+    "subtopic": "Uniform Circular Motion",
+    "fsmTag": "centripetal-ratio-same-omega",
+    "concepts": ["uniform-circular-motion", "centripetal-acceleration", "angular-speed"],
+    "sourcePages": [84],
+    "timeTargets": { "ap_eapcet": 70, "ts_eapcet": 70, "jee_main": 100 },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Same angular speed, different radii.",
+      "steps": [
+        "**Trigger:** Same $\\omega$ - use $a_c = \\omega^2 R$, so $a_c \\propto R$ (NOT $v^2/R$, since $v$ differs).",
+        "**Action:** $\\dfrac{a_1}{a_2} = \\dfrac{R}{2R}$.",
+        "**Result:** $1 : 2$ - option D."
+      ],
+      "sanityCheck": "With equal $\\omega$, the larger circle has the larger linear speed and the larger centripetal acceleration - so radius $2R$ wins, giving $1:2$."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Centripetal acceleration at equal angular speed (Section 4.11): $a_c = \\omega^2 R$.",
+        "**EXTRACT:** Same $\\omega$; radii $R$ and $2R$.",
+        "**EXECUTE:** $a_1 = \\omega^2 R$, $a_2 = \\omega^2 (2R)$, so $a_1 : a_2 = R : 2R = 1 : 2$.",
+        "**PROOF:** Option A (2:1) inverts the ratio, wrongly treating $a_c \\propto 1/R$ as if the two had the same linear speed; option B (1:4) applies an inverse-SQUARE ($a_c \\propto 1/R^2$) confusion; option C (1:1) ignores the radius dependence. At equal $\\omega$, $a_c = \\omega^2 R \\propto R$, giving $1 : 2$ - option D."
+      ]
+    },
+    "visual": { "type": "none" }
+  }
+]

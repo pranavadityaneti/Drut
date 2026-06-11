@@ -78,11 +78,24 @@ Exit 0 required before a batch counts as done.
   no mid-sentence self-corrections left in the text.
 - **Ch3 recurring lesson (scratch-text leak):** the generator repeatedly
   leaks drafting fragments into PROOFs ("... no - it computes...",
-  "$\ldots$ no -", "doubles... no"). MANDATORY post-generation scrub on
-  every batch file BEFORE validation:
-  `grep -o '\.\.\. no \|no - it\|? no -\|ldots no' <file>` must return
-  empty. If an attribution isn't certain while drafting, STOP and verify
-  the arithmetic instead of thinking aloud into the string.
+  "$\ldots$ no -", "doubles... no", "no valid path beyond a guess",
+  "via a mis-step", "$v^2/... $ scaled wrong"). MANDATORY post-generation
+  scrub on every batch file BEFORE validation:
+  `grep -cE 'no - it|\.\.\. no|ldots no|no valid path|beyond a guess|or similar|mis-step|/\.\.\. ' <file>`
+  must return 0. If an attribution isn't certain while drafting, STOP and
+  compute what mistake actually produces that distractor value, or change
+  the distractor to a value with a clean single-error path.
+- **Ch4-B1 lesson (no internal cross-references):** every question must
+  STAND ALONE. Never reference another question in the same batch
+  ("as question 3 establishes", "the statement-style question above").
+  A student sees one question at a time. Textbook anchors (Section 4.x,
+  Eq. 4.xx, Example 4.x, Fig. 4.x, Points to Ponder N) ARE allowed and
+  encouraged — they help the student locate the concept.
+- **Ch4-B1 lesson (distractor with no clean path → change the value):**
+  if a distractor (e.g. "1.5 s") has no single derivable mistake that
+  produces it, do NOT paper over it with vague PROOF text — replace the
+  VALUE with one that has a clean path (e.g. a sign-error root, a
+  dropped-factor-2 value, a wrong-trig-function value).
 
 ## 4. Distractor + answer-position discipline
 
@@ -103,6 +116,15 @@ Exit 0 required before a batch counts as done.
 - `correctOptionIndex`: assign deliberately DURING generation, tracking a
   running tally; target 12–13 per position per 50-question batch. Claude
   chat drifted to position bias twice when leaving this to chance.
+- **Ch4-B3 lesson (count + position discipline on long batches):** a
+  one-pass 50-question write drifted to 47 questions with answers clustered
+  at indices 1/2 (index 3 at 4% — exploitable). BEFORE validating, the
+  validator prints the count and the 0/1/2/3 spread — confirm count == 50
+  and no position below ~10. To rebalance after the fact, swap the correct
+  option with the target-position option AND remap the PROOF's "option X"
+  letters (a scripted 2-way token swap of the two letters is reliable;
+  then programmatically assert every TAR/DEEP conclusion's final
+  "- option X" matches correctOptionIndex).
 - After writing a batch, audit that every "option X" reference inside
   T.A.R./D.E.E.P. text matches the actual `correctOptionIndex`.
 
