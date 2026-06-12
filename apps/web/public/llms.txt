@@ -1,0 +1,36 @@
+# Drut
+
+> Drut is an AI-powered practice platform for Indian engineering entrance
+> exams, focused on AP EAPCET and TG EAPCET (Andhra Pradesh and Telangana
+> Engineering, Agriculture and Pharmacy Common Entrance Tests). Drut trains
+> students to solve exam questions faster using exam-grade practice
+> questions, step-by-step solutions, and speed analytics.
+
+Drut (the word means "fast tempo" in Indian classical music) is built on a
+simple premise: in rank-based entrance exams, time is the difference
+between a rank and a rejection. Most students know the concepts; they lose
+ranks because they solve too slowly.
+
+## What Drut offers
+
+- Exam-grade practice questions for AP EAPCET and TG EAPCET (Physics,
+  Chemistry, Mathematics), mapped chapter-by-chapter to the Intermediate
+  (Class 11 and 12) syllabus
+- Two solutions for every question: "The Optimal Path" (the fastest exam
+  technique — Trigger, Action, Result) and a full step-by-step solution
+  (Diagnose, Extract, Execute, Proof)
+- Per-question time targets calibrated to real exam pacing
+- Speed analytics: where a student loses time, which solving patterns are
+  slow, and which chapters need work
+- Sprint mode: timed bursts that simulate exam pressure
+
+## Status
+
+Drut is in closed beta (2026) with a public launch planned for the 2027
+EAPCET season. The product is free during beta.
+
+## Site
+
+- Landing and waitlist: https://www.drut.club/
+- Privacy policy: https://www.drut.club/privacypolicy
+- Terms: https://www.drut.club/termsandconditions
