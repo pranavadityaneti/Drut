@@ -129,6 +129,9 @@ function App() {
           <Route path="/classic" element={
             user ? <Navigate to="/dashboard" replace /> : <WaitlistClassic onGetStarted={() => window.location.href = '/login'} />
           } />
+          <Route path="/alt" element={
+            user ? <Navigate to="/dashboard" replace /> : <Landing variant="marks" onGetStarted={() => window.location.href = '/login'} />
+          } />
           <Route path="/login" element={
             user ? <Navigate to="/dashboard" replace /> : <AuthPage onLoginSuccess={handleLoginSuccess} defaultMode="login" />
           } />

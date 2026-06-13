@@ -368,11 +368,140 @@ const faqJsonLd = JSON.stringify({
 /* Page                                                                */
 /* ------------------------------------------------------------------ */
 
+/* ------------------------------------------------------------------ */
+/* Hero backdrop — two variants (blobs vs speed-marks)                 */
+/* Both share the same atmospheric base so the comparison is purely    */
+/* about the decorative motif, not the whole hero feel.                */
+/* ------------------------------------------------------------------ */
+
+const HeroBackdrop: React.FC<{ variant: 'blobs' | 'marks' }> = ({ variant }) => (
+  <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+    {/* Atmospheric base: lime-tinted radial wash fading to cream */}
+    <div
+      className="absolute inset-0"
+      style={{
+        background:
+          'radial-gradient(ellipse 90% 70% at 50% -10%, #e8f5d8 0%, #f1f7e6 30%, #f4f6ee 55%, #f7f7f5 80%)',
+      }}
+    />
+    {/* Faint dot-grid texture — engineered/precision feel */}
+    <div
+      className="absolute inset-0 opacity-[0.06]"
+      style={{
+        backgroundImage: 'radial-gradient(#1c1d1a 1px, transparent 1px)',
+        backgroundSize: '24px 24px',
+        maskImage: 'radial-gradient(ellipse 70% 60% at 50% 30%, #000 40%, transparent 80%)',
+        WebkitMaskImage: 'radial-gradient(ellipse 70% 60% at 50% 30%, #000 40%, transparent 80%)',
+      }}
+    />
+
+    {variant === 'blobs' ? (
+      <>
+        {/* Lime blob, top-left */}
+        <div
+          className="absolute -top-24 -left-24 h-[480px] w-[480px] rounded-full"
+          style={{ background: 'radial-gradient(circle, #c8e8a5 0%, transparent 65%)', filter: 'blur(60px)', opacity: 0.85 }}
+        />
+        {/* Coral blob, top-right */}
+        <div
+          className="absolute -top-16 -right-32 h-[420px] w-[420px] rounded-full"
+          style={{ background: 'radial-gradient(circle, #ffc4a3 0%, transparent 65%)', filter: 'blur(70px)', opacity: 0.7 }}
+        />
+        {/* Sky blob, behind the CTA */}
+        <div
+          className="absolute bottom-[-60px] left-1/2 -translate-x-1/2 h-[260px] w-[640px] rounded-full"
+          style={{ background: 'radial-gradient(circle, #c5e3f4 0%, transparent 70%)', filter: 'blur(70px)', opacity: 0.55 }}
+        />
+      </>
+    ) : (
+      <>
+        {/* Speed-themed marks: motion streaks (left & right rails),       */}
+        {/* angled chevrons hinting at "forward".                            */}
+        <svg
+          className="absolute -top-4 left-0 h-[480px] w-[480px]"
+          viewBox="0 0 480 480"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g stroke="#5cbb21" strokeLinecap="round" strokeWidth="3" opacity="0.45">
+            <line x1="20" y1="110" x2="200" y2="110" />
+            <line x1="10" y1="170" x2="240" y2="170" />
+            <line x1="40" y1="230" x2="180" y2="230" />
+            <line x1="0" y1="290" x2="220" y2="290" />
+            <line x1="30" y1="350" x2="160" y2="350" />
+          </g>
+          {/* Chevron stack */}
+          <g stroke="#5cbb21" strokeLinecap="round" strokeWidth="4" fill="none" opacity="0.6">
+            <polyline points="60,400 90,420 60,440" />
+            <polyline points="90,400 120,420 90,440" />
+            <polyline points="120,400 150,420 120,440" />
+          </g>
+        </svg>
+        <svg
+          className="absolute top-12 right-0 h-[460px] w-[460px]"
+          viewBox="0 0 460 460"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g stroke="#ff7a3a" strokeLinecap="round" strokeWidth="3" opacity="0.45">
+            <line x1="260" y1="90" x2="440" y2="90" />
+            <line x1="220" y1="150" x2="450" y2="150" />
+            <line x1="280" y1="210" x2="420" y2="210" />
+            <line x1="240" y1="270" x2="460" y2="270" />
+            <line x1="300" y1="330" x2="430" y2="330" />
+          </g>
+          {/* Arrowhead burst */}
+          <g stroke="#ff7a3a" strokeLinecap="round" strokeWidth="4" fill="none" opacity="0.55">
+            <polyline points="330,380 360,400 330,420" />
+            <polyline points="360,380 390,400 360,420" />
+            <polyline points="390,380 420,400 390,420" />
+          </g>
+        </svg>
+        {/* Central streak — extra forward motion behind the type */}
+        <div
+          className="absolute top-[28%] left-1/2 -translate-x-1/2 h-[280px] w-[760px] rounded-full"
+          style={{
+            background:
+              'linear-gradient(90deg, transparent 0%, rgba(92,187,33,0.18) 30%, rgba(255,122,58,0.14) 70%, transparent 100%)',
+            filter: 'blur(40px)',
+          }}
+        />
+      </>
+    )}
+  </div>
+);
+
+/* Hand-drawn underline stroke under "faster" */
+const FasterUnderline: React.FC = () => (
+  <svg
+    aria-hidden="true"
+    viewBox="0 0 200 16"
+    preserveAspectRatio="none"
+    className="absolute -bottom-1.5 left-0 w-full h-[10px] sm:h-[12px]"
+  >
+    <path
+      d="M3 11 Q 35 3, 70 8 T 140 7 T 197 9"
+      fill="none"
+      stroke="#5cbb21"
+      strokeWidth="4"
+      strokeLinecap="round"
+    />
+  </svg>
+);
+
 interface LandingProps {
   onGetStarted?: () => void;
+  /**
+   * Hero backdrop variant — controls the decorative motif behind the type.
+   * The atmospheric base (lime wash + dot grid) is identical between variants;
+   * only the foreground motif changes (`blobs` = Jorny-style soft orbs;
+   * `marks` = speed lines + chevrons matching the "faster" positioning).
+   * Default: 'blobs'. The /alt route renders 'marks' for side-by-side review.
+   */
+  variant?: 'blobs' | 'marks';
 }
 
-export const Landing: React.FC<LandingProps> = () => {
+export const Landing: React.FC<LandingProps> = ({ variant = 'blobs' }) => {
   const [showResearch, setShowResearch] = useState(false);
 
   const scrollToJoin = () =>
@@ -408,14 +537,24 @@ export const Landing: React.FC<LandingProps> = () => {
 
       <main>
         {/* ---------- Hero ---------- */}
-        <section className="pt-16 sm:pt-20 pb-12 text-center px-4">
-          <div className="inline-flex items-center gap-2 rounded-full bg-white border border-[#e6e6e2] px-4 py-1.5 text-[13px] font-semibold text-[#5c5e57] mb-7 shadow-sm">
-            <span className="h-2 w-2 rounded-full bg-[#ff7a3a]" aria-hidden="true" />
+        <section className="relative isolate overflow-hidden pt-20 sm:pt-24 pb-20 text-center px-4">
+          <HeroBackdrop variant={variant} />
+
+          <div className="inline-flex items-center gap-2 rounded-full bg-white/90 backdrop-blur border border-[#e6e6e2] px-4 py-1.5 text-[13px] font-semibold text-[#5c5e57] mb-7 shadow-[0_2px_12px_rgba(28,29,26,0.06)]">
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inset-0 rounded-full bg-[#ff7a3a] animate-ping opacity-60" aria-hidden="true" />
+              <span className="relative h-2 w-2 rounded-full bg-[#ff7a3a]" aria-hidden="true" />
+            </span>
             Closed beta · Andhra Pradesh & Telangana
           </div>
 
-          <h1 className="mx-auto max-w-3xl text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-[1.06]">
-            Solve EAPCET questions <span className="text-[#5cbb21]">faster</span>.
+          <h1 className="mx-auto max-w-3xl text-4xl sm:text-5xl md:text-[68px] font-extrabold tracking-tight leading-[1.04]">
+            Solve EAPCET questions{' '}
+            <span className="relative inline-block text-[#5cbb21]">
+              faster
+              <FasterUnderline />
+            </span>
+            .
             <br />
             Rank higher.
           </h1>
@@ -425,7 +564,7 @@ export const Landing: React.FC<LandingProps> = () => {
             method so you can answer faster and finish the paper with confidence.
           </p>
 
-          <div className="mt-9">
+          <div className="mt-9 drop-shadow-[0_8px_24px_rgba(92,187,33,0.18)]">
             <WaitlistForm id="join" />
             <div className="mt-4 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-[13px] text-[#9a9c93]">
               <span>Free during beta</span>
