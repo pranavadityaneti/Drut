@@ -272,10 +272,11 @@ const useLoopStep = (steps: number, ms: number, reduced: boolean, frozenStep = 1
 
 const SCREEN_H = 600;
 
-const PhoneStatusBar: React.FC<{ label: string }> = ({ label }) => (
-  <div className="flex items-center justify-between px-6 pt-3 pb-1 text-[11px] font-semibold text-[#1c1d1a]">
+// Status bar leaves the centre empty so the hole-punch camera never sits on
+// top of any text. The extra top padding is the camera safe-area.
+const PhoneStatusBar: React.FC = () => (
+  <div className="flex items-center justify-between px-6 pt-7 pb-1 text-[11px] font-semibold text-[#1c1d1a]">
     <span>9:41</span>
-    <span className="text-[10px] font-bold tracking-wide text-[#5cbb21] uppercase">{label}</span>
     <span className="flex items-center gap-1" aria-hidden="true">
       <svg width="16" height="11" viewBox="0 0 16 11" fill="currentColor"><rect x="0" y="7" width="3" height="4" rx="0.5" /><rect x="4" y="5" width="3" height="6" rx="0.5" /><rect x="8" y="3" width="3" height="8" rx="0.5" /><rect x="12" y="1" width="3" height="10" rx="0.5" /></svg>
       <svg width="18" height="11" viewBox="0 0 24 14" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="1" y="1" width="19" height="12" rx="3" /><rect x="3" y="3" width="13" height="8" rx="1.5" fill="currentColor" /><path d="M22 5v4" strokeLinecap="round" /></svg>
@@ -311,7 +312,7 @@ const PracticePhone: React.FC = () => {
   const selected = step >= 1;
 
   return (
-    <div className="relative shrink-0" style={{ animation: reduced ? undefined : 'drutFloat 7s ease-in-out infinite' }}>
+    <div className="relative shrink-0">
       {/* Android device frame — uniform thin bezel + centred hole-punch */}
       <div className="rounded-[40px] bg-[#101010] p-[9px] shadow-[0_40px_70px_-20px_rgba(28,29,26,0.45)]">
         <div className="relative overflow-hidden rounded-[32px] bg-white w-[272px] sm:w-[288px] text-left" style={{ height: SCREEN_H }}>
@@ -325,7 +326,7 @@ const PracticePhone: React.FC = () => {
           >
             {/* Frame 0 — Question + answer */}
             <div className="flex flex-col" style={{ height: SCREEN_H }}>
-              <PhoneStatusBar label="Practice" />
+              <PhoneStatusBar />
               <div className="flex-1 px-5 pt-3">
                 <div className="flex items-center justify-between mb-3">
                   <span className="text-[10px] font-bold uppercase tracking-wide text-[#9a9c93]">Physics · Friction</span>
@@ -374,7 +375,7 @@ const PracticePhone: React.FC = () => {
 
             {/* Frame 1 — Quick Method (light, on-brand) */}
             <div className="flex flex-col" style={{ height: SCREEN_H }}>
-              <PhoneStatusBar label="Quick Method" />
+              <PhoneStatusBar />
               <div className="flex flex-1 flex-col px-5 pt-4">
                 <div className="flex items-center gap-2.5 mb-6">
                   <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[#5cbb21]">
@@ -405,7 +406,7 @@ const PracticePhone: React.FC = () => {
 
             {/* Frame 2 — Full Solution (genuinely detailed) */}
             <div className="flex flex-col" style={{ height: SCREEN_H }}>
-              <PhoneStatusBar label="Full Solution" />
+              <PhoneStatusBar />
               <div className="flex-1 overflow-hidden px-5 pt-3">
                 <div className="flex items-baseline justify-between mb-3">
                   <span className="text-[15px] font-extrabold text-[#1c1d1a]">Full Solution</span>
@@ -434,11 +435,8 @@ const PracticePhone: React.FC = () => {
 };
 
 /* Side cards that flank the phone (never overlap the screen content) */
-const AnalyticsCard: React.FC<{ reduced: boolean }> = ({ reduced }) => (
-  <div
-    className="w-52 rounded-2xl bg-white p-4 shadow-[0_20px_45px_-15px_rgba(28,29,26,0.28)] border border-[#eceae4]"
-    style={{ animation: reduced ? undefined : 'drutFloat2 6s ease-in-out infinite' }}
-  >
+const AnalyticsCard: React.FC = () => (
+  <div className="w-52 rounded-2xl bg-white p-4 shadow-[0_20px_45px_-15px_rgba(28,29,26,0.28)] border border-[#eceae4]">
     <div className="text-[10px] font-bold uppercase tracking-wide text-[#9a9c93] mb-2.5">Speed Analytics</div>
     <div className="flex items-end justify-between gap-1.5 h-14 mb-2.5" aria-hidden="true">
       {[40, 65, 50, 80, 60, 95].map((h, i) => (
@@ -450,11 +448,8 @@ const AnalyticsCard: React.FC<{ reduced: boolean }> = ({ reduced }) => (
   </div>
 );
 
-const StreakCard: React.FC<{ reduced: boolean }> = ({ reduced }) => (
-  <div
-    className="flex items-center gap-2.5 rounded-2xl bg-white px-4 py-3.5 shadow-[0_20px_45px_-15px_rgba(28,29,26,0.28)] border border-[#eceae4]"
-    style={{ animation: reduced ? undefined : 'drutFloat 6.5s ease-in-out infinite' }}
-  >
+const StreakCard: React.FC = () => (
+  <div className="flex items-center gap-2.5 rounded-2xl bg-white px-4 py-3.5 shadow-[0_20px_45px_-15px_rgba(28,29,26,0.28)] border border-[#eceae4]">
     <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[#fff1e8]">
       <svg width="17" height="17" viewBox="0 0 24 24" fill="#ff7a3a" aria-hidden="true"><path d="M12 2c1 3-1 4-1 6a3 3 0 0 0 6 0c0-1 0-2-1-3 2 1 4 4 4 8a8 8 0 1 1-16 0c0-3 2-5 3-7 1 2 2 2 3 1 0-2-1-3-1-5z" /></svg>
     </span>
@@ -491,7 +486,7 @@ const SprintDeck: React.FC = () => {
   const picked = step >= 1;
 
   return (
-    <div className="relative mx-auto h-[300px] w-full max-w-[340px]" style={{ animation: reduced ? undefined : 'drutFloat 7s ease-in-out infinite' }}>
+    <div className="relative mx-auto h-[300px] w-full max-w-[340px]">
       {SPRINT_CARDS.map((card, i) => {
         const pos = (i - front + SPRINT_CARDS.length) % SPRINT_CARDS.length; // 0 front, 1, 2
         const leaving = pos === 0 && step === 2;
@@ -634,7 +629,6 @@ interface LandingProps {
 
 export const Landing: React.FC<LandingProps> = () => {
   const [showResearch, setShowResearch] = useState(false);
-  const reduced = usePrefersReducedMotion();
 
   const scrollToJoin = () =>
     document.getElementById('join')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -724,11 +718,11 @@ export const Landing: React.FC<LandingProps> = () => {
               on xl+ where there's room; below that the phone stands alone. */}
           <div className="mt-16 flex items-center justify-center gap-8">
             <div className="hidden xl:block">
-              <StreakCard reduced={reduced} />
+              <StreakCard />
             </div>
             <PracticePhone />
             <div className="hidden xl:block">
-              <AnalyticsCard reduced={reduced} />
+              <AnalyticsCard />
             </div>
           </div>
         </section>
