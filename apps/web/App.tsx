@@ -19,6 +19,7 @@ import { Profile } from './components/Profile';
 import { HelpSupport } from './components/HelpSupport';
 import { WaitlistModern } from './components/WaitlistModern';
 import { WaitlistClassic } from './components/WaitlistClassic';
+import { Landing } from './components/Landing';
 import { AdminDashboard } from './components/admin/AdminDashboard';
 import { ModalProvider } from './components/ui/Modal';
 import { ErrorBoundary } from './components/ui/ErrorBoundary';
@@ -123,7 +124,7 @@ function App() {
         <Routes>
           {/* Public routes */}
           <Route path="/" element={
-            user ? <Navigate to="/dashboard" replace /> : <WaitlistClassic onGetStarted={() => window.location.href = '/login'} />
+            user ? <Navigate to="/dashboard" replace /> : <Landing onGetStarted={() => window.location.href = '/login'} />
           } />
           <Route path="/classic" element={
             user ? <Navigate to="/dashboard" replace /> : <WaitlistClassic onGetStarted={() => window.location.href = '/login'} />
