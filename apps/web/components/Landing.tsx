@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { supabase } from '@drut/shared';
 
 /**
@@ -240,88 +240,274 @@ const ResearchModal: React.FC<{ open: boolean; onClose: () => void }> = ({ open,
 };
 
 /* ------------------------------------------------------------------ */
-/* Product mock — hand-built "question + optimal path" composition     */
+/* Animation primitives                                                */
 /* ------------------------------------------------------------------ */
 
-const ProductMock: React.FC = () => (
-  <div className="relative mx-auto max-w-4xl px-4">
-    <div className="rounded-[32px] bg-gradient-to-b from-[#eef7e6] via-[#f4f9ef] to-[#f7f7f5] border border-[#e6e6e2] px-4 sm:px-10 pt-10 pb-12 overflow-hidden">
-      <div className="flex flex-col md:flex-row items-center justify-center gap-6">
-        {/* Question card */}
-        <div className="w-full max-w-sm rounded-2xl bg-white shadow-xl border border-[#eceae4] p-5 md:-rotate-1">
-          <div className="flex items-center justify-between mb-4">
-            <span className="text-[11px] font-bold tracking-wide text-[#5c5e57] uppercase">Physics · Laws of Motion</span>
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-[#fff1e8] text-[#c2410c] text-[12px] font-bold px-2.5 py-1">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
-                <circle cx="12" cy="13" r="8" />
-                <path d="M12 9v4l2 2M9 2h6" />
-              </svg>
-              0:45
-            </span>
-          </div>
-          <p className="text-[15px] font-semibold text-[#1c1d1a] leading-snug mb-4">
-            A 2 kg block on a 30° incline just begins to slide. The coefficient of static friction is:
-          </p>
-          <div className="space-y-2">
-            {['1/√3', '√3', '1/2', '√3/2'].map((opt, i) => (
-              <div
-                key={opt}
-                className={`rounded-xl border px-4 py-2.5 text-[14px] font-medium ${
-                  i === 0 ? 'border-[#5cbb21] bg-[#f0f9e8] text-[#1c1d1a]' : 'border-[#eceae4] text-[#5c5e57]'
-                }`}
-              >
-                {String.fromCharCode(65 + i)}. {opt}
-              </div>
-            ))}
-          </div>
-        </div>
+// Respect the user's reduced-motion preference — freeze animations if set.
+const usePrefersReducedMotion = (): boolean => {
+  const [reduced, setReduced] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const apply = () => setReduced(mq.matches);
+    apply();
+    mq.addEventListener?.('change', apply);
+    return () => mq.removeEventListener?.('change', apply);
+  }, []);
+  return reduced;
+};
 
-        {/* Optimal Path card */}
-        <div className="w-full max-w-sm rounded-2xl bg-[#1c1d1a] shadow-xl p-5 text-white md:rotate-1">
-          <div className="flex items-center gap-2 mb-4">
-            <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#5cbb21]">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="3" aria-hidden="true">
-                <path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z" />
-              </svg>
-            </span>
-            <span className="text-[13px] font-bold tracking-wide uppercase text-[#bfe8a3]">The Optimal Path · 15 sec</span>
-          </div>
-          <ol className="space-y-3 text-[14px] leading-snug">
-            <li className="flex gap-3">
-              <span className="shrink-0 font-extrabold text-[#5cbb21]">1</span>
-              <span>
-                <strong className="text-white">Trigger:</strong> "just begins to slide" on an incline.
-              </span>
-            </li>
-            <li className="flex gap-3">
-              <span className="shrink-0 font-extrabold text-[#5cbb21]">2</span>
-              <span>
-                <strong className="text-white">Action:</strong> μ = tan θ — skip the force diagram.
-              </span>
-            </li>
-            <li className="flex gap-3">
-              <span className="shrink-0 font-extrabold text-[#5cbb21]">3</span>
-              <span>
-                <strong className="text-white">Result:</strong> tan 30° = 1/√3. Option A.
-              </span>
-            </li>
-          </ol>
-          <div className="mt-4 rounded-xl bg-white/10 px-3 py-2 text-[12px] text-white/80">
-            Full step-by-step solution available — every step shown.
-          </div>
-        </div>
-      </div>
+// Loop a step counter 0..(steps-1), advancing every `ms`. Pauses if reduced.
+const useLoopStep = (steps: number, ms: number, reduced: boolean, frozenStep = 1): number => {
+  const [step, setStep] = useState(0);
+  useEffect(() => {
+    if (reduced) {
+      setStep(frozenStep);
+      return;
+    }
+    const id = setInterval(() => setStep((s) => (s + 1) % steps), ms);
+    return () => clearInterval(id);
+  }, [steps, ms, reduced, frozenStep]);
+  return step;
+};
 
-      {/* Analytics chip */}
-      <div className="mt-6 mx-auto w-fit max-w-full rounded-full bg-white border border-[#eceae4] shadow-md px-5 py-2.5 flex items-center gap-3">
-        <span className="h-2.5 w-2.5 shrink-0 rounded-full bg-[#5cbb21]" aria-hidden="true" />
-        <span className="text-[13px] font-semibold text-[#1c1d1a]">
-          You solve Friction questions 32s slower than your target — 14 questions queued.
-        </span>
-      </div>
-    </div>
+const SCREEN_H = 540;
+
+const PhoneStatusBar: React.FC<{ label: string }> = ({ label }) => (
+  <div className="flex items-center justify-between px-6 pt-3 pb-1 text-[11px] font-semibold text-[#1c1d1a]">
+    <span>9:41</span>
+    <span className="text-[10px] font-bold tracking-wide text-[#5cbb21] uppercase">{label}</span>
+    <span className="flex items-center gap-1" aria-hidden="true">
+      <svg width="16" height="11" viewBox="0 0 16 11" fill="currentColor"><rect x="0" y="7" width="3" height="4" rx="0.5" /><rect x="4" y="5" width="3" height="6" rx="0.5" /><rect x="8" y="3" width="3" height="8" rx="0.5" /><rect x="12" y="1" width="3" height="10" rx="0.5" /></svg>
+      <svg width="18" height="11" viewBox="0 0 24 14" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="1" y="1" width="19" height="12" rx="3" /><rect x="3" y="3" width="13" height="8" rx="1.5" fill="currentColor" /><path d="M22 5v4" strokeLinecap="round" /></svg>
+    </span>
   </div>
 );
+
+/* ------------------------------------------------------------------ */
+/* Practice phone — auto-running question -> answer -> optimal -> deep  */
+/* ------------------------------------------------------------------ */
+
+const PRACTICE_OPTS = ['1/√3', '√3', '1/2', '√3/2'];
+
+const PracticePhone: React.FC = () => {
+  const reduced = usePrefersReducedMotion();
+  // 0: question  1: answer selected  2: optimal path  3: step-by-step
+  const step = useLoopStep(4, 2000, reduced, 1);
+  const frame = step <= 1 ? 0 : step === 2 ? 1 : 2;
+  const selected = step >= 1;
+
+  return (
+    <div className="relative w-[268px] sm:w-[288px] shrink-0" style={{ animation: reduced ? undefined : 'drutFloat 7s ease-in-out infinite' }}>
+      {/* Device frame */}
+      <div className="rounded-[44px] bg-[#1c1d1a] p-[10px] shadow-[0_40px_70px_-20px_rgba(28,29,26,0.45)]">
+        <div className="relative overflow-hidden rounded-[36px] bg-white" style={{ height: SCREEN_H }}>
+          {/* Notch */}
+          <div className="absolute left-1/2 top-2 z-30 h-[26px] w-[110px] -translate-x-1/2 rounded-full bg-[#1c1d1a]" />
+
+          {/* Filmstrip: 3 stacked frames, translated by step */}
+          <div
+            className="transition-transform duration-700"
+            style={{ transform: `translateY(-${frame * SCREEN_H}px)`, transitionTimingFunction: 'cubic-bezier(0.22,1,0.36,1)' }}
+          >
+            {/* Frame 0 — Question + answer */}
+            <div className="flex flex-col" style={{ height: SCREEN_H }}>
+              <PhoneStatusBar label="Practice" />
+              <div className="flex-1 px-5 pt-3">
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-[10px] font-bold uppercase tracking-wide text-[#9a9c93]">Physics · Friction</span>
+                  <span className="inline-flex items-center gap-1 rounded-full bg-[#fff1e8] px-2 py-0.5 text-[11px] font-bold text-[#c2410c]">
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true"><circle cx="12" cy="13" r="8" /><path d="M12 9v4l2 2M9 2h6" /></svg>
+                    0:45
+                  </span>
+                </div>
+                <p className="text-[14px] font-bold leading-snug text-[#1c1d1a] mb-4">
+                  A 2 kg block on a 30° incline just begins to slide. The coefficient of static friction is:
+                </p>
+                <div className="space-y-2">
+                  {PRACTICE_OPTS.map((opt, i) => {
+                    const isCorrect = i === 0;
+                    const show = selected && isCorrect;
+                    return (
+                      <div
+                        key={opt}
+                        className={`flex items-center justify-between rounded-xl border px-3.5 py-2.5 text-[13px] font-semibold transition-all duration-500 ${
+                          show ? 'border-[#5cbb21] bg-[#f0f9e8] text-[#1c1d1a]' : 'border-[#eceae4] text-[#5c5e57]'
+                        }`}
+                      >
+                        <span>{String.fromCharCode(65 + i)}. {opt}</span>
+                        {show && (
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5cbb21" strokeWidth="3" aria-hidden="true"><path d="M5 13l4 4L19 7" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+                <div className={`mt-4 flex items-center gap-2 rounded-xl bg-[#1c1d1a] px-3 py-2 transition-opacity duration-500 ${selected ? 'opacity-100' : 'opacity-0'}`}>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5cbb21" strokeWidth="3" aria-hidden="true"><path d="M5 13l4 4L19 7" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                  <span className="text-[12px] font-bold text-white">Correct — in 12s</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Frame 1 — Optimal Path */}
+            <div className="flex flex-col bg-[#1c1d1a] text-white" style={{ height: SCREEN_H }}>
+              <div className="flex items-center justify-between px-6 pt-3 pb-1 text-[11px] font-semibold text-white/80">
+                <span>9:41</span>
+                <span className="text-[10px] font-bold uppercase tracking-wide text-[#bfe8a3]">Optimal Path</span>
+                <span className="h-2 w-2 rounded-full bg-[#5cbb21]" aria-hidden="true" />
+              </div>
+              <div className="flex-1 px-5 pt-5">
+                <div className="flex items-center gap-2 mb-5">
+                  <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-[#5cbb21]">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="3" aria-hidden="true"><path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z" /></svg>
+                  </span>
+                  <div>
+                    <div className="text-[13px] font-extrabold leading-tight">The Optimal Path</div>
+                    <div className="text-[11px] text-[#bfe8a3]">Solve it in 15 seconds</div>
+                  </div>
+                </div>
+                <ol className="space-y-4 text-[13px] leading-snug">
+                  <li className="flex gap-3"><span className="font-extrabold text-[#5cbb21]">1</span><span><strong>Trigger:</strong> "just begins to slide" on an incline.</span></li>
+                  <li className="flex gap-3"><span className="font-extrabold text-[#5cbb21]">2</span><span><strong>Action:</strong> μ = tan θ — skip the force diagram.</span></li>
+                  <li className="flex gap-3"><span className="font-extrabold text-[#5cbb21]">3</span><span><strong>Result:</strong> tan 30° = 1/√3. Option A.</span></li>
+                </ol>
+                <div className="mt-6 rounded-xl bg-white/10 px-3 py-2.5 text-[12px] text-white/80">
+                  Scroll for the full step-by-step ↓
+                </div>
+              </div>
+            </div>
+
+            {/* Frame 2 — Step-by-step */}
+            <div className="flex flex-col" style={{ height: SCREEN_H }}>
+              <PhoneStatusBar label="Full solution" />
+              <div className="flex-1 px-5 pt-4">
+                <div className="text-[13px] font-extrabold text-[#1c1d1a] mb-4">Step-by-step solution</div>
+                <div className="space-y-2.5">
+                  {[
+                    ['DIAGNOSE', 'Block on the verge of sliding — angle of repose.'],
+                    ['EXTRACT', 'θ = 30°; "just begins to slide" ⇒ friction at limit.'],
+                    ['EXECUTE', 'mg sinθ = μ mg cosθ ⇒ μ = tan 30° = 1/√3.'],
+                    ['PROOF', '1/√3 ≈ 0.577 — a typical surface value. Option A.'],
+                  ].map(([tag, body]) => (
+                    <div key={tag} className="rounded-xl border border-[#eceae4] px-3 py-2">
+                      <div className="text-[10px] font-extrabold tracking-wide text-[#5cbb21]">{tag}</div>
+                      <div className="text-[12px] leading-snug text-[#5c5e57]">{body}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Home indicator */}
+          <div className="absolute bottom-2 left-1/2 z-30 h-1 w-24 -translate-x-1/2 rounded-full bg-black/15" />
+        </div>
+      </div>
+
+      {/* Floating card — speed analytics (top-right) */}
+      <div
+        className="hidden lg:block absolute -right-16 top-24 w-48 rounded-2xl bg-white p-3.5 shadow-[0_20px_40px_-12px_rgba(28,29,26,0.25)] border border-[#eceae4]"
+        style={{ animation: reduced ? undefined : 'drutFloat2 6s ease-in-out infinite' }}
+      >
+        <div className="text-[10px] font-bold uppercase tracking-wide text-[#9a9c93] mb-2">Speed Analytics</div>
+        <div className="flex items-end justify-between gap-1 h-12 mb-2" aria-hidden="true">
+          {[40, 65, 50, 80, 60, 95].map((h, i) => (
+            <span key={i} className="flex-1 rounded-sm" style={{ height: `${h}%`, backgroundColor: i === 5 ? '#5cbb21' : '#e2efd6' }} />
+          ))}
+        </div>
+        <div className="text-[12px] font-bold text-[#1c1d1a]">Friction</div>
+        <div className="text-[11px] text-[#c2410c] font-semibold">32s slower than target</div>
+      </div>
+
+      {/* Floating card — streak (bottom-left) */}
+      <div
+        className="hidden lg:flex absolute -left-14 bottom-28 items-center gap-2.5 rounded-2xl bg-white px-3.5 py-3 shadow-[0_20px_40px_-12px_rgba(28,29,26,0.25)] border border-[#eceae4]"
+        style={{ animation: reduced ? undefined : 'drutFloat 6.5s ease-in-out infinite' }}
+      >
+        <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-[#fff1e8]">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="#ff7a3a" aria-hidden="true"><path d="M12 2c1 3-1 4-1 6a3 3 0 0 0 6 0c0-1 0-2-1-3 2 1 4 4 4 8a8 8 0 1 1-16 0c0-3 2-5 3-7 1 2 2 2 3 1 0-2-1-3-1-5z" /></svg>
+        </span>
+        <div>
+          <div className="text-[13px] font-extrabold text-[#1c1d1a] leading-tight">7-day streak</div>
+          <div className="text-[11px] text-[#5c5e57]">Speed climbing</div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+/* ------------------------------------------------------------------ */
+/* Sprint deck — stacked cards, auto-advancing question -> pick -> next */
+/* ------------------------------------------------------------------ */
+
+const SPRINT_CARDS = [
+  { tag: 'Maths · Functions', q: 'Domain of f(x) = 1/√(x − 2):', opts: ['x > 2', 'x ≥ 2', 'x < 2', 'all x'], correct: 0 },
+  { tag: 'Chemistry · Mole', q: 'Number of atoms in 0.5 mol of O₂:', opts: ['6.02×10²³', '3.01×10²³', '1.2×10²⁴', '6.02×10²²'], correct: 2 },
+  { tag: 'Physics · Kinematics', q: 'A body from rest, a = 2 m/s². Distance in 3 s:', opts: ['6 m', '9 m', '18 m', '12 m'], correct: 1 },
+];
+
+const SprintDeck: React.FC = () => {
+  const reduced = usePrefersReducedMotion();
+  // 0: question  1: pick shown  2: advancing
+  const step = useLoopStep(3, 1500, reduced, 1);
+  const [front, setFront] = useState(0);
+
+  useEffect(() => {
+    if (step === 2) {
+      const t = setTimeout(() => setFront((f) => (f + 1) % SPRINT_CARDS.length), 420);
+      return () => clearTimeout(t);
+    }
+  }, [step]);
+
+  const picked = step >= 1;
+
+  return (
+    <div className="relative mx-auto h-[300px] w-full max-w-[340px]" style={{ animation: reduced ? undefined : 'drutFloat 7s ease-in-out infinite' }}>
+      {SPRINT_CARDS.map((card, i) => {
+        const pos = (i - front + SPRINT_CARDS.length) % SPRINT_CARDS.length; // 0 front, 1, 2
+        const leaving = pos === 0 && step === 2;
+        const style: React.CSSProperties = {
+          zIndex: 30 - pos,
+          transform: leaving
+            ? 'translateY(-40px) scale(0.96) rotate(-4deg)'
+            : `translateY(${pos * 14}px) scale(${1 - pos * 0.05})`,
+          opacity: leaving ? 0 : pos === 2 ? 0.7 : 1,
+          transitionTimingFunction: 'cubic-bezier(0.22,1,0.36,1)',
+        };
+        return (
+          <div
+            key={i}
+            className="absolute inset-x-0 top-0 rounded-3xl bg-white p-6 shadow-[0_20px_45px_-15px_rgba(28,29,26,0.3)] border border-[#eceae4] transition-all duration-500"
+            style={style}
+          >
+            <div className="flex items-center justify-between mb-4">
+              <span className="text-[11px] font-bold uppercase tracking-wide text-[#9a9c93]">{card.tag}</span>
+              <span className="inline-flex items-center gap-1 rounded-full bg-[#1c1d1a] px-2.5 py-1 text-[11px] font-bold text-white">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#ff7a3a]" aria-hidden="true" /> SPRINT
+              </span>
+            </div>
+            <p className="text-[15px] font-bold leading-snug text-[#1c1d1a] mb-4 min-h-[44px]">{card.q}</p>
+            <div className="grid grid-cols-2 gap-2">
+              {card.opts.map((opt, oi) => {
+                const show = pos === 0 && picked && oi === card.correct;
+                return (
+                  <div
+                    key={oi}
+                    className={`rounded-xl border px-3 py-2 text-[13px] font-semibold transition-all duration-300 ${
+                      show ? 'border-[#5cbb21] bg-[#f0f9e8] text-[#1c1d1a]' : 'border-[#eceae4] text-[#5c5e57]'
+                    }`}
+                  >
+                    {opt}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+};
 
 /* ------------------------------------------------------------------ */
 /* FAQ data + schema                                                   */
@@ -369,105 +555,29 @@ const faqJsonLd = JSON.stringify({
 /* ------------------------------------------------------------------ */
 
 /* ------------------------------------------------------------------ */
-/* Hero backdrop — two variants (blobs vs speed-marks)                 */
-/* Both share the same atmospheric base so the comparison is purely    */
-/* about the decorative motif, not the whole hero feel.                */
+/* Hero backdrop — soft lime gradient wash (device-forward design)     */
 /* ------------------------------------------------------------------ */
 
-const HeroBackdrop: React.FC<{ variant: 'blobs' | 'marks' }> = ({ variant }) => (
+const HeroBackdrop: React.FC = () => (
   <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
-    {/* Atmospheric base: lime-tinted radial wash fading to cream */}
+    {/* Lime-tinted radial wash fading to cream — the device pops against it */}
     <div
       className="absolute inset-0"
       style={{
         background:
-          'radial-gradient(ellipse 90% 70% at 50% -10%, #e8f5d8 0%, #f1f7e6 30%, #f4f6ee 55%, #f7f7f5 80%)',
+          'radial-gradient(ellipse 100% 80% at 50% -5%, #e4f4d2 0%, #eef7e3 28%, #f3f6ec 52%, #f7f7f5 78%)',
       }}
     />
     {/* Faint dot-grid texture — engineered/precision feel */}
     <div
-      className="absolute inset-0 opacity-[0.06]"
+      className="absolute inset-0 opacity-[0.05]"
       style={{
         backgroundImage: 'radial-gradient(#1c1d1a 1px, transparent 1px)',
-        backgroundSize: '24px 24px',
-        maskImage: 'radial-gradient(ellipse 70% 60% at 50% 30%, #000 40%, transparent 80%)',
-        WebkitMaskImage: 'radial-gradient(ellipse 70% 60% at 50% 30%, #000 40%, transparent 80%)',
+        backgroundSize: '26px 26px',
+        maskImage: 'radial-gradient(ellipse 80% 70% at 50% 25%, #000 45%, transparent 85%)',
+        WebkitMaskImage: 'radial-gradient(ellipse 80% 70% at 50% 25%, #000 45%, transparent 85%)',
       }}
     />
-
-    {variant === 'blobs' ? (
-      <>
-        {/* Lime blob, top-left */}
-        <div
-          className="absolute -top-24 -left-24 h-[480px] w-[480px] rounded-full"
-          style={{ background: 'radial-gradient(circle, #c8e8a5 0%, transparent 65%)', filter: 'blur(60px)', opacity: 0.85 }}
-        />
-        {/* Coral blob, top-right */}
-        <div
-          className="absolute -top-16 -right-32 h-[420px] w-[420px] rounded-full"
-          style={{ background: 'radial-gradient(circle, #ffc4a3 0%, transparent 65%)', filter: 'blur(70px)', opacity: 0.7 }}
-        />
-        {/* Sky blob, behind the CTA */}
-        <div
-          className="absolute bottom-[-60px] left-1/2 -translate-x-1/2 h-[260px] w-[640px] rounded-full"
-          style={{ background: 'radial-gradient(circle, #c5e3f4 0%, transparent 70%)', filter: 'blur(70px)', opacity: 0.55 }}
-        />
-      </>
-    ) : (
-      <>
-        {/* Speed-themed marks: motion streaks (left & right rails),       */}
-        {/* angled chevrons hinting at "forward".                            */}
-        <svg
-          className="absolute -top-4 left-0 h-[480px] w-[480px]"
-          viewBox="0 0 480 480"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <g stroke="#5cbb21" strokeLinecap="round" strokeWidth="3" opacity="0.45">
-            <line x1="20" y1="110" x2="200" y2="110" />
-            <line x1="10" y1="170" x2="240" y2="170" />
-            <line x1="40" y1="230" x2="180" y2="230" />
-            <line x1="0" y1="290" x2="220" y2="290" />
-            <line x1="30" y1="350" x2="160" y2="350" />
-          </g>
-          {/* Chevron stack */}
-          <g stroke="#5cbb21" strokeLinecap="round" strokeWidth="4" fill="none" opacity="0.6">
-            <polyline points="60,400 90,420 60,440" />
-            <polyline points="90,400 120,420 90,440" />
-            <polyline points="120,400 150,420 120,440" />
-          </g>
-        </svg>
-        <svg
-          className="absolute top-12 right-0 h-[460px] w-[460px]"
-          viewBox="0 0 460 460"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <g stroke="#ff7a3a" strokeLinecap="round" strokeWidth="3" opacity="0.45">
-            <line x1="260" y1="90" x2="440" y2="90" />
-            <line x1="220" y1="150" x2="450" y2="150" />
-            <line x1="280" y1="210" x2="420" y2="210" />
-            <line x1="240" y1="270" x2="460" y2="270" />
-            <line x1="300" y1="330" x2="430" y2="330" />
-          </g>
-          {/* Arrowhead burst */}
-          <g stroke="#ff7a3a" strokeLinecap="round" strokeWidth="4" fill="none" opacity="0.55">
-            <polyline points="330,380 360,400 330,420" />
-            <polyline points="360,380 390,400 360,420" />
-            <polyline points="390,380 420,400 390,420" />
-          </g>
-        </svg>
-        {/* Central streak — extra forward motion behind the type */}
-        <div
-          className="absolute top-[28%] left-1/2 -translate-x-1/2 h-[280px] w-[760px] rounded-full"
-          style={{
-            background:
-              'linear-gradient(90deg, transparent 0%, rgba(92,187,33,0.18) 30%, rgba(255,122,58,0.14) 70%, transparent 100%)',
-            filter: 'blur(40px)',
-          }}
-        />
-      </>
-    )}
   </div>
 );
 
@@ -491,17 +601,9 @@ const FasterUnderline: React.FC = () => (
 
 interface LandingProps {
   onGetStarted?: () => void;
-  /**
-   * Hero backdrop variant — controls the decorative motif behind the type.
-   * The atmospheric base (lime wash + dot grid) is identical between variants;
-   * only the foreground motif changes (`blobs` = Jorny-style soft orbs;
-   * `marks` = speed lines + chevrons matching the "faster" positioning).
-   * Default: 'blobs'. The /alt route renders 'marks' for side-by-side review.
-   */
-  variant?: 'blobs' | 'marks';
 }
 
-export const Landing: React.FC<LandingProps> = ({ variant = 'blobs' }) => {
+export const Landing: React.FC<LandingProps> = () => {
   const [showResearch, setShowResearch] = useState(false);
 
   const scrollToJoin = () =>
@@ -515,6 +617,15 @@ export const Landing: React.FC<LandingProps> = ({ variant = 'blobs' }) => {
       {/* FAQ structured data for AEO */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: faqJsonLd }} />
 
+      {/* Self-contained keyframes for the floating mockup cards */}
+      <style>{`
+        @keyframes drutFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+        @keyframes drutFloat2 { 0%,100% { transform: translateY(0); } 50% { transform: translateY(10px); } }
+        @media (prefers-reduced-motion: reduce) {
+          [style*="drutFloat"] { animation: none !important; }
+        }
+      `}</style>
+
       {/* ---------- Nav ---------- */}
       <header className="sticky top-0 z-40 bg-[#f7f7f5]/90 backdrop-blur border-b border-[#e6e6e2]/70">
         <nav className="mx-auto max-w-6xl flex items-center justify-between px-4 sm:px-6 py-3.5">
@@ -523,6 +634,7 @@ export const Landing: React.FC<LandingProps> = ({ variant = 'blobs' }) => {
           </a>
           <div className="hidden md:flex items-center gap-7 text-[14px] font-semibold text-[#5c5e57]">
             <a href="#how" className="hover:text-[#1c1d1a] transition-colors">How it works</a>
+            <a href="#sprint" className="hover:text-[#1c1d1a] transition-colors">Sprint</a>
             <a href="#why-speed" className="hover:text-[#1c1d1a] transition-colors">Why speed</a>
             <a href="#faq" className="hover:text-[#1c1d1a] transition-colors">FAQ</a>
           </div>
@@ -537,8 +649,8 @@ export const Landing: React.FC<LandingProps> = ({ variant = 'blobs' }) => {
 
       <main>
         {/* ---------- Hero ---------- */}
-        <section className="relative isolate overflow-hidden pt-20 sm:pt-24 pb-20 text-center px-4">
-          <HeroBackdrop variant={variant} />
+        <section className="relative isolate overflow-hidden pt-20 sm:pt-24 pb-16 text-center px-4">
+          <HeroBackdrop />
 
           <div className="inline-flex items-center gap-2 rounded-full bg-white/90 backdrop-blur border border-[#e6e6e2] px-4 py-1.5 text-[13px] font-semibold text-[#5c5e57] mb-7 shadow-[0_2px_12px_rgba(28,29,26,0.06)]">
             <span className="relative flex h-2 w-2">
@@ -576,11 +688,11 @@ export const Landing: React.FC<LandingProps> = ({ variant = 'blobs' }) => {
               </button>
             </div>
           </div>
-        </section>
 
-        {/* ---------- Product mock ---------- */}
-        <section aria-label="Product preview" className="pb-20">
-          <ProductMock />
+          {/* Device-forward hero centerpiece: the auto-playing Practice phone */}
+          <div className="mt-16 flex justify-center">
+            <PracticePhone />
+          </div>
         </section>
 
         {/* ---------- How Drut works ---------- */}
@@ -622,8 +734,46 @@ export const Landing: React.FC<LandingProps> = ({ variant = 'blobs' }) => {
           </div>
         </section>
 
+        {/* ---------- Sprint showcase ---------- */}
+        <section id="sprint" className="py-20 overflow-hidden">
+          <div className="mx-auto max-w-6xl px-4 sm:px-6">
+            <div className="grid items-center gap-12 md:grid-cols-2">
+              {/* Copy */}
+              <div className="text-center md:text-left">
+                <p className="text-[13px] font-bold tracking-[0.15em] uppercase text-[#ff7a3a] mb-3">Sprint Mode</p>
+                <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight mb-4">
+                  Rapid-fire rounds that build exam stamina.
+                </h2>
+                <p className="text-[16px] leading-relaxed text-[#5c5e57] mb-6">
+                  A deck of timed questions across Physics, Chemistry and Maths — answer, advance,
+                  repeat. Sprint trains the one muscle the exam actually tests: thinking fast under
+                  the clock, without burning out before the last question.
+                </p>
+                <ul className="space-y-2.5 text-[15px] text-[#1c1d1a] inline-block text-left">
+                  {[
+                    'Mixed-subject decks that mirror the real paper',
+                    'A running clock on every card',
+                    'Instant feedback, then straight to the next',
+                  ].map((t) => (
+                    <li key={t} className="flex items-center gap-2.5">
+                      <span className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-[#f0f9e8]">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#4a9a1a" strokeWidth="3" aria-hidden="true"><path d="M5 13l4 4L19 7" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                      </span>
+                      {t}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              {/* Animated card deck */}
+              <div className="py-6">
+                <SprintDeck />
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* ---------- Feature cards ---------- */}
-        <section className="py-20">
+        <section className="py-20 bg-white border-y border-[#e6e6e2]/70">
           <div className="mx-auto max-w-6xl px-4 sm:px-6">
             <h2 className="text-center text-3xl sm:text-4xl font-extrabold tracking-tight mb-14">
               Built for one thing: <span className="text-[#5cbb21]">speed</span>.
