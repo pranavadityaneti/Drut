@@ -270,7 +270,7 @@ const useLoopStep = (steps: number, ms: number, reduced: boolean, frozenStep = 1
   return step;
 };
 
-const SCREEN_H = 540;
+const SCREEN_H = 600;
 
 const PhoneStatusBar: React.FC<{ label: string }> = ({ label }) => (
   <div className="flex items-center justify-between px-6 pt-3 pb-1 text-[11px] font-semibold text-[#1c1d1a]">
@@ -314,7 +314,7 @@ const PracticePhone: React.FC = () => {
     <div className="relative shrink-0" style={{ animation: reduced ? undefined : 'drutFloat 7s ease-in-out infinite' }}>
       {/* Android device frame — uniform thin bezel + centred hole-punch */}
       <div className="rounded-[40px] bg-[#101010] p-[9px] shadow-[0_40px_70px_-20px_rgba(28,29,26,0.45)]">
-        <div className="relative overflow-hidden rounded-[32px] bg-white w-[272px] sm:w-[288px]" style={{ height: SCREEN_H }}>
+        <div className="relative overflow-hidden rounded-[32px] bg-white w-[272px] sm:w-[288px] text-left" style={{ height: SCREEN_H }}>
           {/* Hole-punch camera (Android tell) */}
           <div className="absolute left-1/2 top-[14px] z-30 h-[10px] w-[10px] -translate-x-1/2 rounded-full bg-[#101010] ring-2 ring-black/20" />
 
@@ -339,26 +339,35 @@ const PracticePhone: React.FC = () => {
                 </p>
                 <div className="space-y-2">
                   {PRACTICE_OPTS.map((opt, i) => {
-                    const isCorrect = i === 0;
-                    const show = selected && isCorrect;
+                    const isCorrect = i === 0; // A = 1/√3
+                    const isWrongPick = i === 3; // D = √3/2 — the student's tempting mistake
+                    const showCorrect = selected && isCorrect;
+                    const showWrong = selected && isWrongPick;
                     return (
                       <div
                         key={opt}
                         className={`flex items-center justify-between rounded-xl border px-3.5 py-2.5 text-[13px] font-semibold transition-all duration-500 ${
-                          show ? 'border-[#5cbb21] bg-[#f0f9e8] text-[#1c1d1a]' : 'border-[#eceae4] text-[#5c5e57]'
+                          showCorrect
+                            ? 'border-[#5cbb21] bg-[#f0f9e8] text-[#1c1d1a]'
+                            : showWrong
+                              ? 'border-[#f0a3a3] bg-[#fdecec] text-[#1c1d1a]'
+                              : 'border-[#eceae4] text-[#5c5e57]'
                         }`}
                       >
                         <span>{String.fromCharCode(65 + i)}. {opt}</span>
-                        {show && (
+                        {showCorrect && (
                           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5cbb21" strokeWidth="3" aria-hidden="true"><path d="M5 13l4 4L19 7" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                        )}
+                        {showWrong && (
+                          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#d34a4a" strokeWidth="3" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" strokeLinecap="round" /></svg>
                         )}
                       </div>
                     );
                   })}
                 </div>
-                <div className={`mt-4 flex items-center gap-2 rounded-xl bg-[#5cbb21] px-3 py-2 transition-opacity duration-500 ${selected ? 'opacity-100' : 'opacity-0'}`}>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="3" aria-hidden="true"><path d="M5 13l4 4L19 7" strokeLinecap="round" strokeLinejoin="round" /></svg>
-                  <span className="text-[12px] font-bold text-white">Correct — in 12s</span>
+                <div className={`mt-4 flex items-center gap-2 rounded-xl bg-[#1c1d1a] px-3 py-2 transition-opacity duration-500 ${selected ? 'opacity-100' : 'opacity-0'}`}>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ff7a3a" strokeWidth="3" aria-hidden="true"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z" strokeLinejoin="round" /></svg>
+                  <span className="text-[12px] font-bold text-white">Not quite — here's the faster way</span>
                 </div>
               </div>
             </div>
@@ -366,33 +375,30 @@ const PracticePhone: React.FC = () => {
             {/* Frame 1 — Quick Method (light, on-brand) */}
             <div className="flex flex-col" style={{ height: SCREEN_H }}>
               <PhoneStatusBar label="Quick Method" />
-              <div className="flex-1 px-5 pt-3">
-                <div className="flex items-center gap-2.5 mb-5">
-                  <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-[#5cbb21]">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" aria-hidden="true"><path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z" strokeLinejoin="round" /></svg>
+              <div className="flex flex-1 flex-col px-5 pt-4">
+                <div className="flex items-center gap-2.5 mb-6">
+                  <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[#5cbb21]">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" aria-hidden="true"><path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z" strokeLinejoin="round" /></svg>
                   </span>
                   <div>
-                    <div className="text-[15px] font-extrabold leading-tight text-[#1c1d1a]">Quick Method</div>
-                    <div className="text-[11px] font-semibold text-[#4a9a1a]">Solve it in ~15 seconds</div>
+                    <div className="text-[16px] font-extrabold leading-tight text-[#1c1d1a]">Quick Method</div>
+                    <div className="text-[12px] font-semibold text-[#4a9a1a]">Solve it in ~15 seconds</div>
                   </div>
                 </div>
-                <div className="space-y-2.5">
+                <div className="space-y-3.5">
                   {[
-                    ['Trigger', '“Just begins to slide” on an incline.'],
-                    ['Action', 'Use μ = tan θ — skip the whole force diagram.'],
-                    ['Result', 'tan 30° = 1/√3. Option A.'],
-                  ].map(([label, body], i) => (
-                    <div key={label} className="rounded-xl bg-[#f0f9e8] px-3.5 py-3">
-                      <div className="flex items-center gap-2 mb-0.5">
-                        <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-[#5cbb21] text-[11px] font-extrabold text-white">{i + 1}</span>
-                        <span className="text-[12px] font-extrabold uppercase tracking-wide text-[#4a9a1a]">{label}</span>
-                      </div>
-                      <p className="text-[13px] leading-snug text-[#1c1d1a] pl-7">{body}</p>
+                    'Spot the signal: "just begins to slide" on an incline.',
+                    'Use μ = tan θ — no force diagram needed.',
+                    'tan 30° = 1/√3, so the answer is Option A.',
+                  ].map((body, i) => (
+                    <div key={i} className="flex items-start gap-3 rounded-2xl bg-[#f0f9e8] px-4 py-3.5">
+                      <span className="mt-[1px] inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#5cbb21] text-[12px] font-extrabold text-white">{i + 1}</span>
+                      <p className="text-[14px] leading-snug text-[#1c1d1a]">{body}</p>
                     </div>
                   ))}
                 </div>
-                <div className="mt-4 flex items-center justify-center gap-1.5 text-[12px] font-semibold text-[#9a9c93]">
-                  Need the why? See the Full Solution ↓
+                <div className="mt-auto pb-4 flex items-center gap-1.5 text-[12px] font-semibold text-[#9a9c93]">
+                  Want the why? See the Full Solution ↓
                 </div>
               </div>
             </div>
@@ -746,7 +752,7 @@ export const Landing: React.FC<LandingProps> = () => {
                 {
                   n: '02',
                   title: 'Learn the Quick Method',
-                  desc: 'Every question teaches the fastest exam-legal way to solve it — Trigger, Action, Result — alongside a detailed Full Solution.',
+                  desc: 'Every question teaches the fastest exam-legal way to solve it in a few steps — alongside a detailed Full Solution that shows exactly why it works.',
                 },
                 {
                   n: '03',
