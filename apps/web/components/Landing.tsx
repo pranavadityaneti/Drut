@@ -284,25 +284,39 @@ const PhoneStatusBar: React.FC<{ label: string }> = ({ label }) => (
 );
 
 /* ------------------------------------------------------------------ */
-/* Practice phone — auto-running question -> answer -> optimal -> deep  */
+/* Practice phone — Android device, auto-running:                      */
+/* question -> answer -> Quick Method -> Full Solution                 */
 /* ------------------------------------------------------------------ */
 
 const PRACTICE_OPTS = ['1/√3', '√3', '1/2', '√3/2'];
 
+// Genuinely detailed worked solution — what a student studies to LEARN it,
+// not a four-cell skeleton. (Full Solution = D.E.E.P. internally.)
+const FULL_SOLUTION_STEPS = [
+  'Mark the forces on the block: weight mg straight down, normal N perpendicular to the incline, friction f acting up the incline (it resists the impending slide).',
+  'Resolve the weight along and across the incline: along it, mg sin θ pulls the block down; across it, mg cos θ presses into the surface.',
+  'Perpendicular to the incline there is no motion, so the surface pushes back equally: N = mg cos θ.',
+  '“Just begins to slide” is the tipping point — static friction is at its maximum, f = μₛN.',
+  'Along the incline, at that instant the block is still in balance: mg sin θ = f = μₛN = μₛ mg cos θ.',
+  'The mg cancels from both sides, leaving μₛ = sin θ / cos θ = tan θ.',
+  'Substitute the angle: μₛ = tan 30° = 1/√3 ≈ 0.577.',
+  'Notice the 2 kg never mattered — μₛ depends only on the angle of repose, not the mass.',
+];
+
 const PracticePhone: React.FC = () => {
   const reduced = usePrefersReducedMotion();
-  // 0: question  1: answer selected  2: optimal path  3: step-by-step
-  const step = useLoopStep(4, 2000, reduced, 1);
+  // 0: question  1: answer selected  2: Quick Method  3: Full Solution
+  const step = useLoopStep(4, 2200, reduced, 1);
   const frame = step <= 1 ? 0 : step === 2 ? 1 : 2;
   const selected = step >= 1;
 
   return (
-    <div className="relative w-[268px] sm:w-[288px] shrink-0" style={{ animation: reduced ? undefined : 'drutFloat 7s ease-in-out infinite' }}>
-      {/* Device frame */}
-      <div className="rounded-[44px] bg-[#1c1d1a] p-[10px] shadow-[0_40px_70px_-20px_rgba(28,29,26,0.45)]">
-        <div className="relative overflow-hidden rounded-[36px] bg-white" style={{ height: SCREEN_H }}>
-          {/* Notch */}
-          <div className="absolute left-1/2 top-2 z-30 h-[26px] w-[110px] -translate-x-1/2 rounded-full bg-[#1c1d1a]" />
+    <div className="relative shrink-0" style={{ animation: reduced ? undefined : 'drutFloat 7s ease-in-out infinite' }}>
+      {/* Android device frame — uniform thin bezel + centred hole-punch */}
+      <div className="rounded-[40px] bg-[#101010] p-[9px] shadow-[0_40px_70px_-20px_rgba(28,29,26,0.45)]">
+        <div className="relative overflow-hidden rounded-[32px] bg-white w-[272px] sm:w-[288px]" style={{ height: SCREEN_H }}>
+          {/* Hole-punch camera (Android tell) */}
+          <div className="absolute left-1/2 top-[14px] z-30 h-[10px] w-[10px] -translate-x-1/2 rounded-full bg-[#101010] ring-2 ring-black/20" />
 
           {/* Filmstrip: 3 stacked frames, translated by step */}
           <div
@@ -342,99 +356,108 @@ const PracticePhone: React.FC = () => {
                     );
                   })}
                 </div>
-                <div className={`mt-4 flex items-center gap-2 rounded-xl bg-[#1c1d1a] px-3 py-2 transition-opacity duration-500 ${selected ? 'opacity-100' : 'opacity-0'}`}>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5cbb21" strokeWidth="3" aria-hidden="true"><path d="M5 13l4 4L19 7" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                <div className={`mt-4 flex items-center gap-2 rounded-xl bg-[#5cbb21] px-3 py-2 transition-opacity duration-500 ${selected ? 'opacity-100' : 'opacity-0'}`}>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="3" aria-hidden="true"><path d="M5 13l4 4L19 7" strokeLinecap="round" strokeLinejoin="round" /></svg>
                   <span className="text-[12px] font-bold text-white">Correct — in 12s</span>
                 </div>
               </div>
             </div>
 
-            {/* Frame 1 — Optimal Path */}
-            <div className="flex flex-col bg-[#1c1d1a] text-white" style={{ height: SCREEN_H }}>
-              <div className="flex items-center justify-between px-6 pt-3 pb-1 text-[11px] font-semibold text-white/80">
-                <span>9:41</span>
-                <span className="text-[10px] font-bold uppercase tracking-wide text-[#bfe8a3]">Optimal Path</span>
-                <span className="h-2 w-2 rounded-full bg-[#5cbb21]" aria-hidden="true" />
-              </div>
-              <div className="flex-1 px-5 pt-5">
-                <div className="flex items-center gap-2 mb-5">
-                  <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-[#5cbb21]">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="3" aria-hidden="true"><path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z" /></svg>
+            {/* Frame 1 — Quick Method (light, on-brand) */}
+            <div className="flex flex-col" style={{ height: SCREEN_H }}>
+              <PhoneStatusBar label="Quick Method" />
+              <div className="flex-1 px-5 pt-3">
+                <div className="flex items-center gap-2.5 mb-5">
+                  <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-[#5cbb21]">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" aria-hidden="true"><path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z" strokeLinejoin="round" /></svg>
                   </span>
                   <div>
-                    <div className="text-[13px] font-extrabold leading-tight">The Optimal Path</div>
-                    <div className="text-[11px] text-[#bfe8a3]">Solve it in 15 seconds</div>
+                    <div className="text-[15px] font-extrabold leading-tight text-[#1c1d1a]">Quick Method</div>
+                    <div className="text-[11px] font-semibold text-[#4a9a1a]">Solve it in ~15 seconds</div>
                   </div>
                 </div>
-                <ol className="space-y-4 text-[13px] leading-snug">
-                  <li className="flex gap-3"><span className="font-extrabold text-[#5cbb21]">1</span><span><strong>Trigger:</strong> "just begins to slide" on an incline.</span></li>
-                  <li className="flex gap-3"><span className="font-extrabold text-[#5cbb21]">2</span><span><strong>Action:</strong> μ = tan θ — skip the force diagram.</span></li>
-                  <li className="flex gap-3"><span className="font-extrabold text-[#5cbb21]">3</span><span><strong>Result:</strong> tan 30° = 1/√3. Option A.</span></li>
-                </ol>
-                <div className="mt-6 rounded-xl bg-white/10 px-3 py-2.5 text-[12px] text-white/80">
-                  Scroll for the full step-by-step ↓
-                </div>
-              </div>
-            </div>
-
-            {/* Frame 2 — Step-by-step */}
-            <div className="flex flex-col" style={{ height: SCREEN_H }}>
-              <PhoneStatusBar label="Full solution" />
-              <div className="flex-1 px-5 pt-4">
-                <div className="text-[13px] font-extrabold text-[#1c1d1a] mb-4">Step-by-step solution</div>
                 <div className="space-y-2.5">
                   {[
-                    ['DIAGNOSE', 'Block on the verge of sliding — angle of repose.'],
-                    ['EXTRACT', 'θ = 30°; "just begins to slide" ⇒ friction at limit.'],
-                    ['EXECUTE', 'mg sinθ = μ mg cosθ ⇒ μ = tan 30° = 1/√3.'],
-                    ['PROOF', '1/√3 ≈ 0.577 — a typical surface value. Option A.'],
-                  ].map(([tag, body]) => (
-                    <div key={tag} className="rounded-xl border border-[#eceae4] px-3 py-2">
-                      <div className="text-[10px] font-extrabold tracking-wide text-[#5cbb21]">{tag}</div>
-                      <div className="text-[12px] leading-snug text-[#5c5e57]">{body}</div>
+                    ['Trigger', '“Just begins to slide” on an incline.'],
+                    ['Action', 'Use μ = tan θ — skip the whole force diagram.'],
+                    ['Result', 'tan 30° = 1/√3. Option A.'],
+                  ].map(([label, body], i) => (
+                    <div key={label} className="rounded-xl bg-[#f0f9e8] px-3.5 py-3">
+                      <div className="flex items-center gap-2 mb-0.5">
+                        <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-[#5cbb21] text-[11px] font-extrabold text-white">{i + 1}</span>
+                        <span className="text-[12px] font-extrabold uppercase tracking-wide text-[#4a9a1a]">{label}</span>
+                      </div>
+                      <p className="text-[13px] leading-snug text-[#1c1d1a] pl-7">{body}</p>
                     </div>
                   ))}
                 </div>
+                <div className="mt-4 flex items-center justify-center gap-1.5 text-[12px] font-semibold text-[#9a9c93]">
+                  Need the why? See the Full Solution ↓
+                </div>
               </div>
+            </div>
+
+            {/* Frame 2 — Full Solution (genuinely detailed) */}
+            <div className="flex flex-col" style={{ height: SCREEN_H }}>
+              <PhoneStatusBar label="Full Solution" />
+              <div className="flex-1 overflow-hidden px-5 pt-3">
+                <div className="flex items-baseline justify-between mb-3">
+                  <span className="text-[15px] font-extrabold text-[#1c1d1a]">Full Solution</span>
+                  <span className="text-[11px] font-semibold text-[#9a9c93]">every step shown</span>
+                </div>
+                <ol className="space-y-3">
+                  {FULL_SOLUTION_STEPS.map((s, i) => (
+                    <li key={i} className="flex gap-2.5">
+                      <span className="mt-[1px] inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-[#d7e8c5] text-[11px] font-extrabold text-[#4a9a1a]">{i + 1}</span>
+                      <p className="text-[12.5px] leading-[1.45] text-[#3c3e38]">{s}</p>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+              {/* fade hint that the solution continues / scrolls */}
+              <div className="pointer-events-none h-10 bg-gradient-to-t from-white to-transparent -mt-10" />
             </div>
           </div>
 
-          {/* Home indicator */}
-          <div className="absolute bottom-2 left-1/2 z-30 h-1 w-24 -translate-x-1/2 rounded-full bg-black/15" />
-        </div>
-      </div>
-
-      {/* Floating card — speed analytics (top-right) */}
-      <div
-        className="hidden lg:block absolute -right-16 top-24 w-48 rounded-2xl bg-white p-3.5 shadow-[0_20px_40px_-12px_rgba(28,29,26,0.25)] border border-[#eceae4]"
-        style={{ animation: reduced ? undefined : 'drutFloat2 6s ease-in-out infinite' }}
-      >
-        <div className="text-[10px] font-bold uppercase tracking-wide text-[#9a9c93] mb-2">Speed Analytics</div>
-        <div className="flex items-end justify-between gap-1 h-12 mb-2" aria-hidden="true">
-          {[40, 65, 50, 80, 60, 95].map((h, i) => (
-            <span key={i} className="flex-1 rounded-sm" style={{ height: `${h}%`, backgroundColor: i === 5 ? '#5cbb21' : '#e2efd6' }} />
-          ))}
-        </div>
-        <div className="text-[12px] font-bold text-[#1c1d1a]">Friction</div>
-        <div className="text-[11px] text-[#c2410c] font-semibold">32s slower than target</div>
-      </div>
-
-      {/* Floating card — streak (bottom-left) */}
-      <div
-        className="hidden lg:flex absolute -left-14 bottom-28 items-center gap-2.5 rounded-2xl bg-white px-3.5 py-3 shadow-[0_20px_40px_-12px_rgba(28,29,26,0.25)] border border-[#eceae4]"
-        style={{ animation: reduced ? undefined : 'drutFloat 6.5s ease-in-out infinite' }}
-      >
-        <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-[#fff1e8]">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="#ff7a3a" aria-hidden="true"><path d="M12 2c1 3-1 4-1 6a3 3 0 0 0 6 0c0-1 0-2-1-3 2 1 4 4 4 8a8 8 0 1 1-16 0c0-3 2-5 3-7 1 2 2 2 3 1 0-2-1-3-1-5z" /></svg>
-        </span>
-        <div>
-          <div className="text-[13px] font-extrabold text-[#1c1d1a] leading-tight">7-day streak</div>
-          <div className="text-[11px] text-[#5c5e57]">Speed climbing</div>
+          {/* Android gesture pill */}
+          <div className="absolute bottom-2 left-1/2 z-30 h-1 w-28 -translate-x-1/2 rounded-full bg-black/20" />
         </div>
       </div>
     </div>
   );
 };
+
+/* Side cards that flank the phone (never overlap the screen content) */
+const AnalyticsCard: React.FC<{ reduced: boolean }> = ({ reduced }) => (
+  <div
+    className="w-52 rounded-2xl bg-white p-4 shadow-[0_20px_45px_-15px_rgba(28,29,26,0.28)] border border-[#eceae4]"
+    style={{ animation: reduced ? undefined : 'drutFloat2 6s ease-in-out infinite' }}
+  >
+    <div className="text-[10px] font-bold uppercase tracking-wide text-[#9a9c93] mb-2.5">Speed Analytics</div>
+    <div className="flex items-end justify-between gap-1.5 h-14 mb-2.5" aria-hidden="true">
+      {[40, 65, 50, 80, 60, 95].map((h, i) => (
+        <span key={i} className="flex-1 rounded-sm" style={{ height: `${h}%`, backgroundColor: i === 5 ? '#5cbb21' : '#e2efd6' }} />
+      ))}
+    </div>
+    <div className="text-[13px] font-extrabold text-[#1c1d1a]">Friction</div>
+    <div className="text-[11px] text-[#c2410c] font-semibold">32s slower than target</div>
+  </div>
+);
+
+const StreakCard: React.FC<{ reduced: boolean }> = ({ reduced }) => (
+  <div
+    className="flex items-center gap-2.5 rounded-2xl bg-white px-4 py-3.5 shadow-[0_20px_45px_-15px_rgba(28,29,26,0.28)] border border-[#eceae4]"
+    style={{ animation: reduced ? undefined : 'drutFloat 6.5s ease-in-out infinite' }}
+  >
+    <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[#fff1e8]">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="#ff7a3a" aria-hidden="true"><path d="M12 2c1 3-1 4-1 6a3 3 0 0 0 6 0c0-1 0-2-1-3 2 1 4 4 4 8a8 8 0 1 1-16 0c0-3 2-5 3-7 1 2 2 2 3 1 0-2-1-3-1-5z" /></svg>
+    </span>
+    <div>
+      <div className="text-[14px] font-extrabold text-[#1c1d1a] leading-tight">7-day streak</div>
+      <div className="text-[11px] text-[#5c5e57]">Speed climbing</div>
+    </div>
+  </div>
+);
 
 /* ------------------------------------------------------------------ */
 /* Sprint deck — stacked cards, auto-advancing question -> pick -> next */
@@ -527,8 +550,8 @@ const FAQS: { q: string; a: string }[] = [
     a: 'Yes — Drut is completely free during the closed beta. Pricing for the public launch will be announced later, and beta users will be the first to know.',
   },
   {
-    q: 'What is "The Optimal Path"?',
-    a: 'Every Drut question ships with two solutions: The Optimal Path — the fastest exam-legal method, written as Trigger → Action → Result — and a full step-by-step solution that shows every step. You learn the shortcut and the foundation behind it.',
+    q: 'What is the "Quick Method"?',
+    a: 'Every Drut question ships with two solutions: the Quick Method — the fastest exam-legal way to solve it, written as Trigger → Action → Result — and a detailed Full Solution that works through every step. You get the shortcut for speed and the full reasoning so it actually sticks.',
   },
   {
     q: 'How is Drut different from other practice apps?',
@@ -605,6 +628,7 @@ interface LandingProps {
 
 export const Landing: React.FC<LandingProps> = () => {
   const [showResearch, setShowResearch] = useState(false);
+  const reduced = usePrefersReducedMotion();
 
   const scrollToJoin = () =>
     document.getElementById('join')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -689,9 +713,17 @@ export const Landing: React.FC<LandingProps> = () => {
             </div>
           </div>
 
-          {/* Device-forward hero centerpiece: the auto-playing Practice phone */}
-          <div className="mt-16 flex justify-center">
+          {/* Device-forward hero centerpiece: phone flanked by product cards.
+              Cards sit BESIDE the phone (never over the screen) and only show
+              on xl+ where there's room; below that the phone stands alone. */}
+          <div className="mt-16 flex items-center justify-center gap-8">
+            <div className="hidden xl:block">
+              <StreakCard reduced={reduced} />
+            </div>
             <PracticePhone />
+            <div className="hidden xl:block">
+              <AnalyticsCard reduced={reduced} />
+            </div>
           </div>
         </section>
 
@@ -713,8 +745,8 @@ export const Landing: React.FC<LandingProps> = () => {
                 },
                 {
                   n: '02',
-                  title: 'Learn the Optimal Path',
-                  desc: 'Every question teaches the fastest exam-legal method — Trigger, Action, Result — alongside the full step-by-step solution.',
+                  title: 'Learn the Quick Method',
+                  desc: 'Every question teaches the fastest exam-legal way to solve it — Trigger, Action, Result — alongside a detailed Full Solution.',
                 },
                 {
                   n: '03',
@@ -787,8 +819,8 @@ export const Landing: React.FC<LandingProps> = () => {
                       <path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z" />
                     </svg>
                   ),
-                  title: 'The Optimal Path',
-                  desc: 'The fastest method for every question — and the full derivation when you want the depth. Shortcut plus foundation, never one without the other.',
+                  title: 'Quick Method',
+                  desc: 'The fastest way to solve every question — plus a detailed Full Solution when you want the depth. Shortcut and foundation, never one without the other.',
                 },
                 {
                   bg: BRAND.coralTint,
