@@ -1,0 +1,2604 @@
+[
+  {
+    "questionText": "Two vectors are given by $\\vec{A} = 2\\hat{i} + 3\\hat{j} + 4\\hat{k}$ and $\\vec{B} = \\hat{i} - 2\\hat{j} + 5\\hat{k}$. Their scalar (dot) product $\\vec{A} \\cdot \\vec{B}$ is:",
+    "options": [
+      {
+        "text": "$16$"
+      },
+      {
+        "text": "$28$"
+      },
+      {
+        "text": "$-24$"
+      },
+      {
+        "text": "$-4$"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Easy",
+    "subtopic": "Scalar (Dot) Product",
+    "fsmTag": "component-dot-product-sum",
+    "concepts": [
+      "dot-product",
+      "component-form"
+    ],
+    "sourcePages": [
+      120
+    ],
+    "timeTargets": {
+      "ap_eapcet": 35,
+      "ts_eapcet": 35,
+      "jee_main": 53
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Both vectors are in Cartesian component form, so use $\\vec{A} \\cdot \\vec{B} = A_x B_x + A_y B_y + A_z B_z$ (Section 6.4).",
+        "**EXTRACT:** $A_x=2, A_y=3, A_z=4$; $B_x=1, B_y=-2, B_z=5$.",
+        "**EXECUTE:** $\\vec{A}\\cdot\\vec{B} = (2)(1) + (3)(-2) + (4)(5) = 2 - 6 + 20 = 16$.",
+        "**PROOF:** The correct sum is $2 - 6 + 20 = 16$. The $28$ option comes from treating the middle term as $+6$ (ignoring the negative on $B_y$): $2 + 6 + 20 = 28$. The $-24$ option comes from a single sign slip that flips the $+20$ term to $-20$: $2 - 6 - 20 = -24$. The $-4$ option comes from dropping the $z$-term $(4)(5)=20$ entirely: $2 - 6 = -4$. Correct option: $16$."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A constant force $\\vec{F} = 5\\hat{i} + 0\\hat{j} - 3\\hat{k}$ N acts on a particle that undergoes a displacement $\\vec{d} = 4\\hat{i} + 2\\hat{j} + 6\\hat{k}$ m. The work done by the force is:",
+    "options": [
+      {
+        "text": "$38$ J"
+      },
+      {
+        "text": "$20$ J"
+      },
+      {
+        "text": "$2$ J"
+      },
+      {
+        "text": "$-2$ J"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Easy",
+    "subtopic": "Scalar (Dot) Product",
+    "fsmTag": "work-as-force-dot-displacement",
+    "concepts": [
+      "dot-product",
+      "work-energy"
+    ],
+    "sourcePages": [
+      120,
+      121
+    ],
+    "timeTargets": {
+      "ap_eapcet": 40,
+      "ts_eapcet": 40,
+      "jee_main": 60
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Work by a constant force is the scalar product $W = \\vec{F}\\cdot\\vec{d}$ (Eq 6.x, Section 6.4).",
+        "**EXTRACT:** $F_x=5, F_y=0, F_z=-3$; $d_x=4, d_y=2, d_z=6$.",
+        "**EXECUTE:** $W = (5)(4) + (0)(2) + (-3)(6) = 20 + 0 - 18 = 2$ J.",
+        "**PROOF:** The correct work is $20 + 0 - 18 = 2$ J. The $38$ J option comes from dropping the minus sign on $F_z$: $20 + 0 + 18 = 38$. The $20$ J option comes from forgetting the $z$-contribution altogether and using only the $x$-term: $20 + 0 = 20$. The $-2$ J option comes from a sign error that flips only the $x$-term: $-20 + 0 + 18 = -2$. Correct option: $2$ J."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The angle between the vectors $\\vec{A} = \\hat{i} + \\hat{k}$ and $\\vec{B} = \\hat{j} + \\hat{k}$ is:",
+    "options": [
+      {
+        "text": "$30^\\circ$"
+      },
+      {
+        "text": "$45^\\circ$"
+      },
+      {
+        "text": "$60^\\circ$"
+      },
+      {
+        "text": "$90^\\circ$"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Medium",
+    "subtopic": "Scalar (Dot) Product",
+    "fsmTag": "angle-from-dot-product",
+    "concepts": [
+      "dot-product",
+      "angle-between-vectors"
+    ],
+    "sourcePages": [
+      120,
+      121
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** The angle between two vectors follows from $\\cos\\theta = \\dfrac{\\vec{A}\\cdot\\vec{B}}{|\\vec{A}||\\vec{B}|}$ (Section 6.4).",
+        "**EXTRACT:** $\\vec{A} = (1, 0, 1)$, $\\vec{B} = (0, 1, 1)$.",
+        "**EXECUTE:** $\\vec{A}\\cdot\\vec{B} = (1)(0) + (0)(1) + (1)(1) = 1$. $|\\vec{A}| = \\sqrt{1+0+1} = \\sqrt{2}$, $|\\vec{B}| = \\sqrt{0+1+1} = \\sqrt{2}$. So $\\cos\\theta = \\dfrac{1}{\\sqrt{2}\\cdot\\sqrt{2}} = \\dfrac{1}{2}$, giving $\\theta = 60^\\circ$.",
+        "**PROOF:** With $\\cos\\theta = 1/2$, $\\theta = 60^\\circ$. The $45^\\circ$ option comes from dividing by only one magnitude, $\\cos\\theta = 1/\\sqrt{2}$, treating the denominator as a single $\\sqrt{2}$ instead of $\\sqrt{2}\\cdot\\sqrt{2}=2$. The $90^\\circ$ option comes from wrongly concluding the dot product is $0$ (e.g. pairing $A_x$ with $B_y$ and getting $1\\cdot0 + 0\\cdot1 = 0$ while missing the $\\hat{k}\\cdot\\hat{k}$ term). The $30^\\circ$ option comes from using $\\cos\\theta = \\sqrt{3}/2$ by mistakenly taking the dot product as $\\sqrt{3}$ or inverting the sine/cosine role. Correct option: $60^\\circ$."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The component (scalar projection) of $\\vec{A} = 2\\hat{i} + 3\\hat{j} + 6\\hat{k}$ along the vector $\\vec{B} = 3\\hat{i} + 4\\hat{k}$ is:",
+    "options": [
+      {
+        "text": "$1.2$"
+      },
+      {
+        "text": "$\\dfrac{30}{7}$"
+      },
+      {
+        "text": "$6$"
+      },
+      {
+        "text": "$30$"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Medium",
+    "subtopic": "Scalar (Dot) Product",
+    "fsmTag": "projection-onto-vector",
+    "concepts": [
+      "dot-product",
+      "projection"
+    ],
+    "sourcePages": [
+      120,
+      121
+    ],
+    "timeTargets": {
+      "ap_eapcet": 65,
+      "ts_eapcet": 65,
+      "jee_main": 98
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** The scalar projection of $\\vec{A}$ on $\\vec{B}$ is $\\dfrac{\\vec{A}\\cdot\\vec{B}}{|\\vec{B}|}$ (Section 6.4).",
+        "**EXTRACT:** $\\vec{A} = (2, 3, 6)$, $\\vec{B} = (3, 0, 4)$.",
+        "**EXECUTE:** $\\vec{A}\\cdot\\vec{B} = (2)(3) + (3)(0) + (6)(4) = 6 + 0 + 24 = 30$. $|\\vec{B}| = \\sqrt{3^2 + 0^2 + 4^2} = \\sqrt{25} = 5$. Projection $= \\dfrac{30}{5} = 6$.",
+        "**PROOF:** The projection is $30/5 = 6$. The $1.2$ option comes from dividing the dot product by $|\\vec{B}|^2 = 25$ instead of $|\\vec{B}|$: $30/25 = 1.2$. The $\\dfrac{30}{7}$ option comes from dividing by $|\\vec{A}| = \\sqrt{4+9+36} = 7$ (projecting onto the wrong vector). The $30$ option is just the raw dot product $\\vec{A}\\cdot\\vec{B}$ with no division by a magnitude at all. Correct option: $6$."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The vector $\\vec{A} = 2\\hat{i} + k\\hat{j} - 3\\hat{k}$ is perpendicular to $\\vec{B} = 4\\hat{i} - 2\\hat{j} + 6\\hat{k}$. The value of $k$ is:",
+    "options": [
+      {
+        "text": "$13$"
+      },
+      {
+        "text": "$5$"
+      },
+      {
+        "text": "$-5$"
+      },
+      {
+        "text": "$-9$"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Hard",
+    "subtopic": "Scalar (Dot) Product",
+    "fsmTag": "perpendicularity-solve-unknown",
+    "concepts": [
+      "dot-product",
+      "perpendicularity"
+    ],
+    "sourcePages": [
+      120,
+      121
+    ],
+    "timeTargets": {
+      "ap_eapcet": 95,
+      "ts_eapcet": 95,
+      "jee_main": 143
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Two vectors are perpendicular when their scalar product is zero: $\\vec{A}\\cdot\\vec{B} = 0$ (Section 6.4).",
+        "**EXTRACT:** $\\vec{A} = (2, k, -3)$, $\\vec{B} = (4, -2, 6)$.",
+        "**EXECUTE:** $\\vec{A}\\cdot\\vec{B} = (2)(4) + (k)(-2) + (-3)(6) = 8 - 2k - 18 = 0$. So $-2k - 10 = 0 \\Rightarrow -2k = 10 \\Rightarrow k = -5$.",
+        "**PROOF:** Setting $8 - 2k - 18 = 0$ gives $-2k = 10$, so $k = -5$; check: $(2)(4) + (-5)(-2) + (-3)(6) = 8 + 10 - 18 = 0$. The $5$ option comes from solving $-2k = 10$ but dropping the negative sign on $k$ (sign slip): $k = 5$. The $13$ option comes from a sign error on the last term, using $8 - 2k + 18 = 0 \\Rightarrow 2k = 26 \\Rightarrow k = 13$. The $-9$ option comes from omitting the first term and solving $-2k - 18 = 0 \\Rightarrow k = -9$. Correct option: $-5$."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A constant horizontal force of $25\\ \\text{N}$ pulls a box through a horizontal displacement of $8\\ \\text{m}$ in the direction of the force. The work done by the force is:",
+    "options": [
+      {
+        "text": "$200\\ \\text{J}$"
+      },
+      {
+        "text": "$3.125\\ \\text{J}$"
+      },
+      {
+        "text": "$0\\ \\text{J}$"
+      },
+      {
+        "text": "$33\\ \\text{J}$"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Easy",
+    "subtopic": "Work & the Work-Energy Theorem",
+    "fsmTag": "work-constant-force-collinear",
+    "concepts": [
+      "work-definition",
+      "force-times-displacement"
+    ],
+    "sourcePages": [
+      122
+    ],
+    "timeTargets": {
+      "ap_eapcet": 35,
+      "ts_eapcet": 35,
+      "jee_main": 53
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Force and displacement are collinear (theta = 0, cos 0 = 1).",
+      "steps": [
+        "**Trigger:** Force along displacement means W = Fd directly.",
+        "**Action:** Multiply 25 N by 8 m.",
+        "**Result:** 200 J."
+      ],
+      "sanityCheck": "Positive work since force aids motion; magnitude is order of tens-of-newtons times metres = hundreds of joules."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Constant force collinear with displacement; apply the definition of work $W = Fd\\cos\\theta$ (Section 6.4).",
+        "**EXTRACT:** $F = 25\\ \\text{N}$, $d = 8\\ \\text{m}$, $\\theta = 0^\\circ$ so $\\cos\\theta = 1$.",
+        "**EXECUTE:** $W = 25 \\times 8 \\times 1 = 200\\ \\text{J}$.",
+        "**PROOF:** $W = Fd = 200\\ \\text{J}$ confirms the 200 J option. The 3.125 J option comes from dividing instead of multiplying ($8/25 \\times \\dots$, i.e. $25/8 = 3.125$). The 0 J option assumes force is perpendicular to displacement ($\\cos 90^\\circ = 0$), which is wrong here. The 33 J option comes from adding $25 + 8 = 33$ instead of multiplying. Correct option: 200 J."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A waiter carries a tray of mass $3\\ \\text{kg}$ horizontally at constant speed across a level room, covering $12\\ \\text{m}$. Take $g = 10\\ \\text{m/s}^2$. The work done by the supporting force of his hand on the tray is:",
+    "options": [
+      {
+        "text": "$360\\ \\text{J}$"
+      },
+      {
+        "text": "$30\\ \\text{J}$"
+      },
+      {
+        "text": "$0\\ \\text{J}$"
+      },
+      {
+        "text": "$120\\ \\text{J}$"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Easy",
+    "subtopic": "Work & the Work-Energy Theorem",
+    "fsmTag": "zero-work-perpendicular",
+    "concepts": [
+      "work-definition",
+      "perpendicular-force"
+    ],
+    "sourcePages": [
+      122
+    ],
+    "timeTargets": {
+      "ap_eapcet": 40,
+      "ts_eapcet": 40,
+      "jee_main": 60
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Supporting force is vertical (upward), displacement is horizontal, so they are perpendicular.",
+      "steps": [
+        "**Trigger:** Vertical support force, horizontal motion means force perpendicular to displacement.",
+        "**Action:** Apply $\\cos 90^\\circ = 0$.",
+        "**Result:** Work = 0 J."
+      ],
+      "sanityCheck": "No component of the hand's force lies along the motion, so it transfers no energy."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** A force perpendicular to displacement does no work; the hand pushes up while the tray moves horizontally (Section 6.4, the carrier example).",
+        "**EXTRACT:** Supporting force is vertical $= mg = 3 \\times 10 = 30\\ \\text{N}$ upward; displacement $= 12\\ \\text{m}$ horizontal; angle between them $= 90^\\circ$.",
+        "**EXECUTE:** $W = Fd\\cos 90^\\circ = 30 \\times 12 \\times 0 = 0\\ \\text{J}$.",
+        "**PROOF:** Since $\\cos 90^\\circ = 0$, the work is the 0 J option. The 360 J option ignores the angle and computes $mg \\times d = 30 \\times 12 = 360\\ \\text{J}$. The 30 J option reports only the force magnitude $mg = 30\\ \\text{N}$ as if it were work. The 120 J option wrongly takes the force as $g = 10\\ \\text{N}$ and multiplies by the displacement: $10 \\times 12 = 120\\ \\text{J}$. Correct option: 0 J."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A child pulls a sled by a rope inclined at $60^\\circ$ above the horizontal with a constant force of $40\\ \\text{N}$. The sled moves $15\\ \\text{m}$ horizontally. The work done by the child on the sled is ($\\cos 60^\\circ = 0.5$):",
+    "options": [
+      {
+        "text": "$600\\ \\text{J}$"
+      },
+      {
+        "text": "$300\\ \\text{J}$"
+      },
+      {
+        "text": "$519.6\\ \\text{J}$"
+      },
+      {
+        "text": "$150\\ \\text{J}$"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Medium",
+    "subtopic": "Work & the Work-Energy Theorem",
+    "fsmTag": "work-force-at-angle",
+    "concepts": [
+      "work-definition",
+      "force-at-angle",
+      "cosine-component"
+    ],
+    "sourcePages": [
+      122
+    ],
+    "timeTargets": {
+      "ap_eapcet": 55,
+      "ts_eapcet": 55,
+      "jee_main": 83
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Work by a constant force at an angle uses $W = Fd\\cos\\theta$ where $\\theta$ is the angle between force and displacement (Eq 6.2a).",
+        "**EXTRACT:** $F = 40\\ \\text{N}$, $d = 15\\ \\text{m}$, $\\theta = 60^\\circ$, $\\cos 60^\\circ = 0.5$.",
+        "**EXECUTE:** $W = 40 \\times 15 \\times 0.5 = 300\\ \\text{J}$.",
+        "**PROOF:** $W = Fd\\cos\\theta = 300\\ \\text{J}$ matches the 300 J option. The 600 J option drops the cosine factor ($40 \\times 15 = 600\\ \\text{J}$). The 519.6 J option mistakenly uses $\\sin 60^\\circ = 0.866$ ($40 \\times 15 \\times 0.866 = 519.6\\ \\text{J}$), taking the perpendicular component. The 150 J option squares the cosine or halves twice ($600 \\times 0.25 = 150\\ \\text{J}$). Correct option: 300 J."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A block slides $6\\ \\text{m}$ along a rough horizontal floor against a constant friction force of $18\\ \\text{N}$. The work done by friction on the block is:",
+    "options": [
+      {
+        "text": "$+108\\ \\text{J}$"
+      },
+      {
+        "text": "$0\\ \\text{J}$"
+      },
+      {
+        "text": "$-108\\ \\text{J}$"
+      },
+      {
+        "text": "$-3\\ \\text{J}$"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Medium",
+    "subtopic": "Work & the Work-Energy Theorem",
+    "fsmTag": "work-friction-negative",
+    "concepts": [
+      "work-definition",
+      "friction-work",
+      "negative-work"
+    ],
+    "sourcePages": [
+      122
+    ],
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "timeTargets": {
+      "ap_eapcet": 50,
+      "ts_eapcet": 50,
+      "jee_main": 75
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Friction always opposes relative motion, so the angle between the friction force and the displacement is $180^\\circ$ and its work is negative (Section 6.4).",
+        "**EXTRACT:** $f = 18\\ \\text{N}$, $d = 6\\ \\text{m}$, $\\theta = 180^\\circ$, $\\cos 180^\\circ = -1$.",
+        "**EXECUTE:** $W = fd\\cos 180^\\circ = 18 \\times 6 \\times (-1) = -108\\ \\text{J}$.",
+        "**PROOF:** $W = -108\\ \\text{J}$ matches the $-108\\ \\text{J}$ option. The $+108\\ \\text{J}$ option uses $\\cos 0^\\circ = +1$, ignoring that friction opposes motion. The $0\\ \\text{J}$ option wrongly treats friction as perpendicular ($\\cos 90^\\circ = 0$). The $-3\\ \\text{J}$ option divides instead of multiplying ($-18/6 = -3$). Correct option: $-108\\ \\text{J}$."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A net force does $240\\ \\text{J}$ of work on a $4\\ \\text{kg}$ trolley initially at rest on a frictionless track. Using the work-energy theorem, the final speed of the trolley is:",
+    "options": [
+      {
+        "text": "$60\\ \\text{m/s}$"
+      },
+      {
+        "text": "$120\\ \\text{m/s}$"
+      },
+      {
+        "text": "$10.95\\ \\text{m/s}$"
+      },
+      {
+        "text": "$\\sqrt{60}\\ \\text{m/s} \\approx 7.75\\ \\text{m/s}$"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Medium",
+    "subtopic": "Work & the Work-Energy Theorem",
+    "fsmTag": "we-theorem-final-speed",
+    "concepts": [
+      "work-energy-theorem",
+      "kinetic-energy",
+      "solve-for-speed"
+    ],
+    "sourcePages": [
+      123
+    ],
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** With the trolley starting from rest, the work-energy theorem $W_{net} = K_f - K_i$ gives the final kinetic energy directly (Eq 6.3, Section 6.5).",
+        "**EXTRACT:** $W_{net} = 240\\ \\text{J}$, $m = 4\\ \\text{kg}$, $K_i = 0$ (starts at rest); find $v_f$.",
+        "**EXECUTE:** $K_f = W_{net} = 240\\ \\text{J} = \\tfrac{1}{2}mv_f^2$, so $v_f^2 = \\dfrac{2 \\times 240}{4} = 120$, giving $v_f = \\sqrt{120} \\approx 10.95\\ \\text{m/s}$.",
+        "**PROOF:** $v_f = \\sqrt{120} \\approx 10.95\\ \\text{m/s}$ matches the $10.95\\ \\text{m/s}$ option. The $60\\ \\text{m/s}$ option forgets the factor $\\tfrac{1}{2}$ and the square root, taking $v = W/m \\times \\dots$ as $240/4 = 60$. The $120\\ \\text{m/s}$ option leaves the answer as $v^2 = 120$ but reports it as $v$ (also matching $2W/m = 120$ without the square root). The $\\sqrt{60} \\approx 7.75\\ \\text{m/s}$ option drops the factor of 2 ($v^2 = W/m = 60$). Correct option: $10.95\\ \\text{m/s}$."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A $1500\\ \\text{kg}$ car moving at $20\\ \\text{m/s}$ is brought to rest by the brakes. Using the work-energy theorem, the magnitude of the work done by the braking force is:",
+    "options": [
+      {
+        "text": "$15000\\ \\text{J}$"
+      },
+      {
+        "text": "$3 \\times 10^5\\ \\text{J}$"
+      },
+      {
+        "text": "$6 \\times 10^5\\ \\text{J}$"
+      },
+      {
+        "text": "$30000\\ \\text{J}$"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Medium",
+    "subtopic": "Work & the Work-Energy Theorem",
+    "fsmTag": "we-theorem-stopping-work",
+    "concepts": [
+      "work-energy-theorem",
+      "kinetic-energy",
+      "braking-work"
+    ],
+    "sourcePages": [
+      123
+    ],
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Car stops, so the magnitude of braking work equals the initial kinetic energy.",
+      "steps": [
+        "**Trigger:** Comes to rest means |W_brake| = initial KE.",
+        "**Action:** Compute (1/2)(1500)(20^2).",
+        "**Result:** 3 x 10^5 J."
+      ],
+      "sanityCheck": "Final KE is zero, so all of the initial 300 kJ must be removed by the brakes."
+    },
+    "timeTargets": {
+      "ap_eapcet": 55,
+      "ts_eapcet": 55,
+      "jee_main": 83
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** By the work-energy theorem $W_{net} = K_f - K_i$; since the car stops, the braking work magnitude equals the initial kinetic energy (Section 6.5).",
+        "**EXTRACT:** $m = 1500\\ \\text{kg}$, $v_i = 20\\ \\text{m/s}$, $v_f = 0$.",
+        "**EXECUTE:** $|W| = K_i = \\tfrac{1}{2}mv_i^2 = \\tfrac{1}{2}(1500)(20^2) = 750 \\times 400 = 300000 = 3 \\times 10^5\\ \\text{J}$.",
+        "**PROOF:** $|W| = 3 \\times 10^5\\ \\text{J}$ matches the $3 \\times 10^5\\ \\text{J}$ option. The $15000\\ \\text{J}$ option forgets to square the speed ($\\tfrac{1}{2} \\times 1500 \\times 20 = 15000$). The $6 \\times 10^5\\ \\text{J}$ option drops the factor $\\tfrac{1}{2}$ ($1500 \\times 400 = 600000$). The $30000\\ \\text{J}$ option uses $mv$ without the half ($1500 \\times 20 = 30000$). Correct option: $3 \\times 10^5\\ \\text{J}$."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A $2\\ \\text{kg}$ block moving at $5\\ \\text{m/s}$ on a rough horizontal surface is pushed in its direction of motion by an external force that does $+44\\ \\text{J}$ of work, while friction does $-19\\ \\text{J}$ of work over the same path. Using the work-energy theorem, the final speed of the block is:",
+    "options": [
+      {
+        "text": "$5\\ \\text{m/s}$"
+      },
+      {
+        "text": "$8\\ \\text{m/s}$"
+      },
+      {
+        "text": "$7\\ \\text{m/s}$"
+      },
+      {
+        "text": "$5.57\\ \\text{m/s}$"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Hard",
+    "subtopic": "Work & the Work-Energy Theorem",
+    "fsmTag": "we-theorem-net-work-multiple-forces",
+    "concepts": [
+      "work-energy-theorem",
+      "net-work",
+      "kinetic-energy"
+    ],
+    "sourcePages": [
+      123
+    ],
+    "timeTargets": {
+      "ap_eapcet": 100,
+      "ts_eapcet": 100,
+      "jee_main": 150
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Sum the work of all forces to get $W_{net}$, then apply $W_{net} = K_f - K_i$ to find $v_f$ (Eq 6.3, Section 6.5).",
+        "**EXTRACT:** $m = 2\\ \\text{kg}$, $v_i = 5\\ \\text{m/s}$, $W_{ext} = +44\\ \\text{J}$, $W_{fric} = -19\\ \\text{J}$.",
+        "**EXECUTE:** $K_i = \\tfrac{1}{2}(2)(5^2) = 25\\ \\text{J}$; $W_{net} = 44 - 19 = 25\\ \\text{J}$; $K_f = K_i + W_{net} = 25 + 25 = 50\\ \\text{J}$; $\\tfrac{1}{2}(2)v_f^2 = 50 \\Rightarrow v_f^2 = 50 \\Rightarrow v_f \\approx 7.07\\ \\text{m/s} \\approx 7\\ \\text{m/s}$.",
+        "**PROOF:** $v_f = \\sqrt{50} \\approx 7\\ \\text{m/s}$ matches the $7\\ \\text{m/s}$ option. The $5\\ \\text{m/s}$ option wrongly treats the two works as cancelling so $W_{net} = 0$, leaving the speed unchanged. The $8\\ \\text{m/s}$ option ignores the friction work and uses only the external work: $K_f = 25 + 44 = 69$, $v = \\sqrt{69} \\approx 8.3 \\to 8\\ \\text{m/s}$. The $5.57\\ \\text{m/s}$ option subtracts the friction work twice: $K_f = 25 + 44 - 2(19) = 31$, $v = \\sqrt{31} \\approx 5.57\\ \\text{m/s}$. Correct option: $7\\ \\text{m/s}$."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A body of mass $4\\ \\text{kg}$ moves with a speed of $15\\ \\text{m s}^{-1}$. Its kinetic energy is:",
+    "options": [
+      {
+        "text": "$30\\ \\text{J}$"
+      },
+      {
+        "text": "$60\\ \\text{J}$"
+      },
+      {
+        "text": "$450\\ \\text{J}$"
+      },
+      {
+        "text": "$900\\ \\text{J}$"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Easy",
+    "subtopic": "Kinetic Energy",
+    "fsmTag": "direct-ke-formula",
+    "concepts": [
+      "kinetic-energy",
+      "half-m-v-squared"
+    ],
+    "sourcePages": [
+      123
+    ],
+    "timeTargets": {
+      "ap_eapcet": 35,
+      "ts_eapcet": 35,
+      "jee_main": 53
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Single body with given mass and speed; direct use of $K=\\tfrac{1}{2}mv^2$.",
+      "steps": [
+        "**Trigger:** Mass and speed given, single body, asking for kinetic energy.",
+        "**Action:** Apply $K=\\tfrac{1}{2}mv^2=\\tfrac{1}{2}(4)(15)^2$.",
+        "**Result:** $K=\\tfrac{1}{2}(4)(225)=450\\ \\text{J}$."
+      ],
+      "sanityCheck": "Half of $4\\times225=900$ is $450\\ \\text{J}$; units $\\text{kg}\\cdot\\text{m}^2\\text{s}^{-2}=\\text{J}$."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** A single body's kinetic energy is wanted from its mass and speed; this is a direct substitution into $K=\\tfrac{1}{2}mv^2$ (Eq. 6.5, Section 6.4).",
+        "**EXTRACT:** $m=4\\ \\text{kg}$, $v=15\\ \\text{m s}^{-1}$. Required: $K$.",
+        "**EXECUTE:** $K=\\tfrac{1}{2}mv^2=\\tfrac{1}{2}(4)(15)^2=\\tfrac{1}{2}(4)(225)=2\\times225=450\\ \\text{J}$.",
+        "**PROOF:** The 450 J option uses the full formula with the speed squared. The 900 J option drops the factor $\\tfrac{1}{2}$ ($mv^2=4\\times225=900$). The 60 J option computes $mv=4\\times15$ (treating it as momentum, forgetting both the square and the half). The 30 J option computes $\\tfrac{1}{2}mv=\\tfrac{1}{2}(4)(15)$ (forgot to square the speed). Correct option: $450\\ \\text{J}$."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A particle has kinetic energy $200\\ \\text{J}$. Its mass is unchanged, but its speed is increased to three times the original value. The new kinetic energy is:",
+    "options": [
+      {
+        "text": "$600\\ \\text{J}$"
+      },
+      {
+        "text": "$800\\ \\text{J}$"
+      },
+      {
+        "text": "$1200\\ \\text{J}$"
+      },
+      {
+        "text": "$1800\\ \\text{J}$"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Easy",
+    "subtopic": "Kinetic Energy",
+    "fsmTag": "ke-speed-scaling",
+    "concepts": [
+      "kinetic-energy",
+      "ke-velocity-relation"
+    ],
+    "sourcePages": [
+      123
+    ],
+    "timeTargets": {
+      "ap_eapcet": 40,
+      "ts_eapcet": 40,
+      "jee_main": 60
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Same mass; only speed scaled by a known factor; use $K\\propto v^2$.",
+      "steps": [
+        "**Trigger:** Same mass, speed scaled by a factor; kinetic energy asked.",
+        "**Action:** $K\\propto v^2$, so multiply by $3^2=9$: $200\\times9$.",
+        "**Result:** New $K=1800\\ \\text{J}$."
+      ],
+      "sanityCheck": "Tripling speed must raise $K$ by $9\\times$, not $3\\times$; $9\\times200=1800\\ \\text{J}$."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Mass is fixed and speed is scaled; use the proportionality $K\\propto v^2$ that follows from $K=\\tfrac{1}{2}mv^2$ (Section 6.4) instead of recomputing absolute values.",
+        "**EXTRACT:** $K_1=200\\ \\text{J}$, $v_2=3v_1$, mass unchanged. Required: $K_2$.",
+        "**EXECUTE:** $\\dfrac{K_2}{K_1}=\\left(\\dfrac{v_2}{v_1}\\right)^2=3^2=9$, so $K_2=9\\times200=1800\\ \\text{J}$.",
+        "**PROOF:** The 1800 J option correctly squares the factor 3. The 600 J option scales linearly ($200\\times3$), treating $K\\propto v$ instead of $v^2$. The 800 J option squares the wrong factor, using $2^2=4$ (the familiar 'doubling gives $\\times4$' reflex) to get $200\\times4$. The 1200 J option uses $\\times6$ ($200\\times6$), having multiplied the factor 3 by 2 rather than squaring it. Correct option: $1800\\ \\text{J}$."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A body of mass $5\\ \\text{kg}$ has linear momentum of magnitude $30\\ \\text{kg m s}^{-1}$. Its kinetic energy is:",
+    "options": [
+      {
+        "text": "$90\\ \\text{J}$"
+      },
+      {
+        "text": "$180\\ \\text{J}$"
+      },
+      {
+        "text": "$75\\ \\text{J}$"
+      },
+      {
+        "text": "$3\\ \\text{J}$"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Medium",
+    "subtopic": "Kinetic Energy",
+    "fsmTag": "ke-from-momentum",
+    "concepts": [
+      "kinetic-energy",
+      "momentum-ke-relation"
+    ],
+    "sourcePages": [
+      123
+    ],
+    "timeTargets": {
+      "ap_eapcet": 50,
+      "ts_eapcet": 50,
+      "jee_main": 75
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Momentum and mass given, speed not needed; use $K=p^2/2m$ directly.",
+      "steps": [
+        "**Trigger:** Momentum and mass given, kinetic energy asked — no speed needed.",
+        "**Action:** Apply $K=\\dfrac{p^2}{2m}=\\dfrac{30^2}{2(5)}$.",
+        "**Result:** $K=\\dfrac{900}{10}=90\\ \\text{J}$."
+      ],
+      "sanityCheck": "$p^2=900$ divided by $2m=10$ gives $90\\ \\text{J}$, a positive scalar energy."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Kinetic energy is wanted from momentum and mass; the direct bridge is $K=\\dfrac{p^2}{2m}$, obtained by writing $K=\\tfrac{1}{2}mv^2$ with $p=mv$ (Section 6.4).",
+        "**EXTRACT:** $p=30\\ \\text{kg m s}^{-1}$, $m=5\\ \\text{kg}$. Required: $K$.",
+        "**EXECUTE:** $K=\\dfrac{p^2}{2m}=\\dfrac{(30)^2}{2(5)}=\\dfrac{900}{10}=90\\ \\text{J}$.",
+        "**PROOF:** The 90 J option uses $p^2/2m$ correctly. The 180 J option drops the factor $\\tfrac{1}{2}$, computing $p^2/m=900/5$. The 75 J option mistakenly uses $K=\\tfrac{1}{2}pm=\\tfrac{1}{2}(30)(5)$, multiplying momentum by mass instead of dividing. The 3 J option uses $p/(2m)=30/10$, forgetting to square the momentum. Correct option: $90\\ \\text{J}$."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Two bodies of masses $2\\ \\text{kg}$ and $8\\ \\text{kg}$ have the same kinetic energy. The ratio of the magnitudes of their linear momenta (lighter : heavier) is:",
+    "options": [
+      {
+        "text": "$4:1$"
+      },
+      {
+        "text": "$1:2$"
+      },
+      {
+        "text": "$2:1$"
+      },
+      {
+        "text": "$1:1$"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Medium",
+    "subtopic": "Kinetic Energy",
+    "fsmTag": "equal-ke-momentum-ratio",
+    "concepts": [
+      "kinetic-energy",
+      "momentum-ke-relation",
+      "equal-ke"
+    ],
+    "sourcePages": [
+      123
+    ],
+    "timeTargets": {
+      "ap_eapcet": 55,
+      "ts_eapcet": 55,
+      "jee_main": 83
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Equal kinetic energy for two known masses; use $p\\propto\\sqrt{m}$.",
+      "steps": [
+        "**Trigger:** Equal kinetic energy, asking ratio of momenta of two masses.",
+        "**Action:** Equal $K$ gives $p\\propto\\sqrt{m}$, so $p_1:p_2=\\sqrt{2}:\\sqrt{8}$.",
+        "**Result:** $\\sqrt{2}:\\sqrt{8}=\\sqrt{2}:2\\sqrt{2}=1:2$."
+      ],
+      "sanityCheck": "Heavier body carries more momentum at equal $K$, so lighter:heavier $<1$, consistent with $1:2$."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Two bodies share the same kinetic energy and the momentum ratio is wanted; rearrange $K=\\dfrac{p^2}{2m}$ to $p=\\sqrt{2mK}$, so for equal $K$, $p\\propto\\sqrt{m}$.",
+        "**EXTRACT:** $m_1=2\\ \\text{kg}$ (lighter), $m_2=8\\ \\text{kg}$ (heavier), $K_1=K_2$. Required: $p_1:p_2$.",
+        "**EXECUTE:** $\\dfrac{p_1}{p_2}=\\sqrt{\\dfrac{m_1}{m_2}}=\\sqrt{\\dfrac{2}{8}}=\\sqrt{\\dfrac{1}{4}}=\\dfrac{1}{2}$, i.e. $p_1:p_2=1:2$.",
+        "**PROOF:** The $1:2$ option correctly takes the square root of the mass ratio. The $4:1$ option uses $m_1:m_2$ directly as the momentum ratio (forgetting the square root and also inverting), since $m_2:m_1=8:2=4:1$. The $2:1$ option takes the square root but inverts it, $\\sqrt{m_2/m_1}=\\sqrt{4}=2$, giving heavier:lighter. The $1:1$ option assumes equal kinetic energy implies equal momentum. Correct option: $1:2$."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A bullet of mass $20\\ \\text{g}$ is fired with speed $300\\ \\text{m s}^{-1}$ into a wooden block. After passing through, the bullet retains $16\\%$ of its initial kinetic energy. The emergent speed of the bullet is:",
+    "options": [
+      {
+        "text": "$48\\ \\text{m s}^{-1}$"
+      },
+      {
+        "text": "$252\\ \\text{m s}^{-1}$"
+      },
+      {
+        "text": "$120\\ \\text{m s}^{-1}$"
+      },
+      {
+        "text": "$275\\ \\text{m s}^{-1}$"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Hard",
+    "subtopic": "Kinetic Energy",
+    "fsmTag": "fractional-ke-to-speed",
+    "concepts": [
+      "kinetic-energy",
+      "ke-velocity-relation",
+      "fractional-ke"
+    ],
+    "sourcePages": [
+      124
+    ],
+    "timeTargets": {
+      "ap_eapcet": 95,
+      "ts_eapcet": 95,
+      "jee_main": 143
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** A bullet retains a fraction of its kinetic energy after passing through a block, and the emergent speed is wanted; since $K\\propto v^2$ at fixed mass, the speed ratio is the square root of the kinetic-energy fraction (the method of Example 6.4, Section 6.4).",
+        "**EXTRACT:** $m=20\\ \\text{g}$ (mass cancels), $v_i=300\\ \\text{m s}^{-1}$, $K_f=0.16\\,K_i$. Required: $v_f$.",
+        "**EXECUTE:** $\\dfrac{K_f}{K_i}=\\left(\\dfrac{v_f}{v_i}\\right)^2=0.16$, so $\\dfrac{v_f}{v_i}=\\sqrt{0.16}=0.4$, giving $v_f=0.4\\times300=120\\ \\text{m s}^{-1}$.",
+        "**PROOF:** The $120\\ \\text{m s}^{-1}$ option takes $\\sqrt{0.16}=0.4$ of the initial speed (mass cancels, as in Example 6.4). The $48\\ \\text{m s}^{-1}$ option applies the energy fraction directly to speed, $0.16\\times300$, ignoring that energy scales as speed squared. The $252\\ \\text{m s}^{-1}$ option subtracts the fraction from the speed, $(1-0.16)\\times300=0.84\\times300$, treating the lost energy as a lost speed fraction. The $275\\ \\text{m s}^{-1}$ option computes $\\sqrt{1-0.16}\\times300=\\sqrt{0.84}\\times300$, taking the square root of the energy lost rather than the energy retained. Correct option: $120\\ \\text{m s}^{-1}$."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A variable force acting on a body along the x-axis varies with position such that its force-displacement (F-x) graph is a straight line. The force increases uniformly from $4\\,\\text{N}$ at $x = 0$ to $10\\,\\text{N}$ at $x = 5\\,\\text{m}$. The work done by this force as the body moves from $x = 0$ to $x = 5\\,\\text{m}$ equals the area under the F-x graph. What is this work done?",
+    "options": [
+      {
+        "text": "$35\\,\\text{J}$"
+      },
+      {
+        "text": "$50\\,\\text{J}$"
+      },
+      {
+        "text": "$20\\,\\text{J}$"
+      },
+      {
+        "text": "$25\\,\\text{J}$"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Easy",
+    "subtopic": "Work done by a Variable Force",
+    "fsmTag": "area-under-f-x-trapezium",
+    "concepts": [
+      "work-variable-force",
+      "area-under-graph"
+    ],
+    "sourcePages": [
+      124
+    ],
+    "timeTargets": {
+      "ap_eapcet": 40,
+      "ts_eapcet": 40,
+      "jee_main": 60
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Work by a variable force equals the area under the F-x graph. A linear graph from $(0,4)$ to $(5,10)$ bounds a trapezium with the x-axis.",
+        "**EXTRACT:** Parallel sides $F_1 = 4\\,\\text{N}$ and $F_2 = 10\\,\\text{N}$; width (height of trapezium) $\\Delta x = 5\\,\\text{m}$.",
+        "**EXECUTE:** $W = \\tfrac{1}{2}(F_1 + F_2)\\,\\Delta x = \\tfrac{1}{2}(4 + 10)(5) = \\tfrac{1}{2}(14)(5) = 35\\,\\text{J}$.",
+        "**PROOF:** The trapezium area gives $35\\,\\text{J}$. The $50\\,\\text{J}$ option uses only the final force as if constant, $10 \\times 5 = 50$. The $20\\,\\text{J}$ option uses only the initial force as if constant, $4 \\times 5 = 20$. The $25\\,\\text{J}$ option treats the region as a triangle from the origin, $\\tfrac{1}{2}(10)(5) = 25$, ignoring the $4\\,\\text{N}$ starting offset. Correct option: $35\\,\\text{J}$."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A force directed along the x-axis is given by $F = (15 + 6x)\\,\\text{N}$, where $x$ is in metres. The work done by this force in moving a particle from $x = 0$ to $x = 5\\,\\text{m}$ is:",
+    "options": [
+      {
+        "text": "$75\\,\\text{J}$"
+      },
+      {
+        "text": "$225\\,\\text{J}$"
+      },
+      {
+        "text": "$150\\,\\text{J}$"
+      },
+      {
+        "text": "$45\\,\\text{J}$"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Medium",
+    "subtopic": "Work done by a Variable Force",
+    "fsmTag": "integrate-linear-force",
+    "concepts": [
+      "work-variable-force",
+      "definite-integral"
+    ],
+    "sourcePages": [
+      124,
+      125
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** For a position-dependent force along one axis, work is $W = \\int_{x_1}^{x_2} F\\,dx$. Here $F = 15 + 6x$ is linear in $x$.",
+        "**EXTRACT:** $F = (15 + 6x)\\,\\text{N}$, limits $x_1 = 0$, $x_2 = 5\\,\\text{m}$.",
+        "**EXECUTE:** $W = \\int_0^5 (15 + 6x)\\,dx = \\left[15x + 3x^2\\right]_0^5 = (75 + 75) - 0 = 150\\,\\text{J}$.",
+        "**PROOF:** Integrating both terms gives $150\\,\\text{J}$. The $75\\,\\text{J}$ option keeps only the constant term, $15 \\times 5 = 75$, dropping the $6x$ contribution. The $45\\,\\text{J}$ option evaluates the force at the endpoint, $F(5) = 15 + 30 = 45\\,\\text{N}$, mistaking force for work. The $225\\,\\text{J}$ option multiplies that endpoint force by the distance, $45 \\times 5 = 225$, treating the variable force as constant at its maximum value. Correct option: $150\\,\\text{J}$."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A repulsive force along the x-axis is given by $F = -\\dfrac{k}{x^2}$, where $k = 600\\,\\text{N}\\cdot\\text{m}^2$ and $x$ is in metres. The work done by this force as a particle moves from $x = a = 2\\,\\text{m}$ to $x = 3a = 6\\,\\text{m}$ is:",
+    "options": [
+      {
+        "text": "$-100\\,\\text{J}$"
+      },
+      {
+        "text": "$-200\\,\\text{J}$"
+      },
+      {
+        "text": "$-150\\,\\text{J}$"
+      },
+      {
+        "text": "$+200\\,\\text{J}$"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Medium",
+    "subtopic": "Work done by a Variable Force",
+    "fsmTag": "inverse-square-force-integral",
+    "concepts": [
+      "work-variable-force",
+      "inverse-square-integral"
+    ],
+    "sourcePages": [
+      125,
+      126
+    ],
+    "timeTargets": {
+      "ap_eapcet": 65,
+      "ts_eapcet": 65,
+      "jee_main": 98
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Work by a position-dependent force is $W = \\int_{x_1}^{x_2} F\\,dx$. With $F \\propto 1/x^2$, the antiderivative of $1/x^2$ is $-1/x$.",
+        "**EXTRACT:** $F = -k/x^2$, $k = 600\\,\\text{N}\\cdot\\text{m}^2$, limits $x_1 = a = 2\\,\\text{m}$ to $x_2 = 3a = 6\\,\\text{m}$.",
+        "**EXECUTE:** $W = \\int_a^{3a} \\left(-\\dfrac{k}{x^2}\\right)dx = -k\\left[-\\dfrac{1}{x}\\right]_a^{3a} = k\\left[\\dfrac{1}{x}\\right]_a^{3a} = k\\left(\\dfrac{1}{3a} - \\dfrac{1}{a}\\right) = -\\dfrac{2k}{3a}$. Substituting, $W = -\\dfrac{2(600)}{3(2)} = -200\\,\\text{J}$.",
+        "**PROOF:** Evaluating $-2k/3a$ gives $-200\\,\\text{J}$. The $-100\\,\\text{J}$ option keeps only the upper-limit term $k/(3a) = 600/6 = 100$ with the sign, dropping the larger lower-limit $k/a$ term. The $-150\\,\\text{J}$ option misreads the upper limit $3a$ as $2a$, giving $W = k\\left(\\dfrac{1}{2a} - \\dfrac{1}{a}\\right) = -\\dfrac{k}{2a} = -\\dfrac{600}{4} = -150$. The $+200\\,\\text{J}$ option has the correct magnitude but drops the overall negative sign by treating the force as positive. Correct option: $-200\\,\\text{J}$."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A particle moving along the x-axis experiences a force $F = -\\dfrac{k}{x}$, where $k = 20\\,\\text{N}\\cdot\\text{m}$ and $x$ is in metres. The work done by this force as the particle moves from $x = 2\\,\\text{m}$ to $x = 8\\,\\text{m}$ is: (use $\\ln 2 = 0.693$)",
+    "options": [
+      {
+        "text": "$+27.7\\,\\text{J}$"
+      },
+      {
+        "text": "$-12.0\\,\\text{J}$"
+      },
+      {
+        "text": "$-27.7\\,\\text{J}$"
+      },
+      {
+        "text": "$-13.9\\,\\text{J}$"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Medium",
+    "subtopic": "Work done by a Variable Force",
+    "fsmTag": "inverse-force-log-integral",
+    "concepts": [
+      "work-variable-force",
+      "logarithmic-integral"
+    ],
+    "sourcePages": [
+      125,
+      126
+    ],
+    "timeTargets": {
+      "ap_eapcet": 70,
+      "ts_eapcet": 70,
+      "jee_main": 105
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** For $F = -k/x$, work is $W = \\int_{x_1}^{x_2} F\\,dx$, and the antiderivative of $1/x$ is the natural logarithm $\\ln x$ (Example 6.6), not $\\log_{10}$.",
+        "**EXTRACT:** $F = -k/x$, $k = 20\\,\\text{N}\\cdot\\text{m}$, $x_1 = 2\\,\\text{m}$, $x_2 = 8\\,\\text{m}$; $\\ln 2 = 0.693$.",
+        "**EXECUTE:** $W = \\int_2^8 \\left(-\\dfrac{k}{x}\\right)dx = -k\\left[\\ln x\\right]_2^8 = -k\\,\\ln\\!\\left(\\dfrac{8}{2}\\right) = -k\\,\\ln 4 = -20(2 \\times 0.693) = -20(1.386) = -27.7\\,\\text{J}$.",
+        "**PROOF:** Using $\\ln 4 = 1.386$ gives $-27.7\\,\\text{J}$. The $+27.7\\,\\text{J}$ option has the correct magnitude but inverts the ratio to $\\ln(x_1/x_2) = \\ln(1/4)$ or drops the negative sign of the force, flipping the sign. The $-12.0\\,\\text{J}$ option uses $\\log_{10} 4 = 0.602$ instead of the natural log, giving $-20(0.602) = -12.0$. The $-13.9\\,\\text{J}$ option uses $\\ln 2$ alone, $-20(0.693) = -13.9$, mistaking the ratio $8/2$ for an exponent of 2 rather than computing $\\ln 4 = 2\\ln 2$. Correct option: $-27.7\\,\\text{J}$."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A body of mass $4\\,\\text{kg}$ moving along the x-axis with an initial speed of $5\\,\\text{m/s}$ is acted upon by a variable force whose F-x graph (force in N, position in m) is as follows: the force rises linearly from $0$ at $x = 0$ to $20\\,\\text{N}$ at $x = 4\\,\\text{m}$, stays constant at $20\\,\\text{N}$ from $x = 4\\,\\text{m}$ to $x = 8\\,\\text{m}$, then falls linearly from $20\\,\\text{N}$ to $0$ between $x = 8\\,\\text{m}$ and $x = 10\\,\\text{m}$. Using the work-energy theorem, the speed of the body at $x = 10\\,\\text{m}$ is approximately:",
+    "options": [
+      {
+        "text": "$8.4\\,\\text{m/s}$"
+      },
+      {
+        "text": "$9.7\\,\\text{m/s}$"
+      },
+      {
+        "text": "$8.1\\,\\text{m/s}$"
+      },
+      {
+        "text": "$12.8\\,\\text{m/s}$"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Hard",
+    "subtopic": "Work done by a Variable Force",
+    "fsmTag": "area-graph-then-work-energy",
+    "concepts": [
+      "work-variable-force",
+      "area-under-graph",
+      "work-energy-theorem"
+    ],
+    "sourcePages": [
+      124,
+      125,
+      126
+    ],
+    "timeTargets": {
+      "ap_eapcet": 110,
+      "ts_eapcet": 110,
+      "jee_main": 165
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Total work by the variable force is the area under the F-x graph (triangle + rectangle + triangle); then the work-energy theorem $W = \\Delta KE = \\tfrac{1}{2}mv_f^2 - \\tfrac{1}{2}mv_0^2$ gives the final speed.",
+        "**EXTRACT:** $m = 4\\,\\text{kg}$, $v_0 = 5\\,\\text{m/s}$. Graph regions: rising triangle base $4\\,\\text{m}$, height $20\\,\\text{N}$; rectangle width $4\\,\\text{m}$, height $20\\,\\text{N}$; falling triangle base $2\\,\\text{m}$, height $20\\,\\text{N}$.",
+        "**EXECUTE:** Areas: $A_1 = \\tfrac{1}{2}(4)(20) = 40\\,\\text{J}$, $A_2 = (4)(20) = 80\\,\\text{J}$, $A_3 = \\tfrac{1}{2}(2)(20) = 20\\,\\text{J}$; total $W = 140\\,\\text{J}$. Then $\\tfrac{1}{2}mv_f^2 = \\tfrac{1}{2}mv_0^2 + W = \\tfrac{1}{2}(4)(25) + 140 = 50 + 140 = 190\\,\\text{J}$, so $v_f = \\sqrt{2(190)/4} = \\sqrt{95} \\approx 9.7\\,\\text{m/s}$.",
+        "**PROOF:** Adding all three areas gives $W = 140\\,\\text{J}$ and $v_f = \\sqrt{95} \\approx 9.7\\,\\text{m/s}$. The $8.4\\,\\text{m/s}$ option ignores the initial kinetic energy, using $\\tfrac{1}{2}(4)v_f^2 = 140$ so $v_f = \\sqrt{70} \\approx 8.4$. The $8.1\\,\\text{m/s}$ option counts only the rectangle area $W = 80\\,\\text{J}$, omitting both triangles: $\\tfrac{1}{2}(4)v_f^2 = 50 + 80 = 130$, $v_f = \\sqrt{65} \\approx 8.1$. The $12.8\\,\\text{m/s}$ option doubles the total work, using $W = 2(140) = 280\\,\\text{J}$ instead of $140\\,\\text{J}$: $\\tfrac{1}{2}(4)v_f^2 = 50 + 280 = 330$, $v_f = \\sqrt{165} \\approx 12.8$. Correct option: $9.7\\,\\text{m/s}$."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A block of mass $4\\,\\text{kg}$ is lifted slowly to a shelf $2.5\\,\\text{m}$ above the floor. Taking $g = 10\\,\\text{m/s}^2$ and the floor as reference, the gravitational potential energy gained by the block is",
+    "options": [
+      {
+        "text": "$25\\,\\text{J}$"
+      },
+      {
+        "text": "$40\\,\\text{J}$"
+      },
+      {
+        "text": "$100\\,\\text{J}$"
+      },
+      {
+        "text": "$50\\,\\text{J}$"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Easy",
+    "subtopic": "Potential Energy & Conservation of Mechanical Energy",
+    "fsmTag": "direct-mgh-substitution",
+    "concepts": [
+      "gravitational-potential-energy",
+      "mgh"
+    ],
+    "sourcePages": [
+      126
+    ],
+    "timeTargets": {
+      "ap_eapcet": 35,
+      "ts_eapcet": 35,
+      "jee_main": 53
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Object raised to a height near Earth's surface, asked for gravitational potential energy. Apply $V = mgh$ (Section 6.8).",
+        "**EXTRACT:** $m = 4\\,\\text{kg}$, $h = 2.5\\,\\text{m}$, $g = 10\\,\\text{m/s}^2$, reference at floor.",
+        "**EXECUTE:** $V = mgh = 4 \\times 10 \\times 2.5 = 100\\,\\text{J}$.",
+        "**PROOF:** Direct substitution gives $100\\,\\text{J}$. The $25\\,\\text{J}$ option uses $gh = 10 \\times 2.5$, dropping the mass. The $40\\,\\text{J}$ option uses $mg = 4 \\times 10$, dropping the height. The $50\\,\\text{J}$ option computes $mgh/2 = 100/2$, inserting a spurious one-half factor borrowed from kinetic energy. Correct option: $100\\,\\text{J}$."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A stone is dropped from rest at the top of a tower of height $4.05\\,\\text{m}$. Using conservation of mechanical energy and $g = 10\\,\\text{m/s}^2$, the speed of the stone just before it hits the ground is",
+    "options": [
+      {
+        "text": "$9\\,\\text{m/s}$"
+      },
+      {
+        "text": "$6.36\\,\\text{m/s}$"
+      },
+      {
+        "text": "$4.5\\,\\text{m/s}$"
+      },
+      {
+        "text": "$81\\,\\text{m/s}$"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Easy",
+    "subtopic": "Potential Energy & Conservation of Mechanical Energy",
+    "fsmTag": "energy-conservation-free-fall",
+    "concepts": [
+      "conservation-of-mechanical-energy",
+      "free-fall"
+    ],
+    "sourcePages": [
+      127
+    ],
+    "timeTargets": {
+      "ap_eapcet": 40,
+      "ts_eapcet": 40,
+      "jee_main": 60
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Body falls freely from rest; mechanical energy is conserved, so the lost potential energy equals the gained kinetic energy. This yields $v = \\sqrt{2gh}$ (Section 6.8).",
+        "**EXTRACT:** initial speed $= 0$, $h = 4.05\\,\\text{m}$, $g = 10\\,\\text{m/s}^2$.",
+        "**EXECUTE:** $\\tfrac{1}{2}mv^2 = mgh \\Rightarrow v = \\sqrt{2gh} = \\sqrt{2 \\times 10 \\times 4.05} = \\sqrt{81} = 9\\,\\text{m/s}$.",
+        "**PROOF:** $\\sqrt{2gh} = \\sqrt{81} = 9\\,\\text{m/s}$. The $6.36\\,\\text{m/s}$ option uses $\\sqrt{gh} = \\sqrt{40.5}$, dropping the factor of 2. The $4.5\\,\\text{m/s}$ option uses $\\sqrt{gh/2} = \\sqrt{20.25}$, inverting the factor of 2. The $81\\,\\text{m/s}$ option reports $2gh$ without taking the square root. Correct option: $9\\,\\text{m/s}$."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The potential energy of a particle moving along the $x$-axis is given by $V(x) = 3x^2 - 2x$ (in joules, $x$ in metres). The force on the particle at $x = 2\\,\\text{m}$ is",
+    "options": [
+      {
+        "text": "$+10\\,\\text{N}$"
+      },
+      {
+        "text": "$-10\\,\\text{N}$"
+      },
+      {
+        "text": "$+8\\,\\text{N}$"
+      },
+      {
+        "text": "$-8\\,\\text{N}$"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Medium",
+    "subtopic": "Potential Energy & Conservation of Mechanical Energy",
+    "fsmTag": "force-from-potential-derivative",
+    "concepts": [
+      "force-potential-relation",
+      "conservative-force"
+    ],
+    "sourcePages": [
+      126,
+      128
+    ],
+    "timeTargets": {
+      "ap_eapcet": 55,
+      "ts_eapcet": 55,
+      "jee_main": 83
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Given a potential energy function $V(x)$, the conservative force is recovered by $F = -\\dfrac{dV}{dx}$ (Eq 6.x, Section 6.8).",
+        "**EXTRACT:** $V(x) = 3x^2 - 2x$, evaluate at $x = 2\\,\\text{m}$.",
+        "**EXECUTE:** $\\dfrac{dV}{dx} = 6x - 2$. So $F = -(6x - 2) = -6x + 2$. At $x = 2$: $F = -12 + 2 = -10\\,\\text{N}$.",
+        "**PROOF:** $F = -(6\\times 2 - 2) = -(10) = -10\\,\\text{N}$. The $+10\\,\\text{N}$ option drops the leading negative sign, reporting $+dV/dx$ instead of $-dV/dx$. The $+8\\,\\text{N}$ option reports the potential-energy value itself as the force: $V(2) = 3(2)^2 - 2(2) = 12 - 4 = 8\\,\\text{J}$, mistaken for the force. The $-8\\,\\text{N}$ option is that same misread $V(2)$ value with the $F = -dV/dx$ minus sign attached, giving $-8\\,\\text{N}$. Correct option: $-10\\,\\text{N}$."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A small smooth block slides from rest down a frictionless incline. The top of the incline is $1.8\\,\\text{m}$ vertically above the bottom, and the incline makes an angle of $30^\\circ$ with the horizontal. Taking $g = 10\\,\\text{m/s}^2$, the speed of the block at the bottom is",
+    "options": [
+      {
+        "text": "$3\\,\\text{m/s}$"
+      },
+      {
+        "text": "$36\\,\\text{m/s}$"
+      },
+      {
+        "text": "$4.24\\,\\text{m/s}$"
+      },
+      {
+        "text": "$6\\,\\text{m/s}$"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Medium",
+    "subtopic": "Potential Energy & Conservation of Mechanical Energy",
+    "fsmTag": "incline-energy-conservation-angle-independent",
+    "concepts": [
+      "conservation-of-mechanical-energy",
+      "smooth-incline"
+    ],
+    "sourcePages": [
+      127
+    ],
+    "timeTargets": {
+      "ap_eapcet": 55,
+      "ts_eapcet": 55,
+      "jee_main": 83
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "steps": [
+        "**Trigger:** Smooth (frictionless) incline, block released from rest, only the vertical drop $h$ is given alongside a distractor angle.",
+        "**Action:** On a frictionless surface mechanical energy is conserved, so the angle is irrelevant; apply $v = \\sqrt{2gh}$.",
+        "**Result:** $v = \\sqrt{2 \\times 10 \\times 1.8} = \\sqrt{36} = 6\\,\\text{m/s}$."
+      ],
+      "preconditions": "Incline is frictionless (smooth) and the vertical height is given directly.",
+      "sanityCheck": "The same $h$ via free fall gives the identical $\\sqrt{2gh}$, confirming angle-independence."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Frictionless incline, block from rest; no non-conservative work, so mechanical energy is conserved. Speed at the bottom depends only on the vertical drop, not the angle (Section 6.8).",
+        "**EXTRACT:** $h = 1.8\\,\\text{m}$ (vertical), $\\theta = 30^\\circ$ (irrelevant for a smooth track), $g = 10\\,\\text{m/s}^2$, initial speed $= 0$.",
+        "**EXECUTE:** $\\tfrac{1}{2}mv^2 = mgh \\Rightarrow v = \\sqrt{2gh} = \\sqrt{2 \\times 10 \\times 1.8} = \\sqrt{36} = 6\\,\\text{m/s}$.",
+        "**PROOF:** $\\sqrt{2gh} = \\sqrt{36} = 6\\,\\text{m/s}$. The $4.24\\,\\text{m/s}$ option wrongly multiplies the height by $\\sin 30^\\circ = 0.5$ first, using $\\sqrt{2g(h\\sin\\theta)} = \\sqrt{18}$, double-counting the geometry. The $3\\,\\text{m/s}$ option uses $\\sqrt{gh/2} = \\sqrt{9}$, inverting the factor of 2. The $36\\,\\text{m/s}$ option reports $2gh$ without taking the square root. Correct option: $6\\,\\text{m/s}$."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A ball of mass $0.5\\,\\text{kg}$ is thrown vertically upward from the ground with a speed of $12\\,\\text{m/s}$. Neglecting air resistance and taking $g = 10\\,\\text{m/s}^2$, the maximum height reached by the ball is",
+    "options": [
+      {
+        "text": "$7.2\\,\\text{m}$"
+      },
+      {
+        "text": "$14.4\\,\\text{m}$"
+      },
+      {
+        "text": "$3.6\\,\\text{m}$"
+      },
+      {
+        "text": "$1.2\\,\\text{m}$"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Medium",
+    "subtopic": "Potential Energy & Conservation of Mechanical Energy",
+    "fsmTag": "energy-conservation-max-height",
+    "concepts": [
+      "conservation-of-mechanical-energy",
+      "kinetic-to-potential"
+    ],
+    "sourcePages": [
+      127,
+      128
+    ],
+    "timeTargets": {
+      "ap_eapcet": 50,
+      "ts_eapcet": 50,
+      "jee_main": 75
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Projectile thrown straight up; at maximum height all kinetic energy has converted to potential energy. Conservation gives $h = v^2/(2g)$ (Section 6.8). Mass cancels.",
+        "**EXTRACT:** $v = 12\\,\\text{m/s}$, $g = 10\\,\\text{m/s}^2$; mass $0.5\\,\\text{kg}$ is not needed.",
+        "**EXECUTE:** $\\tfrac{1}{2}mv^2 = mgh \\Rightarrow h = \\dfrac{v^2}{2g} = \\dfrac{12^2}{2 \\times 10} = \\dfrac{144}{20} = 7.2\\,\\text{m}$.",
+        "**PROOF:** $h = 144/20 = 7.2\\,\\text{m}$. The $14.4\\,\\text{m}$ option uses $v^2/g = 144/10$, dropping the factor of 2 in the denominator. The $3.6\\,\\text{m}$ option uses $v^2/(4g) = 144/40$, an extra factor of 2 from mistakenly multiplying by mass $0.5$. The $1.2\\,\\text{m}$ option uses $v/g = 12/10$, forgetting to square the speed. Correct option: $7.2\\,\\text{m}$."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A bob of mass $m$ tied to a string of length $2\\,\\text{m}$ is whirled in a vertical circle. For the bob to just complete the circle, taking $g = 10\\,\\text{m/s}^2$, the minimum speed it must have at the lowest point is",
+    "options": [
+      {
+        "text": "$4.47\\,\\text{m/s}$"
+      },
+      {
+        "text": "$6.32\\,\\text{m/s}$"
+      },
+      {
+        "text": "$7.75\\,\\text{m/s}$"
+      },
+      {
+        "text": "$10\\,\\text{m/s}$"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Hard",
+    "subtopic": "Potential Energy & Conservation of Mechanical Energy",
+    "fsmTag": "vertical-circle-minimum-bottom-speed",
+    "concepts": [
+      "vertical-circular-motion",
+      "conservation-of-mechanical-energy"
+    ],
+    "sourcePages": [
+      128,
+      129
+    ],
+    "timeTargets": {
+      "ap_eapcet": 90,
+      "ts_eapcet": 90,
+      "jee_main": 135
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Vertical-circle problem asking for the minimum speed at the lowest point to just complete the loop. The standard result (Example 6.7) is $v_{\\text{bottom}} = \\sqrt{5gL}$.",
+        "**EXTRACT:** $L = 2\\,\\text{m}$, $g = 10\\,\\text{m/s}^2$. The just-completes condition fixes the top speed at $v_{\\text{top}} = \\sqrt{gL}$.",
+        "**EXECUTE:** At the top, minimum speed satisfies $mg = mv_{\\text{top}}^2/L \\Rightarrow v_{\\text{top}}^2 = gL$. Energy conservation between top and bottom: $\\tfrac{1}{2}v_{\\text{bottom}}^2 = \\tfrac{1}{2}v_{\\text{top}}^2 + g(2L)$, giving $v_{\\text{bottom}}^2 = gL + 4gL = 5gL = 5 \\times 10 \\times 2 = 100$, so $v_{\\text{bottom}} = 10\\,\\text{m/s}$.",
+        "**PROOF:** $\\sqrt{5gL} = \\sqrt{100} = 10\\,\\text{m/s}$. The $4.47\\,\\text{m/s}$ option is $\\sqrt{gL} = \\sqrt{20}$, the top-point minimum speed mistaken for the bottom. The $7.75\\,\\text{m/s}$ option is $\\sqrt{3gL} = \\sqrt{60}$, the speed at the horizontal (side) point, not the bottom. The $6.32\\,\\text{m/s}$ option is $\\sqrt{2gL} = \\sqrt{40}$, obtained by taking zero top kinetic energy and applying the energy drop over only one radius $L$ (instead of the full diameter $2L$), giving $v^2 = 2gL = 40$. Correct option: $10\\,\\text{m/s}$."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A body is dropped from rest from a height of $4.5\\,\\text{m}$. Using conservation of mechanical energy with $g = 10\\,\\text{m/s}^2$, the height above the ground at which its kinetic energy is exactly twice its potential energy is",
+    "options": [
+      {
+        "text": "$2.25\\,\\text{m}$"
+      },
+      {
+        "text": "$3.0\\,\\text{m}$"
+      },
+      {
+        "text": "$0.9\\,\\text{m}$"
+      },
+      {
+        "text": "$1.5\\,\\text{m}$"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Hard",
+    "subtopic": "Potential Energy & Conservation of Mechanical Energy",
+    "fsmTag": "energy-partition-during-fall",
+    "concepts": [
+      "conservation-of-mechanical-energy",
+      "kinetic-potential-partition"
+    ],
+    "sourcePages": [
+      127,
+      128
+    ],
+    "timeTargets": {
+      "ap_eapcet": 95,
+      "ts_eapcet": 95,
+      "jee_main": 143
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** During free fall mechanical energy is conserved; at any height $y$ the potential energy is $mgy$ and the kinetic energy is the total minus that, $mg(H - y)$. Set up the requested ratio (Section 6.8).",
+        "**EXTRACT:** $H = 4.5\\,\\text{m}$, condition $K = 2V$, with $V = mgy$ and $K = mg(H - y)$.",
+        "**EXECUTE:** $K = 2V \\Rightarrow mg(H - y) = 2mgy \\Rightarrow H - y = 2y \\Rightarrow H = 3y \\Rightarrow y = H/3 = 4.5/3 = 1.5\\,\\text{m}$.",
+        "**PROOF:** $y = H/3 = 1.5\\,\\text{m}$; check: $V = mg(1.5)$, $K = mg(3.0)$, ratio $K/V = 2$. Correct. The $2.25\\,\\text{m}$ option solves $K = V$ (equal energies), giving $y = H/2$. The $3.0\\,\\text{m}$ option inverts the condition to $V = 2K$, giving $y = 2H/3$. The $0.9\\,\\text{m}$ option uses $y = H/5$, treating the ratio as $K:V = 4:1$ from $H = 5y$. Correct option: $1.5\\,\\text{m}$."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A light spring of force constant $k = 200$ N/m is compressed by $x = 0.10$ m from its natural length. What is the elastic potential energy stored in the spring?",
+    "options": [
+      {
+        "text": "$1.0$ J"
+      },
+      {
+        "text": "$2.0$ J"
+      },
+      {
+        "text": "$10$ J"
+      },
+      {
+        "text": "$20$ J"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Easy",
+    "subtopic": "Potential Energy of a Spring",
+    "fsmTag": "direct-formula-substitution",
+    "concepts": [
+      "spring-potential-energy",
+      "hookes-law"
+    ],
+    "sourcePages": [
+      129,
+      130
+    ],
+    "timeTargets": {
+      "ap_eapcet": 35,
+      "ts_eapcet": 35,
+      "jee_main": 53
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** This is a direct application of the elastic potential energy formula for a spring obeying Hooke's law.",
+        "**EXTRACT:** $k = 200$ N/m, $x = 0.10$ m (compression from natural length). Required: stored PE $V$.",
+        "**EXECUTE:** $V = \\tfrac{1}{2}kx^2 = \\tfrac{1}{2}(200)(0.10)^2 = \\tfrac{1}{2}(200)(0.01) = 1.0$ J.",
+        "**PROOF:** The $1.0$ J option uses the correct $\\tfrac{1}{2}kx^2$. The $2.0$ J option drops the factor $\\tfrac{1}{2}$, giving $kx^2 = 200(0.01) = 2.0$ J. The $10$ J option forgets to square $x$, giving $\\tfrac{1}{2}kx = \\tfrac{1}{2}(200)(0.10) = 10$ J. The $20$ J option computes the spring force magnitude $kx = 200(0.10) = 20$ N and mislabels it as energy. Correct option: $1.0$ J."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A block of mass $m = 2.0$ kg moving at $v = 3.0$ m/s on a smooth horizontal surface strikes the free end of a light spring of force constant $k = 500$ N/m and compresses it. The maximum compression of the spring is closest to:",
+    "options": [
+      {
+        "text": "$0.036$ m"
+      },
+      {
+        "text": "$0.19$ m"
+      },
+      {
+        "text": "$0.27$ m"
+      },
+      {
+        "text": "$0.38$ m"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Medium",
+    "subtopic": "Potential Energy of a Spring",
+    "fsmTag": "energy-conservation-ke-to-spring-pe",
+    "concepts": [
+      "spring-potential-energy",
+      "work-energy-theorem",
+      "energy-conservation"
+    ],
+    "sourcePages": [
+      130,
+      131
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Smooth surface, so all kinetic energy converts to spring potential energy at maximum compression (block momentarily at rest). This is the car-spring energy balance of Example 6.8.",
+        "**EXTRACT:** $m = 2.0$ kg, $v = 3.0$ m/s, $k = 500$ N/m. Required: maximum compression $x_m$.",
+        "**EXECUTE:** $\\tfrac{1}{2}mv^2 = \\tfrac{1}{2}kx_m^2 \\Rightarrow x_m = v\\sqrt{m/k} = 3.0\\sqrt{2.0/500} = 3.0\\sqrt{0.004} = 3.0(0.0632) = 0.19$ m.",
+        "**PROOF:** The $0.19$ m option correctly equates KE to spring PE: $x_m = \\sqrt{mv^2/k} = \\sqrt{(2)(9)/500} = \\sqrt{0.036} = 0.19$ m. The $0.036$ m option stops at $mv^2/k = 0.036$ and forgets to take the square root. The $0.27$ m option keeps a stray factor of 2, computing $x_m = \\sqrt{2mv^2/k} = \\sqrt{0.072} = 0.268 \\approx 0.27$ m. The $0.38$ m option applies the factor-of-2 slip twice (canceling both halves incorrectly), computing $x_m = \\sqrt{4mv^2/k} = \\sqrt{0.144} = 0.38$ m. Correct option: $0.19$ m."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A block of mass $m = 0.5$ kg is attached to a light spring of force constant $k = 800$ N/m on a smooth horizontal table. The block is pulled to a maximum displacement $x_m = 0.20$ m and released from rest. What is its maximum speed during the resulting motion?",
+    "options": [
+      {
+        "text": "$0.005$ m/s"
+      },
+      {
+        "text": "$8.0$ m/s"
+      },
+      {
+        "text": "$40$ m/s"
+      },
+      {
+        "text": "$320$ m/s"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Medium",
+    "subtopic": "Potential Energy of a Spring",
+    "fsmTag": "energy-conservation-spring-pe-to-ke",
+    "concepts": [
+      "spring-potential-energy",
+      "energy-conservation",
+      "maximum-speed"
+    ],
+    "sourcePages": [
+      130,
+      131
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "steps": [],
+      "preconditions": "",
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Maximum speed occurs at the equilibrium (natural-length) position, where all stored spring PE has converted to kinetic energy. Smooth table means mechanical energy is conserved.",
+        "**EXTRACT:** $m = 0.5$ kg, $k = 800$ N/m, $x_m = 0.20$ m. Required: $v_{max}$.",
+        "**EXECUTE:** $\\tfrac{1}{2}kx_m^2 = \\tfrac{1}{2}mv_{max}^2 \\Rightarrow v_{max} = x_m\\sqrt{k/m} = 0.20\\sqrt{800/0.5} = 0.20\\sqrt{1600} = 0.20(40) = 8.0$ m/s.",
+        "**PROOF:** The $8.0$ m/s option uses $v_{max} = x_m\\sqrt{k/m} = 0.20(40) = 8.0$ m/s. The $40$ m/s option forgets to multiply by $x_m$, leaving just $\\sqrt{k/m} = 40$ m/s. The $0.005$ m/s option inverts the ratio inside the root: $x_m\\sqrt{m/k} = 0.20\\sqrt{0.5/800} = 0.20(0.025) = 0.005$ m/s. The $320$ m/s option drops the square root entirely: $x_m(k/m) = 0.20(1600) = 320$ m/s. Correct option: $8.0$ m/s."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A light spring of force constant $k = 300$ N/m is already compressed by $0.05$ m from its natural length. How much additional work must be done against the spring force to compress it further to a total compression of $0.15$ m?",
+    "options": [
+      {
+        "text": "$1.5$ J"
+      },
+      {
+        "text": "$3.0$ J"
+      },
+      {
+        "text": "$3.375$ J"
+      },
+      {
+        "text": "$6.0$ J"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Medium",
+    "subtopic": "Potential Energy of a Spring",
+    "fsmTag": "spring-pe-difference",
+    "concepts": [
+      "spring-potential-energy",
+      "work-energy-theorem"
+    ],
+    "sourcePages": [
+      129,
+      130
+    ],
+    "timeTargets": {
+      "ap_eapcet": 65,
+      "ts_eapcet": 65,
+      "jee_main": 98
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "steps": [],
+      "preconditions": "",
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Work done against the spring equals the change in stored elastic PE between the two compressions. The spring is non-linear in energy ($V \\propto x^2$), so the difference must use squared positions, not a single squared interval.",
+        "**EXTRACT:** $k = 300$ N/m, $x_1 = 0.05$ m (initial compression), $x_2 = 0.15$ m (final compression). Required: $W = V_2 - V_1$.",
+        "**EXECUTE:** $W = \\tfrac{1}{2}k(x_2^2 - x_1^2) = \\tfrac{1}{2}(300)(0.15^2 - 0.05^2) = 150(0.0225 - 0.0025) = 150(0.0200) = 3.0$ J.",
+        "**PROOF:** The $3.0$ J option correctly uses $\\tfrac{1}{2}k(x_2^2 - x_1^2) = 150(0.02) = 3.0$ J. The $1.5$ J option wrongly squares the displacement difference: $\\tfrac{1}{2}k(x_2 - x_1)^2 = 150(0.10)^2 = 150(0.01) = 1.5$ J. The $3.375$ J option ignores the initial compression and computes only the final-state PE: $\\tfrac{1}{2}k x_2^2 = 150(0.0225) = 3.375$ J. The $6.0$ J option drops the factor $\\tfrac{1}{2}$: $k(x_2^2 - x_1^2) = 300(0.02) = 6.0$ J. Correct option: $3.0$ J."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A block of mass $m = 1.0$ kg slides along a rough horizontal floor (coefficient of kinetic friction $\\mu = 0.4$) and, moving at $v = 4.0$ m/s, strikes a light spring of force constant $k = 200$ N/m. Friction continues to act on the block while it compresses the spring. Taking $g = 10$ m/s$^2$, the maximum compression of the spring is closest to:",
+    "options": [
+      {
+        "text": "$0.26$ m"
+      },
+      {
+        "text": "$0.27$ m"
+      },
+      {
+        "text": "$0.28$ m"
+      },
+      {
+        "text": "$0.30$ m"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Hard",
+    "subtopic": "Potential Energy of a Spring",
+    "fsmTag": "energy-conservation-with-friction-quadratic",
+    "concepts": [
+      "spring-potential-energy",
+      "work-energy-theorem",
+      "friction-work"
+    ],
+    "sourcePages": [
+      130,
+      131
+    ],
+    "timeTargets": {
+      "ap_eapcet": 110,
+      "ts_eapcet": 110,
+      "jee_main": 165
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "steps": [],
+      "preconditions": "",
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Both the spring and friction oppose the block over the compression distance $x_m$. Kinetic energy goes into spring PE plus heat from friction (Example 6.9 with friction). This yields a quadratic in $x_m$.",
+        "**EXTRACT:** $m = 1.0$ kg, $v = 4.0$ m/s, $k = 200$ N/m, $\\mu = 0.4$, $g = 10$ m/s$^2$. Required: $x_m$.",
+        "**EXECUTE:** Energy balance: $\\tfrac{1}{2}mv^2 = \\tfrac{1}{2}kx_m^2 + \\mu mg\\,x_m$, i.e. $kx_m^2 + 2\\mu mg\\,x_m - mv^2 = 0 \\Rightarrow 200x_m^2 + 8x_m - 16 = 0$. Solving: $x_m = \\dfrac{-8 + \\sqrt{64 + 12800}}{400} = \\dfrac{-8 + 113.4}{400} = 0.264 \\approx 0.26$ m.",
+        "**PROOF:** The $0.26$ m option solves the full quadratic $200x_m^2 + 8x_m - 16 = 0$ giving $x_m = 0.264$ m. The $0.27$ m option halves the friction term (forgets the factor 2 from $W_{fric} = \\mu mg\\,x_m$ versus the $2\\mu mg$ that appears after multiplying through by 2), solving $200x_m^2 + 4x_m - 16 = 0 \\Rightarrow x_m = 0.273$ m. The $0.28$ m option ignores friction entirely, $x_m = v\\sqrt{m/k} = 4.0\\sqrt{0.005} = 0.283$ m. The $0.30$ m option flips the friction sign (treats friction as aiding compression): $200x_m^2 - 8x_m - 16 = 0 \\Rightarrow x_m = 0.304$ m. Correct option: $0.26$ m."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Which of the following correctly states the principle of conservation of energy as discussed for an isolated system?",
+    "options": [
+      {
+        "text": "The mechanical energy of the system is always conserved, regardless of the nature of the forces acting."
+      },
+      {
+        "text": "The total energy of the system is constant; energy may transform from one form to another but can be neither created nor destroyed."
+      },
+      {
+        "text": "Energy can be created within the system but can never be destroyed."
+      },
+      {
+        "text": "The total energy of the system is conserved only when no frictional (non-conservative) forces act."
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Easy",
+    "subtopic": "Forms of Energy & Mass-Energy Equivalence",
+    "fsmTag": "identify-correct-statement",
+    "concepts": [
+      "conservation-of-energy",
+      "forms-of-energy"
+    ],
+    "sourcePages": [
+      132,
+      134
+    ],
+    "timeTargets": {
+      "ap_eapcet": 35,
+      "ts_eapcet": 35,
+      "jee_main": 53
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** This is a recall/conceptual item on Section 6.10.6, the law of conservation of energy. We must pick the statement that is true for an isolated system and reject statements that overstate (mechanical-only) or contradict (creation possible) the principle.",
+        "**EXTRACT:** Textbook statements: (i) the total energy of an isolated system does not change as long as all forms of energy are accounted for; (ii) energy may be transformed from one form to another but the total energy of an isolated system remains constant; (iii) energy can neither be created nor destroyed. Mechanical energy alone is conserved only when the forces are conservative.",
+        "**EXECUTE:** The statement matching the textbook is: total energy is constant, energy transforms between forms, and is neither created nor destroyed. This is the conservation-of-total-energy option.",
+        "**PROOF:** The 'total energy is constant; energy may transform but cannot be created or destroyed' option reproduces Section 6.10.6 verbatim and is correct. The 'mechanical energy is always conserved' option is false because when non-conservative forces (e.g. friction) act, mechanical energy is converted to heat/sound, so only TOTAL energy is conserved, not mechanical energy. The 'energy can be created but not destroyed' option directly violates the principle, which states energy can be neither created nor destroyed. The 'conserved only when no friction acts' option confuses the conservation of mechanical energy (which does require conservative forces) with the conservation of total energy (which holds even with friction, since the lost mechanical energy reappears as heat). Correct option: B."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A mass of 3 kg is completely converted into energy. Taking the speed of light c = 3 x 10^8 m/s, the energy released (using $E = mc^2$) is:",
+    "options": [
+      {
+        "text": "$2.7 \\times 10^{17}$ J"
+      },
+      {
+        "text": "$9 \\times 10^{16}$ J"
+      },
+      {
+        "text": "$9 \\times 10^{8}$ J"
+      },
+      {
+        "text": "$1.35 \\times 10^{17}$ J"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Easy",
+    "subtopic": "Forms of Energy & Mass-Energy Equivalence",
+    "fsmTag": "direct-formula-substitution",
+    "concepts": [
+      "mass-energy-equivalence",
+      "e-equals-mc-squared"
+    ],
+    "sourcePages": [
+      132
+    ],
+    "timeTargets": {
+      "ap_eapcet": 40,
+      "ts_eapcet": 40,
+      "jee_main": 60
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "steps": [
+        "**Trigger:** Full mass-to-energy conversion with a given mass and c, asking for energy via $E = mc^2$.",
+        "**Action:** The textbook gives $c^2 = 9 \\times 10^{16}$, so just multiply by m = 3: $3 \\times 9 \\times 10^{16}$.",
+        "**Result:** $2.7 \\times 10^{17}$ J."
+      ],
+      "preconditions": "Recall that $c^2 = (3 \\times 10^8)^2 = 9 \\times 10^{16}$, the standard 1 kg figure from Eq. 6.20.",
+      "sanityCheck": "1 kg gives $9 \\times 10^{16}$ J, so 3 kg must give 3 times that, i.e. $2.7 \\times 10^{17}$ J."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Mass-energy equivalence (Section 6.10.4, Eq. 6.20). A given mass is fully converted to energy; apply $E = mc^2$ directly.",
+        "**EXTRACT:** m = 3 kg, c = 3 x 10^8 m/s. So $c^2 = (3 \\times 10^8)^2 = 9 \\times 10^{16}$ m^2/s^2.",
+        "**EXECUTE:** $E = mc^2 = 3 \\times 9 \\times 10^{16} = 2.7 \\times 10^{17}$ J.",
+        "**PROOF:** $E = 3 \\times (3 \\times 10^8)^2 = 3 \\times 9 \\times 10^{16} = 2.7 \\times 10^{17}$ J confirms the answer. The $9 \\times 10^{16}$ J option is the energy for only 1 kg (Eq. 6.20 value), i.e. the factor m = 3 was dropped. The $9 \\times 10^{8}$ J option comes from using $E = mc$ instead of $E = mc^2$: $3 \\times 3 \\times 10^8 = 9 \\times 10^8$, forgetting to square c. The $1.35 \\times 10^{17}$ J option comes from using $E = \\tfrac{1}{2}mc^2$ (confusing the rest-energy formula with the kinetic-energy formula): $\\tfrac{1}{2} \\times 3 \\times 9 \\times 10^{16} = 1.35 \\times 10^{17}$. Correct option: A."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "How many kilograms of coal must be burnt to release the same amount of energy as that obtained by completely converting a mass of 1 microgram (1 x 10^-9 kg) into energy? Take c = 3 x 10^8 m/s and the energy released on burning coal = 3 x 10^7 J/kg.",
+    "options": [
+      {
+        "text": "$1 \\times 10^{-8}$ kg"
+      },
+      {
+        "text": "$0.33$ kg"
+      },
+      {
+        "text": "$30$ kg"
+      },
+      {
+        "text": "$3$ kg"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Medium",
+    "subtopic": "Forms of Energy & Mass-Energy Equivalence",
+    "fsmTag": "energy-equivalence-then-ratio",
+    "concepts": [
+      "mass-energy-equivalence",
+      "chemical-energy",
+      "energy-density"
+    ],
+    "sourcePages": [
+      132,
+      133
+    ],
+    "timeTargets": {
+      "ap_eapcet": 65,
+      "ts_eapcet": 65,
+      "jee_main": 98
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** A two-step problem: first find the energy from full mass conversion (Section 6.10.4, $E = mc^2$), then divide by coal's energy density (Section 6.10.2) to get the equivalent mass of coal.",
+        "**EXTRACT:** Converted mass m = 1 x 10^-9 kg, c = 3 x 10^8 m/s so $c^2 = 9 \\times 10^{16}$. Coal releases 3 x 10^7 J per kg.",
+        "**EXECUTE:** Energy from conversion: $E = mc^2 = 10^{-9} \\times 9 \\times 10^{16} = 9 \\times 10^{7}$ J. Mass of coal needed: $\\dfrac{9 \\times 10^{7}}{3 \\times 10^{7}} = 3$ kg.",
+        "**PROOF:** $E = 10^{-9} \\times 9 \\times 10^{16} = 9 \\times 10^7$ J, and $9 \\times 10^7 \\div 3 \\times 10^7 = 3$ kg confirms the answer. The $1 \\times 10^{-8}$ kg option uses $E = mc$ instead of $mc^2$: $E = 10^{-9} \\times 3 \\times 10^8 = 0.3$ J, then $0.3 \\div 3 \\times 10^7 = 1 \\times 10^{-8}$ kg (forgot to square c). The $0.33$ kg option inverts the final ratio, dividing coal density by the energy: $3 \\times 10^7 \\div 9 \\times 10^7 = 1/3 \\approx 0.33$. The $30$ kg option uses a coal energy density that is off by a factor of ten ($3 \\times 10^6$ J/kg instead of $3 \\times 10^7$): $9 \\times 10^7 \\div 3 \\times 10^6 = 30$ kg. Correct option: D."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A worker does $3600$ J of useful work in $60$ s while sliding a crate across a floor at steady speed. What is his average power output? (Take $g = 10$ m/s$^2$.)",
+    "options": [
+      {
+        "text": "$60$ W"
+      },
+      {
+        "text": "$216000$ W"
+      },
+      {
+        "text": "$3600$ W"
+      },
+      {
+        "text": "$60000$ W"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Easy",
+    "subtopic": "Power",
+    "fsmTag": "average-power-work-over-time",
+    "concepts": [
+      "average-power",
+      "work-energy"
+    ],
+    "sourcePages": [
+      134
+    ],
+    "timeTargets": {
+      "ap_eapcet": 35,
+      "ts_eapcet": 35,
+      "jee_main": 53
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** This is a direct application of average power as the ratio of total work to the time taken (Section 6.10).",
+        "**EXTRACT:** $W = 3600$ J, $t = 60$ s. Required: $P_{avg}$.",
+        "**EXECUTE:** $P_{avg} = W/t = 3600/60 = 60$ W.",
+        "**PROOF:** $P_{avg} = W/t = 3600/60 = 60$ W confirms the 60 W option. The 216000 W option multiplies work by time ($3600 \\times 60 = 216000$) instead of dividing, an inverted operation. The 3600 W option simply restates the work value in watts, forgetting to divide by time. The 60000 W option misreads the work as $3600$ kJ, converts to $3\\,600\\,000$ J, then divides by time ($3\\,600\\,000/60 = 60000$ W), a single unit-conversion slip. Correct option: 60 W."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "An electric motor is rated at $2.5$ hp. Express this power in watts. (Take $1$ hp $= 746$ W.)",
+    "options": [
+      {
+        "text": "$298.4$ W"
+      },
+      {
+        "text": "$746$ W"
+      },
+      {
+        "text": "$2.5$ W"
+      },
+      {
+        "text": "$1865$ W"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Easy",
+    "subtopic": "Power",
+    "fsmTag": "horsepower-to-watt-conversion",
+    "concepts": [
+      "power-units",
+      "horsepower-conversion"
+    ],
+    "sourcePages": [
+      134,
+      135
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** This is a unit conversion using the SI equivalent of horsepower (Section 6.10).",
+        "**EXTRACT:** Power $= 2.5$ hp, conversion $1$ hp $= 746$ W. Required: power in W.",
+        "**EXECUTE:** $P = 2.5 \\times 746 = 1865$ W.",
+        "**PROOF:** $2.5 \\times 746 = 1865$ W confirms the 1865 W option. The 298.4 W option divides by 2.5 instead of multiplying ($746/2.5 = 298.4$), inverting the operation. The 746 W option ignores the 2.5 factor entirely, quoting the single-horsepower value. The 2.5 W option mistakes the numerical rating for the answer, forgetting to apply the conversion factor at all. Correct option: 1865 W."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "An elevator of mass $1500$ kg moves upward at a constant speed of $2.0$ m/s against a constant frictional force of $4000$ N. What power must the motor deliver? (Take $g = 10$ m/s$^2$.)",
+    "options": [
+      {
+        "text": "$30$ kW"
+      },
+      {
+        "text": "$38$ kW"
+      },
+      {
+        "text": "$8$ kW"
+      },
+      {
+        "text": "$19$ kW"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Medium",
+    "subtopic": "Power",
+    "fsmTag": "instantaneous-power-force-times-velocity",
+    "concepts": [
+      "instantaneous-power",
+      "force-velocity",
+      "friction"
+    ],
+    "sourcePages": [
+      134,
+      135
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** At constant speed the motor force balances weight plus friction; instantaneous power is the product of that force and the velocity, $P = Fv$ (Example 6.11).",
+        "**EXTRACT:** $m = 1500$ kg, $v = 2.0$ m/s, friction $f = 4000$ N, $g = 10$ m/s$^2$. Required: motor power.",
+        "**EXECUTE:** $F = mg + f = 1500 \\times 10 + 4000 = 15000 + 4000 = 19000$ N. $P = Fv = 19000 \\times 2.0 = 38000$ W $= 38$ kW.",
+        "**PROOF:** $F = 19000$ N and $P = 19000 \\times 2.0 = 38$ kW confirms the 38 kW option. The 30 kW option uses weight only and drops the friction term ($mg \\cdot v = 15000 \\times 2 = 30000$ W). The 8 kW option uses friction only and drops the weight term ($4000 \\times 2 = 8000$ W). The 19 kW option reports the force $F = 19000$ N read off as power, forgetting to multiply by the velocity. Correct option: 38 kW."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A pump raises water from a well $25$ m deep and discharges it at the top with negligible speed. If the pump delivers $600$ litres of water per minute, what is the minimum power required? (Take $g = 10$ m/s$^2$, density of water $= 1000$ kg/m$^3$.)",
+    "options": [
+      {
+        "text": "$150000$ W"
+      },
+      {
+        "text": "$2500$ W"
+      },
+      {
+        "text": "$1500$ W"
+      },
+      {
+        "text": "$25000$ W"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Medium",
+    "subtopic": "Power",
+    "fsmTag": "pump-power-rate-of-potential-energy",
+    "concepts": [
+      "power",
+      "rate-of-energy",
+      "gravitational-pe"
+    ],
+    "sourcePages": [
+      134,
+      135
+    ],
+    "timeTargets": {
+      "ap_eapcet": 70,
+      "ts_eapcet": 70,
+      "jee_main": 105
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Power equals the rate at which gravitational potential energy is supplied: $P = (\\Delta m/\\Delta t) g h$, where $\\Delta m/\\Delta t$ is the mass of water lifted per second (Section 6.10).",
+        "**EXTRACT:** $h = 25$ m, flow $= 600$ L/min $= 0.6$ m$^3$/min, density $= 1000$ kg/m$^3$, $g = 10$ m/s$^2$. Required: minimum power.",
+        "**EXECUTE:** Mass per minute $= 0.6 \\times 1000 = 600$ kg, so mass per second $= 600/60 = 10$ kg/s. $P = (\\Delta m/\\Delta t) g h = 10 \\times 10 \\times 25 = 2500$ W.",
+        "**PROOF:** $P = 10 \\times 10 \\times 25 = 2500$ W confirms the 2500 W option. The 150000 W option uses the full per-minute mass $600$ kg as if it were the per-second mass ($600 \\times 10 \\times 25 = 150000$), forgetting to convert minutes to seconds. The 1500 W option misreads the depth as $h = 15$ m instead of $25$ m ($10 \\times 10 \\times 15 = 1500$), a height slip. The 25000 W option divides the per-minute mass by $6$ instead of $60$, giving $100$ kg/s ($600/6 = 100$, then $100 \\times 10 \\times 25 = 25000$), a minute-to-second conversion slip. Correct option: 2500 W."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A machine gun fires $240$ bullets per minute, each of mass $8$ g, at a muzzle speed of $500$ m/s. What is the power output of the gun (the rate at which it delivers kinetic energy to the bullets)? (Take $g = 10$ m/s$^2$.)",
+    "correctOptionIndex": 0,
+    "difficulty": "Medium",
+    "subtopic": "Power",
+    "fsmTag": "power-as-rate-of-kinetic-energy",
+    "concepts": [
+      "power",
+      "kinetic-energy",
+      "rate-of-energy"
+    ],
+    "sourcePages": [
+      134,
+      135
+    ],
+    "options": [
+      {
+        "text": "$4000$ W"
+      },
+      {
+        "text": "$240000$ W"
+      },
+      {
+        "text": "$16$ W"
+      },
+      {
+        "text": "$8000$ W"
+      }
+    ],
+    "timeTargets": {
+      "ap_eapcet": 70,
+      "ts_eapcet": 70,
+      "jee_main": 105
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Power is the kinetic energy given to each bullet multiplied by the number of bullets fired per second, $P = n \\cdot \\tfrac{1}{2}mv^2$ (Section 6.10).",
+        "**EXTRACT:** Rate $= 240$/min $= 4$ bullets/s, $m = 8$ g $= 0.008$ kg, $v = 500$ m/s. Required: power.",
+        "**EXECUTE:** KE per bullet $= \\tfrac{1}{2}mv^2 = 0.5 \\times 0.008 \\times 500^2 = 0.5 \\times 0.008 \\times 250000 = 1000$ J. $P = 4 \\times 1000 = 4000$ W.",
+        "**PROOF:** $P = 4 \\times 1000 = 4000$ W confirms the 4000 W option. The 240000 W option keeps the per-minute rate $240$ instead of per-second ($240 \\times 1000 = 240000$), skipping the minute-to-second conversion. The 16 W option uses momentum $mv$ per bullet instead of kinetic energy $\\tfrac{1}{2}mv^2$: $mv = 0.008 \\times 500 = 4$ kg·m/s, then $4 \\times 4 = 16$ W — rate of momentum, not energy. The 8000 W option drops the $\\tfrac{1}{2}$ factor, using $mv^2$ per bullet ($0.008 \\times 250000 = 2000$ J $\\times 4 = 8000$ W). Correct option: 4000 W."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A body of mass $m$ starts from rest and is driven along a straight line by a machine delivering constant power. If the body covers $8$ m in the first $4$ s, what distance does it cover in the first $9$ s? (Take $g = 10$ m/s$^2$.)",
+    "options": [
+      {
+        "text": "$18$ m"
+      },
+      {
+        "text": "$40.5$ m"
+      },
+      {
+        "text": "$12$ m"
+      },
+      {
+        "text": "$27$ m"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Hard",
+    "subtopic": "Power",
+    "fsmTag": "constant-power-distance-scaling",
+    "concepts": [
+      "constant-power",
+      "kinematics-scaling",
+      "work-energy-theorem"
+    ],
+    "sourcePages": [
+      134,
+      135
+    ],
+    "timeTargets": {
+      "ap_eapcet": 110,
+      "ts_eapcet": 110,
+      "jee_main": 165
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Under constant power from rest, work done equals kinetic energy: $Pt = \\tfrac{1}{2}mv^2$, giving $v \\propto t^{1/2}$ and hence displacement $s \\propto t^{3/2}$ (Section 6.10).",
+        "**EXTRACT:** Constant power, starts from rest, $s_1 = 8$ m at $t_1 = 4$ s. Required: $s_2$ at $t_2 = 9$ s.",
+        "**EXECUTE:** Since $s \\propto t^{3/2}$, $s_2/s_1 = (t_2/t_1)^{3/2} = (9/4)^{3/2} = (3/2)^3 = 27/8 = 3.375$. Thus $s_2 = 8 \\times 3.375 = 27$ m.",
+        "**PROOF:** $s_2 = 8 \\times (9/4)^{3/2} = 8 \\times 3.375 = 27$ m confirms the 27 m option. The 18 m option uses linear scaling $s \\propto t$ ($8 \\times 9/4 = 18$), as if speed were constant. The 40.5 m option uses $s \\propto t^2$ ($8 \\times (9/4)^2 = 8 \\times 5.0625 = 40.5$), the constant-acceleration law that does not apply here. The 12 m option uses $s \\propto t^{1/2}$ ($8 \\times (9/4)^{1/2} = 8 \\times 1.5 = 12$), confusing the velocity scaling with the distance scaling. Correct option: 27 m."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A ball of mass $m$ moving at $8 \\text{ m/s}$ makes a head-on elastic collision with an identical stationary ball of mass $m$ on a smooth horizontal surface. What are the velocities of the moving ball and the struck ball, respectively, just after the collision?",
+    "options": [
+      {
+        "text": "$0 \\text{ m/s}$ and $8 \\text{ m/s}$"
+      },
+      {
+        "text": "$8 \\text{ m/s}$ and $8 \\text{ m/s}$"
+      },
+      {
+        "text": "$4 \\text{ m/s}$ and $4 \\text{ m/s}$"
+      },
+      {
+        "text": "$8 \\text{ m/s}$ and $0 \\text{ m/s}$"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Easy",
+    "subtopic": "Collisions",
+    "fsmTag": "equal-mass-elastic-velocity-exchange",
+    "concepts": [
+      "elastic-collision",
+      "equal-masses",
+      "velocity-exchange"
+    ],
+    "sourcePages": [
+      136
+    ],
+    "timeTargets": {
+      "ap_eapcet": 35,
+      "ts_eapcet": 35,
+      "jee_main": 53
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "steps": [
+        "**Trigger:** 1D elastic collision between two EQUAL masses, one initially at rest.",
+        "**Action:** Apply the equal-mass rule — the bodies simply exchange velocities.",
+        "**Result:** Incoming ball stops ($0 \\text{ m/s}$) and the struck ball moves off at $8 \\text{ m/s}$."
+      ],
+      "preconditions": "Collision must be elastic, 1D (head-on), and the two masses exactly equal.",
+      "sanityCheck": "Momentum: before $m(8)$, after $m(0)+m(8)=8m$. KE: before $\\tfrac12 m(8)^2$, after $\\tfrac12 m(8)^2$. Both conserved."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Head-on (1D) ELASTIC collision, two equal masses $m$, one at rest. This is the textbook special case where both momentum and kinetic energy are conserved with $m_1=m_2$.",
+        "**EXTRACT:** $m_1=m_2=m$, $u_1=8 \\text{ m/s}$, $u_2=0$. Elastic 1D formulas: $v_{1f}=\\frac{m_1-m_2}{m_1+m_2}u_1$, $v_{2f}=\\frac{2m_1}{m_1+m_2}u_1$.",
+        "**EXECUTE:** With $m_1=m_2$: $v_{1f}=\\frac{m-m}{2m}(8)=0 \\text{ m/s}$ and $v_{2f}=\\frac{2m}{2m}(8)=8 \\text{ m/s}$. The velocities are exchanged.",
+        "**PROOF:** The correct pair is $0 \\text{ m/s}$ and $8 \\text{ m/s}$ — momentum $8m$ and KE $32m$ both match the initial values. The $8$ and $8$ option violates momentum ($16m \\ne 8m$) — it wrongly assumes the first ball keeps its speed while pushing the second. The $4$ and $4$ option is the perfectly-INELASTIC common velocity ($\\frac{m(8)}{2m}=4$), valid only if they stick — KE would drop, so it is not elastic. The $8$ and $0$ option (no change) ignores that the struck ball must move. Correct option: $0 \\text{ m/s}$ and $8 \\text{ m/s}$."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A $3 \\text{ kg}$ trolley moving at $4 \\text{ m/s}$ collides head-on with a stationary $2 \\text{ kg}$ trolley and the two move off locked together. What is their common velocity after this perfectly inelastic collision?",
+    "options": [
+      {
+        "text": "$6 \\text{ m/s}$"
+      },
+      {
+        "text": "$0.8 \\text{ m/s}$"
+      },
+      {
+        "text": "$4 \\text{ m/s}$"
+      },
+      {
+        "text": "$2.4 \\text{ m/s}$"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Medium",
+    "subtopic": "Collisions",
+    "fsmTag": "perfectly-inelastic-common-velocity",
+    "concepts": [
+      "perfectly-inelastic-collision",
+      "momentum-conservation"
+    ],
+    "sourcePages": [
+      137
+    ],
+    "timeTargets": {
+      "ap_eapcet": 50,
+      "ts_eapcet": 50,
+      "jee_main": 75
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "steps": [
+        "**Trigger:** Two bodies stick together after collision (perfectly inelastic), one initially at rest.",
+        "**Action:** Common velocity $v_f=\\frac{m_1 u_1}{m_1+m_2}=\\frac{3\\times 4}{5}$.",
+        "**Result:** $v_f=2.4 \\text{ m/s}$."
+      ],
+      "preconditions": "Bodies must couple and move as one (perfectly inelastic); target initially at rest.",
+      "sanityCheck": "Momentum before $=3(4)=12$; after $=(5)(2.4)=12 \\text{ kg m/s}$. Conserved."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Perfectly inelastic collision — the trolleys move off together, so only momentum is conserved (kinetic energy is not).",
+        "**EXTRACT:** $m_1=3 \\text{ kg}$, $u_1=4 \\text{ m/s}$, $m_2=2 \\text{ kg}$, $u_2=0$. Use $v_f=\\frac{m_1 u_1+m_2 u_2}{m_1+m_2}$.",
+        "**EXECUTE:** $v_f=\\frac{3(4)+2(0)}{3+2}=\\frac{12}{5}=2.4 \\text{ m/s}$.",
+        "**PROOF:** The $2.4 \\text{ m/s}$ option satisfies momentum conservation ($12=5\\times2.4$). The $6 \\text{ m/s}$ option comes from dividing the initial momentum by the wrong mass, $\\frac{m_1 u_1}{m_2}=\\frac{12}{2}$. The $4 \\text{ m/s}$ option ignores the added mass entirely ($\\frac{m_1u_1}{m_1}$), i.e. assumes the speed is unchanged. The $0.8 \\text{ m/s}$ option mistakenly uses the mass DIFFERENCE, $\\frac{(m_1-m_2)u_1}{m_1+m_2}=\\frac{1\\times4}{5}$. Correct option: $2.4 \\text{ m/s}$."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A ball is dropped from rest from a height of $5 \\text{ m}$ onto a hard floor and rebounds to a height of $1.8 \\text{ m}$. What is the coefficient of restitution between the ball and the floor? (Take $g = 10 \\text{ m/s}^2$.)",
+    "options": [
+      {
+        "text": "$0.36$"
+      },
+      {
+        "text": "$1.67$"
+      },
+      {
+        "text": "$2.78$"
+      },
+      {
+        "text": "$0.6$"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Medium",
+    "subtopic": "Collisions",
+    "fsmTag": "restitution-from-rebound-heights",
+    "concepts": [
+      "coefficient-of-restitution",
+      "bouncing-ball"
+    ],
+    "sourcePages": [
+      138
+    ],
+    "timeTargets": {
+      "ap_eapcet": 55,
+      "ts_eapcet": 55,
+      "jee_main": 83
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "steps": [
+        "**Trigger:** Ball dropped from $h_1$ rebounds to $h_2$ off a fixed floor.",
+        "**Action:** $e=\\sqrt{h_2/h_1}=\\sqrt{1.8/5}=\\sqrt{0.36}$.",
+        "**Result:** $e=0.6$."
+      ],
+      "preconditions": "Floor is fixed/massive, drop and rebound are vertical, air resistance ignored.",
+      "sanityCheck": "$e=0.6$ is between 0 and 1 as required; $0.6^2=0.36=1.8/5$. Consistent."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Bouncing ball off a fixed surface. The coefficient of restitution links the rebound speed to the impact speed, and for free fall those speeds map to the square roots of the heights.",
+        "**EXTRACT:** $h_1=5 \\text{ m}$ (drop), $h_2=1.8 \\text{ m}$ (rebound). Impact speed $v_{down}=\\sqrt{2gh_1}$, rebound speed $v_{up}=\\sqrt{2gh_2}$, and $e=\\frac{v_{up}}{v_{down}}=\\sqrt{\\frac{h_2}{h_1}}$.",
+        "**EXECUTE:** $e=\\sqrt{\\frac{1.8}{5}}=\\sqrt{0.36}=0.6$.",
+        "**PROOF:** The $0.6$ option equals $\\sqrt{h_2/h_1}$ as required. The $0.36$ option is the ratio $h_2/h_1$ taken WITHOUT the square root (i.e. $e^2$ reported as $e$). The $1.67$ option inverts the heights and square-roots, $\\sqrt{h_1/h_2}=\\sqrt{2.78}$. The $2.78$ option is the inverted ratio $h_1/h_2$ with no square root. Correct option: $0.6$."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A $2 \\text{ kg}$ block moving at $6 \\text{ m/s}$ makes a head-on elastic collision with a stationary $4 \\text{ kg}$ block on a frictionless track. What is the velocity of the $2 \\text{ kg}$ block immediately after the collision?",
+    "options": [
+      {
+        "text": "$+2 \\text{ m/s}$ (same direction)"
+      },
+      {
+        "text": "$+4 \\text{ m/s}$ (same direction)"
+      },
+      {
+        "text": "$-6 \\text{ m/s}$ (reversed)"
+      },
+      {
+        "text": "$-2 \\text{ m/s}$ (reversed)"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Medium",
+    "subtopic": "Collisions",
+    "fsmTag": "elastic-1d-unequal-mass-v1f",
+    "concepts": [
+      "elastic-collision",
+      "unequal-masses",
+      "momentum-energy-conservation"
+    ],
+    "sourcePages": [
+      136
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "steps": [
+        "**Trigger:** 1D elastic collision, lighter mass hits a heavier mass at rest.",
+        "**Action:** $v_{1f}=\\frac{m_1-m_2}{m_1+m_2}u_1=\\frac{2-4}{6}(6)$.",
+        "**Result:** $v_{1f}=-2 \\text{ m/s}$ — it bounces back (since $m_2>m_1$)."
+      ],
+      "preconditions": "Collision elastic and 1D; target initially at rest; need only the incoming body's final velocity.",
+      "sanityCheck": "Sign is negative as expected when the struck mass is heavier; magnitude $2 \\text{ m/s} < 6 \\text{ m/s}$. Reasonable."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Head-on ELASTIC collision with unequal masses, target at rest. Use the standard 1D elastic result for the incoming body.",
+        "**EXTRACT:** $m_1=2 \\text{ kg}$, $u_1=6 \\text{ m/s}$, $m_2=4 \\text{ kg}$, $u_2=0$. Formula: $v_{1f}=\\frac{m_1-m_2}{m_1+m_2}u_1$.",
+        "**EXECUTE:** $v_{1f}=\\frac{2-4}{2+4}(6)=\\frac{-2}{6}(6)=-2 \\text{ m/s}$. The negative sign means it rebounds.",
+        "**PROOF:** The $-2 \\text{ m/s}$ option correctly uses $\\frac{m_1-m_2}{m_1+m_2}u_1$ and shows rebound. The $+2 \\text{ m/s}$ option drops the sign by writing $\\frac{m_2-m_1}{m_1+m_2}u_1$, giving the right magnitude but wrong direction. The $+4 \\text{ m/s}$ option is the STRUCK block's velocity $v_{2f}=\\frac{2m_1}{m_1+m_2}u_1=\\frac{4}{6}(6)$, mistakenly reported for the incoming block. The $-6 \\text{ m/s}$ option assumes a heavy wall ($m_2 \\gg m_1$) that reverses the velocity unchanged, ignoring that $m_2$ is only twice $m_1$. Correct option: $-2 \\text{ m/s}$."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A $2 \\text{ kg}$ ball of putty moving at $9 \\text{ m/s}$ strikes and sticks to a stationary $1 \\text{ kg}$ ball on a smooth surface. How much kinetic energy is lost in this perfectly inelastic collision?",
+    "options": [
+      {
+        "text": "$27 \\text{ J}$"
+      },
+      {
+        "text": "$81 \\text{ J}$"
+      },
+      {
+        "text": "$54 \\text{ J}$"
+      },
+      {
+        "text": "$3 \\text{ J}$"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Medium",
+    "subtopic": "Collisions",
+    "fsmTag": "inelastic-ke-loss-reduced-mass",
+    "concepts": [
+      "perfectly-inelastic-collision",
+      "kinetic-energy-loss"
+    ],
+    "sourcePages": [
+      137
+    ],
+    "timeTargets": {
+      "ap_eapcet": 65,
+      "ts_eapcet": 65,
+      "jee_main": 98
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "steps": [
+        "**Trigger:** Perfectly inelastic collision, one mass at rest, asked for KE lost.",
+        "**Action:** $\\Delta KE=\\tfrac12\\frac{m_1 m_2}{m_1+m_2}u_1^2=\\tfrac12\\cdot\\frac{2\\times1}{3}\\cdot 81$.",
+        "**Result:** $\\Delta KE=27 \\text{ J}$."
+      ],
+      "preconditions": "Bodies stick together; target at rest; reduced-mass shortcut applies only with $u_2=0$.",
+      "sanityCheck": "Direct check: $KE_i=81 \\text{ J}$, $v_f=6 \\text{ m/s}$, $KE_f=\\tfrac12(3)(36)=54 \\text{ J}$, loss $=27 \\text{ J}$. Matches."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Perfectly inelastic collision (bodies stick). Momentum is conserved but kinetic energy is not — find the deficit.",
+        "**EXTRACT:** $m_1=2 \\text{ kg}$, $u_1=9 \\text{ m/s}$, $m_2=1 \\text{ kg}$, $u_2=0$. KE loss for $u_2=0$: $\\Delta KE=\\frac12\\frac{m_1 m_2}{m_1+m_2}u_1^2$.",
+        "**EXECUTE:** $\\Delta KE=\\frac12\\cdot\\frac{2\\times1}{2+1}\\cdot 9^2=\\frac12\\cdot\\frac{2}{3}\\cdot 81=\\frac{1}{3}\\cdot 81=27 \\text{ J}$.",
+        "**PROOF:** The $27 \\text{ J}$ option matches the direct calculation ($KE_i=81 \\text{ J}$ minus $KE_f=54 \\text{ J}$). The $81 \\text{ J}$ option is the full initial KE $\\frac12(2)(9)^2$, wrongly taken as the loss (assuming all KE vanishes). The $54 \\text{ J}$ option is the FINAL KE $\\frac12(3)(6)^2$ that survives, not the loss. The $3 \\text{ J}$ option forgets to square the speed in the reduced-mass formula, using $\\frac12\\frac{m_1m_2}{m_1+m_2}u_1=\\frac12\\cdot\\frac23\\cdot 9$. Correct option: $27 \\text{ J}$."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A ball is dropped from a height of $10 \\text{ m}$ onto a floor with which its coefficient of restitution is $0.5$. Assuming negligible air resistance, what is the total distance the ball travels before finally coming to rest? (Take $g = 10 \\text{ m/s}^2$.)",
+    "options": [
+      {
+        "text": "$30 \\text{ m}$"
+      },
+      {
+        "text": "$6 \\text{ m}$"
+      },
+      {
+        "text": "$\\frac{40}{3} \\text{ m}$"
+      },
+      {
+        "text": "$\\frac{50}{3} \\text{ m}$"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Hard",
+    "subtopic": "Collisions",
+    "fsmTag": "total-bounce-distance-geometric-series",
+    "concepts": [
+      "coefficient-of-restitution",
+      "bouncing-ball",
+      "geometric-series"
+    ],
+    "sourcePages": [
+      138
+    ],
+    "timeTargets": {
+      "ap_eapcet": 100,
+      "ts_eapcet": 100,
+      "jee_main": 150
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "steps": [],
+      "preconditions": "",
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Repeatedly bouncing ball. Each bounce reduces the rebound height by a fixed factor $e^2$, so the total path is the first drop plus an infinite geometric series of up-and-down trips.",
+        "**EXTRACT:** $h=10 \\text{ m}$, $e=0.5$. After the $n$-th impact the ball rises to $h e^{2n}$. Total distance $D=h+2(he^2+he^4+\\cdots)=h\\,\\frac{1+e^2}{1-e^2}$.",
+        "**EXECUTE:** With $e^2=0.25$: $D=10\\cdot\\frac{1+0.25}{1-0.25}=10\\cdot\\frac{1.25}{0.75}=10\\cdot\\frac{5}{3}=\\frac{50}{3}\\approx 16.7 \\text{ m}$.",
+        "**PROOF:** The $\\frac{50}{3} \\text{ m}$ option uses the correct closed form $h\\frac{1+e^2}{1-e^2}$. The $30 \\text{ m}$ option mistakenly drops the squares, using $h\\frac{1+e}{1-e}=10\\cdot\\frac{1.5}{0.5}$ (treating each bounce as scaling height by $e$ instead of $e^2$). The $6 \\text{ m}$ option inverts the fraction, $h\\frac{1-e^2}{1+e^2}=10\\cdot\\frac{0.75}{1.25}$. The $\\frac{40}{3} \\text{ m}$ option is $\\frac{h}{1-e^2}=\\frac{10}{0.75}$, which counts only one direction of the rebounds and omits the doubling. Correct option: $\\frac{50}{3} \\text{ m}$."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A particle of mass $m$ moving with speed $u$ makes a head-on elastic collision with a stationary particle of mass $2m$. What fraction of the incident particle's kinetic energy is transferred to the target particle?",
+    "options": [
+      {
+        "text": "$\\frac{1}{9}$"
+      },
+      {
+        "text": "$\\frac{1}{3}$"
+      },
+      {
+        "text": "$\\frac{2}{3}$"
+      },
+      {
+        "text": "$\\frac{8}{9}$"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Hard",
+    "subtopic": "Collisions",
+    "fsmTag": "fractional-ke-transfer-elastic",
+    "concepts": [
+      "elastic-collision",
+      "kinetic-energy-transfer",
+      "fractional-energy"
+    ],
+    "sourcePages": [
+      136,
+      137
+    ],
+    "timeTargets": {
+      "ap_eapcet": 90,
+      "ts_eapcet": 90,
+      "jee_main": 135
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "steps": [],
+      "preconditions": "",
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** 1D elastic collision, target at rest, asking for the FRACTION of kinetic energy handed to the struck mass (the Section 6.12 neutron-moderation result).",
+        "**EXTRACT:** $m_1=m$, $m_2=2m$, $u_1=u$, $u_2=0$. Fraction transferred to the target: $f=\\frac{4m_1 m_2}{(m_1+m_2)^2}$.",
+        "**EXECUTE:** $f=\\frac{4(m)(2m)}{(m+2m)^2}=\\frac{8m^2}{9m^2}=\\frac{8}{9}$.",
+        "**PROOF:** The $\\frac{8}{9}$ option uses $\\frac{4m_1m_2}{(m_1+m_2)^2}$, the energy delivered to the target. The $\\frac{1}{9}$ option is the fraction RETAINED by the incident particle, $\\left(\\frac{m_1-m_2}{m_1+m_2}\\right)^2=\\left(\\frac{-1}{3}\\right)^2$ — the complement, not the transfer. The $\\frac{1}{3}$ option is the velocity ratio magnitude $\\left|\\frac{m_1-m_2}{m_1+m_2}\\right|=\\frac{1}{3}$ used without squaring. The $\\frac{2}{3}$ option is the struck particle's velocity factor $\\frac{2m_1}{m_1+m_2}=\\frac{2}{3}$ mistaken for an energy fraction. Note $\\frac{8}{9}+\\frac{1}{9}=1$, confirming energy balance. Correct option: $\\frac{8}{9}$."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  }
+]
