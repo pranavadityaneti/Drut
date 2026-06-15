@@ -442,7 +442,7 @@
         "**DIAGNOSE:** Sub-discipline identification — must distinguish a static-equilibrium problem from a thermal one.",
         "**EXTRACT:** Phenomenon = equilibrium of a bent rod under a load.",
         "**EXECUTE:** Section 1.2 describes Mechanics: 'Mechanics founded on Newton's laws of motion and the law of gravitation is concerned with the motion (or equilibrium) of particles, rigid and deformable bodies, and general systems of particles... the equilibrium of a bent rod under a load, etc., are problems of mechanics.'",
-        "**PROOF:** Option C matches the textbook's explicit example."
+        "**PROOF:** Option C (Mechanics) is the textbook's explicit example: equilibrium of a deformable body under a load is a statics/elasticity problem, the canonical domain of mechanics. Correct option: C."
       ]
     },
     "visual": {
@@ -453,7 +453,7 @@
     "questionText": "According to the chapter, the approximate range of mass scales relevant to physics extends from:",
     "options": [
       {
-        "text": "$10^{-14}$ kg (mass of an electron) to $10^{26}$ kg (mass of the universe)"
+        "text": "$10^{-30}$ kg (mass of an electron) to $10^{30}$ kg (mass of the Sun)"
       },
       {
         "text": "$10^{-30}$ kg (mass of an electron) to $10^{55}$ kg (mass of the known observable universe)"
@@ -489,10 +489,10 @@
     },
     "fullStepByStep": {
       "steps": [
-        "**DIAGNOSE:** Mass-scale recall, with a trap that swaps in length-scale orders of magnitude (option A) or time-scale orders (option C).",
-        "**EXTRACT:** Asked: range of mass scales in physics.",
+        "**DIAGNOSE:** Mass-scale recall. The trap (option A) keeps the correct electron mass at the low end but truncates the upper end at the Sun's mass ($10^{30}$ kg) instead of the whole observable universe.",
+        "**EXTRACT:** Asked: the approximate range of mass scales in physics.",
         "**EXECUTE:** Section 1.2: 'The range of masses goes from, say, $10^{-30}$ kg (mass of an electron) to $10^{55}$ kg (mass of known observable universe).'",
-        "**PROOF:** Option B matches; the other options confuse mass with length or time ranges."
+        "**PROOF:** Option B gives both standard endpoints: $\\sim10^{-30}$ kg (electron, $\\approx9.1\\times10^{-31}$ kg) and $\\sim10^{55}$ kg (observable universe). Option A stops at the Sun ($10^{30}$ kg), not the universe. Options C and D give ranges that match no physical mass extremes. Correct option: B."
       ]
     },
     "visual": {
@@ -832,7 +832,7 @@
         "text": "Thin-film optical interference"
       },
       {
-        "text": "Wave nature of electrons"
+        "text": "Ordinary refraction at a single boundary"
       }
     ],
     "correctOptionIndex": 1,
@@ -859,14 +859,14 @@
         "**Action:** Map to total internal reflection of light.",
         "**Result:** Option B."
       ],
-      "sanityCheck": "Photoelectric effect is for photocells; thin-film interference is for non-reflecting coatings; wave nature of electrons is for the electron microscope."
+      "sanityCheck": "Photoelectric effect is for photocells; thin-film interference is for non-reflecting coatings; ordinary refraction at a single boundary would let light leak out rather than stay confined in the fibre."
     },
     "fullStepByStep": {
       "steps": [
         "**DIAGNOSE:** Technology-principle match.",
         "**EXTRACT:** Asked: working principle of optical fibres.",
         "**EXECUTE:** Table 1.2: Optical fibres — Total internal reflection of light. Light traveling inside a fibre with a denser core repeatedly reflects internally at the core–cladding interface.",
-        "**PROOF:** Option B matches Table 1.2."
+        "**PROOF:** Optical fibres confine light by total internal reflection at the core–cladding interface (denser core, incidence angle above the critical angle), which is option B. A (photoelectric effect) is the principle of photocells; C (thin-film interference) underlies non-reflecting coatings; D (ordinary refraction at a single boundary) would bend light out of the fibre instead of trapping it. Correct option: B."
       ]
     },
     "visual": {
@@ -988,7 +988,7 @@
         "text": "Faraday's laws of electromagnetic induction"
       },
       {
-        "text": "Magnetic confinement of plasma"
+        "text": "Archimedes' principle of buoyancy"
       }
     ],
     "correctOptionIndex": 1,
@@ -1019,7 +1019,7 @@
         "**DIAGNOSE:** Technology-principle match; the trap is that aircraft motion involves Newton's laws too, but the chapter's Table 1.2 attributes 'aeroplane' specifically to Bernoulli's principle.",
         "**EXTRACT:** Asked: principle behind an aeroplane (i.e., the lift).",
         "**EXECUTE:** Table 1.2: Aeroplane — Bernoulli's principle in fluid dynamics. Pressure difference between upper and lower surfaces of the wing arises from the different air-flow speeds.",
-        "**PROOF:** Option B matches Table 1.2. Rocket propulsion (not aeroplane) is the Newton's-laws entry."
+        "**PROOF:** Option B matches Table 1.2; faster air over the curved upper surface lowers pressure there, and the higher pressure below produces lift. Newton's laws (option A) belong to rocket propulsion, not aeroplane lift; Faraday's induction (option C) is electromagnetism, unrelated; Archimedes' buoyancy (option D) explains floating bodies, not aerodynamic lift. Correct option: B."
       ]
     },
     "visual": {
@@ -1443,7 +1443,7 @@
         "text": "Approximately $10^{-16}$ m"
       },
       {
-        "text": "About 100 times the size of a nucleus"
+        "text": "Approximately $10^{-10}$ m"
       },
       {
         "text": "Infinite"
@@ -1476,7 +1476,7 @@
         "**DIAGNOSE:** Force-range recall.",
         "**EXTRACT:** Asked: range of EM force.",
         "**EXECUTE:** Table 1.3: Electromagnetic force — Range: Infinite — Operates among: Charged particles.",
-        "**PROOF:** Option D matches Table 1.3. Options A and B are the ranges of strong and weak nuclear forces respectively."
+        "**PROOF:** Option D (Infinite) matches Table 1.3 for the electromagnetic force, whose massless photon mediator gives a 1/r Coulomb potential and hence infinite range. Option A ($10^{-15}$ m) is the strong nuclear force range; Option B ($10^{-16}$ m) is the weak nuclear force range; Option C ($10^{-10}$ m) is roughly an atomic/molecular size, not a fundamental-force range. Correct option: D."
       ]
     },
     "visual": {
@@ -1496,7 +1496,7 @@
         "text": "Exert no force on each other"
       },
       {
-        "text": "Attract at short distances and repel at long distances"
+        "text": "Exert a force only when in physical contact"
       }
     ],
     "correctOptionIndex": 0,
@@ -1526,7 +1526,7 @@
         "**DIAGNOSE:** Sign convention for the Coulomb force between like charges.",
         "**EXTRACT:** Asked: behaviour of two like charges.",
         "**EXECUTE:** Section 1.4.2: 'In the simpler case when charges are at rest, the force is given by Coulomb's law: attractive for unlike charges and repulsive for like charges.'",
-        "**PROOF:** Option A matches."
+        "**PROOF:** Like charges have a positive product of charges, so Coulomb's law gives a repulsive force that acts at a distance (no contact required), matching option A. Correct option: A."
       ]
     },
     "visual": {
@@ -1649,7 +1649,7 @@
         "text": "Binding protons and neutrons together inside a nucleus"
       },
       {
-        "text": "Producing the buoyancy of objects in fluids"
+        "text": "Holding atoms together to form molecules"
       }
     ],
     "correctOptionIndex": 2,
@@ -1676,14 +1676,14 @@
         "**Action:** Map to the strong nuclear force.",
         "**Result:** Option C."
       ],
-      "sanityCheck": "$\\beta$-decay is the weak force; electron–nucleus binding is electromagnetic; buoyancy is a macroscopic derived force."
+      "sanityCheck": "$\\beta$-decay is the weak force; electron–nucleus binding and atom-to-molecule bonding are both electromagnetic."
     },
     "fullStepByStep": {
       "steps": [
         "**DIAGNOSE:** Force-role identification.",
         "**EXTRACT:** Asked: primary role of the strong nuclear force.",
         "**EXECUTE:** Section 1.4.3: 'The strong nuclear force binds protons and neutrons in a nucleus. It is evident that without some attractive force, a nucleus will be unstable due to the electric repulsion between its protons.'",
-        "**PROOF:** Option C matches; the other roles belong to other forces."
+        "**PROOF:** Option C names binding of protons and neutrons in the nucleus, the role of the strong nuclear force. A ($\\beta$-decay) is the weak force; B (electron–nucleus binding) and D (atom-to-molecule bonding) are both electromagnetic. Correct option: C."
       ]
     },
     "visual": {
@@ -2031,21 +2031,17 @@
       "jee_main": 45
     },
     "theOptimalPath": {
-      "exists": true,
-      "preconditions": "Question asks what Newton unified.",
-      "steps": [
-        "**Trigger:** See 'Newton' + 'unification'.",
-        "**Action:** Map to terrestrial + celestial gravitation.",
-        "**Result:** Option A."
-      ],
-      "sanityCheck": "Oersted/Faraday → electric+magnetic; Maxwell → EM+optics; Salam et al. → electroweak."
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
     },
     "fullStepByStep": {
       "steps": [
         "**DIAGNOSE:** Unification-milestone identification.",
         "**EXTRACT:** Asked: what did Newton unify.",
         "**EXECUTE:** Section 1.4.5: 'Newton unified terrestrial and celestial domains under a common law of gravitation.'",
-        "**PROOF:** Option A matches."
+        "**PROOF:** Newton's universal law of gravitation brought the fall of an apple (terrestrial gravity) and the motion of the moon and planets (celestial gravity) under one inverse-square law — option A. Option B (electric and magnetic phenomena) was unified by Oersted/Faraday/Maxwell, not Newton. Option C (electromagnetism and optics) was Maxwell's work. Option D (weak nuclear and electromagnetic forces) is the electroweak unification of Glashow, Salam, and Weinberg. Correct option: A."
       ]
     },
     "visual": {
@@ -2222,7 +2218,7 @@
         "text": "The sum of kinetic and potential energy (total mechanical energy)"
       },
       {
-        "text": "The speed of the body"
+        "text": "The linear momentum of the body"
       }
     ],
     "correctOptionIndex": 2,
@@ -2252,7 +2248,7 @@
         "**DIAGNOSE:** Conservation-law recall.",
         "**EXTRACT:** Asked: which quantity is constant for a body under a conservative force.",
         "**EXECUTE:** Section 1.5: 'For motion under an external conservative force, the total mechanical energy i.e. the sum of kinetic and potential energy of a body is a constant.'",
-        "**PROOF:** Option C matches the textbook. KE and PE both change with time individually (e.g. in free fall) but their sum is fixed."
+        "**PROOF:** Option C states the sum of kinetic and potential energy is constant, matching the textbook. KE alone (A) and PE alone (B) each change with time individually (e.g. in free fall) while their sum stays fixed; the linear momentum (D) changes whenever a net force acts, so it is not conserved here. Correct option: C."
       ]
     },
     "visual": {
@@ -2470,7 +2466,7 @@
         "text": "The application of the conservation laws of energy and momentum to $\\beta$-decay"
       },
       {
-        "text": "Symmetry arguments based on Maxwell's equations"
+        "text": "The conservation of angular momentum (spin) alone"
       },
       {
         "text": "The principle of charge conservation alone"
@@ -2503,8 +2499,8 @@
       "steps": [
         "**DIAGNOSE:** Historical use of conservation laws to predict a new particle.",
         "**EXTRACT:** Asked: basis of Pauli's 1931 neutrino prediction.",
-        "**EXECUTE:** Section 1.5: 'using the conservation laws of energy and momentum for $\\beta$-decay, Wolfgang Pauli (1900-1958) correctly predicted in 1931 the existence of a new particle (now called neutrino) emitted in $\\beta$-decay along with the electron.' Option A is wrong because the prediction preceded experimental detection. Option D is incomplete: Pauli used BOTH energy and momentum conservation, not charge alone.",
-        "**PROOF:** Option B matches the chapter."
+        "**EXECUTE:** Section 1.5: 'using the conservation laws of energy and momentum for $\\beta$-decay, Wolfgang Pauli (1900-1958) correctly predicted in 1931 the existence of a new particle (now called neutrino) emitted in $\\beta$-decay along with the electron.' Option A is wrong because the prediction preceded experimental detection (Cowan-Reines, 1956). Option C is wrong: while spin/angular momentum is also restored by the neutrino, Pauli's stated basis was the continuous beta-energy spectrum violating energy and momentum conservation, not angular momentum alone. Option D is incomplete: Pauli used energy and momentum conservation; charge already balances in $\\beta$-decay without a neutrino, so charge conservation alone would not predict one.",
+        "**PROOF:** Option B matches the chapter: Pauli's prediction rested on the application of the conservation laws of energy and momentum to $\\beta$-decay. A preceded experimental detection; C names only angular momentum, not Pauli's stated energy-momentum basis; D names charge, which already balances without a neutrino. Correct option: B."
       ]
     },
     "visual": {

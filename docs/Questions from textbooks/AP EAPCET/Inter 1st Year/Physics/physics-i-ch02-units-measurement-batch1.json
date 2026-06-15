@@ -321,7 +321,7 @@
         "text": "$3.0 \\times 10^{7}$ m"
       },
       {
-        "text": "$2.1 \\times 10^{10}$ m"
+        "text": "$1.2 \\times 10^{10}$ m"
       }
     ],
     "correctOptionIndex": 0,
@@ -342,21 +342,17 @@
       "jee_main": 90
     },
     "theOptimalPath": {
-      "exists": true,
-      "preconditions": "When a baseline and a parallax angle (in radians) are given.",
-      "steps": [
-        "**Trigger:** Baseline $b$ + parallax angle $\\theta$ in radians.",
-        "**Action:** Apply $D = b/\\theta$.",
-        "**Result:** $D = 1.2\\times10^{7} / 4.0\\times10^{-4} = 3.0\\times10^{10}$ m — option A."
-      ],
-      "sanityCheck": "Dividing by a small angle must give a distance much larger than the baseline; $3.0\\times10^{10} \\gg 1.2\\times10^{7}$. Consistent."
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
     },
     "fullStepByStep": {
       "steps": [
         "**DIAGNOSE:** Parallax-method distance determination (Section 2.3.1).",
         "**EXTRACT:** Given: $b = 1.2\\times10^{7}$ m, $\\theta = 4.0\\times10^{-4}$ rad. Find: distance $D$.",
         "**EXECUTE:** For a small parallax angle, the baseline is an arc of a circle of radius $D$: $\\theta = b/D$, so $D = b/\\theta = \\dfrac{1.2\\times10^{7}}{4.0\\times10^{-4}} = 3.0\\times10^{10}$ m.",
-        "**PROOF:** Units: m / rad = m (radian is dimensionless). Option B comes from multiplying instead of dividing; option C from forgetting to convert a kilometre baseline; option D from an arithmetic slip ($1.2/4 = 0.3$, exponent mishandled)."
+        "**PROOF:** Units: m / rad = m (radian is dimensionless). Option A is $1.2\\times10^{7}/4.0\\times10^{-4} = 0.3\\times10^{11} = 3.0\\times10^{10}$ m. Option B ($4.8\\times10^{3}$) comes from multiplying instead of dividing: $1.2\\times10^{7}\\times4.0\\times10^{-4}=4.8\\times10^{3}$. Option C ($3.0\\times10^{7}$) comes from dropping the exponent of the small angle, dividing by $\\theta\\approx0.4$: $1.2\\times10^{7}/0.4=3.0\\times10^{7}$. Option D ($1.2\\times10^{10}$) comes from handling the powers of ten correctly ($10^{7}/10^{-4}=10^{11}$, giving order $10^{10}$) but forgetting to divide the mantissa by 4.0, leaving $1.2$. Correct option: A."
       ]
     },
     "visual": {
@@ -877,21 +873,17 @@
       "jee_main": 90
     },
     "theOptimalPath": {
-      "exists": true,
-      "preconditions": "When n readings are given and a percentage error is asked.",
-      "steps": [
-        "**Trigger:** A list of repeated readings.",
-        "**Action:** Compute mean → absolute deviations → their mean → divide by mean → ×100.",
-        "**Result:** Mean 2.0 s, mean absolute error 0.12 s, percentage error 6% — option C."
-      ],
-      "sanityCheck": "Spread of readings (~±0.2 on 2.0) is about 10%, so a ~6% mean error is plausible."
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
     },
     "fullStepByStep": {
       "steps": [
         "**DIAGNOSE:** Full error pipeline: arithmetic mean → absolute errors → mean absolute error → relative → percentage (Section 2.6.1).",
         "**EXTRACT:** Readings: 2.1, 2.2, 1.9, 2.0, 1.8 s (n = 5).",
         "**EXECUTE:** Mean $= (2.1+2.2+1.9+2.0+1.8)/5 = 10.0/5 = 2.0$ s. Absolute errors: $|2.1-2.0|=0.1$, $|2.2-2.0|=0.2$, $|1.9-2.0|=0.1$, $|2.0-2.0|=0.0$, $|1.8-2.0|=0.2$. Mean absolute error $= (0.1+0.2+0.1+0.0+0.2)/5 = 0.6/5 = 0.12$ s. Relative error $= 0.12/2.0 = 0.06$. Percentage error $= 6\\%$.",
-        "**PROOF:** Option A (12%) doubles by forgetting to divide by the mean of 2.0; option B treats 0.04 of one deviation; option D slips a factor of 10."
+        "**PROOF:** Mean = 2.0 s; mean absolute error = 0.12 s; percentage error = (0.12/2.0) x 100 = 6% (option C). Option A (12%) reads the mean absolute error 0.12 s directly as a percentage, forgetting to divide by the mean value 2.0 s. Option B (2%) uses a single small deviation instead of the mean of all five readings. Option D (0.6%) slips a factor of 10 on the correct 6%. Correct option: C."
       ]
     },
     "visual": {
@@ -1011,7 +1003,7 @@
         "text": "Both are equally accurate, since accuracy depends only on the instrument"
       },
       {
-        "text": "$L_1$, because shorter lengths are always measured more accurately"
+        "text": "$L_2$, because it has more significant figures (3 vs 2)"
       }
     ],
     "correctOptionIndex": 1,
@@ -1031,21 +1023,17 @@
       "jee_main": 120
     },
     "theOptimalPath": {
-      "exists": true,
-      "preconditions": "When two measurements with different magnitudes and errors are compared for accuracy.",
-      "steps": [
-        "**Trigger:** Compare measurements of different sizes.",
-        "**Action:** Compute relative error $\\Delta a/a$ for each; smaller wins.",
-        "**Result:** $0.01/1.0 = 1\\%$ vs $0.05/10.0 = 0.5\\%$ → $L_2$ more accurate — option B."
-      ],
-      "sanityCheck": "An error of 5 cm on 10 m is proportionally smaller than 1 cm on 1 m, despite being larger in absolute terms."
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
     },
     "fullStepByStep": {
       "steps": [
         "**DIAGNOSE:** Accuracy comparison via relative error — the textbook's reason for introducing relative error in the first place: absolute error alone cannot compare measurements of different magnitudes.",
         "**EXTRACT:** $L_1 = 1.0$ m, $\\Delta L_1 = 0.01$ m; $L_2 = 10.0$ m, $\\Delta L_2 = 0.05$ m.",
         "**EXECUTE:** Relative error of $L_1$: $0.01/1.0 = 0.01 = 1\\%$. Relative error of $L_2$: $0.05/10.0 = 0.005 = 0.5\\%$. The smaller relative error indicates the more accurate measurement → $L_2$.",
-        "**PROOF:** Option A is the classic trap (comparing absolute errors across different magnitudes); options C and D assert rules the chapter does not contain."
+        "**PROOF:** Option A is the classic trap (comparing absolute errors across different magnitudes: 0.01 m < 0.05 m wrongly suggests $L_1$); option C asserts accuracy depends only on the instrument, a rule the chapter does not contain; option D conflates significant-figure count with accuracy — $L_2$ does have 3 sig figs vs 2, but sig-fig count alone does not measure accuracy, and the correct reason is its smaller relative error. Only relative error (0.5% < 1%) settles it in favour of $L_2$. Correct option: B."
       ]
     },
     "visual": {
@@ -1059,7 +1047,7 @@
         "text": "The difference of the absolute errors in the individual quantities"
       },
       {
-        "text": "The product of the absolute errors"
+        "text": "The larger of the two absolute errors"
       },
       {
         "text": "The sum of the absolute errors in the individual quantities"
@@ -1095,7 +1083,7 @@
         "**DIAGNOSE:** Rule recall for error combination under addition/subtraction (Section 2.6.2a).",
         "**EXTRACT:** Asked: the rule for $Z = A \\pm B$.",
         "**EXECUTE:** 'When two quantities are added or subtracted, the absolute error in the final result is the sum of the absolute errors in the individual quantities': $\\Delta Z = \\Delta A + \\Delta B$. Note this holds for BOTH addition and subtraction — errors never cancel.",
-        "**PROOF:** Worst case: both individual errors push the same way, giving $\\Delta A + \\Delta B$. Option A would wrongly let errors cancel in subtraction; option D confuses this with the product/quotient rule."
+        "**PROOF:** Worst case: both individual errors push the same way, giving $\\Delta A + \\Delta B$, so option C is correct. Option A wrongly lets errors cancel in subtraction; option B wrongly keeps only the larger error instead of adding both; option D confuses this with the multiplication/division rule (where relative errors add). Correct option: C."
       ]
     },
     "visual": {
@@ -1300,21 +1288,17 @@
       "jee_main": 120
     },
     "theOptimalPath": {
-      "exists": true,
-      "preconditions": "When Z is a general product of powers $A^p B^q / C^r$.",
-      "steps": [
-        "**Trigger:** Composite expression with exponents on every variable.",
-        "**Action:** $\\frac{\\Delta Z}{Z} = p\\frac{\\Delta A}{A} + q\\frac{\\Delta B}{B} + r\\frac{\\Delta C}{C} + s\\frac{\\Delta D}{D}$ — all errors ADD, with coefficients $|$exponent$|$.",
-        "**Result:** $4(1) + \\tfrac{1}{3}(3) + 1(2) + \\tfrac{3}{2}(2) = 4+1+2+3 = 10\\%$ — option C."
-      ],
-      "sanityCheck": "Denominator exponents contribute positively too (errors never cancel); each term is individually sensible."
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
     },
     "fullStepByStep": {
       "steps": [
         "**DIAGNOSE:** General power-combination rule, the structure of textbook Example 2.11.",
         "**EXTRACT:** Exponents: $A^4$, $B^{1/3}$, $C^{-1}$, $D^{-3/2}$. Percentage errors: $a = 1\\%$, $b = 3\\%$, $c = 2\\%$, $d = 2\\%$.",
         "**EXECUTE:** 'If $Z = A^p B^q / C^r$, then $\\Delta Z/Z = p(\\Delta A/A) + q(\\Delta B/B) + r(\\Delta C/C)$.' Extending to four variables: $\\Delta Z/Z = 4(1\\%) + \\frac{1}{3}(3\\%) + 1(2\\%) + \\frac{3}{2}(2\\%) = 4\\% + 1\\% + 2\\% + 3\\% = 10\\%$.",
-        "**PROOF:** Option A forgets the $C$ term; option B doubles the $A$ contribution to 8 and miscounts; option D treats only the largest single term. The full sum is 10%."
+        "**PROOF:** Option A (8%) drops the $C$ term: $4 + 1 + 3 = 8\\%$. Option B (12%) forgets to multiply B's error by its $\\tfrac{1}{3}$ exponent, using the full $3\\%$ instead of $1\\%$: $4 + 3 + 2 + 3 = 12\\%$. Option D (4%) keeps only the $A$ term: $4 \\times 1 = 4\\%$. The full weighted sum is $4 + 1 + 2 + 3 = 10\\%$. Correct option: C."
       ]
     },
     "visual": {
@@ -1355,21 +1339,17 @@
       "jee_main": 90
     },
     "theOptimalPath": {
-      "exists": true,
-      "preconditions": "When a derived quantity contains a squared measured variable.",
-      "steps": [
-        "**Trigger:** $g \\propto L/T^2$ with errors in $L$ and $T$.",
-        "**Action:** $\\frac{\\Delta g}{g} = \\frac{\\Delta L}{L} + 2\\frac{\\Delta T}{T}$ (the exponent 2 doubles T's contribution).",
-        "**Result:** $0.5\\% + 2(1\\%) = 2.5\\%$ — option B."
-      ],
-      "sanityCheck": "The constant $4\\pi^2$ is exact and contributes no error; only L and T matter."
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
     },
     "fullStepByStep": {
       "steps": [
         "**DIAGNOSE:** Error propagation through $g = 4\\pi^2 L/T^2$ — the structure of textbook Example 2.12.",
         "**EXTRACT:** $\\Delta L/L = 0.5\\%$; $\\Delta T/T = 1\\%$. Find $\\Delta g/g$.",
         "**EXECUTE:** $g \\propto L^1 T^{-2}$, so $\\Delta g/g = (\\Delta L/L) + 2(\\Delta T/T) = 0.5\\% + 2 \\times 1\\% = 2.5\\%$.",
-        "**PROOF:** Option A forgets the factor 2 on the period term; option C triples T's error; option D drops the T term entirely."
+        "**PROOF:** Option A forgets the factor 2 on the period term ($0.5\\% + 1\\% = 1.5\\%$); option C wrongly applies the factor-2 doubling to BOTH terms ($2 \\times 0.5\\% + 2 \\times 1\\% = 3.0\\%$); option D drops the T term entirely ($0.5\\%$). Correct option: B."
       ]
     },
     "visual": {
@@ -1411,21 +1391,17 @@
       "jee_main": 120
     },
     "theOptimalPath": {
-      "exists": true,
-      "preconditions": "When a quotient contains a cubed measured variable.",
-      "steps": [
-        "**Trigger:** $\\rho = m/a^3$ with errors in $m$ and $a$.",
-        "**Action:** $\\frac{\\Delta\\rho}{\\rho} = \\frac{\\Delta m}{m} + 3\\frac{\\Delta a}{a}$.",
-        "**Result:** $1\\% + 3(2\\%) = 7\\%$ — option C."
-      ],
-      "sanityCheck": "The cube triples the side-length error; the side dominates the total, as expected when its exponent is largest."
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
     },
     "fullStepByStep": {
       "steps": [
         "**DIAGNOSE:** Quotient + power error combination. The trap: students who treat $a^3$ as a single measured quantity forget the factor 3.",
         "**EXTRACT:** $\\Delta m/m = 1\\%$; $\\Delta a/a = 2\\%$; $\\rho = m \\, a^{-3}$.",
         "**EXECUTE:** $\\Delta\\rho/\\rho = (\\Delta m/m) + 3(\\Delta a/a) = 1\\% + 3 \\times 2\\% = 1\\% + 6\\% = 7\\%$.",
-        "**PROOF:** Option A adds the raw percentages without the power factor; option B uses a factor 2 instead of 3; option D uses factor 4. Dimensional sanity: all terms are pure percentages, correctly summed."
+        "**PROOF:** Option A (3%) adds the raw percentages without the power factor (1%+2%). Option B (5%) uses a factor 2 instead of 3 (1%+2×2%). Option D (9%) uses factor 4 (1%+4×2%). Dimensional sanity: all terms are pure percentages, correctly summed. Correct option: C."
       ]
     },
     "visual": {
@@ -1499,7 +1475,7 @@
         "text": "4"
       },
       {
-        "text": "5"
+        "text": "1"
       }
     ],
     "correctOptionIndex": 2,
@@ -1532,8 +1508,8 @@
       "steps": [
         "**DIAGNOSE:** Trailing-zero rule (Section 2.7).",
         "**EXTRACT:** Number: 4.700 m.",
-        "**EXECUTE:** The textbook: 'The trailing zero(s) in a number with a decimal point are significant.' Thus 4.700 m has 4 significant figures: 4, 7, 0, 0. Equivalently $4.700 \\times 10^0$ m.",
-        "**PROOF:** The textbook makes the same point with 4.700 m = 470.0 cm = 4700 mm: expressed with a decimal point, the count stays 4."
+        "**EXECUTE:** The textbook rule: 'The trailing zero(s) in a number with a decimal point are significant.' Thus 4.700 m has 4 significant figures: 4, 7, 0, 0. Equivalently $4.700 \\times 10^0$ m.",
+        "**PROOF:** All four digits of 4.700 are significant: the nonzero digits 4 and 7, plus the two trailing zeros after the decimal point, which signal measured precision. Option A (2) counts only the nonzero digits; option B (3) counts only one trailing zero; option D (1) counts only the leading digit. Correct option: C."
       ]
     },
     "visual": {
@@ -1680,21 +1656,17 @@
       "jee_main": 120
     },
     "theOptimalPath": {
-      "exists": true,
-      "preconditions": "When a derived result must carry the precision of the input.",
-      "steps": [
-        "**Trigger:** Input with n significant figures feeding a product/power.",
-        "**Action:** Compute fully, then round the result to n significant figures (here n = 4).",
-        "**Result:** SA $= 6(5.402)^2 = 175.1\\ \\mathrm{m^2}$; V $= (5.402)^3 = 157.6\\ \\mathrm{m^3}$ — option B."
-      ],
-      "sanityCheck": "The exact multiplier 6 has infinite significant figures and does not limit the count."
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
     },
     "fullStepByStep": {
       "steps": [
         "**DIAGNOSE:** Significant figures in multiplication/powers — the structure of textbook Example 2.13 with new numbers.",
         "**EXTRACT:** Side $a = 5.402$ m → 4 significant figures. Find SA $= 6a^2$ and V $= a^3$ to appropriate sig figs.",
         "**EXECUTE:** $a^2 = 29.181604\\ \\mathrm{m^2}$; SA $= 6 \\times 29.181604 = 175.089624\\ \\mathrm{m^2}$. $a^3 = 29.181604 \\times 5.402 = 157.6390...\\ \\mathrm{m^3}$. The input has 4 sig figs, so both results are rounded to 4: SA $= 175.1\\ \\mathrm{m^2}$, V $= 157.6\\ \\mathrm{m^3}$.",
-        "**PROOF:** Option A reports the raw calculator output (more precision than the data justifies); option C rounds to 3 sig figs; option D rounds to 5. Only option B respects the 4-sig-fig input."
+        "**PROOF:** Option A reports the raw calculator output (more precision than the data justifies); option C rounds to 3 sig figs; option D rounds to 5. Only option B respects the 4-sig-fig input. Correct option: B."
       ]
     },
     "visual": {
@@ -1734,21 +1706,17 @@
       "jee_main": 90
     },
     "theOptimalPath": {
-      "exists": true,
-      "preconditions": "When adding or subtracting measured values.",
-      "steps": [
-        "**Trigger:** Addition/subtraction of values with different decimal places.",
-        "**Action:** Keep as many DECIMAL PLACES as the least-precise input (here 318.2 g → 1 decimal place). Do not count significant figures.",
-        "**Result:** $532.41 + 318.2 + 0.402 = 851.012 \\to 851.0$ g — option C."
-      ],
-      "sanityCheck": "The least-precise term is uncertain in its first decimal, so the sum cannot honestly claim more than one decimal."
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
     },
     "fullStepByStep": {
       "steps": [
         "**DIAGNOSE:** Addition rule for significant figures (Section 2.7.1): 'In addition or subtraction, the final result should retain as many decimal places as are there in the number with the least decimal places.'",
         "**EXTRACT:** 532.41 (2 dp), 318.2 (1 dp), 0.402 (3 dp). Least decimal places = 1.",
         "**EXECUTE:** Raw sum: $532.41 + 318.2 + 0.402 = 851.012$ g. Round to 1 decimal place: 851.0 g.",
-        "**PROOF:** Options A and B retain unjustified decimals; option D throws away a justified one. The rule for addition is decimal places, NOT total significant figures — the classic confusion with the multiplication rule."
+        "**PROOF:** Options A and B retain unjustified decimals; option D throws away a justified one. The rule for addition is decimal places, NOT total significant figures — the classic confusion with the multiplication rule. Correct option: C."
       ]
     },
     "visual": {
@@ -1765,7 +1733,7 @@
         "text": "16.4"
       },
       {
-        "text": "16.0"
+        "text": "16.46"
       },
       {
         "text": "17.0"
@@ -1803,7 +1771,7 @@
         "**DIAGNOSE:** The round-half-to-even convention (Section 2.7.2): 'if the insignificant digit to be dropped is 5, the preceding digit is left unchanged if it is even, and raised by 1 if it is odd.'",
         "**EXTRACT:** Number 16.45; round to 3 significant figures, i.e., drop the final 5.",
         "**EXECUTE:** The digit preceding the 5 is 4 — even. So it stays unchanged: 16.4.",
-        "**PROOF:** Option A applies the school 'always round 5 up' habit, which the textbook explicitly replaces with the even-digit convention for an exact trailing 5."
+        "**PROOF:** Option A applies the school 'always round 5 up' habit, raising 16.4 to 16.5 — wrong for an exact trailing 5 with an even preceding digit. Option C (16.46) fails to drop the 5 at all, instead carrying it up into a kept digit, so it does not round to three significant figures. Option D (17.0) comes from a contrived double-rounding cascade (16.45→16.5→17). The convention drops the 5 and leaves the even digit 4 unchanged: 16.4. Correct option: B."
       ]
     },
     "visual": {
@@ -1843,21 +1811,17 @@
       "jee_main": 90
     },
     "theOptimalPath": {
-      "exists": true,
-      "preconditions": "When multiplying or dividing measured values.",
-      "steps": [
-        "**Trigger:** Product/quotient of values with different sig-fig counts.",
-        "**Action:** Keep as many SIGNIFICANT FIGURES as the input with the fewest (here 0.14 → 2 sig figs).",
-        "**Result:** $2.31 \\times 0.14 = 0.3234 \\to 0.32$ — option D."
-      ],
-      "sanityCheck": "The least-precise factor knows only 2 digits; the product cannot know more."
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
     },
     "fullStepByStep": {
       "steps": [
         "**DIAGNOSE:** Multiplication rule (Section 2.7.1): 'In multiplication or division, the final result should retain as many significant figures as are there in the original number with the least significant figures.'",
         "**EXTRACT:** 2.31 → 3 sig figs; 0.14 → 2 sig figs. Limit = 2 sig figs.",
         "**EXECUTE:** Raw product: $2.31 \\times 0.14 = 0.3234$. Round to 2 significant figures: 0.32.",
-        "**PROOF:** Option A keeps the full calculator output; option B keeps 3 sig figs (uses the wrong factor as the limit); option C over-rounds to 1. Note the contrast with addition, where DECIMAL PLACES (not sig figs) govern."
+        "**PROOF:** Option A (0.3234) keeps the full calculator output; option B (0.323) keeps 3 sig figs, wrongly using 2.31's count as the limit; option C (0.3) over-rounds to 1 sig fig. Note the contrast with addition, where DECIMAL PLACES (not sig figs) govern. Correct option: D."
       ]
     },
     "visual": {
@@ -1897,21 +1861,17 @@
       "jee_main": 45
     },
     "theOptimalPath": {
-      "exists": true,
-      "preconditions": "When a quantity is a simple product of base quantities.",
-      "steps": [
-        "**Trigger:** Volume = length × breadth × height.",
-        "**Action:** Multiply dimensions: $[L][L][L] = [L^3]$; no mass or time enters.",
-        "**Result:** $[\\mathrm{M^0 L^3 T^0}]$ — option A."
-      ],
-      "sanityCheck": "Cubic metres confirm pure length-cubed."
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
     },
     "fullStepByStep": {
       "steps": [
         "**DIAGNOSE:** Dimensional construction from the definition (Section 2.8, the textbook's own first example).",
         "**EXTRACT:** Volume = product of three lengths.",
         "**EXECUTE:** $[V] = [L] \\times [L] \\times [L] = [L^3]$. Volume is 'independent of mass and time', so it has 'zero dimension in mass $[M^0]$, zero dimension in time $[T^0]$ and three dimensions in length'.",
-        "**PROOF:** SI unit m³ contains no kg and no s — exponents of M and T must be zero. Options B, C, D each corrupt one exponent."
+        "**PROOF:** SI unit m³ contains no kg and no s — exponents of M and T must be zero, giving $[\\mathrm{M^0 L^3 T^0}]$. Option B wrongly injects mass ($[M L^3 T^0]$, density/mass confusion); option C uses area $[L^2]$ instead of volume; option D treats it as volume flow rate ($[\\mathrm{M^0 L^3 T^{-1}}]$, m³/s). Correct option: A."
       ]
     },
     "visual": {
@@ -2110,21 +2070,17 @@
       "jee_main": 45
     },
     "theOptimalPath": {
-      "exists": true,
-      "preconditions": "When a quantity is a simple quotient of base quantities.",
-      "steps": [
-        "**Trigger:** Density = mass / volume.",
-        "**Action:** $[M]/[L^3]$.",
-        "**Result:** $[\\mathrm{M L^{-3} T^0}]$ — option A."
-      ],
-      "sanityCheck": "kg/m³ — one power of mass, minus three of length, no time."
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
     },
     "fullStepByStep": {
       "steps": [
         "**DIAGNOSE:** Dimensional-formula recall; Section 2.9 lists this one explicitly.",
         "**EXTRACT:** Asked: dimensional formula of mass density.",
         "**EXECUTE:** Density = mass/volume → $[M]/[L^3] = [\\mathrm{M L^{-3} T^0}]$. The textbook states: '$[M L^{-3} T^0]$ [is the dimensional formula] of mass density.'",
-        "**PROOF:** Option B inverts the sign of the length exponent (the most common slip); option C drops the mass; option D uses an area instead of a volume in the denominator."
+        "**PROOF:** Option B inverts the sign of the length exponent (the most common slip); option C drops the mass; option D uses an area instead of a volume in the denominator. Correct option: A."
       ]
     },
     "visual": {
@@ -2195,7 +2151,7 @@
         "text": "Equating the numerical values of a quantity in two different unit systems"
       },
       {
-        "text": "Setting all dimensional exponents equal to 1"
+        "text": "Setting the dimensions of any quantity to $[\\mathrm{M^0\\, L^0\\, T^0}]$, treating it as dimensionless"
       },
       {
         "text": "Replacing every quantity in a formula by its SI unit symbol"
@@ -2228,7 +2184,7 @@
         "**DIAGNOSE:** Definition recall (Section 2.9).",
         "**EXTRACT:** Asked: what constitutes a dimensional equation.",
         "**EXECUTE:** 'An equation obtained by equating a physical quantity with its dimensional formula is called the dimensional equation of the physical quantity.' Examples from the text: $[V] = [M^0 L^3 T^0]$, $[v] = [M^0 L T^{-1}]$, $[F] = [M L T^{-2}]$, $[\\rho] = [M L^{-3} T^0]$.",
-        "**PROOF:** Option A reproduces the definition with the textbook's own example for speed; the others describe operations the chapter never defines."
+        "**PROOF:** Option A reproduces the definition with the textbook's own example for speed, $[v] = [M^0 L T^{-1}]$. Option B describes unit conversion ($n_1 u_1 = n_2 u_2$), not a dimensional equation. Option C conflates writing a dimensional formula with forcing every exponent to zero, which would only describe a dimensionless quantity, not the general definition. Option D confuses dimensions with SI unit symbols. Correct option: A."
       ]
     },
     "visual": {
@@ -2269,21 +2225,17 @@
       "jee_main": 90
     },
     "theOptimalPath": {
-      "exists": true,
-      "preconditions": "When verifying an equation term by term.",
-      "steps": [
-        "**Trigger:** Sum of terms claimed equal to a length.",
-        "**Action:** Reduce each term: $[x_0] = [L]$; $[v_0 t] = [LT^{-1}][T] = [L]$; $[\\tfrac{1}{2}at^2] = [LT^{-2}][T^2] = [L]$.",
-        "**Result:** All terms $[L]$ → consistent — option A."
-      ],
-      "sanityCheck": "Pure numbers like 1/2 are dimensionless and never affect the check."
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
     },
     "fullStepByStep": {
       "steps": [
         "**DIAGNOSE:** Dimensional-consistency verification — the textbook's own worked check (Section 2.10.1).",
         "**EXTRACT:** Equation: $x = x_0 + v_0 t + \\tfrac{1}{2} a t^2$. Verify each term's dimensions.",
         "**EXECUTE:** $[x] = [L]$. $[x_0] = [L]$. $[v_0 t] = [L T^{-1}][T] = [L]$. $[(1/2) a t^2] = [L T^{-2}][T^2] = [L]$. 'As each term on the right hand side of this equation has the same dimension, namely that of length, which is same as the dimension of left hand side... this equation is a dimensionally correct equation.'",
-        "**PROOF:** Option C is explicitly wrong: dimensionless numerical factors play no role in dimensional analysis. Options B and D state false criteria."
+        "**PROOF:** All four terms reduce to $[L]$, matching the LHS, so option A is the reason for consistency. Option B is wrong: the shared dimension is length $[L]$, not velocity $[LT^{-1}]$. Option C is wrong: dimensionless numerical factors such as $1/2$ play no role in dimensional analysis. Option D is wrong: it states an irrelevant criterion, and is also false since $t$ does not appear in the $x_0$ term. Correct option: A."
       ]
     },
     "visual": {
@@ -2536,21 +2488,17 @@
       "jee_main": 120
     },
     "theOptimalPath": {
-      "exists": true,
-      "preconditions": "When exponents must be solved by matching dimensions.",
-      "steps": [
-        "**Trigger:** $T = k\\,l^x g^y m^z$ with three unknown exponents.",
-        "**Action:** Match powers of M, L, T separately: $z = 0$; $x + y = 0$; $-2y = 1$.",
-        "**Result:** $x = \\tfrac{1}{2}$, $y = -\\tfrac{1}{2}$, $z = 0$ — option B."
-      ],
-      "sanityCheck": "$z = 0$ reproduces the famous fact that a pendulum's period is independent of the bob's mass."
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
     },
     "fullStepByStep": {
       "steps": [
         "**DIAGNOSE:** Full exponent-matching deduction — textbook Example 2.17 in its complete three-variable form.",
         "**EXTRACT:** $[T] = [T^1]$; $[l^x] = [L^x]$; $[g^y] = [L^y T^{-2y}]$; $[m^z] = [M^z]$.",
         "**EXECUTE:** $[T^1] = [M^z\\, L^{x+y}\\, T^{-2y}]$. Power of M: $z = 0$. Power of T: $-2y = 1 \\Rightarrow y = -\\tfrac{1}{2}$. Power of L: $x + y = 0 \\Rightarrow x = \\tfrac{1}{2}$.",
-        "**PROOF:** The result $T = k\\sqrt{l/g}$ with no mass dependence matches the textbook's conclusion. Option D swaps the signs of x and y (giving a frequency); option C asserts a mass dependence that the M-exponent match forbids."
+        "**PROOF:** The result $T = k\\sqrt{l/g}$ with no mass dependence matches the textbook's conclusion. Option D swaps the signs of x and y (giving a frequency); option C asserts a mass dependence that the M-exponent match forbids. Correct option: B."
       ]
     },
     "visual": {
@@ -2642,21 +2590,17 @@
       "jee_main": 120
     },
     "theOptimalPath": {
-      "exists": true,
-      "preconditions": "When a combination of deduced exponents is asked rather than the exponents themselves.",
-      "steps": [
-        "**Trigger:** $T \\propto l^a g^b$; asked for $a - b$.",
-        "**Action:** Deduce $a = \\tfrac{1}{2}$, $b = -\\tfrac{1}{2}$ by exponent matching, then combine.",
-        "**Result:** $a - b = \\tfrac{1}{2} - (-\\tfrac{1}{2}) = 1$ — option D."
-      ],
-      "sanityCheck": "The sign trap: subtracting a negative. $a + b = 0$ but $a - b = 1$."
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
     },
     "fullStepByStep": {
       "steps": [
         "**DIAGNOSE:** Two-step problem: dimensional deduction, then exponent arithmetic with a sign trap.",
         "**EXTRACT:** $T \\propto l^a g^b$; $[l] = [L]$, $[g] = [LT^{-2}]$, $[T] = [T]$.",
         "**EXECUTE:** $[T^1] = [L^{a+b}\\,T^{-2b}]$. Matching T: $-2b = 1 \\Rightarrow b = -\\tfrac{1}{2}$. Matching L: $a + b = 0 \\Rightarrow a = \\tfrac{1}{2}$. Therefore $a - b = \\tfrac{1}{2} - \\left(-\\tfrac{1}{2}\\right) = 1$.",
-        "**PROOF:** Option A is the value of $a + b$ (the natural confusion); option B gives just $a$; option C flips the subtraction order with a sign slip."
+        "**PROOF:** Option A is the value of $a + b$ (the natural confusion); option B gives just $a$; option C flips the subtraction order with a sign slip. Correct option: D."
       ]
     },
     "visual": {

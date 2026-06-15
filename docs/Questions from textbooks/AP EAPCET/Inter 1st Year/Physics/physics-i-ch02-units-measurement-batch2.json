@@ -297,7 +297,7 @@
         "**DIAGNOSE:** Definition recall (Sections 2.3.1 and 2.3.3).",
         "**EXTRACT:** Asked: the definition of the AU.",
         "**EXECUTE:** The textbook: '1 astronomical unit = 1 AU (average distance of the Sun from the Earth) $= 1.496 \\times 10^{11}$ m.'",
-        "**PROOF:** Option A defines the light year; option C garbles the parsec definition (and is circular); option B is unrelated. Only option B matches the chapter."
+        "**PROOF:** Option A defines the light year; option C garbles the parsec definition (and is circular); option B is unrelated (the radius of the Sun). Only option D matches the chapter. Correct option: D."
       ]
     },
     "visual": {
@@ -368,7 +368,7 @@
         "text": "$10^{-9}$ m"
       },
       {
-        "text": "$10^{-5}$ m"
+        "text": "$10^{-8}$ m"
       },
       {
         "text": "$10^{-11}$ m"
@@ -392,21 +392,17 @@
       "jee_main": 90
     },
     "theOptimalPath": {
-      "exists": true,
-      "preconditions": "When a volume spreads into a mono-molecular film of known area.",
-      "steps": [
-        "**Trigger:** Volume V spreading into film of area A, one molecule thick.",
-        "**Action:** Thickness $t = V/A$, then convert cm to m.",
-        "**Result:** $t = 5\\times10^{-6}/50 = 10^{-7}$ cm $= 10^{-9}$ m — option B."
-      ],
-      "sanityCheck": "The textbook states oleic acid has 'large molecular size of the order of $10^{-9}$ m' — the answer must land there."
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
     },
     "fullStepByStep": {
       "steps": [
         "**DIAGNOSE:** Mono-molecular film method (Section 2.3.2). The film's thickness equals one molecular diameter.",
         "**EXTRACT:** $V = 5\\times10^{-6}$ cm³; $A = 50$ cm². Find $t = V/A$ in metres.",
         "**EXECUTE:** $t = \\dfrac{5\\times10^{-6}\\ \\mathrm{cm^3}}{50\\ \\mathrm{cm^2}} = 10^{-7}$ cm. Converting: $10^{-7}$ cm $= 10^{-7} \\times 10^{-2}$ m $= 10^{-9}$ m.",
-        "**PROOF:** Matches the chapter's stated order of molecular size ($10^{-9}$ m). Option A forgets the cm→m conversion; option D applies the conversion twice; option C botches the division."
+        "**PROOF:** $V/A = 5\\times10^{-6}/50 = 10^{-7}$ cm $= 10^{-9}$ m, matching the chapter's stated order of molecular size. Option A keeps the cm value $10^{-7}$ and forgets the cm→m conversion. Option C drops one power of ten in the division ($10^{-6}$ cm instead of $10^{-7}$ cm), giving $10^{-8}$ m after conversion. Option D applies the cm→m factor twice ($10^{-9}\\times10^{-2}=10^{-11}$ m). Correct option: B."
       ]
     },
     "visual": {
@@ -447,21 +443,17 @@
       "jee_main": 120
     },
     "theOptimalPath": {
-      "exists": true,
-      "preconditions": "When converting between two non-SI units via their metre values.",
-      "steps": [
-        "**Trigger:** Distance in unit X asked in unit Y, both given in metres.",
-        "**Action:** Multiply by X's metre value, divide by Y's: $4.29 \\times \\dfrac{9.46\\times10^{15}}{3.08\\times10^{16}}$.",
-        "**Result:** $4.29 \\times 0.307 \\approx 1.32$ parsec — option C."
-      ],
-      "sanityCheck": "1 parsec ≈ 3.26 ly, so the parsec count must be about a third of the light-year count: $4.29/3.26 \\approx 1.3$. Consistent."
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
     },
     "fullStepByStep": {
       "steps": [
         "**DIAGNOSE:** Chained unit conversion using the chapter's tabulated values.",
         "**EXTRACT:** $d = 4.29$ ly; 1 ly $= 9.46\\times10^{15}$ m; 1 pc $= 3.08\\times10^{16}$ m.",
         "**EXECUTE:** In metres: $d = 4.29 \\times 9.46\\times10^{15} = 4.058\\times10^{16}$ m. In parsecs: $d = \\dfrac{4.058\\times10^{16}}{3.08\\times10^{16}} = 1.318 \\approx 1.32$ pc.",
-        "**PROOF:** Option B is the reciprocal mistake ($3.08/4.058$ misapplied); option A assumes ly = pc; option D misplaces a decimal. The sanity ratio 1 pc ≈ 3.26 ly confirms ~1.32."
+        "**PROOF:** Option B is the reciprocal mistake ($3.08/4.058 \\approx 0.76$); option A assumes ly = pc; option D misplaces a decimal ($\\times10$ too large). The sanity ratio 1 pc ≈ 3.26 ly confirms ~1.32. Correct option: C."
       ]
     },
     "visual": {
@@ -606,21 +598,17 @@
       "jee_main": 90
     },
     "theOptimalPath": {
-      "exists": true,
-      "preconditions": "When a fractional accuracy must be converted to drift per year.",
-      "steps": [
-        "**Trigger:** Accuracy quoted as 1 part in $10^{13}$.",
-        "**Action:** Multiply by seconds in a year: $10^{-13} \\times 3.15\\times10^{7}\\ \\mathrm{s} \\approx 3\\times10^{-6}$ s.",
-        "**Result:** About 3 µs per year — option D."
-      ],
-      "sanityCheck": "The textbook states the same figure directly: 'they lose or gain no more than 3 µs in one year.'"
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
     },
     "fullStepByStep": {
       "steps": [
         "**DIAGNOSE:** Fractional accuracy → absolute drift conversion (Section 2.5).",
         "**EXTRACT:** Fractional uncertainty $10^{-13}$; interval = 1 year $\\approx 3.15\\times10^{7}$ s.",
         "**EXECUTE:** Drift $= 10^{-13} \\times 3.15\\times10^{7}$ s $= 3.15\\times10^{-6}$ s $\\approx 3$ µs per year. The textbook: the clocks 'lose or gain no more than 3 µs (micro second) in one year.'",
-        "**PROOF:** Option A is off by 10³ (ms vs µs); option C would be accuracy of only 1 part in $3\\times10^{7}$; option B compresses the interval to a day, inflating the implied drift rate by ~365."
+        "**PROOF:** Option A is off by 10³ (ms vs µs); option C would correspond to an accuracy of only 1 part in $3\\times10^{7}$; option B compresses the interval to a day, inflating the implied drift rate by ~365. Correct option: D."
       ]
     },
     "visual": {
@@ -916,21 +904,17 @@
       "jee_main": 90
     },
     "theOptimalPath": {
-      "exists": true,
-      "preconditions": "When repeated readings must be condensed into value ± error.",
-      "steps": [
-        "**Trigger:** A set of repeated readings, report format asked.",
-        "**Action:** Mean of readings, then mean of |deviations|.",
-        "**Result:** Mean $= 10.0/4 = 2.5$ s; $\\Delta_{mean} = (0.1+0.0+0.2+0.1)/4 = 0.1$ s → $(2.5 \\pm 0.1)$ s — option B."
-      ],
-      "sanityCheck": "The error (0.1 s) is comfortably smaller than the spread of readings (0.3 s) but non-zero — the expected shape."
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
     },
     "fullStepByStep": {
       "steps": [
         "**DIAGNOSE:** Mean and mean-absolute-error pipeline with the report format $a_{mean} \\pm \\Delta a_{mean}$ (Section 2.6.1).",
         "**EXTRACT:** Readings: 2.4, 2.5, 2.7, 2.4 s (n = 4).",
         "**EXECUTE:** Mean $= (2.4+2.5+2.7+2.4)/4 = 10.0/4 = 2.5$ s. Deviations: $-0.1, 0.0, +0.2, -0.1$. Absolute errors: 0.1, 0.0, 0.2, 0.1. Mean absolute error $= 0.4/4 = 0.1$ s. Report: $(2.5 \\pm 0.1)$ s.",
-        "**PROOF:** Option A uses the SUM of absolute errors instead of their mean; option C reports a single reading instead of the mean; option D divides the error by n a second time."
+        "**PROOF:** Option A uses the SUM of absolute errors (0.4) instead of their mean; option C reports a single raw reading (2.7) instead of the mean; option D divides the mean error by n a second time (0.1/4 = 0.025). Correct option: B."
       ]
     },
     "visual": {
@@ -1025,21 +1009,17 @@
       "jee_main": 120
     },
     "theOptimalPath": {
-      "exists": true,
-      "preconditions": "When percentage error must come from raw repeated readings.",
-      "steps": [
-        "**Trigger:** Raw readings, percentage error asked.",
-        "**Action:** Mean → |deviations| → mean absolute error → ÷ mean → ×100.",
-        "**Result:** Mean 10.0; $\\Delta_{mean} = 1.4/4 = 0.35$; $(0.35/10.0)\\times100 = 3.5\\%$ — option D."
-      ],
-      "sanityCheck": "Deviations reach 0.5 on 10.0 (5%); the mean error must be somewhat below that. 3.5% fits; 5% (the max deviation) would overstate."
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
     },
     "fullStepByStep": {
       "steps": [
         "**DIAGNOSE:** Full pipeline with deliberately unequal deviations; the distractors are intermediate quantities from the pipeline itself.",
         "**EXTRACT:** Readings: 9.7, 10.2, 10.5, 9.6 g (n = 4).",
         "**EXECUTE:** Mean $= (9.7+10.2+10.5+9.6)/4 = 40.0/4 = 10.0$ g. Deviations: $-0.3, +0.2, +0.5, -0.4$. Absolute errors: 0.3, 0.2, 0.5, 0.4. Mean absolute error $= 1.4/4 = 0.35$ g. Relative error $= 0.35/10.0 = 0.035$. Percentage error $= 3.5\\%$.",
-        "**PROOF:** Option A is the SUM of absolute errors (1.4) read as a percentage; option B is the mean absolute error itself mislabeled; option C uses only the largest single deviation (0.5 → 5%)."
+        "**PROOF:** Option A is the SUM of absolute errors (1.4) read as a percentage; option B is the mean absolute error (0.35 g) mislabeled as a percentage; option C uses only the largest single deviation ($0.5/10.0\\times100 = 5\\%$). Correct option: D."
       ]
     },
     "visual": {
@@ -1141,7 +1121,7 @@
     },
     "fullStepByStep": {
       "steps": [
-        "**DIAGNOSE:** Error in a sum (Section 2.6.2a) — Batch 1 tested the difference; this is the addition counterpart.",
+        "**DIAGNOSE:** Error in a sum (Section 2.6.2a): when two quantities are added, their ABSOLUTE errors add.",
         "**EXTRACT:** $L_1 = 12.4$ cm, $\\Delta L_1 = 0.1$ cm; $L_2 = 7.3$ cm, $\\Delta L_2 = 0.2$ cm. Find $L_1 + L_2$ with error.",
         "**EXECUTE:** Value: $12.4 + 7.3 = 19.7$ cm. Maximum error: $\\Delta Z = \\Delta L_1 + \\Delta L_2 = 0.1 + 0.2 = 0.3$ cm. Result: $(19.7 \\pm 0.3)$ cm.",
         "**PROOF:** Options A and B each carry over only one rod's error; option D subtracts the lengths (wrong operation) while adding errors."
@@ -1184,21 +1164,17 @@
       "jee_main": 120
     },
     "theOptimalPath": {
-      "exists": true,
-      "preconditions": "When Z is a product of powers including roots.",
-      "steps": [
-        "**Trigger:** Composite expression with exponents 2, 3, −1, −1/2.",
-        "**Action:** Sum |exponent| × (percentage error) over all variables; a square root contributes with coefficient 1/2.",
-        "**Result:** $2(2) + 3(1) + 1(3) + \\tfrac{1}{2}(4) = 4+3+3+2 = 12\\%$ — option D."
-      ],
-      "sanityCheck": "Every term is positive (denominator terms ADD); the √d term contributes only half of d's 4%."
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
     },
     "fullStepByStep": {
       "steps": [
         "**DIAGNOSE:** General power-combination rule with a fractional exponent (Section 2.6.2c).",
         "**EXTRACT:** $P = a^2 b^3 c^{-1} d^{-1/2}$; errors: $a$ 2%, $b$ 1%, $c$ 3%, $d$ 4%.",
         "**EXECUTE:** $\\dfrac{\\Delta P}{P} = 2\\dfrac{\\Delta a}{a} + 3\\dfrac{\\Delta b}{b} + \\dfrac{\\Delta c}{c} + \\dfrac{1}{2}\\dfrac{\\Delta d}{d} = 2(2\\%) + 3(1\\%) + 3\\% + \\dfrac{1}{2}(4\\%) = 4\\% + 3\\% + 3\\% + 2\\% = 12\\%$.",
-        "**PROOF:** Option A drops the $\\sqrt{d}$ term's 2%; option C doubles it (treating $\\sqrt{d}$ as $d^2$); option B forgets the $c$ term. All four contributions must appear, each weighted by |exponent|."
+        "**PROOF:** Each variable contributes |exponent| × (its percentage error), and all terms add even for the denominator. Option A drops $d$ entirely ($4+3+3+0 = 10\\%$). Option B mistakenly takes the exponents of $a$, $b$, $c$ as 1 while halving $d$ ($2+1+3+2 = 8\\%$). Option C ignores the square root and uses $d^1$ ($4+3+3+4 = 14\\%$). Only the full weighting $4+3+3+2 = 12\\%$ is right. Correct option: D."
       ]
     },
     "visual": {
@@ -1212,7 +1188,7 @@
         "text": "1.4%"
       },
       {
-        "text": "0.6%"
+        "text": "1.0%"
       },
       {
         "text": "2.4%"
@@ -1253,7 +1229,7 @@
         "**DIAGNOSE:** Least-count error propagation into a derived quantity — the structure of textbook Example 2.12 with different numbers.",
         "**EXTRACT:** $L = 25.0$ cm, $\\Delta L = 0.1$ cm (1 mm). $t = 100$ s for $n = 50$ oscillations, $\\Delta t = 1$ s. $g = 4\\pi^2 L/T^2$.",
         "**EXECUTE:** Period $T = t/n$ and $\\Delta T = \\Delta t/n$, so $\\dfrac{\\Delta T}{T} = \\dfrac{\\Delta t}{t} = \\dfrac{1}{100} = 0.01$. Then $\\dfrac{\\Delta g}{g} = \\dfrac{\\Delta L}{L} + 2\\dfrac{\\Delta T}{T} = \\dfrac{0.1}{25.0} + 2(0.01) = 0.004 + 0.020 = 0.024 \\approx 2.4\\%$.",
-        "**PROOF:** Option A forgets the factor 2 on the time term ($0.4\\% + 1\\% = 1.4\\%$); option B keeps only the length term plus a slip; option D adds an extra 1% by double-counting. The exact constant $4\\pi^2$ contributes no error."
+        "**PROOF:** Option A forgets the factor 2 on the time term ($0.4\\% + 1\\% = 1.4\\%$); option B both drops the length term and forgets the factor 2, leaving only $1\\times\\tfrac{\\Delta T}{T} = 1.0\\%$; option D triples the time term ($0.4\\% + 3\\% = 3.4\\%$). The exact constant $4\\pi^2$ contributes no error. Correct option: C."
       ]
     },
     "visual": {
@@ -1307,7 +1283,7 @@
         "**DIAGNOSE:** Error in a quantity divided by an exact integer (Section 2.6.2; the $T = t/n$, $\\Delta T = \\Delta t/n$ step inside textbook Example 2.12).",
         "**EXTRACT:** $n = 25$ (exact), $t = 50.0$ s, $\\Delta t = 0.2$ s. Find $\\Delta T$ where $T = t/n$.",
         "**EXECUTE:** $T = 50.0/25 = 2.0$ s. Since n is an exact count with no error, $\\Delta T = \\Delta t / n = 0.2/25 = 0.008$ s.",
-        "**PROOF:** Option A assigns the watch's full error to a single period; option B divides by 5 instead of 25; option D divides by n twice. Relative check: $\\Delta T/T = 0.008/2.0 = 0.4\\% = \\Delta t/t = 0.2/50.0$. Consistent."
+        "**PROOF:** Option A assigns the watch's full error to a single period; option B divides by 5 instead of 25; option D ($0.0008$ s) comes from a decimal-place slip — taking the correct $0.008$ s and shifting the decimal one place (e.g. $0.008/10$). Relative check: $\\Delta T/T = 0.008/2.0 = 0.4\\% = \\Delta t/t = 0.2/50.0$. Consistent. Correct option: C."
       ]
     },
     "visual": {
@@ -1349,21 +1325,17 @@
       "jee_main": 90
     },
     "theOptimalPath": {
-      "exists": true,
-      "preconditions": "When the error of a PRODUCT must be reported in absolute form.",
-      "steps": [
-        "**Trigger:** $A = l \\times b$, absolute error of A asked.",
-        "**Action:** Add relative errors, then convert back: $\\Delta A = A \\times (\\frac{\\Delta l}{l} + \\frac{\\Delta b}{b})$.",
-        "**Result:** $\\Delta A = 50.0 \\times (0.01 + 0.02) = 1.5\\ \\mathrm{cm^2}$ → $(50.0 \\pm 1.5)\\ \\mathrm{cm^2}$ — option B."
-      ],
-      "sanityCheck": "3% of 50 is 1.5 — the percentage route and the absolute route must agree."
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
     },
     "fullStepByStep": {
       "steps": [
         "**DIAGNOSE:** Product rule with a final conversion from relative back to absolute error — the step students most often skip.",
         "**EXTRACT:** $l = 10.0$ cm, $\\Delta l = 0.1$ cm; $b = 5.0$ cm, $\\Delta b = 0.1$ cm. Find $A \\pm \\Delta A$.",
         "**EXECUTE:** $A = 10.0 \\times 5.0 = 50.0\\ \\mathrm{cm^2}$. Relative errors: $\\Delta l/l = 0.01$; $\\Delta b/b = 0.02$. $\\Delta A/A = 0.01 + 0.02 = 0.03$. Absolute error: $\\Delta A = 0.03 \\times 50.0 = 1.5\\ \\mathrm{cm^2}$.",
-        "**PROOF:** Option A adds the absolute errors of l and b directly (0.1+0.1) — the sum/difference rule applied to a product; option C multiplies the absolute errors; option D doubles the correct answer."
+        "**PROOF:** Option A adds the absolute errors of l and b directly (0.1+0.1) — the sum/difference rule wrongly applied to a product; option C multiplies the absolute errors (0.1×0.1); option D doubles the correct 1.5. Correct option: B."
       ]
     },
     "visual": {
@@ -1403,21 +1375,17 @@
       "jee_main": 120
     },
     "theOptimalPath": {
-      "exists": true,
-      "preconditions": "When Z is a product of powers with a fractional exponent in the numerator.",
-      "steps": [
-        "**Trigger:** $Z = A^{3/2} B / C^2$.",
-        "**Action:** Weight each percentage error by |exponent| and add: $\\tfrac{3}{2}(2\\%) + 1(1\\%) + 2(1\\%)$.",
-        "**Result:** $3\\% + 1\\% + 2\\% = 6\\%$ — option D."
-      ],
-      "sanityCheck": "All contributions add (denominator included); A's fractional exponent still yields a whole-number term: $\\tfrac{3}{2}\\times2 = 3$."
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
     },
     "fullStepByStep": {
       "steps": [
         "**DIAGNOSE:** General power rule $Z = A^p B^q / C^r \\Rightarrow \\Delta Z/Z = p\\frac{\\Delta A}{A} + q\\frac{\\Delta B}{B} + r\\frac{\\Delta C}{C}$ (Section 2.6.2c).",
         "**EXTRACT:** $p = 3/2$, $q = 1$, $r = 2$; errors 2%, 1%, 1%.",
         "**EXECUTE:** $\\dfrac{\\Delta Z}{Z} = \\dfrac{3}{2}(2\\%) + 1(1\\%) + 2(1\\%) = 3\\% + 1\\% + 2\\% = 6\\%$.",
-        "**PROOF:** Option A treats $A^{3/2}$ as $A^1$ ($2+1+1$); option C uses $C^1$ instead of $C^2$; option B subtracts the denominator's contribution — errors never subtract."
+        "**PROOF:** Option A treats $A^{3/2}$ as $A^1$, giving $2+1+1 = 4\\%$; option C uses $C^1$ instead of $C^2$, giving $3+1+1 = 5\\%$; option B keeps only the A-term, $\\tfrac{3}{2}(2\\%) = 3\\%$, dropping the B and C contributions entirely. Correct option: D."
       ]
     },
     "visual": {
@@ -1619,21 +1587,17 @@
       "jee_main": 120
     },
     "theOptimalPath": {
-      "exists": true,
-      "preconditions": "When subtracting two nearly equal measured values.",
-      "steps": [
-        "**Trigger:** Difference of close values with unequal decimal places.",
-        "**Action:** Subtract, then keep only as many DECIMAL PLACES as the least-precise input (2.31 → 2 dp).",
-        "**Result:** $2.342 - 2.31 = 0.032 \\to 0.03$ g — option C."
-      ],
-      "sanityCheck": "Four significant figures in, ONE significant figure out — subtraction of close values destroys precision. That collapse is the point of the question."
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
     },
     "fullStepByStep": {
       "steps": [
         "**DIAGNOSE:** The addition/subtraction rule (decimal places, not sig figs) in its most punishing case: nearly equal operands (Section 2.7.1).",
         "**EXTRACT:** 2.342 g (3 dp) − 2.31 g (2 dp). Least decimal places = 2.",
         "**EXECUTE:** Raw difference: $2.342 - 2.31 = 0.032$ g. Rounding to 2 decimal places: 0.03 g — a result with just one significant figure.",
-        "**PROOF:** Option A retains a third decimal the less-precise input cannot support; option B even adds a fourth; option D over-rounds to 1 decimal place. The textbook makes the same point with its 0.307 m − 0.304 m = 0.003 m illustration: subtraction of close numbers erodes significant figures."
+        "**PROOF:** Option A retains a third decimal the less-precise input cannot support; option B even adds a fourth; option D over-rounds to 1 decimal place. The textbook makes the same point with its 0.307 m − 0.304 m = 0.003 m illustration: subtraction of close numbers erodes significant figures. Correct option: C."
       ]
     },
     "visual": {
@@ -1674,21 +1638,17 @@
       "jee_main": 45
     },
     "theOptimalPath": {
-      "exists": true,
-      "preconditions": "When the dropped digit is greater than 5.",
-      "steps": [
-        "**Trigger:** Digit to drop is 6 (> 5).",
-        "**Action:** Raise the preceding digit by 1.",
-        "**Result:** 2.74|6 → 2.75 — option B."
-      ],
-      "sanityCheck": "2.746 is closer to 2.75 than to 2.74 — rounding up minimizes the rounding error."
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
     },
     "fullStepByStep": {
       "steps": [
         "**DIAGNOSE:** The basic rounding rule (Section 2.7.2): 'the preceding digit is raised by 1 if the insignificant digit to be dropped... is more than 5, and is left unchanged if the latter is less than 5.'",
         "**EXTRACT:** 2.746 → 3 significant figures; the digit to drop is 6.",
         "**EXECUTE:** 6 > 5, so the preceding 4 is raised to 5: result 2.75.",
-        "**PROOF:** Option A leaves the 4 unchanged (the rule for a dropped digit < 5); options C and D round to two significant figures instead of three."
+        "**PROOF:** Option A leaves the 4 unchanged, the rule for a dropped digit < 5 (2.74). Option C rounds to two significant figures instead of three: dropping '46', the 4 < 5 so the 7 stays, giving 2.7. Option D does not arise from any single rounding rule — to two sig figs 2.746 rounds to 2.7, not 2.8; 2.8 only appears from incorrect double-rounding (2.746 → 2.75 → 2.8). Correct option: B."
       ]
     },
     "visual": {
@@ -1743,7 +1703,7 @@
         "**DIAGNOSE:** Round-half-to-even, odd branch (Section 2.7.2): 'if the insignificant digit to be dropped is 5, the preceding digit is left unchanged if it is even, and raised by 1 if it is odd.'",
         "**EXTRACT:** 2.735 → 3 significant figures; drop the trailing 5; preceding digit is 3 (odd).",
         "**EXECUTE:** Odd preceding digit → raise by 1: 2.74.",
-        "**PROOF:** Option B applies the even-branch rule to an odd digit; option C loses a significant figure; option D refuses to round. Together with Batch 1's 16.45 → 16.4, this covers both branches of the convention."
+        "**PROOF:** Dropping the trailing 5 by the round-half-to-even rule: the preceding digit 3 is odd, so it rounds up, giving 2.74 (option A). Option B (2.73) wrongly applies the even-branch (leave unchanged) to an odd digit. Option C (2.7) rounds to two significant figures instead of three. Option D (2.735) leaves the number unrounded. Correct option: A."
       ]
     },
     "visual": {
@@ -1783,21 +1743,17 @@
       "jee_main": 90
     },
     "theOptimalPath": {
-      "exists": true,
-      "preconditions": "When dividing measured values with different sig-fig counts.",
-      "steps": [
-        "**Trigger:** Quotient of a 4-sig-fig and a 3-sig-fig number.",
-        "**Action:** Keep as many significant figures as the LEAST precise input (3).",
-        "**Result:** $4.327/2.51 = 1.7239... \\to 1.72$ — option D."
-      ],
-      "sanityCheck": "Estimate: $4.3/2.5 \\approx 1.7$ — the answer must sit near 1.72, not 17.2 or 0.172."
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
     },
     "fullStepByStep": {
       "steps": [
         "**DIAGNOSE:** Division under the multiplication/division rule (Section 2.7.1): retain the significant figures of the least-precise factor.",
         "**EXTRACT:** 4.327 → 4 sig figs; 2.51 → 3 sig figs. Limit = 3.",
         "**EXECUTE:** $4.327 / 2.51 = 1.72390...$ Rounding to 3 significant figures: 1.72.",
-        "**PROOF:** Option A keeps 4 sig figs (limited by the wrong operand); option C reports raw calculator output; option B over-rounds to 2. Cross-check: $1.72 \\times 2.51 = 4.317$, within rounding distance of 4.327."
+        "**PROOF:** Option A keeps 4 sig figs (limited by the wrong operand); option C reports raw calculator output; option B over-rounds to 2. Cross-check: $1.72 \\times 2.51 = 4.317$, within rounding distance of 4.327. Correct option: D."
       ]
     },
     "visual": {
@@ -1838,21 +1794,17 @@
       "jee_main": 120
     },
     "theOptimalPath": {
-      "exists": true,
-      "preconditions": "When addition and multiplication rules must be applied in sequence.",
-      "steps": [
-        "**Trigger:** A sum feeding a product.",
-        "**Action:** Addition stage → decimal-places rule (1.2 has 1 dp). Multiplication stage → sig-figs rule (1.4 has 2 sf).",
-        "**Result:** $1.2+2.31 = 3.51 \\to 3.5$; $3.5 \\times 1.4 = 4.9$ — option C."
-      ],
-      "sanityCheck": "Skipping intermediate rounding: $3.51 \\times 1.4 = 4.914 \\to 4.9$ at 2 sig figs — same final answer, confirming robustness."
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
     },
     "fullStepByStep": {
       "steps": [
         "**DIAGNOSE:** Two-stage problem testing that the student applies the RIGHT rule at each stage: decimal places for +, significant figures for ×.",
         "**EXTRACT:** Stage 1: $1.2 + 2.31$ (least decimal places = 1). Stage 2: result × 1.4 (least sig figs = 2).",
         "**EXECUTE:** Stage 1: $1.2 + 2.31 = 3.51$, rounded to 1 decimal place → 3.5. Stage 2: $3.5 \\times 1.4 = 4.90$, retained to 2 significant figures → 4.9.",
-        "**PROOF:** Option A is the raw unrounded value; option B applies a 3-sig-fig limit that no operand justifies; option D over-rounds to 1 sig fig. Computing without intermediate rounding ($3.51 \\times 1.4 = 4.914 \\to 4.9$) lands on the same answer."
+        "**PROOF:** Option A is the raw unrounded value; option B applies a 3-sig-fig limit that no operand justifies; option D over-rounds to 1 sig fig. Computing without intermediate rounding ($3.51 \\times 1.4 = 4.914 \\to 4.9$) lands on the same answer. Correct option: C."
       ]
     },
     "visual": {
@@ -1947,21 +1899,17 @@
       "jee_main": 90
     },
     "theOptimalPath": {
-      "exists": true,
-      "preconditions": "When the exponent of one base quantity must be read off.",
-      "steps": [
-        "**Trigger:** Asked for 'the dimension in time' of a quantity.",
-        "**Action:** Read the exponent of T in the dimensional formula, sign included.",
-        "**Result:** In $[\\mathrm{MLT^{-2}}]$, the T-exponent is $-2$ — option B."
-      ],
-      "sanityCheck": "Force involves acceleration (per time, twice), so time appears in the denominator twice: exponent $-2$."
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
     },
     "fullStepByStep": {
       "steps": [
         "**DIAGNOSE:** Interpreting 'dimensions' as exponents — the chapter's core definition: 'The dimensions of a physical quantity are the powers (or exponents) to which the base quantities are raised.'",
         "**EXTRACT:** $[F] = [\\mathrm{M^1 L^1 T^{-2}}]$. Asked: the exponent of T.",
         "**EXECUTE:** The textbook reads this formula as: 'the force has one dimension in mass, one dimension in length, and −2 dimensions in time.' The dimension in time is $-2$.",
-        "**PROOF:** Option A drops the sign — the critical error this question hunts; option D would mean force is time-independent, contradicted by its unit kg m s⁻²."
+        "**PROOF:** The exponent of T in $[\\mathrm{M^1 L^1 T^{-2}}]$ is $-2$, which is option B. Option A drops the sign — the critical error this question hunts; option C confuses the M or L exponent (both $+1$) with the T exponent; option D would mean force is time-independent, contradicted by its unit kg m s⁻². Correct option: B."
       ]
     },
     "visual": {
@@ -2051,21 +1999,17 @@
       "jee_main": 45
     },
     "theOptimalPath": {
-      "exists": true,
-      "preconditions": "When the quantity is distance per unit time.",
-      "steps": [
-        "**Trigger:** Speed = distance/time.",
-        "**Action:** $[L]/[T]$.",
-        "**Result:** $[\\mathrm{M^0 L T^{-1}}]$ — option A."
-      ],
-      "sanityCheck": "m/s: no mass, length to the first power, time to the minus one."
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
     },
     "fullStepByStep": {
       "steps": [
         "**DIAGNOSE:** Dimensional-formula recall; Section 2.9 lists it verbatim: 'that of speed or velocity is $[M^0 L T^{-1}]$.'",
         "**EXTRACT:** Asked: dimensional formula of speed.",
         "**EXECUTE:** Speed = distance/time → $[L]/[T] = [\\mathrm{M^0 L T^{-1}}]$.",
-        "**PROOF:** Option B is acceleration; option C smuggles in a mass dimension (momentum's formula); option D inverts the ratio (slowness, not speed)."
+        "**PROOF:** Option B is acceleration; option C smuggles in a mass dimension (momentum's formula); option D inverts the ratio (slowness, not speed). Correct option: A."
       ]
     },
     "visual": {
@@ -2268,21 +2212,17 @@
       "jee_main": 90
     },
     "theOptimalPath": {
-      "exists": true,
-      "preconditions": "When a square root of a quotient must be checked.",
-      "steps": [
-        "**Trigger:** $\\sqrt{L/g}$ inside a period formula.",
-        "**Action:** $[L/g] = [L]/[LT^{-2}] = [T^2]$; the square root halves the exponents.",
-        "**Result:** $\\sqrt{[T^2]} = [T]$ — option B, consistent with the left side."
-      ],
-      "sanityCheck": "$2\\pi$ is dimensionless, so the right side has dimension [T] — matching the period. The formula passes."
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
     },
     "fullStepByStep": {
       "steps": [
         "**DIAGNOSE:** Consistency check on the pendulum formula — the canonical verification exercise of Section 2.10.1.",
         "**EXTRACT:** $[L] = [\\mathrm{L}]$; $[g] = [\\mathrm{LT^{-2}}]$. Find $[\\sqrt{L/g}]$.",
         "**EXECUTE:** $\\left[\\dfrac{L}{g}\\right] = \\dfrac{[\\mathrm{L}]}{[\\mathrm{LT^{-2}}]} = [\\mathrm{T^2}]$. Taking the square root halves every exponent: $[\\mathrm{T}]$.",
-        "**PROOF:** Left side $[T]$ = right side $[T]$ — the equation is dimensionally consistent. Option A forgets the square root; option C inverts (that is $\\sqrt{g/L}$, an angular-frequency-type quantity); option D never cancelled the lengths."
+        "**PROOF:** Left side $[T]$ = right side $[T]$ — the equation is dimensionally consistent. Option A forgets the square root, leaving $[T^2]$; option C inverts the ratio (that is $\\sqrt{g/L} = [T^{-1}]$, an angular-frequency-type quantity); option D multiplies instead of dividing inside the root — $\\sqrt{[L][LT^{-2}]} = \\sqrt{[L^2T^{-2}]} = [LT^{-1}]$, a velocity. Correct option: B."
       ]
     },
     "visual": {
@@ -2407,7 +2347,7 @@
         "text": "The dimensionless constant is known in advance"
       },
       {
-        "text": "At least one quantity is dimensionless"
+        "text": "The relation may include a sum of terms with different dimensions"
       }
     ],
     "correctOptionIndex": 0,
@@ -2438,7 +2378,7 @@
         "**DIAGNOSE:** Prerequisite recall for the deduction method (Section 2.10.2).",
         "**EXTRACT:** Asked: the method's stated requirement.",
         "**EXECUTE:** 'For this we should know the dependence of the physical quantity on other quantities (upto three physical quantities or linearly independent variables) and consider it as a product type of the dependence.' Three unknowns is the natural ceiling because mechanics offers three independent dimensions (M, L, T) — three equations to solve for the exponents.",
-        "**PROOF:** Option C inverts the situation (the constant is what the method CANNOT find); options B and D invent restrictions absent from the chapter."
+        "**PROOF:** Option C inverts the situation (the constant is exactly what the method CANNOT find); option D inverts the product-type requirement (dimensional homogeneity forbids adding terms of different dimensions, so a sum of differently-dimensioned terms is impossible); option B invents a 'mechanical-only' restriction absent from the chapter. Correct option: A."
       ]
     },
     "visual": {
@@ -2591,21 +2531,17 @@
       "jee_main": 120
     },
     "theOptimalPath": {
-      "exists": true,
-      "preconditions": "When target dimensions are $[LT^{-1}]$ and the building blocks are l and g.",
-      "steps": [
-        "**Trigger:** $[LT^{-1}] = [L]^x [LT^{-2}]^y$.",
-        "**Action:** Match exponents: T: $-2y = -1 \\Rightarrow y = \\tfrac{1}{2}$; L: $x + y = 1 \\Rightarrow x = \\tfrac{1}{2}$.",
-        "**Result:** $v = k\\sqrt{l g}$, i.e. $x = y = \\tfrac{1}{2}$ — option B."
-      ],
-      "sanityCheck": "Check: $\\sqrt{\\mathrm{m \\cdot m\\,s^{-2}}} = \\sqrt{\\mathrm{m^2 s^{-2}}} = \\mathrm{m\\,s^{-1}}$. Correct."
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
     },
     "fullStepByStep": {
       "steps": [
         "**DIAGNOSE:** Exponent-matching deduction with a velocity-dimensioned target — same method as the pendulum (Section 2.10.2), different target dimensions.",
         "**EXTRACT:** $[v] = [\\mathrm{L T^{-1}}]$; $[l^x] = [\\mathrm{L}^x]$; $[g^y] = [\\mathrm{L}^y \\mathrm{T}^{-2y}]$.",
         "**EXECUTE:** $[\\mathrm{L^1 T^{-1}}] = [\\mathrm{L}^{x+y}\\, \\mathrm{T}^{-2y}]$. Matching T: $-2y = -1 \\Rightarrow y = \\tfrac{1}{2}$. Matching L: $x + y = 1 \\Rightarrow x = 1 - \\tfrac{1}{2} = \\tfrac{1}{2}$. So $v = k\\sqrt{lg}$.",
-        "**PROOF:** Option D is the pendulum's exponent pair carried over by habit — it would give dimensions $[T]$... actually $l^{1/2}g^{-1/2}$ has dimension $[\\mathrm{T}]$, a period, not a speed. Option A gives $[L][L^{-1}T^{2}] = [T^2]$ — also wrong. Only option B reproduces $[LT^{-1}]$."
+        "**PROOF:** Option A gives $[L]^1[LT^{-2}]^{-1} = [L^{0}T^{2}] = [T^2]$ — wrong. Option C gives $[L]^{-1/2}[LT^{-2}]^{1/2} = [L^{0}T^{-1}] = [T^{-1}]$, a frequency — wrong. Option D gives $[L]^{1/2}[LT^{-2}]^{-1/2} = [L^{0}T^{1}] = [T]$, a period (the pendulum's exponent pair) — wrong. Only option B gives $[L]^{1/2}[LT^{-2}]^{1/2} = [LT^{-1}]$, reproducing the speed. Correct option: B."
       ]
     },
     "visual": {
