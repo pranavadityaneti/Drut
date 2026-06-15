@@ -1,0 +1,2647 @@
+[
+  {
+    "questionText": "A long-jumper takes a running start (a run-up) before leaving the take-off board, instead of jumping from a standstill. The increase in jump distance gained from the run-up is a direct consequence of:",
+    "options": [
+      {
+        "text": "inertia of motion — at take-off the jumper's body tends to keep its forward velocity, carrying it farther through the air"
+      },
+      {
+        "text": "inertia of rest — the body resists being set into motion, so the run-up overcomes this resistance"
+      },
+      {
+        "text": "Newton's third law — the ground pushes the jumper forward with a reaction equal to the backward push of the feet"
+      },
+      {
+        "text": "conservation of mechanical energy — the kinetic energy of the run-up is fully converted into gravitational potential energy"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Easy",
+    "subtopic": "First Law and Inertia",
+    "fsmTag": "identify-inertia-type",
+    "concepts": [
+      "inertia-of-motion",
+      "newtons-first-law"
+    ],
+    "sourcePages": [
+      95
+    ],
+    "timeTargets": {
+      "ap_eapcet": 35,
+      "ts_eapcet": 35,
+      "jee_main": 53
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Recognise the three sub-types of inertia (rest, motion, direction) and that a run-up supplies forward velocity that the body tends to retain at take-off.",
+      "steps": [
+        "**Trigger:** A body already moving (the run-up) keeps moving forward at take-off without any new push — this is the tendency to preserve an existing velocity.",
+        "**Action:** Match 'tendency to keep an existing forward velocity' to the named sub-type: inertia of motion.",
+        "**Result:** The retained forward velocity carries the jumper farther — option A."
+      ],
+      "sanityCheck": "The body is in motion before the jump, not at rest, so the operative property is inertia of motion, ruling out inertia of rest."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** This is a concept-identification question about inertia. Per the first law (page 95), a body continues in its state of rest or of uniform motion in a straight line unless compelled by an external force; the inability to change that state by itself is inertia ('resistance to change'). We must name the specific sub-type that explains why a run-up helps.",
+        "**EXTRACT:** Key fact — before the jump the body is already moving forward (the run-up gives it velocity); at take-off no force adds to that horizontal velocity, yet the body keeps it. The sub-type describing a moving body's tendency to retain its velocity is inertia of motion.",
+        "**EXECUTE:** The run-up builds up forward velocity. At take-off the legs supply a vertical impulse, but the horizontal forward velocity is simply retained (no force removes it), so the jumper travels a greater horizontal distance while airborne. The property responsible is the tendency of a moving body to stay in motion — inertia of motion. This is option A.",
+        "**PROOF:** Option A correctly names inertia of motion — the retention of an existing forward velocity — matching the run-up scenario. Option B (inertia of rest) is the tendency of a body AT REST to stay at rest; here the body is already moving, so inertia of rest is not what gains the extra distance — this is the classic confusion of one inertia sub-type for another. Option C (Newton's third law) does describe the ground's reaction that produces the run-up, but the EXTRA distance after leaving the board comes from retaining velocity, not from any contact reaction during flight, so it mis-attributes the airborne gain to a take-off action-reaction pair. Option D (conservation of mechanical energy) is wrong both as a label and physically — the horizontal kinetic energy is not converted into height; it is largely retained as horizontal motion, so invoking full KE-to-PE conversion misidentifies the principle. Correct option: A."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A stone tied to one end of a string is whirled in a horizontal circle. At some instant the string suddenly snaps and the stone is released. Immediately after release (ignoring gravity for the in-plane motion), the stone moves:",
+    "options": [
+      {
+        "text": "radially outward, away from the centre, pushed by the centrifugal force that was acting on it"
+      },
+      {
+        "text": "along the tangent to the circle at the release point, illustrating inertia of direction"
+      },
+      {
+        "text": "it stays momentarily at the release point, then drops, because inertia of rest holds it in place"
+      },
+      {
+        "text": "back toward the hand along the original radius, as a Newton's-third-law reaction to the broken string's pull"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Medium",
+    "subtopic": "First Law and Inertia",
+    "fsmTag": "identify-inertia-type",
+    "concepts": [
+      "inertia-of-direction",
+      "newtons-first-law"
+    ],
+    "sourcePages": [
+      95
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Know that velocity in circular motion is tangential, and that with no force a body continues in a straight line (inertia of direction).",
+      "steps": [
+        "**Trigger:** The instantaneous velocity in circular motion always points along the tangent; once the string snaps, the centripetal force vanishes.",
+        "**Action:** With no force, the first law forces straight-line continuation in the direction of the velocity at that instant — the tangent.",
+        "**Result:** The stone departs along the tangent, an example of inertia of direction — option B."
+      ],
+      "sanityCheck": "The velocity was tangential while whirling; removing the only inward force cannot suddenly make the body move radially, so tangential (not radial) departure is the consistent answer."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** A concept-identification question testing what happens when the centripetal (inward) force is removed. By Newton's first law (page 95), with zero net external force a body continues in uniform motion in a straight line; the relevant sub-type — tendency to keep the same straight-line direction — is inertia of direction.",
+        "**EXTRACT:** Key facts — during circular motion the stone's velocity is directed along the tangent (not along the radius); the string provides the inward centripetal force. When the string snaps, that inward force becomes zero, so net force in the plane is zero.",
+        "**EXECUTE:** With zero net force, the first law says the stone keeps moving uniformly in a straight line in the direction it was already going — the tangent at the point of release. It does NOT fly radially outward, because there was no real outward force to push it out. The straight-line, same-direction continuation is inertia of direction. This is option B.",
+        "**PROOF:** Option B correctly identifies tangential departure as inertia of direction. Option A (radial outward, 'centrifugal force') is the standard misconception: in the inertial (ground) frame there is no real outward force — the only real force was the inward string tension, so attributing radial flight to a centrifugal push is wrong. Option C (inertia of rest, stays put then drops) is wrong because the stone was moving, not at rest, so it cannot suddenly have zero velocity; it confuses a moving body with a stationary one. Option D (back along the radius toward the hand, by Newton's third law) misuses the third law — the string's reaction acted on the hand, not on the stone, and once the string breaks no force acts on the stone, so it cannot reverse toward the centre. Correct option: B."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "To clean a dusty carpet, it is hung over a line and beaten with a stick, after which dust falls out. The best physical explanation is:",
+    "options": [
+      {
+        "text": "the stick directly transfers its momentum to the dust particles, throwing them out of the carpet"
+      },
+      {
+        "text": "the dust particles are lighter than the carpet, so gravity pulls them down faster and they fall out"
+      },
+      {
+        "text": "the blow suddenly sets the carpet into motion while the dust, by inertia of rest, tends to stay behind, so the two separate"
+      },
+      {
+        "text": "Newton's third law makes the carpet push the dust outward with a reaction equal to the stick's blow"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Medium",
+    "subtopic": "First Law and Inertia",
+    "fsmTag": "identify-inertia-type",
+    "concepts": [
+      "inertia-of-rest",
+      "newtons-first-law"
+    ],
+    "sourcePages": [
+      94,
+      95
+    ],
+    "timeTargets": {
+      "ap_eapcet": 55,
+      "ts_eapcet": 55,
+      "jee_main": 83
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Recognise that a sudden blow moves the carpet but the loosely-held dust, tending to stay at rest, is left behind.",
+      "steps": [
+        "**Trigger:** A sudden impulse displaces the carpet quickly while the dust is only loosely held and is initially at rest.",
+        "**Action:** Apply the first law to the dust: with no adequate force communicated in time, it tends to remain at rest while the carpet moves — inertia of rest.",
+        "**Result:** Carpet moves, dust stays behind and separates — option C."
+      ],
+      "sanityCheck": "The explanation must hinge on the dust being LEFT BEHIND (staying at rest) as the carpet jerks away, which is precisely inertia of rest, not the dust being actively flung out."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** A concept-identification question about why beating separates dust from a carpet. By Newton's first law (page 95) a body at rest tends to stay at rest unless a force acts on it; this 'resistance to a change from rest' is inertia of rest (page 94 discusses the law of inertia).",
+        "**EXTRACT:** Key facts — the dust particles rest loosely on the carpet fibres; the stick delivers a sudden blow to the CARPET, setting the carpet quickly in motion. The dust is not directly struck and is held only weakly.",
+        "**EXECUTE:** When the carpet is jerked into motion by the blow, the loosely-held dust particles, having inertia of rest, tend to remain at rest and are momentarily left behind. The carpet moves away from them, so the dust separates from the carpet and then falls under gravity. The operative principle is the dust's inertia of rest. This is option C.",
+        "**PROOF:** Option C correctly attributes the separation to the dust's inertia of rest while the carpet is suddenly moved. Option A (stick transfers momentum to the dust) is wrong because the stick strikes the carpet, not the dust; the dust separates by being left behind, not by being directly pushed — it mistakes the mechanism for a direct momentum transfer. Option B (lighter dust pulled down faster by gravity) is wrong: in free fall all bodies fall with the same acceleration g regardless of mass, so 'lighter falls faster' is false, and gravity is not what dislodges the dust. Option D (Newton's third law, carpet pushes dust out) misapplies action-reaction: the relevant separation comes from the dust staying at rest while the carpet moves, not from any reaction force ejecting the dust outward. Correct option: C."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Which has the greater linear momentum: a 2 kg ball moving at 10 m/s, or a 4 kg ball moving at 5 m/s?",
+    "options": [
+      {
+        "text": "They have equal momentum, both $20$ kg m/s"
+      },
+      {
+        "text": "The 2 kg ball, because it moves faster"
+      },
+      {
+        "text": "The 4 kg ball, because it has more mass"
+      },
+      {
+        "text": "They cannot be compared without knowing the direction"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Easy",
+    "subtopic": "Momentum",
+    "fsmTag": "compute-and-compare-momentum",
+    "concepts": [
+      "linear-momentum",
+      "p-equals-mv"
+    ],
+    "sourcePages": [
+      97
+    ],
+    "timeTargets": {
+      "ap_eapcet": 35,
+      "ts_eapcet": 35,
+      "jee_main": 53
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Both bodies' mass and speed are given; momentum magnitude only is asked.",
+      "steps": [
+        "**Trigger:** Two bodies, asked which has greater $p$ — compute $p = mv$ for each.",
+        "**Action:** $p_1 = 2 \\times 10 = 20$ kg m/s; $p_2 = 4 \\times 5 = 20$ kg m/s.",
+        "**Result:** Both equal $20$ kg m/s, so momenta are equal — option A."
+      ],
+      "sanityCheck": "Halving mass and doubling speed leaves the product $mv$ unchanged, confirming equality."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** This compares the linear momentum magnitudes of two bodies; use the definition $p = mv$ for each and compare.",
+        "**EXTRACT:** Ball 1: $m_1 = 2$ kg, $v_1 = 10$ m/s. Ball 2: $m_2 = 4$ kg, $v_2 = 5$ m/s.",
+        "**EXECUTE:** $p_1 = m_1 v_1 = 2 \\times 10 = 20$ kg m/s and $p_2 = m_2 v_2 = 4 \\times 5 = 20$ kg m/s. The two values are identical.",
+        "**PROOF:** Both momenta equal $20$ kg m/s, so they are EQUAL — option A. Option B (the 2 kg ball) wrongly ranks by speed alone ($10 > 5$), ignoring that the lighter ball's lower mass exactly cancels its higher speed. Option C (the 4 kg ball) wrongly ranks by mass alone ($4 > 2$), ignoring the slower speed that exactly cancels the mass advantage. Option D claims they cannot be compared, but momentum magnitude $p = mv$ is fully determined by mass and speed; direction is irrelevant when only magnitudes are compared. Correct option: A."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A 4 kg body has a linear momentum of magnitude 12 kg m/s. Its kinetic energy is:",
+    "options": [
+      {
+        "text": "$24$ J"
+      },
+      {
+        "text": "$72$ J"
+      },
+      {
+        "text": "$18$ J"
+      },
+      {
+        "text": "$36$ J"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Easy",
+    "subtopic": "Momentum",
+    "fsmTag": "kinetic-energy-from-momentum",
+    "concepts": [
+      "linear-momentum",
+      "kinetic-energy",
+      "p-ke-relation"
+    ],
+    "sourcePages": [
+      97,
+      98
+    ],
+    "timeTargets": {
+      "ap_eapcet": 40,
+      "ts_eapcet": 40,
+      "jee_main": 60
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Momentum magnitude and mass are given; kinetic energy is asked.",
+      "steps": [
+        "**Trigger:** Given $p$ and $m$, asked for KE — apply $KE = \\dfrac{p^2}{2m}$ directly.",
+        "**Action:** $KE = \\dfrac{12^2}{2 \\times 4} = \\dfrac{144}{8}$.",
+        "**Result:** $KE = 18$ J — option C."
+      ],
+      "sanityCheck": "Check $p = \\sqrt{2mKE} = \\sqrt{2 \\times 4 \\times 18} = \\sqrt{144} = 12$ kg m/s, matching the given momentum."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Kinetic energy is requested from momentum and mass; the direct link is $KE = \\dfrac{p^2}{2m}$, derived from $p = mv$ and $KE = \\tfrac{1}{2}mv^2$.",
+        "**EXTRACT:** $m = 4$ kg, $p = 12$ kg m/s.",
+        "**EXECUTE:** $KE = \\dfrac{p^2}{2m} = \\dfrac{12^2}{2 \\times 4} = \\dfrac{144}{8} = 18$ J.",
+        "**PROOF:** $KE = 18$ J is option C. Option A ($24$ J) comes from the wrong formula $KE = \\dfrac{pm}{2} = \\dfrac{12 \\times 4}{2} = 24$, multiplying instead of using $p^2/2m$. Option B ($72$ J) drops the mass entirely, computing $\\dfrac{p^2}{2} = \\dfrac{144}{2} = 72$. Option D ($36$ J) uses half the mass by mistake, $\\dfrac{p^2}{2 \\times 2} = \\dfrac{144}{4} = 36$, i.e. taking $m = 2$ instead of $4$. Correct option: C."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A 3 kg body moves at 4 m/s due east and a 4 kg body moves at 3 m/s due north. The magnitude of the total linear momentum of the two-body system is:",
+    "options": [
+      {
+        "text": "$24$ kg m/s"
+      },
+      {
+        "text": "$0$ kg m/s"
+      },
+      {
+        "text": "$12$ kg m/s"
+      },
+      {
+        "text": "$12\\sqrt{2} \\approx 17.0$ kg m/s"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Medium",
+    "subtopic": "Momentum",
+    "fsmTag": "vector-addition-of-momenta",
+    "concepts": [
+      "linear-momentum",
+      "vector-addition",
+      "perpendicular-resultant"
+    ],
+    "sourcePages": [
+      97
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Momentum is a vector; total momentum is the vector sum of the two individual momenta, which point in perpendicular directions (east and north).",
+        "**EXTRACT:** Body 1: $m_1 = 3$ kg, $v_1 = 4$ m/s east. Body 2: $m_2 = 4$ kg, $v_2 = 3$ m/s north.",
+        "**EXECUTE:** $p_1 = 3 \\times 4 = 12$ kg m/s (east), $p_2 = 4 \\times 3 = 12$ kg m/s (north). Being perpendicular, $|\\vec{p}| = \\sqrt{p_1^2 + p_2^2} = \\sqrt{144 + 144} = \\sqrt{288} = 12\\sqrt{2} \\approx 17.0$ kg m/s.",
+        "**PROOF:** $12\\sqrt{2} \\approx 17.0$ kg m/s is option D. Option A ($24$ kg m/s) adds the magnitudes as scalars ($12 + 12$), ignoring that they are perpendicular vectors. Option B ($0$ kg m/s) wrongly treats the two momenta as opposite and cancelling, but east and north are at $90^\\circ$, not $180^\\circ$, so they do not cancel. Option C ($12$ kg m/s) takes only one body's momentum and forgets to combine both. Correct option: D."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The speed of a moving body is doubled. By what factors do its linear momentum and its kinetic energy change, respectively?",
+    "options": [
+      {
+        "text": "Momentum $\\times 2$, kinetic energy $\\times 2$"
+      },
+      {
+        "text": "Momentum $\\times 2$, kinetic energy $\\times 4$"
+      },
+      {
+        "text": "Momentum $\\times 4$, kinetic energy $\\times 2$"
+      },
+      {
+        "text": "Momentum $\\times 4$, kinetic energy $\\times 4$"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Medium",
+    "subtopic": "Momentum",
+    "fsmTag": "scaling-momentum-and-energy-with-speed",
+    "concepts": [
+      "linear-momentum",
+      "kinetic-energy",
+      "proportional-scaling"
+    ],
+    "sourcePages": [
+      97,
+      98
+    ],
+    "timeTargets": {
+      "ap_eapcet": 50,
+      "ts_eapcet": 50,
+      "jee_main": 75
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Mass is constant; only speed changes, so use the power-law dependence of each quantity on $v$.",
+      "steps": [
+        "**Trigger:** Speed doubled, mass fixed — read off exponents: $p \\propto v^1$, $KE \\propto v^2$.",
+        "**Action:** Momentum scales by $2^1 = 2$; kinetic energy scales by $2^2 = 4$.",
+        "**Result:** Momentum $\\times 2$, kinetic energy $\\times 4$ — option B."
+      ],
+      "sanityCheck": "Since $KE = \\dfrac{p^2}{2m}$ and $p$ doubled, $KE$ scales as $2^2 = 4$, consistent with the $\\times 4$ energy factor."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** With mass unchanged, both quantities depend only on speed: linear momentum $p = mv$ is linear in $v$, while kinetic energy $KE = \\tfrac{1}{2}mv^2$ is quadratic in $v$.",
+        "**EXTRACT:** New speed $v' = 2v$, mass $m$ unchanged.",
+        "**EXECUTE:** $p' = m(2v) = 2(mv) = 2p$, so momentum scales by $2$. $KE' = \\tfrac{1}{2}m(2v)^2 = \\tfrac{1}{2}m \\cdot 4v^2 = 4 \\cdot \\tfrac{1}{2}mv^2 = 4\\,KE$, so kinetic energy scales by $4$.",
+        "**PROOF:** Momentum $\\times 2$ and kinetic energy $\\times 4$ is option B. Option A (KE $\\times 2$) wrongly treats kinetic energy as linear in $v$, missing the squaring of $v$ in $\\tfrac{1}{2}mv^2$. Option C (momentum $\\times 4$, KE $\\times 2$) swaps the two dependences, applying the square to momentum and the linear factor to energy. Option D (both $\\times 4$) wrongly squares the factor for momentum as well, treating $p$ as quadratic in $v$ when it is linear. Correct option: B."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A constant force of $20$ N acts on a body of mass $5$ kg resting on a smooth surface. The magnitude of the acceleration produced is:",
+    "options": [
+      {
+        "text": "$4$ m/s$^2$"
+      },
+      {
+        "text": "$100$ m/s$^2$"
+      },
+      {
+        "text": "$25$ m/s$^2$"
+      },
+      {
+        "text": "$0.25$ m/s$^2$"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Easy",
+    "subtopic": "Newton's Second Law",
+    "fsmTag": "force-mass-to-acceleration",
+    "concepts": [
+      "newtons-second-law",
+      "force-equation"
+    ],
+    "sourcePages": [
+      98
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** A single net force acts on a single mass; this is a direct application of Newton's second law to find acceleration.",
+        "**EXTRACT:** $F=20$ N, $m=5$ kg, surface smooth so $F$ is the net force.",
+        "**EXECUTE:** $a=\\dfrac{F}{m}=\\dfrac{20}{5}=4$ m/s$^2$.",
+        "**PROOF:** $a=20/5=4$ m/s$^2$ confirms option A. Option B $=100$ comes from multiplying $F\\times m=20\\times5=100$ instead of dividing. Option C $=25$ comes from adding $F+m=20+5=25$. Option D $=0.25$ comes from inverting the ratio, $m/F=5/20=0.25$. Correct option: A."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "What net force is required to give a body of mass $0.5$ kg an acceleration of $4$ m/s$^2$?",
+    "options": [
+      {
+        "text": "$8$ N"
+      },
+      {
+        "text": "$0.125$ N"
+      },
+      {
+        "text": "$2$ N"
+      },
+      {
+        "text": "$4.5$ N"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Easy",
+    "subtopic": "Newton's Second Law",
+    "fsmTag": "mass-acceleration-to-force",
+    "concepts": [
+      "newtons-second-law",
+      "force-equation"
+    ],
+    "sourcePages": [
+      98
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Mass and required acceleration are given; Newton's second law $F=ma$ gives the needed net force.",
+        "**EXTRACT:** $m=0.5$ kg, $a=4$ m/s$^2$.",
+        "**EXECUTE:** $F=ma=0.5\\times4=2$ N.",
+        "**PROOF:** $F=0.5\\times4=2$ N confirms option C. Option A $=8$ comes from dividing instead of multiplying, $a/m=4/0.5=8$. Option B $=0.125$ comes from inverting, $m/a=0.5/4=0.125$. Option D $=4.5$ comes from adding $m+a=0.5+4=4.5$. Correct option: C."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A car of mass $1500$ kg moving at $10$ m/s is brought to rest by the brakes in $5$ s. The average braking force is:",
+    "options": [
+      {
+        "text": "$3000$ N"
+      },
+      {
+        "text": "$7500$ N"
+      },
+      {
+        "text": "$15000$ N"
+      },
+      {
+        "text": "$1500$ N"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Medium",
+    "subtopic": "Newton's Second Law",
+    "fsmTag": "impulse-momentum-force",
+    "concepts": [
+      "newtons-second-law",
+      "rate-of-change-of-momentum"
+    ],
+    "sourcePages": [
+      99
+    ],
+    "timeTargets": {
+      "ap_eapcet": 50,
+      "ts_eapcet": 50,
+      "jee_main": 75
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Mass, velocity change and time given; force as rate of change of momentum.",
+      "steps": [
+        "**Trigger:** Mass, speed change over a time interval — force equals $m\\,\\Delta v/t$.",
+        "**Action:** Compute $1500\\times10/5$.",
+        "**Result:** $F=3000$ N — option A."
+      ],
+      "sanityCheck": "Decelerating from 10 m/s in 5 s gives $a=2$ m/s$^2$; $F=1500\\times2=3000$ N matches."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** A change in momentum over a known time gives the average force, $F=m\\,\\Delta v/t$ (Newton's second law in impulse form).",
+        "**EXTRACT:** $m=1500$ kg, $\\Delta v=10-0=10$ m/s, $t=5$ s.",
+        "**EXECUTE:** $F=\\dfrac{m\\,\\Delta v}{t}=\\dfrac{1500\\times10}{5}=\\dfrac{15000}{5}=3000$ N.",
+        "**PROOF:** $F = m\\,\\Delta v / t = 1500 \\times 10 / 5 = 3000$ N (option A). Option B ($7500$ N) divides by half the time, $15000/2 = 7500$. Option C ($15000$ N) forgets to divide by time, computing only $m\\,\\Delta v = 1500 \\times 10$. Option D ($1500$ N) divides by the speed change $\\Delta v = 10$ instead of the time $t = 5$: $15000/10 = 1500$. Correct option: A."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Two blocks of masses $1$ kg and $3$ kg are placed in contact on a smooth horizontal floor. A horizontal force of $4$ N is applied to the $1$ kg block, pushing both blocks. The contact force between the two blocks is:",
+    "options": [
+      {
+        "text": "$1$ N"
+      },
+      {
+        "text": "$3$ N"
+      },
+      {
+        "text": "$4$ N"
+      },
+      {
+        "text": "$12$ N"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Medium",
+    "subtopic": "Newton's Second Law",
+    "fsmTag": "system-then-individual-block",
+    "concepts": [
+      "newtons-second-law",
+      "contact-force",
+      "connected-bodies"
+    ],
+    "sourcePages": [
+      99,
+      100
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Two contact blocks, force on the front block; contact force equals applied force times mass-fraction of the rear block.",
+      "steps": [
+        "**Trigger:** Contact force on a smooth floor — it is the force needed to accelerate only the second block.",
+        "**Action:** Contact force $=\\dfrac{m_2}{m_1+m_2}F=\\dfrac{3}{4}\\times4$.",
+        "**Result:** $3$ N — option B."
+      ],
+      "sanityCheck": "Common acceleration $a=4/4=1$ m/s$^2$; the 3 kg block needs $3\\times1=3$ N, supplied only by contact."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Two blocks accelerate together; first find the system acceleration, then isolate the second block whose only horizontal force is the contact force.",
+        "**EXTRACT:** $m_1=1$ kg, $m_2=3$ kg, $F=4$ N, smooth floor (no friction).",
+        "**EXECUTE:** System: $a=\\dfrac{F}{m_1+m_2}=\\dfrac{4}{4}=1$ m/s$^2$. For the $3$ kg block alone, contact force $N=m_2 a=3\\times1=3$ N.",
+        "**PROOF:** $N=3\\times1=3$ N confirms option B. Option A $=1$ comes from using the front block's mass, $m_1 a=1\\times1=1$ N. Option C $=4$ comes from taking the contact force equal to the whole applied force $F=4$ N (ignoring that part accelerates the first block). Option D $=12$ comes from multiplying $m_2\\times F=3\\times4=12$ instead of $m_2\\times a$. Correct option: B."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A body of mass $2$ kg moves such that its velocity varies with time as $v = 4t$ m/s (with $t$ in seconds). The magnitude of the net force acting on it is:",
+    "options": [
+      {
+        "text": "$2$ N"
+      },
+      {
+        "text": "$4$ N"
+      },
+      {
+        "text": "$8$ N"
+      },
+      {
+        "text": "$16$ N"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Medium",
+    "subtopic": "Newton's Second Law",
+    "fsmTag": "differentiate-velocity-then-force",
+    "concepts": [
+      "newtons-second-law",
+      "acceleration-from-velocity"
+    ],
+    "sourcePages": [
+      98
+    ],
+    "timeTargets": {
+      "ap_eapcet": 55,
+      "ts_eapcet": 55,
+      "jee_main": 83
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Velocity given as a linear function of time; acceleration is its constant slope.",
+      "steps": [
+        "**Trigger:** $v=4t$ is linear in $t$, so $a=dv/dt$ is the constant slope $4$.",
+        "**Action:** $F=ma=2\\times4$.",
+        "**Result:** $8$ N — option C."
+      ],
+      "sanityCheck": "Since $v$ is linear, $a$ is constant, so $F$ must be constant and independent of $t$ — $8$ N fits."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Force requires acceleration; acceleration is the time-derivative of velocity, then apply $F=ma$.",
+        "**EXTRACT:** $m=2$ kg, $v=4t$ m/s.",
+        "**EXECUTE:** $a=\\dfrac{dv}{dt}=4$ m/s$^2$ (constant), so $F=ma=2\\times4=8$ N.",
+        "**PROOF:** $F=2\\times4=8$ N confirms option C. Option A $=2$ comes from dividing instead of multiplying, $a/m=4/2=2$. Option B $=4$ comes from quoting the acceleration $a=4$ as the force without multiplying by mass. Option D $=16$ comes from using the velocity at $t=2$ s, $v=4\\times2=8$, as the acceleration and computing $2\\times8=16$. Correct option: C."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A car of mass $1000$ kg moving at $30$ m/s skids to a stop in $75$ m on a level road. Taking $g=10$ m/s$^2$, the constant friction force and the coefficient of friction are respectively:",
+    "options": [
+      {
+        "text": "$6000$ N, $0.06$"
+      },
+      {
+        "text": "$3000$ N, $0.3$"
+      },
+      {
+        "text": "$6000$ N, $0.6$"
+      },
+      {
+        "text": "$12000$ N, $1.2$"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Hard",
+    "subtopic": "Newton's Second Law",
+    "fsmTag": "kinematics-force-then-friction-coefficient",
+    "concepts": [
+      "newtons-second-law",
+      "friction",
+      "kinematics-equation"
+    ],
+    "sourcePages": [
+      99,
+      100
+    ],
+    "timeTargets": {
+      "ap_eapcet": 100,
+      "ts_eapcet": 100,
+      "jee_main": 150
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Friction is the only decelerating force; find the deceleration from kinematics, get the force from $F=ma$, then the coefficient from $\\mu=F/mg$.",
+        "**EXTRACT:** $m=1000$ kg, $u=30$ m/s, $v=0$, $d=75$ m, $g=10$ m/s$^2$.",
+        "**EXECUTE:** $a=\\dfrac{u^2}{2d}=\\dfrac{30^2}{2\\times75}=\\dfrac{900}{150}=6$ m/s$^2$. Then $F=ma=1000\\times6=6000$ N, and $\\mu=\\dfrac{F}{mg}=\\dfrac{6000}{1000\\times10}=\\dfrac{6000}{10000}=0.6$.",
+        "**PROOF:** $F=6000$ N and $\\mu=0.6$ confirm option C. Option A keeps the correct $F=6000$ N but divides by $100000$ instead of $10000$ for $\\mu$, giving $0.06$. Option B halves both quantities by mistakenly using $a=u^2/(2\\cdot2d)=900/300=3$, giving $F=3000$ N and $\\mu=3000/10000=0.3$. Option D doubles the deceleration by dropping the factor $2$ in $u^2/2d$, taking $a=u^2/d=900/75=12$, giving $F=12000$ N and $\\mu=12000/10000=1.2$. Correct option: C."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A body of mass $2$ kg starts from rest. A constant force of $10$ N acts on it for the first $4$ s and is then removed. On a smooth horizontal surface, the total distance travelled in the first $6$ s is:",
+    "options": [
+      {
+        "text": "$40$ m"
+      },
+      {
+        "text": "$60$ m"
+      },
+      {
+        "text": "$80$ m"
+      },
+      {
+        "text": "$90$ m"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Hard",
+    "subtopic": "Newton's Second Law",
+    "fsmTag": "two-phase-accelerated-then-uniform",
+    "concepts": [
+      "newtons-second-law",
+      "kinematics-equation"
+    ],
+    "sourcePages": [
+      98,
+      99
+    ],
+    "timeTargets": {
+      "ap_eapcet": 110,
+      "ts_eapcet": 110,
+      "jee_main": 165
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Motion has two phases — uniform acceleration while the force acts (0-4 s), then uniform velocity after it is removed (4-6 s); add the two distances.",
+        "**EXTRACT:** $m=2$ kg, $F=10$ N for $0\\le t\\le4$ s, then $F=0$; total time $6$ s, smooth surface.",
+        "**EXECUTE:** Phase 1: $a=F/m=10/2=5$ m/s$^2$, $s_1=\\tfrac12 a t^2=\\tfrac12\\times5\\times4^2=40$ m, velocity at $4$ s $=at=5\\times4=20$ m/s. Phase 2 (force removed, constant $20$ m/s for $2$ s): $s_2=20\\times2=40$ m. Total $=40+40=80$ m.",
+        "**PROOF:** $s_1+s_2=40+40=80$ m confirms option C. Option A $=40$ counts only the first phase $s_1$ and ignores the motion after the force is removed. Option B $=60$ comes from wrongly applying $s=\\tfrac12(u+v)t$ over the whole 6 s as $\\tfrac12(0+20)\\times6=60$ m, treating the velocity as if it kept building uniformly to 20 across all 6 s. Option D $=90$ assumes the acceleration continues for the full 6 s, $s=\\tfrac12\\times5\\times6^2=90$ m. Correct option: C."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A constant force of 2 N acts on a body for 3 s along the direction of motion. The magnitude of the impulse delivered to the body is (impulse = force x time).",
+    "options": [
+      {
+        "text": "$6$ N s"
+      },
+      {
+        "text": "$0.67$ N s"
+      },
+      {
+        "text": "$5$ N s"
+      },
+      {
+        "text": "$3$ N s"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Easy",
+    "subtopic": "Impulse",
+    "fsmTag": "impulse-force-times-time",
+    "concepts": [
+      "impulse",
+      "constant-force"
+    ],
+    "sourcePages": [
+      100
+    ],
+    "timeTargets": {
+      "ap_eapcet": 35,
+      "ts_eapcet": 35,
+      "jee_main": 53
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Force is constant over the whole time interval, so impulse is simply the product J = F t.",
+      "steps": [
+        "**Trigger:** Constant force acting for a stated time, asking for impulse.",
+        "**Action:** Multiply force by time: $J = F\\,t = 2 \\times 3$.",
+        "**Result:** $J = 6$ N s — option A."
+      ],
+      "sanityCheck": "Units check: N x s = N s, the correct unit of impulse, and the value 6 lies between the force (2) and a typical larger product, consistent with multiplication."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** This is a direct application of impulse for a constant force. Impulse J equals the force multiplied by the time over which it acts.",
+        "**EXTRACT:** Force $F = 2$ N; time of action $t = 3$ s; force is constant, so no graph area is needed.",
+        "**EXECUTE:** $J = F\\,t = 2 \\times 3 = 6$ N s.",
+        "**PROOF:** Impulse $= F \\times t = 2 \\times 3 = 6$ N s (option A). Option B ($0.67$ N s) divides instead of multiplying: $F/t = 2/3$. Option C ($5$ N s) adds force and time: $2 + 3 = 5$. Option D ($3$ N s) wrongly applies a factor $\\tfrac{1}{2}$, as if the force grew linearly to a triangular peak: $\\tfrac{1}{2}(2)(3) = 3$. Correct option: A."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A bat strikes a ball, exerting a force that rises and falls as a triangle on a force-time graph, peaking at $100$ N over a total contact time of $0.2$ s. The ball has mass $2$ kg and was initially at rest. Its speed just after contact is (impulse = area under the force-time graph).",
+    "options": [
+      {
+        "text": "$10$ m/s"
+      },
+      {
+        "text": "$5$ m/s"
+      },
+      {
+        "text": "$2.5$ m/s"
+      },
+      {
+        "text": "$20$ m/s"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Hard",
+    "subtopic": "Impulse",
+    "fsmTag": "impulse-area-then-momentum",
+    "concepts": [
+      "impulse-momentum-theorem",
+      "force-time-graph",
+      "triangular-pulse"
+    ],
+    "sourcePages": [
+      100
+    ],
+    "timeTargets": {
+      "ap_eapcet": 95,
+      "ts_eapcet": 95,
+      "jee_main": 143
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** A varying force is given as a force-time graph, so impulse is the area under the curve. That impulse equals the change in momentum, from which the final speed follows since the ball starts at rest.",
+        "**EXTRACT:** Triangle peak (height) $F_{max} = 100$ N; base (total contact time) $t = 0.2$ s; mass $m = 2$ kg; initial velocity $u = 0$.",
+        "**EXECUTE:** Impulse = area of triangle $= \\tfrac{1}{2} \\times \\text{base} \\times \\text{height} = \\tfrac{1}{2} \\times 0.2 \\times 100 = 10$ N s. By the impulse-momentum theorem $J = m\\,v - m\\,u = m\\,v$, so $v = J/m = 10/2 = 5$ m/s.",
+        "**PROOF:** The correct speed is $v = 10/2 = 5$ m/s (Option B). Option A, $10$ m/s, is the impulse value $10$ N s mistaken for the speed (forgetting to divide by mass). Option D, $20$ m/s, uses the full rectangle area $100 \\times 0.2 = 20$ N s as the impulse (omitting the factor $\\tfrac{1}{2}$ for a triangle) and then drops the mass division, reporting $20$. Option C, $2.5$ m/s, divides by the mass twice: $10/2 = 5$, then $5/2 = 2.5$. Only the correct triangular area and a single division by mass give $5$ m/s. Correct option: B."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "An impulsive force changes the velocity of a $2$ kg object from $3$ m/s due east to $4$ m/s due north. The magnitude of the impulse delivered is (impulse = mass x change in velocity, treated as a vector).",
+    "options": [
+      {
+        "text": "$2$ N s"
+      },
+      {
+        "text": "$7$ N s"
+      },
+      {
+        "text": "$10$ N s"
+      },
+      {
+        "text": "$14$ N s"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Medium",
+    "subtopic": "Impulse",
+    "fsmTag": "vector-change-in-velocity-impulse",
+    "concepts": [
+      "impulse",
+      "vector-subtraction",
+      "change-in-momentum"
+    ],
+    "sourcePages": [
+      100
+    ],
+    "timeTargets": {
+      "ap_eapcet": 65,
+      "ts_eapcet": 65,
+      "jee_main": 98
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** The velocity changes direction, so the change in velocity is a vector difference. Since the initial (east) and final (north) velocities are perpendicular, the magnitude of the change is the hypotenuse, and impulse is mass times that magnitude.",
+        "**EXTRACT:** Mass $m = 2$ kg; initial velocity $3$ m/s east; final velocity $4$ m/s north; the two directions are perpendicular (east vs north).",
+        "**EXECUTE:** The change in velocity has perpendicular components $4$ (north) and $3$ (south-to-east subtraction), so $|\\Delta v| = \\sqrt{3^2 + 4^2} = \\sqrt{9 + 16} = \\sqrt{25} = 5$ m/s. Impulse $J = m\\,|\\Delta v| = 2 \\times 5 = 10$ N s.",
+        "**PROOF:** The correct impulse is $2 \\times 5 = 10$ N s (Option C). Option A, $2$ N s, treats the speeds as collinear and subtracts: $m(4 - 3) = 2 \\times 1 = 2$. Option D, $14$ N s, treats them as collinear opposites and adds the speeds: $m(3 + 4) = 2 \\times 7 = 14$. Option B, $7$ N s, adds the two speeds without multiplying by mass: $3 + 4 = 7$. Only the perpendicular (vector) treatment giving $|\\Delta v| = 5$ then times mass yields $10$ N s. Correct option: C."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A cricketer catches a $0.15$ kg ball moving at $20$ m/s. By drawing his hands back he increases the stopping time from $0.01$ s to $0.1$ s. Compared with not drawing the hands back, the average catching force in the second case is",
+    "options": [
+      {
+        "text": "increased by a factor of $10$ (to $3000$ N)"
+      },
+      {
+        "text": "reduced by a factor of $10$ (to $30$ N)"
+      },
+      {
+        "text": "unchanged ($300$ N), since the impulse is the same"
+      },
+      {
+        "text": "reduced to half (to $150$ N)"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Hard",
+    "subtopic": "Impulse",
+    "fsmTag": "impulse-fixed-force-inverse-time",
+    "concepts": [
+      "impulse-momentum-theorem",
+      "average-force",
+      "stopping-time"
+    ],
+    "sourcePages": [
+      100
+    ],
+    "timeTargets": {
+      "ap_eapcet": 100,
+      "ts_eapcet": 100,
+      "jee_main": 150
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "The momentum change (impulse) is fixed by mass and speed, so the average force varies inversely with the stopping time: F = J/t.",
+      "steps": [
+        "**Trigger:** Same ball stopped over a longer time — impulse fixed, force = impulse / time.",
+        "**Action:** Time goes from $0.01$ s to $0.1$ s, a factor of $10$ longer, so force drops by the same factor of $10$.",
+        "**Result:** Force reduces by a factor of $10$ (from $300$ N to $30$ N) — option B."
+      ],
+      "sanityCheck": "Check the magnitude: $J = 0.15 \\times 20 = 3$ N s; $F_2 = 3/0.1 = 30$ N, exactly one-tenth of $F_1 = 3/0.01 = 300$ N, confirming the factor of 10 reduction."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** The ball's momentum change is fixed (same mass, same speed), so the impulse is the same in both cases. The average force is impulse divided by stopping time, so a longer time means a smaller force.",
+        "**EXTRACT:** Mass $m = 0.15$ kg; speed $v = 20$ m/s; first stopping time $t_1 = 0.01$ s; second stopping time $t_2 = 0.1$ s.",
+        "**EXECUTE:** Impulse $J = m\\,v = 0.15 \\times 20 = 3$ N s. First force $F_1 = J/t_1 = 3/0.01 = 300$ N. Second force $F_2 = J/t_2 = 3/0.1 = 30$ N. Since $t_2 = 10\\,t_1$, $F_2 = F_1/10$, i.e. the force is reduced by a factor of $10$ to $30$ N.",
+        "**PROOF:** The correct result is $F_2 = 30$ N, a tenfold reduction (Option B). Option A, increased by a factor of $10$ to $3000$ N, inverts the relationship (treating longer time as larger force, $300 \\times 10 = 3000$). Option C, unchanged at $300$ N, wrongly equates equal impulse with equal force, ignoring that force depends on time. Option D, reduced to half ($150$ N), assumes force halves rather than scaling with the actual time ratio; $300/2 = 150$, but the true ratio is $t_2/t_1 = 10$, not $2$. Only $F = J/t$ with the factor-of-10 time increase gives $30$ N. Correct option: B."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A swimmer pushes the water backward with her hands and as a result moves forward through the water. This forward motion is a direct demonstration of:",
+    "options": [
+      {
+        "text": "Newton's third law of motion: the water pushes the swimmer forward with a force equal in magnitude and opposite in direction to the backward force the swimmer applies on the water"
+      },
+      {
+        "text": "Newton's first law of motion: a body at rest remains at rest unless acted upon by an external force"
+      },
+      {
+        "text": "The principle of conservation of energy: the kinetic energy of the hands is transferred to the swimmer's body"
+      },
+      {
+        "text": "The buoyant force: the water exerts an upward push that propels the swimmer forward"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Easy",
+    "subtopic": "Newton's Third Law",
+    "fsmTag": "identify-action-reaction-pair",
+    "concepts": [
+      "newtons-third-law",
+      "action-reaction-pair"
+    ],
+    "sourcePages": [
+      100
+    ],
+    "timeTargets": {
+      "ap_eapcet": 35,
+      "ts_eapcet": 35,
+      "jee_main": 53
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** This is a concept-identification question. A swimmer's hands exert a backward force on the water and the swimmer moves forward. The task is to name the law that links the swimmer's forward motion to the backward push she applies on the water.",
+        "**EXTRACT:** Two bodies interact (swimmer's hands and water). The swimmer applies a force ON the water (backward); the question asks what makes the swimmer move forward. This is precisely the setting of an action-reaction pair: forces between two different bodies, equal in magnitude, opposite in direction.",
+        "**EXECUTE:** By Newton's third law, every action has an equal and opposite reaction. The action is the swimmer pushing water backward; the reaction is the water pushing the swimmer forward with an equal-magnitude, opposite-direction force. That reaction force on the swimmer is what drives her forward, so the correct choice is Option A.",
+        "**PROOF:** Option A correctly states the action-reaction pairing (swimmer-on-water backward, water-on-swimmer forward), so it is correct. Option B (first law) describes inertia and applies only when no net external force acts; here a real propelling force exists, so it does not explain the forward motion. Option C (conservation of energy) accounts for energy bookkeeping, not for the origin of the forward force — energy conservation cannot by itself produce a directed thrust, so it is wrong. Option D (buoyant force) is the vertical upthrust that keeps the swimmer afloat; it acts upward, not in the horizontal forward direction, so it cannot be the cause of forward propulsion. Correct option: A."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A rocket in deep space (far from any planet and with no surrounding air) accelerates forward by continuously ejecting hot gas backward at high speed. The forward thrust on the rocket is best explained by:",
+    "options": [
+      {
+        "text": "The ejected gas pushing against the air present behind the rocket, which throws the rocket forward"
+      },
+      {
+        "text": "Newton's first law of motion: with no air resistance the rocket simply continues at constant velocity"
+      },
+      {
+        "text": "Newton's third law / conservation of momentum: the rocket pushes the gas backward, so the gas pushes the rocket forward with an equal and opposite force"
+      },
+      {
+        "text": "A gravitational pull from masses ahead of the rocket that draws it forward"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Medium",
+    "subtopic": "Newton's Third Law",
+    "fsmTag": "identify-action-reaction-pair",
+    "concepts": [
+      "newtons-third-law",
+      "conservation-of-momentum",
+      "rocket-propulsion"
+    ],
+    "sourcePages": [
+      100,
+      101
+    ],
+    "timeTargets": {
+      "ap_eapcet": 55,
+      "ts_eapcet": 55,
+      "jee_main": 83
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** This is a concept-identification question about rocket propulsion in vacuum. A rocket ejects gas backward and accelerates forward; the task is to identify the correct physical principle behind the forward thrust, while rejecting the common misconception that propulsion needs surrounding air.",
+        "**EXTRACT:** Key data: deep space, no surrounding air, gas ejected backward at high speed, rocket accelerates forward. Two interacting bodies are the rocket and the gas it expels. The isolated rocket-plus-gas system has no external horizontal force, so total momentum is conserved.",
+        "**EXECUTE:** The rocket exerts a backward force on the gas to expel it; by Newton's third law the gas exerts an equal and opposite forward force on the rocket. Equivalently, the rocket-gas system conserves momentum: the gas gains backward momentum, so the rocket must gain equal forward momentum. Both descriptions name the same physics and require no external medium, so the correct choice is Option C.",
+        "**PROOF:** Option C is correct: it states the third-law pairing (rocket-on-gas backward, gas-on-rocket forward), equivalently momentum conservation, and works in vacuum. Option A wrongly claims the gas must push against external air; this is the classic misconception that rockets cannot work in vacuum — false, since the reaction force comes from the gas itself, not the air, so it is wrong. Option B (first law) describes constant-velocity motion in the absence of a net force, but the rocket is accelerating because a real thrust force acts, so the first law does not explain the thrust. Option D invents a forward gravitational pull from masses ahead; in deep space there is no such dominant mass, and gravity is not the source of the thrust, so it is wrong. Correct option: C."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A person walks forward on level ground. Among the forces involved, which one actually pushes the person forward?",
+    "options": [
+      {
+        "text": "The backward push of the person's feet on the ground"
+      },
+      {
+        "text": "The person's own muscular force acting on themselves"
+      },
+      {
+        "text": "The forward frictional reaction of the ground on the person's feet"
+      },
+      {
+        "text": "The upward normal reaction of the ground on the person's feet"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Medium",
+    "subtopic": "Newton's Third Law",
+    "fsmTag": "identify-action-reaction-pair",
+    "concepts": [
+      "newtons-third-law",
+      "friction",
+      "action-reaction-pair"
+    ],
+    "sourcePages": [
+      101
+    ],
+    "timeTargets": {
+      "ap_eapcet": 55,
+      "ts_eapcet": 55,
+      "jee_main": 83
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** This is a concept-identification question about walking. A person walks forward; the task is to pick, from the listed forces, the single force that actually acts ON the person in the forward direction and is therefore responsible for accelerating them forward.",
+        "**EXTRACT:** Two interacting bodies: the person's feet and the ground. When walking, the foot pushes the ground backward (via friction); the reaction is the ground pushing the foot forward. The force that moves the person must act ON the person (not on the ground) and must point forward (not merely upward).",
+        "**EXECUTE:** The person's foot exerts a backward friction force on the ground. By Newton's third law, the ground exerts an equal and opposite forward friction force on the foot. That forward frictional reaction acts on the person and is the only listed force pointing in the direction of motion, so it is what pushes the person forward — the correct choice is Option C.",
+        "**PROOF:** Option C is correct: the forward frictional reaction of the ground on the feet acts on the person and points forward, driving the motion. Option A (backward push of feet on the ground) is the action force; it acts ON the ground, not on the person, so it cannot push the person — it is the partner, not the propelling force. Option B (own muscular force on oneself) is wrong because an internal force a body exerts on itself produces no net external force and cannot accelerate the body's centre of mass. Option D (normal reaction) acts on the person but is directed vertically upward, balancing weight; it has no forward component, so it cannot push the person forward. Correct option: C."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A 2 kg trolley moving at 3 m/s strikes a stationary 2 kg trolley on a smooth horizontal track, and the two couple together and move as one. What is their common speed just after coupling?",
+    "options": [
+      {
+        "text": "$3 \\text{ m/s}$"
+      },
+      {
+        "text": "$6 \\text{ m/s}$"
+      },
+      {
+        "text": "$1.5 \\text{ m/s}$"
+      },
+      {
+        "text": "$0.75 \\text{ m/s}$"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Easy",
+    "subtopic": "Conservation of Momentum",
+    "fsmTag": "perfectly-inelastic-coupling",
+    "concepts": [
+      "conservation-of-momentum",
+      "inelastic-collision"
+    ],
+    "sourcePages": [
+      102
+    ],
+    "timeTargets": {
+      "ap_eapcet": 35,
+      "ts_eapcet": 35,
+      "jee_main": 53
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "One body stationary; equal masses couple together.",
+      "steps": [
+        "**Trigger:** Two equal masses, one at rest, stick together (perfectly inelastic).",
+        "**Action:** Common speed = (moving speed) x (its mass) / (total mass) = $3 \\times 2 / 4$.",
+        "**Result:** $v = 1.5 \\text{ m/s}$ — option C."
+      ],
+      "sanityCheck": "Final speed must be between 0 and 3 m/s and, for equal masses with one at rest, exactly half: $3/2 = 1.5$ m/s. Matches."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Perfectly inelastic collision: the two trolleys couple, so momentum is conserved but they share one final velocity $v$.",
+        "**EXTRACT:** $m_1 = 2 \\text{ kg}$, $u_1 = 3 \\text{ m/s}$; $m_2 = 2 \\text{ kg}$, $u_2 = 0$. Total mass after coupling $= 4 \\text{ kg}$.",
+        "**EXECUTE:** Conservation of momentum: $m_1 u_1 + m_2 u_2 = (m_1 + m_2) v \\Rightarrow 2(3) + 0 = 4v \\Rightarrow 6 = 4v \\Rightarrow v = 1.5 \\text{ m/s}$.",
+        "**PROOF:** Correct value $1.5 \\text{ m/s}$ is option C. Option A ($3$) = leaving the speed unchanged, ignoring that the added mass slows it. Option B ($6$) = computing the momentum $2 \\times 3 = 6$ and forgetting to divide by the total mass $4$. Option D ($0.75$) = dividing by $8$ instead of $4$ (doubling the mass denominator), since $6/8 = 0.75$. Correct option: C."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A 2 kg body moving at 5 m/s and a 3 kg body moving at 2 m/s travel in the SAME direction along a straight line. They collide and stick together. What is their common velocity after collision?",
+    "options": [
+      {
+        "text": "$3.2 \\text{ m/s}$"
+      },
+      {
+        "text": "$3.5 \\text{ m/s}$"
+      },
+      {
+        "text": "$7 \\text{ m/s}$"
+      },
+      {
+        "text": "$0.8 \\text{ m/s}$"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Medium",
+    "subtopic": "Conservation of Momentum",
+    "fsmTag": "same-direction-inelastic-merge",
+    "concepts": [
+      "conservation-of-momentum",
+      "inelastic-collision"
+    ],
+    "sourcePages": [
+      102
+    ],
+    "timeTargets": {
+      "ap_eapcet": 55,
+      "ts_eapcet": 55,
+      "jee_main": 83
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Perfectly inelastic collision of two bodies moving the same way; momentum conserved, single final velocity $v$. Same direction means both momenta are added (same sign).",
+        "**EXTRACT:** $m_1 = 2 \\text{ kg}$, $u_1 = 5 \\text{ m/s}$; $m_2 = 3 \\text{ kg}$, $u_2 = 2 \\text{ m/s}$. Total mass $= 5 \\text{ kg}$.",
+        "**EXECUTE:** $m_1 u_1 + m_2 u_2 = (m_1+m_2)v \\Rightarrow 2(5) + 3(2) = 5v \\Rightarrow 10 + 6 = 5v \\Rightarrow 16 = 5v \\Rightarrow v = 3.2 \\text{ m/s}$.",
+        "**PROOF:** Correct value $3.2 \\text{ m/s}$ is option A. Option B ($3.5$) = averaging the two speeds, $(5+2)/2 = 3.5$, ignoring the masses. Option C ($7$) = simply adding the two speeds, $5 + 2 = 7$. Option D ($0.8$) = subtracting the momenta instead of adding (treating them as opposite), $(10-6)/5 = 0.8$. Correct option: A."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A machine gun fires 10 bullets per second, each of mass 20 g, at a muzzle speed of 400 m/s. What constant force must be applied to hold the gun steady?",
+    "options": [
+      {
+        "text": "$8 \\text{ N}$"
+      },
+      {
+        "text": "$4 \\text{ N}$"
+      },
+      {
+        "text": "$800 \\text{ N}$"
+      },
+      {
+        "text": "$80 \\text{ N}$"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Medium",
+    "subtopic": "Conservation of Momentum",
+    "fsmTag": "momentum-rate-force",
+    "concepts": [
+      "rate-of-change-of-momentum",
+      "conservation-of-momentum"
+    ],
+    "sourcePages": [
+      103
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Steady firing; force equals momentum imparted per second.",
+      "steps": [
+        "**Trigger:** Continuous firing — force = momentum carried away per second.",
+        "**Action:** $F = n \\, m \\, v = 10 \\times 0.02 \\times 400$.",
+        "**Result:** $F = 80 \\text{ N}$ — option D."
+      ],
+      "sanityCheck": "One bullet carries $0.02 \\times 400 = 8$ kg m/s; ten per second gives $10 \\times 8 = 80$ N. Consistent."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** By Newton's second law the force needed equals the rate of change of momentum, i.e. the momentum given to the bullets each second (recoil reaction).",
+        "**EXTRACT:** $n = 10 \\text{ bullets/s}$, $m = 20 \\text{ g} = 0.02 \\text{ kg}$, $v = 400 \\text{ m/s}$.",
+        "**EXECUTE:** $F = n \\, m \\, v = 10 \\times 0.02 \\times 400 = 80 \\text{ N}$.",
+        "**PROOF:** Correct value $80 \\text{ N}$ is option D. Option A ($8$) = momentum of a single bullet, $0.02 \\times 400 = 8$, forgetting the firing rate of 10 per second. Option B ($4$) = mistaking the figure $20$ (grams) for the speed, $10 \\times 0.02 \\times 20 = 4$. Option C ($800$) = converting $20 \\text{ g}$ wrongly to $0.2 \\text{ kg}$, giving $10 \\times 0.2 \\times 400 = 800$. Correct option: D."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A 4 kg body moving east at 3 m/s collides head-on with a 2 kg body moving west at 6 m/s, and the two stick together. What is their common velocity immediately after the collision?",
+    "options": [
+      {
+        "text": "$3 \\text{ m/s east}$"
+      },
+      {
+        "text": "$0$ (they come to rest)"
+      },
+      {
+        "text": "$4 \\text{ m/s east}$"
+      },
+      {
+        "text": "$2 \\text{ m/s west}$"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Medium",
+    "subtopic": "Conservation of Momentum",
+    "fsmTag": "head-on-inelastic-vector-momentum",
+    "concepts": [
+      "conservation-of-momentum",
+      "inelastic-collision",
+      "vector-signs"
+    ],
+    "sourcePages": [
+      102
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Head-on collision; the two momenta are equal and opposite.",
+      "steps": [
+        "**Trigger:** Head-on stick collision — take east positive and add signed momenta.",
+        "**Action:** $p = 4(+3) + 2(-6) = 12 - 12 = 0$.",
+        "**Result:** Total momentum zero, so $v = 0$ — option B."
+      ],
+      "sanityCheck": "Both bodies carry equal magnitude momentum $12$ kg m/s in opposite directions, so they cancel exactly and the joined mass is at rest. Consistent."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Head-on perfectly inelastic collision; momentum is a vector, so opposite directions take opposite signs. Take east as positive.",
+        "**EXTRACT:** $m_1 = 4 \\text{ kg}$, $u_1 = +3 \\text{ m/s}$ (east); $m_2 = 2 \\text{ kg}$, $u_2 = -6 \\text{ m/s}$ (west). Total mass $= 6 \\text{ kg}$.",
+        "**EXECUTE:** Total momentum $= 4(+3) + 2(-6) = 12 - 12 = 0$. Then $(m_1+m_2)v = 0 \\Rightarrow 6v = 0 \\Rightarrow v = 0$.",
+        "**PROOF:** Correct value $0$ is option B. Option A ($3$ east) = ignoring the 2 kg body entirely, $4 \\times 3 / 4 = 3$. Option C ($4$ east) = adding the two momenta instead of subtracting (treating both as eastward), $(12 + 12)/6 = 4$. Option D ($2$ west) = keeping only the westward body's momentum over the total mass, $2 \\times 6 / 6 = 2$ west. Correct option: B."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A 40 kg boy runs at 5 m/s and jumps onto a stationary 20 kg cart on frictionless horizontal ground, landing on it. What is their common speed just after he lands?",
+    "options": [
+      {
+        "text": "$3.33 \\text{ m/s}$"
+      },
+      {
+        "text": "$5 \\text{ m/s}$"
+      },
+      {
+        "text": "$10 \\text{ m/s}$"
+      },
+      {
+        "text": "$2.5 \\text{ m/s}$"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Medium",
+    "subtopic": "Conservation of Momentum",
+    "fsmTag": "jump-on-cart-inelastic",
+    "concepts": [
+      "conservation-of-momentum",
+      "inelastic-collision"
+    ],
+    "sourcePages": [
+      102
+    ],
+    "timeTargets": {
+      "ap_eapcet": 55,
+      "ts_eapcet": 55,
+      "jee_main": 83
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Frictionless ground means horizontal momentum is conserved as the boy lands on the cart and they move together (perfectly inelastic).",
+        "**EXTRACT:** $m_1 = 40 \\text{ kg}$, $u_1 = 5 \\text{ m/s}$; $m_2 = 20 \\text{ kg}$, $u_2 = 0$. Total mass $= 60 \\text{ kg}$.",
+        "**EXECUTE:** $m_1 u_1 = (m_1 + m_2) v \\Rightarrow 40 \\times 5 = 60 v \\Rightarrow 200 = 60 v \\Rightarrow v = 3.33 \\text{ m/s}$.",
+        "**PROOF:** Momentum conservation: $v = \\dfrac{40 \\times 5}{40 + 20} = \\dfrac{200}{60} = 3.33$ m/s (option A). Option B ($5$ m/s) leaves the boy’s speed unchanged, ignoring the added cart mass. Option C ($10$ m/s) divides the momentum by the cart mass only, $200/20 = 10$. Option D ($2.5$ m/s) naively averages the two initial speeds, $(5 + 0)/2 = 2.5$, instead of conserving momentum. Correct option: A."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A 6 kg shell moving east at 4 m/s explodes into two pieces. A 2 kg piece continues east at 10 m/s. Find the velocity of the 4 kg piece. (Take east as positive.)",
+    "options": [
+      {
+        "text": "$6 \\text{ m/s east}$"
+      },
+      {
+        "text": "$5 \\text{ m/s east}$"
+      },
+      {
+        "text": "$1 \\text{ m/s west}$"
+      },
+      {
+        "text": "$1 \\text{ m/s east}$"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Hard",
+    "subtopic": "Conservation of Momentum",
+    "fsmTag": "explosion-momentum-split",
+    "concepts": [
+      "conservation-of-momentum",
+      "explosion",
+      "vector-signs"
+    ],
+    "sourcePages": [
+      103
+    ],
+    "timeTargets": {
+      "ap_eapcet": 100,
+      "ts_eapcet": 100,
+      "jee_main": 150
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** In an explosion the internal forces cancel, so total momentum is conserved: the momentum before equals the sum of the two pieces' momenta after. Take east as positive.",
+        "**EXTRACT:** Before: $M = 6 \\text{ kg}$ at $U = 4 \\text{ m/s}$. After: piece 1 $m_1 = 2 \\text{ kg}$ at $v_1 = +10 \\text{ m/s}$; piece 2 $m_2 = 4 \\text{ kg}$ at unknown $v_2$.",
+        "**EXECUTE:** $M U = m_1 v_1 + m_2 v_2 \\Rightarrow 6 \\times 4 = 2 \\times 10 + 4 v_2 \\Rightarrow 24 = 20 + 4 v_2 \\Rightarrow 4 v_2 = 4 \\Rightarrow v_2 = +1 \\text{ m/s}$, i.e. 1 m/s east.",
+        "**PROOF:** Correct value $+1 \\text{ m/s}$ (east) is option D. Option A ($6$ east) = ignoring the ejected 2 kg piece and putting all initial momentum into the 4 kg piece, $24/4 = 6$. Option B ($5$ east) = dropping the shell's initial momentum and balancing only the 2 kg piece, $4 v_2 = 2 \\times 10 \\Rightarrow v_2 = 5$. Option C ($1$ west) = getting the magnitude $1$ right but flipping the sign (direction error), since $v_2 = +1$ is east, not west. Correct option: D."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "According to Lami's theorem, when three concurrent coplanar forces hold a particle in equilibrium, each force is directly proportional to:",
+    "options": [
+      {
+        "text": "the sine of the angle between the other two forces"
+      },
+      {
+        "text": "the cosine of the angle between the other two forces"
+      },
+      {
+        "text": "the angle between the other two forces"
+      },
+      {
+        "text": "the sum of the other two forces"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Easy",
+    "subtopic": "Equilibrium of a Particle",
+    "fsmTag": "lami-theorem-statement",
+    "concepts": [
+      "lami-theorem",
+      "concurrent-forces",
+      "particle-equilibrium"
+    ],
+    "sourcePages": [
+      104
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** This is a recall question on the exact statement of Lami's theorem for three concurrent coplanar forces in equilibrium.",
+        "**EXTRACT:** Lami's theorem: $\\frac{F_1}{\\sin\\alpha} = \\frac{F_2}{\\sin\\beta} = \\frac{F_3}{\\sin\\gamma}$, where $\\alpha$ is the angle between $F_2$ and $F_3$, i.e. the angle opposite to (between the OTHER two) the force in the numerator.",
+        "**EXECUTE:** Each force is proportional to the SINE of the angle between the other two forces, which is Option A.",
+        "**PROOF:** Lami's theorem follows from resolving the closed force triangle using the sine rule, so the proportionality is to sine, not cosine — Option B (cosine of the angle between the other two) is the sine rule misremembered as a cosine relation. Option C (the angle itself) drops the sine function entirely and is dimensionally meaningless. Option D (the sum of the other two forces) confuses equilibrium (vector sum of all three is zero, so one force equals the magnitude of the resultant of the other two only when they are perpendicular) with the proportionality statement and is not what Lami's theorem states. Correct option: A."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A 10 kg weight hangs at the junction of two light strings, each making an angle of 30 degrees with the HORIZONTAL in a symmetric arrangement. Taking g = 10 m/s^2, the tension in each string is:",
+    "options": [
+      {
+        "text": "50 N"
+      },
+      {
+        "text": "100 N"
+      },
+      {
+        "text": "200 N"
+      },
+      {
+        "text": "58 N"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Medium",
+    "subtopic": "Equilibrium of a Particle",
+    "fsmTag": "symmetric-two-string-vertical-balance",
+    "concepts": [
+      "force-resolution",
+      "particle-equilibrium",
+      "string-tension"
+    ],
+    "sourcePages": [
+      103,
+      104
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Symmetric two-string suspension; both strings at the same angle to the horizontal, so by symmetry both tensions are equal and only the vertical balance is needed.",
+      "steps": [
+        "**Trigger:** Symmetric pair of strings at angle theta to horizontal carrying weight mg — only the vertical components share the load.",
+        "**Action:** Apply $2T\\sin\\theta = mg$, so $T = \\dfrac{mg}{2\\sin\\theta} = \\dfrac{100}{2\\times0.5}$.",
+        "**Result:** $T = 100$ N — option B."
+      ],
+      "sanityCheck": "Each string vertical component = 100 sin30 = 50 N; two of them sum to 100 N = mg. Balanced."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** A weight is held by two symmetric strings; resolve the equal tensions vertically to balance gravity. The horizontal components cancel by symmetry.",
+        "**EXTRACT:** m = 10 kg, g = 10 m/s^2 so mg = 100 N; each string at theta = 30 degrees to the horizontal; both tensions equal to T by symmetry. sin30 = 0.5.",
+        "**EXECUTE:** Vertical equilibrium: $2T\\sin30^\\circ = mg \\Rightarrow 2T(0.5) = 100 \\Rightarrow T = \\dfrac{100}{1} = 100$ N.",
+        "**PROOF:** The correct value is 100 N (Option B). Option A (50 N) comes from writing $2T = mg \\Rightarrow T = mg/2 = 50$, i.e. splitting the weight between the two strings but forgetting to resolve along the 30-degree direction (dropping the sin30 factor). Option C (200 N) comes from treating only one string as load-bearing, $T\\sin30 = mg \\Rightarrow T = mg/\\sin30 = 100/0.5 = 200$, i.e. forgetting the factor 2. Option D (58 N) comes from using the angle with the vertical (60 degrees) instead of the horizontal, $T = mg/(2\\sin60) = 100/(2\\times0.866) \\approx 58$ N. Correct option: B."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A 5 kg block rests on a smooth (frictionless) incline of 37 degrees and is held in place by a light string running ALONG the incline. Taking g = 10 m/s^2 and sin37 = 0.6, the tension in the string is:",
+    "options": [
+      {
+        "text": "40 N"
+      },
+      {
+        "text": "50 N"
+      },
+      {
+        "text": "30 N"
+      },
+      {
+        "text": "25 N"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Medium",
+    "subtopic": "Equilibrium of a Particle",
+    "fsmTag": "incline-string-along-slope-balance",
+    "concepts": [
+      "inclined-plane",
+      "force-resolution",
+      "string-tension"
+    ],
+    "sourcePages": [
+      103
+    ],
+    "timeTargets": {
+      "ap_eapcet": 50,
+      "ts_eapcet": 50,
+      "jee_main": 75
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Smooth incline, string along the slope; the only force component along the slope is the gravity component mg sin(theta), which the tension must balance.",
+      "steps": [
+        "**Trigger:** Block in equilibrium on a smooth incline held by a string along the slope — tension balances only the along-slope weight component.",
+        "**Action:** $T = mg\\sin\\theta = 50\\times0.6$.",
+        "**Result:** $T = 30$ N — option C."
+      ],
+      "sanityCheck": "On a smooth incline the normal force handles mg cos37 = 40 N; the string handles mg sin37 = 30 N along the slope. Consistent."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** A block is in equilibrium on a smooth incline, held by a string parallel to the slope. Resolve weight along and perpendicular to the incline; the tension balances the along-slope component only (smooth surface, so no friction).",
+        "**EXTRACT:** m = 5 kg, g = 10 m/s^2 so mg = 50 N; incline angle theta = 37 degrees; string along the incline; sin37 = 0.6. Smooth means friction = 0.",
+        "**EXECUTE:** Along-slope equilibrium: $T = mg\\sin37^\\circ = 50\\times0.6 = 30$ N.",
+        "**PROOF:** The correct value is 30 N (Option C). Option A (40 N) comes from using cos37 = 0.8 instead of sin37, $mg\\cos37 = 50\\times0.8 = 40$, which is actually the normal force, not the string tension. Option B (50 N) comes from setting $T = mg = 50$, forgetting to resolve the weight along the incline at all. Option D (25 N) comes from using sin37 = 0.5 (the 30-degree value) instead of 0.6, $50\\times0.5 = 25$. Correct option: C."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A 20 kg lamp hangs in equilibrium from a junction point that is held by a HORIZONTAL string attached to a wall and a second string fastened to the ceiling making 53 degrees with the horizontal. Taking g = 10 m/s^2, sin53 = 0.8 and cos53 = 0.6, the tensions in the inclined string and the horizontal string are respectively:",
+    "options": [
+      {
+        "text": "200 N and 150 N"
+      },
+      {
+        "text": "250 N and 200 N"
+      },
+      {
+        "text": "160 N and 120 N"
+      },
+      {
+        "text": "250 N and 150 N"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Hard",
+    "subtopic": "Equilibrium of a Particle",
+    "fsmTag": "junction-two-string-resolve-both-axes",
+    "concepts": [
+      "force-resolution",
+      "particle-equilibrium",
+      "string-tension"
+    ],
+    "sourcePages": [
+      103,
+      104
+    ],
+    "timeTargets": {
+      "ap_eapcet": 100,
+      "ts_eapcet": 100,
+      "jee_main": 150
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Three forces act at the junction in equilibrium: the weight mg straight down, the horizontal string tension T2, and the inclined string tension T1 at 53 degrees to the horizontal. Resolve T1 into horizontal and vertical components and apply equilibrium along both axes.",
+        "**EXTRACT:** m = 20 kg, g = 10 m/s^2 so mg = 200 N; inclined string at 53 degrees to horizontal; horizontal string is purely horizontal. sin53 = 0.8, cos53 = 0.6. Only T1 has a vertical component.",
+        "**EXECUTE:** Vertical: $T_1\\sin53^\\circ = mg \\Rightarrow T_1 = \\dfrac{200}{0.8} = 250$ N. Horizontal: $T_2 = T_1\\cos53^\\circ = 250\\times0.6 = 150$ N.",
+        "**PROOF:** The correct pair is T1 = 250 N (inclined) and T2 = 150 N (horizontal), Option D. Option A (200 N and 150 N) takes T1 = mg = 200 (forgetting to divide by sin53 in the vertical balance) while still quoting the correct 150 N for T2, an inconsistent mix. Option B (250 N and 200 N) gets T1 = 250 correct but computes T2 using sin53 instead of cos53, $250\\times0.8 = 200$. Option C (160 N and 120 N) resolves mg itself as if it were a tension along the inclined and horizontal directions, giving $mg\\sin53 = 200\\times0.8 = 160$ and $mg\\cos53 = 200\\times0.6 = 120$, which inverts the role of the equations. Correct option: D."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A 10 kg block rests on a horizontal surface. The coefficient of static friction between the block and the surface is 0.5. What is the maximum (limiting) static friction force on the block? (Take $g = 10$ m/s$^2$.)",
+    "options": [
+      {
+        "text": "100 N"
+      },
+      {
+        "text": "50 N"
+      },
+      {
+        "text": "5 N"
+      },
+      {
+        "text": "200 N"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Easy",
+    "subtopic": "Friction",
+    "fsmTag": "limiting-static-friction-from-normal-force",
+    "concepts": [
+      "static-friction",
+      "limiting-friction",
+      "normal-reaction"
+    ],
+    "sourcePages": [
+      104
+    ],
+    "timeTargets": {
+      "ap_eapcet": 35,
+      "ts_eapcet": 35,
+      "jee_main": 53
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Horizontal surface, so $N = mg$; limiting friction asked.",
+      "steps": [
+        "**Trigger:** Limiting static friction on a flat surface, so $f_{s,max} = \\mu_s N = \\mu_s mg$.",
+        "**Action:** Compute $0.5 \\times 10 \\times 10$.",
+        "**Result:** $50$ N — option B."
+      ],
+      "sanityCheck": "50 N is half of the 100 N weight, consistent with $\\mu_s = 0.5$."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Block on a horizontal surface; asked for the maximum (limiting) static friction, which equals $\\mu_s$ times the normal reaction.",
+        "**EXTRACT:** $m = 10$ kg, $\\mu_s = 0.5$, $g = 10$ m/s$^2$. On a horizontal surface with no vertical applied force, $N = mg = 100$ N.",
+        "**EXECUTE:** $f_{s,max} = \\mu_s N = 0.5 \\times 100 = 50$ N.",
+        "**PROOF:** Limiting static friction $= \\mu_s mg = 0.5 \\times 10 \\times 10 = 50$ N (option B). Option A ($100$ N) is the normal reaction $mg$ alone, forgetting to multiply by $\\mu_s$. Option C ($5$ N) drops $g$, computing $\\mu_s m = 0.5 \\times 10 = 5$. Option D ($200$ N) divides by $\\mu_s$ instead of multiplying: $mg/\\mu_s = 100/0.5 = 200$. Correct option: B."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The force of friction between two surfaces in contact always acts:",
+    "options": [
+      {
+        "text": "parallel to the surfaces and opposite to the direction of (impending or actual) relative motion"
+      },
+      {
+        "text": "perpendicular to the surfaces in contact"
+      },
+      {
+        "text": "along the direction of relative motion"
+      },
+      {
+        "text": "vertically downward on the body"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Easy",
+    "subtopic": "Friction",
+    "fsmTag": "direction-of-friction-recall",
+    "concepts": [
+      "friction-direction",
+      "relative-motion",
+      "contact-force"
+    ],
+    "sourcePages": [
+      104
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Conceptual recall of the direction in which friction acts between two surfaces in contact.",
+        "**EXTRACT:** Friction is a tangential contact force that opposes relative sliding (or the tendency of relative sliding) between the surfaces.",
+        "**EXECUTE:** By definition, friction lies in the plane of contact (parallel to the surfaces) and points opposite to the relative motion or impending relative motion.",
+        "**PROOF:** Option A states friction acts parallel to the surfaces and opposite to the relative motion, which is the correct definition. Option B (perpendicular to the surfaces) describes the normal reaction, not friction. Option C (along the direction of motion) is the reverse of the truth, since friction opposes, not aids, relative motion. Option D (vertically downward) describes weight, not friction, and friction need not be vertical. Correct option: A."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A 4 kg block sits on a rough horizontal floor with coefficient of static friction $\\mu_s = 0.5$. A horizontal force of 15 N is applied to the block. What is the friction force acting on the block? (Take $g = 10$ m/s$^2$.)",
+    "options": [
+      {
+        "text": "20 N"
+      },
+      {
+        "text": "0 N"
+      },
+      {
+        "text": "15 N"
+      },
+      {
+        "text": "6 N"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Medium",
+    "subtopic": "Friction",
+    "fsmTag": "self-adjusting-static-friction-check",
+    "concepts": [
+      "static-friction",
+      "limiting-friction",
+      "self-adjusting-friction"
+    ],
+    "sourcePages": [
+      104,
+      105
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Applied force compared against limiting static friction; block found to stay at rest.",
+      "steps": [
+        "**Trigger:** Applied force (15 N) is below limiting friction $\\mu_s mg = 20$ N, so the block does not move.",
+        "**Action:** Static friction self-adjusts to balance the applied force exactly.",
+        "**Result:** Friction $= 15$ N — option C."
+      ],
+      "sanityCheck": "Block is at rest, so friction must equal the 15 N push for equilibrium."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** A horizontal force is applied to a block on a rough floor; decide whether it moves, then find the actual friction (which is self-adjusting up to a maximum).",
+        "**EXTRACT:** $m = 4$ kg, $\\mu_s = 0.5$, applied force $F = 15$ N, $g = 10$ m/s$^2$. Limiting friction $f_{s,max} = \\mu_s mg = 0.5 \\times 40 = 20$ N.",
+        "**EXECUTE:** Since $F = 15$ N $< f_{s,max} = 20$ N, the block stays at rest, so static friction equals the applied force: $f_s = 15$ N.",
+        "**PROOF:** The block is in equilibrium, so friction balances the 15 N applied force exactly, giving 15 N and confirming option C. Option A (20 N) is the maximum possible static friction $\\mu_s mg = 20$ N, but static friction only rises to that value when needed, not here. Option B (0 N) assumes the block slides freely with no resistance, which is wrong since 15 N $<$ 20 N. Option D (6 N) comes from $\\mu_s \\times F = 0.5 \\times 15 = 6$ N, wrongly applying the coefficient to the applied force. Correct option: C."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A 5 kg block on a rough horizontal floor has coefficient of kinetic friction $\\mu_k = 0.2$. It is pushed by a steady horizontal force of 20 N and slides along the floor. What is its acceleration? (Take $g = 10$ m/s$^2$.)",
+    "options": [
+      {
+        "text": "4 m/s$^2$"
+      },
+      {
+        "text": "6 m/s$^2$"
+      },
+      {
+        "text": "1 m/s$^2$"
+      },
+      {
+        "text": "2 m/s$^2$"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Medium",
+    "subtopic": "Friction",
+    "fsmTag": "net-force-with-kinetic-friction",
+    "concepts": [
+      "kinetic-friction",
+      "newtons-second-law",
+      "net-force"
+    ],
+    "sourcePages": [
+      105
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** A sliding block on a rough floor under a horizontal push; kinetic friction opposes motion and Newton's second law gives the acceleration.",
+        "**EXTRACT:** $m = 5$ kg, $\\mu_k = 0.2$, applied force $F = 20$ N, $g = 10$ m/s$^2$. Normal reaction $N = mg = 50$ N.",
+        "**EXECUTE:** Kinetic friction $f_k = \\mu_k N = 0.2 \\times 50 = 10$ N. Net force $= 20 - 10 = 10$ N. Acceleration $a = 10/5 = 2$ m/s$^2$.",
+        "**PROOF:** With friction 10 N opposing the 20 N push, $a = (20-10)/5 = 2$ m/s$^2$, confirming option D. Option A (4 m/s$^2$) ignores friction entirely: $20/5 = 4$. Option B (6 m/s$^2$) adds friction instead of subtracting it: $(20+10)/5 = 6$. Option C (1 m/s$^2$) uses $\\mu_k \\times F / m = 0.2 \\times 20 / 5 = 1$, wrongly applying the coefficient to the applied force. Correct option: D."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A block slides down a rough inclined plane at constant velocity. If the incline makes an angle of $45^\\circ$ with the horizontal, the coefficient of kinetic friction between the block and the incline is:",
+    "options": [
+      {
+        "text": "1"
+      },
+      {
+        "text": "0.5"
+      },
+      {
+        "text": "$\\sqrt{2}$"
+      },
+      {
+        "text": "0"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Medium",
+    "subtopic": "Friction",
+    "fsmTag": "constant-velocity-incline-mu-equals-tan-theta",
+    "concepts": [
+      "kinetic-friction",
+      "inclined-plane",
+      "constant-velocity-equilibrium"
+    ],
+    "sourcePages": [
+      106
+    ],
+    "timeTargets": {
+      "ap_eapcet": 50,
+      "ts_eapcet": 50,
+      "jee_main": 75
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Body slides down at constant velocity, so net force is zero along the incline.",
+      "steps": [
+        "**Trigger:** Constant velocity down a rough incline means the angle is the angle of repose, so $\\mu_k = \\tan\\theta$.",
+        "**Action:** Evaluate $\\tan 45^\\circ$.",
+        "**Result:** $\\mu_k = 1$ — option A."
+      ],
+      "sanityCheck": "At $45^\\circ$ the slope and base are equal, so $\\tan\\theta = 1$, a clean unit value."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Constant velocity down a rough incline means zero net force along the slope, balancing the gravity component against kinetic friction.",
+        "**EXTRACT:** $\\theta = 45^\\circ$, constant velocity (so acceleration is zero). Along the incline: $mg\\sin\\theta = f_k = \\mu_k mg\\cos\\theta$.",
+        "**EXECUTE:** Cancelling $mg$: $\\mu_k = \\tan\\theta = \\tan 45^\\circ = 1$.",
+        "**PROOF:** Constant velocity means zero net force, so $mg\\sin\\theta = \\mu_k mg\\cos\\theta$, giving $\\mu_k = \\tan 45^\\circ = 1$ (option A). Option B ($0.5$) comes from multiplying $\\sin 45^\\circ \\cos 45^\\circ = 0.5$ instead of taking their ratio $\\tan 45^\\circ$. Option C ($\\sqrt{2}$) uses $\\sec 45^\\circ = 1/\\cos 45^\\circ$ instead of $\\tan 45^\\circ$. Option D ($0$) describes a smooth incline, contradicting the rough surface and constant-velocity motion. Correct option: A."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A 5 kg block rests on a rough horizontal floor with coefficient of static friction $\\mu_s = 0.4$ and coefficient of kinetic friction $\\mu_k = 0.3$. A horizontal force of 25 N is applied. What is the acceleration of the block? (Take $g = 10$ m/s$^2$.)",
+    "options": [
+      {
+        "text": "1 m/s$^2$"
+      },
+      {
+        "text": "2 m/s$^2$"
+      },
+      {
+        "text": "5 m/s$^2$"
+      },
+      {
+        "text": "0 m/s$^2$"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Medium",
+    "subtopic": "Friction",
+    "fsmTag": "check-limiting-then-kinetic-acceleration",
+    "concepts": [
+      "static-friction",
+      "kinetic-friction",
+      "newtons-second-law"
+    ],
+    "sourcePages": [
+      105
+    ],
+    "timeTargets": {
+      "ap_eapcet": 70,
+      "ts_eapcet": 70,
+      "jee_main": 105
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Both static and kinetic coefficients are given, so first test whether the applied force overcomes limiting static friction, then use kinetic friction for the acceleration once it moves.",
+        "**EXTRACT:** $m = 5$ kg, $\\mu_s = 0.4$, $\\mu_k = 0.3$, $F = 25$ N, $g = 10$ m/s$^2$. Normal reaction $N = mg = 50$ N.",
+        "**EXECUTE:** Limiting friction $f_{s,max} = \\mu_s N = 0.4 \\times 50 = 20$ N. Since $25 > 20$ the block moves. Kinetic friction $f_k = \\mu_k N = 0.3 \\times 50 = 15$ N. Net force $= 25 - 15 = 10$ N, so $a = 10/5 = 2$ m/s$^2$.",
+        "**PROOF:** The block moves and the correct resistance once moving is kinetic friction 15 N, giving $a = (25-15)/5 = 2$ m/s$^2$ and confirming option B. Option A (1 m/s$^2$) wrongly uses static friction 20 N as the resistance while moving: $(25-20)/5 = 1$. Option C (5 m/s$^2$) ignores friction entirely: $25/5 = 5$. Option D (0 m/s$^2$) assumes the block stays at rest, but $25$ N exceeds the 20 N limiting friction, so it does move. Correct option: B."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A 4 kg block rests on top of a 6 kg block, which itself sits on a smooth (frictionless) horizontal floor. The coefficient of friction between the two blocks is 0.4. A horizontal force is applied to the TOP block. What is the maximum horizontal force that can be applied to the top block so that the two blocks move together without slipping? (Take $g = 10$ m/s$^2$.)",
+    "options": [
+      {
+        "text": "16 N"
+      },
+      {
+        "text": "24 N"
+      },
+      {
+        "text": "26.7 N"
+      },
+      {
+        "text": "40 N"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Hard",
+    "subtopic": "Friction",
+    "fsmTag": "two-block-no-slip-max-force-from-shared-acceleration",
+    "concepts": [
+      "friction",
+      "systems-of-blocks",
+      "common-acceleration"
+    ],
+    "sourcePages": [
+      105,
+      106
+    ],
+    "timeTargets": {
+      "ap_eapcet": 110,
+      "ts_eapcet": 110,
+      "jee_main": 165
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** The force is on the top block, but the only thing dragging the bottom block forward is friction between the blocks; at the verge of slipping that friction is at its maximum, which sets the largest common acceleration.",
+        "**EXTRACT:** $m_{top} = 4$ kg, $m_{bottom} = 6$ kg, $\\mu = 0.4$ between blocks, floor smooth, $g = 10$ m/s$^2$. Friction on the bottom block from the top: $f_{max} = \\mu m_{top} g$.",
+        "**EXECUTE:** $f_{max} = 0.4 \\times 4 \\times 10 = 16$ N. The bottom block (smooth floor) gets only this friction, so the maximum common acceleration is $a = f_{max}/m_{bottom} = 16/6 = 2.67$ m/s$^2$. For the whole system, $F_{max} = (m_{top}+m_{bottom}) a = 10 \\times 2.67 = 26.7$ N.",
+        "**PROOF:** For the blocks to move together with common acceleration $a$, friction must supply the top block’s acceleration; the maximum available friction is $\\mu m_{top} g = 0.4 \\times 4 \\times 10 = 16$ N, giving $a_{max} = 16/6 = 2.67$ m/s$^2$, so $F_{max} = (m_{top}+m_{bottom})\\,a_{max} = 10 \\times 2.67 = 26.7$ N (option C). Option A ($16$ N) is the maximum friction itself, mistaken for the applied force. Option B ($24$ N) uses the bottom block’s weight in the friction limit: $\\mu m_{bottom} g = 0.4 \\times 6 \\times 10 = 24$ N. Option D ($40$ N) loads the contact with the total weight: $\\mu (m_{top}+m_{bottom}) g = 0.4 \\times 10 \\times 10 = 40$ N. Correct option: C."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A 10 kg block is pulled at constant velocity along a rough horizontal floor by a force directed at $37^\\circ$ above the horizontal. The coefficient of kinetic friction is $\\mu_k = 0.5$. Find the magnitude of the pulling force. (Take $g = 10$ m/s$^2$, $\\sin 37^\\circ = 0.6$, $\\cos 37^\\circ = 0.8$.)",
+    "options": [
+      {
+        "text": "50 N"
+      },
+      {
+        "text": "62.5 N"
+      },
+      {
+        "text": "41.7 N"
+      },
+      {
+        "text": "45.5 N"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Hard",
+    "subtopic": "Friction",
+    "fsmTag": "pulled-at-angle-constant-velocity-force-balance",
+    "concepts": [
+      "kinetic-friction",
+      "force-resolution",
+      "equilibrium"
+    ],
+    "sourcePages": [
+      106,
+      107
+    ],
+    "timeTargets": {
+      "ap_eapcet": 115,
+      "ts_eapcet": 115,
+      "jee_main": 173
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** A force pulled at an angle has both a horizontal component (driving motion) and a vertical component (lifting the block, reducing the normal force); constant velocity means horizontal forces balance and the reduced normal force sets the friction.",
+        "**EXTRACT:** $m = 10$ kg, $\\theta = 37^\\circ$, $\\mu_k = 0.5$, $g = 10$ m/s$^2$, $\\sin 37^\\circ = 0.6$, $\\cos 37^\\circ = 0.8$. Vertical: $N = mg - F\\sin\\theta$. Horizontal: $F\\cos\\theta = \\mu_k N$.",
+        "**EXECUTE:** $F\\cos\\theta = \\mu_k(mg - F\\sin\\theta) \\Rightarrow 0.8F = 0.5(100 - 0.6F) \\Rightarrow 0.8F = 50 - 0.3F \\Rightarrow 1.1F = 50 \\Rightarrow F = 45.5$ N.",
+        "**PROOF:** Solving $1.1F = 50$ gives $F = 45.5$ N; check: $0.8 \\times 45.5 = 36.4$ N and $0.5(100 - 0.6 \\times 45.5) = 0.5 \\times 72.7 = 36.4$ N, balanced, confirming option D. Option A (50 N) ignores the vertical lift component, taking $N = mg$ so friction $= \\mu_k mg = 0.5 \\times 100 = 50$ N and equating $F$ to that. Option B (62.5 N) keeps $N = mg$ (no lift) but divides by $\\cos\\theta$: $\\mu_k mg/\\cos\\theta = 50/0.8 = 62.5$ N. Option C (41.7 N) mis-projects the lift, using $\\mu_k F\\cos\\theta$ instead of $\\mu_k F\\sin\\theta$ in the normal equation, giving denominator $\\cos\\theta + \\mu_k\\cos\\theta = 0.8 + 0.4 = 1.2$, so $50/1.2 = 41.7$ N. Correct option: D."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A 60 kg person stands on a weighing scale inside a lift that is accelerating upward at $2 \\text{ m/s}^2$. Take $g = 10 \\text{ m/s}^2$. What does the scale read?",
+    "options": [
+      {
+        "text": "720 N"
+      },
+      {
+        "text": "600 N"
+      },
+      {
+        "text": "480 N"
+      },
+      {
+        "text": "120 N"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Easy",
+    "subtopic": "Dynamics: Connected Bodies, Inclines & Lifts",
+    "fsmTag": "lift-apparent-weight",
+    "concepts": [
+      "apparent-weight",
+      "newtons-second-law",
+      "non-inertial-lift"
+    ],
+    "sourcePages": [
+      111
+    ],
+    "timeTargets": {
+      "ap_eapcet": 35,
+      "ts_eapcet": 35,
+      "jee_main": 53
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Lift accelerating upward, so apparent weight exceeds true weight; scale reading is the normal force N.",
+      "steps": [
+        "**Trigger:** Lift accelerating UP means the floor must push harder than gravity, so $N > mg$ and $N = m(g+a)$.",
+        "**Action:** Compute $N = 60 \\times (10 + 2) = 60 \\times 12$.",
+        "**Result:** $N = 720 \\text{ N}$ — option A."
+      ],
+      "sanityCheck": "$720 \\text{ N} > mg = 600 \\text{ N}$, as expected for upward acceleration."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** A person on a scale in an accelerating lift; the scale reads the normal force $N$. With upward acceleration the body needs a net upward force, so $N$ must exceed $mg$.",
+        "**EXTRACT:** $m = 60 \\text{ kg}$, $a = 2 \\text{ m/s}^2$ upward, $g = 10 \\text{ m/s}^2$. Newton's second law on the person (up positive): $N - mg = ma$.",
+        "**EXECUTE:** $N = m(g + a) = 60 \\times (10 + 2) = 60 \\times 12 = 720 \\text{ N}$.",
+        "**PROOF:** $N = 60 \\times 12 = 720 \\text{ N}$ confirms option A. Option B, $600 \\text{ N}$, ignores the acceleration and uses true weight $mg = 60 \\times 10 = 600 \\text{ N}$. Option C, $480 \\text{ N}$, wrongly subtracts the acceleration as if the lift went down: $m(g - a) = 60 \\times 8 = 480 \\text{ N}$. Option D, $120 \\text{ N}$, gives only the extra force needed for acceleration, $ma = 60 \\times 2 = 120 \\text{ N}$, instead of the full normal force. Correct option: A."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Two masses of 6 kg and 4 kg hang from the two ends of a light, inextensible string passing over a frictionless pulley (an Atwood machine). Take $g = 10 \\text{ m/s}^2$. What is the tension in the string?",
+    "options": [
+      {
+        "text": "60 N"
+      },
+      {
+        "text": "48 N"
+      },
+      {
+        "text": "100 N"
+      },
+      {
+        "text": "40 N"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Medium",
+    "subtopic": "Dynamics: Connected Bodies, Inclines & Lifts",
+    "fsmTag": "atwood-tension",
+    "concepts": [
+      "atwood-machine",
+      "tension",
+      "connected-bodies"
+    ],
+    "sourcePages": [
+      110
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Ideal Atwood machine (massless string, frictionless pulley); the closed-form tension result applies directly.",
+      "steps": [
+        "**Trigger:** Atwood machine asking for string tension fits the standard result $T = \\dfrac{2 m_1 m_2 g}{m_1 + m_2}$.",
+        "**Action:** Substitute: $T = \\dfrac{2 \\times 6 \\times 4 \\times 10}{6 + 4} = \\dfrac{480}{10}$.",
+        "**Result:** $T = 48 \\text{ N}$ — option B."
+      ],
+      "sanityCheck": "$T = 48 \\text{ N}$ lies between the two weights $40 \\text{ N}$ and $60 \\text{ N}$, as a valid Atwood tension must."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** A frictionless-pulley Atwood machine with unequal masses. The heavier mass falls, the lighter rises, and a single tension $T$ acts in the string throughout.",
+        "**EXTRACT:** $m_1 = 6 \\text{ kg}$, $m_2 = 4 \\text{ kg}$, $g = 10 \\text{ m/s}^2$. System acceleration $a = \\dfrac{(m_1 - m_2)g}{m_1 + m_2}$ and tension $T = \\dfrac{2 m_1 m_2 g}{m_1 + m_2}$.",
+        "**EXECUTE:** $a = \\dfrac{(6-4)\\times 10}{10} = 2 \\text{ m/s}^2$. Then $T = \\dfrac{2 \\times 6 \\times 4 \\times 10}{10} = \\dfrac{480}{10} = 48 \\text{ N}$. Check on the 4 kg mass: $T - m_2 g = m_2 a \\Rightarrow 48 - 40 = 8 = 4 \\times 2$. Consistent.",
+        "**PROOF:** $T = 48 \\text{ N}$ confirms option B. Option A, $60 \\text{ N}$, takes the heavier weight $m_1 g = 6 \\times 10 = 60 \\text{ N}$, treating tension as if the heavier mass simply hung at rest. Option C, $100 \\text{ N}$, adds both weights, $(6+4)\\times 10 = 100 \\text{ N}$. Option D, $40 \\text{ N}$, takes the lighter weight, $m_2 g = 4 \\times 10 = 40 \\text{ N}$, assuming the tension just balances the rising mass. Correct option: B."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Three blocks of masses 1 kg, 2 kg and 3 kg are connected in that order by light strings and rest on a smooth horizontal floor. A horizontal force of 12 N is applied to the 1 kg block, pulling the whole train. What is the tension in the string connecting the 2 kg and 3 kg blocks?",
+    "options": [
+      {
+        "text": "12 N"
+      },
+      {
+        "text": "10 N"
+      },
+      {
+        "text": "4 N"
+      },
+      {
+        "text": "6 N"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Medium",
+    "subtopic": "Dynamics: Connected Bodies, Inclines & Lifts",
+    "fsmTag": "connected-train-tension",
+    "concepts": [
+      "connected-bodies",
+      "tension",
+      "newtons-second-law"
+    ],
+    "sourcePages": [
+      110
+    ],
+    "timeTargets": {
+      "ap_eapcet": 65,
+      "ts_eapcet": 65,
+      "jee_main": 98
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Smooth floor so the only horizontal force on the last block is the string tension; the string between 2 kg and 3 kg pulls only the 3 kg block.",
+      "steps": [
+        "**Trigger:** Tension in a string of a connected train equals the mass it pulls times the common acceleration; the 2 kg–3 kg string pulls only the trailing 3 kg block.",
+        "**Action:** Common $a = \\dfrac{12}{1+2+3} = 2 \\text{ m/s}^2$; then $T = 3 \\times 2$.",
+        "**Result:** $T = 6 \\text{ N}$ — option D."
+      ],
+      "sanityCheck": "$T = 6 \\text{ N}$ is less than the 12 N applied force, correct since the string pulls only part of the train."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** A 3-block train on a smooth floor pulled from the front. All blocks share one acceleration. The tension in a given string equals (mass on the far side of that string) times the acceleration.",
+        "**EXTRACT:** Masses $1, 2, 3 \\text{ kg}$; total $= 6 \\text{ kg}$; applied force $F = 12 \\text{ N}$. The 2 kg–3 kg string is the last link, so it pulls only the 3 kg block.",
+        "**EXECUTE:** $a = \\dfrac{F}{m_{total}} = \\dfrac{12}{6} = 2 \\text{ m/s}^2$. Tension on the 3 kg block: $T = 3 \\times 2 = 6 \\text{ N}$.",
+        "**PROOF:** $T = 6 \\text{ N}$ confirms option D. Option A, $12 \\text{ N}$, mistakes the tension for the entire applied force. Option B, $10 \\text{ N}$, pulls the combined 2 kg + 3 kg = 5 kg behind the first string: $5 \\times 2 = 10 \\text{ N}$ (that is the 1 kg–2 kg tension, not the asked one). Option C, $4 \\text{ N}$, applies the acceleration to the 2 kg block alone: $2 \\times 2 = 4 \\text{ N}$. Correct option: D."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A 50 kg person stands on a weighing scale inside a lift. The scale reads 450 N. Take $g = 10 \\text{ m/s}^2$. What is the lift's acceleration?",
+    "options": [
+      {
+        "text": "1 m/s$^2$ upward"
+      },
+      {
+        "text": "9 m/s$^2$ downward"
+      },
+      {
+        "text": "Zero (lift not accelerating)"
+      },
+      {
+        "text": "1 m/s$^2$ downward"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Medium",
+    "subtopic": "Dynamics: Connected Bodies, Inclines & Lifts",
+    "fsmTag": "lift-acceleration-from-reading",
+    "concepts": [
+      "apparent-weight",
+      "newtons-second-law",
+      "non-inertial-lift"
+    ],
+    "sourcePages": [
+      111
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** The scale reads the normal force $N = 450 \\text{ N}$. Since $N < mg = 500 \\text{ N}$, the apparent weight is reduced, which means the lift accelerates downward.",
+        "**EXTRACT:** $m = 50 \\text{ kg}$, $N = 450 \\text{ N}$, $g = 10 \\text{ m/s}^2$. True weight $mg = 50 \\times 10 = 500 \\text{ N}$. For downward acceleration $a$: $N = m(g - a)$.",
+        "**EXECUTE:** $450 = 50(10 - a) \\Rightarrow 10 - a = 9 \\Rightarrow a = 1 \\text{ m/s}^2$, directed downward.",
+        "**PROOF:** $a = 1 \\text{ m/s}^2$ downward confirms option D. Option A, $1 \\text{ m/s}^2$ upward, has the magnitude right but the wrong direction; upward acceleration would give $N = m(g+a) = 50 \\times 11 = 550 \\text{ N}$, not 450 N. Option B, $9 \\text{ m/s}^2$ downward, comes from stopping at the intermediate value $g - a = 9$ and wrongly calling 9 the acceleration. Option C, zero, would require $N = mg = 500 \\text{ N}$, but the scale reads 450 N, so the lift must be accelerating. Correct option: D."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A 2 kg block rests on a smooth (frictionless) incline of $30^\\circ$. It is connected by a light string over a frictionless pulley at the top of the incline to a 2 kg mass hanging vertically. Take $g = 10 \\text{ m/s}^2$. What is the magnitude of the acceleration of the system?",
+    "options": [
+      {
+        "text": "5 m/s$^2$"
+      },
+      {
+        "text": "0 (system stays at rest)"
+      },
+      {
+        "text": "1.25 m/s$^2$"
+      },
+      {
+        "text": "2.5 m/s$^2$"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Medium",
+    "subtopic": "Dynamics: Connected Bodies, Inclines & Lifts",
+    "fsmTag": "incline-pulley-acceleration",
+    "concepts": [
+      "inclined-plane",
+      "connected-bodies",
+      "newtons-second-law"
+    ],
+    "sourcePages": [
+      109,
+      110
+    ],
+    "timeTargets": {
+      "ap_eapcet": 70,
+      "ts_eapcet": 70,
+      "jee_main": 105
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** A mass on a smooth incline tied over a pulley to a hanging mass. The hanging weight drives the motion; the incline block opposes with its gravity component along the slope, $m_1 g \\sin\\theta$. Both share one acceleration.",
+        "**EXTRACT:** Incline block $m_1 = 2 \\text{ kg}$, $\\theta = 30^\\circ$ ($\\sin 30^\\circ = 0.5$), hanging mass $m_2 = 2 \\text{ kg}$, $g = 10 \\text{ m/s}^2$. Driving force $= m_2 g$; opposing force $= m_1 g \\sin\\theta$. $a = \\dfrac{m_2 g - m_1 g \\sin\\theta}{m_1 + m_2}$.",
+        "**EXECUTE:** $m_2 g = 2 \\times 10 = 20 \\text{ N}$; $m_1 g \\sin 30^\\circ = 2 \\times 10 \\times 0.5 = 10 \\text{ N}$. $a = \\dfrac{20 - 10}{2 + 2} = \\dfrac{10}{4} = 2.5 \\text{ m/s}^2$.",
+        "**PROOF:** $a = 2.5 \\text{ m/s}^2$ confirms option D. Option A, $5 \\text{ m/s}^2$, drops the system mass on the bottom and divides the net force by the hanging mass only: $\\dfrac{20 - 10}{2} = 5 \\text{ m/s}^2$. Option B, $0$, wrongly assumes the equal masses balance, ignoring that $\\sin 30^\\circ$ halves the incline block's pull so the hanging side wins. Option C, $1.25 \\text{ m/s}^2$, halves the correct answer by dividing the net force $10 \\text{ N}$ by 8 instead of 4, i.e. applying $\\sin 30^\\circ$ a second time to the denominator. Correct option: D."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A 4 kg block on a rough horizontal table ($\\mu_k = 0.25$) is connected by a light string over a frictionless pulley at the table's edge to a 2 kg mass hanging vertically. Take $g = 10 \\text{ m/s}^2$. What are the acceleration of the system and the tension in the string?",
+    "options": [
+      {
+        "text": "$3.33 \\text{ m/s}^2$ and $13.3 \\text{ N}$"
+      },
+      {
+        "text": "$1.67 \\text{ m/s}^2$ and $16.7 \\text{ N}$"
+      },
+      {
+        "text": "$1.67 \\text{ m/s}^2$ and $20 \\text{ N}$"
+      },
+      {
+        "text": "$0.83 \\text{ m/s}^2$ and $18.3 \\text{ N}$"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Hard",
+    "subtopic": "Dynamics: Connected Bodies, Inclines & Lifts",
+    "fsmTag": "horizontal-pulley-friction",
+    "concepts": [
+      "kinetic-friction",
+      "connected-bodies",
+      "tension"
+    ],
+    "sourcePages": [
+      109,
+      110
+    ],
+    "timeTargets": {
+      "ap_eapcet": 110,
+      "ts_eapcet": 110,
+      "jee_main": 165
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** A table block held by friction, tied over a pulley to a hanging mass. The hanging weight drives the system; kinetic friction on the table block opposes it. One common acceleration; tension found from either block afterward.",
+        "**EXTRACT:** Table block $m_1 = 4 \\text{ kg}$, $\\mu_k = 0.25$, hanging mass $m_2 = 2 \\text{ kg}$, $g = 10 \\text{ m/s}^2$. Friction $f = \\mu_k m_1 g$. $a = \\dfrac{m_2 g - \\mu_k m_1 g}{m_1 + m_2}$; tension from the hanging mass $T = m_2(g - a)$.",
+        "**EXECUTE:** Driving $m_2 g = 20 \\text{ N}$; friction $f = 0.25 \\times 4 \\times 10 = 10 \\text{ N}$. $a = \\dfrac{20 - 10}{4 + 2} = \\dfrac{10}{6} = 1.67 \\text{ m/s}^2$. $T = m_2(g - a) = 2 \\times (10 - 1.67) = 2 \\times 8.33 = 16.7 \\text{ N}$. Check on the table block: $T - f = 16.7 - 10 = 6.7 = 4 \\times 1.67$. Consistent.",
+        "**PROOF:** $a = 1.67 \\text{ m/s}^2$, $T = 16.7 \\text{ N}$ confirms option B. Option A, $3.33 \\text{ m/s}^2$ and $13.3 \\text{ N}$, ignores friction entirely: $a = \\dfrac{20}{6} = 3.33 \\text{ m/s}^2$ and $T = 2(10 - 3.33) = 13.3 \\text{ N}$. Option C, $1.67 \\text{ m/s}^2$ and $20 \\text{ N}$, has the right acceleration but wrongly sets $T = m_2 g = 2 \\times 10 = 20 \\text{ N}$, forgetting that the falling mass accelerates so $T < m_2 g$. Option D, $0.83 \\text{ m/s}^2$ and $18.3 \\text{ N}$, divides the net force by the wrong total $(4+2)\\times 2 = 12$, giving half the correct acceleration, $\\dfrac{10}{12} = 0.83 \\text{ m/s}^2$, and $T = 2(10 - 0.83) = 18.3 \\text{ N}$. Correct option: B."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A body moves in a circle of radius 5 m at a uniform speed of 10 m/s. What is the magnitude of its centripetal acceleration?",
+    "options": [
+      {
+        "text": "$20 \\text{ m/s}^2$"
+      },
+      {
+        "text": "$2 \\text{ m/s}^2$"
+      },
+      {
+        "text": "$50 \\text{ m/s}^2$"
+      },
+      {
+        "text": "$100 \\text{ m/s}^2$"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Easy",
+    "subtopic": "Circular Motion (Dynamics)",
+    "fsmTag": "centripetal-acceleration-direct",
+    "concepts": [
+      "centripetal-acceleration",
+      "uniform-circular-motion"
+    ],
+    "sourcePages": [
+      108
+    ],
+    "timeTargets": {
+      "ap_eapcet": 35,
+      "ts_eapcet": 35,
+      "jee_main": 53
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Recall the centripetal acceleration formula $a = v^2/R$ and that $v$ and $R$ are given directly.",
+      "steps": [
+        "**Trigger:** Uniform circular motion with $v$ and $R$ given asks for centripetal acceleration — apply $a = v^2/R$ in one shot.",
+        "**Action:** Compute $a = 10^2/5 = 100/5$.",
+        "**Result:** $a = 20 \\text{ m/s}^2$ — option A."
+      ],
+      "sanityCheck": "Units: $(\\text{m/s})^2/\\text{m} = \\text{m/s}^2$, correct for an acceleration; magnitude order ~20 is reasonable."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** A body in uniform circular motion has a centripetal (radial, inward) acceleration of magnitude $a = v^2/R$, even though its speed is constant. This is a direct single-formula substitution.",
+        "**EXTRACT:** Radius $R = 5 \\text{ m}$, speed $v = 10 \\text{ m/s}$. Required: centripetal acceleration $a$.",
+        "**EXECUTE:** $a = \\dfrac{v^2}{R} = \\dfrac{10^2}{5} = \\dfrac{100}{5} = 20 \\text{ m/s}^2$.",
+        "**PROOF:** The correct value $20 \\text{ m/s}^2$ is option A. Option B, $2 \\text{ m/s}^2$, comes from using $v/R = 10/5 = 2$ (treating it like an angular-velocity ratio rather than squaring $v$). Option C, $50 \\text{ m/s}^2$, comes from $v^2/2 = 100/2 = 50$ (squaring $v$ but dropping $R$ and instead dividing by 2). Option D, $100 \\text{ m/s}^2$, is just $v^2 = 100$ (forgetting to divide by $R$ entirely). Correct option: A."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The centripetal force acting on a body in uniform circular motion does no work on the body. Why?",
+    "options": [
+      {
+        "text": "Its magnitude is very small compared to the body's weight."
+      },
+      {
+        "text": "It is always directed perpendicular to the velocity (toward the centre), so its component along the displacement is zero."
+      },
+      {
+        "text": "It is exactly balanced by an equal and opposite centrifugal force, giving zero net force."
+      },
+      {
+        "text": "The body returns to its starting point at the end of each cycle, so the net displacement is zero."
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Easy",
+    "subtopic": "Circular Motion (Dynamics)",
+    "fsmTag": "work-by-perpendicular-force-concept",
+    "concepts": [
+      "work-energy",
+      "centripetal-force"
+    ],
+    "sourcePages": [
+      108
+    ],
+    "timeTargets": {
+      "ap_eapcet": 35,
+      "ts_eapcet": 35,
+      "jee_main": 53
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** This is a concept question about why work done by the centripetal force is zero. Work $W = \\vec{F}\\cdot\\vec{s} = Fs\\cos\\theta$; if the force is perpendicular to the instantaneous displacement (velocity), then $\\theta = 90^\\circ$ and $\\cos 90^\\circ = 0$, so $W = 0$ at every instant.",
+        "**EXTRACT:** In uniform circular motion the velocity is tangential while the centripetal force points radially inward toward the centre. The angle between force and velocity is therefore $90^\\circ$ throughout the motion.",
+        "**EXECUTE:** Since $\\vec{F} \\perp \\vec{v}$ always, the instantaneous power $P = \\vec{F}\\cdot\\vec{v} = 0$ and hence the work done over any interval is zero. This is exactly the reasoning in option B.",
+        "**PROOF:** Option B correctly states the force is perpendicular to velocity, the true reason work is zero. Option A is wrong because work being zero has nothing to do with the force's magnitude — even a large perpendicular force does zero work; and the centripetal force is not generally small. Option C is wrong because in the inertial frame there is no real centrifugal force to balance it; the centripetal force is the unbalanced net force that produces the acceleration, not a balanced pair. Option D is wrong because zero net work does not require returning to the start — work is zero on every infinitesimal segment regardless of position, and a non-zero net displacement over a partial arc still yields zero work. Correct option: B."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A particle moves in a circle of radius 0.5 m, completing 120 revolutions per minute. What is its linear speed? (Take $\\pi = 3.14$.)",
+    "options": [
+      {
+        "text": "$3.14 \\text{ m/s}$"
+      },
+      {
+        "text": "$1 \\text{ m/s}$"
+      },
+      {
+        "text": "$12.57 \\text{ m/s}$"
+      },
+      {
+        "text": "$6.28 \\text{ m/s}$"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Easy",
+    "subtopic": "Circular Motion (Dynamics)",
+    "fsmTag": "angular-to-linear-speed",
+    "concepts": [
+      "angular-velocity",
+      "linear-speed"
+    ],
+    "sourcePages": [
+      108
+    ],
+    "timeTargets": {
+      "ap_eapcet": 40,
+      "ts_eapcet": 40,
+      "jee_main": 60
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Frequency is given in revolutions per minute and we need linear speed. The path is: convert rev/min to rev/s, then to angular velocity $\\omega = 2\\pi f$, then $v = \\omega R$.",
+        "**EXTRACT:** Radius $R = 0.5 \\text{ m}$; frequency $f = 120 \\text{ rev/min} = 120/60 = 2 \\text{ rev/s}$. Required: linear speed $v$.",
+        "**EXECUTE:** $\\omega = 2\\pi f = 2\\pi(2) = 4\\pi \\text{ rad/s}$. Then $v = \\omega R = 4\\pi \\times 0.5 = 2\\pi = 2 \\times 3.14 = 6.28 \\text{ m/s}$.",
+        "**PROOF:** $\\omega = 2\\pi f = 2\\pi (120/60) = 4\\pi$ rad/s; $v = \\omega R = 4\\pi \\times 0.5 = 2\\pi = 6.28$ m/s (option D). Option A ($3.14$ m/s) drops the factor 2 in $\\omega = 2\\pi f$: $v = \\pi f R = \\pi \\times 2 \\times 0.5 = 3.14$. Option C ($12.57$ m/s) reports $\\omega = 4\\pi$ as the speed, forgetting to multiply by $R$. Option B ($1$ m/s) uses the frequency $2$ rev/s as if it were $\\omega$ in rad/s (omitting $2\\pi$): $2 \\times 0.5 = 1$. Correct option: D."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A car can just negotiate a turn of radius 40 m on a level road for which the coefficient of static friction between the tyres and the road is 0.4. What is the maximum safe speed for the turn? (Take $g = 10 \\text{ m/s}^2$.)",
+    "options": [
+      {
+        "text": "$160 \\text{ m/s}$"
+      },
+      {
+        "text": "$4 \\text{ m/s}$"
+      },
+      {
+        "text": "$20 \\text{ m/s}$"
+      },
+      {
+        "text": "$12.6 \\text{ m/s}$"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Medium",
+    "subtopic": "Circular Motion (Dynamics)",
+    "fsmTag": "level-road-max-speed",
+    "concepts": [
+      "friction-as-centripetal-force",
+      "banking-and-turning"
+    ],
+    "sourcePages": [
+      109
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Recall that on a level road friction supplies the centripetal force, giving the standard result $v_{max} = \\sqrt{\\mu R g}$.",
+      "steps": [
+        "**Trigger:** \"Just negotiates a level turn\" with $\\mu$, $R$, $g$ given is the textbook $v_{max} = \\sqrt{\\mu R g}$ case.",
+        "**Action:** Compute $\\sqrt{0.4 \\times 40 \\times 10} = \\sqrt{160}$.",
+        "**Result:** $v_{max} = \\sqrt{160} \\approx 12.6 \\text{ m/s}$ — option D."
+      ],
+      "sanityCheck": "$\\sqrt{160}$ lies between $\\sqrt{144}=12$ and $\\sqrt{169}=13$, so ~12.6 is consistent; units $\\sqrt{\\text{m}\\cdot\\text{m/s}^2} = \\text{m/s}$ check out."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** On a flat (unbanked) road, the only horizontal force available to bend the car's path is static friction. The car is at maximum speed when friction is at its limiting value, so $f_{max} = \\mu mg$ must equal the required centripetal force $mv^2/R$.",
+        "**EXTRACT:** Radius $R = 40 \\text{ m}$, coefficient of static friction $\\mu = 0.4$, $g = 10 \\text{ m/s}^2$. Required: maximum speed $v_{max}$.",
+        "**EXECUTE:** Set $\\dfrac{mv_{max}^2}{R} = \\mu mg$, so $v_{max}^2 = \\mu R g = 0.4 \\times 40 \\times 10 = 160$, giving $v_{max} = \\sqrt{160} \\approx 12.6 \\text{ m/s}$.",
+        "**PROOF:** The correct value is $v_{max} = \\sqrt{\\mu R g} = \\sqrt{0.4 \\times 40 \\times 10} = \\sqrt{160} \\approx 12.6 \\text{ m/s}$ (option D). Option A ($160 \\text{ m/s}$) computes $\\mu R g = 160$ but forgets to take the square root. Option B ($4 \\text{ m/s}$) drops the factor $g$: $\\sqrt{\\mu R} = \\sqrt{16} = 4$. Option C ($20 \\text{ m/s}$) drops the factor $\\mu$: $\\sqrt{R g} = \\sqrt{400} = 20$. Correct option: D."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A bob of mass 0.5 kg is attached to a string of length 1 m and whirled in a horizontal circle as a conical pendulum, so that the string makes an angle of $37^\\circ$ with the vertical. What is the tension in the string? (Take $g = 10 \\text{ m/s}^2$, $\\cos 37^\\circ = 0.8$.)",
+    "options": [
+      {
+        "text": "$5 \\text{ N}$"
+      },
+      {
+        "text": "$4 \\text{ N}$"
+      },
+      {
+        "text": "$6.67 \\text{ N}$"
+      },
+      {
+        "text": "$6.25 \\text{ N}$"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Hard",
+    "subtopic": "Circular Motion (Dynamics)",
+    "fsmTag": "conical-pendulum-tension",
+    "concepts": [
+      "conical-pendulum",
+      "force-resolution",
+      "vertical-equilibrium"
+    ],
+    "sourcePages": [
+      109
+    ],
+    "timeTargets": {
+      "ap_eapcet": 90,
+      "ts_eapcet": 90,
+      "jee_main": 135
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Recognise that for a conical pendulum the vertical component of tension supports the weight: $T\\cos\\theta = mg$, hence $T = mg/\\cos\\theta$.",
+      "steps": [
+        "**Trigger:** Conical pendulum tension is governed by vertical balance $T\\cos\\theta = mg$, so $T = mg/\\cos\\theta$.",
+        "**Action:** Compute $T = \\dfrac{0.5 \\times 10}{0.8} = \\dfrac{5}{0.8}$.",
+        "**Result:** $T = 6.25 \\text{ N}$ — option D."
+      ],
+      "sanityCheck": "Tension must exceed the weight $mg = 5 \\text{ N}$ because it also supplies the horizontal centripetal pull; $6.25 > 5$, consistent."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** In a conical pendulum the bob moves in a horizontal circle while the string sweeps a cone. The tension has a vertical component (balancing gravity) and a horizontal component (providing centripetal force). The tension is found purely from vertical equilibrium: $T\\cos\\theta = mg$.",
+        "**EXTRACT:** Mass $m = 0.5 \\text{ kg}$, angle from vertical $\\theta = 37^\\circ$ with $\\cos 37^\\circ = 0.8$, $g = 10 \\text{ m/s}^2$. The string length 1 m is not needed for the tension. Required: tension $T$.",
+        "**EXECUTE:** Vertical balance gives $T\\cos\\theta = mg$, so $T = \\dfrac{mg}{\\cos\\theta} = \\dfrac{0.5 \\times 10}{0.8} = \\dfrac{5}{0.8} = 6.25 \\text{ N}$.",
+        "**PROOF:** The correct value $6.25 \\text{ N}$ is option D. Option A, $5 \\text{ N}$, comes from taking $T = mg = 0.5 \\times 10 = 5$, ignoring the angle entirely. Option B, $4 \\text{ N}$, comes from multiplying instead of dividing by the cosine: $mg\\cos\\theta = 5 \\times 0.8 = 4$. Option C, $6.67 \\text{ N}$, comes from using $\\sin 37^\\circ = 0.6$ in place of cosine: $mg/\\sin\\theta = 5/0.6 = 6.67$. Correct option: D."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  }
+]

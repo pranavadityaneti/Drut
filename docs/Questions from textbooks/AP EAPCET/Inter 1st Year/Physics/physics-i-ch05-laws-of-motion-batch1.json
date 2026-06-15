@@ -1,0 +1,2621 @@
+[
+  {
+    "questionText": "Newton's first law of motion is essentially a statement about:",
+    "options": [
+      {
+        "text": "the inertia of a body — its tendency to resist any change in its state of rest or uniform motion"
+      },
+      {
+        "text": "the proportionality of force to mass"
+      },
+      {
+        "text": "the conservation of momentum during collisions"
+      },
+      {
+        "text": "the equality of action and reaction forces"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Easy",
+    "subtopic": "First Law and Inertia",
+    "fsmTag": "first-law-definition",
+    "concepts": [
+      "first-law",
+      "inertia"
+    ],
+    "sourcePages": [
+      95
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Definition recall of Newton's first law (Section 5.4).",
+        "**EXTRACT:** 'Every body continues to be in its state of rest or of uniform motion in a straight line unless compelled by some external force to act otherwise.'",
+        "**EXECUTE:** This 'resistance to change' is exactly inertia — the property the law makes precise.",
+        "**PROOF:** Option B describes the SECOND law (F ∝ ma); option C is a CONSEQUENCE of the second and third laws (Section 5.7); option D is the THIRD law (Section 5.6). Only option A captures what the first law uniquely asserts."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Aristotle's law of motion — 'an external force is required to keep a body in motion' — is incorrect because it overlooks:",
+    "options": [
+      {
+        "text": "the gravitational force on every object"
+      },
+      {
+        "text": "the rotation of the Earth"
+      },
+      {
+        "text": "the inertia of the body"
+      },
+      {
+        "text": "the opposing force of friction acting on every terrestrial body"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Easy",
+    "subtopic": "First Law and Inertia",
+    "fsmTag": "aristotle-fallacy",
+    "concepts": [
+      "aristotle-fallacy",
+      "friction",
+      "galileo"
+    ],
+    "sourcePages": [
+      94
+    ],
+    "timeTargets": {
+      "ap_eapcet": 35,
+      "ts_eapcet": 35,
+      "jee_main": 50
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Conceptual reading of Section 5.2 (Aristotle's fallacy).",
+        "**EXTRACT:** The chapter explains that a moving toy car eventually stops because the floor exerts a frictional force on it. To keep it moving uniformly, the child must apply an external force that cancels this friction — leaving zero NET force.",
+        "**EXECUTE:** Aristotle mistook the externally applied force for the cause of motion; in fact it merely cancels friction. Galileo's idealisation — frictionless plane → motion continues indefinitely — exposes the fallacy.",
+        "**PROOF:** Options A, B, and C are true facts but irrelevant to the fallacy itself — gravity acts perpendicular to horizontal motion; Earth's rotation is far too small; inertia is the LAW that replaces Aristotle's, not the missing ingredient he failed to see. The missing ingredient is friction — option D."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A spaceship is moving with uniform velocity in interstellar space, far from any gravitating object, with all its rockets switched off. The net force acting on the spaceship is:",
+    "options": [
+      {
+        "text": "in the direction of motion, equal to its weight"
+      },
+      {
+        "text": "zero"
+      },
+      {
+        "text": "opposite to the direction of motion"
+      },
+      {
+        "text": "perpendicular to the direction of motion"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Medium",
+    "subtopic": "First Law and Inertia",
+    "fsmTag": "uniform-motion-zero-net-force",
+    "concepts": [
+      "first-law",
+      "uniform-motion",
+      "net-force"
+    ],
+    "sourcePages": [
+      96,
+      97
+    ],
+    "timeTargets": {
+      "ap_eapcet": 40,
+      "ts_eapcet": 40,
+      "jee_main": 60
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Uniform motion observed and no information about individual forces is needed.",
+      "steps": [
+        "**Trigger:** 'Uniform velocity' — straight from the first law.",
+        "**Action:** Net force = 0 (the contrapositive of F=0 ⇒ a=0).",
+        "**Result:** Zero net force — option B."
+      ],
+      "sanityCheck": "We need not know what individual forces act; uniform motion alone forces the NET to be zero."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** First-law application: zero acceleration ⇒ zero net force (Ex. 5.1, generalised).",
+        "**EXTRACT:** Spaceship in deep space, rockets off, uniform velocity.",
+        "**EXECUTE:** Acceleration = 0 because velocity is constant. By F = ma, the NET external force = 0.",
+        "**PROOF:** Option A invokes weight, but the ship is far from any gravitating object — weight ≈ 0; option C would decelerate the ship, contradicting uniform velocity; option D would curve its path, also contradicting uniform STRAIGHT-line motion. Zero net force is the only consistent answer — option B."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A passenger standing in a stationary bus is suddenly jerked backward when the driver accelerates the bus forward. The correct explanation is:",
+    "options": [
+      {
+        "text": "a backward force acts on the passenger's body due to the acceleration of the bus"
+      },
+      {
+        "text": "the passenger's upper body tends, by inertia, to remain at rest while the feet are dragged forward by friction with the floor"
+      },
+      {
+        "text": "the air inside the bus pushes the passenger backward as the bus moves forward"
+      },
+      {
+        "text": "Newton's third law produces a reaction force opposite to the bus's motion"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Medium",
+    "subtopic": "First Law and Inertia",
+    "fsmTag": "inertia-of-rest-bus",
+    "concepts": [
+      "inertia-of-rest",
+      "friction",
+      "first-law"
+    ],
+    "sourcePages": [
+      97
+    ],
+    "timeTargets": {
+      "ap_eapcet": 50,
+      "ts_eapcet": 50,
+      "jee_main": 70
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Inertia-of-rest illustration (the chapter's bus example, Section 5.4).",
+        "**EXTRACT:** Bus accelerates forward from rest; passenger's feet are in frictional contact with the floor.",
+        "**EXECUTE:** The friction at the feet drags the lower body forward with the bus. The upper body, deformable and not directly compelled, tends by inertia to remain at rest. Relative to the bus, the upper body lags — i.e., appears to lurch BACKWARD.",
+        "**PROOF:** Option A invents a real backward force in the ground frame — none exists; the effect is a misreading from the accelerating (non-inertial) bus frame. Option C blames the enclosed air, but the air inside the bus accelerates forward with the bus and exerts no backward push on the passenger. Option D misapplies the third law to two FORCES on the SAME body. The chapter's inertia-of-rest narrative is option B. Correct option: B."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The momentum of a body is:",
+    "options": [
+      {
+        "text": "a scalar quantity with the units kg·m/s²"
+      },
+      {
+        "text": "a vector quantity defined as the product of mass and velocity, with units kg·m/s"
+      },
+      {
+        "text": "a vector quantity defined as the product of force and time"
+      },
+      {
+        "text": "a scalar quantity equal to the kinetic energy of the body"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Easy",
+    "subtopic": "Momentum",
+    "fsmTag": "momentum-definition",
+    "concepts": [
+      "momentum",
+      "vector-quantity"
+    ],
+    "sourcePages": [
+      97
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Recall Eq. (5.1): p = m v.",
+        "**EXTRACT:** Momentum's definition + dimensional check.",
+        "**EXECUTE:** p is a vector (inherits v's direction). Units: kg · (m/s) = kg·m/s. Dimensions [MLT⁻¹].",
+        "**PROOF:** Option A reports the units of FORCE (kg·m/s²); option C is the definition of IMPULSE (FΔt), which equals the CHANGE in momentum, not momentum itself; option D confuses momentum (vector, mv) with kinetic energy (scalar, ½mv²). Option B."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A body of mass 0.5 kg moves with a velocity of $(3\\hat{i} + 4\\hat{j})$ m/s. The magnitude of its momentum is:",
+    "options": [
+      {
+        "text": "2.5 kg·m/s"
+      },
+      {
+        "text": "3.5 kg·m/s"
+      },
+      {
+        "text": "5.0 kg·m/s"
+      },
+      {
+        "text": "7.0 kg·m/s"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Medium",
+    "subtopic": "Momentum",
+    "fsmTag": "momentum-magnitude",
+    "concepts": [
+      "momentum",
+      "vector-magnitude"
+    ],
+    "sourcePages": [
+      97
+    ],
+    "timeTargets": {
+      "ap_eapcet": 50,
+      "ts_eapcet": 50,
+      "jee_main": 70
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Magnitude of a vector momentum.",
+        "**EXTRACT:** $m = 0.5$ kg, $\\mathbf{v} = 3\\hat{i}+4\\hat{j}$ m/s.",
+        "**EXECUTE:** $|\\mathbf{v}| = \\sqrt{3^2+4^2} = \\sqrt{9+16} = 5$ m/s. $|\\mathbf{p}| = m|\\mathbf{v}| = 0.5 \\times 5 = 2.5$ kg·m/s.",
+        "**PROOF:** Option B ($3.5$) adds the velocity components as scalars instead of taking the vector magnitude, but does keep the mass: $m(v_x+v_y) = 0.5 \\times (3+4) = 0.5 \\times 7 = 3.5$ — a wrong-formula slip. Option C ($5.0$) reports $|\\mathbf{v}| = 5$ itself, forgetting to multiply by the mass. Option D ($7.0$) takes the linear sum $v_x + v_y = 3 + 4 = 7$, dropping both the vector-magnitude rule and the mass. The correct magnitude is $|\\mathbf{p}| = 2.5$ kg·m/s. Correct option: A."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Two bodies of mass 1 kg and 4 kg have equal kinetic energies. The ratio of the magnitudes of their momenta (1 kg : 4 kg) is:",
+    "options": [
+      {
+        "text": "$4 : 1$"
+      },
+      {
+        "text": "$1 : 2$"
+      },
+      {
+        "text": "$2 : 1$"
+      },
+      {
+        "text": "$1 : 4$"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Medium",
+    "subtopic": "Momentum",
+    "fsmTag": "momentum-from-equal-ke",
+    "concepts": [
+      "momentum",
+      "kinetic-energy",
+      "p-vs-ke-link"
+    ],
+    "sourcePages": [
+      97
+    ],
+    "timeTargets": {
+      "ap_eapcet": 55,
+      "ts_eapcet": 55,
+      "jee_main": 75
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Two bodies with EQUAL kinetic energies, ratio of momenta asked.",
+      "steps": [
+        "**Trigger:** Equal KE, unequal masses — use $p = \\sqrt{2mE}$.",
+        "**Action:** $p \\propto \\sqrt{m}$ when KE is fixed.",
+        "**Result:** $p_1 : p_2 = \\sqrt{1} : \\sqrt{4} = 1 : 2$ — option B."
+      ],
+      "sanityCheck": "The heavier body must carry MORE momentum to hold the same KE (since KE = p²/2m). So light:heavy < 1; 1:2 fits."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Link between momentum and kinetic energy: $KE = \\dfrac{p^2}{2m} \\Rightarrow p = \\sqrt{2mE}$.",
+        "**EXTRACT:** $m_1 = 1$ kg, $m_2 = 4$ kg, $E_1 = E_2 = E$.",
+        "**EXECUTE:** $\\dfrac{p_1}{p_2} = \\sqrt{\\dfrac{m_1}{m_2}} = \\sqrt{\\dfrac{1}{4}} = \\dfrac{1}{2}$.",
+        "**PROOF:** Option A applies $p \\propto m$ but lists the bodies in reverse order, giving $m_2 : m_1 = 4 : 1$. Option C inverts the correct ratio $1 : 2$ to get $2 : 1$ (writing heavy:light instead of the stated 1 kg : 4 kg direction). Option D applies $p \\propto m$ in the correct body order ($m_1 : m_2 = 1 : 4$), which is the EQUAL-SPEED case, not the equal-KE case. The square-root law gives $1 : 2$. Correct option: B."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The linear momentum of a particle as a function of time is $p = a + bt$, where $a$ and $b$ are positive constants. The force acting on the particle is:",
+    "options": [
+      {
+        "text": "$a$"
+      },
+      {
+        "text": "$at$"
+      },
+      {
+        "text": "$a + b$"
+      },
+      {
+        "text": "$b$"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Medium",
+    "subtopic": "Momentum",
+    "fsmTag": "force-from-momentum-derivative",
+    "concepts": [
+      "momentum",
+      "newton-second-law",
+      "differentiation"
+    ],
+    "sourcePages": [
+      98,
+      99
+    ],
+    "timeTargets": {
+      "ap_eapcet": 40,
+      "ts_eapcet": 40,
+      "jee_main": 60
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Newton's second law in its general form, Eq. (5.2): $F = dp/dt$.",
+        "**EXTRACT:** $p(t) = a + bt$ with $a$, $b$ positive constants.",
+        "**EXECUTE:** $F = \\dfrac{dp}{dt} = b$ (constant). The constant $a$ is the initial momentum and contributes nothing to its rate of change.",
+        "**PROOF:** Option A reports the initial momentum $p(0) = a$ as a force; option B reports $at$ — pairing the constant $a$ with $t$ instead of differentiating to get the coefficient $b$; option C adds the two constants as if 'force = sum of momentum terms'. The derivative of a linear function is its slope: $F = b$. Correct option: D."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Newton's second law of motion, in its standard form, states that:",
+    "options": [
+      {
+        "text": "the impulse on a body equals its kinetic energy"
+      },
+      {
+        "text": "the rate of change of momentum of a body is directly proportional to the applied force and takes place in the direction of the force"
+      },
+      {
+        "text": "every action has an equal and opposite reaction"
+      },
+      {
+        "text": "the total momentum of an isolated system is conserved"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Easy",
+    "subtopic": "Newton's Second Law",
+    "fsmTag": "second-law-statement",
+    "concepts": [
+      "second-law"
+    ],
+    "sourcePages": [
+      98
+    ],
+    "timeTargets": {
+      "ap_eapcet": 25,
+      "ts_eapcet": 25,
+      "jee_main": 40
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Verbatim recall of the second-law statement (Section 5.5).",
+        "**EXTRACT:** Match phrasing to the chapter.",
+        "**EXECUTE:** The textbook's exact wording: 'The rate of change of momentum of a body is directly proportional to the applied force and takes place in the direction in which the force acts.'",
+        "**PROOF:** Option A confuses impulse (= Δp) with kinetic energy; option C is the third law; option D is the law of conservation of momentum (a consequence). Only B is the second law itself."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "In SI units, one newton (1 N) is the force that produces an acceleration of:",
+    "options": [
+      {
+        "text": "1 m/s² in a mass of 1 g"
+      },
+      {
+        "text": "1 m/s² in a mass of 1 kg"
+      },
+      {
+        "text": "10 m/s² in a mass of 1 kg"
+      },
+      {
+        "text": "1 cm/s² in a mass of 1 g"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Easy",
+    "subtopic": "Newton's Second Law",
+    "fsmTag": "newton-unit-definition",
+    "concepts": [
+      "si-units",
+      "force-unit"
+    ],
+    "sourcePages": [
+      99
+    ],
+    "timeTargets": {
+      "ap_eapcet": 25,
+      "ts_eapcet": 25,
+      "jee_main": 35
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Definition of the SI unit of force (Section 5.5).",
+        "**EXTRACT:** $1 \\text{ N} = 1 \\text{ kg} \\cdot 1 \\text{ m/s}^2$.",
+        "**EXECUTE:** A 1 N force gives a 1 kg mass an acceleration of 1 m/s².",
+        "**PROOF:** Option A uses gram instead of kilogram: $1 \\text{ g} \\cdot 1 \\text{ m/s}^2 = 10^{-3} \\text{ N}$ — a mass-unit slip. Option C inflates the acceleration tenfold to 10 m/s². Option D swaps to full CGS units: $1 \\text{ g} \\cdot 1 \\text{ cm/s}^2 = 10^{-5} \\text{ N} = 1 \\text{ dyne}$, not 1 N. Correct option: B."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A net force of 5 N acts on a body of mass 10 kg, initially at rest. The time it takes the body to acquire a velocity of 2 m/s is:",
+    "options": [
+      {
+        "text": "1 s"
+      },
+      {
+        "text": "2 s"
+      },
+      {
+        "text": "10 s"
+      },
+      {
+        "text": "4 s"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Medium",
+    "subtopic": "Newton's Second Law",
+    "fsmTag": "second-law-time-for-velocity-change",
+    "concepts": [
+      "second-law",
+      "kinematics"
+    ],
+    "sourcePages": [
+      98,
+      99
+    ],
+    "timeTargets": {
+      "ap_eapcet": 45,
+      "ts_eapcet": 45,
+      "jee_main": 65
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Constant force on a body of known mass — velocity change known, time asked.",
+      "steps": [
+        "**Trigger:** Constant $F$, find time for $\\Delta v$.",
+        "**Action:** $F\\,t = m\\,\\Delta v$ (impulse = change in momentum) ⇒ $t = m\\Delta v / F$.",
+        "**Result:** $t = 10 \\times 2 / 5 = 4$ s — Option D."
+      ],
+      "sanityCheck": "$a = F/m = 0.5$ m/s². To reach 2 m/s from rest takes $2/0.5 = 4$ s — consistent."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Constant-force kinematics from $F = ma$, then $v = u + at$.",
+        "**EXTRACT:** $F = 5$ N, $m = 10$ kg, $u = 0$, $v = 2$ m/s.",
+        "**EXECUTE:** $a = F/m = 5/10 = 0.5$ m/s². From rest, $t = v/a = 2/0.5 = 4$ s.",
+        "**PROOF:** Option A inverts the impulse relation, writing $t = F\\,\\Delta v / m = 5 \\times 2 / 10 = 1$ s instead of $t = m\\,\\Delta v / F$. Option B reports the target velocity ($2$ m/s) as the time. Option C uses the mass value ($10$ kg) as if it were time in seconds. Impulse–momentum check: $F t = m v \\Rightarrow 5 t = 20 \\Rightarrow t = 4$ s — Option D. Correct option: D."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A constant force acts on a body of mass 3 kg and changes its speed from 2.0 m/s to 3.5 m/s in 25 s. The direction of motion remains unchanged. The magnitude of the force is:",
+    "options": [
+      {
+        "text": "1.5 N"
+      },
+      {
+        "text": "0.45 N"
+      },
+      {
+        "text": "0.18 N"
+      },
+      {
+        "text": "4.5 N"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Medium",
+    "subtopic": "Newton's Second Law",
+    "fsmTag": "constant-force-from-velocity-change",
+    "concepts": [
+      "second-law",
+      "average-acceleration"
+    ],
+    "sourcePages": [
+      98,
+      99
+    ],
+    "timeTargets": {
+      "ap_eapcet": 55,
+      "ts_eapcet": 55,
+      "jee_main": 75
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Constant force, given mass and velocity change over time.",
+        "**EXTRACT:** $m = 3$ kg, $v_0 = 2.0$ m/s, $v = 3.5$ m/s, $t = 25$ s.",
+        "**EXECUTE:** $a = (v - v_0)/t = 1.5/25 = 0.06$ m/s². $F = ma = 3 \\times 0.06 = 0.18$ N.",
+        "**PROOF:** Option A reports $\\Delta v = 1.5$ m/s as if it were the force (wrong dimensions); option B computes $m \\times \\Delta v / 10 = 0.45$ — divides by the wrong time; option D multiplies $m$ by $\\Delta v$ directly, omitting the divide by time. Acceleration $0.06$ m/s² times mass $3$ kg gives 0.18 N — option C."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A bullet of mass 0.04 kg moving at 90 m/s enters a heavy wooden block and is brought to rest in a distance of 60 cm. Assuming the resistive force is constant, its magnitude is:",
+    "options": [
+      {
+        "text": "135 N"
+      },
+      {
+        "text": "540 N"
+      },
+      {
+        "text": "270 N"
+      },
+      {
+        "text": "3 N"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Medium",
+    "subtopic": "Newton's Second Law",
+    "fsmTag": "stopping-force-from-distance",
+    "concepts": [
+      "second-law",
+      "v-squared-equation"
+    ],
+    "sourcePages": [
+      99
+    ],
+    "timeTargets": {
+      "ap_eapcet": 65,
+      "ts_eapcet": 65,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Stopping distance, mass, and initial speed given; constant force.",
+      "steps": [
+        "**Trigger:** Stop-from-$u$ in distance $s$.",
+        "**Action:** $a = -u^2/(2s)$, then $|F| = m|a| = mu^2/(2s)$.",
+        "**Result:** $0.04 \\times 90^2 / (2 \\times 0.6) = 0.04 \\times 8100 / 1.2 = 324/1.2 = 270$ N — option C."
+      ],
+      "sanityCheck": "Retardation $= 90^2/(2 \\cdot 0.6) = 6750$ m/s²; times 0.04 kg gives 270 N — matches."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Ex. 5.2 of the chapter — constant retardation from $v^2 = u^2 + 2as$ with $v = 0$.",
+        "**EXTRACT:** $m = 0.04$ kg, $u = 90$ m/s, $s = 0.6$ m, $v = 0$.",
+        "**EXECUTE:** $a = -u^2/(2s) = -8100/1.2 = -6750$ m/s². $|F| = m|a| = 0.04 \\times 6750 = 270$ N.",
+        "**PROOF:** Option A (135 N) halves the correct answer (forgets the 2 in $2s$ then double-counts, or reads $s = 1.2$ m). Option B (540 N) drops the factor of 2 in the denominator, using $a = u^2/s$ so $|F| = mu^2/s = 0.04 \\times 8100 / 0.6 = 540$ N. Option D (3 N) forgets the SQUARE on $u$, using $mu/2s = 0.04 \\times 90 / 1.2 = 3$ N. The $v^2$ equation gives $mu^2/(2s) = 270$ N. Correct option: C."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The motion of a particle of mass $m$ is described by $y = ut + \\tfrac{1}{2} g t^2$ where $u$ and $g$ are constants. The force acting on the particle is:",
+    "options": [
+      {
+        "text": "$mu$"
+      },
+      {
+        "text": "$mg$"
+      },
+      {
+        "text": "$m(u+g)$"
+      },
+      {
+        "text": "$mut$"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Medium",
+    "subtopic": "Newton's Second Law",
+    "fsmTag": "force-from-position-function",
+    "concepts": [
+      "second-law",
+      "differentiation",
+      "uniform-acceleration"
+    ],
+    "sourcePages": [
+      100
+    ],
+    "timeTargets": {
+      "ap_eapcet": 50,
+      "ts_eapcet": 50,
+      "jee_main": 70
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Position given as a quadratic in $t$.",
+      "steps": [
+        "**Trigger:** $y(t)$ quadratic ⇒ acceleration is the coefficient of $t^2$ times 2.",
+        "**Action:** $a = d^2y/dt^2 = g$; force $= m a$.",
+        "**Result:** $F = mg$ — option B."
+      ],
+      "sanityCheck": "$y = ut + \\tfrac{1}{2}gt^2$ is the kinematic equation under constant acceleration $g$ — the particle falls under gravity, force $= mg$."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Ex. 5.3 — extract acceleration from $y(t)$ by differentiating twice.",
+        "**EXTRACT:** $y = ut + \\tfrac{1}{2}gt^2$.",
+        "**EXECUTE:** $v = dy/dt = u + gt$; $a = dv/dt = g$. By Newton's second law $F = ma = mg$.",
+        "**PROOF:** Option A reports $m u$ — that's the initial momentum, not the force; option C adds initial-velocity and acceleration values that have different dimensions (m/s and m/s²); option D ($mut$) is dimensionally a momentum-times-time, also wrong. The chapter's Ex. 5.3 gives exactly $F = mg$ — option B."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Consider four statements about Newton's second law of motion: (i) $F$ in $F = ma$ refers to the NET external force, not any single force. (ii) The 'ma' term is itself a force exerted on the body and must be added to the right-hand side. (iii) Force at an instant determines acceleration at the same instant — acceleration does not depend on the history of motion. (iv) The second law is a VECTOR law: each component equation holds independently. Which of these are TRUE?",
+    "options": [
+      {
+        "text": "(i), (iii) and (iv) only"
+      },
+      {
+        "text": "(i) and (ii) only"
+      },
+      {
+        "text": "All four are true"
+      },
+      {
+        "text": "(ii) and (iv) only"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Hard",
+    "subtopic": "Newton's Second Law",
+    "fsmTag": "second-law-statement-trap",
+    "concepts": [
+      "second-law",
+      "vector-law",
+      "force-not-history"
+    ],
+    "sourcePages": [
+      99,
+      100,
+      112
+    ],
+    "timeTargets": {
+      "ap_eapcet": 90,
+      "ts_eapcet": 90,
+      "jee_main": 130
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Multi-statement question with one statement that is the classic textbook trap.",
+      "steps": [
+        "**Trigger:** Statement (ii) is a universality / 'add ma as a force' claim — the chapter's most flagged misconception (Points to Ponder #4).",
+        "**Action:** (ii) is FALSE — kill every option containing (ii) → eliminate B, C, D.",
+        "**Result:** Option A — '(i), (iii) and (iv) only'."
+      ],
+      "sanityCheck": "Confirm (i) is the explicit clarification at the top of p.99; (iii) is Points-to-Ponder #3; (iv) is Eq. (5.6). Three independent confirmations from the chapter."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Statement trap testing the four explicit cautions of the second law in the chapter.",
+        "**EXTRACT:** Verify each of (i)–(iv) against the textbook.",
+        "**EXECUTE:** (i) TRUE — Section 5.5 clarifies $F$ is the NET external force; internal forces don't enter. (ii) FALSE — Points to Ponder #4 explicitly warns: '$ma$ should not be regarded as yet another force besides $F$.' (iii) TRUE — Points to Ponder #3 / Fig. 5.5: acceleration here-and-now is determined by force here-and-now, not history. (iv) TRUE — Eq. (5.6) splits the second law into three independent component equations.",
+        "**PROOF:** Any option containing (ii) is automatically wrong, eliminating B, C, D. Only option A keeps the three TRUE statements without (ii)."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Impulse delivered to a body equals:",
+    "options": [
+      {
+        "text": "the change in momentum of the body"
+      },
+      {
+        "text": "the rate of change of momentum of the body"
+      },
+      {
+        "text": "the product of mass and velocity of the body"
+      },
+      {
+        "text": "the product of mass and acceleration of the body"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Easy",
+    "subtopic": "Impulse",
+    "fsmTag": "impulse-definition",
+    "concepts": [
+      "impulse",
+      "momentum"
+    ],
+    "sourcePages": [
+      100
+    ],
+    "timeTargets": {
+      "ap_eapcet": 25,
+      "ts_eapcet": 25,
+      "jee_main": 35
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Eq. (5.7): $J = F \\Delta t = \\Delta p$ (the impulse–momentum theorem).",
+        "**EXTRACT:** Match the definition.",
+        "**EXECUTE:** Impulse equals the CHANGE in momentum it produces.",
+        "**PROOF:** Option B is the RATE of change of momentum $\\left(\\dfrac{dp}{dt}\\right)$, which is force (Eq. 5.6), not impulse — confusing 'change' with 'rate of change'; option C is momentum ($mv$), not the CHANGE in momentum; option D is force ($ma$), not impulse. Eq. (5.7) gives $J = \\Delta p$. Correct option: A."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A cricket ball of mass 0.15 kg moving with a speed of 12 m/s is struck by a bat and returns straight back along its original line with the same speed of 12 m/s. The magnitude of the impulse imparted to the ball is:",
+    "options": [
+      {
+        "text": "0 N·s"
+      },
+      {
+        "text": "1.8 N·s"
+      },
+      {
+        "text": "2.7 N·s"
+      },
+      {
+        "text": "3.6 N·s"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Medium",
+    "subtopic": "Impulse",
+    "fsmTag": "head-on-reversal-impulse",
+    "concepts": [
+      "impulse",
+      "head-on-reversal",
+      "vector-subtraction"
+    ],
+    "sourcePages": [
+      100
+    ],
+    "timeTargets": {
+      "ap_eapcet": 55,
+      "ts_eapcet": 55,
+      "jee_main": 75
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Head-on reversal at the same speed.",
+      "steps": [
+        "**Trigger:** Same-speed reversal.",
+        "**Action:** $|\\Delta p| = 2mv$ (signs of incoming and outgoing momenta opposite).",
+        "**Result:** $2 \\times 0.15 \\times 12 = 3.6$ N·s — option D."
+      ],
+      "sanityCheck": "If the ball merely STOPPED, impulse would be $mv = 1.8$. Reversing it doubles to 3.6 — bigger than 'just stopping', as it should be."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Ex. 5.4 — same-speed head-on rebound.",
+        "**EXTRACT:** $m = 0.15$ kg, $v_i = +12$, $v_f = -12$ m/s.",
+        "**EXECUTE:** $\\Delta p = m(v_f - v_i) = 0.15 \\times (-12 - 12) = -3.6$ kg·m/s; magnitude 3.6 N·s.",
+        "**PROOF:** Option A treats SPEED as unchanged, so it reads $\\Delta p = 0$ — but velocity reverses, so $\\Delta p \\ne 0$. Option B computes only the stop-impulse $mv = 0.15 \\times 12 = 1.8$, forgetting that the reversal doubles it. Option C is the averaging guess $(1.8 + 3.6)/2 = 2.7$ N·s, splitting the difference between the stop-impulse and the true value instead of applying $|\\Delta p| = 2mv$. The correct signed subtraction gives $|\\Delta p| = 2mv = 3.6$ N·s. Correct option: D."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A ball of mass $m$ is thrown vertically upward from the ground with speed $u$ and returns to the thrower's hand with the same speed $u$. The impulse on the ball due to gravity during its complete flight is:",
+    "options": [
+      {
+        "text": "$mu$, directed upward"
+      },
+      {
+        "text": "$mu$, directed downward"
+      },
+      {
+        "text": "$2mu$, directed downward"
+      },
+      {
+        "text": "zero"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Medium",
+    "subtopic": "Impulse",
+    "fsmTag": "gravity-impulse-up-and-down-flight",
+    "concepts": [
+      "impulse",
+      "free-fall",
+      "vector-change"
+    ],
+    "sourcePages": [
+      100
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 85
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Impulse–momentum theorem applied to the full flight; gravity is the only force.",
+        "**EXTRACT:** Initial $v = +u$ (up). Final $v = -u$ (down, same speed by symmetry).",
+        "**EXECUTE:** $\\Delta p = m(-u) - m(u) = -2mu$. Hence impulse magnitude $2mu$ directed downward.",
+        "**PROOF:** Option A is dimensionally right but wrong direction (gravity pulls down); Option B has the right direction but only the magnitude $mu$ — that would be the impulse to merely STOP the ball, missing the descent half; Option D forgets that the velocity vector has REVERSED. $\\Delta p = 2mu$ downward. Correct option: C."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "An identical billiard ball strikes a rigid wall with speed $u$ at 30° to the normal and rebounds elastically (same speed, mirror angle) from the wall. The magnitude of the impulse imparted to the ball is:",
+    "options": [
+      {
+        "text": "$2mu$"
+      },
+      {
+        "text": "$\\dfrac{mu}{2}$"
+      },
+      {
+        "text": "$m u$"
+      },
+      {
+        "text": "$2mu \\cos 30^\\circ$"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Hard",
+    "subtopic": "Impulse",
+    "fsmTag": "oblique-wall-impulse",
+    "concepts": [
+      "impulse",
+      "oblique-reflection",
+      "vector-components"
+    ],
+    "sourcePages": [
+      102
+    ],
+    "timeTargets": {
+      "ap_eapcet": 90,
+      "ts_eapcet": 90,
+      "jee_main": 130
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Elastic oblique reflection from a wall.",
+      "steps": [
+        "**Trigger:** Reflection at angle $\\theta$ to the normal — only the NORMAL component of velocity reverses; the tangential component is unchanged.",
+        "**Action:** $|\\Delta p| = 2 m u \\cos\\theta$ (twice the normal-component momentum).",
+        "**Result:** $2 m u \\cos 30^\\circ = \\sqrt{3}\\,mu$ — option D."
+      ],
+      "sanityCheck": "At $\\theta = 0$ (head-on) this reduces to the familiar $2mu$, killing option A as the GENERAL answer; here $\\cos 30^\\circ < 1$ so impulse < 2mu — consistent."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Ex. 5.5 — same setup, asking for impulse magnitude.",
+        "**EXTRACT:** $|v| = u$, angle $30^\\circ$ from normal. Tangential component $u\\sin 30^\\circ$ unchanged; normal component $u\\cos 30^\\circ$ reverses.",
+        "**EXECUTE:** Normal-direction $\\Delta p = m[(-u\\cos 30^\\circ) - (u\\cos 30^\\circ)] = -2mu\\cos 30^\\circ$. Tangential $\\Delta p = 0$. Net magnitude $= 2mu\\cos 30^\\circ$.",
+        "**PROOF:** Option A is the HEAD-ON value ($\\theta = 0$), wrongly ignoring the angle; option B ($mu/2$) takes $mu \\cos 60^\\circ$ — confuses the angle from the normal ($30^\\circ$) with the angle from the wall ($60^\\circ$) AND keeps only ONE momentum-component change instead of doubling for the reflection; option C reports $mu$ — the impulse to merely STOP an incoming head-on ball, ignoring both the angle and the reversal. The reflection-with-angle formula gives $2mu\\cos 30^\\circ$ — option D."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Newton's third law of motion states that:",
+    "options": [
+      {
+        "text": "the total momentum of an isolated system is conserved"
+      },
+      {
+        "text": "the rate of change of momentum equals the applied force"
+      },
+      {
+        "text": "a body remains at rest or in uniform motion unless an external force acts on it"
+      },
+      {
+        "text": "to every action there is always an equal and opposite reaction"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Easy",
+    "subtopic": "Newton's Third Law",
+    "fsmTag": "third-law-statement",
+    "concepts": [
+      "third-law"
+    ],
+    "sourcePages": [
+      101
+    ],
+    "timeTargets": {
+      "ap_eapcet": 25,
+      "ts_eapcet": 25,
+      "jee_main": 35
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Verbatim recall (Section 5.6).",
+        "**EXTRACT:** Match the chapter's wording.",
+        "**EXECUTE:** Newton: 'To every action there is always an equal and opposite reaction.'",
+        "**PROOF:** Option A is the CONSERVATION law (a consequence); option B is the SECOND law; option C is the FIRST law. Only D is the third law itself."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "When a bullet is fired from a gun, the gun recoils backward. The correct explanation by Newton's third law is:",
+    "options": [
+      {
+        "text": "the gun and bullet form an action–reaction pair; the gun pushes the bullet forward, and the bullet pushes the gun backward with an equal force"
+      },
+      {
+        "text": "the gas pressure produces an outward push only on the bullet"
+      },
+      {
+        "text": "the recoil arises from the heating of the gun barrel"
+      },
+      {
+        "text": "the recoil happens because the bullet acquires more momentum than the gun"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Easy",
+    "subtopic": "Newton's Third Law",
+    "fsmTag": "gun-recoil-third-law",
+    "concepts": [
+      "third-law",
+      "action-reaction"
+    ],
+    "sourcePages": [
+      101,
+      102
+    ],
+    "timeTargets": {
+      "ap_eapcet": 35,
+      "ts_eapcet": 35,
+      "jee_main": 50
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Third-law application — gun and bullet as the standard textbook pair.",
+        "**EXTRACT:** Identify mutual forces between gun and bullet during firing.",
+        "**EXECUTE:** During firing, the gun exerts a forward force on the bullet (via expanding gas/barrel). By the third law, the bullet exerts an equal and opposite backward force on the gun — that's the recoil.",
+        "**PROOF:** Option B violates the third law (a force on the bullet without one on the gun); option C invokes thermal effects, irrelevant to the impulsive recoil; option D confuses momentum CONSERVATION (which says the two momenta are EQUAL in magnitude) with the third law. The clean action–reaction pairing is option A."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A heavy rifle and a light rifle, fired with identical cartridges, eject identical bullets with the same speed. The heavy rifle recoils LESS strongly because:",
+    "options": [
+      {
+        "text": "the force on the heavy rifle is smaller than on the light rifle"
+      },
+      {
+        "text": "the heavy rifle absorbs the kinetic energy by deforming"
+      },
+      {
+        "text": "both rifles receive the same recoil momentum, but the heavier rifle has lower recoil speed (v = p/m)"
+      },
+      {
+        "text": "the third law applies only to light objects"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Medium",
+    "subtopic": "Newton's Third Law",
+    "fsmTag": "rifle-recoil-mass-comparison",
+    "concepts": [
+      "third-law",
+      "momentum-conservation",
+      "recoil"
+    ],
+    "sourcePages": [
+      102,
+      113
+    ],
+    "timeTargets": {
+      "ap_eapcet": 55,
+      "ts_eapcet": 55,
+      "jee_main": 75
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Compare recoil VELOCITIES given equal bullet momenta.",
+        "**EXTRACT:** Bullets identical and equally fast ⇒ same bullet momentum $p$. By conservation, each rifle picks up momentum $p$ backward.",
+        "**EXECUTE:** $v_{\\text{recoil}} = p/M$. Larger $M$ ⇒ smaller $v_{\\text{recoil}}$ — the heavy rifle moves backward slowly; the felt 'kick' is gentler.",
+        "**PROOF:** Option A violates the third law — the FORCE on each rifle is the SAME (equal and opposite to the bullet's); option B invents a deformation mechanism without basis; option D denies the universality of the third law. The momentum/mass partition gives option C."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Which of the following pairs of forces constitutes a Newton's third-law (action–reaction) pair?",
+    "options": [
+      {
+        "text": "the force exerted by your hand pushing a wall, and the friction the floor exerts on your feet keeping you in place"
+      },
+      {
+        "text": "the gravitational pull of the Earth on a stone, and the gravitational pull of the stone on the Earth"
+      },
+      {
+        "text": "the weight of a person on the floor, and the normal force of the floor on the person"
+      },
+      {
+        "text": "the centripetal force on a stone whirled in a circle, and the tension in the string"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Medium",
+    "subtopic": "Newton's Third Law",
+    "fsmTag": "action-reaction-pair-identification",
+    "concepts": [
+      "third-law",
+      "action-reaction-pair"
+    ],
+    "sourcePages": [
+      101,
+      113
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Identify which pair fits the rule: same magnitude, opposite direction, acting on DIFFERENT bodies, same TYPE of force.",
+      "steps": [
+        "**Trigger:** 'Different bodies' is the discriminator (Points to Ponder #8).",
+        "**Action:** Reject any pair where both forces act on the SAME body.",
+        "**Result:** Earth pulls stone; stone pulls Earth — Option B."
+      ],
+      "sanityCheck": "Both forces are GRAVITATIONAL (same type), one on the stone, one on the Earth — textbook pair."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Identify the action–reaction pair using the chapter's rule (Points to Ponder #8).",
+        "**EXTRACT:** Action–reaction pairs (i) act on DIFFERENT bodies, (ii) are of the SAME type of force, (iii) are equal in magnitude and opposite in direction.",
+        "**EXECUTE:** Option B passes all three: Earth's gravity on the stone and the stone's gravity on the Earth — different bodies, same gravitational type, equal magnitudes.",
+        "**PROOF:** Option A — the hand-on-wall push and the floor-on-feet friction are two separate forces on different surfaces that happen to balance for equilibrium; they are NOT each other's reaction (the reaction to the hand's push is the wall pushing back on the hand), so this is a balanced-forces confusion, not a third-law pair. Option C — weight (Earth's gravity on the person) and normal force (the floor's contact push) act on the SAME body and are DIFFERENT types of force; they balance only because the body is in equilibrium, which is a first-law consequence, not a third-law pair. Option D — 'centripetal force' is a NAME for whichever real force points inward (here, the tension itself), not a separate force, so pairing a force with another name for the same force is meaningless. Correct option: B."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "The law of conservation of linear momentum states that:",
+    "options": [
+      {
+        "text": "the kinetic energy of an isolated system remains constant"
+      },
+      {
+        "text": "the velocity of a body is constant if no force acts on it"
+      },
+      {
+        "text": "the total linear momentum of an isolated system (one with no external force) remains constant"
+      },
+      {
+        "text": "the impulse on a body equals the change in its momentum"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Easy",
+    "subtopic": "Conservation of Momentum",
+    "fsmTag": "conservation-of-momentum-statement",
+    "concepts": [
+      "conservation-of-momentum",
+      "isolated-system"
+    ],
+    "sourcePages": [
+      102,
+      103
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Verbatim recall (Section 5.7).",
+        "**EXTRACT:** Match the textbook's statement.",
+        "**EXECUTE:** 'The total momentum of an isolated system of interacting particles is conserved.'",
+        "**PROOF:** Option A is conservation of ENERGY, not momentum (and even then is not generally true under conservation of momentum alone — inelastic collisions lose KE); option B is the first law restated; option D is the impulse–momentum theorem (Eq. 5.7). Only C states momentum conservation."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A stationary bomb explodes into two fragments of masses 2 kg and 3 kg. The 3 kg fragment moves with a velocity of 8 m/s in some direction. The speed of the 2 kg fragment is:",
+    "options": [
+      {
+        "text": "12 m/s, in the opposite direction"
+      },
+      {
+        "text": "5.3 m/s, in the same direction"
+      },
+      {
+        "text": "12 m/s, in the same direction"
+      },
+      {
+        "text": "8 m/s, in the opposite direction"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Medium",
+    "subtopic": "Conservation of Momentum",
+    "fsmTag": "explosion-mass-velocity-inverse",
+    "concepts": [
+      "conservation-of-momentum",
+      "explosion",
+      "inverse-mass-velocity"
+    ],
+    "sourcePages": [
+      102,
+      103
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 85
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Initially at rest; explodes into two pieces.",
+      "steps": [
+        "**Trigger:** Initial momentum zero.",
+        "**Action:** $m_1 v_1 + m_2 v_2 = 0 \\Rightarrow v_1 = -\\dfrac{m_2}{m_1} v_2$ — equal and opposite momenta.",
+        "**Result:** $|v_1| = \\dfrac{3}{2} \\times 8 = 12$ m/s, opposite direction — option A."
+      ],
+      "sanityCheck": "Lighter fragment must be faster (same momentum/mass ratio inverse). 12 > 8 — consistent."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Conservation of momentum for a rest-to-fragments explosion (Section 5.7).",
+        "**EXTRACT:** $m_1 = 2$ kg (unknown speed), $m_2 = 3$ kg moving at 8 m/s.",
+        "**EXECUTE:** Total initial momentum = 0 ⇒ $2 v_1 + 3 \\times 8 = 0$ (taking the 3 kg direction positive) ⇒ $v_1 = -12$ m/s. Lighter piece moves 12 m/s opposite.",
+        "**PROOF:** Option B inverts the mass ratio ($8 \\times \\tfrac{2}{3} = 5.3$ m/s) and wrongly keeps the same direction; option C gets the magnitude right but ignores the 'opposite direction' constraint of momentum conservation; option D applies $|v_1| = |v_2| = 8$ — wrong because the masses differ. The inverse-mass scaling $|v_1| = \\tfrac{m_2}{m_1} v_2 = \\tfrac{3}{2} \\times 8 = 12$ m/s opposite gives the answer. Correct option: A."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A 2 g bullet is fired from a 1 kg gun, both initially at rest. If the bullet leaves the gun with speed 400 m/s, the recoil speed of the gun is:",
+    "options": [
+      {
+        "text": "0.4 m/s"
+      },
+      {
+        "text": "8 m/s"
+      },
+      {
+        "text": "400 m/s"
+      },
+      {
+        "text": "0.8 m/s"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Medium",
+    "subtopic": "Conservation of Momentum",
+    "fsmTag": "gun-recoil-velocity",
+    "concepts": [
+      "conservation-of-momentum",
+      "recoil",
+      "unit-conversion"
+    ],
+    "sourcePages": [
+      102
+    ],
+    "timeTargets": {
+      "ap_eapcet": 55,
+      "ts_eapcet": 55,
+      "jee_main": 75
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Gun + bullet system at rest; bullet's speed given.",
+      "steps": [
+        "**Trigger:** Initial momentum zero ⇒ $|m_b v_b| = |M_g v_g|$.",
+        "**Action:** $v_g = m_b v_b / M_g$. Convert grams to kg first.",
+        "**Result:** $v_g = (0.002 \\times 400)/1 = 0.8$ m/s — option D."
+      ],
+      "sanityCheck": "Gun is 500× heavier than the bullet, so recoils 500× slower: $400/500 = 0.8$ m/s — consistent."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Recoil via momentum conservation.",
+        "**EXTRACT:** $m_b = 2$ g $= 0.002$ kg, $v_b = 400$ m/s; $M_g = 1$ kg.",
+        "**EXECUTE:** $0 = m_b v_b + M_g v_g \\Rightarrow v_g = -m_b v_b / M_g = -0.002 \\times 400 / 1 = -0.8$ m/s. Recoil speed = 0.8 m/s.",
+        "**PROOF:** Option A halves the correct result (spurious factor of 2): $0.8/2 = 0.4$ m/s. Option B drops one factor of 10 in the g→kg conversion, taking $2$ g $= 0.02$ kg: $0.02 \\times 400 / 1 = 8$ m/s. Option C reports the bullet speed itself ($400$ m/s) instead of the gun's. Converting correctly: $m_b v_b = 0.002 \\times 400 = 0.8$ kg·m/s, so $v_g = 0.8$ m/s. Correct option: D."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Two skaters of masses 60 kg and 40 kg stand at rest on a frictionless icy surface and push off each other. If the 60 kg skater moves at 2 m/s, the 40 kg skater moves at:",
+    "options": [
+      {
+        "text": "2 m/s in the same direction"
+      },
+      {
+        "text": "3 m/s in the opposite direction"
+      },
+      {
+        "text": "1.33 m/s in the opposite direction"
+      },
+      {
+        "text": "2 m/s in the opposite direction"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Medium",
+    "subtopic": "Conservation of Momentum",
+    "fsmTag": "skater-pushoff",
+    "concepts": [
+      "conservation-of-momentum",
+      "two-body-recoil"
+    ],
+    "sourcePages": [
+      102,
+      103
+    ],
+    "timeTargets": {
+      "ap_eapcet": 55,
+      "ts_eapcet": 55,
+      "jee_main": 75
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Two bodies push off from rest on a frictionless surface.",
+      "steps": [
+        "**Trigger:** Same setup as the gun-bullet recoil.",
+        "**Action:** $m_1 v_1 = m_2 v_2$ (magnitudes), opposite directions.",
+        "**Result:** $v_2 = (60 \\times 2)/40 = 3$ m/s opposite — option B."
+      ],
+      "sanityCheck": "Lighter skater is 1.5× lighter, so moves 1.5× faster: $2 \\times 1.5 = 3$ m/s — consistent."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Same-system conservation: initial $P = 0$, final $P_1 + P_2 = 0$.",
+        "**EXTRACT:** $m_1 = 60$ kg @ 2 m/s; $m_2 = 40$ kg.",
+        "**EXECUTE:** $60 \\times 2 + 40 \\times v_2 = 0 \\Rightarrow v_2 = -3$ m/s. Magnitude 3 m/s in the opposite direction.",
+        "**PROOF:** Option A reuses 2 m/s for both — would only hold for equal masses (and keeps the wrong direction); Option C inverts the mass ratio, $2 \\times (40/60) = 1.33$ m/s, instead of using $m_1/m_2$; Option D forgets the mass ratio entirely. The correct inverse-mass scaling, $v_2 = m_1 v_1 / m_2 = 3$ m/s opposite — Option B. Correct option: B."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A bomb initially at rest at a height of 40 m above the ground suddenly explodes into two identical fragments. One fragment starts moving vertically downward with an initial speed of 10 m/s. Taking $g = 10$ m/s², the separation between the two fragments 2 seconds after the explosion is:",
+    "options": [
+      {
+        "text": "40 m"
+      },
+      {
+        "text": "20 m"
+      },
+      {
+        "text": "10 m"
+      },
+      {
+        "text": "60 m"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Hard",
+    "subtopic": "Conservation of Momentum",
+    "fsmTag": "bomb-vertical-explosion-separation",
+    "concepts": [
+      "conservation-of-momentum",
+      "free-fall",
+      "relative-velocity"
+    ],
+    "sourcePages": [
+      102,
+      114
+    ],
+    "timeTargets": {
+      "ap_eapcet": 100,
+      "ts_eapcet": 100,
+      "jee_main": 140
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Symmetric explosion; equal masses; both pieces fall under gravity.",
+      "steps": [
+        "**Trigger:** Identical fragments ⇒ equal-and-opposite initial velocities from a rest bomb.",
+        "**Action:** $v_2 = +10$ m/s up; $v_1 = -10$ m/s down. Both fall under $g$, which CANCELS in their relative motion: relative velocity stays $20$ m/s constant.",
+        "**Result:** Separation after $t$ = (relative speed) × $t$ = $20 \\times 2 = 40$ m — option A."
+      ],
+      "sanityCheck": "Gravity acts on both pieces identically, so it doesn't change their relative position — the separation grows at the constant initial relative speed."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Exercise problem 7 — vertical explosion, separation under gravity.",
+        "**EXTRACT:** Both halves equal mass; bomb at rest ⇒ momenta equal and opposite. Piece 1: 10 m/s down. Piece 2: 10 m/s up.",
+        "**EXECUTE:** Position of piece 1: $y_1 = 40 - 10t - \\tfrac{1}{2}g t^2 = 40 - 20 - 20 = 0$ at $t = 2$. Piece 2: $y_2 = 40 + 10t - \\tfrac{1}{2}g t^2 = 40 + 20 - 20 = 40$ at $t = 2$. Separation $= |y_2 - y_1| = 40$ m. (Equivalently, relative speed 20 m/s × 2 s = 40 m, since gravity cancels.)",
+        "**PROOF:** Both fragments have equal mass, so by momentum conservation one moves up at 10 m/s while the other moves down at 10 m/s; their relative speed is 20 m/s and gravity (equal on both) cancels in the relative motion, so separation $= 20 \\times 2 = 40$ m (option A). Option B ($20$ m) reports the relative speed itself, dropping the $\\times t = 2$ s. Option C ($10$ m) uses one fragment’s launch speed as the displacement. Option D ($60$ m) wrongly adds a gravity term, $20 \\times 2 + \\tfrac{1}{2}(10)(2^2) = 40 + 20 = 60$, not realising gravity cancels in the relative motion. Correct option: A."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A particle is in equilibrium when:",
+    "options": [
+      {
+        "text": "the sum of all forces on it equals its weight"
+      },
+      {
+        "text": "the net external force on it is zero"
+      },
+      {
+        "text": "it is at rest, regardless of the forces on it"
+      },
+      {
+        "text": "every force on it has a reaction pair"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Easy",
+    "subtopic": "Equilibrium of a Particle",
+    "fsmTag": "equilibrium-definition",
+    "concepts": [
+      "equilibrium",
+      "net-force"
+    ],
+    "sourcePages": [
+      103
+    ],
+    "timeTargets": {
+      "ap_eapcet": 25,
+      "ts_eapcet": 25,
+      "jee_main": 35
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Definition of mechanical equilibrium (Section 5.8).",
+        "**EXTRACT:** A particle is in equilibrium when the net external force is zero — the particle may be at rest or in uniform motion (first-law condition).",
+        "**EXECUTE:** $\\sum \\mathbf{F} = 0$.",
+        "**PROOF:** Option A confuses 'balanced' with 'weight present'; if the net force equals the weight in magnitude, the body accelerates at $g$ and is NOT in equilibrium. Option C confuses equilibrium with rest — a body in uniform motion is also in equilibrium, and a body can have $v=0$ yet $a\\neq 0$ (e.g. top of a vertical throw). Option D restates Newton's third law (always true) as if it were the equilibrium condition. Only B captures the chapter's definition. Correct option: B."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Three concurrent coplanar forces acting on a particle keep it in equilibrium. They must be representable as:",
+    "options": [
+      {
+        "text": "two equal and opposite, the third zero"
+      },
+      {
+        "text": "two perpendicular forces and a third along the diagonal"
+      },
+      {
+        "text": "three sides of a closed triangle taken in the same order"
+      },
+      {
+        "text": "three vectors of equal magnitude at 120° to each other"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Medium",
+    "subtopic": "Equilibrium of a Particle",
+    "fsmTag": "three-force-triangle-closure",
+    "concepts": [
+      "equilibrium",
+      "vector-closure",
+      "triangle-rule"
+    ],
+    "sourcePages": [
+      103
+    ],
+    "timeTargets": {
+      "ap_eapcet": 50,
+      "ts_eapcet": 50,
+      "jee_main": 70
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Three concurrent forces in equilibrium.",
+      "steps": [
+        "**Trigger:** $\\mathbf{F}_1 + \\mathbf{F}_2 + \\mathbf{F}_3 = 0$.",
+        "**Action:** Vectors summing to zero must form a closed polygon — for three vectors, a closed triangle.",
+        "**Result:** Triangle taken in the same order — option C."
+      ],
+      "sanityCheck": "The resultant of any two must equal the negative of the third (Section 5.8) — exactly the triangle-closure condition."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Equilibrium under three concurrent forces (Eq. 5.11, Fig. 5.7).",
+        "**EXTRACT:** Triangle (or closed-polygon) condition.",
+        "**EXECUTE:** Three force vectors arranged head-to-tail must close — this is the geometric statement of $\\sum F = 0$.",
+        "**PROOF:** Option A is a SPECIAL CASE (one of the forces being zero); option B is unrelated geometry; option D is also only a SPECIAL CASE (three equal forces at 120°). The GENERAL condition is the closed triangle — option C."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A mass of 6 kg is suspended from a ceiling by a light rope of length 2 m. A horizontal force of 50 N is applied at the midpoint of the rope. Taking $g = 10$ m/s², the angle the upper half of the rope makes with the vertical, in equilibrium, is approximately:",
+    "options": [
+      {
+        "text": "sin⁻¹(5/6)"
+      },
+      {
+        "text": "tan⁻¹(50/6)"
+      },
+      {
+        "text": "40°"
+      },
+      {
+        "text": "tan⁻¹(6/5)"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Hard",
+    "subtopic": "Equilibrium of a Particle",
+    "fsmTag": "rope-midpoint-horizontal-force",
+    "concepts": [
+      "equilibrium",
+      "tension-balance",
+      "free-body-diagram"
+    ],
+    "sourcePages": [
+      103,
+      104
+    ],
+    "timeTargets": {
+      "ap_eapcet": 90,
+      "ts_eapcet": 90,
+      "jee_main": 130
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Ex. 5.6 — free-body diagram at the midpoint of the rope.",
+        "**EXTRACT:** $m = 6$ kg ⇒ $T_2 = mg = 60$ N (lower half just supports the weight). Horizontal force $= 50$ N.",
+        "**EXECUTE:** Equilibrium at the midpoint: $T_1 \\sin\\theta = 50$, $T_1 \\cos\\theta = 60$. Divide: $\\tan\\theta = 50/60 = 5/6 \\Rightarrow \\theta \\approx 39.8^\\circ \\approx 40^\\circ$.",
+        "**PROOF:** Option A uses $\\sin\\theta = 50/60$ instead of $\\tan\\theta$ (sin/tan confusion), giving $\\sin^{-1}(5/6) \\approx 56.4^\\circ$. Option B forgets to multiply mass by $g$ and writes $\\tan\\theta = 50/6$ (using $m=6$ instead of $mg=60$), giving $\\tan^{-1}(50/6) \\approx 83.2^\\circ$. Option D inverts the ratio to $\\tan\\theta = 60/50 = 6/5$ (uses $mg/F$ instead of $F/mg$), giving $\\tan^{-1}(6/5) \\approx 50.2^\\circ$. The correct balance gives $\\tan\\theta = 5/6 \\Rightarrow \\theta \\approx 40^\\circ$. Correct option: C."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Three forces $\\mathbf{F}_1 = (4\\hat{i} + 3\\hat{j})$ N, $\\mathbf{F}_2 = (-2\\hat{i} - 5\\hat{j})$ N and $\\mathbf{F}_3$ act on a particle that is in equilibrium. The force $\\mathbf{F}_3$ is:",
+    "options": [
+      {
+        "text": "$(-2\\hat{i} + 2\\hat{j})$ N"
+      },
+      {
+        "text": "$(2\\hat{i} + 2\\hat{j})$ N"
+      },
+      {
+        "text": "$(2\\hat{i} - 2\\hat{j})$ N"
+      },
+      {
+        "text": "$(-2\\hat{i} - 2\\hat{j})$ N"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Hard",
+    "subtopic": "Equilibrium of a Particle",
+    "fsmTag": "third-force-from-equilibrium",
+    "concepts": [
+      "equilibrium",
+      "vector-sum",
+      "component-balance"
+    ],
+    "sourcePages": [
+      103
+    ],
+    "timeTargets": {
+      "ap_eapcet": 75,
+      "ts_eapcet": 75,
+      "jee_main": 105
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Equilibrium of a particle, Eq. (5.11) in component form (Eq. 5.12).",
+        "**EXTRACT:** $\\mathbf{F}_1 = 4\\hat{i} + 3\\hat{j}$, $\\mathbf{F}_2 = -2\\hat{i} - 5\\hat{j}$.",
+        "**EXECUTE:** $\\mathbf{F}_1 + \\mathbf{F}_2 = (4-2)\\hat{i} + (3-5)\\hat{j} = 2\\hat{i} - 2\\hat{j}$. For equilibrium, $\\mathbf{F}_3 = -(2\\hat{i} - 2\\hat{j}) = -2\\hat{i} + 2\\hat{j}$ N.",
+        "**PROOF:** Option B reports $(\\mathbf{F}_1 + \\mathbf{F}_2)$ with only the $\\hat{j}$ component negated, giving $(2\\hat{i} + 2\\hat{j})$. Option C is $(\\mathbf{F}_1 + \\mathbf{F}_2)$ itself, $(2\\hat{i} - 2\\hat{j})$ — the equilibrant equals the NEGATIVE of the resultant, sign forgotten. Option D negates both components of the WRONG starting sum $(2\\hat{i} + 2\\hat{j})$, giving $(-2\\hat{i} - 2\\hat{j})$. Closure with Option A: $(4-2-2) = 0$, $(3-5+2) = 0$. Correct option: A."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Static friction differs from kinetic friction in that:",
+    "options": [
+      {
+        "text": "static friction acts only on moving bodies"
+      },
+      {
+        "text": "kinetic friction is independent of the normal force"
+      },
+      {
+        "text": "static friction depends on the area of contact while kinetic friction does not"
+      },
+      {
+        "text": "static friction is self-adjusting and has a MAXIMUM value $\\mu_s N$; kinetic friction has a definite value $\\mu_k N$ that opposes existing relative motion"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Easy",
+    "subtopic": "Friction",
+    "fsmTag": "static-vs-kinetic-friction",
+    "concepts": [
+      "friction",
+      "static-friction",
+      "kinetic-friction"
+    ],
+    "sourcePages": [
+      105
+    ],
+    "timeTargets": {
+      "ap_eapcet": 35,
+      "ts_eapcet": 35,
+      "jee_main": 50
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Recall Sections 5.9.1 and Eqs. (5.13)–(5.15).",
+        "**EXTRACT:** Match the chapter's distinctions.",
+        "**EXECUTE:** Static friction is self-adjusting up to a limit $\\mu_s N$; kinetic friction has the definite value $\\mu_k N$ and opposes actual relative motion.",
+        "**PROOF:** Option A inverts roles — static friction acts on bodies NOT in relative motion; option B contradicts $f_k = \\mu_k N$; option C wrongly attaches area-dependence to one but not the other (both are approximately area-independent). Option D."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Compared to the coefficient of static friction $\\mu_s$ between two surfaces, the coefficient of kinetic friction $\\mu_k$ is generally:",
+    "options": [
+      {
+        "text": "equal to $\\mu_s$"
+      },
+      {
+        "text": "equal to half $\\mu_s$"
+      },
+      {
+        "text": "less than $\\mu_s$"
+      },
+      {
+        "text": "greater than $\\mu_s$"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Easy",
+    "subtopic": "Friction",
+    "fsmTag": "mu-k-less-than-mu-s",
+    "concepts": [
+      "friction",
+      "static-vs-kinetic"
+    ],
+    "sourcePages": [
+      105
+    ],
+    "timeTargets": {
+      "ap_eapcet": 25,
+      "ts_eapcet": 25,
+      "jee_main": 35
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Recall (Section 5.9.1): $\\mu_k$ is less than $\\mu_s$.",
+        "**EXTRACT:** The chapter explicitly states this on p. 105.",
+        "**EXECUTE:** Kinetic friction is less than the maximum static friction; that is why a body, once it starts to move, requires less force to keep moving.",
+        "**PROOF:** Option A comes from treating friction as one constant per surface pair and ignoring the static-vs-kinetic distinction ($\\mu_k=\\mu_s$). Option B comes from over-quantifying the correct 'kinetic is smaller' rule into a fabricated fixed ratio $\\mu_k=\\mu_s/2$, which the chapter never states. Option D comes from the inverted belief that a moving body experiences more friction than a stationary one. The textbook's experimental result is $\\mu_k<\\mu_s$. Correct option: C."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Which of the following is the BEST approximate description of how the limiting static friction $f_{s,\\max}$ depends on the area of contact and the normal force $N$?",
+    "options": [
+      {
+        "text": "independent of $N$; proportional to contact area"
+      },
+      {
+        "text": "proportional to contact area; independent of $N$"
+      },
+      {
+        "text": "proportional to both contact area and $N$"
+      },
+      {
+        "text": "independent of contact area; proportional to $N$"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Easy",
+    "subtopic": "Friction",
+    "fsmTag": "limiting-friction-area-independence",
+    "concepts": [
+      "friction",
+      "normal-force",
+      "area-independence"
+    ],
+    "sourcePages": [
+      105
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Recall the empirical law: $f_{s,\\max} = \\mu_s N$ (Eq. 5.13).",
+        "**EXTRACT:** Two empirical facts: independent of area, proportional to $N$.",
+        "**EXECUTE:** Both characteristics are summarised by Eq. (5.13); contact area does NOT appear.",
+        "**PROOF:** Options A, B, C each attach a non-existent area-dependence or strip the $N$-dependence — empirical law $f_{s,\\max} = \\mu_s N$ contradicts all three. The chapter states limiting friction is independent of area and proportional to $N$ — option D."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "An object placed on an inclined plane just begins to slide down when the angle of inclination is increased to $\\theta_{\\max} = 30°$. The coefficient of static friction between the object and the plane is:",
+    "options": [
+      {
+        "text": "$\\sqrt{3}$"
+      },
+      {
+        "text": "$1/\\sqrt{3}$"
+      },
+      {
+        "text": "$1/2$"
+      },
+      {
+        "text": "$\\sqrt{3}/2$"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Medium",
+    "subtopic": "Friction",
+    "fsmTag": "angle-of-repose-mu-s",
+    "concepts": [
+      "angle-of-repose",
+      "static-friction",
+      "inclined-plane"
+    ],
+    "sourcePages": [
+      106
+    ],
+    "timeTargets": {
+      "ap_eapcet": 45,
+      "ts_eapcet": 45,
+      "jee_main": 65
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Angle of repose given.",
+      "steps": [
+        "**Trigger:** Block just-about-to-slip on an incline.",
+        "**Action:** $\\mu_s = \\tan\\theta_{\\max}$ (Eq. on p. 106).",
+        "**Result:** $\\mu_s = \\tan 30^\\circ = 1/\\sqrt{3}$ — option B."
+      ],
+      "sanityCheck": "At small angles the block stays put; at 30° it just slips — $\\tan 30°$ ≈ 0.577 is the threshold."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Ex. 5.8 (Section 5.9.1): block on a tilted plane, find $\\mu_s$ from the angle of repose.",
+        "**EXTRACT:** $\\theta_{\\max} = 30^\\circ$.",
+        "**EXECUTE:** Resolving along the plane: $mg\\sin\\theta = f_{s,\\max} = \\mu_s mg\\cos\\theta \\Rightarrow \\mu_s = \\tan\\theta$. So $\\mu_s = \\tan 30^\\circ = 1/\\sqrt{3}$.",
+        "**PROOF:** Option A is $\\tan 60^\\circ$ — wrong angle; option C is $\\sin 30^\\circ$ — wrong trig function; option D is $\\cos 30^\\circ$ — same mistake. $\\tan 30^\\circ = 1/\\sqrt{3}$ — option B."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A box rests on the floor of a horizontally accelerating train. The coefficient of static friction between the box and the floor is 0.20. Taking $g = 10$ m/s², the MAXIMUM acceleration of the train for which the box will remain stationary relative to the floor is:",
+    "options": [
+      {
+        "text": "0.4 m/s²"
+      },
+      {
+        "text": "0.02 m/s²"
+      },
+      {
+        "text": "2.0 m/s²"
+      },
+      {
+        "text": "5.0 m/s²"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Medium",
+    "subtopic": "Friction",
+    "fsmTag": "max-train-acceleration-friction",
+    "concepts": [
+      "static-friction",
+      "horizontal-acceleration"
+    ],
+    "sourcePages": [
+      105,
+      106
+    ],
+    "timeTargets": {
+      "ap_eapcet": 50,
+      "ts_eapcet": 50,
+      "jee_main": 70
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Ex. 5.7 — friction supplies the box's acceleration; the maximum it can supply is $f_{\\max} = \\mu_s N = \\mu_s mg$ (horizontal floor, $N = mg$).",
+        "**EXTRACT:** $\\mu_s = 0.20$, $g = 10$ m/s².",
+        "**EXECUTE:** $ma_{\\max} = \\mu_s mg \\Rightarrow a_{\\max} = \\mu_s g = 0.20 \\times 10 = 2.0$ m/s².",
+        "**PROOF:** Option A (0.4) squares the coefficient: $\\mu_s^2 g = 0.04 \\times 10 = 0.4$. Option B (0.02) divides by $g$ instead of multiplying: $\\mu_s / g = 0.20 / 10 = 0.02$. Option D (5.0) misreads $\\mu_s = 0.20$ as $0.50$: $0.50 \\times 10 = 5.0$. The correct product is $\\mu_s g = 0.20 \\times 10 = 2.0$ m/s². Correct option: C."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A block of mass 2 kg is placed on a rough inclined plane that makes a 30° angle with the horizontal. The coefficient of friction between the block and the plane is $\\mu = \\sqrt{3}/2$. Taking $g = 10$ m/s², the minimum force directed along the plane required to push the block UP the plane WITHOUT acceleration is:",
+    "options": [
+      {
+        "text": "5.0 N"
+      },
+      {
+        "text": "10.0 N"
+      },
+      {
+        "text": "15.0 N"
+      },
+      {
+        "text": "25.0 N"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Medium",
+    "subtopic": "Friction",
+    "fsmTag": "min-force-up-incline-with-friction",
+    "concepts": [
+      "friction",
+      "inclined-plane",
+      "force-balance"
+    ],
+    "sourcePages": [
+      106,
+      115
+    ],
+    "timeTargets": {
+      "ap_eapcet": 75,
+      "ts_eapcet": 75,
+      "jee_main": 105
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Exercise problem 9(b): block moves up the incline with constant velocity.",
+        "**EXTRACT:** $m = 2$ kg, $\\theta = 30^\\circ$, $\\mu = \\sqrt{3}/2$, $g = 10$ m/s².",
+        "**EXECUTE:** $N = mg\\cos\\theta$. Both gravity component ($mg\\sin\\theta$) and friction ($\\mu N$) oppose the push. $F = mg\\sin\\theta + \\mu mg\\cos\\theta = (2)(10)(\\tfrac{1}{2}) + (\\sqrt{3}/2)(2)(10)(\\sqrt{3}/2) = 10 + 15 = 25$ N.",
+        "**PROOF:** Option A subtracts friction instead of adding it (wrong sign: treats friction as aiding the push), giving $mg\\sin\\theta - \\mu mg\\cos\\theta = 10 - 15 = -5$, taken as 5 N. Option B is the friction-free $mg\\sin\\theta$ value only (10 N). Option C reports the friction term alone, $\\mu mg\\cos\\theta = 15$ N. The correct sum is $10 + 15 = 25$ N. Correct option: D."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A container of mass 200 kg rests on the flat bed of an open truck. The truck accelerates at 1.5 m/s² on a straight horizontal road. Taking $g = 9.8$ m/s², the MINIMUM coefficient of static friction between the container and the truck bed needed to prevent the container from sliding is approximately:",
+    "options": [
+      {
+        "text": "0.150"
+      },
+      {
+        "text": "0.153"
+      },
+      {
+        "text": "0.300"
+      },
+      {
+        "text": "1.500"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Medium",
+    "subtopic": "Friction",
+    "fsmTag": "min-mu-for-no-slip-on-truck",
+    "concepts": [
+      "static-friction",
+      "horizontal-acceleration"
+    ],
+    "sourcePages": [
+      114
+    ],
+    "timeTargets": {
+      "ap_eapcet": 55,
+      "ts_eapcet": 55,
+      "jee_main": 80
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Exercise problem 6 of Section 5.11.",
+        "**EXTRACT:** $a = 1.5$ m/s², $g = 9.8$ m/s².",
+        "**EXECUTE:** Friction must supply the container's acceleration: $\\mu_{\\min} mg = ma \\Rightarrow \\mu_{\\min} = a/g = 1.5/9.8 \\approx 0.153$.",
+        "**PROOF:** Option A ignores the explicit $g = 9.8$ override and uses the default $g = 10$, giving $1.5/10 = 0.150$; Option C uses $g = 5$, giving $1.5/5 = 0.300$; Option D forgets to divide by $g$ entirely, giving $\\mu = a = 1.5$. The correct dimensionless ratio is $1.5/9.8 = 0.153$. Correct option: B."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A 20 kg trolley sits on a horizontal table with $\\mu_k = 0.04$ between the trolley and the table. A 3 kg block hangs from a light cord that passes over a frictionless pulley at the edge of the table and is attached to the trolley. Taking $g = 10$ m/s², the magnitude of the common acceleration of the system (the trolley moves horizontally, the block moves downward) is approximately:",
+    "options": [
+      {
+        "text": "0.96 m/s²"
+      },
+      {
+        "text": "1.30 m/s²"
+      },
+      {
+        "text": "1.65 m/s$^2$"
+      },
+      {
+        "text": "0.90 m/s²"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Hard",
+    "subtopic": "Friction",
+    "fsmTag": "pulley-trolley-with-friction",
+    "concepts": [
+      "friction",
+      "connected-bodies",
+      "pulley"
+    ],
+    "sourcePages": [
+      106,
+      107
+    ],
+    "timeTargets": {
+      "ap_eapcet": 100,
+      "ts_eapcet": 100,
+      "jee_main": 140
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Ex. 5.9 — Atwood-style system with kinetic friction.",
+        "**EXTRACT:** Trolley $m_t = 20$ kg, hanging block $m_h = 3$ kg, $\\mu_k = 0.04$, $g = 10$ m/s².",
+        "**EXECUTE:** Block: $m_h g - T = m_h a$. Trolley: $T - \\mu_k m_t g = m_t a$. Add: $m_h g - \\mu_k m_t g = (m_h + m_t) a$ ⇒ $a = (30 - 8)/23 = 22/23 \\approx 0.96$ m/s².",
+        "**PROOF:** Option B (1.30 m/s$^2$) is the FRICTION-FREE Atwood result $m_h g/(m_h+m_t) = 30/23$ — drops the $\\mu_k m_t g$ subtraction; Option C (1.65 m/s$^2$) ADDS friction instead of subtracting it: $(m_h g + \\mu_k m_t g)/(m_h+m_t) = (30+8)/23$ — sign error on the friction term; Option D (0.90 m/s$^2$) takes the normal force as the TOTAL weight rather than just the trolley's: $f = \\mu_k (m_t+m_h) g = 9.2$ N, giving $a = (30 - 9.2)/23 = 20.8/23 \\approx 0.90$ — wrong normal force. The correct subtraction uses $f = \\mu_k m_t g = 8$ N, giving 0.96 m/s². Correct option: A."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "In a frictionless Atwood machine, two masses $m_1$ and $m_2$ ($m_1 > m_2$) hang from the two ends of a light, inextensible string over a smooth, light pulley. The magnitude of the acceleration of either mass is:",
+    "options": [
+      {
+        "text": "$g$"
+      },
+      {
+        "text": "$\\dfrac{(m_1+m_2)\\,g}{m_1-m_2}$"
+      },
+      {
+        "text": "$\\dfrac{(m_1-m_2)\\,g}{m_1+m_2}$"
+      },
+      {
+        "text": "$\\dfrac{m_1\\,g}{m_2}$"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Easy",
+    "subtopic": "Dynamics: Connected Bodies, Inclines & Lifts",
+    "fsmTag": "atwood-acceleration-formula",
+    "concepts": [
+      "atwood-machine",
+      "newton-second-law"
+    ],
+    "sourcePages": [
+      109,
+      110
+    ],
+    "timeTargets": {
+      "ap_eapcet": 35,
+      "ts_eapcet": 35,
+      "jee_main": 50
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Standard Atwood derivation.",
+        "**EXTRACT:** Two masses, inextensible string, common acceleration magnitude $a$.",
+        "**EXECUTE:** Heavy side: $m_1 g - T = m_1 a$. Light side: $T - m_2 g = m_2 a$. Add: $(m_1 - m_2) g = (m_1 + m_2) a \\Rightarrow a = \\dfrac{(m_1-m_2)g}{m_1+m_2}$.",
+        "**PROOF:** Option A would be free fall (no constraint); option B inverts the ratio — would exceed $g$ for any $m_1 > m_2$, unphysical; option D gives $g$ only when $m_1 = m_2$, not generally. The clean formula is option C."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A person of weight $W$ stands on a weighing machine in a lift moving upward with a uniform acceleration of $g/3$. The reading of the machine is:",
+    "options": [
+      {
+        "text": "$W/3$"
+      },
+      {
+        "text": "$4W/3$"
+      },
+      {
+        "text": "$2W/3$"
+      },
+      {
+        "text": "$W$"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Medium",
+    "subtopic": "Dynamics: Connected Bodies, Inclines & Lifts",
+    "fsmTag": "lift-apparent-weight",
+    "concepts": [
+      "non-inertial-frame",
+      "apparent-weight",
+      "newton-second-law"
+    ],
+    "sourcePages": [
+      114
+    ],
+    "timeTargets": {
+      "ap_eapcet": 50,
+      "ts_eapcet": 50,
+      "jee_main": 70
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Lift accelerates with acceleration $a$ vertically.",
+      "steps": [
+        "**Trigger:** Apparent weight = $m(g \\pm a)$ (up = +, down = −).",
+        "**Action:** Up with $a = g/3$: apparent weight $= m(g + g/3) = (4/3) mg = (4/3) W$.",
+        "**Result:** $4W/3$ — option B."
+      ],
+      "sanityCheck": "Accelerating up ⇒ feels HEAVIER (>$W$). $4W/3 > W$ — consistent."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Exercise problem 5 — apparent weight in an accelerating lift.",
+        "**EXTRACT:** Lift accelerates up at $a = g/3$.",
+        "**EXECUTE:** Free-body on the person: $N - mg = ma$ (taking up positive). So $N = m(g + a) = m(g + g/3) = (4/3) mg = (4/3) W$.",
+        "**PROOF:** Option A ($W/3$) reports only the increase due to the acceleration ($ma$), forgetting the original weight; option C ($2W/3$) does $W - W/3$ — applies a DOWNWARD acceleration mistakenly; option D would only hold in equilibrium ($a = 0$). The chapter's textbook answer is $4W/3$ — option B."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Two masses 4 kg and 3 kg are connected by a light inextensible string passing over a frictionless smooth pulley. Taking $g = 10$ m/s², the magnitude of the common acceleration is:",
+    "options": [
+      {
+        "text": "$1.43$ m/s²"
+      },
+      {
+        "text": "$3.33$ m/s²"
+      },
+      {
+        "text": "$0.71$ m/s²"
+      },
+      {
+        "text": "$2.5$ m/s²"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Medium",
+    "subtopic": "Dynamics: Connected Bodies, Inclines & Lifts",
+    "fsmTag": "atwood-numerical-43",
+    "concepts": [
+      "atwood-machine",
+      "common-acceleration"
+    ],
+    "sourcePages": [
+      109
+    ],
+    "timeTargets": {
+      "ap_eapcet": 45,
+      "ts_eapcet": 45,
+      "jee_main": 65
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Plug-and-chug Atwood.",
+        "**EXTRACT:** $m_1 = 4$ kg, $m_2 = 3$ kg, $g = 10$ m/s².",
+        "**EXECUTE:** $a = (4-3)(10)/(4+3) = 10/7 \\approx 1.43$ m/s².",
+        "**PROOF:** Option B divides the net force by the smaller mass alone: $(m_1-m_2)g/m_2 = 10/3 = 3.33$. Option C halves the correct answer, using $(m_1-m_2)g/[2(m_1+m_2)] = 10/14 = 0.71$ (a factor-of-2 slip). Option D divides the net force by the larger mass alone: $(m_1-m_2)g/m_1 = 10/4 = 2.5$. The exact formula divides by the sum, giving $10/7 \\approx 1.43$ m/s². Correct option: A."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A fixed pulley has a light string passing over it: a 4 kg mass hangs on one side; on the other side a 3 kg mass is attached, and from that 3 kg mass a SECOND light string supports another 3 kg mass below it. The system is released from rest. Taking $g = 10$ m/s², the magnitude of the common acceleration is:",
+    "options": [
+      {
+        "text": "$2$ m/s²"
+      },
+      {
+        "text": "$10/3$ m/s²"
+      },
+      {
+        "text": "$1$ m/s²"
+      },
+      {
+        "text": "$5$ m/s²"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Hard",
+    "subtopic": "Dynamics: Connected Bodies, Inclines & Lifts",
+    "fsmTag": "compound-atwood-three-mass",
+    "concepts": [
+      "atwood-machine",
+      "compound-pulley",
+      "connected-bodies"
+    ],
+    "sourcePages": [
+      115
+    ],
+    "timeTargets": {
+      "ap_eapcet": 90,
+      "ts_eapcet": 90,
+      "jee_main": 130
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "One side: $m_a = 4$ kg. Other side: $m_b = 3 + 3 = 6$ kg moving together (rigid through the lower string).",
+      "steps": [
+        "**Trigger:** Two pieces on one side are connected so they accelerate together.",
+        "**Action:** Treat as Atwood with $6$ kg vs $4$ kg.",
+        "**Result:** $a = (6 - 4)(10)/(6 + 4) = 20/10 = 2$ m/s² — option A."
+      ],
+      "sanityCheck": "Heavier side (6 kg) moves down; lighter (4 kg) up — consistent with $a$ positive in that sense."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Exercise problem 8 — compound Atwood with three masses.",
+        "**EXTRACT:** Side 1: 4 kg. Side 2: 3 kg above + 3 kg below it (linked by a second string) ⇒ effective mass 6 kg.",
+        "**EXECUTE:** Standard Atwood: $a = (m_2 - m_1) g / (m_2 + m_1) = (6 - 4) \\times 10 / 10 = 2$ m/s². Both 3 kg masses share this same magnitude of acceleration because the lower string is also inextensible.",
+        "**PROOF:** Option B ($10/3$ ≈ 3.33 m/s²) keeps the numerator $20$ but divides by the lumped heavy side mass $m_b = 6$ kg instead of the total $m_a + m_b = 10$ kg, giving $20/6 = 10/3$; option C ($1$ m/s²) halves the correct answer (uses denominator $2(m_a+m_b) = 20$); option D ($5$ m/s²) is $g/2$ — the limiting value if the lower mass were in free fall, not the constrained Atwood case. The 6-vs-4 reduction with denominator $m_a + m_b = 10$ gives 2 m/s². Correct option: A."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A 2 kg block sits on a horizontal table and is connected by a light string passing over a frictionless pulley at the edge of the table to a 0.45 kg block that hangs over the side. The coefficient of sliding friction between the 2 kg block and the table is $\\mu_k = 0.2$. Taking $g = 10$ m/s², the magnitude of the initial acceleration of the system is approximately:",
+    "options": [
+      {
+        "text": "$0.50$ m/s²"
+      },
+      {
+        "text": "$1.84$ m/s²"
+      },
+      {
+        "text": "$0.20$ m/s²"
+      },
+      {
+        "text": "$2.45$ m/s²"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Hard",
+    "subtopic": "Dynamics: Connected Bodies, Inclines & Lifts",
+    "fsmTag": "two-body-pulley-with-friction",
+    "concepts": [
+      "friction",
+      "connected-bodies",
+      "pulley"
+    ],
+    "sourcePages": [
+      115
+    ],
+    "timeTargets": {
+      "ap_eapcet": 95,
+      "ts_eapcet": 95,
+      "jee_main": 135
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Exercise problem 11.",
+        "**EXTRACT:** $m_t = 2$ kg, $m_h = 0.45$ kg, $\\mu_k = 0.2$, $g = 10$ m/s².",
+        "**EXECUTE:** Equations: $m_h g - T = m_h a$, $T - \\mu_k m_t g = m_t a$. Add: $a = (m_h g - \\mu_k m_t g)/(m_t + m_h) = (4.5 - 4)/2.45 \\approx 0.204$ m/s².",
+        "**PROOF:** Option A ($0.50$) reports the NET force in newtons ($m_h g - \\mu_k m_t g = 4.5 - 4 = 0.5$ N) without dividing by the total mass — a units/step slip. Option B ($1.84$) is the FRICTION-FREE result $m_h g/(m_t+m_h) = 4.5/2.45 \\approx 1.84$ — forgets to subtract friction. Option D ($2.45$) reports the TOTAL mass $(m_t+m_h) = 2.45$ kg misread as an acceleration. The friction-corrected calculation gives $0.5/2.45 \\approx 0.20$ m/s$^2$. Correct option: C."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "For a particle of mass $m$ moving with uniform speed $v$ in a circle of radius $R$, the centripetal force needed to keep the particle on the circular path is:",
+    "options": [
+      {
+        "text": "$mvR$"
+      },
+      {
+        "text": "$\\dfrac{mv}{R}$"
+      },
+      {
+        "text": "$\\dfrac{m R^2}{v}$"
+      },
+      {
+        "text": "$\\dfrac{mv^2}{R}$"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Easy",
+    "subtopic": "Circular Motion (Dynamics)",
+    "fsmTag": "centripetal-force-formula",
+    "concepts": [
+      "centripetal-force",
+      "circular-motion"
+    ],
+    "sourcePages": [
+      108
+    ],
+    "timeTargets": {
+      "ap_eapcet": 25,
+      "ts_eapcet": 25,
+      "jee_main": 35
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Recall Eq. (5.16): $f_c = mv^2/R$.",
+        "**EXTRACT:** Direct formula recall.",
+        "**EXECUTE:** Centripetal acceleration $v^2/R$ (from Ch. 4), times mass.",
+        "**PROOF:** Options A, B, C are all dimensionally INCORRECT for a force; only $mv^2/R$ has dimensions [MLT⁻²]. Option D."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "On a level circular road of radius $R$, a car can take the turn without skidding if its speed $v$ satisfies:",
+    "options": [
+      {
+        "text": "$v \\le \\sqrt{\\mu_s R g}$"
+      },
+      {
+        "text": "$v \\ge \\sqrt{\\mu_s R g}$"
+      },
+      {
+        "text": "$v \\le \\mu_s R g$"
+      },
+      {
+        "text": "$v \\le R g / \\mu_s$"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Medium",
+    "subtopic": "Circular Motion (Dynamics)",
+    "fsmTag": "level-road-max-speed",
+    "concepts": [
+      "centripetal-force",
+      "static-friction",
+      "level-road"
+    ],
+    "sourcePages": [
+      108
+    ],
+    "timeTargets": {
+      "ap_eapcet": 40,
+      "ts_eapcet": 40,
+      "jee_main": 60
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Section 5.10 (Motion of a car on a level road) — Eq. (5.18).",
+        "**EXTRACT:** Required centripetal force $mv^2/R$ supplied by static friction (max $\\mu_s N = \\mu_s mg$).",
+        "**EXECUTE:** $mv^2/R \\le \\mu_s mg \\Rightarrow v^2 \\le \\mu_s R g \\Rightarrow v_{\\max} = \\sqrt{\\mu_s R g}$.",
+        "**PROOF:** Option B keeps the magnitude but flips the inequality direction (it gives the speeds at which the car *does* skid). Option C drops the square root when solving $v^2 \\le \\mu_s R g$, leaving $v \\le \\mu_s R g$, a dimensionally wrong bound ($\\text{m}^2/\\text{s}^2$). Option D mis-rearranges the algebra, placing $\\mu_s$ in the denominator so a stickier surface would wrongly reduce the allowed speed. The correct form is $v \\le \\sqrt{\\mu_s R g}$. Correct option: A."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A cyclist takes a circular turn of radius 3 m on a level road at a speed of 18 km/h. The coefficient of static friction between the tyres and the road is 0.1. Taking $g = 9.8$ m/s², the cyclist will:",
+    "options": [
+      {
+        "text": "round the turn comfortably"
+      },
+      {
+        "text": "round the turn only if the speed is reduced below 6 km/h"
+      },
+      {
+        "text": "slip while taking the turn"
+      },
+      {
+        "text": "round the turn safely, since gravity supplies the centripetal force on a level road"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Medium",
+    "subtopic": "Circular Motion (Dynamics)",
+    "fsmTag": "cyclist-slip-check",
+    "concepts": [
+      "centripetal-force",
+      "static-friction",
+      "slip-condition"
+    ],
+    "sourcePages": [
+      109
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 85
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Ex. 5.10 — slip-or-no-slip test on a level circular road.",
+        "**EXTRACT:** $v = 18$ km/h $= 5$ m/s, $R = 3$ m, $\\mu_s = 0.1$, $g = 9.8$ m/s².",
+        "**EXECUTE:** $v^2 = 25$. $\\mu_s R g = 0.1 \\cdot 3 \\cdot 9.8 = 2.94$. Since $v^2 = 25 > 2.94$, the no-slip condition $v^2 \\le \\mu_s R g$ is violated, so the cyclist slips.",
+        "**PROOF:** No-slip requires $v^2 \\le \\mu_s R g$. Here $v = 18$ km/h $= 5$ m/s so $v^2 = 25$, while $\\mu_s R g = 0.1 \\times 3 \\times 9.8 = 2.94$. Since $25 > 2.94$ the condition fails and the cyclist slips (option C). Option A inverts the inequality, reading no-slip as $v^2 \\ge \\mu_s R g$. Option B finds $v_{max} = \\sqrt{\\mu_s R g} \\approx 1.7$ m/s $\\approx 6$ km/h but mis-states it as a reducible condition instead of noting 18 km/h already exceeds it. Option D wrongly assumes gravity supplies the centripetal force on a level road, when only friction can. Correct option: C."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "A circular racetrack of radius 300 m is banked at an angle of 15°. Taking $g = 9.8$ m/s², the OPTIMUM speed of a race-car (where no friction is needed for the turn) is approximately:",
+    "options": [
+      {
+        "text": "$28.1$ m/s"
+      },
+      {
+        "text": "$39.7$ m/s"
+      },
+      {
+        "text": "$15.0$ m/s"
+      },
+      {
+        "text": "$54.2$ m/s"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Hard",
+    "subtopic": "Circular Motion (Dynamics)",
+    "fsmTag": "banked-road-optimum-speed",
+    "concepts": [
+      "circular-motion",
+      "banking",
+      "no-friction-condition"
+    ],
+    "sourcePages": [
+      108,
+      109
+    ],
+    "timeTargets": {
+      "ap_eapcet": 80,
+      "ts_eapcet": 80,
+      "jee_main": 110
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "Optimum speed on a banked road = friction-free formula.",
+      "steps": [
+        "**Trigger:** 'Optimum / no-friction-needed' speed on a banked road.",
+        "**Action:** $v_o = \\sqrt{R g \\tan\\theta}$ (Eq. 5.22).",
+        "**Result:** $v_o = \\sqrt{300 \\times 9.8 \\times \\tan 15^\\circ} = \\sqrt{300 \\times 9.8 \\times 0.2679} \\approx \\sqrt{787.6} \\approx 28.1$ m/s — option A."
+      ],
+      "sanityCheck": "At this speed, frictional force is zero — exactly the case the question describes."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Ex. 5.11(a) — friction-free banked turn.",
+        "**EXTRACT:** $R = 300$ m, $\\theta = 15^\\circ$, $g = 9.8$ m/s².",
+        "**EXECUTE:** $v_o = \\sqrt{R g \\tan\\theta} = \\sqrt{300 \\cdot 9.8 \\cdot 0.2679}$. Inside: $300 \\cdot 9.8 = 2940$; $\\cdot 0.2679 \\approx 787.6$. $\\sqrt{787.6} \\approx 28.1$ m/s.",
+        "**PROOF:** The optimum (frictionless) speed is $v_o = \\sqrt{R g \\tan\\theta} = \\sqrt{300 \\times 9.8 \\times \\tan 15^\\circ} = \\sqrt{300 \\times 9.8 \\times 0.2679} \\approx 28.1$ m/s (option A). Option B ($39.7$ m/s) inserts a spurious factor of 2: $\\sqrt{2 R g \\tan\\theta} \\approx 39.7$. Option C ($15$ m/s) reuses the bank angle as a speed. Option D ($54.2$ m/s) omits the $\\tan\\theta$ factor: $\\sqrt{R g} = \\sqrt{300 \\times 9.8} = 54.2$. Correct option: A."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "For the same circular racetrack of radius 300 m banked at 15°, with a coefficient of static friction $\\mu_s = 0.2$ between the tyres and the road, the MAXIMUM permissible speed for the race-car to avoid slipping outward is approximately ($g = 9.8$ m/s²):",
+    "options": [
+      {
+        "text": "$28.1$ m/s"
+      },
+      {
+        "text": "$37.1$ m/s"
+      },
+      {
+        "text": "$15.0$ m/s"
+      },
+      {
+        "text": "$38.1$ m/s"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Hard",
+    "subtopic": "Circular Motion (Dynamics)",
+    "fsmTag": "banked-road-max-speed-with-friction",
+    "concepts": [
+      "circular-motion",
+      "banking",
+      "friction-aided-turn"
+    ],
+    "sourcePages": [
+      108,
+      109
+    ],
+    "timeTargets": {
+      "ap_eapcet": 110,
+      "ts_eapcet": 110,
+      "jee_main": 150
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "preconditions": "",
+      "steps": [],
+      "sanityCheck": ""
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Ex. 5.11(b) — banked road with friction at the limit, outward slip threshold.",
+        "**EXTRACT:** $R = 300$ m, $\\theta = 15^\\circ$ (so $\\tan\\theta \\approx 0.2679$), $\\mu_s = 0.2$, $g = 9.8$ m/s².",
+        "**EXECUTE:** $v_{\\max}^2 = Rg(\\mu_s+\\tan\\theta)/(1-\\mu_s\\tan\\theta) = 2940 \\cdot 0.4679 / 0.9464 \\approx 1453.5$. $v_{\\max} \\approx 38.1$ m/s.",
+        "**PROOF:** Option A is the OPTIMUM (friction-free) speed $\\sqrt{Rg\\tan\\theta} = 28.1$ m/s, not the maximum. Option B ($37.1$ m/s) comes from dropping the $(1-\\mu_s\\tan\\theta)$ denominator: $\\sqrt{Rg(\\mu_s+\\tan\\theta)} = \\sqrt{2940 \\cdot 0.4679} = 37.1$ m/s. Option C confuses the angle's numerical value ($15$) with speed. Retaining the full denominator gives the textbook maximum $38.1$ m/s. Correct option: D."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  }
+]
