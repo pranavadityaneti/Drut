@@ -9,8 +9,8 @@ export interface ProfileSetupData {
     // Step 1: About You
     full_name?: string;
     city?: string;
-    phone_number?: string;        // collected if user signed up via email
-    email_address?: string;       // collected if user signed up via WhatsApp OTP
+    phone_number?: string;        // optional contact number, captured in profile-setup
+    email_address?: string;       // legacy field — Drut no longer has phone-only signups
     avatar_uri?: string;          // local URI of picked photo (uploaded on submit)
 
     // Step 2: Academic

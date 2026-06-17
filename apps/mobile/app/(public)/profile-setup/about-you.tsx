@@ -181,7 +181,7 @@ export default function AboutYouScreen() {
                         {signupMethod === 'email' ? (
                             <View>
                                 <Text style={styles.label}>Phone Number *</Text>
-                                <Text style={styles.helperText}>We'll use this for WhatsApp updates.</Text>
+                                <Text style={styles.helperText}>We'll use this only if we need to reach you.</Text>
                                 <View style={styles.phoneRow}>
                                     <View style={styles.countryCode}>
                                         <Text style={styles.countryCodeText}>+91</Text>
