@@ -1,0 +1,173 @@
+// create-razorpay-order — Bearer-JWT-verified endpoint that creates a
+// Razorpay order for the calling user, then returns the order_id +
+// amount that the client-side Razorpay Checkout JS consumes to render
+// the checkout sheet.
+//
+// FLOW:
+//   1. Verify the bearer JWT → resolve user_id + email.
+//   2. Body { plan: 'monthly' | 'annual' } → resolve amount in paise.
+//   3. POST to Razorpay https://api.razorpay.com/v1/orders with Basic
+//      auth (key_id:key_secret).
+//   4. Insert a pending row into `subscriptions` so verify-razorpay-payment
+//      can flip it to 'active' after the signature check.
+//   5. Return { order_id, amount_paise, currency, plan, key_id } to client.
+//      key_id is the PUBLIC test/live identifier the client SDK needs to
+//      open the modal — also exposed via VITE_RAZORPAY_KEY_ID, but
+//      sending it back here lets the client confirm prod vs test mode
+//      from the same trip.
+//
+// ENV REQUIRED:
+//   RAZORPAY_KEY_ID         — public-ish, from Razorpay dashboard
+//   RAZORPAY_KEY_SECRET     — SECRET, from Razorpay dashboard
+//   SUPABASE_URL, SUPABASE_ANON_KEY, SUPABASE_SERVICE_ROLE_KEY (auto-set)
+
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+import { corsHeaders } from '../_shared/cors.ts';
+
+const SUPABASE_URL          = Deno.env.get('SUPABASE_URL')!;
+const SUPABASE_ANON_KEY     = Deno.env.get('SUPABASE_ANON_KEY')!;
+const SUPABASE_SERVICE_ROLE = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+
+const RAZORPAY_KEY_ID       = Deno.env.get('RAZORPAY_KEY_ID') || '';
+const RAZORPAY_KEY_SECRET   = Deno.env.get('RAZORPAY_KEY_SECRET') || '';
+const RAZORPAY_API_BASE     = 'https://api.razorpay.com/v1';
+
+// Pricing source of truth. Mirror in @drut/shared/lib/pricing.ts.
+// KEEP IN SYNC. If the price changes, update both.
+const PLANS: Record<'monthly' | 'annual', { amount_paise: number; days: number; label: string }> = {
+    monthly: { amount_paise: 29900,  days: 30,  label: 'Drut Pro Monthly' },
+    annual:  { amount_paise: 149900, days: 365, label: 'Drut Pro Annual'  },
+};
+
+interface Body {
+    plan: 'monthly' | 'annual';
+}
+
+function json(status: number, payload: unknown) {
+    return new Response(JSON.stringify(payload), {
+        status,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+}
+
+Deno.serve(async (req) => {
+    if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
+    if (req.method !== 'POST')    return json(405, { error: 'method-not-allowed' });
+
+    // --- 1. JWT verification ---
+    const authHeader = req.headers.get('Authorization') || '';
+    if (!authHeader.startsWith('Bearer ')) return json(401, { error: 'missing-bearer' });
+
+    const supabaseAnon = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+        global: { headers: { Authorization: authHeader } },
+    });
+
+    const { data: userData, error: userErr } = await supabaseAnon.auth.getUser();
+    if (userErr || !userData.user) return json(401, { error: 'invalid-bearer' });
+
+    const user = userData.user;
+
+    // --- 2. Body validation ---
+    let body: Body;
+    try {
+        body = await req.json();
+    } catch {
+        return json(400, { error: 'invalid-json' });
+    }
+
+    const plan = body?.plan;
+    if (plan !== 'monthly' && plan !== 'annual') {
+        return json(400, { error: 'invalid-plan', detail: 'plan must be monthly or annual' });
+    }
+
+    const planSpec = PLANS[plan];
+
+    // Razorpay enforces amount >= 100 paise — our prices are well above.
+    if (planSpec.amount_paise < 100) {
+        return json(400, { error: 'amount-below-minimum' });
+    }
+
+    // --- 3. KEY CHECK — fail FAST + LOUD if Razorpay env not wired ---
+    if (!RAZORPAY_KEY_ID || !RAZORPAY_KEY_SECRET) {
+        // Don't 500 silently — return a clear message so the client paywall
+        // can render "Payment temporarily unavailable" instead of looking broken.
+        return json(503, {
+            error: 'razorpay-not-configured',
+            detail: 'Set RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET in Supabase function env.',
+        });
+    }
+
+    // --- 4. App-side receipt for idempotency / reconciliation ---
+    // Razorpay's `receipt` is our own id — max 40 chars.
+    const receipt = `drut_${crypto.randomUUID().replace(/-/g, '').slice(0, 32)}`;
+
+    // --- 5. POST to Razorpay /orders ---
+    const razorpayReq = {
+        amount:   planSpec.amount_paise,    // Razorpay takes paise directly (unlike Cashfree which wants rupees)
+        currency: 'INR',
+        receipt,
+        notes: {
+            user_id: user.id,
+            user_email: user.email || '',
+            plan,
+            source: 'drut',
+        },
+    };
+
+    const basicAuth = btoa(`${RAZORPAY_KEY_ID}:${RAZORPAY_KEY_SECRET}`);
+
+    const rpResp = await fetch(`${RAZORPAY_API_BASE}/orders`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Basic ${basicAuth}`,
+        },
+        body: JSON.stringify(razorpayReq),
+    });
+
+    if (!rpResp.ok) {
+        const errBody = await rpResp.text();
+        console.error('[create-razorpay-order] Razorpay API failed', rpResp.status, errBody);
+        return json(rpResp.status === 401 ? 401 : 502, {
+            error: rpResp.status === 401 ? 'razorpay-auth-failed' : 'razorpay-api-failed',
+            status: rpResp.status,
+            detail: errBody.slice(0, 500),
+        });
+    }
+
+    const rpBody = await rpResp.json();
+    const orderId = rpBody.id as string | undefined;
+    if (!orderId) {
+        return json(502, { error: 'no-order-id', razorpay: rpBody });
+    }
+
+    // --- 6. Insert pending subscription row (service role bypasses RLS) ---
+    // verify-razorpay-payment flips status='active' + sets expires_at.
+    const supabaseService = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE);
+    const expiresAt = new Date(Date.now() + planSpec.days * 24 * 60 * 60 * 1000).toISOString();
+
+    const { error: insertErr } = await supabaseService.from('subscriptions').insert({
+        user_id: user.id,
+        plan,
+        status: 'pending',
+        razorpay_order_id: orderId,
+        amount_paise: planSpec.amount_paise,
+        currency: 'INR',
+        expires_at: expiresAt,
+    });
+
+    if (insertErr) {
+        console.error('[create-razorpay-order] subscriptions insert failed', insertErr);
+        // Don't block — verify endpoint can still find the order by id via Razorpay
+        // and reconstruct. Logging is enough.
+    }
+
+    return json(200, {
+        order_id: orderId,
+        amount_paise: planSpec.amount_paise,
+        currency: 'INR',
+        plan,
+        key_id: RAZORPAY_KEY_ID,   // public id — client SDK needs this to open the modal
+        receipt,
+    });
+});

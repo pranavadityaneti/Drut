@@ -99,6 +99,7 @@ export * from './lib/pricing';
 
 // Hooks (Careful with React usage)
 export * from './hooks/useDashboardData';
+export * from './hooks/useRazorpayCheckout';
 
 // Validation
 export * from './lib/clientValidator';

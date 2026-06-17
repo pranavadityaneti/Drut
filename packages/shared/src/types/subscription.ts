@@ -12,9 +12,10 @@ export interface Subscription {
     user_id: string;
     plan: PlanId;
     status: SubscriptionStatus;
-    cashfree_order_id: string | null;
-    cashfree_payment_id: string | null;
-    cashfree_subscription_id: string | null;
+    razorpay_order_id: string | null;
+    razorpay_payment_id: string | null;
+    razorpay_subscription_id: string | null;
+    razorpay_signature: string | null;
     amount_paise: number;
     currency: 'INR';
     started_at: string;
@@ -24,19 +25,29 @@ export interface Subscription {
     updated_at: string;
 }
 
-/** Returned by create-cashfree-order edge fn. */
+/** Returned by create-razorpay-order edge fn. */
 export interface CreateOrderResponse {
     order_id: string;
-    payment_session_id: string;
     amount_paise: number;
     currency: 'INR';
     plan: PlanId;
+    key_id: string;          // public Razorpay key — client uses this to open the modal
+    receipt: string;
 }
 
-/** Returned by create-cashfree-order on misconfig — surfaces to the paywall. */
-export interface CreateOrderError {
-    error: string;
-    detail?: string;
+/** Returned by verify-razorpay-payment edge fn on success. */
+export interface VerifyPaymentResponse {
+    verified: true;
+    plan: PlanId;
+    status: 'active';
+    expires_at: string;
+}
+
+/** What the Razorpay Checkout JS hands back to us on success. */
+export interface RazorpaySuccessPayload {
+    razorpay_payment_id: string;
+    razorpay_order_id: string;
+    razorpay_signature: string;
 }
 
 export type ReportCategory = 'wrong-answer' | 'typo' | 'unclear' | 'other';

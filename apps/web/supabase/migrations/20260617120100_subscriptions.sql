@@ -1,6 +1,7 @@
--- subscriptions: paid Pro subscriptions via Cashfree.
--- Insert/update path: cashfree-webhook edge fn (service role bypasses RLS).
--- Read path: usePaywall() hook on web + mobile via @drut/shared paymentService.
+-- subscriptions: paid Pro subscriptions via Razorpay.
+-- Insert path: create-razorpay-order edge fn (status='pending').
+-- Update path: verify-razorpay-payment edge fn (status='active' after signature check).
+-- Read path:   usePaywall() hook on web + mobile via @drut/shared paymentService.
 -- Pricing (closed beta): single tier ₹299/month or ₹1499/year.
 
 create table if not exists public.subscriptions (
@@ -12,11 +13,11 @@ create table if not exists public.subscriptions (
   status                    text not null
                               check (status in ('pending','active','past_due','canceled','expired')),
 
-  -- Cashfree identifiers (subscription_id only set for recurring auto-debit;
-  -- one-time orders only carry order_id + payment_id).
-  cashfree_order_id         text,
-  cashfree_payment_id       text,
-  cashfree_subscription_id  text,
+  -- Razorpay identifiers
+  razorpay_order_id         text,                       -- order_<id>; set on order creation
+  razorpay_payment_id       text,                       -- pay_<id>;   set after signature verify
+  razorpay_subscription_id  text,                       -- sub_<id>;   only for recurring autodebit (not used in v1)
+  razorpay_signature        text,                       -- audit: signature we successfully verified
 
   -- Amount in paise (₹299 = 29900, ₹1499 = 149900) for audit + reconciliation.
   amount_paise              integer not null check (amount_paise > 0),
@@ -40,7 +41,7 @@ create unique index if not exists subscriptions_one_active_per_user
 create index if not exists subscriptions_user_id_idx       on public.subscriptions(user_id);
 create index if not exists subscriptions_status_idx        on public.subscriptions(status);
 create index if not exists subscriptions_expires_at_idx    on public.subscriptions(expires_at);
-create index if not exists subscriptions_cashfree_order_idx on public.subscriptions(cashfree_order_id) where cashfree_order_id is not null;
+create index if not exists subscriptions_razorpay_order_idx on public.subscriptions(razorpay_order_id) where razorpay_order_id is not null;
 
 -- Auto-touch updated_at
 create or replace function public.tg_subscriptions_touch_updated_at()
@@ -65,7 +66,7 @@ create policy "subscriptions_select_own"
 
 -- Writes are ONLY allowed via service role (edge fns). No insert/update policy
 -- for authenticated role means the API path is the only writer — exactly what
--- we want for payment state. Admin reads via JWT role check.
+-- we want for payment state. Admin reads/writes via JWT role check.
 create policy "subscriptions_admin_all"
   on public.subscriptions for all
   using (
@@ -75,14 +76,14 @@ create policy "subscriptions_admin_all"
     coalesce(auth.jwt() -> 'app_metadata' ->> 'role', '') = 'admin'
   );
 
--- payment_events: audit trail of every Cashfree webhook received.
+-- payment_events: audit trail of every Razorpay event (verify + future webhook events).
 -- Lets us reconstruct what happened if a subscription row looks wrong.
 create table if not exists public.payment_events (
   id                  uuid primary key default gen_random_uuid(),
   user_id             uuid references auth.users(id) on delete set null,
-  cashfree_event_type text not null,                   -- e.g. 'PAYMENT_SUCCESS_WEBHOOK'
-  cashfree_order_id   text,
-  cashfree_payment_id text,
+  razorpay_event_type text not null,                   -- e.g. 'payment.verified', 'payment.captured', 'refund.created'
+  razorpay_order_id   text,
+  razorpay_payment_id text,
   signature_verified  boolean not null default false,
   raw_payload         jsonb not null,
   processed           boolean not null default false,
@@ -91,10 +92,10 @@ create table if not exists public.payment_events (
 );
 
 create index if not exists payment_events_received_at_idx on public.payment_events(received_at desc);
-create index if not exists payment_events_order_id_idx    on public.payment_events(cashfree_order_id) where cashfree_order_id is not null;
+create index if not exists payment_events_order_id_idx    on public.payment_events(razorpay_order_id) where razorpay_order_id is not null;
 
 alter table public.payment_events enable row level security;
 -- Service role only. No public policies = no client-side access.
 
-comment on table  public.subscriptions  is 'Pro subscriptions via Cashfree. Writes only via cashfree-webhook edge fn (service role).';
-comment on table  public.payment_events is 'Audit log of every Cashfree webhook received. Service-role-only access.';
+comment on table  public.subscriptions  is 'Pro subscriptions via Razorpay. Writes only via create-razorpay-order + verify-razorpay-payment edge fns (service role).';
+comment on table  public.payment_events is 'Audit log of every Razorpay verification + webhook event. Service-role-only access.';

@@ -1,28 +1,52 @@
 /**
- * paymentService — client-side facade for the Cashfree payment flow.
+ * paymentService — client-side facade for the Razorpay payment flow.
  * Used by both web (apps/web) and mobile (apps/mobile) via @drut/shared.
  *
- * The actual checkout UI is platform-specific (web: Cashfree JS SDK,
- * mobile: react-native-cashfree-pg-sdk), but everything BEFORE the
- * checkout sheet (creating the order) and AFTER (reading the resulting
- * subscription) lives here.
+ * The actual checkout UI is platform-specific (web: Razorpay Checkout JS,
+ * mobile: react-native-razorpay), but everything BEFORE the checkout
+ * sheet (creating the order) and AFTER (verifying the signature, reading
+ * the subscription) lives here.
  */
 
 import { getSupabase } from '../lib/supabase';
-import type { CreateOrderResponse, Subscription } from '../types/subscription';
+import type {
+    CreateOrderResponse,
+    VerifyPaymentResponse,
+    RazorpaySuccessPayload,
+    Subscription,
+} from '../types/subscription';
 import type { PlanId } from '../lib/pricing';
 
 /**
- * Create a Cashfree order for the calling authenticated user.
- * Returns the payment_session_id the platform SDK consumes.
+ * Create a Razorpay order for the calling authenticated user.
+ * Returns { order_id, amount_paise, currency, plan, key_id }.
+ * Pass order_id + key_id to the platform Razorpay Checkout SDK.
  */
-export async function createCashfreeOrder(plan: PlanId): Promise<CreateOrderResponse> {
+export async function createRazorpayOrder(plan: PlanId): Promise<CreateOrderResponse> {
     const supabase = getSupabase();
-    const { data, error } = await supabase.functions.invoke<CreateOrderResponse>('create-cashfree-order', {
+    const { data, error } = await supabase.functions.invoke<CreateOrderResponse>('create-razorpay-order', {
         body: { plan },
     });
-    if (error) throw new Error(error.message || 'create-cashfree-order failed');
-    if (!data || !data.payment_session_id) throw new Error('No payment_session_id returned');
+    if (error) throw new Error(error.message || 'create-razorpay-order failed');
+    if (!data || !data.order_id) throw new Error('No order_id returned');
+    return data;
+}
+
+/**
+ * Verify the Razorpay signature after the user completes checkout.
+ * Pass the 3 fields Razorpay handed back in its success handler.
+ *
+ * On success: the user's subscription row flips to 'active' server-side
+ * and this resolves with { verified: true, plan, status, expires_at }.
+ * On signature mismatch: throws.
+ */
+export async function verifyRazorpayPayment(payload: RazorpaySuccessPayload): Promise<VerifyPaymentResponse> {
+    const supabase = getSupabase();
+    const { data, error } = await supabase.functions.invoke<VerifyPaymentResponse>('verify-razorpay-payment', {
+        body: payload,
+    });
+    if (error) throw new Error(error.message || 'verify-razorpay-payment failed');
+    if (!data || !(data as any).verified) throw new Error('Signature mismatch');
     return data;
 }
 
