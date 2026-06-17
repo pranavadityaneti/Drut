@@ -2,13 +2,15 @@ import { View, Text, StyleSheet, TouchableOpacity, TextInput, ActivityIndicator,
 import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { Colors } from '../../constants/Colors';
-import { ArrowLeft, Mail, Lock, Eye, EyeOff, MessageCircle } from 'lucide-react-native';
+import { ArrowLeft, Mail, Lock, Eye, EyeOff } from 'lucide-react-native';
 import { useState } from 'react';
 import { authService } from '@drut/shared';
+import { signInWithGoogle } from '../../lib/googleAuth';
 
 export default function LoginScreen() {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
+    const [googleBusy, setGoogleBusy] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
@@ -27,6 +29,24 @@ export default function LoginScreen() {
             Alert.alert('Login Failed', err.message);
         } finally {
             setLoading(false);
+        }
+    };
+
+    const handleGoogleSignIn = async () => {
+        setGoogleBusy(true);
+        try {
+            await signInWithGoogle();
+            // AuthContext picks up the new session and root index.tsx routes
+            // to dashboard or profile-setup automatically. Push to "/" to
+            // re-evaluate that gate.
+            router.replace('/');
+        } catch (err: any) {
+            const msg = err?.message || 'Could not sign in with Google.';
+            if (msg !== 'Cancelled') {
+                Alert.alert('Google sign-in failed', msg);
+            }
+        } finally {
+            setGoogleBusy(false);
         }
     };
 
@@ -52,13 +72,18 @@ export default function LoginScreen() {
                     <Text style={styles.subtitle}>Log in to continue your progress.</Text>
                 </View>
 
-                {/* Phone Login — Primary */}
+                {/* Google Sign-In — Primary */}
                 <TouchableOpacity
-                    style={styles.phoneButton}
-                    onPress={() => router.push('/(public)/phone-login')}
+                    style={[styles.googleButton, googleBusy && { opacity: 0.6 }]}
+                    onPress={handleGoogleSignIn}
+                    disabled={googleBusy || loading}
                 >
-                    <MessageCircle size={22} color="#25D366" />
-                    <Text style={styles.phoneButtonText}>Login with WhatsApp OTP</Text>
+                    <View style={styles.googleG}>
+                        <Text style={styles.googleGText}>G</Text>
+                    </View>
+                    <Text style={styles.googleButtonText}>
+                        {googleBusy ? 'Signing in…' : 'Continue with Google'}
+                    </Text>
                 </TouchableOpacity>
 
                 {/* Divider */}
@@ -178,25 +203,41 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: Colors.textDim,
     },
-    phoneButton: {
+    googleButton: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
         gap: 12,
         height: 56,
         borderRadius: 28,
-        backgroundColor: '#1A1A1A',
+        backgroundColor: '#FFFFFF',
+        borderWidth: 1,
+        borderColor: '#E5E7EB',
         marginBottom: 8,
         shadowColor: '#000',
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.15,
-        shadowRadius: 8,
-        elevation: 4,
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.06,
+        shadowRadius: 6,
+        elevation: 2,
     },
-    phoneButtonText: {
-        fontSize: 17,
-        fontWeight: '700',
-        color: '#FFFFFF',
+    googleButtonText: {
+        fontSize: 16,
+        fontWeight: '600',
+        color: '#1A1A1A',
+    },
+    googleG: {
+        width: 24,
+        height: 24,
+        borderRadius: 12,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#FFFFFF',
+    },
+    googleGText: {
+        fontSize: 18,
+        fontWeight: '800',
+        color: '#4285F4',  // Google blue
+        lineHeight: 22,
     },
     dividerContainer: {
         flexDirection: 'row',

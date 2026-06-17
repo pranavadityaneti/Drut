@@ -6,8 +6,6 @@ export default function PublicLayout() {
             <Stack.Screen name="onboarding" />
             <Stack.Screen name="login" />
             <Stack.Screen name="signup" />
-            <Stack.Screen name="phone-login" />
-            <Stack.Screen name="verify-otp" />
             <Stack.Screen name="profile-setup" />
         </Stack>
     );

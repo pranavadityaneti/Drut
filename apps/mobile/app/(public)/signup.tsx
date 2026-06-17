@@ -5,14 +5,33 @@ import { Colors, Layout } from '../../constants/Colors';
 import { ArrowLeft, Mail, Lock, Eye, EyeOff, User } from 'lucide-react-native';
 import { useState } from 'react';
 import { authService } from '@drut/shared';
+import { signInWithGoogle } from '../../lib/googleAuth';
 
 export default function SignupScreen() {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
+    const [googleBusy, setGoogleBusy] = useState(false);
     const [fullName, setFullName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
+
+    const handleGoogleSignIn = async () => {
+        setGoogleBusy(true);
+        try {
+            await signInWithGoogle();
+            // Brand-new Google users land on profile-setup automatically via
+            // root index.tsx (no onboarding_completed metadata yet).
+            router.replace('/');
+        } catch (err: any) {
+            const msg = err?.message || 'Could not sign in with Google.';
+            if (msg !== 'Cancelled') {
+                Alert.alert('Google sign-in failed', msg);
+            }
+        } finally {
+            setGoogleBusy(false);
+        }
+    };
 
     const handleSignup = async () => {
         if (!fullName.trim()) {
@@ -74,6 +93,27 @@ export default function SignupScreen() {
                     </View>
                     <Text style={styles.title}>Create Account</Text>
                     <Text style={styles.subtitle}>Join Drut and start acing your exams.</Text>
+                </View>
+
+                {/* Google Sign-In — Primary */}
+                <TouchableOpacity
+                    style={[styles.googleButton, googleBusy && { opacity: 0.6 }]}
+                    onPress={handleGoogleSignIn}
+                    disabled={googleBusy || loading}
+                >
+                    <View style={styles.googleG}>
+                        <Text style={styles.googleGText}>G</Text>
+                    </View>
+                    <Text style={styles.googleButtonText}>
+                        {googleBusy ? 'Signing in…' : 'Continue with Google'}
+                    </Text>
+                </TouchableOpacity>
+
+                {/* Divider */}
+                <View style={styles.dividerContainer}>
+                    <View style={styles.divider} />
+                    <Text style={styles.dividerText}>or sign up with email</Text>
+                    <View style={styles.divider} />
                 </View>
 
                 {/* Form */}
@@ -194,6 +234,57 @@ const styles = StyleSheet.create({
     subtitle: {
         fontSize: 16,
         color: Colors.textDim,
+    },
+    googleButton: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: 12,
+        height: 56,
+        borderRadius: 28,
+        backgroundColor: '#FFFFFF',
+        borderWidth: 1,
+        borderColor: '#E5E7EB',
+        marginBottom: 8,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.06,
+        shadowRadius: 6,
+        elevation: 2,
+    },
+    googleButtonText: {
+        fontSize: 16,
+        fontWeight: '600',
+        color: '#1A1A1A',
+    },
+    googleG: {
+        width: 24,
+        height: 24,
+        borderRadius: 12,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#FFFFFF',
+    },
+    googleGText: {
+        fontSize: 18,
+        fontWeight: '800',
+        color: '#4285F4',
+        lineHeight: 22,
+    },
+    dividerContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginVertical: 24,
+    },
+    divider: {
+        flex: 1,
+        height: 1,
+        backgroundColor: Colors.border,
+    },
+    dividerText: {
+        marginHorizontal: 16,
+        color: Colors.textDim,
+        fontSize: 14,
     },
     form: {
         gap: 16,

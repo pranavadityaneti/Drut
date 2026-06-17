@@ -37,11 +37,22 @@ export const signup = async (email: string, password: string): Promise<{ user: U
     return { user: data.user, sessionEstablished: !!data.session };
 };
 
+/**
+ * Web-only Google OAuth sign-in. Redirects the browser to Google, then back
+ * to /dashboard after success. Mobile uses signInWithIdToken via the native
+ * Google SDK — see apps/mobile/lib/googleAuth.ts.
+ *
+ * Requires: Supabase Auth → Providers → Google enabled with the Google Cloud
+ * Web OAuth client id + secret.
+ */
 export const loginWithGoogle = async () => {
     const supabase = getSupabase();
     if (!supabase) throw new Error("Supabase client is not available.");
+    const redirectTo =
+        typeof window !== 'undefined' ? `${window.location.origin}/dashboard` : undefined;
     const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
+        options: redirectTo ? { redirectTo } : undefined,
     });
     if (error) throw new Error(error.message);
 };

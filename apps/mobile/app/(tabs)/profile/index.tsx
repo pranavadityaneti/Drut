@@ -77,10 +77,13 @@ export default function ProfileScreen() {
             ]);
             setProfile(data);
             setUserMeta(user?.user_metadata || null);
-            // Use real email if signed up via email; for WhatsApp users use email_address from metadata
+            // Display the user's real email. Legacy `@phone.drut.club` placeholders
+            // (from the removed WhatsApp-OTP signup flow) fall back to metadata's
+            // email_address if present.
             setUserEmail(
+                (user?.email && !user.email.endsWith('@phone.drut.club') ? user.email : '') ||
                 user?.user_metadata?.email_address ||
-                (user?.email?.endsWith('@phone.drut.club') ? '' : user?.email || '')
+                ''
             );
         } finally {
             setLoading(false);
