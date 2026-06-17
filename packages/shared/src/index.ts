@@ -61,6 +61,16 @@ export * from './services/sprintService';
 import * as sprintService from './services/sprintService';
 export { sprintService };
 
+// Payment (Cashfree)
+export * from './services/paymentService';
+import * as paymentService from './services/paymentService';
+export { paymentService };
+
+// Question reports
+export * from './services/reportService';
+import * as reportService from './services/reportService';
+export { reportService };
+
 // Chapter source resolution (for the 3-step Board → Class → Chapter picker)
 export * from './services/chapterService';
 import * as chapterService from './services/chapterService';
@@ -85,6 +95,7 @@ export * from './lib/health';
 export * from './lib/explCache';
 export * from './lib/supabase';
 export * from './lib/svgSanitizer';
+export * from './lib/pricing';
 
 // Hooks (Careful with React usage)
 export * from './hooks/useDashboardData';

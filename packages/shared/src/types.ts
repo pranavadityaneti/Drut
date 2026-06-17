@@ -97,3 +97,6 @@ export type User = {
   role?: string;
   updated_at?: string;
 };
+
+// Payment + reports — see ./types/subscription.ts
+export * from './types/subscription';

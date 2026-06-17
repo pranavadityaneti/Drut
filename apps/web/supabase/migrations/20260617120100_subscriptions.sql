@@ -1,0 +1,100 @@
+-- subscriptions: paid Pro subscriptions via Cashfree.
+-- Insert/update path: cashfree-webhook edge fn (service role bypasses RLS).
+-- Read path: usePaywall() hook on web + mobile via @drut/shared paymentService.
+-- Pricing (closed beta): single tier ₹299/month or ₹1499/year.
+
+create table if not exists public.subscriptions (
+  id                        uuid primary key default gen_random_uuid(),
+  user_id                   uuid not null references auth.users(id) on delete cascade,
+
+  -- Plan + status
+  plan                      text not null check (plan in ('monthly','annual')),
+  status                    text not null
+                              check (status in ('pending','active','past_due','canceled','expired')),
+
+  -- Cashfree identifiers (subscription_id only set for recurring auto-debit;
+  -- one-time orders only carry order_id + payment_id).
+  cashfree_order_id         text,
+  cashfree_payment_id       text,
+  cashfree_subscription_id  text,
+
+  -- Amount in paise (₹299 = 29900, ₹1499 = 149900) for audit + reconciliation.
+  amount_paise              integer not null check (amount_paise > 0),
+  currency                  text    not null default 'INR',
+
+  -- Period
+  started_at                timestamptz not null default now(),
+  expires_at                timestamptz not null,
+  canceled_at               timestamptz,
+
+  -- Audit
+  created_at                timestamptz not null default now(),
+  updated_at                timestamptz not null default now()
+);
+
+-- One ACTIVE subscription per user. Lets the paywall query "is user pro" with a single row.
+create unique index if not exists subscriptions_one_active_per_user
+  on public.subscriptions(user_id)
+  where status = 'active';
+
+create index if not exists subscriptions_user_id_idx       on public.subscriptions(user_id);
+create index if not exists subscriptions_status_idx        on public.subscriptions(status);
+create index if not exists subscriptions_expires_at_idx    on public.subscriptions(expires_at);
+create index if not exists subscriptions_cashfree_order_idx on public.subscriptions(cashfree_order_id) where cashfree_order_id is not null;
+
+-- Auto-touch updated_at
+create or replace function public.tg_subscriptions_touch_updated_at()
+returns trigger language plpgsql as $$
+begin
+  new.updated_at := now();
+  return new;
+end;
+$$;
+
+drop trigger if exists subscriptions_touch_updated_at on public.subscriptions;
+create trigger subscriptions_touch_updated_at
+  before update on public.subscriptions
+  for each row execute function public.tg_subscriptions_touch_updated_at();
+
+alter table public.subscriptions enable row level security;
+
+-- Users see their own subscription row only.
+create policy "subscriptions_select_own"
+  on public.subscriptions for select
+  using (auth.uid() = user_id);
+
+-- Writes are ONLY allowed via service role (edge fns). No insert/update policy
+-- for authenticated role means the API path is the only writer — exactly what
+-- we want for payment state. Admin reads via JWT role check.
+create policy "subscriptions_admin_all"
+  on public.subscriptions for all
+  using (
+    coalesce(auth.jwt() -> 'app_metadata' ->> 'role', '') = 'admin'
+  )
+  with check (
+    coalesce(auth.jwt() -> 'app_metadata' ->> 'role', '') = 'admin'
+  );
+
+-- payment_events: audit trail of every Cashfree webhook received.
+-- Lets us reconstruct what happened if a subscription row looks wrong.
+create table if not exists public.payment_events (
+  id                  uuid primary key default gen_random_uuid(),
+  user_id             uuid references auth.users(id) on delete set null,
+  cashfree_event_type text not null,                   -- e.g. 'PAYMENT_SUCCESS_WEBHOOK'
+  cashfree_order_id   text,
+  cashfree_payment_id text,
+  signature_verified  boolean not null default false,
+  raw_payload         jsonb not null,
+  processed           boolean not null default false,
+  error               text,
+  received_at         timestamptz not null default now()
+);
+
+create index if not exists payment_events_received_at_idx on public.payment_events(received_at desc);
+create index if not exists payment_events_order_id_idx    on public.payment_events(cashfree_order_id) where cashfree_order_id is not null;
+
+alter table public.payment_events enable row level security;
+-- Service role only. No public policies = no client-side access.
+
+comment on table  public.subscriptions  is 'Pro subscriptions via Cashfree. Writes only via cashfree-webhook edge fn (service role).';
+comment on table  public.payment_events is 'Audit log of every Cashfree webhook received. Service-role-only access.';
