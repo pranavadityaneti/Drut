@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, ActivityIndicator } from 'react-native';
 import { WebView } from 'react-native-webview';
+import { inlineMarkdownToHtml } from '@drut/shared';
 
 interface LatexTextProps {
     text: string;
@@ -56,7 +57,7 @@ export const LatexText: React.FC<LatexTextProps> = ({ text, fontSize = 16, color
         </style>
     </head>
     <body>
-        ${text}
+        ${inlineMarkdownToHtml(text)}
     </body>
     </html>
     `;

@@ -7,6 +7,7 @@ import { log } from '@drut/shared'; // from ../../lib/log';
 import { Trophy, Clock, Target, AlertCircle, RotateCcw, Play, CheckCircle2, XCircle, Timer, Grid, Sparkles, BookOpen, ArrowRight } from 'lucide-react';
 import { generateSessionAnalysis } from '../../../../packages/shared/src/services/geminiService';
 import { SolutionView } from '../SolutionView';
+import { LatexText } from '../ui/LatexText';
 
 interface SprintResultsScreenProps {
     sessionId: string;
@@ -278,7 +279,7 @@ export const SprintResultsScreen: React.FC<SprintResultsScreenProps> = ({
                                             {idx + 1}
                                         </div>
                                         <div className="min-w-0">
-                                            <p className="text-[13px] font-medium text-[var(--color-ink-1)] line-clamp-1">{attempt.questionData.questionText}</p>
+                                            <p className="text-[13px] font-medium text-[var(--color-ink-1)] line-clamp-1"><LatexText text={attempt.questionData.questionText} /></p>
                                             <div className="flex items-center gap-3 text-[11px] text-[var(--color-ink-3)] mt-0.5 num-tabular">
                                                 <span className="flex items-center gap-1">
                                                     <Clock className="w-3 h-3" /> {(attempt.timeTaken / 1000).toFixed(1)}s
@@ -300,7 +301,7 @@ export const SprintResultsScreen: React.FC<SprintResultsScreenProps> = ({
                                     <div className="px-3 pb-3 pt-0 border-t border-[var(--color-ink-5)] bg-[var(--color-muted)]">
                                         <div className="pt-3 space-y-3">
                                             <div className="bg-[var(--color-card)] ring-hairline p-3 rounded-[10px] text-[13px] text-[var(--color-ink-2)] leading-relaxed">
-                                                {attempt.questionData.questionText}
+                                                <LatexText text={attempt.questionData.questionText} />
                                             </div>
 
                                             <div className="grid grid-cols-2 gap-3 text-sm">

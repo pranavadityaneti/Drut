@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect, useRef, useMemo } from 'react'
 import { cn } from '@drut/shared';
 import { PracticeSetup } from './PracticeSetup';
 import { QuestionData } from '@drut/shared';
-import { getQuestionsForUser, triggerDiagramGeneration } from '@drut/shared';
+import { getQuestionsForUser, triggerDiagramGeneration, isTrustedQuestion } from '@drut/shared';
 import { authService } from '@drut/shared';
 const { getCurrentUser } = authService;
 import { getPreloadedQuestion } from '@drut/shared'; // from ../../services/preloaderService';
@@ -147,11 +147,13 @@ export const NewPractice: React.FC = () => {
                     subject || undefined
                 );
 
-                // FILER: Only accept Strictly Verified Questions (Version 2.6+)
-                // This forces the system to ignore old "bad" questions in the DB
                 const validQuestions = questions.filter((q: any) =>
-                    q.verification_status &&
-                    (q.verification_status.includes("2.6") || q.verification_status.includes("SubjectFallback")) &&
+                    // Trust the full curated set (PYQ, textbook, RAG, admin-verified,
+                    // manual-curated, …) via the shared helper. Previously this kept
+                    // only 2.6/SubjectFallback and discarded the rest of the bank —
+                    // including PYQ and admin-imported questions. Shared with mobile
+                    // so web/Android/iOS never drift. See CLAUDE.md.
+                    isTrustedQuestion(q) &&
                     // CRITICAL: Strict Domain Guard
                     // Ensure we don't serve Physics questions for a Math session
                     (!q.metadata || !subject || (q.metadata.subject && q.metadata.subject.toLowerCase() === subject.toLowerCase()))
@@ -354,7 +356,10 @@ export const NewPractice: React.FC = () => {
                 const cleanTopic = currentTopic.split('/')[0].trim();
                 const validationTopic = cleanTopic === 'Oscillations' ? 'Oscillations' : cleanTopic; // Ensure exact match for known sensitive topic
 
-                if (!isValidQuestionForTopic(validationTopic, data.questionText)) {
+                // Trusted/curated questions (PYQ, admin-verified, …) skip the keyword
+                // validator — we trust their tagging. Mirrors the buffer gate above so
+                // the render path can't silently drop curated content. See CLAUDE.md.
+                if (!isTrustedQuestion(data) && !isValidQuestionForTopic(validationTopic, data.questionText)) {
                     console.warn(`[LoadQuestion] Rejected by Universal Guardrail: Topic '${validationTopic}'`);
 
                     // Recursive Retry

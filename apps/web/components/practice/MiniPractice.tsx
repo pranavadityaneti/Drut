@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Card, CardContent } from '../ui/Card';
 import { Button } from '../ui/Button';
+import { LatexText } from '../ui/LatexText';
 
 interface MiniQuestion {
  id: string;
@@ -69,7 +70,7 @@ export const MiniPractice: React.FC<MiniPracticeProps> = ({ questions, onComplet
 
  {/* Question */}
  <div className="space-y-4">
- <p className="text-base font-medium leading-relaxed">{currentQuestion.text}</p>
+ <p className="text-base font-medium leading-relaxed"><LatexText text={currentQuestion.text} /></p>
 
  {/* Options */}
  <div className="space-y-2">
@@ -85,7 +86,7 @@ export const MiniPractice: React.FC<MiniPracticeProps> = ({ questions, onComplet
  <span className="text-sm font-medium mr-3 text-muted-foreground">
  {String.fromCharCode(65 + index)}.
  </span>
- <span className="text-sm">{option}</span>
+ <span className="text-sm"><LatexText text={option} /></span>
  </button>
 ))}
  </div>

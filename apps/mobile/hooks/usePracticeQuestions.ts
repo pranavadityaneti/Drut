@@ -1,27 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
 import { Alert } from 'react-native';
-import { getQuestionsForUser, authService, isValidQuestionForTopic, getSupabase, ALLOW_LIVE_AI_FALLBACK } from '@drut/shared';
+import { getQuestionsForUser, authService, isValidQuestionForTopic, getSupabase, ALLOW_LIVE_AI_FALLBACK, isTrustedQuestion } from '@drut/shared';
 
-// Verification statuses that mean the question was curated/verified upstream.
-// Any question with a status in this list (substring match) bypasses the
-// client-side keyword validator — we trust the cache.
-const TRUSTED_STATUS_SUBSTRINGS = [
-    'v3-verified-pyq',
-    'v3-verified-textbook',
-    'v3-verified-rag',
-    '2.6',           // legacy AI batch with curated source
-    'SubjectFallback', // subject-level fallback questions (curated)
-];
-
-const TRUSTED_SOURCE_TYPES = ['pyq', 'textbook', 'rag-verified'];
-
-function isTrustedQuestion(q: any): boolean {
-    const status = String(q.verification_status || '');
-    const sourceType = String(q.source_type || '');
-    if (TRUSTED_STATUS_SUBSTRINGS.some(s => status.includes(s))) return true;
-    if (TRUSTED_SOURCE_TYPES.includes(sourceType)) return true;
-    return false;
-}
+// `isTrustedQuestion` (verification_status / source_type → trusted) now lives in
+// @drut/shared so web + Android + iOS share ONE definition and never drift.
+// See packages/shared/src/lib/questionTrust.ts and CLAUDE.md.
 
 interface UsePracticeQuestionsProps {
     config: {
