@@ -6,6 +6,7 @@ import { startSession, saveSprintAttempt, finalizeSprintSession, calculateSprint
 import { Button } from '../ui/Button';
 import { Card, CardContent } from '../ui/Card';
 import { DiagramRenderer } from '../ui/DiagramRenderer';
+import { LatexText } from '../ui/LatexText';
 import { log } from '@drut/shared';
 
 interface SprintSessionProps {
@@ -307,7 +308,7 @@ export const SprintSession: React.FC<SprintSessionProps> = ({ config, onExit }) 
  {/* Question Area */}
  <div className="space-y-6 animate-in slide-in-from-right-4 duration-300" key={currentIndex}>
  <h2 className="text-2xl font-medium text-[var(--color-ink-1)] leading-relaxed p-2">
- {currentQuestion.questionText}
+ <LatexText text={currentQuestion.questionText} />
  </h2>
 
  {/* Render diagram if available */}
@@ -330,7 +331,7 @@ export const SprintSession: React.FC<SprintSessionProps> = ({ config, onExit }) 
  {String.fromCharCode(65 + idx)}
  </span>
  <span className="text-lg text-[var(--color-ink-2)] font-medium group-hover:text-[var(--color-ink-1)]">
- {option.text}
+ <LatexText text={option.text} />
  </span>
  </div>
  </button>

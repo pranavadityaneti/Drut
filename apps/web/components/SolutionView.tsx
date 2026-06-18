@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from './ui/Card';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from './ui/Tabs';
 import { Check, X, Zap, BookOpen, Plus, Minus } from 'lucide-react';
 import { cn } from '@drut/shared';
+import { MathText } from './ui/MathText';
 
 /**
  * SolutionView — editorial refresh aligned with the Drut learning framework.
@@ -21,22 +22,9 @@ interface SolutionViewProps {
   question: QuestionData;
 }
 
-// Lightweight markdown renderer (token-aware).
-// Bold maps to ink-1; inline code to muted bg + monospace; lists to disc.
-const MarkdownRenderer: React.FC<{ content: string }> = ({ content }) => {
-  const html = content
-    .replace(/\*\*(.*?)\*\*/g, '<strong class="font-semibold text-[var(--color-ink-1)]">$1</strong>')
-    .replace(/\*(.*?)\*/g, '<em>$1</em>')
-    .replace(/`([^`]+)`/g, '<code class="px-1.5 py-0.5 bg-[var(--color-muted)] rounded-[4px] text-[12px] font-mono text-[var(--color-ink-2)]">$1</code>')
-    .replace(/^- (.*$)/gm, '<li class="ml-4 list-disc">$1</li>');
-
-  return (
-    <div
-      className="text-[14px] leading-relaxed text-[var(--color-ink-2)] space-y-2"
-      dangerouslySetInnerHTML={{ __html: html }}
-    />
-  );
-};
+// Inline markdown + LaTeX is now rendered by <MathText> (components/ui/MathText.tsx),
+// which shares its markdown rules with mobile's LatexText via @drut/shared so all
+// three clients render solutions identically. See CLAUDE.md.
 
 // CorrectBanner — the editorial moment that opens every solution.
 // Soft lime wash + halftone corner + haloed lime check chip + answer.
@@ -62,7 +50,7 @@ const CorrectBanner: React.FC<{ letter: string; text: string }> = ({ letter, tex
     <div className="flex flex-col relative z-10">
       <p className="text-[11px] tracking-[0.08em] uppercase font-bold text-[#3d7a0f]">Correct answer</p>
       <p className="text-[16px] font-bold text-[var(--color-ink-1)] tracking-tight mt-0.5">
-        ({letter}) {text}
+        ({letter}) <MathText text={text} />
       </p>
     </div>
   </div>
@@ -122,11 +110,12 @@ export const SolutionView: React.FC<SolutionViewProps> = ({ question }) => {
         <CardContent>
           <CorrectBanner letter={correctOptionLetter} text={correctOptionText} />
           <div className="p-4 rounded-[12px] bg-[var(--color-card)] ring-hairline">
-            <MarkdownRenderer
-              content={
+            <MathText
+              text={
                 (question as any).solution ||
                 'Step-by-step solution available below.'
               }
+              className="text-[14px] leading-relaxed text-[var(--color-ink-2)]"
             />
           </div>
         </CardContent>
@@ -172,7 +161,7 @@ export const SolutionView: React.FC<SolutionViewProps> = ({ question }) => {
                       {i + 1}
                     </div>
                     <div className="text-[14px] flex-1">
-                      <MarkdownRenderer content={step} />
+                      <MathText text={step} />
                     </div>
                   </div>
                 ))}
@@ -239,7 +228,7 @@ export const SolutionView: React.FC<SolutionViewProps> = ({ question }) => {
                       {isExpanded && (
                         <div className="px-3 pb-3 pt-0">
                           <div className="border-t border-[var(--color-ink-5)] pt-3">
-                            <MarkdownRenderer content={phase.content} />
+                            <MathText text={phase.content} className="text-[14px] leading-relaxed text-[var(--color-ink-2)]" />
                           </div>
                         </div>
                       )}
@@ -251,7 +240,7 @@ export const SolutionView: React.FC<SolutionViewProps> = ({ question }) => {
               <ul className="space-y-2 list-disc pl-5 text-[14px] text-[var(--color-ink-2)]">
                 {fullSolution.steps.map((s: string, i: number) => (
                   <li key={i}>
-                    <MarkdownRenderer content={s} />
+                    <MathText text={s} />
                   </li>
                 ))}
               </ul>

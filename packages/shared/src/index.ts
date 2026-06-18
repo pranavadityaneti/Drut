@@ -78,6 +78,8 @@ export { vertexBackendService };
 
 
 // Lib
+export * from './lib/questionTrust';
+export * from './lib/mathMarkdown';
 export * from './lib/taxonomy';
 export * from './lib/utils';
 export * from './lib/log';

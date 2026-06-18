@@ -1,5 +1,6 @@
 import React from 'react';
 import { DistractorData } from '@drut/shared'; // from ../../services/analyticsService';
+import { LatexText } from '../ui/LatexText';
 
 interface Props {
     data: DistractorData[];
@@ -27,7 +28,7 @@ export const DistractorAnalysis: React.FC<Props> = ({ data }) => {
                             <div key={idx} className="flex items-start gap-2 text-xs">
                                 <span className="text-red-600 font-bold mt-0.5">⚠</span>
                                 <div className="flex-1">
-                                    <p className="text-red-800 leading-tight">"{item.wrong_answer_text}"</p>
+                                    <p className="text-red-800 leading-tight">"<LatexText text={item.wrong_answer_text} />"</p>
                                     <p className="text-red-500 mt-1">Chosen {item.choice_count} time{item.choice_count > 1 ? 's' : ''}</p>
                                 </div>
                             </div>
