@@ -17,17 +17,22 @@ export const InterventionModal: React.FC<InterventionModalProps> = ({ visible, q
     const [showFullSteps, setShowFullSteps] = useState(false);
     const { height } = Dimensions.get('window');
 
-    // Support both old schema (optimal_path/full_solution) and new (theOptimalPath/fullStepByStep)
+    // Support old schema (optimal_path/full_solution), intermediate (theOptimalPath/fullStepByStep),
+    // and the new "B+C mix" format (quickMethod / fullSolution{approach,steps[{text,display}],answer}).
     const optimalPath = question?.theOptimalPath || question?.optimal_path;
     const fullSolution = question?.fullStepByStep || question?.full_solution;
     const fsmExplanation = question?.fsm_explanation;
+    // New format (clean Quick Method + concept-led Full Solution, no framework labels)
+    const quickMethod = question?.quickMethod;
+    const newFullSolution = question?.fullSolution;
+    const isNewFormat = !!(quickMethod?.steps?.length || newFullSolution?.steps?.length);
     const hasOptimalPath = optimalPath && (optimalPath.exists || optimalPath.available || optimalPath.steps?.length > 0);
     const hasFullSolution = fullSolution && (fullSolution.phases?.length > 0 || fullSolution.steps?.length > 0);
-    const isLegacyData = !optimalPath && !fullSolution;
+    const isLegacyData = !optimalPath && !fullSolution && !isNewFormat;
 
     // Reset state when question changes
     React.useEffect(() => {
-        if (!isLegacyData && hasOptimalPath) {
+        if (!isLegacyData && (hasOptimalPath || quickMethod?.steps?.length)) {
             setActiveTab('optimal');
         } else {
             setActiveTab('solution');
@@ -256,8 +261,64 @@ export const InterventionModal: React.FC<InterventionModalProps> = ({ visible, q
         );
     };
 
+    // New "B+C mix" Quick Method: 3 clean steps, no framework label
+    const renderNewQuick = () => {
+        const steps = quickMethod?.steps || [];
+        if (steps.length === 0) {
+            return (
+                <View style={[styles.tabContent, { alignItems: 'center', paddingTop: 20 }]}>
+                    <AlertTriangle size={32} color={Colors.textDim} />
+                    <Text style={{ marginTop: 12, color: Colors.textDim, fontSize: 16 }}>Use the Full Solution tab.</Text>
+                </View>
+            );
+        }
+        return (
+            <View style={styles.tabContent}>
+                {steps.map((step: string, i: number) => (
+                    <View key={i} style={styles.stepRow}>
+                        <View style={styles.stepNumber}><Text style={styles.stepNumberText}>{i + 1}</Text></View>
+                        <View style={{ flex: 1 }}>
+                            <LatexText text={step} fontSize={15} color={Colors.text} />
+                        </View>
+                    </View>
+                ))}
+            </View>
+        );
+    };
+
+    // New "B+C mix" Full Solution: concept-led approach → flowing chunks (text + optional
+    // centered display equation) → answer. No phase labels, no step numbers.
+    const renderNewFull = () => {
+        const fs = newFullSolution;
+        if (!fs) return <Text style={{ color: Colors.textDim }}>No full solution available.</Text>;
+        return (
+            <View style={styles.tabContent}>
+                {fs.approach ? (
+                    <View style={{ padding: 12, backgroundColor: '#f0fdf4', borderRadius: 8, borderLeftWidth: 3, borderLeftColor: '#22c55e', marginBottom: 12 }}>
+                        <LatexText text={fs.approach} fontSize={14} color={Colors.text} />
+                    </View>
+                ) : null}
+                {(fs.steps || []).map((chunk: any, i: number) => (
+                    <View key={i} style={{ marginBottom: 10 }}>
+                        <LatexText text={chunk.text} fontSize={15} color={Colors.text} />
+                        {chunk.display ? (
+                            <LatexText text={`$$${chunk.display}$$`} fontSize={15} color={Colors.text} />
+                        ) : null}
+                    </View>
+                ))}
+                {fs.answer ? (
+                    <View style={{ marginTop: 8, paddingTop: 10, borderTopWidth: 1, borderTopColor: '#e2e8f0' }}>
+                        <Text style={{ fontSize: 13, fontWeight: '700', color: '#15803d', marginBottom: 4 }}>ANSWER</Text>
+                        <LatexText text={fs.answer} fontSize={15} color={Colors.text} />
+                    </View>
+                ) : null}
+            </View>
+        );
+    };
+
     const renderContent = () => {
         if (isLegacyData) return renderLegacyContent();
+        if (isNewFormat) return activeTab === 'optimal' ? renderNewQuick() : renderNewFull();
         return activeTab === 'optimal' ? renderTAR() : renderDEEP();
     };
 
@@ -288,7 +349,7 @@ export const InterventionModal: React.FC<InterventionModalProps> = ({ visible, q
                                 onPress={() => setActiveTab('optimal')}
                             >
                                 <Text style={[styles.tabText, activeTab === 'optimal' && styles.activeTabText]}>
-                                    ⚡ Optimal Path
+                                    {isNewFormat ? '⚡ Quick Method' : '⚡ Optimal Path'}
                                 </Text>
                             </TouchableOpacity>
                             <TouchableOpacity

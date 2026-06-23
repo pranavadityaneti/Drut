@@ -4,7 +4,8 @@ import { KnowledgeBase } from './KnowledgeBase';
 import { StagingManager } from './StagingManager';
 import { QuestionSeeding } from './QuestionSeeding';
 import { BulkImport } from './BulkImport';
-import { BookOpen, Database, FileSpreadsheet, Upload } from 'lucide-react';
+import { AiBatchReview } from './AiBatchReview';
+import { BookOpen, Database, FileSpreadsheet, Upload, Sparkles } from 'lucide-react';
 
 /**
  * AdminDashboard — editorial refresh.
@@ -47,6 +48,10 @@ export const AdminDashboard: React.FC = () => {
                         <Upload className="h-4 w-4" />
                         Bulk Import
                     </TabsTrigger>
+                    <TabsTrigger value="ai-review">
+                        <Sparkles className="h-4 w-4" />
+                        AI Review
+                    </TabsTrigger>
                 </TabsList>
 
                 <TabsContent value="textbooks" className="min-h-[500px]">
@@ -60,6 +65,9 @@ export const AdminDashboard: React.FC = () => {
                 </TabsContent>
                 <TabsContent value="bulk-import" className="min-h-[500px]">
                     <BulkImport />
+                </TabsContent>
+                <TabsContent value="ai-review" className="min-h-[500px]">
+                    <AiBatchReview />
                 </TabsContent>
             </Tabs>
         </div>

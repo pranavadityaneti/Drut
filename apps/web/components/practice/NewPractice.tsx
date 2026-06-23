@@ -2,12 +2,13 @@ import React, { useState, useCallback, useEffect, useRef, useMemo } from 'react'
 import { cn } from '@drut/shared';
 import { PracticeSetup } from './PracticeSetup';
 import { QuestionData } from '@drut/shared';
-import { getQuestionsForUser, triggerDiagramGeneration } from '@drut/shared';
+import { getQuestionsForUser, getReviewQuestionsForUser, isServableQuestion, triggerDiagramGeneration } from '@drut/shared';
 import { authService } from '@drut/shared';
 const { getCurrentUser } = authService;
 import { getPreloadedQuestion } from '@drut/shared'; // from ../../services/preloaderService';
 import { isValidOscillationQuestion } from '../../lib/clientValidator';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/Card';
+import { LatexText } from '../ui/LatexText';
 import { Badge } from '../ui/badge';
 import { Button } from '../ui/Button';
 import { Select } from '../ui/Select';
@@ -147,53 +148,51 @@ export const NewPractice: React.FC = () => {
                     subject || undefined
                 );
 
-                // FILER: Only accept Strictly Verified Questions (Version 2.6+)
-                // This forces the system to ignore old "bad" questions in the DB
-                const validQuestions = questions.filter((q: any) =>
-                    q.verification_status &&
-                    (q.verification_status.includes("2.6") || q.verification_status.includes("SubjectFallback")) &&
-                    // CRITICAL: Strict Domain Guard
-                    // Ensure we don't serve Physics questions for a Math session
-                    (!q.metadata || !subject || (q.metadata.subject && q.metadata.subject.toLowerCase() === subject.toLowerCase()))
-                );
+                // FILTER: the shared serving gate (new-format + approved source) —
+                // identical on web and mobile so both platforms serve the same pool.
+                // Wrapped here with the session's domain guard. Defined as a predicate
+                // so the review-seen fallback below applies the EXACT same gate.
+                const isTrusted = (q: any) =>
+                    isServableQuestion(q) &&
+                    // CRITICAL: Strict Domain Guard — don't serve Physics in a Math session
+                    (!q.metadata || !subject || (q.metadata.subject && q.metadata.subject.toLowerCase() === subject.toLowerCase()));
+
+                const validQuestions = questions.filter(isTrusted);
 
                 if (validQuestions.length < questions.length) {
                     log.warn(`[cache] Discarded ${questions.length - validQuestions.length} stale/unverified questions.`);
                 }
 
-                // If shortfall, FORCE GENERATE via Edge Function directly
+                // If shortfall, fall back to VERIFIED REVIEW questions (already-seen,
+                // real DB rows for this exact filter) — NEVER live-generate. This
+                // replaces the old client-side force-generation, which produced
+                // old-format, un-audited questions stamped with non-UUID `temp-gen`
+                // ids (those also broke save-mastery). Quality stays gated; the same
+                // `isTrusted` predicate is applied to review candidates.
                 if (validQuestions.length < batchSize) {
                     const deficit = batchSize - validQuestions.length;
-                    log.info(`[cache] Force-generating ${deficit} new strict questions...`);
-
-                    for (let i = 0; i < deficit; i++) {
-                        try {
-                            const { data, error } = await supabase.functions.invoke('generate-question', {
-                                body: {
-                                    topic: currentTopic,
-                                    subtopic: currentSubTopic,
-                                    subject: subject,
-                                    examProfile: examProfile,
-                                    difficulty: difficulty,
-                                    classLevel: classLevel,
-                                    board: board
-                                }
-                            });
-                            if (data && data.question) {
-                                // Assign UUID and FSM Tag (Required for Submission)
-                                const questionWithMeta = {
-                                    ...data.question,
-                                    uuid: `temp-gen-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-                                    fsmTag: `${currentSubTopic}-gen-${Date.now()}`,
-                                    // Map Backend Schema to Frontend Schema
-                                    // FIX: Check for theOptimalPath first (Standard), then legacy fastestSafeMethod
-                                    theOptimalPath: (data.question as any).theOptimalPath || (data.question as any).fastestSafeMethod || { exists: false, steps: [] }
-                                };
-                                validQuestions.push(questionWithMeta);
-                            }
-                        } catch (genErr) {
-                            console.error("Force generation failed", genErr);
+                    try {
+                        const { questions: reviewQs } = await getReviewQuestionsForUser(
+                            examProfile,
+                            currentTopic,
+                            currentSubTopic,
+                            deficit,
+                            difficulty,
+                            subject || undefined
+                        );
+                        const alreadyHave = new Set(validQuestions.map((q: any) => q.uuid));
+                        const reviewFill = reviewQs
+                            .filter(isTrusted)
+                            .filter((q: any) => !alreadyHave.has(q.uuid))
+                            .slice(0, deficit);
+                        if (reviewFill.length > 0) {
+                            log.info(`[cache] Filled ${reviewFill.length} from verified review pool (no live-gen).`);
+                            validQuestions.push(...reviewFill);
+                        } else {
+                            log.info(`[cache] No verified review questions available for this filter.`);
                         }
+                    } catch (reviewErr) {
+                        console.error("Review fallback failed", reviewErr);
                     }
                 }
 
@@ -778,8 +777,10 @@ export const NewPractice: React.FC = () => {
                     <ReflectionPanel onReflectionSelect={handleReflectionSelect} />
                 )}
 
-                {/* The Optimal Path Panel */}
-                {(practiceState === 'fsm' || practiceState === 'reinforce') && questionData.theOptimalPath.exists && (
+                {/* The Optimal Path Panel — LEGACY format only. Render ONLY when the
+                    question has no new-format Quick Method, so new format always wins
+                    (enriched PYQs carry both; old labels must never show for them). */}
+                {(practiceState === 'fsm' || practiceState === 'reinforce') && !(questionData.quickMethod?.steps?.length) && questionData.theOptimalPath?.exists && (
                     <FsmPanel
                         patternTrigger={questionData.theOptimalPath.preconditions || 'This question type'}
                         steps={questionData.theOptimalPath.steps.map((step) => ({ step }))}
@@ -790,6 +791,27 @@ export const NewPractice: React.FC = () => {
                         }
                         whenToUse="Use this method when you need to solve quickly with high accuracy"
                     />
+                )}
+
+                {/* Quick Method (new "B+C mix" format — clean 3 steps, no framework labels) */}
+                {(practiceState === 'fsm' || practiceState === 'reinforce') && (questionData.quickMethod?.steps?.length ?? 0) > 0 && (
+                    <Card className="border-l-4 border-l-green-500">
+                        <CardContent className="p-6 space-y-3">
+                            <h3 className="text-lg font-semibold text-[#3d7a0f]">Quick Method</h3>
+                            <ol className="space-y-3">
+                                {questionData.quickMethod?.steps.map((step, index) => (
+                                    <li key={index} className="flex gap-3">
+                                        <span className="flex-shrink-0 w-6 h-6 rounded-full bg-[#3d7a0f] text-white text-xs font-medium flex items-center justify-center">
+                                            {index + 1}
+                                        </span>
+                                        <div className="flex-1 pt-0.5 text-sm text-foreground">
+                                            <LatexText text={step} />
+                                        </div>
+                                    </li>
+                                ))}
+                            </ol>
+                        </CardContent>
+                    </Card>
                 )}
 
                 {/* Reinforce Menu */}

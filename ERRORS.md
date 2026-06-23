@@ -23,6 +23,26 @@
 
 ---
 
+## LaTeX in generated-question JSON silently corrupts via JSON escape codes (2026-06-15)
+
+**Problem**: Gemini's Maths question batch rendered broken math — `$\frac{x-3}{2}$` displayed as `rac{x-3}{2}`, `\times` vanished. The Zod schema validator passed it (exit 0) — a corrupted string is still a valid string.
+
+**What didn't work**:
+1. Trusting the schema validator as a correctness gate — it only checks shape, never sees the corruption.
+2. The first adversarial audit (10 Hard questions) only caught 2 of these by eye; a targeted control-char scan was needed to find all 50.
+3. Inline `node -e` scan with control-char regex literals — failed with "argument must be a string without null bytes" (the regex literal contained real control chars). Had to write the scanner to a `.js` file instead.
+
+**Root cause**: When a generator writes LaTeX with a SINGLE backslash in JSON (`\frac`, `\times`, `\to`, `\right`, `\tanh`), `JSON.parse` interprets `\f`→form-feed(0x0c), `\t`→tab(0x09), `\r`→CR(0x0d), `\b`→backspace(0x08). The command name's first letter is eaten and replaced by an invisible control char. Commands starting with other letters (`\s`, `\l`, `\c`) are safe because `\s` etc. is an INVALID JSON escape and would make `JSON.parse` throw — which is why only f/t/r/b/n-initial commands slip through silently.
+
+**What worked**:
+- **Scan**: read the parsed JSON, walk every string field, flag any char `< 32` except newline(10). For tab/CR, only flag when the next char is a letter (bare whitespace is legit). Newline(10) is legit formatting — never flag. Script: `/tmp/scan-ctrl.js`.
+- **Repair**: replace form-feed→`\f`, backspace→`\b`, and tab/CR→`\t`/`\r` when followed by a letter. This exactly reverses the corruption. Script: `/tmp/repair-latex.js` (has `--dry`). 50 fixes across 14 questions, re-validated exit 0, re-scan 0.
+- **Prevent**: generator instruction must require DOUBLED backslashes in JSON (`\\frac`, `\\times`, …) and a post-gen control-char check.
+
+**Lesson**: Schema validation ≠ content/encoding validation. For any generated-question batch, run BOTH (a) an adversarial answer-key audit and (b) a control-char corruption scan before shipping. Never edit the scan/repair regex inline in `node -e` — control-char literals break the shell; write to a file.
+
+---
+
 ## Metro can't resolve `./index` in Expo SDK 56 monorepo (2026-05-24)
 
 **Problem**: Mobile app's Metro bundler kept failing with `Unable to resolve module ./index from /Users/pranavaditya/projects/Drut/...`. App wouldn't load on Expo Go (just bundling errors).

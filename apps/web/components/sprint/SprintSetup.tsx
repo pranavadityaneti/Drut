@@ -354,7 +354,7 @@ export const SprintSetup: React.FC<SprintSetupProps> = ({ onStart }) => {
      })}
     </div>
    </div>
-   {effectivePrimaryBoard !== 'NCERT' && (
+   {effectivePrimaryBoard !== 'NCERT' && chapterSources.some(s => s.board === 'NCERT') && (
     <label className="flex items-center gap-3 cursor-pointer select-none">
      <input
       type="checkbox"

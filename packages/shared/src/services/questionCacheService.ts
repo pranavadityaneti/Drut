@@ -37,6 +37,72 @@ export interface CacheStats {
 }
 
 /**
+ * THE single serving gate for practice questions — used by BOTH web and mobile so
+ * the two platforms always draw from the identical pool (they previously diverged:
+ * web served only `ai-openai-audited` ~13 Qs; mobile also trusted `v3-verified-rag`
+ * and served ~5,500 OLD-format legacy with banned framework labels).
+ *
+ * A question is servable IFF:
+ *   1. it is in the NEW "B+C mix" format (has BOTH quickMethod AND fullSolution) — this
+ *      excludes every old-format legacy row (theOptimalPath/fullStepByStep-only:
+ *      v3-verified-rag, v3-unverified-ai, null) that carries the banned labels; AND
+ *   2. its verification_status is an approved / curated source (allowlist) — this
+ *      excludes new-format-but-unapproved rows (ai-openai-staged / -rejected).
+ *
+ * Net result served: `ai-openai-audited` (generated + admin-approved) and the
+ * enriched `v3-verified-pyq` past-paper questions. Nothing old-format reaches users.
+ */
+const SERVABLE_STATUS_SUBSTRINGS = ['ai-openai-audited', 'v3-verified-pyq', '2.6', 'SubjectFallback'];
+
+export function isServableQuestion(q: any): boolean {
+  if (!q) return false;
+  // (1) new-format gate — the hard exclusion of old-format legacy.
+  if (!q.quickMethod || !q.fullSolution) return false;
+  // (2) approved-source gate.
+  const status = String(q.verification_status || '');
+  return SERVABLE_STATUS_SUBSTRINGS.some(s => status.includes(s));
+}
+
+/**
+ * Map a cached_questions row (from the get_unseen_questions RPC OR a direct
+ * select) to the QuestionData shape the renderers expect.
+ *
+ * CRITICAL: carries the new "B+C mix" fields (quickMethod/fullSolution) alongside
+ * the legacy fields, so both formats render. Without quickMethod/fullSolution the
+ * UI falls back to the legacy "optimal path" and shows "No optimal path available".
+ * Trust signals come from the top-level columns, with the JSONB as a fallback for
+ * older rows. Shared by the unseen path and the review-seen fallback.
+ */
+function mapCachedToQuestionData(
+  cq: any,
+  subtopic: string,
+  fallbackDifficulty: 'Easy' | 'Medium' | 'Hard'
+): QuestionData {
+  const qd = (cq.question_data || {}) as unknown as QuestionData;
+  const result: any = {
+    uuid: cq.id,
+    fsmTag: cq.fsm_tag || `${subtopic}-legacy`,
+    questionText: qd.questionText,
+    options: qd.options,
+    correctOptionIndex: qd.correctOptionIndex,
+    timeTargets: qd.timeTargets,
+    theOptimalPath: (qd as any).theOptimalPath || (qd as any).fastestSafeMethod,
+    fullStepByStep: qd.fullStepByStep,
+    quickMethod: (qd as any).quickMethod,
+    fullSolution: (qd as any).fullSolution,
+    concepts: (qd as any).concepts,
+    distractorRationale: (qd as any).distractorRationale,
+    visualDescription: (qd as any).visualDescription || undefined,
+    diagramUrl: (qd as any).diagramUrl || undefined,
+    diagramRequired: (qd as any).diagramRequired || false,
+    difficulty: (qd as any).difficulty || fallbackDifficulty,
+    verification_status: cq.verification_status || (qd as any).verification_status,
+    source_type: cq.source_type || (qd as any).source_type,
+  };
+  return result;
+}
+
+/**
  * Get questions for a user, ensuring no repetition
  * Uses cached questions when available, generates new ones when needed
  */
@@ -93,31 +159,9 @@ export async function getQuestionsForUser(
       log.info(`[cache] Found ${unseenQuestions.length} unseen cached questions`);
       metadata.cached = unseenQuestions.length;
 
-      // Map cached questions to QuestionData with uuid and fsmTag.
-      // We propagate `verification_status` and `source_type` so the mobile
-      // trust filter can bypass keyword validation for curated questions.
-      const cachedQs = unseenQuestions.map((cq: any): QuestionData => {
-        const qd = (cq.question_data || {}) as unknown as QuestionData;
-        const result: any = {
-          uuid: cq.id,
-          fsmTag: cq.fsm_tag || `${subtopic}-legacy`,
-          questionText: qd.questionText,
-          options: qd.options,
-          correctOptionIndex: qd.correctOptionIndex,
-          timeTargets: qd.timeTargets,
-          theOptimalPath: (qd as any).theOptimalPath || (qd as any).fastestSafeMethod,
-          fullStepByStep: qd.fullStepByStep,
-          visualDescription: (qd as any).visualDescription || undefined,
-          diagramUrl: (qd as any).diagramUrl || undefined,
-          diagramRequired: (qd as any).diagramRequired || false,
-          difficulty: (qd as any).difficulty || difficulty,
-          // Trust signals — propagated from top-level cached_questions columns
-          // (or from the question_data JSONB as a fallback for older rows).
-          verification_status: cq.verification_status || (qd as any).verification_status,
-          source_type: cq.source_type || (qd as any).source_type,
-        };
-        return result;
-      });
+      // Map cached questions to QuestionData (carries new + legacy fields and the
+      // trust signals). Shared with the review-seen fallback below.
+      const cachedQs = unseenQuestions.map((cq: any) => mapCachedToQuestionData(cq, subtopic, difficulty));
       questions.push(...cachedQs);
 
       // Mark these questions as seen by this user
@@ -221,6 +265,65 @@ export async function getQuestionsForUser(
     console.error('[DEBUG] Fatal error in getQuestionsForUser:', error);
     log.error('[cache] Failed to get questions:', error);
     throw new Error(`Failed to load questions: ${error.message}`);
+  }
+}
+
+/**
+ * REVIEW-SEEN fallback.
+ *
+ * When a user has exhausted the UNSEEN questions for a narrow filter, we re-serve
+ * already-seen questions for the SAME filter instead of (a) generating new,
+ * un-audited content or (b) hitting a dead end. This is the safe alternative to
+ * the removed client-side "force generate" path: review content is always real,
+ * already-stored questions — never live-generated.
+ *
+ * Returns candidate rows for the filter from cached_questions (read-only; does
+ * NOT mark them seen — they are review). The CALLER applies its own trust filter
+ * (web and mobile use different trusted-status sets) and de-dupes against the
+ * questions already in the current batch. Returns [] on any error (never throws).
+ */
+export async function getReviewQuestionsForUser(
+  examProfile: string,
+  topic: string,
+  subtopic: string,
+  count: number = 5,
+  difficulty: 'Easy' | 'Medium' | 'Hard' = 'Medium',
+  subject?: string
+): Promise<{ questions: QuestionData[] }> {
+  try {
+    // Over-fetch candidates for this exact serving filter so the caller's trust
+    // filter still leaves enough to fill the deficit (trust is enforced
+    // client-side today). Mirrors the unseen path's filter: exam/topic/subtopic/
+    // difficulty (+ subject when known).
+    let query = supabase
+      .from('cached_questions')
+      .select('id, fsm_tag, question_data, verification_status, difficulty')
+      .eq('exam_profile', examProfile)
+      .eq('topic', topic)
+      .eq('subtopic', subtopic)
+      .eq('difficulty', difficulty)
+      .limit(Math.max(count * 6, 30));
+    if (subject) query = query.eq('subject', subject);
+
+    const { data, error } = await query;
+    if (error) {
+      log.warn('[review] Error fetching review questions:', error);
+      return { questions: [] };
+    }
+
+    const rows = Array.isArray(data) ? [...data] : [];
+    // Shuffle so review isn't always the same order.
+    for (let i = rows.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [rows[i], rows[j]] = [rows[j], rows[i]];
+    }
+
+    const questions = rows.map((cq: any) => mapCachedToQuestionData(cq, subtopic, difficulty));
+    log.info(`[review] Fetched ${questions.length} review candidates for ${topic}/${subtopic}/${difficulty}`);
+    return { questions };
+  } catch (err: any) {
+    log.warn('[review] Exception fetching review questions:', err?.message);
+    return { questions: [] };
   }
 }
 

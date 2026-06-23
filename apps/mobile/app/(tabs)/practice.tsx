@@ -297,7 +297,7 @@ export default function PracticeScreen() {
                 )}
 
                 {/* NCERT-include checkbox (hidden when primary board is already NCERT) */}
-                {chapterSources.length > 0 && effectivePrimaryBoard !== 'NCERT' && (
+                {chapterSources.length > 0 && effectivePrimaryBoard !== 'NCERT' && chapterSources.some(s => s.board === 'NCERT') && (
                     <View style={styles.section}>
                         <TouchableOpacity
                             style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}

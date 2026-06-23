@@ -1,14 +1,16 @@
-// Chapter source resolution — walks knowledge_nodes parent chain to group
-// chapters by their (board, class, subject) source so the practice/sprint
-// picker can show "NCERT Class 11 Mathematics → Chapter 1: Sets" instead of
-// a flat dropdown where the same chapter number appears 8 times from 8
-// different textbooks.
+// Chapter source resolution for the practice/sprint chapter picker.
 //
-// Shared between web (PracticeSetup.tsx, SprintSetup.tsx) and mobile
-// (practice.tsx, sprint.tsx) so the picker logic doesn't drift.
+// SINGLE SOURCE OF TRUTH: chapters come from EXAM_TAXONOMY (the canonical AP
+// EAPCET syllabus, reconciled from the official syllabus + BIEAP textbook TOCs —
+// see docs/ap-eapcet-taxonomy-analysis.html). We do NOT read knowledge_nodes for
+// the picker anymore (it was incomplete and mixed NCERT names in). knowledge_nodes
+// remains only for RAG textbook linkage, never the picker.
+//
+// EAPCET (AP + TG) share one syllabus, surfaced under a single "EAPCET" board, so
+// NCERT is never offered for EAPCET. Shared by web (PracticeSetup, SprintSetup)
+// and mobile (practice.tsx) so the picker can't drift.
 
-import { getSupabase } from '../lib/supabase';
-import { log } from '../lib/log';
+import { EXAM_TAXONOMY } from '../lib/taxonomy';
 
 export interface ChapterEntry {
     id: string;
@@ -17,29 +19,22 @@ export interface ChapterEntry {
 }
 
 /**
- * Map an exam profile to its primary state board.
+ * Map an exam profile to its picker "board".
  *
- * The Board picker was removed from the practice/sprint setup (PR v2)
- * because the exam choice implies the board:
- *   - AP EAPCET → BIEAP (Andhra Pradesh state board)
- *   - TS EAPCET → TSBIE (Telangana state board)
- *   - Everything else (JEE/NEET/CAT/…) → NCERT (national)
- *
- * When the primary board has no chapters ingested for the selected
- * subject (e.g., BIEAP Chemistry not yet ingested), the picker silently
- * falls back to NCERT and surfaces a small footnote to the user.
+ * EAPCET (AP + TG) → a single "EAPCET" board (one shared syllabus from
+ * EXAM_TAXONOMY). Everything else (JEE/NEET/…) → NCERT. The board concept is now
+ * vestigial for EAPCET (one syllabus, no NCERT fallback), but kept so the
+ * existing picker board-match logic continues to work unchanged.
  */
 export function getPrimaryBoardForExam(examProfile: string): string {
-    if (examProfile === 'ap_eapcet') return 'BIEAP';
-    if (examProfile === 'ts_eapcet') return 'TSBIE';
+    if (examProfile === 'ap_eapcet' || examProfile === 'ts_eapcet') return 'EAPCET';
     return 'NCERT';
 }
 
 /**
- * Class naming differs by board: NCERT uses "Class 11" / "Class 12",
- * state boards (BIEAP/TSBIE) use "1st Year" / "2nd Year". The picker
- * surfaces a normalized "Class 11" / "Class 12" / "Both" choice; this
- * helper matches a source's class_name against that selection.
+ * Class naming: the picker surfaces "Class 11" / "Class 12" / "Both". Sources are
+ * labelled "Class 11" / "Class 12" (from EXAM_TAXONOMY class_level). Kept tolerant
+ * of legacy "1st Year" / "2nd Year" labels too.
  */
 export function classMatchesSelection(sourceClass: string, selection: string): boolean {
     if (selection === 'Both') return true;
@@ -49,130 +44,50 @@ export function classMatchesSelection(sourceClass: string, selection: string): b
 }
 
 export interface ChapterSource {
-    subject_id: string;          // knowledge_nodes.id of the subject node
+    subject_id: string;          // stable key (subject name)
     subject: string;             // e.g., "Mathematics"
-    class_name: string;          // e.g., "Class 11" or "1st Year"
-    board: string;               // e.g., "NCERT" or "BIEAP"
-    chapters: ChapterEntry[];    // sorted alphabetically by name
+    class_name: string;          // "Class 11" | "Class 12"
+    board: string;               // "EAPCET"
+    chapters: ChapterEntry[];    // canonical bare-label chapters, sorted by name
 }
 
-interface NodeRow {
-    id: string;
-    name: string;
-    parent_id: string | null;
-    node_type: string;
-    metadata: any;
-}
+// EAPCET syllabus = the shared topic list on the ap_eapcet exam (ts_eapcet shares it).
+const EAPCET_TOPICS = EXAM_TAXONOMY.find(e => e.value === 'ap_eapcet')?.topics || [];
 
 /**
- * Fetch chapter sources grouped by (board × class × subject).
+ * Build chapter sources for the picker from the canonical EXAM_TAXONOMY.
  *
- * Each ChapterSource represents one ingested textbook surface — e.g.,
- * "NCERT × Class 11 × Mathematics" or "BIEAP × 1st Year × Physics" — and
- * carries the chapters available under that source.
- *
- * Optional filters narrow the result:
- *   - subject:    "Mathematics" | "Physics" | "Chemistry" (or any subject name)
- *   - userClass:  "Class 11" | "Class 12" | "1st Year" | "2nd Year"
- *   - userBoard:  "NCERT" | "BIEAP" | ...
- *
- * Returns empty array on any DB error (logs the error). Callers should
- * treat empty as "no chapters available for this selection" — not as
- * "service failed."
- *
- * Implementation note: queries all knowledge_nodes in one round-trip and
- * builds the parent walk in JS. Drut's knowledge tree is small (~150
- * nodes today, well under a few thousand even at full curriculum scope)
- * so this is fine; if it ever grows past 10k, switch to a SQL RPC with
- * a recursive CTE.
+ * Each ChapterSource = one (EAPCET board × class × subject) bucket carrying its
+ * canonical bare-label chapters. NCERT is never produced for EAPCET. Signature
+ * (async + optional filters) preserved so existing callers are unchanged.
  */
 export async function fetchChapterSources(
     subject?: string,
     userClass?: string,
     userBoard?: string,
 ): Promise<ChapterSource[]> {
-    const supabase = getSupabase();
-    if (!supabase) {
-        log.warn('[chapterService] Supabase client not available');
-        return [];
+    if (userBoard && userBoard !== 'EAPCET') return [];
+
+    const byKey = new Map<string, ChapterSource>();
+    for (const t of EAPCET_TOPICS) {
+        if (subject && t.subject !== subject) continue;
+        const class_name = t.class_level === '12' ? 'Class 12' : 'Class 11';
+        if (userClass && !classMatchesSelection(class_name, userClass) && class_name !== userClass) continue;
+        const key = `${t.subject}|${class_name}`;
+        let bucket = byKey.get(key);
+        if (!bucket) {
+            bucket = { subject_id: t.subject, subject: t.subject, class_name, board: 'EAPCET', chapters: [] };
+            byKey.set(key, bucket);
+        }
+        // label IS the canonical topic string (what serving matches); id = kebab value.
+        bucket.chapters.push({ id: t.value, name: t.label });
     }
 
-    try {
-        const { data, error } = await supabase
-            .from('knowledge_nodes')
-            .select('id, name, parent_id, node_type, metadata');
-
-        if (error) {
-            log.error('[chapterService] fetchChapterSources failed:', error.message);
-            return [];
-        }
-        if (!data || data.length === 0) return [];
-
-        const nodes = data as NodeRow[];
-        const byId = new Map<string, NodeRow>();
-        for (const n of nodes) byId.set(n.id, n);
-
-        // Walk topic → subject → class → board for each topic node.
-        // A topic without a complete chain (missing parent at any level)
-        // is skipped — it shouldn't appear in the picker because we can't
-        // label its source.
-        const grouped = new Map<string, ChapterSource>();
-
-        for (const topic of nodes) {
-            if (topic.node_type !== 'topic') continue;
-            if (!topic.parent_id) continue;
-
-            const subjectNode = byId.get(topic.parent_id);
-            if (!subjectNode || subjectNode.node_type !== 'subject') continue;
-            if (!subjectNode.parent_id) continue;
-
-            const classNode = byId.get(subjectNode.parent_id);
-            if (!classNode) continue;
-            if (!classNode.parent_id) continue;
-
-            const boardNode = byId.get(classNode.parent_id);
-            if (!boardNode) continue;
-
-            // Apply filters
-            if (subject && subjectNode.name !== subject) continue;
-            if (userClass && classNode.name !== userClass) continue;
-            if (userBoard && boardNode.name !== userBoard) continue;
-
-            // Group key — one bucket per (board, class, subject) triple
-            const key = `${boardNode.id}|${classNode.id}|${subjectNode.id}`;
-            let bucket = grouped.get(key);
-            if (!bucket) {
-                bucket = {
-                    subject_id: subjectNode.id,
-                    subject: subjectNode.name,
-                    class_name: classNode.name,
-                    board: boardNode.name,
-                    chapters: [],
-                };
-                grouped.set(key, bucket);
-            }
-            bucket.chapters.push({
-                id: topic.id,
-                name: topic.name,
-                metadata: topic.metadata,
-            });
-        }
-
-        // Sort chapters alphabetically within each bucket, and sort buckets
-        // by board → class → subject for stable picker order.
-        const sources = Array.from(grouped.values());
-        for (const s of sources) {
-            s.chapters.sort((a, b) => a.name.localeCompare(b.name));
-        }
-        sources.sort((a, b) => {
-            if (a.board !== b.board) return a.board.localeCompare(b.board);
-            if (a.class_name !== b.class_name) return a.class_name.localeCompare(b.class_name);
-            return a.subject.localeCompare(b.subject);
-        });
-
-        return sources;
-    } catch (err: any) {
-        log.error('[chapterService] Exception:', err?.message || err);
-        return [];
-    }
+    const sources = Array.from(byKey.values());
+    for (const s of sources) s.chapters.sort((a, b) => a.name.localeCompare(b.name));
+    sources.sort((a, b) => {
+        if (a.class_name !== b.class_name) return a.class_name.localeCompare(b.class_name);
+        return a.subject.localeCompare(b.subject);
+    });
+    return sources;
 }

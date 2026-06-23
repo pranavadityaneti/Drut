@@ -394,7 +394,7 @@ export const PracticeSetup: React.FC<PracticeSetupProps> = ({ onStart }) => {
    </div>
 
    {/* NCERT-include checkbox (hidden when primary board is already NCERT) */}
-   {effectivePrimaryBoard !== 'NCERT' && (
+   {effectivePrimaryBoard !== 'NCERT' && chapterSources.some(s => s.board === 'NCERT') && (
     <label className="flex items-center gap-3 cursor-pointer select-none">
      <input
       type="checkbox"

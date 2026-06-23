@@ -24,6 +24,24 @@ export interface FullStepByStep {
   steps: string[];
 }
 
+// ---- New "B+C mix" solution format (calibrated 2026-06; clean, label-free, replaces
+// the user-facing T.A.R./D.E.E.P. fields above). New questions carry these instead. ----
+export interface QuickMethod {
+  // Exactly 3 clean steps; NO framework labels (no Trigger/Action/Result)
+  steps: string[];
+}
+
+export interface FullSolutionStep {
+  text: string;        // flowing prose for this chunk (inline $...$ math)
+  display?: string;    // optional pivotal equation, rendered centered as $$...$$ (no $ delimiters)
+}
+
+export interface FullSolution {
+  approach: string;            // concept-led opener (the governing principle + why this route)
+  steps: FullSolutionStep[];   // detailed, variable-length, NO numbers/labels
+  answer: string;              // final answer + option letter
+}
+
 export interface QuestionOption {
   text: string;
 }
@@ -37,6 +55,17 @@ export interface QuestionData {
   timeTargets: TimeTargets;
   theOptimalPath: TheOptimalPath;
   fullStepByStep: FullStepByStep;
+  // New "B+C mix" solution format (additive; new questions use these instead of the two legacy fields above)
+  quickMethod?: QuickMethod;
+  fullSolution?: FullSolution;
+  // Governing concepts (backend tagging / focus areas) and per-option rationale
+  concepts?: string[];
+  distractorRationale?: string[];
+  // Inter 1st/2nd year (Class 11 / 12) — now explicit
+  class_level?: string;
+  // Trust stamps (set by the generation/ingestion pipeline; read by the trust gate)
+  verification_status?: string;
+  source_type?: string;
   // Pattern tag for grouping
   fsmTag: string;
   // Learning explanation

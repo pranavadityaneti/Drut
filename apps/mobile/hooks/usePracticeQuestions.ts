@@ -1,27 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
 import { Alert } from 'react-native';
-import { getQuestionsForUser, authService, isValidQuestionForTopic, getSupabase, ALLOW_LIVE_AI_FALLBACK } from '@drut/shared';
+import { getQuestionsForUser, getReviewQuestionsForUser, isServableQuestion, authService, getSupabase, ALLOW_LIVE_AI_FALLBACK } from '@drut/shared';
 
-// Verification statuses that mean the question was curated/verified upstream.
-// Any question with a status in this list (substring match) bypasses the
-// client-side keyword validator — we trust the cache.
-const TRUSTED_STATUS_SUBSTRINGS = [
-    'v3-verified-pyq',
-    'v3-verified-textbook',
-    'v3-verified-rag',
-    '2.6',           // legacy AI batch with curated source
-    'SubjectFallback', // subject-level fallback questions (curated)
-];
-
-const TRUSTED_SOURCE_TYPES = ['pyq', 'textbook', 'rag-verified'];
-
-function isTrustedQuestion(q: any): boolean {
-    const status = String(q.verification_status || '');
-    const sourceType = String(q.source_type || '');
-    if (TRUSTED_STATUS_SUBSTRINGS.some(s => status.includes(s))) return true;
-    if (TRUSTED_SOURCE_TYPES.includes(sourceType)) return true;
-    return false;
-}
+// Serving trust is centralized in @drut/shared `isServableQuestion` (new-format +
+// approved source) so web and mobile serve the IDENTICAL pool. The old per-client
+// TRUSTED_STATUS list wrongly included `v3-verified-rag`/`v3-verified-textbook`,
+// which served ~5,500 old-format legacy questions (banned framework labels).
 
 interface UsePracticeQuestionsProps {
     config: {
@@ -144,27 +128,12 @@ export function usePracticeQuestions({ config, batchSize = 5 }: UsePracticeQuest
                 config.subject,
             );
 
-            // Process: trust-based filter. If a question carries a trusted
-            // verification_status or source_type, bypass keyword validation.
-            // Otherwise validate against the chapter (or subject for All-chapters).
+            // Shared serving gate: new-format + approved source (same as web).
+            // The DB query already constrains topic/subtopic/difficulty, so the
+            // old per-client keyword validator is no longer needed — and it was
+            // letting old-format legacy rows through.
             const processed = (apiQuestions || [])
-                .filter((q: any) => {
-                    if (isTrustedQuestion(q)) return true;
-
-                    // Non-trusted: run keyword validation against the topic key.
-                    // For All-chapters mode the "topic" is actually the subject;
-                    // the validator has no rule for subject-level checks and will
-                    // return true (allow) — which is acceptable since the cache
-                    // already filtered by subject server-side.
-                    const isValid = isValidQuestionForTopic(
-                        chapter,
-                        q.questionText || q.question_text || q.text || '',
-                    );
-                    if (!isValid) {
-                        console.warn(`[MobileValidator] Skipped question for ${chapter}`);
-                    }
-                    return isValid;
-                })
+                .filter((q: any) => isServableQuestion(q))
                 .map((q: any) => ({
                     ...q,
                     options: (q.options || []).map((opt: any, idx: number) => ({
@@ -176,6 +145,35 @@ export function usePracticeQuestions({ config, batchSize = 5 }: UsePracticeQuest
             if (processed.length > 0) {
                 fetchedCountRef.current += processed.length;
                 setQuestions(prev => [...prev, ...processed]);
+                return;
+            }
+
+            // Unseen pool exhausted/empty for this filter. Before any (gated) live
+            // generation, fall back to VERIFIED REVIEW questions — already-seen, real
+            // DB rows for the same filter. Mirrors web's review-seen fallback so both
+            // platforms recycle verified content instead of dead-ending. Applies the
+            // SAME shared serving gate (isServableQuestion); never live-generates.
+            const { questions: reviewQs } = await getReviewQuestionsForUser(
+                config.exam,
+                chapter,            // topic (subject when isAllChapters, chapter name otherwise)
+                'mixed',            // subtopic
+                fetchCount,
+                effectiveDifficulty as 'Easy' | 'Medium' | 'Hard',
+                config.subject,
+            );
+            const reviewProcessed = (reviewQs || [])
+                .filter(isServableQuestion)
+                .map((q: any) => ({
+                    ...q,
+                    options: (q.options || []).map((opt: any, idx: number) => ({
+                        ...opt,
+                        id: opt.id || `opt-${idx}-${Date.now()}-${Math.random()}`,
+                    })),
+                }));
+            if (reviewProcessed.length > 0) {
+                console.log(`[usePracticeQuestions] Filled ${reviewProcessed.length} from verified review pool (no live-gen).`);
+                fetchedCountRef.current += reviewProcessed.length;
+                setQuestions(prev => [...prev, ...reviewProcessed]);
                 return;
             }
 
