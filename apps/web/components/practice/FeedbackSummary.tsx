@@ -86,7 +86,7 @@ export const FeedbackSummary: React.FC<FeedbackSummaryProps> = ({
  {isTimeSaved && accuracy >= 67
  ? 'Excellent performance! You\'re mastering this pattern.'
  : !isTimeSaved && accuracy >= 67
- ? 'Good accuracy, but try to solve faster using the FSM.'
+ ? 'Good accuracy, but try to solve faster using the Quick Method.'
  : isTimeSaved && accuracy < 67
  ? 'You\'re fast, but focus on accuracy first.'
  : 'Practice this pattern more to improve both speed and accuracy.'}

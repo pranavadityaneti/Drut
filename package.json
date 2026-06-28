@@ -3,8 +3,9 @@
     "private": true,
     "scripts": {
         "dev:web": "npm run dev --workspace=@drut/web",
-        "build:web": "npm run build --workspace=@drut/web",
-        "lint": "npm run lint --workspaces"
+        "build:web": "npm run check:labels && npm run build --workspace=@drut/web",
+        "check:labels": "node scripts/check-no-framework-labels.mjs",
+        "lint": "npm run check:labels && npm run lint --workspaces"
     },
     "workspaces": [
         "apps/*",

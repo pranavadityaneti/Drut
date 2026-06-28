@@ -56,7 +56,7 @@ export const InterventionModal: React.FC<InterventionModalProps> = ({
 
  const failure = getFailureReason();
  const optimalPath = questionData?.theOptimalPath || { exists: false, steps: [], preconditions: '', sanityCheck: '' };
- // New format: clean 3-step Quick Method (no FSM/pattern scaffolding, no labels)
+ // New format: clean 3-step Quick Method (no internal scaffolding, no labels)
  const quickMethod = questionData?.quickMethod;
  const isNewFormat = !!(quickMethod?.steps?.length);
 
@@ -79,12 +79,12 @@ export const InterventionModal: React.FC<InterventionModalProps> = ({
  </CardContent>
  </Card>
 
- {/* FSM Solution - Inline card */}
+ {/* Quick Method - Inline card */}
  <Card>
  <CardContent className="p-5">
  <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
  <span className="text-[#3d7a0f]"></span>
- {isNewFormat ? 'Quick Method' : 'The Optimal Path'}
+ {'Quick Method'}
  </h3>
 
  {isNewFormat ? (

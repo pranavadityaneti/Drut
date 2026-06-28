@@ -86,7 +86,7 @@ export const InterventionModal: React.FC<InterventionModalProps> = ({ visible, q
                         textTransform: 'uppercase',
                         letterSpacing: 1.5,
                     }}>
-                        The T.A.R. Algorithm
+                        Quick Method
                     </Text>
                 </View>
                 {steps.map((step: any, i: number) => {
@@ -109,7 +109,7 @@ export const InterventionModal: React.FC<InterventionModalProps> = ({ visible, q
                     </View>
                 )}
 
-                {/* FSM Explanation */}
+                {/* Why-it-works explanation */}
                 {fsmExplanation && (
                     <View style={{ marginTop: 12, padding: 12, backgroundColor: '#eff6ff', borderRadius: 8, borderWidth: 1, borderColor: '#dbeafe' }}>
                         <Text style={{ fontSize: 12, fontWeight: '700', color: '#1d4ed8', marginBottom: 4 }}>PATTERN</Text>
@@ -218,7 +218,7 @@ export const InterventionModal: React.FC<InterventionModalProps> = ({ visible, q
                         textTransform: 'uppercase',
                         letterSpacing: 1.5
                     }}>
-                        The D.E.E.P. Framework™
+                        Full Solution
                     </Text>
                 </View>
 
@@ -349,7 +349,7 @@ export const InterventionModal: React.FC<InterventionModalProps> = ({ visible, q
                                 onPress={() => setActiveTab('optimal')}
                             >
                                 <Text style={[styles.tabText, activeTab === 'optimal' && styles.activeTabText]}>
-                                    {isNewFormat ? '⚡ Quick Method' : '⚡ Optimal Path'}
+                                    {'⚡ Quick Method'}
                                 </Text>
                             </TouchableOpacity>
                             <TouchableOpacity

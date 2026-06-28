@@ -7,15 +7,14 @@ import { cn } from '@drut/shared';
 import { LatexText } from './ui/LatexText';
 
 /**
- * SolutionView — editorial refresh aligned with the Drut learning framework.
+ * SolutionView — editorial two-method solution view.
  *
  * Two side-by-side methods rendered as underlined tabs:
- *   - Quick Method  → T.A.R.   (Trigger → Action → Result)
- *   - Full Solution → D.E.E.P. (Diagnose → Extract → Execute → Proof)
+ *   - Quick Method  (the fast, shortcut approach)
+ *   - Full Solution (the detailed step-by-step)
  *
- * Framework attribution is shown in faded ink-3 inside each tab — students
- * see the structure as they use it without the tab itself being a buzzword.
- * See docs/learning-framework.md for the full methodology definition.
+ * The internal solution-generation scaffolding names are backend-only and must
+ * NEVER be rendered to users — the tabs show only the plain method names.
  */
 
 interface SolutionViewProps {
@@ -67,19 +66,6 @@ const CorrectBanner: React.FC<{ letter: string; text: string }> = ({ letter, tex
       </p>
     </div>
   </div>
-);
-
-// FrameworkAttribution — faded subhead at the top of each tab.
-// Shows the framework expansion (Trigger → Action → Result) plus the
-// shorthand (T.A.R.) in a quiet ink-3 line. Educational without being loud.
-const FrameworkAttribution: React.FC<{ steps: string; shorthand: string }> = ({
-  steps,
-  shorthand,
-}) => (
-  <p className="text-[11px] text-[var(--color-ink-3)] tracking-[0.04em] mb-5 opacity-70">
-    <span>{steps}</span>
-    <span className="ml-2 font-semibold">— {shorthand}</span>
-  </p>
 );
 
 export const SolutionView: React.FC<SolutionViewProps> = ({ question }) => {
@@ -177,7 +163,7 @@ export const SolutionView: React.FC<SolutionViewProps> = ({ question }) => {
   // Fallback chain (canonical → intermediate → oldest legacy):
   //   theOptimalPath is the canonical name on QuestionData today
   //   optimal_path was an intermediate name that was renamed
-  //   fastestSafeMethod was the oldest pre-FSM-rename name
+  //   fastestSafeMethod was the oldest legacy name
   // Same pattern for fullStepByStep (canonical) ← full_solution (intermediate).
   // Cached questions in old shapes still load gracefully via the casts.
   const optimalPath =
@@ -239,12 +225,8 @@ export const SolutionView: React.FC<SolutionViewProps> = ({ question }) => {
             </TabsTrigger>
           </TabsList>
 
-          {/* Quick Method tab — T.A.R. */}
+          {/* Quick Method tab */}
           <TabsContent value="fsm">
-            <FrameworkAttribution
-              steps="Trigger → Action → Result"
-              shorthand="T.A.R."
-            />
             {hasOptimal ? (
               <div className="space-y-2.5">
                 {optimalPath.steps.map((step: string, i: number) => (
@@ -276,12 +258,8 @@ export const SolutionView: React.FC<SolutionViewProps> = ({ question }) => {
             )}
           </TabsContent>
 
-          {/* Full Solution tab — D.E.E.P. */}
+          {/* Full Solution tab */}
           <TabsContent value="full">
-            <FrameworkAttribution
-              steps="Diagnose → Extract → Execute → Proof"
-              shorthand="D.E.E.P."
-            />
             {fullSolution?.phases ? (
               <div className="space-y-2">
                 {fullSolution.phases.map((phase: any, idx: number) => {
