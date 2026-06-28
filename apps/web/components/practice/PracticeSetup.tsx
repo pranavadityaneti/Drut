@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { EXAM_TAXONOMY, TopicDef } from '../../../../packages/shared/src/lib/taxonomy';
-import { authService, fetchChapterSources, getPrimaryBoardForExam, classMatchesSelection } from '@drut/shared';
+import { authService, fetchChapterSources, getPrimaryBoardForExam, classMatchesSelection, DIFFICULTY_SELECTION_ENABLED, normalizeTargetExams } from '@drut/shared';
 import type { ChapterSource } from '@drut/shared';
 // @ts-ignore
 import { supabase } from '@drut/shared'; // Ensure we can import supabase client
@@ -53,42 +53,17 @@ export const PracticeSetup: React.FC<PracticeSetupProps> = ({ onStart }) => {
  try {
  const user = await getCurrentUser();
  if (user) {
- let exams = (user.user_metadata?.target_exams || []) as string[];
+ // Single shared normalizer (labels / legacy 'eamcet'/'both' / snake_case),
+ // identical to mobile, so both platforms resolve enrollment the same way.
+ const finalExams = normalizeTargetExams(
+ (user.user_metadata?.target_exams && (user.user_metadata.target_exams as string[]).length)
+ ? user.user_metadata.target_exams
+ : user.user_metadata?.exam_profile
+ );
  const cls = user.user_metadata?.class || '11';
-
- // Fallback
- if (exams.length === 0 && user.user_metadata?.exam_profile) exams.push(user.user_metadata.exam_profile);
-
- const availableExamValues = new Set(EXAM_TAXONOMY.map(e => e.value));
- const cleanExams: string[] = [];
-
- exams.forEach(e => {
- const clean = e.toLowerCase().replace(/[^a-z0-9_]/g, '');
- if (clean === 'eamcet') {
- if (availableExamValues.has('ap_eapcet')) cleanExams.push('ap_eapcet');
- if (availableExamValues.has('ts_eapcet')) cleanExams.push('ts_eapcet');
- return;
- }
- // Fix for legacy/mismatched values (e.g. APEAPCET -> apeapcet vs ap_eapcet)
- if (clean === 'apeapcet') {
- if (availableExamValues.has('ap_eapcet')) cleanExams.push('ap_eapcet');
- return;
- }
- if (clean === 'tgeapcet') {
- if (availableExamValues.has('ts_eapcet')) cleanExams.push('ts_eapcet');
- return;
- }
-
- cleanExams.push(clean);
- });
-
- const finalExams = Array.from(new Set(cleanExams));
  setUserExams(finalExams);
  setUserClass(cls);
-
- if (finalExams.length > 0) {
- setSelectedExam(finalExams[0]);
- }
+ if (finalExams.length > 0) setSelectedExam(finalExams[0]);
  }
  } catch (err) {
  console.error("Failed to initialize PracticeSetup:", err);
@@ -167,11 +142,14 @@ export const PracticeSetup: React.FC<PracticeSetupProps> = ({ onStart }) => {
     setChapterSources([]);
     return;
    }
-   const sources = await fetchChapterSources(selectedSubject);
+   // Pass the exam's board so JEE Main loads JEE chapters (not EAPCET). EAPCET exams
+   // resolve to the EAPCET board; jee_main resolves to 'JEE Main' in chapterService.
+   const board = getPrimaryBoardForExam(selectedExam);
+   const sources = await fetchChapterSources(selectedSubject, undefined, board);
    setChapterSources(sources);
   };
   loadSources();
- }, [selectedSubject]);
+ }, [selectedSubject, selectedExam]);
 
  // Derived Logic
  const examDef = EXAM_TAXONOMY.find(e => e.value === selectedExam);
@@ -394,7 +372,7 @@ export const PracticeSetup: React.FC<PracticeSetupProps> = ({ onStart }) => {
    </div>
 
    {/* NCERT-include checkbox (hidden when primary board is already NCERT) */}
-   {effectivePrimaryBoard !== 'NCERT' && (
+   {effectivePrimaryBoard !== 'NCERT' && chapterSources.some(s => s.board === 'NCERT') && (
     <label className="flex items-center gap-3 cursor-pointer select-none">
      <input
       type="checkbox"
@@ -459,7 +437,8 @@ export const PracticeSetup: React.FC<PracticeSetupProps> = ({ onStart }) => {
 
 
 
- {/* 4. Difficulty */}
+ {/* 4. Difficulty — hidden until difficulty is empirically calibrated (Elo). Defaults to 'Medium'. */}
+ {DIFFICULTY_SELECTION_ENABLED && (
  <div>
  <label className="text-sm font-semibold text-[var(--color-ink-1)] mb-3 block">Difficulty Level</label>
  <div className="grid grid-cols-3 gap-4">
@@ -482,6 +461,7 @@ export const PracticeSetup: React.FC<PracticeSetupProps> = ({ onStart }) => {
  })}
  </div>
  </div>
+ )}
 
  {/* Action */}
  <div className="pt-8">

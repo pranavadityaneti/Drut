@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from './ui/Card';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from './ui/Tabs';
 import { Check, X, Zap, BookOpen, Plus, Minus } from 'lucide-react';
 import { cn } from '@drut/shared';
+import { LatexText } from './ui/LatexText';
 
 /**
  * SolutionView — editorial refresh aligned with the Drut learning framework.
@@ -89,6 +90,89 @@ export const SolutionView: React.FC<SolutionViewProps> = ({ question }) => {
     question.options?.[correctOptionIndex]?.text ||
     `Option ${String.fromCharCode(65 + correctOptionIndex)}`;
   const correctOptionLetter = String.fromCharCode(65 + correctOptionIndex);
+
+  // ---- New "B+C mix" format (calibrated 2026-06): clean Quick Method + concept-led
+  // flowing Full Solution, NO framework labels. Rendered as its own branch so legacy
+  // questions are untouched. Math via LatexText ($...$ inline, $$...$$ centered). ----
+  const quickMethod = question.quickMethod;
+  const newFullSolution = question.fullSolution;
+  const isNewFormat = !!(quickMethod?.steps?.length || newFullSolution?.steps?.length);
+
+  if (isNewFormat) {
+    return (
+      <Card>
+        <CardHeader>
+          <p className="label-uppercase">Solution</p>
+          <CardTitle className="text-[18px] tracking-tight mt-1">Solutions</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <CorrectBanner letter={correctOptionLetter} text={correctOptionText} />
+          <Tabs defaultValue="quick">
+            <TabsList>
+              <TabsTrigger value="quick">
+                <Zap className="w-4 h-4" />
+                Quick Method
+              </TabsTrigger>
+              <TabsTrigger value="full">
+                <BookOpen className="w-4 h-4" />
+                Full Solution
+              </TabsTrigger>
+            </TabsList>
+
+            {/* Quick Method — 3 clean steps, no framework labels */}
+            <TabsContent value="quick">
+              {quickMethod?.steps?.length ? (
+                <div className="space-y-2.5">
+                  {quickMethod.steps.map((step, i) => (
+                    <div key={i} className="flex gap-3 p-3 rounded-[12px] bg-[var(--color-muted)]">
+                      <div className="shrink-0 inline-flex h-6 w-6 items-center justify-center rounded-[8px] bg-[var(--color-card)] ring-hairline-strong text-[11px] font-bold num-tabular text-[var(--color-ink-1)] mt-0.5">
+                        {i + 1}
+                      </div>
+                      <div className="text-[14px] flex-1 leading-relaxed text-[var(--color-ink-2)]">
+                        <LatexText text={step} />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-[13px] italic text-[var(--color-ink-3)]">Quick method unavailable.</p>
+              )}
+            </TabsContent>
+
+            {/* Full Solution — concept-led, flowing chunks, no labels/numbers */}
+            <TabsContent value="full">
+              {newFullSolution ? (
+                <div className="space-y-3">
+                  {newFullSolution.approach && (
+                    <div className="p-3 rounded-[10px] bg-[var(--color-muted)] border-l-[3px] border-[var(--color-primary)] text-[14px] leading-relaxed text-[var(--color-ink-2)]">
+                      <LatexText text={newFullSolution.approach} />
+                    </div>
+                  )}
+                  {newFullSolution.steps?.map((chunk, i) => (
+                    <div key={i} className="text-[14px] leading-relaxed text-[var(--color-ink-2)]">
+                      <LatexText text={chunk.text} />
+                      {chunk.display ? (
+                        <div className="my-2 text-center overflow-x-auto">
+                          <LatexText text={`$$${chunk.display}$$`} />
+                        </div>
+                      ) : null}
+                    </div>
+                  ))}
+                  {newFullSolution.answer && (
+                    <div className="mt-1 pt-3 border-t border-[var(--color-ink-5)] text-[14px] font-semibold text-[var(--color-ink-1)]">
+                      Answer: <LatexText text={newFullSolution.answer} />
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <p className="text-[13px] italic text-[var(--color-ink-3)]">Full solution unavailable.</p>
+              )}
+            </TabsContent>
+          </Tabs>
+        </CardContent>
+      </Card>
+    );
+  }
 
   // Fallback chain (canonical → intermediate → oldest legacy):
   //   theOptimalPath is the canonical name on QuestionData today

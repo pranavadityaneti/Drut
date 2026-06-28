@@ -36,6 +36,22 @@ export const QuestionSchema = z.object({
   fullStepByStep: z.object({
     steps: z.array(z.string())
   }).optional(),
+  // New "B+C mix" format (calibrated 2026-06): clean Quick Method (no labels) +
+  // concept-led, flowing Full Solution. Optional so legacy output still validates.
+  quickMethod: z.object({
+    steps: z.array(z.string())
+  }).optional(),
+  fullSolution: z.object({
+    approach: z.string(),
+    steps: z.array(z.object({
+      text: z.string(),
+      display: z.string().optional()
+    })),
+    answer: z.string()
+  }).optional(),
+  concepts: z.array(z.string()).optional(),
+  distractorRationale: z.array(z.string()).optional(),
+  subtopic: z.string().optional(),
   // FSM Tag: kebab-case pattern identifier for grouping similar problems
   fsmTag: z.string().regex(
     /^[a-z0-9]+(-[a-z0-9]+)*$/,

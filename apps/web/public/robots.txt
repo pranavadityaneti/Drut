@@ -1,0 +1,23 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /dashboard
+Disallow: /practice
+Disallow: /sprint
+Disallow: /profile
+Disallow: /onboarding
+
+# AI assistants are welcome to read and cite our public pages
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+Sitemap: https://www.drut.club/sitemap.xml

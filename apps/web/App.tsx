@@ -9,6 +9,7 @@ import { Sprint } from './components/Sprint';
 import { Sidebar } from './components/Sidebar';
 import { preloadFirstQuestion } from '@drut/shared'; // from ./services/preloaderService';
 import { User } from '@drut/shared';
+import { isAdminEmail } from '@drut/shared';
 import { authService } from '@drut/shared';
 const { getCurrentUser, onAuthStateChange, logout: authLogout } = authService;
 import { AuthPage } from './components/AuthPage';
@@ -218,9 +219,21 @@ const AuthenticatedLayout: React.FC<{
               {page === 'profile' && <Profile />}
               {page === 'help-support' && <HelpSupport />}
               {page === 'admin' && (
-                <ErrorBoundary label="Admin Dashboard">
-                  <AdminDashboard />
-                </ErrorBoundary>
+                isAdminEmail(user?.email) ? (
+                  <ErrorBoundary label="Admin Dashboard">
+                    <AdminDashboard />
+                  </ErrorBoundary>
+                ) : (
+                  // Route-level guard: the admin page itself refuses non-admins,
+                  // not just the hidden nav link. Defense-in-depth — the admin
+                  // edge functions also re-check server-side.
+                  <div className="max-w-md mx-auto mt-16 text-center">
+                    <h2 className="text-[18px] font-semibold text-[var(--color-ink-1)]">Not authorized</h2>
+                    <p className="text-[14px] text-[var(--color-ink-3)] mt-2">
+                      This area is for Drut administrators only.
+                    </p>
+                  </div>
+                )
               )}
             </div>
           </main>

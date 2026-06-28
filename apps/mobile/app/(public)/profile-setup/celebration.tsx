@@ -5,7 +5,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Colors } from '../../../constants/Colors';
 import { Sparkles, Target, GraduationCap, Calendar } from 'lucide-react-native';
 import { useEffect, useRef, useState } from 'react';
-import { authService } from '@drut/shared';
+import { authService, normalizeTargetExams } from '@drut/shared';
+
+const EXAM_LABEL: Record<string, string> = { ap_eapcet: 'AP EAPCET', ts_eapcet: 'TG EAPCET', jee_main: 'JEE Main' };
 
 export default function CelebrationScreen() {
     const router = useRouter();
@@ -40,14 +42,10 @@ export default function CelebrationScreen() {
             if (user) {
                 setUserName(user.user_metadata?.full_name?.split(' ')[0] || 'Champion');
 
-                const targets = user.user_metadata?.target_exams || [];
-                const examLabel = targets.length === 2
-                    ? 'AP + TS EAPCET'
-                    : targets[0] === 'ap_eapcet'
-                        ? 'AP EAPCET'
-                        : targets[0] === 'ts_eapcet'
-                            ? 'TS EAPCET'
-                            : 'EAPCET';
+                const targets = normalizeTargetExams(user.user_metadata?.target_exams);
+                const examLabel = targets.length
+                    ? targets.map(v => EXAM_LABEL[v] || v).join(' + ')
+                    : 'EAPCET';
 
                 const yearLabel = user.user_metadata?.year_in_school === 'Reappear'
                     ? 'Reappear'

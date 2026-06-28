@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Colors, Layout } from '../constants/Colors';
 import { ChevronDown, Clock, StopCircle } from 'lucide-react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { DIFFICULTY_SELECTION_ENABLED } from '@drut/shared';
 
 interface SessionHeaderProps {
     currentIndex: number;
@@ -44,17 +45,20 @@ export const SessionHeader: React.FC<SessionHeaderProps> = ({
                 {/* Center: Topic & Difficulty */}
                 <TouchableOpacity
                     style={styles.centerSection}
-                    onPress={onToggleDifficulty}
-                    activeOpacity={0.7}
+                    onPress={DIFFICULTY_SELECTION_ENABLED ? onToggleDifficulty : undefined}
+                    activeOpacity={DIFFICULTY_SELECTION_ENABLED ? 0.7 : 1}
+                    disabled={!DIFFICULTY_SELECTION_ENABLED}
                 >
                     <Text style={styles.topicText} numberOfLines={1}>
                         {topic || 'Practice'}
                     </Text>
-                    {/* Visual cue for Dropdown */}
+                    {/* Difficulty badge — hidden until difficulty is empirically calibrated (Elo). */}
+                    {DIFFICULTY_SELECTION_ENABLED && (
                     <View style={styles.difficultyBadge}>
                         <Text style={styles.difficultyText}>{difficulty || 'Standard'}</Text>
                         <ChevronDown size={12} color={Colors.primary} />
                     </View>
+                    )}
                 </TouchableOpacity>
 
                 {/* Right: Stacked Timers */}

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { EXAM_TAXONOMY, TopicDef } from '../../../../packages/shared/src/lib/taxonomy';
-import { authService, fetchChapterSources, getPrimaryBoardForExam, classMatchesSelection } from '@drut/shared';
+import { authService, fetchChapterSources, getPrimaryBoardForExam, classMatchesSelection, normalizeTargetExams } from '@drut/shared';
 import type { ChapterSource } from '@drut/shared';
 // @ts-ignore
 import { supabase } from '@drut/shared';
@@ -48,44 +48,17 @@ export const SprintSetup: React.FC<SprintSetupProps> = ({ onStart }) => {
  try {
  const user = await getCurrentUser();
  if (user) {
- let exams = (user.user_metadata?.target_exams || []) as string[];
+ // Single shared normalizer (labels / legacy 'eamcet'/'both' / snake_case),
+ // identical to mobile + PracticeSetup.
+ const exams = normalizeTargetExams(
+ (user.user_metadata?.target_exams && (user.user_metadata.target_exams as string[]).length)
+ ? user.user_metadata.target_exams
+ : user.user_metadata?.exam_profile
+ );
  const cls = user.user_metadata?.class || '11';
-
- // Fallback
- if (exams.length === 0 && user.user_metadata?.exam_profile) exams.push(user.user_metadata.exam_profile);
-
- // Normalization - removing forced eamcet mapping, using taxonomy availability
- const availableExamValues = new Set(EXAM_TAXONOMY.map(e => e.value));
- const cleanExams: string[] = [];
-
- exams.forEach(e => {
- const clean = e.toLowerCase().replace(/[^a-z0-9_]/g, '');
- if (clean === 'eamcet') {
- if (availableExamValues.has('ap_eapcet')) cleanExams.push('ap_eapcet');
- if (availableExamValues.has('ts_eapcet')) cleanExams.push('ts_eapcet');
- return;
- }
- if (clean === 'apeapcet') {
- if (availableExamValues.has('ap_eapcet')) cleanExams.push('ap_eapcet');
- return;
- }
- if (clean === 'tgeapcet') {
- if (availableExamValues.has('ts_eapcet')) cleanExams.push('ts_eapcet');
- return;
- }
- cleanExams.push(clean);
- });
-
- // Dedup
- exams = Array.from(new Set(cleanExams));
-
  setUserExams(exams);
  setUserClass(cls);
-
- // Auto-select
- if (exams.length > 0) {
- setSelectedExam(exams[0]);
- }
+ if (exams.length > 0) setSelectedExam(exams[0]);
  }
  } catch (err) {
  console.error("Failed to initialize SprintSetup:", err);
@@ -354,7 +327,7 @@ export const SprintSetup: React.FC<SprintSetupProps> = ({ onStart }) => {
      })}
     </div>
    </div>
-   {effectivePrimaryBoard !== 'NCERT' && (
+   {effectivePrimaryBoard !== 'NCERT' && chapterSources.some(s => s.board === 'NCERT') && (
     <label className="flex items-center gap-3 cursor-pointer select-none">
      <input
       type="checkbox"

@@ -2,6 +2,7 @@ import React from 'react';
 import { FsmPanel } from './FsmPanel';
 import { QuestionData } from '@drut/shared';
 import { Card, CardContent } from '../ui/Card';
+import { LatexText } from '../ui/LatexText';
 
 interface InterventionModalProps {
  questionData: QuestionData;
@@ -55,6 +56,9 @@ export const InterventionModal: React.FC<InterventionModalProps> = ({
 
  const failure = getFailureReason();
  const optimalPath = questionData?.theOptimalPath || { exists: false, steps: [], preconditions: '', sanityCheck: '' };
+ // New format: clean 3-step Quick Method (no FSM/pattern scaffolding, no labels)
+ const quickMethod = questionData?.quickMethod;
+ const isNewFormat = !!(quickMethod?.steps?.length);
 
  return (
  <div className="space-y-4">
@@ -80,10 +84,23 @@ export const InterventionModal: React.FC<InterventionModalProps> = ({
  <CardContent className="p-5">
  <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
  <span className="text-[#3d7a0f]"></span>
- The Optimal Path
+ {isNewFormat ? 'Quick Method' : 'The Optimal Path'}
  </h3>
 
- {optimalPath.exists ? (
+ {isNewFormat ? (
+ <div className="space-y-2.5">
+ {quickMethod?.steps.map((step, i) => (
+ <div key={i} className="flex gap-3 p-3 rounded-[12px] bg-[var(--color-muted)]">
+ <div className="shrink-0 inline-flex h-6 w-6 items-center justify-center rounded-[8px] bg-[var(--color-card)] ring-hairline-strong text-[11px] font-bold text-[var(--color-ink-1)] mt-0.5">
+ {i + 1}
+ </div>
+ <div className="text-[14px] flex-1 leading-relaxed">
+ <LatexText text={step} />
+ </div>
+ </div>
+ ))}
+ </div>
+) : optimalPath.exists ? (
  <FsmPanel
  patternTrigger={optimalPath.preconditions || 'This question type'}
  steps={optimalPath.steps.map((step) => ({ step }))}

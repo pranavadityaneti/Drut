@@ -29,6 +29,65 @@
 
 ---
 
+## Session: 2026-06-19 → 2026-06-22 (worktree: unruffled-vaughan-c3f74d; edits land in MAIN repo, branch feat/landing-redesign — UNCOMMITTED)
+
+### Practice serving fix (2026-06-22) — force-gen leak + review-seen fallback
+- **Bug found in live practice test:** web `NewPractice.tsx` force-generated questions via the `generate-question` edge function when the strict pool ran short → served OLD-format (theOptimalPath/"Trigger" labels) un-audited questions with non-UUID `temp-gen` ids that crashed save-mastery (400 uuid error). Root: web duplicated serving logic and ignored `ALLOW_LIVE_AI_FALLBACK` (shared + mobile respect it).
+- **Fix (Pranav-approved, structural + review-seen):**
+  - Shared `questionCacheService.ts`: extracted `mapCachedToQuestionData()` + added `getReviewQuestionsForUser()` (re-serves verified questions for a filter; read-only; []-on-error). tsc 0; runtime-verified (returns 5 verified review Qs for LoM·Medium via anon key).
+  - Web `NewPractice.tsx`: removed force-gen block; `isTrusted` predicate; review-seen fallback. tsc clean (only pre-existing dotenv errors in untouched `apps/web/scripts/*`); Vite HMR clean.
+  - Mobile `usePracticeQuestions.ts`: added same review-seen fallback (mobile force-gen was already gated off). tsc clean for the file (only pre-existing `FloatingTabBar` nav-dep errors).
+- **Behavioral E2E pending Pranav (logged-in):** practice LoM·Medium past Q5 → verified review Qs, no temp-gen save errors.
+- **Audit flag → forlater #54:** mobile trust list includes `v3-verified-rag` → mobile serves OLD-format legacy in NORMAL practice (banned labels). Fix = retire legacy / tighten mobile trust.
+- forlater #53 added: scale generation to fill the bank (chapter-by-chapter) + retire legacy.
+
+### Unified serving gate (2026-06-22) — web + mobile serve the SAME pool [#54 resolved serving-side]
+- **Found:** the trust gate was mis-set on BOTH platforms in opposite ways — web served only ~13 (`ai-openai-audited`, excluding the 151 enriched PYQs); mobile trusted `v3-verified-rag` → served ~5,525 OLD-format legacy (banned labels).
+- **Fix (Pranav-approved):** added shared `isServableQuestion()` (`@drut/shared` questionCacheService) = new-format (`quickMethod`+`fullSolution`) AND status ∈ {ai-openai-audited, v3-verified-pyq, 2.6, SubjectFallback}. Wired into web `NewPractice.tsx` (`isTrusted`=`isServableQuestion`+domain guard) and mobile `usePracticeQuestions.ts` (removed `isTrustedQuestion`/`TRUSTED_*`/keyword validator).
+- **Result:** both platforms serve the IDENTICAL **164** (13 audited + 151 enriched PYQ); ~6,295 old-format/unapproved gated OUT (not deleted). Verified: tsc clean on all 3 (only pre-existing dotenv/FloatingTabBar errors); DB query servable=164, staged=0, legacy=0.
+- Note: web's `metadata.subject` domain guard is dormant (mapper never sets `metadata`) — both platforms rely on the DB topic filter for subject-correctness (topic names are subject-unique). Mobile keyword validator removed as redundant. Mobile's gated force-gen remains vestigial.
+
+### Renderer precedence fix (2026-06-22) — new format must win over old
+- **Found during live web test:** the 151 enriched PYQs carry BOTH formats (quickMethod+fullSolution AND legacy fastestSafeMethod/fullStepByStep). `NewPractice.tsx` rendered the old `FsmPanel` (line 781) on an INDEPENDENT `&&` condition from the new Quick Method block (795) — so enriched PYQs showed the banned "Fastest Safe Method / Trigger" labels.
+- **Fix:** gated `FsmPanel` on `!(quickMethod?.steps?.length)` — old panel renders ONLY when there's no new Quick Method. Verified the other 3 renderers already prefer new (web SolutionView early-returns on isNewFormat; web + mobile InterventionModal use `isNewFormat ? new : old`). NewPractice was the only buggy one. tsc web clean.
+- **Also surfaced:** a pure `v3-verified-rag` (no quickMethod) showed in Pranav's tab = STALE browser state (gate correctly discards it; console logged "Discarded 1 stale/unverified"). Hard reload clears it.
+- Optional follow-up: strip stale old-format fields from the 151 enriched PYQs in the DB (defensive; renderers already prefer new, so not urgent).
+
+
+### Major work completed
+**OpenAI question-generation pipeline — productionized + hardened**
+- Calibrated **gpt-5.4-mini @ high + "B+C mix" format**: Quick Method = 3 unlabeled steps; Full Solution = concept-led approach + flowing chunks (optional centered `display` eqn) + answer. NO T.A.R./D.E.E.P. labels shown to users (backend-only scaffolding).
+- **Stack now OpenAI-only**: generation (Responses API) + embeddings (text-embedding-3-small @768). Re-embedded all 7,204 textbook_chunks. Edge `_shared/vertex-client.ts` rewritten Gemini→OpenAI (forlater #51 done + deployed + verified).
+- Schema/types: new quickMethod/fullSolution shape (legacy optional). **Migrations 041 (class_level) + 042 (scoped UPDATE RLS for ai-openai-* rows) APPLIED.**
+- Renderers dual-render new format (web SolutionView / InterventionModal / NewPractice; mobile InterventionModal). `questionCacheService` mapper fixed to carry new fields (was dropping them → "No optimal path").
+- Admin **"AI Review" tab** (`AiBatchReview.tsx`) — lists `ai-openai-staged`, Approve→`ai-openai-audited` (served) / Reject.
+- **`scripts/generate-chapter.mjs`**: RAG → generate → programmatic audit → **LLM-verify gate (NEW 2026-06-21)** → staged DB write. Verify = INDEPENDENT re-solve (sees only stem+options, never the key), fail-closed; holds wrong-key/arithmetic defects. Proven by `scripts/test-verify-pass.mjs` — held the known 2.5 m/s² pilot defect, passed the 8 good ones, 0 false holds.
+- **First LIVE write run (2026-06-21):** Laws of Motion pilot (9, balanced 3/3/3) → **9/9 audit+verify passed → 9 staged rows**, verified in DB (correct verification_status/class_level/subtopic/schema/dedup). HTML preview: `docs/staged-lom-9-preview.html`. **Awaiting Pranav AI-Review approval.**
+- PYQ enrichment: 158 seeded PYQs enriched in place to new format (agree+audit-pass only). DB new-format total ~152 (Physics 41 / Maths 79 / Chem 32 — mostly PYQs); rest (~6,300) is legacy v3-verified-rag.
+
+### Decisions
+- **Regenerate fresh, DON'T migrate legacy.** The ~6,300 v3-verified-rag are old Gemini AI-gen (no archival value, ~93% mislabeled Medium, banned labels baked in) → retire after fresh coverage exists per chapter. Real PYQs (158) enriched in place instead.
+- **Parallelism:** run TWO `generate-chapter.mjs` instances concurrently (e.g. Physics + Maths), Claude as orchestrator/QA — far cheaper than Claude hand-authoring at volume. Claude-authoring reserved for a premium slice if ever wanted.
+- **Verify gate ON by default**; `VERIFY_MODEL=gpt-5.4` is the stronger-gate lever.
+- Old-format Physics Ch1–6 (~750 Q on `feat/question-bank-physics`) = regenerate, not transform. NO Maths/Chemistry Claude-authored content exists anywhere (corrected an earlier assumption).
+
+### Open threads (see forlater.md)
+- **Pranav to approve the 9 staged LoM in AI Review** → then they serve.
+- **Scale generation** — full LoM (150), then syllabus chapter-by-chapter (awaiting go). Then retire legacy.
+- forlater **#50** (diagrams→GPT-5.5), **#52** (canonical-topic sourcing, RLS hardening, migrate phase).
+- **Uncommitted main-repo changes** (branch feat/landing-redesign) — commit when Pranav asks.
+- 7 held PYQs (2 answer-key disputes + 5 format-fails) for Pranav review.
+
+### Files modified (high-level)
+- **scripts**: `generate-chapter.mjs` (verify gate), `test-verify-pass.mjs` (new), `render-staged-preview.mjs` (new), `enrich-pyq.mjs`, `reembed-chunks.mjs`, `verify-serving.mjs` + audit/list utilities
+- **shared**: `types.ts`, `lib/ai/schema.ts`, `services/questionCacheService.ts`
+- **web**: `SolutionView`, `practice/{InterventionModal,NewPractice}`, `admin/{AiBatchReview,AdminDashboard}`
+- **mobile**: `practice/InterventionModal`, `hooks/usePracticeQuestions`
+- **migrations** 041, 042 (applied); edge `_shared/vertex-client.ts`
+- **docs**: `staged-lom-9-preview.html` (new) + earlier preview/calibration HTMLs
+
+---
+
 ## Session: 2026-06-03 → 2026-06-04 (worktree: keen-payne-fa2500)
 
 ### Major work completed
@@ -249,3 +308,137 @@
 - `SESSION_LOG.md` (this entry)
 - `forlater.md` (updated with new deferred items)
 - `ERRORS.md` (4 new entries from this session)
+
+---
+
+## 2026-06-15 — Gemini Maths 1A Ch1 Batch 1: full adversarial audit + repair
+
+**Context**: Parallel track — Gemini generates Maths in Antigravity, I run the adversarial audit before ship. First batch delivered: `docs/Questions from textbooks/AP EAPCET/Inter 1st Year/Maths/maths-1a-ch01-functions-batch1.json` (50 q, 15E/25M/10H).
+
+**What I did**:
+1. **Adversarial audit of 10 Hard questions** (11-agent Workflow). Result: 8 ship-as-is, 1 polish (Q16), 1 reject (Q24).
+2. **Q24 fixed** (approved): was keyed B but math gives A `{1,-5/3}`; also had a scratch-text leak with answer-rigging meta-text ("let's keep Option B by swapping…"). Re-keyed to A, rewrote T.A.R. + D.E.E.P. cleanly, scrubbed all meta-text.
+3. **Q16 fixed** (approved): key was correct (540) but 2 filler distractors (378/186) + garbled proof arithmetic. Replaced distractors with derivable mistakes (537, 90), fixed the proof.
+4. **Key-correctness pass on the other 40** (40-agent Workflow): **40/40 keys correct, 0 scratch leaks.**
+5. **Control-char corruption scan** found a systemic Gemini export defect: **50 LaTeX corruptions across 14 questions** (`\frac`→form-feed, `\times`/`\to`/`\tanh`→tab, `\right`→CR). Built + dry-ran + applied a mechanical repair (approved). Re-scan: 0. Re-validate: exit 0.
+
+**End state**: Batch is fully clean — 50/50 keys correct, 0 scratch leaks, 0 LaTeX corruptions, schema valid. **Uncommitted** (in parent-repo working tree where Gemini's file lives).
+
+**Process output**: New ERRORS.md entry (JSON-escape LaTeX corruption trap). Gemini-brief rule drafted (double all backslashes in JSON).
+
+**Open threads**: (a) Decide if Gemini fixes at-source for future batches or I repair downstream; (b) Physics Ch5 Batches 2 & 3 still pending ("resume Ch5"); (c) Full-Solution depth decision across the 750 generated questions still flagged.
+
+**Scripts (in /tmp, reusable)**: `scan-ctrl.js` (corruption scan), `repair-latex.js --dry` (repair), `verify-maths-b1.js` (Hard audit), `verify-maths-keys.js` (key pass).
+
+---
+
+## 2026-06-15 (cont.) — Autonomous question generation: Physics Ch5 COMPLETE
+
+**Decision**: Pranav dropped the Gemini parallel track — I now own ALL question
+generation (Physics → Maths → Chemistry), cadence "stop after every chapter."
+
+**Worktree**: Physics bank lives on branch `feat/question-bank-physics`; created a
+dedicated worktree `.claude/worktrees/qbank-physics` and recovered the orphaned
+Ch5 batch1 (was uncommitted on the landing branch).
+
+**Ch5 Laws of Motion — 150/150 questions, all schema-valid + adversarially audited:**
+- Grounded in BIEAP Physics-I PDF (textbook pp. 93–117), Sections 5.1–5.11,
+  Examples 5.1–5.12 + verified exercise [Ans] set. Wrote ch05 config + ledger.
+- B2 (50) + B3 (50): generated via 10-subtopic-agent workflows from precise specs;
+  rebalanced positions; scrubbed; each ran a 50-agent adversarial audit (every Q
+  re-derived independently); all fixes applied.
+- B1 (50, prior-session output): retro-audited (50 agents) — found 0 wrong keys /
+  0 math errors but 13 relabeled T.A.R. + 30 distractor/attribution issues; fixed
+  via 30-agent fix-pass (answer+position preserved), re-audited, 4 residual fixes.
+- Across all 150: 0 wrong keys, 0 math errors, 0 control-char/scratch/letter-
+  consistency defects. Combined 45E/75M/30H; positions 40/37/37/36; 0 dup stems.
+- **Status: UNCOMMITTED** in the qbank-physics worktree, ready for Pranav to commit
+  + upload via admin Bulk Import.
+
+**Tooling built (reusable for every future batch)**: gen-by-subtopic workflow;
+rebalance.js (option-swap + letter-remap, hardened: gi flag + bare-letter); 
+consistency-scan.js; scan-ctrl.js (control-char/LaTeX-corruption); 50-agent audit
+builder; 30-agent fix-pass. LESSONS for next chapters: (a) tell gen agents to
+pre-distribute answer positions + refer to distractors by content not bare letter;
+(b) always audit ALL questions incl. pre-existing batches; (c) the gen step
+over-claims T.A.R. — the audit reliably catches relabeled-derivations.
+
+**Open**: Maths track (after Physics) — I own it now, not Gemini. Physics Ch6+
+next. The earlier-fixed Gemini Maths 1A Ch1 batch1 still sits on feat/question-
+bank-maths (uncommitted).
+
+---
+
+## 2026-06-15 (cont.) — Ch1 & Ch2 retro-audit + committed Physics Ch1/Ch2/Ch5
+
+After Ch5 completed, retro-audited the earlier-session Ch1 (Physical World, 50)
+and Ch2 (Units & Measurement, 100) — they had NEVER been adversarially audited.
+Result: 0 wrong keys, 0 math errors, 0 rejects across all 150 (answers sound),
+but heavy over-claimed T.A.R. + weak/incoherent distractor attributions + a few
+cross-batch references and one PROOF self-contradiction (Ch2 Q6). Fixed via a
+49-question conservative fix-pass + 3 re-audits + final residual cleanup
+(answers/positions preserved). All validate exit 0.
+
+**Committed + pushed to origin/feat/question-bank-physics:**
+- 2e53588 — Ch5 Laws of Motion (150 audited questions + ch05 config)
+- 9c26043 — Ch1 & Ch2 retro-audit remediation
+
+**FLAGGED for Pranav (not yet actioned):** stale duplicate
+`physics-i-ch01-physical-world.json` (no V1_ prefix) uses the FORBIDDEN
+`visualDescription` field and FAILS the strict validator — it would break Bulk
+Import. The valid Ch1 is `V1_physics-i-ch01-physical-world.json`. Recommend
+`git rm` the stale one (awaiting Pranav's OK — deletion needs confirmation).
+
+**Physics 1st Year status:** Ch1 ✓, Ch2 ✓, Ch3 ✓, Ch4 ✓, Ch5 ✓ — all audited.
+Next: Ch6 (Work, Energy & Power) on Pranav's go. Then 2nd year Physics, then
+Maths, then Chemistry (I own all generation now; Gemini track dropped).
+
+---
+
+## 2026-06-15 (cont.) — Physics Ch6 Work, Energy & Power COMPLETE (uncommitted)
+
+Generated + audited the full chapter via the proven pipeline. 150 questions, 3
+batches. PDF-grounded (textbook pp. 120–144, Sections 6.1–6.12, Examples
+6.1–6.13 + verified exercise [Ans]). B1 spec-light generation from anchors;
+B2+B3 generated as one combined run (avoiding B1 forms) then split into two
+balanced batches. Each batch: rebalance → scrub → validate → 50-agent audit →
+fix-pass → re-audit. Across all 150: 0 wrong keys, 0 math errors, 0 rejects,
+0 control/scratch/consistency defects. Combined 45E/75M/30H, positions
+39/36/39/36, subtopic totals 14/20/14/14/22/14/10/18/24. (4 stems share a
+template opening but have different vectors/functions/numbers — distinct
+instances, not true dups.)
+
+**Files (in qbank-physics worktree, UNCOMMITTED, awaiting Pranav's commit OK):**
+- physics-i-ch06-work-energy-power-batch{1,2,3}.json
+- docs/question-generation/chapters/ch06-work-energy-power.md
+
+**Physics 1st Year:** Ch1–Ch6 all generated + audited. Ch5 + Ch1/Ch2-fixes
+already committed/pushed (2e53588, 9c26043, faed895). Ch6 pending commit.
+Next on Pranav's go: Ch7 (Systems of Particles & Rotational Motion) or whatever
+he directs. Generation pipeline + tooling all reusable in /tmp.
+
+---
+
+## 2026-06-20 — OpenAI calibration → wired into the app (Phases 1–5)
+
+**Calibration concluded.** gpt-5.4-mini @ high + new "B+C mix" solution format =
+10/10 production-ready text questions at ~$489/10k. T.A.R./D.E.E.P. are
+backend-only — NEVER shown to users; Quick Method = 3 clean steps, Full Solution
+= concept-led flowing chunks (`{text, display?}`), no labels/numbers. Diagrams:
+mini only ~44% production-ready at 3.8× cost → manual feed now, GPT-5.5 later
+(forlater #50). Memory: project_question_gen_calibration, feedback_solution_presentation.
+
+**Wired the format into the app (plan: .claude/plans/go-through-the-repo-magical-pizza.md):**
+- Phase 1: new schema/types (`packages/shared/src/types.ts`, `lib/ai/schema.ts`) — `quickMethod` + `fullSolution{approach,steps[{text,display}],answer}`, legacy optional.
+- Phase 2: renderers dual-render new+legacy (web `SolutionView`/`practice/InterventionModal`/`NewPractice`; mobile `practice/InterventionModal`) + trust gates (`ai-openai-audited`).
+- Phase 3: `scripts/generate-chapter.mjs` — RAG (OpenAI embeds) → mini-high → audit gate → staged DB write. Proven.
+- Phase 4: admin "AI Review" tab (`components/admin/AiBatchReview.tsx`) approve→served. Migrations 041 (class_level) + 042 (scoped approve RLS) — BOTH APPLIED. Serve-path proven (`verify-serving.mjs`): approve→served, staged→withheld. 1 question LIVE for Physics Ch5 Laws of Motion (ap_eapcet); 3 staged.
+- **Embeddings: dropped Gemini, OpenAI-only.** Re-embedded all 7,204 textbook_chunks with `text-embedding-3-small`@768 (`scripts/reembed-chunks.mjs`). GOTCHA: edge-fn embeddings (`_shared/vertex-client.ts`, `ingest-textbook`) still Gemini → **do NOT ingest new textbooks** until switched (forlater #51).
+- Phase 5a scaling prep: `generate-chapter.mjs` now has count+difficultyDistribution, JSON-retry, empirical canonical-topic guard. `scripts/list-chapters.mjs` helper. (Taxonomy is messy — duplicate "Chapter 4/5: Laws of Motion" etc.; topic must match the app's selector exactly — forlater #52.)
+- Phase 5b PYQ enrichment: `scripts/enrich-pyq.mjs` — verify stored answer + generate new-format solution for seeded PYQs. DRY-only. Sample 6/6 audit-pass, 0 answer disagreements. Write-back strategy (in-place enrich vs staged) pending Pranav.
+
+**Open / Pranav's:** logged-in click-through (Admin→AI Review approve + Practice render — agent can't auth); decide PYQ write-back; edge-embedding switch before any new ingestion (#51); canonical-topic sourcing + retry-at-scale (#52); Phase 6 = migrate existing ~6,453 questions to new format.
+
+**Scripts:** generate-chapter, reembed-chunks, verify-serving, list-chapters, enrich-pyq, render-format-html, render-diagram-gallery, calibrate-format/diagrams. **Docs (HTML):** revised-format-10-questions, diagram-calibration-gallery, ai-staged-batch-preview, enriched-pyq-preview, format-final-with-examples. Memory: project_openai_generation_wired.
+
+**PYQ write-back DONE (autonomous):** enriched 151/158 v3-verified-pyq questions IN PLACE (added quickMethod+fullSolution+distractorRationale to question_data; verification_status unchanged → still served; marker enrichedBy='openai-mini-high'). Only audit-pass + answer-AGREES rows written; disagreements/audit-fails HELD. Took 3 passes (network `fetch failed` blips ~40% on the first pass; bumped enrichOne retries to 5× exp-backoff + added ONLY_UNENRICHED mode that targets rows missing quickMethod). **7 still held for Pranav:** 2 ANSWER-KEY DISPUTES (verification caught likely-wrong stored keys) — (a) Physics/Mechanical Properties of Fluids: stored A=$44D^2S$ is wrong, correct is D=$56\pi D^2S$ [independently verified]; (b) Chemistry/Chemical Bonding boiling-points: stored C, model B (H2O>HF>NH3>H2S). Plus 5 minor format audit-fails (3 literal-unicode-math, 2 incomplete-solution) — those PYQs keep their old-format solution, retryable/hand-fixable. **NEXT (per Pranav): discuss moving edge-fn embeddings Gemini→OpenAI (forlater #51) BEFORE any new textbook ingestion. Then Pranav logs in → Admin→AI Review approves the 3 staged Laws-of-Motion Qs.**

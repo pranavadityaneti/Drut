@@ -29,3 +29,20 @@ dist-ssr
 .env.*.local
 .vercel
 .env*.local
+# Calibration / scripts secrets (never commit)
+.env.calibration
+scripts/.env.calibration
+
+# Local script artifacts / temp outputs (not committed)
+scripts/*.json
+scripts/.backup-*
+scripts/.canonical-topics.txt
+scripts/.pyq-pages/
+packages/shared/src/lib/.taxonomy.ts.bak
+
+# Agent / worktree / editor local state
+.claude/
+.worktrees/
+.stale-from-main-checkout/
+*.code-workspace
+apps/web/supabase/.temp/

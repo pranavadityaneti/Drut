@@ -3,10 +3,9 @@ import { Card, CardContent, CardFooter, CardHeader } from './ui/Card';
 import { Button } from './ui/Button';
 import { updateOnboardingProfile } from '@drut/shared';
 import { authService } from '@drut/shared';
-import { EXAM_TAXONOMY } from '../../../packages/shared/src/lib/taxonomy';
 const { getCurrentUser } = authService;
 import { useNavigate } from 'react-router-dom';
-import { cn } from '@drut/shared';
+import { cn, getExamOptions } from '@drut/shared';
 import { ArrowRight } from 'lucide-react';
 
 /**
@@ -30,7 +29,8 @@ export const Onboarding: React.FC<OnboardingProps> = () => {
  target_exams: [] as string[],
  });
 
- const EXAM_OPTIONS = EXAM_TAXONOMY.map(e => e.label);
+ // {value,label} — store snake_case values (consistent with mobile), display labels.
+ const EXAM_OPTIONS = getExamOptions();
 
  const handleExamToggle = (exam: string) => {
  setFormData(prev => {
@@ -131,14 +131,14 @@ export const Onboarding: React.FC<OnboardingProps> = () => {
  <div className="grid grid-cols-3 gap-2">
  {EXAM_OPTIONS.map((exam) => (
  <div
- key={exam}
+ key={exam.value}
  className={cn(
  chipBase,
- formData.target_exams.includes(exam) ? chipActive : chipInactive
+ formData.target_exams.includes(exam.value) ? chipActive : chipInactive
  )}
- onClick={() => handleExamToggle(exam)}
+ onClick={() => handleExamToggle(exam.value)}
  >
- {exam}
+ {exam.label}
  </div>
  ))}
  </div>

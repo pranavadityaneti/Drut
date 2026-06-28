@@ -6,7 +6,7 @@ const { getCurrentUser, updateUser } = authService;
 import { uploadAvatar } from '@drut/shared'; // from ../services/profileService';
 import { fetchUserAnalytics } from '@drut/shared'; // from ../services/analyticsService';
 import { User } from '@drut/shared';
-import { EXAM_TAXONOMY, getExamOptions } from '@drut/shared';
+import { EXAM_TAXONOMY, getExamOptions, normalizeTargetExams } from '@drut/shared';
 import { log } from '@drut/shared';
 import { supabase } from '@drut/shared';
 
@@ -22,6 +22,8 @@ export const Profile: React.FC<{}> = () => {
  const [fullName, setFullName] = useState('');
  const [phone, setPhone] = useState('');
  const [examProfile, setExamProfile] = useState('');
+ const [targetExams, setTargetExams] = useState<string[]>([]);
+ const toggleExam = (v: string) => setTargetExams(prev => (prev.includes(v) ? prev.filter(x => x !== v) : [...prev, v]));
  const [avatarUrl, setAvatarUrl] = useState<string | undefined>(undefined);
  const [newAvatarFile, setNewAvatarFile] = useState<File | null>(null);
  const [avatarPreview, setAvatarPreview] = useState<string | undefined>(undefined);
@@ -39,6 +41,7 @@ export const Profile: React.FC<{}> = () => {
  setFullName(metadata.full_name || '');
  setPhone(metadata.phone || '');
  setExamProfile(metadata.exam_profile || EXAM_TAXONOMY[0].value);
+ setTargetExams(normalizeTargetExams((metadata.target_exams && metadata.target_exams.length) ? metadata.target_exams : metadata.exam_profile));
  setAvatarUrl(metadata.avatar_url);
  setAvatarPreview(metadata.avatar_url);
  } else {
@@ -82,7 +85,8 @@ export const Profile: React.FC<{}> = () => {
  const updatedMetadata = {
  full_name: fullName,
  phone: phone,
- exam_profile: examProfile,
+ target_exams: targetExams,
+ exam_profile: targetExams[0] || examProfile, // primary = first selected (backward compat)
  avatar_url: finalAvatarUrl,
  };
 
@@ -243,16 +247,27 @@ export const Profile: React.FC<{}> = () => {
 
  <div>
  <label className="label-uppercase block mb-2">Target exams</label>
+ <p className="text-[12px] text-[var(--color-ink-3)] mb-2">Select all you're preparing for — EAPCET students often also take JEE Main.</p>
  <div className="flex flex-wrap gap-2">
- {user?.user_metadata?.target_exams?.map((exam: string) => (
- <span key={exam} className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[8px] bg-[var(--color-accent)] text-[var(--color-accent-foreground)] text-[12px] font-semibold">
- <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-[var(--color-primary)]" />
- {exam}
- </span>
- ))}
- {(!user?.user_metadata?.target_exams || user.user_metadata.target_exams.length === 0) && (
- <span className="text-[12px] text-[var(--color-ink-3)] italic">No exams selected</span>
+ {getExamOptions().map((opt) => {
+ const selected = targetExams.includes(opt.value);
+ return (
+ <button
+ key={opt.value}
+ type="button"
+ onClick={() => toggleExam(opt.value)}
+ className={cn(
+ 'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[10px] text-[13px] font-semibold transition-all',
+ selected
+ ? 'bg-[var(--color-accent)] text-[var(--color-accent-foreground)] ring-hairline-strong'
+ : 'bg-[var(--color-card)] ring-hairline text-[var(--color-ink-2)] hover:bg-[var(--color-muted)]'
  )}
+ >
+ {selected && <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-[var(--color-primary)]" />}
+ {opt.label}
+ </button>
+ );
+ })}
  </div>
  </div>
  </div>
