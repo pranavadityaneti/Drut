@@ -63,8 +63,8 @@ export async function validateCoupon(plan: PlanId, couponCode: string): Promise<
 
 export interface CreateCouponInput {
     code: string;
-    type: 'percent' | 'flat';
-    value: number;                 // percent: 0..100 ; flat: rupees off (converted to paise server-side)
+    type: 'percent' | 'flat' | 'fixed';
+    value: number;                 // percent: 0..100 ; flat: rupees off ; fixed: final price in rupees (flat/fixed converted to paise server-side)
     applies_to_plan?: 'any' | 'monthly' | 'annual';
     max_redemptions?: number | null;
     per_user_limit?: number;

@@ -14,7 +14,9 @@ function fmtDate(s: string | null): string {
 }
 
 function describeValue(c: Coupon): string {
-    return c.type === 'percent' ? `${c.value}% off` : `${formatINR(c.value)} off`;
+    if (c.type === 'percent') return `${c.value}% off`;
+    if (c.type === 'fixed') return `Pay ${formatINR(c.value)}`;
+    return `${formatINR(c.value)} off`;
 }
 
 const EMPTY_FORM: CreateCouponInput = {
@@ -103,11 +105,12 @@ export const AdminCoupons: React.FC = () => {
                 <p className="text-[13px] font-semibold text-[var(--color-ink-1)] mb-3">New coupon</p>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                     <input className={`${inputCls} uppercase`} placeholder="CODE" value={form.code} onChange={(e) => setForm({ ...form, code: e.target.value })} />
-                    <select className={inputCls} value={form.type} onChange={(e) => setForm({ ...form, type: e.target.value as 'percent' | 'flat' })}>
+                    <select className={inputCls} value={form.type} onChange={(e) => setForm({ ...form, type: e.target.value as 'percent' | 'flat' | 'fixed' })}>
                         <option value="percent">Percent off</option>
                         <option value="flat">Flat ₹ off</option>
+                        <option value="fixed">Fixed price (pay ₹X)</option>
                     </select>
-                    <input className={inputCls} type="number" min={0} placeholder={form.type === 'percent' ? '% (0–100)' : '₹ off'} value={form.value} onChange={(e) => setForm({ ...form, value: Number(e.target.value) })} />
+                    <input className={inputCls} type="number" min={0} placeholder={form.type === 'percent' ? '% (0–100)' : form.type === 'fixed' ? '₹ final price' : '₹ off'} value={form.value} onChange={(e) => setForm({ ...form, value: Number(e.target.value) })} />
                     <select className={inputCls} value={form.applies_to_plan} onChange={(e) => setForm({ ...form, applies_to_plan: e.target.value as any })}>
                         <option value="any">Any plan</option>
                         <option value="monthly">Monthly</option>

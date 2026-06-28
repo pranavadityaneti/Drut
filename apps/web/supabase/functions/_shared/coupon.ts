@@ -7,8 +7,8 @@ import { type SupabaseClient } from 'https://esm.sh/@supabase/supabase-js@2';
 export interface CouponRow {
     id: string;
     code: string;
-    type: 'percent' | 'flat';
-    value: number;                 // percent: 0..100 ; flat: paise off
+    type: 'percent' | 'flat' | 'fixed';
+    value: number;                 // percent: 0..100 ; flat: paise off ; fixed: final price in paise
     applies_to_plan: 'any' | 'monthly' | 'annual';
     max_redemptions: number | null;
     times_redeemed: number;
@@ -72,9 +72,16 @@ export async function validateAndPriceCoupon(
         .eq('user_id', userId);
     if ((mine ?? 0) >= coupon.per_user_limit) return fail('You have already used this coupon');
 
-    const discount = coupon.type === 'percent'
-        ? Math.floor((basePaise * coupon.value) / 100)
-        : Math.min(coupon.value, basePaise);
+    let discount: number;
+    if (coupon.type === 'percent') {
+        discount = Math.floor((basePaise * coupon.value) / 100);
+    } else if (coupon.type === 'fixed') {
+        // 'fixed' sets the FINAL price to coupon.value (paise), capped at base.
+        discount = basePaise - Math.min(coupon.value, basePaise);
+    } else {
+        // 'flat' = amount off
+        discount = Math.min(coupon.value, basePaise);
+    }
     const finalPaise = Math.max(0, basePaise - discount);
 
     return { ok: true, coupon: coupon as CouponRow, discountPaise: discount, finalPaise };
