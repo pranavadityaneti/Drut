@@ -51,10 +51,22 @@ export interface CacheStats {
  *   2. its verification_status is an approved / curated source (allowlist) — this
  *      excludes new-format-but-unapproved rows (ai-openai-staged / -rejected).
  *
- * Net result served: `ai-openai-audited` (generated + admin-approved) and the
- * enriched `v3-verified-pyq` past-paper questions. Nothing old-format reaches users.
+ * NOTE: gate (1) is the hard label-leak guard — only NEW-format rows (quickMethod +
+ * fullSolution) ever serve, so legacy-format admin-imported rows stay excluded even
+ * though their status is on the allowlist below; they must be re-generated in the new
+ * format to serve. Gate (2) decides WHICH trusted sources may serve once they ARE
+ * new-format. (Previously this list omitted admin-verified/manual-curated, so a
+ * new-format admin-imported question was silently unservable; and the old doc-comment
+ * claimed a 2-entry set while the array had 4 — both reconciled here.)
  */
-const SERVABLE_STATUS_SUBSTRINGS = ['ai-openai-audited', 'v3-verified-pyq', '2.6', 'SubjectFallback'];
+const SERVABLE_STATUS_SUBSTRINGS = [
+  'ai-openai-audited',   // generated + admin-approved
+  'v3-verified-pyq',     // enriched past-paper questions
+  'admin-verified',      // admin Bulk Import (serves only if ALSO new-format — gate 1)
+  'manual-curated',      // manually curated (serves only if ALSO new-format — gate 1)
+  '2.6',                 // legacy version tag, back-compat (fragile substring — revisit)
+  'SubjectFallback',     // legacy fallback tag, back-compat
+];
 
 export function isServableQuestion(q: any): boolean {
   if (!q) return false;
@@ -75,7 +87,7 @@ export function isServableQuestion(q: any): boolean {
  * Trust signals come from the top-level columns, with the JSONB as a fallback for
  * older rows. Shared by the unseen path and the review-seen fallback.
  */
-function mapCachedToQuestionData(
+export function mapCachedToQuestionData(
   cq: any,
   subtopic: string,
   fallbackDifficulty: 'Easy' | 'Medium' | 'Hard'

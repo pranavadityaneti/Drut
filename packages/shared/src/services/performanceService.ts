@@ -1,6 +1,7 @@
 import { supabase } from '../lib/supabase';
 import { QuestionData } from '../types';
 import { assertWithinFreeQuota } from './paymentService';
+import { mapCachedToQuestionData, isServableQuestion } from './questionCacheService';
 
 export async function savePerformance(
   isCorrect: boolean,
@@ -99,9 +100,16 @@ export async function getQuestionByFsmTag(
     return null;
   }
 
-  // Parse question_data from cached_questions row
+  // Normalize the cached_questions row the SAME way the main serving path does, so the
+  // drill question carries uuid (row.id) + fsmTag (row.fsm_tag). Returning raw
+  // question_data (the old behavior) left both undefined → the Submit handler silently
+  // no-opped and the drill was ungradeable. Then apply the trust gate so a legacy or
+  // unapproved row never slips in via this path (it would leak framework labels AND be
+  // ungradeable); null → the caller shows its "no drill variants" toast.
   const row = Array.isArray(data) ? data[0] : data;
-  return row.question_data as QuestionData;
+  const q = mapCachedToQuestionData(row, fsmTag, 'Medium');
+  if (!isServableQuestion(q)) return null;
+  return q;
 }
 
 // ============================================================
