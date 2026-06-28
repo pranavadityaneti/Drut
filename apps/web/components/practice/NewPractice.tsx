@@ -687,9 +687,9 @@ export const NewPractice: React.FC = () => {
 
     // Paywall → Razorpay checkout. On verified payment the subscription is active
     // server-side; resume by reloading the current question (the gate now passes).
-    const handleUpgrade = async (plan: PlanId) => {
+    const handleUpgrade = async (plan: PlanId, couponCode?: string) => {
         try {
-            await payWithRazorpay(plan);
+            await payWithRazorpay(plan, couponCode);
             setShowPaywall(false);
             setError(null);
             addToast("You're now Drut Pro — practice on!", 'success', 3000);

@@ -272,9 +272,9 @@ export const SprintSession: React.FC<SprintSessionProps> = ({ config, onExit }) 
 
 
  // Paywall → Razorpay checkout. On success, re-run init (now Pro → gate passes).
- const handleUpgrade = async (plan: PlanId) => {
+ const handleUpgrade = async (plan: PlanId, couponCode?: string) => {
  try {
- await payWithRazorpay(plan);
+ await payWithRazorpay(plan, couponCode);
  setShowPaywall(false);
  setReloadKey((k) => k + 1);
  } catch (e: any) {

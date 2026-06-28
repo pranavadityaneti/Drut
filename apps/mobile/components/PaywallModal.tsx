@@ -7,15 +7,15 @@
  * onUpgrade(plan) hands off to the Razorpay checkout.
  */
 import React, { useState } from 'react';
-import { Modal, View, Text, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
-import { X, BadgeCheck, Infinity as InfinityIcon, ListChecks, Timer } from 'lucide-react-native';
+import { Modal, View, Text, StyleSheet, TouchableOpacity, ActivityIndicator, TextInput } from 'react-native';
+import { X, BadgeCheck, Infinity as InfinityIcon, ListChecks, Timer, Tag } from 'lucide-react-native';
 import { Colors } from '../constants/Colors';
-import { PRICING, priceForPlan, type PlanId } from '@drut/shared';
+import { PRICING, priceForPlan, validateCoupon, formatINR, type PlanId, type CouponPreview } from '@drut/shared';
 
 interface PaywallModalProps {
     visible: boolean;
     onClose: () => void;
-    onUpgrade: (plan: PlanId) => void;
+    onUpgrade: (plan: PlanId, couponCode?: string) => void;
     isFirstTimer?: boolean;
     loading?: boolean;
     reason?: string; // optional context line, e.g. "You've used your 20 free questions today"
@@ -28,7 +28,34 @@ const FEATURES = [
 ];
 
 export const PaywallModal: React.FC<PaywallModalProps> = ({ visible, onClose, onUpgrade, isFirstTimer = true, loading = false, reason }) => {
-    const [plan, setPlan] = useState<PlanId>('annual');
+    const [plan, setPlanState] = useState<PlanId>('annual');
+    const [couponInput, setCouponInput] = useState('');
+    const [applied, setApplied] = useState<CouponPreview | null>(null);
+    const [applyMsg, setApplyMsg] = useState<string | null>(null);
+    const [applying, setApplying] = useState(false);
+
+    // Changing plan invalidates any applied coupon (price + plan-scoping differ).
+    const setPlan = (id: PlanId) => { setPlanState(id); setApplied(null); setApplyMsg(null); };
+
+    const handleApply = async () => {
+        const code = couponInput.trim();
+        if (!code || applying) return;
+        setApplying(true);
+        setApplyMsg(null);
+        try {
+            const res = await validateCoupon(plan, code);
+            setApplied(res);
+            if (!res.valid) setApplyMsg(res.reason || 'Invalid coupon code');
+        } catch (e: any) {
+            setApplied(null);
+            setApplyMsg(e?.message || 'Could not apply coupon');
+        } finally {
+            setApplying(false);
+        }
+    };
+
+    const couponOk = applied?.valid === true;
+    const couponCode = couponOk ? applied!.code : undefined;
 
     const monthly = priceForPlan('monthly', isFirstTimer);
     const annual = priceForPlan('annual', isFirstTimer);
@@ -102,9 +129,33 @@ export const PaywallModal: React.FC<PaywallModalProps> = ({ visible, onClose, on
                         />
                     </View>
 
+                    {/* Coupon */}
+                    <View style={styles.couponRow}>
+                        <View style={styles.couponInputWrap}>
+                            <Tag size={16} color={Colors.textDim} />
+                            <TextInput
+                                style={styles.couponInput}
+                                value={couponInput}
+                                onChangeText={(t) => { setCouponInput(t); setApplied(null); setApplyMsg(null); }}
+                                placeholder="Coupon code"
+                                placeholderTextColor={Colors.textDim}
+                                autoCapitalize="characters"
+                                autoCorrect={false}
+                            />
+                        </View>
+                        <TouchableOpacity style={styles.couponApply} onPress={handleApply} disabled={applying || !couponInput.trim()} activeOpacity={0.85}>
+                            {applying ? <ActivityIndicator color={Colors.text} /> : <Text style={styles.couponApplyText}>Apply</Text>}
+                        </TouchableOpacity>
+                    </View>
+                    {couponOk ? (
+                        <Text style={styles.couponOk}>
+                            {applied!.isFree ? `Coupon ${applied!.code} applied — it's free 🎉` : `Coupon ${applied!.code} applied — you pay ${formatINR(applied!.finalPaise ?? 0)}`}
+                        </Text>
+                    ) : applyMsg ? <Text style={styles.couponErr}>{applyMsg}</Text> : null}
+
                     {/* CTA */}
-                    <TouchableOpacity style={[styles.cta, loading && { opacity: 0.7 }]} onPress={() => onUpgrade(plan)} disabled={loading} activeOpacity={0.9}>
-                        {loading ? <ActivityIndicator color={Colors.white} /> : <Text style={styles.ctaText}>Upgrade</Text>}
+                    <TouchableOpacity style={[styles.cta, loading && { opacity: 0.7 }]} onPress={() => onUpgrade(plan, couponCode)} disabled={loading} activeOpacity={0.9}>
+                        {loading ? <ActivityIndicator color={Colors.white} /> : <Text style={styles.ctaText}>{couponOk && applied!.isFree ? 'Unlock free' : 'Upgrade'}</Text>}
                     </TouchableOpacity>
                     <Text style={styles.footer}>Cancel anytime. Plans renew automatically.</Text>
                 </View>
@@ -140,6 +191,13 @@ const styles = StyleSheet.create({
     planUnit: { fontSize: 12, color: Colors.textDim, marginBottom: 3 },
     strike: { fontSize: 12, color: Colors.textDim, textDecorationLine: 'line-through', marginTop: 2 },
     planNote: { fontSize: 11, color: Colors.textDim, marginTop: 4 },
+    couponRow: { flexDirection: 'row', gap: 8, marginTop: 16, alignItems: 'center' },
+    couponInputWrap: { flex: 1, flexDirection: 'row', alignItems: 'center', gap: 8, borderWidth: 1.5, borderColor: Colors.border, borderRadius: 22, paddingHorizontal: 14, height: 44 },
+    couponInput: { flex: 1, fontSize: 14, color: Colors.text, paddingVertical: 0 },
+    couponApply: { height: 44, paddingHorizontal: 18, borderRadius: 22, backgroundColor: Colors.surface, alignItems: 'center', justifyContent: 'center' },
+    couponApplyText: { fontSize: 13, fontWeight: '700', color: Colors.text },
+    couponOk: { fontSize: 12.5, color: '#3d7a0f', marginTop: 8 },
+    couponErr: { fontSize: 12.5, color: Colors.error, marginTop: 8 },
     cta: { backgroundColor: Colors.primary, height: 52, borderRadius: 26, alignItems: 'center', justifyContent: 'center', marginTop: 18 },
     ctaText: { fontSize: 16, fontWeight: '800', color: Colors.white },
     footer: { fontSize: 11.5, color: Colors.textDim, textAlign: 'center', marginTop: 12 },

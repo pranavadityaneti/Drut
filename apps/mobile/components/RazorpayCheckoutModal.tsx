@@ -17,15 +17,16 @@
 import React, { useEffect, useState } from 'react';
 import { Modal, View, Text, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { WebView, type WebViewMessageEvent } from 'react-native-webview';
-import { createRazorpayOrder, verifyRazorpayPayment, PRICING, type PlanId, type CreateOrderResponse } from '@drut/shared';
+import { createRazorpayOrder, verifyRazorpayPayment, isFreeGrant, PRICING, type PlanId, type CreateOrderResponse } from '@drut/shared';
 import { Colors } from '../constants/Colors';
 
 interface Props {
     visible: boolean;
     plan: PlanId | null;
+    couponCode?: string | null;
     prefill?: { name?: string; email?: string; contact?: string };
     onClose: () => void;     // dismissed / cancelled / hard error (no charge)
-    onSuccess: () => void;   // payment verified server-side
+    onSuccess: () => void;   // payment verified server-side, OR coupon made it free
 }
 
 function buildCheckoutHtml(
@@ -67,7 +68,7 @@ function buildCheckoutHtml(
 </html>`;
 }
 
-export const RazorpayCheckoutModal: React.FC<Props> = ({ visible, plan, prefill, onClose, onSuccess }) => {
+export const RazorpayCheckoutModal: React.FC<Props> = ({ visible, plan, couponCode, prefill, onClose, onSuccess }) => {
     const [html, setHtml] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
     const [verifying, setVerifying] = useState(false);
@@ -84,8 +85,13 @@ export const RazorpayCheckoutModal: React.FC<Props> = ({ visible, plan, prefill,
             setLoading(true);
             setErrorMsg(null);
             try {
-                const order = await createRazorpayOrder(plan);
+                const order = await createRazorpayOrder(plan, couponCode || undefined);
                 if (cancelled) return;
+                // Coupon made it free → granted directly, no WebView/checkout sheet.
+                if (isFreeGrant(order)) {
+                    onSuccess();
+                    return;
+                }
                 setHtml(buildCheckoutHtml(order, PRICING[plan].label, prefill));
             } catch (e: any) {
                 if (cancelled) return;
@@ -95,7 +101,7 @@ export const RazorpayCheckoutModal: React.FC<Props> = ({ visible, plan, prefill,
             }
         })();
         return () => { cancelled = true; };
-    }, [visible, plan]);
+    }, [visible, plan, couponCode]);
 
     const handleMessage = async (event: WebViewMessageEvent) => {
         let msg: any;

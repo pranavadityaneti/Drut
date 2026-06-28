@@ -22,6 +22,7 @@
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import { corsHeaders } from '../_shared/cors.ts';
+import { recordRedemption } from '../_shared/coupon.ts';
 
 const SUPABASE_URL          = Deno.env.get('SUPABASE_URL')!;
 const SUPABASE_ANON_KEY     = Deno.env.get('SUPABASE_ANON_KEY')!;
@@ -177,6 +178,17 @@ Deno.serve(async (req) => {
     if (updateErr) {
         console.error('[verify-razorpay-payment] failed to activate sub', updateErr);
         return json(500, { error: 'sub-update-failed', detail: updateErr.message });
+    }
+
+    // If a coupon discounted this paid order, record the redemption now (after the
+    // payment succeeded). Best-effort — never fail an activated subscription over
+    // redemption bookkeeping.
+    if (sub.coupon_id) {
+        try {
+            await recordRedemption(supabaseService, sub.coupon_id, user.id, sub.id);
+        } catch (e) {
+            console.error('[verify-razorpay-payment] coupon redemption logging failed', e);
+        }
     }
 
     return json(200, {

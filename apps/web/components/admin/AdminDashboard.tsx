@@ -7,7 +7,8 @@ import { BulkImport } from './BulkImport';
 import { AiBatchReview } from './AiBatchReview';
 import { AdminPayments } from './AdminPayments';
 import { AdminUsers } from './AdminUsers';
-import { BookOpen, Database, FileSpreadsheet, Upload, Sparkles, CreditCard, Users } from 'lucide-react';
+import { AdminCoupons } from './AdminCoupons';
+import { BookOpen, Database, FileSpreadsheet, Upload, Sparkles, CreditCard, Users, Tag } from 'lucide-react';
 
 /**
  * AdminDashboard — editorial refresh.
@@ -62,6 +63,10 @@ export const AdminDashboard: React.FC = () => {
                         <Users className="h-4 w-4" />
                         Users
                     </TabsTrigger>
+                    <TabsTrigger value="coupons">
+                        <Tag className="h-4 w-4" />
+                        Coupons
+                    </TabsTrigger>
                 </TabsList>
 
                 <TabsContent value="textbooks" className="min-h-[500px]">
@@ -84,6 +89,9 @@ export const AdminDashboard: React.FC = () => {
                 </TabsContent>
                 <TabsContent value="users" className="min-h-[500px]">
                     <AdminUsers />
+                </TabsContent>
+                <TabsContent value="coupons" className="min-h-[500px]">
+                    <AdminCoupons />
                 </TabsContent>
             </Tabs>
         </div>

@@ -25,6 +25,8 @@
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import { corsHeaders } from '../_shared/cors.ts';
+import { validateAndPriceCoupon, recordRedemption } from '../_shared/coupon.ts';
+import { SERVER_PRICING, amountPaiseFor, isFirstTimerSubscriber } from '../_shared/pricing.ts';
 
 const SUPABASE_URL          = Deno.env.get('SUPABASE_URL')!;
 const SUPABASE_ANON_KEY     = Deno.env.get('SUPABASE_ANON_KEY')!;
@@ -34,33 +36,9 @@ const RAZORPAY_KEY_ID       = Deno.env.get('RAZORPAY_KEY_ID') || '';
 const RAZORPAY_KEY_SECRET   = Deno.env.get('RAZORPAY_KEY_SECRET') || '';
 const RAZORPAY_API_BASE     = 'https://api.razorpay.com/v1';
 
-// ---------------------------------------------------------------------------
-// Pricing — server-side MIRROR of @drut/shared/lib/pricing.ts.
-// KEEP IN SYNC. Decided 2026-06-26: monthly ₹199, annual ₹1999 (₹1799 first-timer
-// intro). The client display reads pricing.ts; the charge is computed HERE so a
-// tampered client can never change the amount.
-// ---------------------------------------------------------------------------
-const SERVER_PRICING: Record<'monthly' | 'annual', {
-    amount_paise: number;
-    first_timer_amount_paise?: number;
-    days: number;
-    label: string;
-}> = {
-    monthly: { amount_paise: 19900,                                days: 30,  label: 'Drut Pro · Monthly' },
-    annual:  { amount_paise: 199900, first_timer_amount_paise: 179900, days: 365, label: 'Drut Pro · Annual'  },
-};
-
-/** Effective amount in paise for a plan, given first-timer status (mirrors priceForPlan). */
-function amountPaiseFor(plan: 'monthly' | 'annual', isFirstTimer: boolean): number {
-    const spec = SERVER_PRICING[plan];
-    if (plan === 'annual' && isFirstTimer && spec.first_timer_amount_paise) {
-        return spec.first_timer_amount_paise;
-    }
-    return spec.amount_paise;
-}
-
 interface Body {
     plan: 'monthly' | 'annual';
+    coupon_code?: string;
 }
 
 function json(status: number, payload: unknown) {
@@ -102,47 +80,86 @@ Deno.serve(async (req) => {
 
     const planSpec = SERVER_PRICING[plan];
 
-    // --- 3. KEY CHECK — fail FAST + LOUD if Razorpay env not wired ---
+    // --- 4. First-timer detection (service role; bypasses RLS) ---
+    const supabaseService = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE);
+    const isFirstTimer = await isFirstTimerSubscriber(supabaseService, user.id);
+    const baseAmountPaise = amountPaiseFor(plan, isFirstTimer);
+
+    // --- 4b. Apply coupon (server-side; client never sends an amount/discount) ---
+    let chargePaise = baseAmountPaise;
+    let couponId: string | null = null;
+    let couponCode: string | null = null;
+    if (body?.coupon_code) {
+        const couponRes = await validateAndPriceCoupon(supabaseService, body.coupon_code, plan, user.id, baseAmountPaise);
+        if (!couponRes.ok) {
+            return json(400, { error: 'coupon-invalid', detail: couponRes.reason });
+        }
+        chargePaise = couponRes.finalPaise;
+        couponId = couponRes.coupon!.id;
+        couponCode = couponRes.coupon!.code;
+    }
+
+    const nowIso = new Date().toISOString();
+    const expiresAt = new Date(Date.now() + planSpec.days * 24 * 60 * 60 * 1000).toISOString();
+
+    // --- 5. FREE path: a coupon (or any sub-₹1 result) grants directly, no Razorpay ---
+    // Razorpay rejects orders below ₹1 (100 paise), so anything under that is granted.
+    if (chargePaise < 100) {
+        // Expire any existing active subscription first (one-active-per-user index).
+        const { error: expireErr } = await supabaseService
+            .from('subscriptions')
+            .update({ status: 'expired' })
+            .eq('user_id', user.id)
+            .eq('status', 'active');
+        if (expireErr) return json(500, { error: 'expire-prior-failed', detail: expireErr.message });
+
+        const orderTag = couponCode
+            ? `coupon-${couponCode}-${crypto.randomUUID().replace(/-/g, '').slice(0, 12)}`
+            : `comp-${crypto.randomUUID().replace(/-/g, '').slice(0, 20)}`;
+
+        const { data: granted, error: grantErr } = await supabaseService
+            .from('subscriptions')
+            .insert({
+                user_id: user.id,
+                plan,
+                status: 'active',
+                amount_paise: 0,
+                currency: 'INR',
+                razorpay_order_id: orderTag,
+                started_at: nowIso,
+                expires_at: expiresAt,
+                coupon_id: couponId,
+            })
+            .select()
+            .single();
+        if (grantErr) return json(500, { error: 'grant-failed', detail: grantErr.message });
+
+        if (couponId) await recordRedemption(supabaseService, couponId, user.id, granted?.id ?? null);
+
+        await supabaseService.from('payment_events').insert({
+            user_id: user.id,
+            razorpay_event_type: 'coupon.free_grant',
+            signature_verified: true,
+            raw_payload: { plan, coupon: couponCode },
+            processed: true,
+        });
+
+        return json(200, { free: true, plan, status: 'active', expires_at: expiresAt });
+    }
+
+    // --- 6. PAID path: Razorpay order for the (possibly discounted) amount ---
+    // Razorpay keys are only needed here (the free path above never calls Razorpay).
     if (!RAZORPAY_KEY_ID || !RAZORPAY_KEY_SECRET) {
-        // Don't 500 silently — return a clear message so the client paywall
-        // can render "Payment temporarily unavailable" instead of looking broken.
         return json(503, {
             error: 'razorpay-not-configured',
             detail: 'Set RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET in Supabase function env.',
         });
     }
 
-    // --- 4. First-timer detection (service role; bypasses RLS) ---
-    // First-timer = no subscription row that ever progressed past 'pending'.
-    // Abandoned checkouts (pending-only) keep the intro available.
-    const supabaseService = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE);
-
-    const { count: priorCount, error: priorErr } = await supabaseService
-        .from('subscriptions')
-        .select('id', { count: 'exact', head: true })
-        .eq('user_id', user.id)
-        .neq('status', 'pending');
-
-    if (priorErr) {
-        // Fail SAFE on the charge: if we can't confirm first-timer status, charge
-        // the standard (non-discounted) price rather than risk repeated intros.
-        console.error('[create-razorpay-order] first-timer lookup failed', priorErr);
-    }
-    const isFirstTimer = !priorErr && (priorCount ?? 0) === 0;
-
-    const amountPaise = amountPaiseFor(plan, isFirstTimer);
-
-    // Razorpay enforces amount >= 100 paise — our prices are well above.
-    if (amountPaise < 100) {
-        return json(400, { error: 'amount-below-minimum' });
-    }
-
-    // --- 5. App-side receipt for idempotency / reconciliation (max 40 chars) ---
     const receipt = `drut_${crypto.randomUUID().replace(/-/g, '').slice(0, 32)}`;
 
-    // --- 6. POST to Razorpay /orders ---
     const razorpayReq = {
-        amount:   amountPaise,    // Razorpay takes paise directly
+        amount:   chargePaise,    // Razorpay takes paise directly
         currency: 'INR',
         receipt,
         notes: {
@@ -150,6 +167,7 @@ Deno.serve(async (req) => {
             user_email: user.email || '',
             plan,
             first_timer: String(isFirstTimer),
+            coupon: couponCode || '',
             source: 'drut',
         },
     };
@@ -182,31 +200,31 @@ Deno.serve(async (req) => {
     }
 
     // --- 7. Insert pending subscription row (service role bypasses RLS) ---
-    // verify-razorpay-payment flips status='active' + sets expires_at.
-    const expiresAt = new Date(Date.now() + planSpec.days * 24 * 60 * 60 * 1000).toISOString();
-
+    // verify-razorpay-payment flips status='active', sets expires_at, and (if a
+    // coupon was used) records the redemption — only AFTER successful payment.
     const { error: insertErr } = await supabaseService.from('subscriptions').insert({
         user_id: user.id,
         plan,
         status: 'pending',
         razorpay_order_id: orderId,
-        amount_paise: amountPaise,
+        amount_paise: chargePaise,
         currency: 'INR',
         expires_at: expiresAt,
+        coupon_id: couponId,
     });
 
     if (insertErr) {
         console.error('[create-razorpay-order] subscriptions insert failed', insertErr);
-        // Don't block — verify endpoint can still find the order by id via Razorpay
-        // and reconstruct. Logging is enough.
+        // Don't block — verify endpoint can still find the order by id via Razorpay.
     }
 
     return json(200, {
         order_id: orderId,
-        amount_paise: amountPaise,
+        amount_paise: chargePaise,
         currency: 'INR',
         plan,
         key_id: RAZORPAY_KEY_ID,   // public id — client SDK needs this to open the modal
         receipt,
+        coupon_code: couponCode || undefined,
     });
 });

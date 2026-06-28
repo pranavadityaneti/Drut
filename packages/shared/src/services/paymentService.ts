@@ -15,23 +15,88 @@ import type {
     VerifyPaymentResponse,
     RazorpaySuccessPayload,
     Subscription,
+    OrderResult,
+    Coupon,
+    CouponPreview,
 } from '../types/subscription';
 import type { PlanId } from '../lib/pricing';
 import { FREE_DAILY_QUESTION_LIMIT } from '../lib/pricing';
 
 /**
- * Create a Razorpay order for the calling authenticated user.
- * Returns { order_id, amount_paise, currency, plan, key_id }. The server
- * re-derives the amount from pricing.ts — the client never sends it.
+ * Create a Razorpay order for the calling authenticated user, optionally applying
+ * a coupon. The server re-derives the amount from pricing.ts and the coupon — the
+ * client never sends an amount or a discount.
+ *
+ * Returns EITHER a Razorpay order (paid path) OR a FreeGrantResponse when a coupon
+ * brings the price to ₹0 (the subscription is granted directly, no checkout sheet).
+ * Use isFreeGrant() to discriminate.
  */
-export async function createRazorpayOrder(plan: PlanId): Promise<CreateOrderResponse> {
+export async function createRazorpayOrder(plan: PlanId, couponCode?: string): Promise<OrderResult> {
     const supabase = getSupabase();
-    const { data, error } = await supabase.functions.invoke<CreateOrderResponse>('create-razorpay-order', {
-        body: { plan },
+    const { data, error } = await supabase.functions.invoke<OrderResult>('create-razorpay-order', {
+        body: { plan, coupon_code: couponCode || undefined },
     });
     if (error) throw new Error(error.message || 'create-razorpay-order failed');
-    if (!data || !data.order_id) throw new Error('No order_id returned');
+    if (!data) throw new Error('No response from create-razorpay-order');
+    if ((data as any).free) return data;                       // free grant — no order
+    if (!(data as CreateOrderResponse).order_id) throw new Error('No order_id returned');
     return data;
+}
+
+/**
+ * Validate a coupon for a plan WITHOUT committing — drives the paywall price
+ * preview. Returns { valid, finalPaise, isFree, reason? }. The actual discount is
+ * always re-computed server-side at order creation; this is display-only.
+ */
+export async function validateCoupon(plan: PlanId, couponCode: string): Promise<CouponPreview> {
+    const supabase = getSupabase();
+    const { data, error } = await supabase.functions.invoke<CouponPreview>('validate-coupon', {
+        body: { plan, coupon_code: couponCode },
+    });
+    if (error) return { valid: false, reason: error.message || 'Could not validate coupon' };
+    return data ?? { valid: false, reason: 'Could not validate coupon' };
+}
+
+// ============================================================
+// Admin coupon management (admin-gated edge fn: admin-coupons)
+// ============================================================
+
+export interface CreateCouponInput {
+    code: string;
+    type: 'percent' | 'flat';
+    value: number;                 // percent: 0..100 ; flat: rupees off (converted to paise server-side)
+    applies_to_plan?: 'any' | 'monthly' | 'annual';
+    max_redemptions?: number | null;
+    per_user_limit?: number;
+    expires_at?: string | null;
+    note?: string;
+}
+
+export async function adminListCoupons(): Promise<Coupon[]> {
+    const supabase = getSupabase();
+    const { data, error } = await supabase.functions.invoke<{ coupons: Coupon[] }>('admin-coupons', {
+        body: { action: 'list' },
+    });
+    if (error) throw new Error(error.message || 'admin-coupons list failed');
+    return data?.coupons ?? [];
+}
+
+export async function adminCreateCoupon(input: CreateCouponInput): Promise<Coupon> {
+    const supabase = getSupabase();
+    const { data, error } = await supabase.functions.invoke<{ coupon: Coupon }>('admin-coupons', {
+        body: { action: 'create', ...input },
+    });
+    if (error) throw new Error(error.message || 'admin-coupons create failed');
+    if (!data?.coupon) throw new Error('Coupon not created');
+    return data.coupon;
+}
+
+export async function adminSetCouponActive(id: string, active: boolean): Promise<void> {
+    const supabase = getSupabase();
+    const { error } = await supabase.functions.invoke('admin-coupons', {
+        body: { action: 'set_active', id, active },
+    });
+    if (error) throw new Error(error.message || 'admin-coupons set_active failed');
 }
 
 /**
