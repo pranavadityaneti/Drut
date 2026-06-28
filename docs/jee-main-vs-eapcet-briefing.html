@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Drut — JEE Main vs EAPCET: Briefing & Sequencing</title>
+<style>
+  :root { --ink:#16211c; --muted:#5c6b63; --line:#dfe6e1; --green:#2f8a4e; --accent:#b4fa8d; --bg:#fff; --soft:#f5f9f6; --warn:#b4540a; --warnbg:#fff4ea; }
+  *{box-sizing:border-box}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:var(--bg);margin:0;line-height:1.62}
+  .wrap{max-width:900px;margin:0 auto;padding:40px 24px 90px}
+  h1{font-size:30px;margin:0 0 4px;letter-spacing:-0.02em}
+  .sub{color:var(--muted);margin:0 0 26px;font-size:14.5px}
+  h2{font-size:21px;margin:40px 0 12px;padding-bottom:7px;border-bottom:2px solid var(--line);letter-spacing:-0.01em}
+  h3{font-size:16.5px;margin:22px 0 6px}
+  p,li{font-size:15.5px}
+  a{color:var(--green)}
+  .toc{background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:16px 22px;margin:0 0 22px}
+  .toc h2{border:0;margin:0 0 8px;font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+  .toc ol{margin:0;padding-left:20px} .toc li{font-size:14.5px;margin:3px 0}
+  table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14.5px}
+  th,td{border:1px solid var(--line);padding:9px 12px;text-align:left;vertical-align:top}
+  th{background:var(--soft);font-weight:700}
+  td.jee{background:#eef6ff}
+  .pill{display:inline-block;font-size:11px;font-weight:700;border-radius:999px;padding:2px 9px}
+  .pill.reuse{background:#e6f7ec;color:#1d6b3a} .pill.build{background:var(--warnbg);color:var(--warn)}
+  .verdict{background:var(--accent);color:#13241a;border-radius:12px;padding:18px 22px;margin:18px 0;font-weight:600}
+  .warn{background:var(--warnbg);border:1px solid #f1c9a3;border-left:4px solid var(--warn);border-radius:8px;padding:13px 18px;margin:14px 0}
+  .box{background:var(--soft);border:1px solid var(--line);border-radius:10px;padding:14px 20px;margin:14px 0}
+  .plain{background:#eef7f0;border-radius:10px;padding:14px 20px;margin:16px 0;font-style:italic}
+  code{background:var(--soft);padding:1px 6px;border-radius:5px;font-size:13px}
+  .conf{font-size:11px;color:var(--muted);font-weight:600}
+  @media print{body{font-size:11.5px}.wrap{max-width:none}a{color:var(--ink);text-decoration:none}table,.box,.warn{break-inside:avoid}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>JEE Main vs EAPCET — Briefing &amp; Sequencing</h1>
+  <p class="sub">Drut · 2026-06-25 · from two adversarially-verified deep-research passes (~200 agents, multi-source, 3-vote verification). Facts marked <span class="conf">[high]</span> / <span class="conf">[medium]</span>; gaps that failed verification are called out.</p>
+
+  <div class="toc"><h2>Contents</h2><ol>
+    <li><a href="#tldr">The one-line takeaway</a></li>
+    <li><a href="#h2h">Head-to-head: the two exams</a></li>
+    <li><a href="#syll">Syllabus: state-board vs NCERT (the deep difference)</a></li>
+    <li><a href="#diff">Difficulty</a></li>
+    <li><a href="#weight">Chapter weightage</a></li>
+    <li><a href="#market">Market &amp; competition</a></li>
+    <li><a href="#reuse">What actually reuses vs what we'd build</a></li>
+    <li><a href="#seq">Recommended sequencing</a></li>
+  </ol></div>
+
+  <h2 id="tldr">1 · The one-line takeaway</h2>
+  <div class="verdict">JEE Main is NOT "harder EAPCET." It's a different format (⅓ numerical-answer, with negative marking), a different syllabus basis (NCERT, trimmed in 2024 — vs EAPCET's state board), and a harder, more concept-driven paper. Our <em>pipeline and concept backbone</em> reuse cleanly; the <em>questions and the practice format</em> mostly do not. So "add JEE Main" = run JEE PYQs through an extended pipeline, not recycle EAPCET content.</div>
+
+  <h2 id="h2h">2 · Head-to-head <span class="conf">[high]</span></h2>
+  <table>
+    <tr><th>&nbsp;</th><th>EAPCET (AP EAPCET / TG EAPCET)</th><th class="jee">JEE Main (Paper 1)</th></tr>
+    <tr><td><strong>Questions</strong></td><td>160 — 80 Maths / 40 Physics / 40 Chemistry</td><td class="jee">75 — 25 each (Phys/Chem/Maths)</td></tr>
+    <tr><td><strong>Question types</strong></td><td>100% 4-option MCQ</td><td class="jee">Per subject: 20 MCQ + <strong>5 Numerical-Answer-Type (NAT)</strong></td></tr>
+    <tr><td><strong>Marking</strong></td><td>+1 correct · <strong>no negative marking</strong></td><td class="jee">+4 correct · <strong>−1 wrong</strong> — and −1 now applies to NAT too (range −75…+300)</td></tr>
+    <tr><td><strong>Duration</strong></td><td>3 hours</td><td class="jee">3 hours</td></tr>
+    <tr><td><strong>Scoring</strong></td><td>Raw marks → rank</td><td class="jee">Percentile-normalized across Jan + April sessions; ranked on best of the two</td></tr>
+    <tr><td><strong>Syllabus basis</strong></td><td>State Intermediate board (BIEAP / TSBIE)</td><td class="jee">NCERT Class 11–12 (rationalized; cut in 2024)</td></tr>
+    <tr><td><strong>Sessions/yr</strong></td><td>One</td><td class="jee">Two (January, April)</td></tr>
+  </table>
+
+  <h2 id="syll">3 · Syllabus: the deep difference <span class="conf">[high]</span></h2>
+  <p>EAPCET is built on the <strong>AP/Telangana state Intermediate curriculum (BIEAP/TSBIE), not NCERT</strong>. JEE Main is NCERT-based and NTA <strong>cut it in 2024</strong>. So the two chapter lists genuinely diverge:</p>
+  <ul>
+    <li><strong>EAPCET still tests units JEE Main dropped</strong> — confirmed concretely for <strong>Mathematical Induction</strong> (in EAPCET Maths; removed from JEE Main 2024). Also Mathematical Reasoning.</li>
+    <li><strong>JEE Main 2024 cuts:</strong> Chemistry deepest (States of Matter, Surface Chemistry, Metallurgy, Hydrogen, s-Block, Environmental Chem, Polymers, Chemistry in Everyday Life — all gone); Physics lost Communication Systems + transistors/amplifiers; Maths lost Mathematical Induction + Mathematical Reasoning. Current: Maths 14 units, Physics 20, Chemistry 20.</li>
+  </ul>
+  <div class="warn"><strong>Direct consequence for our code:</strong> our <code>JEE_MAIN_TOPICS</code> list is actually the <em>EAPCET</em> chapter list (it still contains Mathematical Induction). It is <strong>not</strong> a correct JEE Main chapter list. A real JEE Main bank needs a JEE-accurate, NCERT-2024 chapter taxonomy — not the EAPCET list reused verbatim. And <strong>pre-2024 JEE Main PYQs contain now-removed-syllabus questions</strong> → prefer 2024+ papers or filter.</div>
+
+  <h2 id="diff">4 · Difficulty <span class="conf">[high]</span></h2>
+  <p>Cross-platform consensus (competing portals, no incentive to agree): <strong>JEE Main is meaningfully harder.</strong> EAPCET questions are "more direct, formula-based, syllabus-bound"; JEE Main is "concept-driven, multi-step, in-depth." Implication: you can't serve EAPCET MCQs to a JEE aspirant and call it JEE prep — they're too easy and the format differs. (Our empirical Elo difficulty engine handles the per-exam difficulty gap automatically once attempts arrive — no special casing needed.)</p>
+
+  <h2 id="weight">5 · Chapter weightage</h2>
+  <p><strong>Physics <span class="conf">[medium]</span>:</strong> Mechanics ≈35%, Electromagnetism ≈27%, Modern Physics ≈17%. Most-asked chapters: Ray Optics &amp; Optical Instruments (~19–23 Qs/yr aggregated), Units &amp; Measurements (~13–20), Rotational Motion (~13–14).</p>
+  <div class="warn"><strong>Gap:</strong> Chemistry and Maths chapter-level weightage numbers <strong>failed verification</strong> and are deliberately omitted — treat as unresolved until sourced from official analyses. (We can also derive real weightage empirically once we have several JEE papers tagged in our own bank.)</div>
+
+  <h2 id="market">6 · Market &amp; competition <span class="conf">[medium]</span></h2>
+  <ul>
+    <li><strong>EAPCET:</strong> AP EAPCET 2025 ≈ <strong>280k</strong> Engineering applicants (≈362k incl. Agri/Pharma). TS adds a similar order. </li>
+    <li><strong>JEE Main:</strong> roughly an <strong>order of magnitude larger</strong> than each state exam (~10×).</li>
+    <li><strong>Competitive bar:</strong> PW, Allen, Aakash, Embibe, Vedantu, Unacademy all compete hard on JEE Main PYQ banks + test series. A thin JEE offering won't impress serious aspirants — but a <em>closed beta</em> is about learning signal, not market share.</li>
+  </ul>
+
+  <h2 id="reuse">7 · What reuses vs what we'd build</h2>
+  <table>
+    <tr><th>Asset</th><th>Status for JEE Main</th></tr>
+    <tr><td>Extraction → tag → verify → generate → stage pipeline</td><td><span class="pill reuse">REUSE</span> exam-agnostic; just point at JEE PDFs with <code>exam_profile=jee_main</code></td></tr>
+    <tr><td>Two-tier solutions (Quick Method + Full Solution), audit, Unicode/repair gates</td><td><span class="pill reuse">REUSE</span> identical</td></tr>
+    <tr><td>Empirical Elo difficulty engine</td><td><span class="pill reuse">REUSE</span> auto-handles JEE's harder difficulty per exam population</td></tr>
+    <tr><td>Concept backbone (PCM concepts overlap heavily)</td><td><span class="pill reuse">REUSE</span> same physics/chem/math concepts</td></tr>
+    <tr><td>The actual EAPCET questions</td><td><span class="pill build">NOT REUSABLE as JEE</span> wrong difficulty, wrong format, state-board scoped</td></tr>
+    <tr><td>Chapter taxonomy</td><td><span class="pill build">BUILD</span> JEE needs an NCERT-2024 chapter list (not the EAPCET list)</td></tr>
+    <tr><td>Numerical-Answer-Type (NAT) questions — ⅓ of JEE Main</td><td><span class="pill build">BUILD</span> new question type; engine is MCQ-only today</td></tr>
+    <tr><td>Negative marking (+4/−1) &amp; percentile framing</td><td><span class="pill build">BUILD</span> EAPCET grading is +1/no-negative</td></tr>
+    <tr><td>App: <code>jee_main</code> exam (ExamDef, board mapping, exam selector web+mobile)</td><td><span class="pill build">BUILD</span> small additive wiring</td></tr>
+  </table>
+
+  <h2 id="seq">8 · Recommended sequencing</h2>
+  <p><strong>For the closed beta — JEE Main as an MCQ-only track:</strong></p>
+  <ol>
+    <li>Wire <code>jee_main</code> as a supported exam (ExamDef + board mapping + exam selector).</li>
+    <li>Build a <strong>JEE-accurate chapter taxonomy</strong> (NCERT 2024-reduced) — not the EAPCET list.</li>
+    <li>Run <strong>2024+ JEE Main PYQ MCQs</strong> (Section A) through the existing pipeline → stage → review. That's the 20-of-25-per-subject MCQ portion — a credible practice surface and widely how students drill.</li>
+    <li><strong>Defer NAT + negative-marking + percentile</strong> to post-beta; label the beta honestly as "JEE Main MCQ practice." NAT is a clean, well-scoped later add.</li>
+  </ol>
+  <div class="box"><strong>Why MCQ-first:</strong> it captures the national learning signal (10× pool) and reuses the whole pipeline at low marginal cost, without blocking beta on building a new question type + grading mode. The format gaps (NAT, negative marking) become the "earn the national claim" work before the July public launch.</div>
+
+  <div class="plain"><strong>In plain English:</strong> JEE Main and EAPCET test the same subjects but are genuinely different exams — JEE has fill-in-the-number questions, punishes wrong answers, follows NCERT (trimmed in 2024), and is harder. So we can't just recycle EAPCET questions into JEE. What we <em>can</em> reuse is the whole machine that turns past papers into practice. The smart beta move: add JEE Main as multiple-choice-only practice (two-thirds of the real paper) to learn from a much bigger audience, and build the numerical-answer part before we market "national" at the July launch.</div>
+</div>
+</body>
+</html>

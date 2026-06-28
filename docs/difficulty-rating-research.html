@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Drut — Question Difficulty: Research & Decision</title>
+<style>
+  :root { --ink:#1a2420; --muted:#5c6b63; --line:#dfe6e1; --green:#3f9b5f; --accent:#b4fa8d; --bg:#fff; --soft:#f4f8f5; }
+  * { box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; color: var(--ink); background: var(--bg); margin: 0; line-height: 1.6; }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 40px 24px 80px; }
+  h1 { font-size: 30px; margin: 0 0 4px; letter-spacing: -0.02em; }
+  .sub { color: var(--muted); margin: 0 0 28px; font-size: 15px; }
+  h2 { font-size: 21px; margin: 38px 0 10px; padding-bottom: 7px; border-bottom: 2px solid var(--line); letter-spacing: -0.01em; }
+  h3 { font-size: 16px; margin: 22px 0 6px; }
+  p, li { font-size: 15.5px; }
+  a { color: var(--green); }
+  .toc { background: var(--soft); border: 1px solid var(--line); border-radius: 12px; padding: 16px 22px; margin: 0 0 24px; }
+  .toc h2 { border: 0; margin: 0 0 8px; font-size: 14px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); }
+  .toc ol { margin: 0; padding-left: 20px; } .toc li { font-size: 14.5px; margin: 3px 0; }
+  .finding { border: 1px solid var(--line); border-left: 4px solid var(--green); border-radius: 8px; padding: 14px 18px; margin: 14px 0; background: #fcfdfc; }
+  .finding .tag { display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--green); margin-bottom: 4px; }
+  .finding .src { font-size: 12.5px; color: var(--muted); margin-top: 8px; word-break: break-word; }
+  .verdict { background: var(--accent); color: #14241a; border-radius: 12px; padding: 18px 22px; margin: 18px 0; font-weight: 600; }
+  .box { background: var(--soft); border: 1px solid var(--line); border-radius: 10px; padding: 14px 20px; margin: 14px 0; }
+  table { border-collapse: collapse; width: 100%; margin: 14px 0; font-size: 14.5px; }
+  th, td { border: 1px solid var(--line); padding: 8px 11px; text-align: left; vertical-align: top; }
+  th { background: var(--soft); }
+  code { background: var(--soft); padding: 1px 6px; border-radius: 5px; font-size: 13.5px; }
+  .plain { background: #eef7f0; border-radius: 10px; padding: 14px 20px; margin: 16px 0; font-style: italic; }
+  @media print { body { font-size: 12px; } .wrap { max-width: none; } a { color: var(--ink); text-decoration: none; } .finding { break-inside: avoid; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Question Difficulty — Research &amp; Decision</h1>
+  <p class="sub">Drut · prepared 2026-06-23 · evidence from a multi-source, adversarially-verified deep-research pass (≈20 sources, 3-vote claim verification). All findings below were rated <strong>high confidence</strong> unless noted.</p>
+
+  <div class="toc">
+    <h2>Contents</h2>
+    <ol>
+      <li><a href="#q">The question</a></li>
+      <li><a href="#find">What the evidence says</a></li>
+      <li><a href="#verdict">Verdict</a></li>
+      <li><a href="#plan">Drut's approach (what we built)</a></li>
+      <li><a href="#plain">In plain English</a></li>
+    </ol>
+  </div>
+
+  <h2 id="q">1 · The question</h2>
+  <p>How should a <strong>brand-new</strong> question bank assign difficulty when there is <strong>no student-response data yet</strong> — for Indian competitive-exam MCQs (EAPCET/JEE/NEET style), on a platform that will quickly accumulate per-question correct/incorrect + time data once students practice? Specifically: is it defensible to show Easy/Medium/Hard labels before any data exists?</p>
+
+  <h2 id="find">2 · What the evidence says</h2>
+
+  <div class="finding">
+    <span class="tag">Definition</span>
+    <p><strong>Difficulty is empirical by definition.</strong> Two standard measures: the classical <em>facility / p-value</em> (proportion who answer correctly) and the IRT <em>b-parameter</em> (ability level at which P(correct)=0.5). Both require observed responses.</p>
+    <div class="src">Cappelleri et al., PMC4096146</div>
+  </div>
+
+  <div class="finding">
+    <span class="tag">Data cost</span>
+    <p><strong>Rigorous IRT calibration needs a lot of data per item</strong> — ≈200 examinees for the simplest 1PL/Rasch model, ≈500 for 2PL, ≈1000+ for 3PL. Sample size (not test length) dominates accuracy. Simpler models are the right choice while data is thin.</p>
+    <div class="src">Cappelleri et al. (PMC4096146); Hulin et al. 1982 (ERIC EJ1303861); Schroeders &amp; Gnambs 2025</div>
+  </div>
+
+  <div class="finding">
+    <span class="tag">Experts are weak</span>
+    <p><strong>Human experts predict difficulty poorly — and expertise makes it worse</strong> ("curse of knowledge"). Expert ratings explained only <strong>~33%</strong> of empirical difficulty variance; the other 67% was unexplained. Fixed pre-data expert labels should not be treated as ground truth.</p>
+    <div class="src">Wonde et al. 2024, BMC Med Educ (PMC11407004) — 200 MCQs, 7 expert physicians, 815 examinees</div>
+  </div>
+
+  <div class="finding">
+    <span class="tag">LLMs are weak (directly)</span>
+    <p><strong>LLMs are poor at directly rating difficulty from text</strong> — the best system barely beat a "just predict the mean" baseline (RMSE 0.299 vs 0.311). A known failure mode: stronger models find items "too easy." (By contrast, response <em>time</em> IS predictable from text.)</p>
+    <div class="src">BEA 2024 shared task, Yaneva et al. (ACL 2024.bea-1.39) — 667 retired USMLE items</div>
+  </div>
+
+  <div class="finding">
+    <span class="tag">Better LLM use (medium conf.)</span>
+    <p>LLM <em>student-simulation</em> (simulate learners across ability tiers, then fit IRT) predicts real difficulty far better than direct rating — item correctness correlations up to <strong>r≈0.75–0.82</strong>. Promising as a richer prior later, but heavier to build.</p>
+    <div class="src">arXiv:2601.09953 (NAEP math, not yet peer-reviewed) — best-case ensemble figures</div>
+  </div>
+
+  <div class="finding">
+    <span class="tag">What real platforms do</span>
+    <p><strong>Adaptive platforms solve cold-start with Elo/Glicko-style online ratings.</strong> Duolingo's "Birdbrain" is an IRT-inspired logistic model fit online by SGD — explicitly "a generalization of the Elo rating system": each question has a difficulty rating, each learner an ability rating; a wrong answer raises the item's difficulty and lowers the learner's ability. It converges in <strong>tens of attempts</strong> and corrects for <em>who</em> answered (raw % cannot).</p>
+    <div class="src">IEEE Spectrum — Bicknell, Settles, Brust (Duolingo)</div>
+  </div>
+
+  <div class="finding">
+    <span class="tag">UI / labels</span>
+    <p><strong>Do not surface fixed Easy/Medium/Hard before calibration.</strong> Keep difficulty as a continuous score in a "calibrating" state; reveal a discrete band only once the estimate is stable.</p>
+    <div class="src">Synthesis of the above (expert ~33% variance; LLM ≈ baseline)</div>
+  </div>
+
+  <h2 id="verdict">3 · Verdict</h2>
+  <div class="verdict">Difficulty can't be honestly labelled before data — not by experts (~33% of variance, worse with expertise) and not by LLMs (barely beat a mean baseline; they think everything's easy). The only trustworthy source is real student performance, captured through an Elo/Rasch rating that converges fast. Until a question is calibrated, show no difficulty label.</div>
+
+  <h2 id="plan">4 · Drut's approach (what we built)</h2>
+  <table>
+    <tr><th>Stage</th><th>What happens</th></tr>
+    <tr><td><strong>Day 1 — cold start</strong></td><td>Each question stored <code>difficultySource: 'uncalibrated'</code>, <code>calibrated: false</code>. <strong>No Easy/Medium/Hard shown.</strong> We keep the two things that <em>are</em> defensible: a model solve-time estimate → <code>timeTargets</code> (powers Sprint; time IS text-predictable) and <code>concepts</code>. The model's solve-confidence is used only as a <em>quality gate</em> to catch broken/unsolvable questions — never as a difficulty label.</td></tr>
+    <tr><td><strong>As students practice</strong></td><td>An Elo / 1PL-Rasch engine (<code>recompute-difficulty.mjs</code>) rates each question against learner ability from real attempts (<code>user_question_history</code>). Fast convergence; corrects for who answered.</td></tr>
+    <tr><td><strong>Graduation</strong></td><td>A question gets a <em>shown</em> Easy/Medium/Hard band only once <strong>calibrated</strong> (≥ ~20 attempts), set from the Elo-implied facility for a median learner. <code>difficultySource</code> flips to <code>'empirical-elo'</code>.</td></tr>
+  </table>
+  <div class="box"><strong>Why this is the nearest-to-optimal:</strong> it's exactly what production adaptive systems do (Birdbrain = logistic/IRT via SGD = generalized Elo), it needs far less data than full IRT, it never asserts a difficulty we can't back, and it has one continuous metric that improves with every answer.</div>
+
+  <h2 id="plain">5 · In plain English</h2>
+  <div class="plain">Nobody can guess how hard a question is before students try it — not subject experts (only ~33% accurate, and worse the more they know), not AI (it thinks everything is easy). So Drut ships questions with <strong>no difficulty label</strong>, keeps only the timer estimate (that the AI can predict), and lets a chess-style rating system score each question as real students answer — fast, self-correcting, and it only shows a difficulty badge once it has genuinely earned it.</div>
+</div>
+</body>
+</html>

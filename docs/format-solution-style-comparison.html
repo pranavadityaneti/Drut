@@ -1,0 +1,79 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Drut — Full Solution Style Comparison</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});"></script>
+<style>
+ :root{--green:#b4fa8d;--ink:#0f1a14;--muted:#5b6b62;--line:#e3e8e4;--bg:#fafcfa;--accent:#1f7a4d}
+ *{box-sizing:border-box} body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;color:var(--ink);background:var(--bg);margin:0;line-height:1.6}
+ .wrap{max-width:780px;margin:0 auto;padding:26px 20px 70px}
+ h1{font-size:20px;margin:0 0 4px} .qline{color:var(--muted);font-size:13px;margin-bottom:8px}
+ .q{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 16px;font-size:15px;margin-bottom:22px}
+ .variant{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px 22px;margin-bottom:18px}
+ .vtag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#fff;background:var(--ink);border-radius:999px;padding:3px 11px;margin-bottom:4px}
+ .vtag.rec{background:var(--accent)}
+ .vname{font-weight:700;font-size:15px;margin:6px 0 2px}
+ .vwhy{color:var(--muted);font-size:12.5px;margin-bottom:12px}
+ .approach{background:#f4f8f5;border-left:3px solid var(--green);border-radius:6px;padding:9px 13px;font-size:14px;margin-bottom:12px}
+ ol.num{margin:0;padding-left:20px;display:grid;gap:11px;font-size:14.5px}
+ .chunks{display:grid;gap:11px;font-size:14.5px}
+ .act{font-weight:700;display:block;margin-bottom:1px}
+ .det{color:#27332c}
+ .flow{font-size:14.5px} .flow p{margin:0 0 9px}
+ .ans{margin-top:13px;background:var(--ink);color:#fff;border-radius:9px;padding:9px 13px;font-weight:600;font-size:14.5px}
+ .ans .g{color:var(--green)}
+ .eq{margin:4px 0}
+</style></head><body><div class="wrap">
+
+<h1>Full Solution — three styles, same problem</h1>
+<div class="qline">All three are unlabeled (no Diagnose/Extract/…). They differ only in numbering &amp; flow.</div>
+<div class="q">A ball is thrown vertically upward at $20\,\text{m/s}$ from the top of a $25\,\text{m}$ tower. With $g=10\,\text{m/s}^2$ and no air resistance, with what speed does it strike the ground? &nbsp;<b>(Answer: 30 m/s, option B)</b></div>
+
+<!-- VARIANT A -->
+<div class="variant">
+  <span class="vtag">Variant A</span>
+  <div class="vname">Numbered steps + bold headers</div>
+  <div class="vwhy">Most scannable; feels like a checklist (the "1-2-3" you want to avoid).</div>
+  <div class="approach">Only gravity acts, so mechanical energy is conserved and the final speed depends only on the launch speed and the net drop. Use $v^2 = u^2 + 2as$.</div>
+  <ol class="num">
+    <li><span class="act">Set a sign convention.</span><span class="det">Acceleration is constant at $g=10\,\text{m/s}^2$ downward; take downward as positive.</span></li>
+    <li><span class="act">Ignore the upward leg.</span><span class="det">The ball returns to launch height at the same $20\,\text{m/s}$, so it's equivalent to dropping it from the top at $20\,\text{m/s}$.</span></li>
+    <li><span class="act">Apply $v^2=u^2+2as$.</span><span class="det">$v^2 = 20^2 + 2(10)(25) = 400 + 500 = 900$.</span></li>
+    <li><span class="act">Take the root.</span><span class="det">$v=\sqrt{900}=30\,\text{m/s}$.</span></li>
+  </ol>
+  <div class="ans">Answer: <span class="g">$30\,\text{m/s}$</span> — option B.</div>
+</div>
+
+<!-- VARIANT B -->
+<div class="variant">
+  <span class="vtag rec">Variant B · recommended</span>
+  <div class="vname">No numbers, chunked, connective flow</div>
+  <div class="vwhy">Reads as a solution developing top-to-bottom, but each move is still a findable chunk. Best on mobile + when stuck.</div>
+  <div class="approach">Only gravity acts, so mechanical energy is conserved — the final speed depends only on the launch speed and the net drop, not the path. The clean tool is $v^2 = u^2 + 2as$.</div>
+  <div class="chunks">
+    <div><span class="act">Set up the motion.</span><span class="det">The acceleration is constant at $g=10\,\text{m/s}^2$ downward, so take downward as positive.</span></div>
+    <div><span class="act">The upward leg cancels.</span><span class="det">The ball rises, stops, and returns to its launch height with the same $20\,\text{m/s}$ — so the problem is just a drop from the tower top with an initial downward speed of $20\,\text{m/s}$.</span></div>
+    <div><span class="act">Apply the kinematic relation.</span><span class="det">With $u=20$, $s=25$, $a=10$: $\;v^2 = 20^2 + 2(10)(25) = 400 + 500 = 900$.</span></div>
+    <div><span class="act">Solve for the speed.</span><span class="det">Taking the positive root, $v=\sqrt{900}=30\,\text{m/s}$.</span></div>
+  </div>
+  <div class="ans">Answer: <span class="g">$30\,\text{m/s}$</span> — option B.</div>
+</div>
+
+<!-- VARIANT C -->
+<div class="variant">
+  <span class="vtag">Variant C</span>
+  <div class="vname">Flowing prose (solution forming)</div>
+  <div class="vwhy">Reads most like a tutor working it out; elegant here, but becomes a dense wall on 10–15-step Hard problems and is hardest to scan on a phone.</div>
+  <div class="approach">Only gravity acts, so mechanical energy is conserved — the final speed depends only on the launch speed and the net drop. Use $v^2 = u^2 + 2as$.</div>
+  <div class="flow">
+    <p>Only gravity acts on the ball, so its acceleration is constant at $g=10\,\text{m/s}^2$ downward; take downward as positive. The upward leg doesn't change the outcome — the ball returns to its launch height with the same $20\,\text{m/s}$ it left with, so the motion is equivalent to dropping it from the tower top at $20\,\text{m/s}$.</p>
+    <p>With $u=20\,\text{m/s}$, $s=25\,\text{m}$ and $a=10\,\text{m/s}^2$, the kinematic relation gives</p>
+    <p class="eq">$$v^2 = u^2 + 2as = 20^2 + 2(10)(25) = 400 + 500 = 900.$$</p>
+    <p>Taking the positive root, $v=\sqrt{900}=30\,\text{m/s}$, so the ball strikes the ground at $30\,\text{m/s}$ — option B.</p>
+  </div>
+  <div class="ans">Answer: <span class="g">$30\,\text{m/s}$</span> — option B.</div>
+</div>
+
+</div></body></html>

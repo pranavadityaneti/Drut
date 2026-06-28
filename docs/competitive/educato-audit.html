@@ -1,0 +1,468 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Educato AI — Competitive Audit · Drut</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root {
+    --ink-1: #1c1d1a;
+    --ink-2: #3a3b37;
+    --ink-3: #6a6c63;
+    --paper: #faf9f5;
+    --card: #ffffff;
+    --hair: #e6e3d6;
+    --lime: #5cbb21;
+    --lime-deep: #3d7a0f;
+    --coral: #ff7a3a;
+    --amber: #fef3c7;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: ui-sans-serif, -apple-system, "Segoe UI", "Helvetica Neue", sans-serif;
+    line-height: 1.55;
+    color: var(--ink-1);
+    background: var(--paper);
+    margin: 0;
+    padding: 40px 20px 80px;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; }
+  header.title-card {
+    background: linear-gradient(135deg, #fff 0%, #faf9f5 100%);
+    border: 1px solid var(--hair);
+    border-radius: 16px;
+    padding: 32px;
+    margin-bottom: 28px;
+  }
+  .eyebrow {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--lime-deep);
+    font-weight: 700;
+    margin: 0 0 10px;
+  }
+  h1 { font-size: 32px; line-height: 1.15; margin: 0 0 6px; letter-spacing: -0.01em; }
+  .subtitle { color: var(--ink-3); font-size: 14px; margin: 0; }
+  .meta { color: var(--ink-3); font-size: 12px; margin: 14px 0 0; }
+
+  nav.toc {
+    background: #fff;
+    border: 1px solid var(--hair);
+    border-radius: 12px;
+    padding: 18px 22px;
+    margin-bottom: 28px;
+  }
+  nav.toc strong { font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--ink-3); }
+  nav.toc ol { margin: 8px 0 0; padding-left: 20px; columns: 2; column-gap: 30px; font-size: 13px; }
+  nav.toc li { margin: 3px 0; break-inside: avoid; }
+  nav.toc a { color: var(--ink-1); text-decoration: none; }
+  nav.toc a:hover { color: var(--lime-deep); text-decoration: underline; }
+
+  h2 {
+    font-size: 22px;
+    margin: 44px 0 10px;
+    padding-top: 14px;
+    border-top: 1px solid var(--hair);
+    letter-spacing: -0.005em;
+  }
+  h3 { font-size: 16px; margin: 22px 0 8px; color: var(--ink-1); }
+  p { margin: 8px 0 14px; }
+  .lede { font-size: 15.5px; color: var(--ink-2); }
+
+  ul, ol { margin: 6px 0 14px; padding-left: 22px; }
+  li { margin: 4px 0; }
+  li > p { margin: 4px 0; }
+
+  blockquote {
+    margin: 14px 0;
+    padding: 12px 16px;
+    background: #f0f6e8;
+    border-left: 3px solid var(--lime);
+    border-radius: 0 8px 8px 0;
+    font-style: italic;
+    color: var(--ink-2);
+  }
+  blockquote cite { display: block; margin-top: 6px; font-style: normal; font-size: 12px; color: var(--ink-3); }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0 18px;
+    font-size: 13px;
+  }
+  th, td {
+    text-align: left;
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--hair);
+    vertical-align: top;
+  }
+  th { background: #f5f3eb; font-weight: 600; font-size: 12px; }
+  td.center { text-align: center; }
+  .yes { color: var(--lime-deep); font-weight: 600; }
+  .no  { color: #b00020; font-weight: 600; }
+  .partial { color: #c47b00; font-weight: 600; }
+
+  code { background: #f3f1e8; padding: 2px 5px; border-radius: 3px; font-size: 12.5px; font-family: ui-monospace, "SF Mono", Menlo, monospace; }
+  pre { background: var(--ink-1); color: #f5f3eb; padding: 14px 18px; border-radius: 8px; overflow-x: auto; font-size: 12.5px; line-height: 1.5; font-family: ui-monospace, "SF Mono", Menlo, monospace; }
+
+  .callout {
+    background: var(--amber);
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin: 14px 0;
+    font-size: 13.5px;
+    color: var(--ink-1);
+    border-left: 3px solid #f59e0b;
+  }
+  .callout-lime { background: #f0f6e8; border-left-color: var(--lime); }
+
+  .pill {
+    display: inline-block;
+    background: #efece1;
+    color: var(--ink-2);
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    margin-right: 4px;
+  }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 14px 0; }
+  .grid-2 > div { background: #fff; border: 1px solid var(--hair); border-radius: 10px; padding: 16px; }
+  .grid-2 h4 { margin: 0 0 6px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-3); }
+  .grid-2 p { margin: 0; font-size: 13.5px; }
+
+  hr.section { border: 0; border-top: 1px solid var(--hair); margin: 32px 0; }
+
+  footer { margin-top: 60px; padding-top: 24px; border-top: 1px solid var(--hair); font-size: 12px; color: var(--ink-3); }
+  footer ol { padding-left: 20px; columns: 2; column-gap: 30px; }
+  footer a { color: var(--lime-deep); }
+
+  @media print {
+    body { background: white; padding: 0; }
+    .wrap { max-width: none; }
+    header.title-card { background: white; border: 0; padding: 0 0 20px; }
+    nav.toc { border: 0; padding: 0; columns: 1; }
+    h2 { page-break-after: avoid; }
+    table, pre, blockquote, .callout, .grid-2 { page-break-inside: avoid; }
+    footer ol { columns: 1; }
+    a { color: var(--ink-1); text-decoration: none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="title-card">
+  <p class="eyebrow">Competitive audit · for Drut</p>
+  <h1>Educato AI — what they're building, how they use AI, and what we should steal</h1>
+  <p class="subtitle">An honest reading of a YC-backed competitor whose architecture is nearly identical to ours — and how we close the gap.</p>
+  <p class="meta">Compiled 2026-06-17 · Sources: educato.com (about, blog, press, homepage), Y Combinator launch &amp; company pages, Crunchbase, third-party reviews. <em>No direct access to their authenticated practice UX; product behaviour is inferred from public marketing + YC launch description + one third-party deep-dive. Where you can share screenshots of questions / concept explanations, I'll annotate this report with primary evidence.</em></p>
+</header>
+
+<nav class="toc">
+  <strong>Contents</strong>
+  <ol>
+    <li><a href="#tldr">TL;DR — the headline</a></li>
+    <li><a href="#snapshot">1. Company snapshot</a></li>
+    <li><a href="#stack">2. Tech stack (what we know + reasoned inference)</a></li>
+    <li><a href="#ai-use">3. How Educato uses AI — the 6 surfaces</a></li>
+    <li><a href="#ai-effective">4. How <em>effectively</em> they use AI</a></li>
+    <li><a href="#pedagogy">5. The pedagogical model (science behind it)</a></li>
+    <li><a href="#concepts">6. How they help students understand concepts</a></li>
+    <li><a href="#vsdrut">7. Educato vs Drut — feature parity</a></li>
+    <li><a href="#replicate">8. What to copy, in priority order</a></li>
+    <li><a href="#avoid">9. What <em>not</em> to copy</a></li>
+    <li><a href="#sources">Sources</a></li>
+  </ol>
+</nav>
+
+<h2 id="tldr">TL;DR — the headline</h2>
+<p class="lede">Educato is essentially the architecture we're already building, but launched 18 months earlier, geography‑different (global long-tail exams vs our EAPCET focus), and with three meaningful pedagogical features we don't yet have: a <strong>spaced-repetition layer</strong>, an <strong>AI tutor chat</strong>, and <strong>realistic timed mock simulations</strong>. They are YC S24, ~$500K raised, ~10 person team, claiming 130K+ students across 150+ countries on 2,900+ exams. Their core differentiator is the same as ours — AI generates the questions, humans validate, content is grounded in source textbooks/past papers — and that's the entire reason they could go from 0 exams to 2,900+ in 18 months. The features we're missing add roughly 4–6 weeks of focused build, but they unlock the next leg of growth (retention, conversion, "smart tutor" perceived value).</p>
+
+<div class="callout callout-lime">
+  <strong>The single best quote from their YC launch:</strong> "Their models generate realistic exam questions from textbooks or past exams, <strong>with human-in-the-loop validation, linked to the original content</strong>, and feature personalized learning paths, AI essay grading with individualized feedback, and live simulation tests with peers."<br>
+  <em>This is exactly Drut's <code>INSTRUCTIONS.md</code> + 11-agent adversarial audit playbook. We're not behind on the bet — we're behind on the surface area.</em>
+</div>
+
+<h2 id="snapshot">1. Company snapshot</h2>
+
+<table>
+  <tr><th>Item</th><th>Detail</th></tr>
+  <tr><td>Legal name</td><td>Educato AI</td></tr>
+  <tr><td>Founded</td><td>2024</td></tr>
+  <tr><td>YC batch</td><td>Summer 2024 (S24)</td></tr>
+  <tr><td>Funding</td><td>~$500K pre-seed (Crunchbase, May 28 2024) — YC standard + some angels (Dan Oros announced on LinkedIn Nov 2024)</td></tr>
+  <tr><td>Founders</td><td>Codrut Lemeni (CEO), Felix Gabler (CTO), Pierre-Louis (3rd co-founder, role unclear from public sources)</td></tr>
+  <tr><td>Team size</td><td>~10 visible (2 founders + 5 engineers + 1 content expert "Oana Stoica" + ~2 unnamed roles)</td></tr>
+  <tr><td>Public traction claim</td><td>130,000+ students · 150+ countries · 4.9/5 average rating · 2,900+ exams live (claim is "10,000+ exams" in marketing copy — discrepancy suggests they count generated-but-not-launched exams)</td></tr>
+  <tr><td>Distribution</td><td>Web app (PWA with offline) + iOS + Android</td></tr>
+  <tr><td>Tagline / positioning</td><td>"Duolingo for every exam"</td></tr>
+  <tr><td>Initial wedge</td><td>Italian medical entrance exam (IMAT) — Felix's home market; Romanian medical exam (founders' background)</td></tr>
+  <tr><td>Now covers</td><td>NCLEX-RN (US nursing), CFA Level 1, ACLS, SAT/ACT — plus the long tail</td></tr>
+</table>
+
+<h3>Why this matters</h3>
+<p>Educato is the proof that the long-tail strategy works. Traditional exam-prep players (Princeton Review, Kaplan, ETS itself) sit on the top 10 US exams and milk them. Educato's bet is: <em>most of the world's ~10,000 standardised exams have terrible or no online prep</em>, and AI lets you bring quality prep to those underserved exams at near-zero marginal cost per new exam. The same bet works for India — EAPCET, JEE, NEET, BITSAT, KCET, CUET, COMEDK — none of which Educato touches. <strong>The market shape favours us: India is too price-sensitive for Educato's pricing model to work, and they show no signs of localising.</strong></p>
+
+<h2 id="stack">2. Tech stack — what we know + what we can infer</h2>
+
+<h3>2.1 Directly confirmed</h3>
+<ul>
+  <li><strong>TypeScript</strong> end-to-end (engineer job descriptions, About page)</li>
+  <li><strong>Vue.js</strong> for the web frontend (About page) — interesting choice; most YC AI startups go React/Next. Vue means Felix (CTO, previously Sagacity) brought it from prior projects.</li>
+  <li>Backend: TypeScript / Node (inferred from the full-stack engineer hires)</li>
+  <li><strong>PWA</strong> with offline support (marketing copy on /, /press)</li>
+  <li>Native mobile: iOS + Android (App Store presence) — likely a hybrid (Capacitor/Ionic) given the Vue stack and small engineering team. Educato sold itself as the same UI on three surfaces.</li>
+</ul>
+
+<h3>2.2 Strongly inferred</h3>
+<ul>
+  <li><strong>AI vendor: undisclosed publicly, but almost certainly OpenAI</strong>. Why: (a) S24 YC startups default to GPT-4o because that's what YC pushes; (b) "AI essay grading with individualized feedback" — OpenAI's structured-output + long-context handling was best in mid-2024; (c) Anthropic API access in 2024 was still limited and OpenAI had the better-priced bulk-content tier. Likely supplemented now with Claude or open-weights for cost optimisation, but core stack = OpenAI Assistants API or chat-completions with custom prompting.</li>
+  <li><strong>Vector DB / RAG</strong>: "linked to the original content" implies they keep citations to the source textbook chunk. This is RAG. Pinecone or Supabase pgvector are the obvious choices for a 10-person team.</li>
+  <li><strong>Spaced repetition algorithm</strong>: SM-2 (Anki's classic) or FSRS (newer, better). They use "adaptive flashcards" language consistent with either.</li>
+  <li><strong>Auth</strong>: Probably Supabase Auth or Clerk (industry default for small TS teams). They support email + likely Google. The /app/start page is auth-gated so I couldn't confirm.</li>
+  <li><strong>Hosting</strong>: Vercel for the web (Vue.js + serverless), with Cloudflare in front. Vercel is the path of least resistance for a Vue/Nuxt or Vite-built SPA.</li>
+  <li><strong>Database</strong>: Postgres (Supabase or Neon). Question content + user progress + spaced-repetition state lives here.</li>
+</ul>
+
+<h3>2.3 What we don't know</h3>
+<ul>
+  <li>Whether they fine-tune their own models or stick to base + prompting + RAG</li>
+  <li>Whether question generation is fully automated or has a "first draft from AI, edit by human content expert" loop (the latter is what Oana Stoica's role suggests)</li>
+  <li>Per-exam content economics: cost per generated-then-validated question</li>
+  <li>How they handle figure/diagram questions (a big problem for EAPCET physics)</li>
+</ul>
+
+<div class="callout">
+  <strong>Strategic note:</strong> Their entire tech stack is replaceable. None of it is a moat. The moat is <em>the question bank + the validation discipline</em> — and we're building exactly that.
+</div>
+
+<h2 id="ai-use">3. How Educato uses AI — the 6 product surfaces</h2>
+
+<p>From the YC launch description + product features list + the third-party Taalk review, AI appears in six distinct places. Each one is a separate prompt-engineering + UX problem:</p>
+
+<div class="grid-2">
+  <div>
+    <h4>1. Question generation</h4>
+    <p>AI reads textbook passages / past papers, generates exam-style MCQs (and free-response for essay exams). <strong>Human-in-the-loop validation</strong> before publishing. Every question is "linked to the original content" — meaning they keep a citation back to the source chunk.</p>
+  </div>
+  <div>
+    <h4>2. Concept explanations / lesson text</h4>
+    <p>"Comprehensive study materials with clear explanations, examples, and multimedia." Likely AI-drafted then editor-polished. Lessons are <em>structured</em>: definition → example → counter-example → check-question.</p>
+  </div>
+  <div>
+    <h4>3. AI tutor / on-demand clarification</h4>
+    <p>"AI integration provides additional clarification when needed" (testimonial). This is the in-question "ask the AI why" surface — when a student gets a question wrong, the AI explains <em>specifically</em> what they got wrong, not just the canonical solution. Adaptive to the student's misconception.</p>
+  </div>
+  <div>
+    <h4>4. Adaptive learning paths</h4>
+    <p>"Customized study plans with interactive quizzes and progress tracking." The AI assembles a per-user sequence of questions/topics based on what the student has mastered vs. struggled with. Functions as both a daily plan ("today: review weak topics from yesterday + 10 new questions on X") and a long-arc plan ("you have 47 days till the exam, here's your week-by-week roadmap").</p>
+  </div>
+  <div>
+    <h4>5. AI essay grading</h4>
+    <p>"AI essay grading with individualized feedback" — for exams that include written sections (CFA written, some medical exams, IB extended essay). Returns a rubric-scored grade + specific improvement notes. NOT applicable to our EAPCET focus (pure MCQ) — explicitly out of scope.</p>
+  </div>
+  <div>
+    <h4>6. Spaced-repetition flashcards</h4>
+    <p>"Interactive flashcards that adapt to your learning pace and help reinforce long-term retention." AI may write the flashcards (front/back) from source material, but the scheduling itself (when to show again) is deterministic algorithm (SM-2 or FSRS), not LLM-judged.</p>
+  </div>
+</div>
+
+<h3>3.1 The architecture, end-to-end (my reconstruction)</h3>
+<p>If I were the CTO of Educato, here's how I'd wire all of this — and the evidence suggests Felix has wired it roughly this way:</p>
+
+<pre>┌─────────────────────────────────────────────────────────────────┐
+│                    CONTENT GENERATION PIPELINE                  │
+│                                                                  │
+│  Textbook PDF / past paper                                       │
+│        │                                                         │
+│        ▼                                                         │
+│  Chunker (split into ~500-token passages, keep citations)        │
+│        │                                                         │
+│        ▼                                                         │
+│  Embeddings → vector store (Pinecone/pgvector)                   │
+│        │                                                         │
+│        ▼                                                         │
+│  Prompt: "Generate N MCQ from this chunk that test concept X"    │
+│        │                                                         │
+│        ▼                                                         │
+│  LLM (GPT-4o, prob.) → draft questions w/ source citation        │
+│        │                                                         │
+│        ▼                                                         │
+│  Human validator (Oana + outsourced) → approve/edit/reject       │
+│        │                                                         │
+│        ▼                                                         │
+│  Published questions table                                       │
+└─────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────┐
+│                    STUDENT-FACING RUNTIME                       │
+│                                                                  │
+│  User answers a question                                         │
+│        │                                                         │
+│        ├─► Right? → SRS updates next-review date (FSRS-style)    │
+│        │                                                         │
+│        └─► Wrong? → Show canonical explanation                   │
+│                          │                                       │
+│                          ▼                                       │
+│                  "Still confused? Ask the AI"                    │
+│                          │                                       │
+│                          ▼                                       │
+│            LLM with context: { question, options, user's pick,   │
+│              canonical solution, source chunk } → personalized   │
+│              explanation that targets *the misconception*        │
+└─────────────────────────────────────────────────────────────────┘</pre>
+
+<h2 id="ai-effective">4. How <em>effectively</em> Educato uses AI</h2>
+
+<p>Three pieces of evidence, in order of how much I trust them:</p>
+
+<h3>4.1 Their own A/B-style data (most credible)</h3>
+<blockquote>
+  "What 1,228 Mock Exam Scores Reveal About Educato Users and Online Exam Prep" — analysis showing premium feature users scored <strong>5 percentage points higher</strong> on mock exams than free-tier participants.
+  <cite>Educato blog, 17 March 2026</cite>
+</blockquote>
+<p>A 5pp uplift on a mock exam is meaningful, especially in exams scored 0–100 where the difference between "qualified" and "not" can be 2–3 points. <em>Caveat:</em> this is a selection effect, not a causal claim — paying users are more motivated. Still, "+5pp" is the kind of number a sales page can defend, and it implies their AI-tutor + adaptive features are at least correlated with better outcomes.</p>
+
+<h3>4.2 User testimonial pattern</h3>
+<p>The on-site testimonials consistently call out: (a) "questions feel like the real exam"; (b) "the explanations actually make me understand"; (c) "the AI clarification helps when I'm stuck". They are <em>not</em> bragging about the AI as a chatbot; they're bragging about it as a tutor that catches confusion. That's the right pedagogical framing.</p>
+
+<h3>4.3 Pattern of feature shipping</h3>
+<p>Their blog cadence is sparse (3 posts in 18 months), which is normal for a 10-person early-stage company — they're shipping product, not writing thought-leadership. The features they HAVE shipped — flashcards, mock simulations, lessons, AI tutor, study plans, community — cover the full pedagogical loop (learn → practice → simulate → review). Nothing screams "we built one cool AI demo and ignored everything else", which is the standard YC EdTech failure mode.</p>
+
+<h3>4.4 Where they're probably weak</h3>
+<ul>
+  <li><strong>Long-tail exam quality.</strong> 2,900+ exams generated by AI with one full-time content reviewer means the bottom 80% of exams probably have shakier content than the flagship IMAT/NCLEX. Their reviews on third-party sites would tell us — but most reviews focus on the top exams.</li>
+  <li><strong>Indian-language and Indian-syllabus exams: not served.</strong> Confirmed via spot-check — no EAPCET, JEE, NEET, KCET, CUET in their list.</li>
+  <li><strong>Per-question depth.</strong> They don't appear to have anything like our <strong>T.A.R. (Quick Method)</strong> vs <strong>D.E.E.P. (full step-by-step)</strong> dual explanation. Their explanations look like single-mode "full solution" blocks. This is a real edge for us, if we keep it sharp.</li>
+</ul>
+
+<h2 id="pedagogy">5. The pedagogical model (the science behind it)</h2>
+
+<p>Educato is explicit about three pedagogical techniques:</p>
+
+<table>
+  <tr><th>Technique</th><th>What it is</th><th>Where Educato applies it</th></tr>
+  <tr><td><strong>Active recall</strong></td><td>Force the learner to retrieve information from memory (vs. re-reading). Decades of evidence that this is the single highest-yield study technique.</td><td>Every question session, flashcards, mock tests.</td></tr>
+  <tr><td><strong>Spaced repetition</strong></td><td>Review items at increasing intervals (1 day, 3 days, 1 week, 1 month). Exploits the forgetting curve.</td><td>Flashcards mainly; possibly also questions ("review this question in 4 days").</td></tr>
+  <tr><td><strong>Retrieval practice</strong></td><td>Testing as a learning method, not just an assessment method. Closely related to active recall.</td><td>Question banks, quizzes.</td></tr>
+</table>
+
+<p>All three are evidence-based. None are novel. <strong>The novelty is the operational discipline — having AI generate enough content to power these techniques at the scale of 10,000 exams.</strong> Building 2,900 well-structured exam banks the traditional way would cost $50M+. AI brings that cost down by ~100×.</p>
+
+<h2 id="concepts">6. How Educato helps students understand concepts</h2>
+
+<p>This is the most important section for us because it's where we can directly steal pattern. Based on the testimonials + the product features list, their concept-explanation flow appears to work like this:</p>
+
+<ol>
+  <li><strong>Static "Lesson" pages per topic</strong> — pre-written, multimedia, structured (definition / example / common pitfall / check-yourself). The AI drafts these; human polishes; once published they're static for all users.</li>
+  <li><strong>Question-attached canonical explanation</strong> — every question has a written explanation visible after answering (right or wrong). This is the equivalent of our D.E.E.P. step-by-step. Educato's explanations are reportedly clear and citation-linked to the source.</li>
+  <li><strong>"Ask the AI for clarification"</strong> — this is the surface where AI becomes genuinely tutor-like. When the student is still confused, they can chat with an AI that has the question + their chosen answer + the canonical solution in context. The AI is forced to answer their <em>specific</em> confusion, not the generic version.</li>
+  <li><strong>Misconception-targeted feedback</strong> — when you pick option B and the answer is option A, Educato's AI ideally responds with "you picked B which usually comes from thinking X. Here's why X is incorrect: …" — this is a small but huge UX win. Doesn't just re-explain the right answer; it diagnoses <em>your</em> mistake.</li>
+  <li><strong>Spaced re-encounter</strong> — concepts you struggled with get put back in front of you on a schedule, so the explanation lands again when you've forgotten parts of it.</li>
+</ol>
+
+<p>The architecture for #3 and #4 is genuinely simple — it's a single LLM call per "ask AI" tap, with a tight system prompt and the question+attempt as context. This is 1–2 weeks of work.</p>
+
+<h2 id="vsdrut">7. Educato vs Drut — feature parity table</h2>
+
+<table>
+  <tr><th>Capability</th><th>Educato</th><th>Drut today</th><th>Drut gap</th></tr>
+  <tr><td>AI-generated question bank, source-grounded, human-validated</td><td class="center yes">✓</td><td class="center yes">✓</td><td>—</td></tr>
+  <tr><td>Per-question step-by-step explanation</td><td class="center yes">✓ (single mode)</td><td class="center yes">✓ D.E.E.P. (4-stage)</td><td>We're <em>ahead</em> here</td></tr>
+  <tr><td>Per-question "quick method" / shortcut</td><td class="center no">—</td><td class="center yes">✓ T.A.R.</td><td>We're <em>ahead</em></td></tr>
+  <tr><td>Adversarial audit gate</td><td class="center partial">Single content reviewer</td><td class="center yes">✓ 11-agent adversarial</td><td>We're <em>ahead</em> on quality discipline</td></tr>
+  <tr><td>AI tutor chat ("ask the AI")</td><td class="center yes">✓</td><td class="center no">—</td><td><strong>Big gap. ~1 week to build.</strong></td></tr>
+  <tr><td>Misconception-targeted feedback (knows what <em>you</em> chose)</td><td class="center yes">✓</td><td class="center no">—</td><td><strong>Big gap. ~3 days to build (extension of D.E.E.P.).</strong></td></tr>
+  <tr><td>Spaced-repetition review scheduling</td><td class="center yes">✓</td><td class="center no">—</td><td><strong>Big gap. ~2 weeks (FSRS algo + UX).</strong></td></tr>
+  <tr><td>Adaptive daily / weekly study plan</td><td class="center yes">✓</td><td class="center partial">Weak-topic surfaces; no full plan</td><td><strong>Medium gap. ~1 week.</strong></td></tr>
+  <tr><td>Realistic timed mock exams (full-length simulation)</td><td class="center yes">✓</td><td class="center partial">Sprint mode, not full mock</td><td><strong>Medium gap. ~5 days.</strong></td></tr>
+  <tr><td>Flashcards</td><td class="center yes">✓</td><td class="center no">—</td><td>Medium gap. Coupled to spaced-rep work.</td></tr>
+  <tr><td>AI essay grading</td><td class="center yes">✓</td><td class="center no">—</td><td>N/A — EAPCET is pure MCQ. Out of scope.</td></tr>
+  <tr><td>Community / peer simulations</td><td class="center yes">✓</td><td class="center no">—</td><td>Defer post-beta. Not in critical path.</td></tr>
+  <tr><td>Mobile apps (iOS + Android)</td><td class="center yes">✓ Native</td><td class="center yes">✓ Expo</td><td>Tied — both have apps</td></tr>
+  <tr><td>PWA / offline mode</td><td class="center yes">✓</td><td class="center no">—</td><td>Small gap. ~3 days.</td></tr>
+  <tr><td>Payments</td><td class="center yes">✓ (Stripe most likely)</td><td class="center partial">Razorpay scaffolded (Sprint 1 PR)</td><td>Closing this week</td></tr>
+  <tr><td>Google sign-in</td><td class="center yes">✓ (probably)</td><td class="center yes">✓ (Sprint 2 PR)</td><td>Closing this week</td></tr>
+  <tr><td>Question report flow</td><td class="center yes">✓ (standard)</td><td class="center yes">✓ (Sprint 1 PR)</td><td>Closing this week</td></tr>
+  <tr><td>Geography / syllabus fit for EAPCET</td><td class="center no">No India coverage</td><td class="center yes">100% EAPCET</td><td>Our moat</td></tr>
+</table>
+
+<h2 id="replicate">8. What to copy, in priority order</h2>
+
+<p>If we add nothing to the current Drut plan, we ship a solid EAPCET MCQ trainer. If we add the four things below, we ship something that <em>feels</em> as smart as Educato — for our geography, with our better explanation depth.</p>
+
+<h3>Priority 1 — AI tutor chat ("ask the AI") · ~1 week</h3>
+<p>Add a button on every Practice / Sprint question result screen labeled "Still confused? Ask the AI". It opens a small chat panel with the question + options + the student's choice + the D.E.E.P. solution pre-loaded into the system prompt. Single endpoint, single model call per turn, no agent orchestration. Likely 5 days of build + 1 day of prompt tuning. Highest perceived-intelligence return per dev-day of any feature on this list.</p>
+
+<h3>Priority 2 — Misconception-targeted PROOF rewriting · ~3 days</h3>
+<p>Our D.E.E.P.'s PROOF step already attributes each wrong option to a specific mistake. We can <em>render</em> that targeted to the student: when they pick option B, the PROOF view leads with "you picked B — here's the mistake that landed you there: …" and pushes the canonical solution second. Pure UI work; no new AI calls. ~3 days.</p>
+
+<h3>Priority 3 — Spaced-repetition for questions + flashcards · ~2 weeks</h3>
+<p>Implement <strong>FSRS</strong> (Free Spaced Repetition Scheduler, the modern Anki algorithm) over the question bank. After a session, schedule questions the user got wrong (or weakly-correct) for re-encounter at 1d → 3d → 7d → 21d intervals. Add a "Reviews due today" surface on Dashboard. Spaced repetition is the single highest-evidence learning technique in cognitive science; building it is non-negotiable for any serious exam-prep product. ~10 days for the algo + UX + Dashboard wiring.</p>
+
+<h3>Priority 4 — Realistic timed mock simulations · ~5 days</h3>
+<p>EAPCET is 160 questions in 180 minutes. Build a mock-test mode that locks the UI into exam-style behaviour: timer, no solutions during, full results + breakdown after. Lift heavily from existing Sprint engine. ~5 days.</p>
+
+<h3>Priority 5 — Adaptive 7-day study plan · ~1 week</h3>
+<p>Once spaced-repetition exists, the "plan" surface mostly writes itself: "today's plan = N reviews due + M new questions on your weakest 3 topics + K minutes of lesson reading on topic X". A small LLM call once a week can write a higher-level narrative ("focus on Vectors this week"). ~5 days.</p>
+
+<h3>Priority 6 — PWA + offline · ~3 days</h3>
+<p>Service worker + offline-first IndexedDB cache of the last N questions practiced + solutions. Lets users continue practicing on a flaky train/bus. Mobile users especially. ~3 days.</p>
+
+<div class="callout">
+  <strong>Total cost to match Educato's perceived AI intelligence:</strong> roughly <strong>6 weeks of focused build</strong>, sequenced after the in-flight Sprint 1–4 closed-beta work. Order matters: priorities 1 + 2 deliver the biggest "this feels smart" jump for the smallest spend, so they should go in first.
+</div>
+
+<h2 id="avoid">9. What <em>not</em> to copy</h2>
+
+<ul>
+  <li><strong>Going wide on exams.</strong> Educato's whole strategy is breadth (10,000 exams). For us, that's a trap. EAPCET → JEE → NEET → CUET is enough to be the dominant Indian-syllabus AI prep player. Stay narrow, go deep, win the geography.</li>
+  <li><strong>AI essay grading.</strong> Zero EAPCET use case. Don't build it.</li>
+  <li><strong>Community / peer simulation.</strong> Their "live with peers" feature is community theatre — high engineering cost, fragile (depends on enough concurrent users), unproven uplift. Defer indefinitely.</li>
+  <li><strong>Vue.js.</strong> Their stack works for them because Felix knows it. We're React/Vite/Expo — don't rewrite.</li>
+  <li><strong>Their pricing model.</strong> Educato's pricing is US/EU/global — likely $20-50/month. For India that's 5-10× over the price ceiling. Our ₹299/mo (~$3.60) is correct for the market.</li>
+  <li><strong>Marketing "10,000 exams" before they exist.</strong> Don't oversell coverage. EAPCET parents and students Google specifics — if we say "EAPCET Physics Ch 7 covered" and it's not, we lose trust fast.</li>
+</ul>
+
+<h2>One-page action summary</h2>
+
+<table>
+  <tr><th>Action</th><th>Why</th><th>Cost</th><th>When</th></tr>
+  <tr><td>Add "Ask the AI" tutor on every question result</td><td>Closes the single biggest perceived-intelligence gap vs Educato</td><td>~5 days</td><td>Right after Sprint 4</td></tr>
+  <tr><td>Render PROOF as misconception-targeted text</td><td>Higher per-question value; UI-only change</td><td>~3 days</td><td>Bundle with above</td></tr>
+  <tr><td>Implement FSRS spaced-repetition over questions</td><td>Single highest-evidence learning technique; defensible retention claim</td><td>~10 days</td><td>Sprint 5</td></tr>
+  <tr><td>Add full-length timed mock exam mode (160Q, 180min)</td><td>Pre-EAPCET, students <em>need</em> to simulate exam conditions</td><td>~5 days</td><td>Sprint 6</td></tr>
+  <tr><td>AI-narrated daily/weekly study plan</td><td>Wraps spaced-rep in a coachy UX; great for ARPU</td><td>~5 days</td><td>Sprint 7</td></tr>
+  <tr><td>PWA + offline-first cache</td><td>India mobile users have flaky connectivity</td><td>~3 days</td><td>Sprint 7</td></tr>
+  <tr><td>Track our own "+Npp on mock" metric and publish</td><td>Educato's blog post proved this kind of data sells</td><td>Ongoing</td><td>Once 100+ paying users</td></tr>
+</table>
+
+<h2 id="sources">Sources</h2>
+<footer>
+<ol>
+  <li><a href="https://www.educato.com/">Educato — homepage (product features, traction claims)</a></li>
+  <li><a href="https://www.educato.com/about">Educato — about page (team, founders, stack signals: TypeScript + Vue.js)</a></li>
+  <li><a href="https://www.educato.com/blog">Educato — blog index (3 posts, incl. "1,228 mock exam scores" data)</a></li>
+  <li><a href="https://www.educato.com/blog/posts/what-1-228-mock-exam-scores-reveal-about-educato-users-and-online-exam-prep">"What 1,228 Mock Exam Scores Reveal" — 5pp premium uplift data</a></li>
+  <li><a href="https://www.educato.com/press">Educato — press page (Y Combinator featured, traction figures)</a></li>
+  <li><a href="https://www.ycombinator.com/companies/educato">Y Combinator — Educato company page</a></li>
+  <li><a href="https://www.ycombinator.com/launches/LNo-educato-duolingo-for-every-exam">YC Launch — "Educato: Duolingo for every exam" (the key tech description)</a></li>
+  <li><a href="https://www.workatastartup.com/companies/educato-ai">Work at a Startup — Educato AI (job listings → tech stack signals)</a></li>
+  <li><a href="https://www.crunchbase.com/organization/educato-ai">Crunchbase — Educato AI funding profile</a></li>
+  <li><a href="https://www.crunchbase.com/funding_round/educato-ai-pre-seed--a69e70dc">Crunchbase — Pre-seed round, May 28 2024</a></li>
+  <li><a href="https://www.linkedin.com/company/educato-ai">LinkedIn — Educato AI company page</a></li>
+  <li><a href="https://www.linkedin.com/posts/danioros_thrilled-to-announce-an-investment-in-educato-activity-7261649856161595392-osQE">Dan Oros — Investment announcement post (Nov 2024)</a></li>
+  <li><a href="https://taalk.com/educato-ai/">Taalk — third-party analysis of Educato AI</a></li>
+  <li><a href="https://www.educato.com/blog/imat/posts/imat-exam-structure-scoring-complete-guide-to-format-subjects-and-ranking">Educato blog — IMAT structure (sample of their lesson/content quality)</a></li>
+  <li><a href="https://arxiv.org/pdf/2512.11882">"Pedagogically Controlled, Curriculum-Constrained AI Tutor" (academic reference for the tutor architecture pattern we'd build)</a></li>
+  <li><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC12453719/">LPITutor — peer-reviewed AI tutor using RAG + prompt engineering (reference)</a></li>
+</ol>
+<p style="margin-top: 20px; padding-top: 14px; border-top: 1px solid var(--hair);">Audit prepared by Claude Opus for Pranav · 17 June 2026 · <code>docs/competitive/educato-audit.html</code></p>
+</footer>
+
+</div>
+</body>
+</html>

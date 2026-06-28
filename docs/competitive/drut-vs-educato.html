@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Drut vs Educato — Atom-Level Comparison of Model & Process</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{
+    --ink-1:#1b1c19;--ink-2:#3a3b36;--ink-3:#6a6c62;--paper:#faf9f5;--card:#fff;
+    --hair:#e7e4d7;--lime:#5cbb21;--lime-deep:#3d7a0f;--coral:#d8552e;--amber:#fef3c7;
+    --red:#b00020;--blue:#185fa5;--blue-bg:#e6f1fb;
+  }
+  *{box-sizing:border-box}
+  body{font-family:ui-sans-serif,-apple-system,"Segoe UI","Helvetica Neue",sans-serif;line-height:1.55;color:var(--ink-1);background:var(--paper);margin:0;padding:40px 20px 90px}
+  .wrap{max-width:980px;margin:0 auto}
+  header.title{background:linear-gradient(135deg,#fff,#faf9f5);border:1px solid var(--hair);border-radius:16px;padding:34px;margin-bottom:26px}
+  .eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.13em;color:var(--coral);font-weight:700;margin:0 0 10px}
+  h1{font-size:31px;line-height:1.12;margin:0 0 8px;letter-spacing:-.01em}
+  .subtitle{color:var(--ink-3);font-size:14.5px;margin:0;max-width:70ch}
+  .meta{color:var(--ink-3);font-size:12px;margin:16px 0 0}
+  nav.toc{background:#fff;border:1px solid var(--hair);border-radius:12px;padding:18px 22px;margin-bottom:28px}
+  nav.toc strong{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--ink-3)}
+  nav.toc ol{margin:10px 0 0;padding-left:20px;columns:2;column-gap:34px;font-size:13px}
+  nav.toc li{margin:4px 0;break-inside:avoid}
+  nav.toc a{color:var(--ink-1);text-decoration:none}
+  nav.toc a:hover{color:var(--lime-deep);text-decoration:underline}
+  h2{font-size:23px;margin:46px 0 6px;padding-top:16px;border-top:2px solid var(--hair);letter-spacing:-.005em}
+  h3{font-size:16.5px;margin:24px 0 8px}
+  h4{font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-3);margin:18px 0 6px}
+  p{margin:9px 0 14px}
+  .lede{font-size:15.5px;color:var(--ink-2)}
+  ul,ol{margin:6px 0 14px;padding-left:22px}
+  li{margin:5px 0}
+  table{width:100%;border-collapse:collapse;margin:14px 0 20px;font-size:13px}
+  th,td{text-align:left;padding:9px 11px;border-bottom:1px solid var(--hair);vertical-align:top}
+  th{background:#f4f2ea;font-weight:600;font-size:12px}
+  thead th{position:relative}
+  .col-drut{color:var(--lime-deep)}
+  .col-edu{color:var(--blue)}
+  td.center{text-align:center}
+  .yes{color:var(--lime-deep);font-weight:600}
+  .no{color:var(--red);font-weight:600}
+  .partial{color:#c47b00;font-weight:600}
+  code{background:#f1efe6;padding:2px 5px;border-radius:3px;font-size:12px;font-family:ui-monospace,"SF Mono",Menlo,monospace}
+  pre{background:var(--ink-1);color:#f3f1e7;padding:14px 18px;border-radius:8px;overflow-x:auto;font-size:12px;line-height:1.5;font-family:ui-monospace,Menlo,monospace}
+  .callout{background:var(--amber);border-radius:8px;padding:13px 17px;margin:15px 0;font-size:13.5px;border-left:3px solid #f59e0b}
+  .callout-lime{background:#f0f6e8;border-left-color:var(--lime)}
+  .callout-coral{background:#fcefe9;border-left-color:var(--coral)}
+  .callout-blue{background:var(--blue-bg);border-left-color:var(--blue)}
+  .callout-red{background:#fdecec;border-left-color:var(--red)}
+  .english{background:#f0f6e8;border-radius:8px;padding:12px 16px;margin:14px 0;font-size:13.5px;border-left:3px solid var(--lime)}
+  .english strong{color:var(--lime-deep)}
+  .pill{display:inline-block;background:#efece1;color:var(--ink-2);padding:2px 9px;border-radius:999px;font-size:11px;font-weight:600;margin-right:4px}
+  .pill-drut{background:#e9f3dc;color:var(--lime-deep)}
+  .pill-edu{background:var(--blue-bg);color:var(--blue)}
+  .pill-red{background:#ffe1e0;color:var(--red)}
+  .pill-amber{background:#faecd2;color:#8a5a06}
+  hr.s{border:0;border-top:1px solid var(--hair);margin:30px 0}
+  footer{margin-top:64px;padding-top:24px;border-top:2px solid var(--hair);font-size:12px;color:var(--ink-3)}
+  .scorebar{display:flex;gap:0;height:26px;border-radius:6px;overflow:hidden;margin:6px 0 2px;font-size:11px;font-weight:600}
+  .scorebar span{display:flex;align-items:center;justify-content:center;color:#fff}
+  @media print{
+    body{background:#fff;padding:0}.wrap{max-width:none}
+    header.title{background:#fff;border:0;padding:0 0 18px}
+    nav.toc{border:0;padding:0;columns:1}
+    h2{page-break-after:avoid}table,pre,.callout,.english{page-break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="title">
+  <p class="eyebrow">Competitive teardown · model + process · atom level</p>
+  <h1>Drut vs Educato</h1>
+  <p class="subtitle">A code-verified, end-to-end comparison of how each company makes its content (the process) and how each teaches (the model) — followed by an honest ledger of where Drut's approach wins, where it loses, and where to deploy AI for the highest return.</p>
+  <p class="meta">Compiled 2026-06-18. Educato side = live walkthrough of Pranav's logged-in account (see <a href="educato-audit.html">educato-audit.html</a> + <a href="educato-audit-addendum.html">addendum</a>). Drut side = direct reading of the actual codebase (generation edge functions, Zod schemas, RAG, mastery SQL, analytics RPCs, taxonomy) — not memory. Every claim about Drut is traceable to a file.</p>
+</header>
+
+<nav class="toc">
+  <strong>Contents</strong>
+  <ol>
+    <li><a href="#thesis">0. The one-paragraph thesis</a></li>
+    <li><a href="#framing">1. Framing: what Drut actually is</a></li>
+    <li><a href="#glance">2. The two companies at a glance</a></li>
+    <li><a href="#process">3. PROCESS — how content gets made</a></li>
+    <li><a href="#aimap">4. AI-usage map (both sides)</a></li>
+    <li><a href="#model">5. MODEL — how each one teaches</a></li>
+    <li><a href="#pros">6. Pros of Drut's approach</a></li>
+    <li><a href="#cons">7. Cons of Drut's approach</a></li>
+    <li><a href="#smartai">8. Where to use AI smartly</a></li>
+    <li><a href="#fixlist">9. The fix list (prioritised)</a></li>
+  </ol>
+</nav>
+
+<h2 id="thesis">0. The one-paragraph thesis</h2>
+<p class="lede"><strong>Educato and Drut have made opposite bets.</strong> Educato spends its AI budget on the <em>live student experience</em> — a named tutor, concept explanations, a real-time predictive grade — and leans on a thin bank of real past-paper questions (~8 per topic). Drut spends its AI budget on <em>manufacturing</em> — a rigorous, textbook-grounded, adversarially-audited question factory targeting 150 questions per chapter, each carrying a dual fast/deep solution (T.A.R. + D.E.E.P.) and deep per-attempt analytics — but currently ships <em>zero</em> AI in the live student loop. Drut's pedagogy-per-question and its analytics are genuinely deeper than Educato's. Educato's engagement loop and its "teach, then test" structure are genuinely better than Drut's. The two are strong in mirror-image places.</p>
+
+<div class="english">
+  <strong>In plain English:</strong> Educato makes studying feel alive and personal but has shallow content. Drut is building deep, rigorous content but the studying experience is currently static — a student answers a question, sees a (very good) solution, and moves on, with no AI helping them in the moment and no single number telling them if they're on track. We out-build them on substance; they out-build us on the feeling of momentum. The fix is to put our AI where they put theirs — into the live experience — on top of content that's already deeper than theirs.
+</div>
+
+<h2 id="framing">1. Framing: what Drut actually is (and what it isn't)</h2>
+<p>Drut is a <strong>multi-exam, multi-state competitive-exam platform</strong>. EAPCET (AP + Telangana) is the <strong>MVP beachhead</strong> — a deliberate strategic decision to prove the model on one exam before fanning out, given the time and effort each additional exam takes. EAPCET focus is <em>not</em> a product advantage and is never listed as a "pro" in this document. The strengths below are strengths of the <strong>approach and the architecture</strong>, which are exam-agnostic by design.</p>
+
+<div class="callout callout-amber">
+  <strong>Honest caveat (this is itself a "con", expanded in §7):</strong> the architecture is exam-agnostic in <em>shape</em> — exams are data rows (<code>ExamDef[]</code> in <code>packages/shared/src/lib/taxonomy.ts</code>), helpers are generic, ingestion is keyed by subject, time-targets are per-exam. But the <em>live</em> taxonomy currently contains only <code>ap_eapcet</code> and <code>ts_eapcet</code>; the mobile app hardcodes a two-exam union type; and there is no Biology syllabus yet (so NEET isn't reachable without new content). "We're not just an EAPCET app" is true of the <em>design and intent</em>, and the foundation genuinely generalises — but turning that into shipped multi-exam reality is real work, not a config flip. The vision is sound; the delivery gap is the thing to close.</p>
+</div>
+
+<h2 id="glance">2. The two companies at a glance</h2>
+<table>
+  <tr><th>Dimension</th><th class="col-drut">Drut</th><th class="col-edu">Educato</th></tr>
+  <tr><td><strong>Identity</strong></td><td>Multi-exam Indian competitive-prep platform; EAPCET beachhead</td><td>"Duolingo for every exam" — YC S24, ~$0.5M pre-seed, 3 founders, ~130k claimed users, 2,900+ exams globally (incl. Indian IAT/IISER)</td></tr>
+  <tr><td><strong>Core bet</strong></td><td>AI into <em>manufacturing</em> deep content</td><td>AI into the <em>live experience</em>; PYQ for questions</td></tr>
+  <tr><td><strong>Backend stack</strong></td><td>Supabase (Postgres + RLS + Deno edge functions)</td><td><strong>Also Supabase</strong> (<code>api.educato.com/rest/v1/rpc/…</code> = PostgREST), Nuxt/Vue frontend</td></tr>
+  <tr><td><strong>Question depth / topic</strong></td><td>Target <strong>150/chapter</strong> (30E/50M/20H)</td><td><strong>~8/topic</strong> (range 3–14); ~422 across 4 subjects</td></tr>
+  <tr><td><strong>Question source</strong></td><td>Mostly PYQ today (~700 EAPCET); generation factory ramping</td><td>Mostly PYQ (7 papers 2017–24, ~424 Q)</td></tr>
+  <tr><td><strong>Per-question teaching</strong></td><td><strong>T.A.R.</strong> (3-step shortcut) + <strong>D.E.E.P.</strong> (4-phase full solution)</td><td>1–2 sentence per-option explanation + crowd %</td></tr>
+  <tr><td><strong>Concept / lesson layer</strong></td><td><span class="no">None</span> (question-only)</td><td><span class="yes">Yes</span> — interleaved concept+question study sessions</td></tr>
+  <tr><td><strong>AI tutor</strong></td><td><span class="no">None</span></td><td><span class="yes">"Plumi"</span> — named, context-aware, voice, web-search</td></tr>
+  <tr><td><strong>Predictive grade</strong></td><td><span class="no">None</span> (marketing copy only)</td><td><span class="yes">Yes</span> — real-time, topic-attributed</td></tr>
+  <tr><td><strong>Spaced repetition</strong></td><td><span class="no">Stub only</span> (TODO + fake alert)</td><td><span class="yes">Claimed</span> (SR flashcards)</td></tr>
+  <tr><td><strong>Analytics depth</strong></td><td><span class="yes">10 analytics RPCs</span> (distractor, stamina, velocity…)</td><td>Grade estimate + streak (shallow, visible)</td></tr>
+  <tr><td><strong>Mastery model</strong></td><td><span class="yes">Pattern-level FSM</span> on <code>fsm_tag</code> + speed</td><td>Topic-level (visible)</td></tr>
+  <tr><td><strong>Gamification</strong></td><td>Streak only</td><td>Energy economy (⚡2/action) + streak</td></tr>
+</table>
+
+<h2 id="process">3. PROCESS — how content gets made (atom level)</h2>
+
+<h3>3.1 Question sourcing</h3>
+<table>
+  <tr><th></th><th class="col-drut">Drut</th><th class="col-edu">Educato</th></tr>
+  <tr><td>Primary source</td><td>Real PYQ (~700 EAPCET, "mostly PYQs") + a Claude-driven generation factory now adding 150/chapter (Physics ch1–7 done)</td><td>Real PYQ — 7 IAT papers 2017–2024 (~424 Q). Per their YC launch they also generate "from textbooks or past exams with human-in-the-loop validation"</td></tr>
+  <tr><td>Per-topic depth</td><td><span class="yes">High once filled</span> — 150/chapter design = ~15–20× Educato</td><td><span class="partial">Thin</span> — ~8/topic, but 100% authentic PYQ</td></tr>
+  <tr><td>Provenance</td><td>Each generated Q traces to <code>sourcePages</code> (textbook page numbers); source label <code>claude-chat-&lt;date&gt;-&lt;board&gt;-&lt;class&gt;-&lt;subject&gt;-ch&lt;N&gt;</code>. <span class="no">No structured PYQ year column</span></td><td>Visible source tag per question (e.g. <code>#2017-eng-iat</code>) — students see the exact paper</td></tr>
+</table>
+
+<h3>3.2 The generation pipeline — Drut has TWO, and only one is real</h3>
+<p>This is the most important process finding. The codebase contains two pipelines:</p>
+
+<h4>Pipeline A — legacy server-side AI (effectively dead)</h4>
+<ul>
+  <li><code>generate-batch</code> / <code>generate-question</code> edge functions, "Universal Brain v4.0 — RAG-grounded."</li>
+  <li>Routes to Gemini <code>gemini-3-flash-preview</code>, with "Rogue Routing" trying a RunPod-hosted <code>PhysicsWallahAI/Aryabhata-1.0</code> for Math/Physics first.</li>
+  <li>RAG-grounded via <code>gemini-embedding-001</code> (768-dim) over a <code>textbook_chunks</code> table (~7,200 chunks).</li>
+  <li><strong>Why it's effectively dead:</strong> (1) gated off — <code>ALLOW_LIVE_AI_FALLBACK = false</code>; (2) the model id <code>gemini-3-flash-preview</code> is not a real released model and would 404 (hence the aggressive fallback to <code>gemini-1.5-flash</code>); (3) the RunPod endpoint is a hardcoded ephemeral IP, almost certainly offline; (4) the ~7,200 existing chunks were embedded with the now-<em>retired</em> <code>text-embedding-004</code> while new queries use <code>gemini-embedding-001</code> — a silent embedding-space mismatch that degrades retrieval quality.</li>
+</ul>
+
+<h4>Pipeline B — Claude-curated bulk import (the real one)</h4>
+<ul>
+  <li>Per <code>docs/practice-mode-architecture-v2.md</code>, server-side generation was <strong>strategically retired for MVP</strong> in favour of out-of-band curation.</li>
+  <li>Process (from <code>docs/question-generation/INSTRUCTIONS.md</code>): Claude reads the actual textbook PDF → enumerates subtopics with page ranges → generates batches of 50 → validates with <code>scripts/validate-bulk-import.mjs</code> → <strong>adversarially audits every Hard question</strong> with parallel agents (independent re-derivation, distractor mistake-path check, T.A.R. genuine-vs-relabelled, PROOF completeness) → Pranav uploads via Admin Bulk Import (his JWT).</li>
+  <li><strong>Ground-truth rule:</strong> "NEVER generate from memory. No PDF → no generation." Every question is grounded in a specific textbook page.</li>
+  <li><strong>Difficulty split:</strong> 30% Easy / 50% Medium / 20% Hard = <strong>45E / 75M / 30H per 150-question chapter</strong> (exactly the split you asked about earlier).</li>
+  <li><strong>Distractor engineering:</strong> each of the 3 wrong options is designed to map to a specific mistake (sign error, formula confusion, arithmetic slip) — so wrong answers are diagnostic.</li>
+</ul>
+
+<div class="english">
+  <strong>In plain English:</strong> Drut's "AI question factory" you may picture running on a server is essentially mothballed and partly broken. The questions that actually reach students are made by Claude reading the real textbook, generating in batches, getting the hard ones adversarially fact-checked, and then you uploading them. That's a <em>higher-quality</em> process than a server cranking out ungrounded questions — but it's manual and gated on you, so it doesn't scale on its own.
+</div>
+
+<h3>3.3 Verification / QA taxonomy</h3>
+<p>Drut has a genuine trust hierarchy (intended order): <code>v3-verified-pyq</code> &gt; <code>manual-curated</code> &gt; <code>manual</code> &gt; <code>v3-verified-textbook</code> &gt; <code>v3-verified-rag</code> &gt; <code>v3-unverified-ai</code>. Educato's QA is "human-in-the-loop validation" (their words) on a much smaller, mostly-PYQ set.</p>
+
+<div class="callout callout-red">
+  <strong>Bug found during this audit (worth fixing):</strong> the Admin Bulk Import edge function stamps <code>verification_status: 'admin-verified'</code>, but the docs, the migration, and the Bulk Import UI all expect <code>'manual-curated'</code>. Critically, <em>neither</em> value is in the mobile "trusted question" filter (<code>TRUSTED_STATUS_SUBSTRINGS</code> in <code>apps/mobile/hooks/usePracticeQuestions.ts</code>). So your hand-curated, highest-effort questions currently <strong>fall through to client-side keyword validation instead of being trusted</strong> — the opposite of intended. Cheap to fix (add the value to the filter), but it means the best content is being treated as least-trusted on mobile right now.
+</div>
+
+<h2 id="aimap">4. AI-usage map — where each company actually calls a model</h2>
+<table>
+  <tr><th>Touchpoint</th><th class="col-drut">Drut</th><th class="col-edu">Educato</th></tr>
+  <tr><td>Question generation</td><td><span class="yes">Claude</span> (via Claude Code, textbook-grounded + audited) — the strong path</td><td>Light — mostly PYQ; some generation w/ human validation</td></tr>
+  <tr><td>Concept / lesson text</td><td><span class="no">N/A</span> (no concept layer)</td><td><span class="yes">AI-generated</span> (hook → definition → examples)</td></tr>
+  <tr><td>Live tutor at moment of confusion</td><td><span class="no">None</span></td><td><span class="yes">Plumi</span> (GPT-4o / Claude-class, context-aware)</td></tr>
+  <tr><td>Predictive grade</td><td><span class="no">None</span></td><td><span class="yes">Model/heuristic</span> over answers, topic-weighted</td></tr>
+  <tr><td>Solution generation (runtime)</td><td>On-demand Gemini fallback exists; mostly pre-generated T.A.R./D.E.E.P.</td><td>Pre-generated per-option explanations</td></tr>
+  <tr><td>Embeddings / RAG</td><td>Built (<code>gemini-embedding-001</code>) but disabled + model-mismatched</td><td>Unknown; not student-visible</td></tr>
+</table>
+<p><strong>The asymmetry in one line:</strong> Drut uses AI <em>before</em> the student arrives (manufacturing). Educato uses AI <em>while</em> the student is there (tutoring, grading, explaining). Same tool, opposite placement.</p>
+
+<h2 id="model">5. MODEL — how each one teaches (atom level)</h2>
+
+<h3>5.1 The pedagogical unit</h3>
+<p><strong>Educato's unit is a Study Session</strong>: a 4–9 minute sequence that interleaves multi-part Concept cards (hook → definition → history → worked examples → matching exercise) with Question cards, ending on a predictive-grade verdict. Teach, then test, then score.</p>
+<p><strong>Drut's unit is a Question</strong>: the student picks exam/subject/chapter/difficulty/count and answers questions; each question carries two solution artifacts:</p>
+<ul>
+  <li><strong>T.A.R.</strong> (Trigger → Action → Result) — a 3-step shortcut, shown only when a genuine pattern shortcut exists (<code>theOptimalPath.exists</code>). UI tab: "Quick Method".</li>
+  <li><strong>D.E.E.P.</strong> (Diagnose → Extract → Execute → Proof) — a 4-phase full solution, always present. UI tab: "Full Solution".</li>
+</ul>
+<p>The pedagogical theory (from <code>docs/learning-framework.md</code>) is explicit and, frankly, sophisticated: it targets two failure modes — "the plodder" (masters concepts, runs out of time) and "the pattern-matcher" (memorises shortcuts, can't adapt) — by giving every question both a fast solve and a deep solve, side by side.</p>
+
+<div class="callout callout-lime">
+  <strong>This is Drut's sharpest pedagogical edge.</strong> Educato's wrong-answer screen gives a 1–2 sentence explanation per option. Drut gives a speed-optimised shortcut <em>and</em> a rigorous 4-phase derivation, designed to fight two distinct ways students fail an exam. Nothing in Educato matches the per-question teaching depth — provided the content is actually populated and rendered correctly.
+</div>
+
+<h3>5.2 Solution depth, side by side</h3>
+<table>
+  <tr><th></th><th class="col-drut">Drut</th><th class="col-edu">Educato</th></tr>
+  <tr><td>Shortcut method</td><td><span class="yes">T.A.R.</span> 3-step, pattern-triggered</td><td><span class="no">No</span> dedicated shortcut</td></tr>
+  <tr><td>Full method</td><td><span class="yes">D.E.E.P.</span> 4-phase, always</td><td>1–2 sentences per option</td></tr>
+  <tr><td>Per-option diagnosis</td><td>Designed at generation (each distractor = a mistake), but <span class="partial">not surfaced as crowd %</span></td><td><span class="yes">Per-option crowd %</span> ("14% chose B")</td></tr>
+  <tr><td>Multiple worked examples</td><td><span class="no">No</span> (queued — forlater #49)</td><td><span class="yes">Yes</span> (2–3 sibling problems)</td></tr>
+  <tr><td>LaTeX rendering</td><td>Mobile <span class="yes">yes</span> (KaTeX); web <span class="no">no</span> (SolutionView renders markdown only)</td><td><span class="yes">Yes</span> both</td></tr>
+  <tr><td>AI follow-up ("why?")</td><td><span class="no">No</span></td><td><span class="yes">Plumi</span></td></tr>
+</table>
+
+<h3>5.3 Progress / mastery model</h3>
+<p><strong>Drut tracks mastery at the pattern level</strong>, which is more granular than topic level. A 3-state FSM (<code>novice → learning → verified</code> at streak thresholds 3 and 7) is keyed on <code>fsm_tag</code> — the <em>solution pattern</em>, not the chapter. Crucially, a "success" requires <strong>correct AND fast</strong> (within per-exam <code>timeTargets</code>) — so speed is a first-class signal, matching how EAPCET/JEE actually punish slowness. Skipping a needed drill marks the pattern "in debt" for resurfacing. <strong>Educato tracks at the topic level</strong> (visible), feeding the predictive grade.</p>
+
+<h3>5.4 Analytics</h3>
+<p>This is a quiet Drut strength. Drut exposes <strong>10 analytics RPCs</strong>: overall accuracy/speed, per-topic proficiency, learning velocity, weakest subtopics, activity heatmap, <strong>distractor analysis</strong> (which wrong answers you pick), <strong>stamina curve</strong> (accuracy vs question index), sprint performance, streak, and pattern-mastery rollup — with matching dashboard widgets. Educato's visible analytics are essentially the predictive grade + a streak. <strong>Drut has materially richer data; it just hasn't turned that data into a single emotional signal the way Educato has.</strong></p>
+
+<h3>5.5 Adaptivity, spaced repetition, predictive grade</h3>
+<table>
+  <tr><th></th><th class="col-drut">Drut (code-verified)</th><th class="col-edu">Educato</th></tr>
+  <tr><td>Adaptive question selection</td><td><span class="no">No</span> — selection = filters + golden-standard priority + recency + <code>RANDOM()</code>. Weak spots are <em>shown</em> on the dashboard but don't steer the queue</td><td>Targets weak areas (study plan / "improve" flows)</td></tr>
+  <tr><td>Spaced repetition</td><td><span class="no">No</span> — only a <code>// TODO</code> + a fake <code>alert('Added to queue')</code>. The real mechanism is a binary "debt" flag, not time-decay</td><td><span class="yes">Claimed</span> SR flashcards</td></tr>
+  <tr><td>Predictive grade</td><td><span class="no">No</span> — landing-page copy only</td><td><span class="yes">Yes</span> — the centrepiece retention loop</td></tr>
+</table>
+
+<h2 id="pros">6. Pros of Drut's approach &amp; model</h2>
+<p>These are strengths of the <em>method and architecture</em> — they hold across any exam we add.</p>
+
+<ol>
+  <li><strong>Deepest-in-class per-question teaching (T.A.R. + D.E.E.P.).</strong> A dual fast/deep solution per question, theory-grounded in two named failure modes. Educato has nothing comparable at the question level. This is the single biggest pedagogical differentiator.</li>
+  <li><strong>Pattern-level mastery, not topic-level.</strong> Tracking on <code>fsm_tag</code> (solution pattern) means we know a student has mastered "completing the square" across chapters — finer-grained than "70% in Algebra." "Prove It" then resurfaces the <em>same pattern</em> for targeted remediation.</li>
+  <li><strong>Speed is a first-class signal.</strong> Mastery requires correct <em>and</em> within an exam-specific time target. Competitive exams are speed games; modelling time at the core (per-exam <code>timeTargets</code>) is a genuine edge Educato doesn't show.</li>
+  <li><strong>Analytics surface is far richer.</strong> Distractor analysis, stamina curves, learning velocity, weakest-subtopic detection — 10 RPCs of signal. We can build a <em>better</em> predictive grade than Educato because we already collect more of the inputs.</li>
+  <li><strong>Rigorous, grounded generation process.</strong> Textbook-PDF-grounded ("no PDF, no generation"), page-level provenance (<code>sourcePages</code>), batch validation, and <strong>adversarial audit of every Hard question</strong>. This is a more defensible quality bar than ungrounded generation — and it's powered by a frontier model (Claude), not a cheap one.</li>
+  <li><strong>Generative depth is a real content moat — once filled.</strong> 150/chapter design vs Educato's ~8/topic is 15–20× depth. At scale, Drut's Physics alone would exceed Educato's entire 4-subject bank. Depth lets us offer endless fresh practice and isomorphic variants; thin PYQ banks get exhausted.</li>
+  <li><strong>Distractors are engineered, not random.</strong> Each wrong option encodes a specific misconception at generation time. That's the raw material for instant, precise "here's the mistake you made" feedback — cheaper and faster than Educato's because it's pre-computed.</li>
+  <li><strong>Exam-agnostic foundation.</strong> Exams are data (<code>ExamDef[]</code>), helpers are generic, ingestion is subject-keyed, time-targets are per-exam, and there's class-split scaffolding (<code>EXAM_SYLLABUS_CONFIG</code>). Adding an exam is fundamentally "add rows + ingest textbooks," not a rewrite. This is what makes the multi-exam vision buildable rather than aspirational.</li>
+  <li><strong>Visual system is clean and extensible.</strong> A 3-way discriminated union (<code>none</code> / sanitized inline <code>svg</code> / <code>smiles</code> via RDKit) covers graphs, geometry, circuits, ray diagrams, and organic chemistry — generated inline, no image hosting. Educato's questions are largely text.</li>
+</ol>
+
+<h2 id="cons">7. Cons of Drut's approach &amp; model (where to improve)</h2>
+<p>Ordered roughly by impact on the student experience.</p>
+
+<ol>
+  <li><strong>No AI tutor — the biggest experiential gap.</strong> At the moment of confusion, the Drut student is alone with a (good) static solution. Educato's Plumi answers "why is C right, not B?" with a structured, context-aware explanation. We already have everything a tutor needs as context (the question, the chosen wrong answer, the engineered distractor, the D.E.E.P. solution) — we just don't expose a conversation.</li>
+  <li><strong>No predictive grade / readiness score.</strong> Educato's entire retention loop runs on one moving number. We have <em>richer</em> analytics but no single "where do you stand / are you ready" signal. Highest-ROI feature gap, and unusually cheap for us because the data already exists.</li>
+  <li><strong>No concept / lesson layer.</strong> Drut is question-only. Educato teaches the concept first, then tests. A beachhead full of crammers benefits from a "learn it" surface — and it's where Educato's interleaving and worked-examples shine.</li>
+  <li><strong>No spaced repetition.</strong> A <code>TODO</code> and a fake alert. SR is the gold-standard retention mechanism and Educato claims it. Our "debt" flag is binary resurfacing, not scheduled review.</li>
+  <li><strong>No adaptive selection.</strong> The main queue is <code>RANDOM()</code> after filters. We <em>detect</em> weak spots but don't steer practice toward them. This is a SQL/ranking change, not an ML project — low effort, high perceived intelligence.</li>
+  <li><strong>No worked examples after the solution.</strong> (Already queued, forlater #49.) Educato shows the method on 2–3 sibling problems; we show one.</li>
+  <li><strong>Web LaTeX is broken.</strong> The canonical web <code>SolutionView</code> renders markdown only — math doesn't render as math on web (mobile is fine via KaTeX). For a math-heavy product this is a real correctness defect, not cosmetic.</li>
+  <li><strong>The "best content treated as least-trusted" bug</strong> (see §3.3): admin-imported, hand-audited questions aren't in the mobile trusted filter. Fix before beta.</li>
+  <li><strong>Two divergent schemas + out-of-band columns.</strong> A Gemini-permissive schema and a Bulk-Import-strict schema disagree on field names (<code>exists</code> vs <code>available</code>, <code>phases[]</code> vs flat <code>steps[]</code>, different <code>timeTargets</code> keys). The UI reads defensively across all shapes — which works but is fragile. Several columns (<code>verification_status</code>, <code>source_type</code>, <code>source</code>) were added out-of-band with no migration DDL.</li>
+  <li><strong>Most of the server-side AI infra is non-functional.</strong> Dead model ids, an ephemeral RunPod IP, an embedding-space mismatch on the RAG corpus, and a master kill-switch off. This isn't hurting students (the Claude path works), but it's a large surface of misleading, rotting code that will confuse future work and gives a false sense of "we have live AI generation."</li>
+  <li><strong>Thin bank today.</strong> ~2,057 cached, ~700 EAPCET, Chemistry critically thin (~5), Math thin. Our depth advantage is <em>potential</em> until generation fills the bank with quality. Educato's thin bank is at least 100% authentic PYQ.</li>
+  <li><strong>No social proof / crowd stats.</strong> Educato's per-option "% of students who chose this" is engaging and cheap. We collect the data (distractor analysis) but don't show it to students.</li>
+  <li><strong>No engagement game loop.</strong> Educato's energy economy drives daily return. Our streak is passive analytics; the 15/day quota is a paywall, not a game.</li>
+  <li><strong>Exam-agnostic in design, EAPCET-only in delivery.</strong> Live taxonomy = 2 exams, mobile hardcodes the two-exam type, no Biology (no NEET). To realise the multi-exam vision, the taxonomy needs to be the genuine single source of truth (retire the legacy <code>constants.ts</code> exam list), mobile needs to read it dynamically, and Biology content needs to exist.</li>
+</ol>
+
+<h2 id="smartai">8. Where to use AI smartly (the real lesson from Educato)</h2>
+<p>Educato's lesson isn't "use more AI" — it's <strong>put AI where it compounds engagement and understanding, and use cheap sources (PYQ) for the commodity (questions)</strong>. Drut has done the inverse. Here's where AI earns its cost in the live loop, roughly by ROI:</p>
+
+<ol>
+  <li><strong>An "Ask why" tutor at the moment of confusion (highest ROI).</strong> Pre-load context we already have: the question, the student's wrong option, that option's engineered misconception, and the D.E.E.P. solution. The model only has to <em>converse</em>, not derive from scratch — which keeps it cheap and accurate. This is the single most impactful place to spend AI.</li>
+  <li><strong>AI-narrated readiness ("predictive grade", but better).</strong> We already compute distractor patterns, stamina, velocity, weak subtopics. Use a model to turn that into a short, natural-language "here's where you stand, here's the one thing to fix next" — and a moving readiness number. We can out-do Educato here because our inputs are richer.</li>
+  <li><strong>On-demand worked examples.</strong> Generate 2–3 sibling problems for a pattern, cache them. Cheap, and it's the §6 / forlater #49 feature.</li>
+  <li><strong>A concept layer, AI-authored from the textbook.</strong> If we add a "learn it" surface, generate the concept cards (hook → definition → worked examples) grounded in the same PDFs we already ingest — exactly Educato's move, on deeper content.</li>
+  <li><strong>Instant distractor feedback — no runtime AI needed.</strong> Because each wrong option already encodes its misconception at generation time, "here's the mistake you made" can be shown instantly with zero model call. Smart AI usage sometimes means <em>pre-computing</em> with AI so runtime is free.</li>
+  <li><strong>Adaptive selection — no LLM needed.</strong> Re-rank the practice queue by the mastery/weak-spot data we already store. "Smart" here is a ranking change, not a model call.</li>
+</ol>
+
+<div class="callout callout-blue">
+  <strong>Model strategy (re: your OpenAI key).</strong> The right pattern is <em>right model per job</em>, not one model everywhere (today everything routes to a single Gemini id that may be broken):
+  <ul style="margin:8px 0 0">
+    <li><strong>Generation + adversarial audit</strong> → frontier model (Claude) — already how Pipeline B works; keep it.</li>
+    <li><strong>Live tutor at scale</strong> → cost-optimised tier (e.g. GPT-4o-mini / Gemini Flash / a small Claude) because context is pre-loaded. Your OpenAI key is exactly the lever to A/B GPT vs Gemini vs Claude on tutor quality-per-rupee before committing.</li>
+    <li><strong>Readiness narration</strong> → mid-tier, low volume (once per session).</li>
+    <li><strong>Embeddings</strong> → fix the mismatch: re-embed the corpus with one current model so queries and chunks share a space.</li>
+  </ul>
+  Security note: the key belongs only in a server-side env var / Supabase secret — never in client code, never committed. (And the key shared in chat should still be rotated whenever convenient; not urgent, but free.)
+</div>
+
+<h2 id="fixlist">9. The fix list — prioritised</h2>
+<table>
+  <tr><th>#</th><th>Fix / build</th><th>Type</th><th>Effort</th><th>Why now</th></tr>
+  <tr><td>1</td><td>Add <code>admin-verified</code>/<code>manual-curated</code> to the mobile trusted filter</td><td><span class="pill-red">Bug</span></td><td>~1 hr</td><td>Best content currently treated as least-trusted. Pre-beta blocker.</td></tr>
+  <tr><td>2</td><td>Fix web <code>SolutionView</code> LaTeX rendering (KaTeX)</td><td><span class="pill-red">Bug</span></td><td>~½ day</td><td>Math doesn't render on web — correctness defect for a math product.</td></tr>
+  <tr><td>3</td><td>AI tutor ("Ask why") with pre-loaded context</td><td><span class="pill-drut">Feature</span></td><td>~7 days</td><td>Biggest experiential gap vs Educato; cheap because context exists.</td></tr>
+  <tr><td>4</td><td>Predictive readiness score + session verdict (AI-narrated over existing analytics)</td><td><span class="pill-drut">Feature</span></td><td>~5 days</td><td>Educato's whole retention loop; we have richer inputs already.</td></tr>
+  <tr><td>5</td><td>Adaptive queue re-rank by weak-spot/mastery data</td><td><span class="pill-amber">Tune</span></td><td>~3 days</td><td>SQL change, no ML; high perceived intelligence.</td></tr>
+  <tr><td>6</td><td>Per-option crowd stats ("% chose this")</td><td><span class="pill-drut">Feature</span></td><td>~3 days</td><td>Cheap social proof; we already collect distractor data.</td></tr>
+  <tr><td>7</td><td>Per-question worked examples (forlater #49)</td><td><span class="pill-drut">Feature</span></td><td>~3 days gen + UI</td><td>Already decided (per-question); queued behind app build.</td></tr>
+  <tr><td>8</td><td>Spaced-repetition engine (replace stub)</td><td><span class="pill-drut">Feature</span></td><td>~10 days</td><td>Gold-standard retention; Educato claims it.</td></tr>
+  <tr><td>9</td><td>Re-embed RAG corpus with one current model; or formally retire RAG infra</td><td><span class="pill-amber">Debt</span></td><td>~2 days</td><td>Embedding mismatch silently degrades any future RAG; dead code misleads.</td></tr>
+  <tr><td>10</td><td>Concept / lesson layer (interleaved, AI-authored from textbook)</td><td><span class="pill-drut">Feature</span></td><td>~7 days + content</td><td>"Teach then test" — Educato's structural advantage.</td></tr>
+  <tr><td>11</td><td>Make <code>taxonomy.ts</code> the true single source; mobile reads it dynamically; retire legacy exam constants</td><td><span class="pill-amber">Debt</span></td><td>~3 days</td><td>Bridges "not just EAPCET" vision to shipped reality.</td></tr>
+  <tr><td>12</td><td>Consolidate the two question schemas behind one contract</td><td><span class="pill-amber">Debt</span></td><td>~3 days</td><td>Removes fragility; one source of truth for the question shape.</td></tr>
+</table>
+
+<div class="english">
+  <strong>In plain English — the takeaway:</strong> we don't need to copy Educato wholesale. We've already out-built them on the hard part (deep, rigorous, exam-calibrated content and analytics). What we're missing is the layer that makes studying <em>feel</em> intelligent and alive — a tutor that answers "why?", a number that says "you're getting closer," practice that bends toward your weak spots, and a quick "learn it" before "test it." Almost all of that sits on top of data and content we already have. Two of the items above are outright bugs (best content mis-trusted; web math not rendering) that should be fixed before beta regardless.
+</div>
+
+<footer>
+  <p>Compiled 2026-06-18. Drut findings verified by direct codebase reading: <code>taxonomy.ts</code>, <code>questionSchema.ts</code>, <code>lib/ai/schema.ts</code>, <code>contentRefinery.ts</code>, edge functions <code>generate-batch</code>/<code>generate-question</code>/<code>admin-bulk-import</code>/<code>ingest-textbook</code>, <code>_shared/rag.ts</code>, <code>_shared/vertex-client.ts</code>, <code>performanceService.ts</code>, <code>analyticsService.ts</code>, <code>usePracticeQuestions.ts</code>, mastery migration <code>010_pattern_mastery.sql</code>, and docs <code>learning-framework.md</code> / <code>practice-mode-architecture-v2.md</code> / <code>question-generation/INSTRUCTIONS.md</code>. Educato findings from the live account walkthrough.</p>
+  <p>Companions: <a href="educato-audit.html">educato-audit.html</a>, <a href="educato-audit-addendum.html">educato-audit-addendum.html</a>.</p>
+  <p style="margin-top:18px;padding-top:14px;border-top:1px solid var(--hair)">Prepared by Claude Opus for Pranav · <code>docs/competitive/drut-vs-educato.html</code></p>
+</footer>
+
+</div>
+</body>
+</html>

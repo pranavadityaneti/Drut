@@ -26,7 +26,7 @@ function card(r, i) {
   if (!q) return `<section class="card err" id="q${i + 1}"><div class="qhead"><span class="qnum">Q${i + 1}</span><span class="meta">${esc(r.task?.subject)} · ${esc(r.task?.subtopic)}</span></div><p class="bad">No valid JSON produced.</p></section>`;
   const t = r.task || {};
   const opts = (q.options || []).map((o, k) =>
-    `<li class="opt${k === q.correctOptionIndex ? ' correct' : ''}"><span class="lett">${LETTERS[k]}</span><span>${md(o.text)}</span>${k === q.correctOptionIndex ? '<span class="tick">✓</span>' : ''}</li>`
+    `<li class="opt${k === q.correctOptionIndex ? ' correct' : ''}"><span class="lett">${LETTERS[k]}</span><span>${md(typeof o === 'string' ? o : (o?.text ?? o?.en ?? ''))}</span>${k === q.correctOptionIndex ? '<span class="tick">✓</span>' : ''}</li>`
   ).join('');
   const quick = (q.quickMethod?.steps || []).map((s) => `<li>${md(s)}</li>`).join('');
   const fs2 = q.fullSolution || {};

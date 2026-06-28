@@ -1,0 +1,251 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Drut — Beta-Readiness Report</title>
+<style>
+ :root{--ink:#16211c;--muted:#5c6b63;--line:#e0e7e2;--soft:#f5f9f6;--accent:#b4fa8d}
+ *{box-sizing:border-box} body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);margin:0;line-height:1.55;background:#fff}
+ .wrap{max-width:1000px;margin:0 auto;padding:36px 24px 90px}
+ h1{font-size:28px;margin:0 0 2px;letter-spacing:-0.02em} .sub{color:var(--muted);font-size:13.5px;margin:0 0 22px}
+ h2{font-size:19px;margin:34px 0 10px;padding-bottom:6px;border-bottom:2px solid var(--line)} .count{font-size:13px;color:var(--muted);font-weight:600}
+ table{border-collapse:collapse;width:100%;margin:8px 0;font-size:13.5px} th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top} th{background:var(--soft);font-weight:700}
+ table.score td:nth-child(n+3):nth-child(-n+5){text-align:center;font-weight:700}
+ .pill{display:inline-block;color:#fff;font-size:11px;font-weight:700;border-radius:999px;padding:2px 9px;text-transform:uppercase}
+ .det{font-size:12.5px;color:#3a463f;margin-top:3px} .files{font-family:ui-monospace,Menlo,monospace;font-size:11px;color:#8a978f;margin-top:3px}
+ .verdict{background:var(--accent);color:#13241a;border-radius:12px;padding:16px 20px;margin:16px 0;font-weight:600}
+ .good{background:#eef7f0;border:1px solid #cfe8d6;border-radius:10px;padding:12px 18px;margin:14px 0}
+ .plan{background:var(--soft);border:1px solid var(--line);border-radius:10px;padding:14px 20px;margin:14px 0}
+ ol li,ul li{margin:4px 0;font-size:14px}
+ @media print{.wrap{max-width:none}}
+</style></head><body><div class="wrap">
+ <h1>Beta-Readiness Report</h1>
+ <p class="sub">Drut · 2026-06-27 · 8-area audit (web + mobile + shared) · 41 actionable gaps · golden path: signup → onboarding → practice → solution → analytics → paywall → payment</p>
+
+ <div class="verdict">The core product loop is real and wired — practice (pick → fetch from the live bank → answer → grade → Quick Method + Full Solution → mastery/streak) works on both platforms, and the student dashboard widgets read real data. The gaps cluster in: payments (not built in main), mobile Sprint (stubbed), one missing analytics RPC, web session persistence, Google OAuth (web), and a few mock/placeholder UI bits.</div>
+
+ <h2>Readiness scorecard</h2>
+ <table class="score"><tr><th>Area</th><th>Overall</th><th>P0</th><th>P1</th><th>P2</th><th>Web</th><th>Mobile</th></tr><tr><td>Auth &amp; Session </td><td style="color:#b4540a;font-weight:700">partial</td><td>1</td><td>2</td><td>3</td><td style="font-size:12px;color:#5c6b63">Email login works; Google OAuth call present but no callback route; em</td><td style="font-size:12px;color:#5c6b63">Email login works; WhatsApp OTP fully wired; signup handles email veri</td></tr><tr><td>Onboarding &amp; Profile </td><td style="color:#3f9b5f;font-weight:700">mostly-ready</td><td>·</td><td>1</td><td>2</td><td style="font-size:12px;color:#5c6b63">Complete onboarding &amp; profile editing; target_exams read by practi</td><td style="font-size:12px;color:#5c6b63">Multi-step wizard (4 screens) captures full profile including target_e</td></tr><tr><td>Core practice loop </td><td style="color:#3f9b5f;font-weight:700">mostly-ready</td><td>·</td><td>·</td><td>1</td><td style="font-size:12px;color:#5c6b63">Core loop fully wired and functional; MiniPractice drill questions are</td><td style="font-size:12px;color:#5c6b63">Core loop fully wired and functional; SessionEngine fetches real quest</td></tr><tr><td>Sprint </td><td style="color:#b4540a;font-weight:700">partial</td><td>3</td><td>1</td><td>1</td><td style="font-size:12px;color:#5c6b63">Web Sprint fully implemented and wired: real session tracking, attempt</td><td style="font-size:12px;color:#5c6b63">Mobile Sprint reuses generic SessionEngine—creates no sprint session, </td></tr><tr><td>Analytics &amp; Progress </td><td style="color:#b4540a;font-weight:700">partial</td><td>1</td><td>1</td><td>1</td><td style="font-size:12px;color:#5c6b63">Partially functional: real data for patterns/sprints/velocity, but mis</td><td style="font-size:12px;color:#5c6b63">Functional with real data: streak, accuracy, pattern counts wired to u</td></tr><tr><td>Paywall &amp; Payments </td><td style="color:#c0392b;font-weight:700">not-started</td><td>10</td><td>4</td><td>·</td><td style="font-size:12px;color:#5c6b63">No paywall, no payment UI, no Razorpay integration. Free unlimited acc</td><td style="font-size:12px;color:#5c6b63">No paywall, no payment UI, no Razorpay integration. Free unlimited acc</td></tr><tr><td>Admin Dashboard </td><td style="color:#3f9b5f;font-weight:700">mostly-ready</td><td>1</td><td>1</td><td>·</td><td style="font-size:12px;color:#5c6b63">5 of 5 admin tabs built, but AI Review approval/rejection lacks server</td><td style="font-size:12px;color:#5c6b63">No admin panel — web-only feature.</td></tr><tr><td>Navigation, states &amp; web/mobile parity</td><td style="color:#b4540a;font-weight:700">partial</td><td>·</td><td>5</td><td>2</td><td style="font-size:12px;color:#5c6b63">Dashboard &amp; auth working; 4 unimplemented navbar links (analytics,</td><td style="font-size:12px;color:#5c6b63">Core 4 tabs functional; profile fully implemented; missing admin panel</td></tr></table>
+
+ <div class="good"><strong>What already works (don't touch):</strong> email login (web+mobile), onboarding + profile save/read (multi-exam), the full practice loop + DB question serving + grading + mastery/streak, Sprint on <em>web</em>, most dashboard analytics widgets (wired to real attempt data), loading/empty/error states, route guards, admin AI-Review + ingestion.</div>
+
+ <h2>P0 — blocks a credible closed beta <span class="count">16</span></h2>
+  <table class="gaps"><tr><th>Status</th><th>Sev</th><th>Area</th><th>Item</th></tr><tr>
+  <td><span class="pill" style="background:#c0392b">broken</span></td>
+  <td><strong>P0</strong></td>
+  <td>Auth · web</td>
+  <td><strong>Google OAuth (WEB)</strong><div class="det">LoginForm.tsx and SignupForm.tsx call loginWithGoogle() which calls supabase.auth.signInWithOAuth({provider: 'google'}). This initiates OAuth flow but: (1) No callback route exists in web App.tsx routing to handle the redirect from Google back to the app; (2) Web uses detectSessionInUrl=true which should detect tokens in URL fragment after OAuth redirect, but there's no dedicated route/page to catch this. When user clicks 'Google' button, they're sent to Supabase Google OAuth but won't return to app state successfully. (3) Google OAuth provider needs to be configured in Supabase project settings with correct redirect URIs.</div><div class="files">apps/web/components/LoginForm.tsx · apps/web/components/SignupForm.tsx · packages/shared/src/services/authService.ts</div></td>
+</tr><tr>
+  <td><span class="pill" style="background:#c0392b">broken</span></td>
+  <td><strong>P0</strong></td>
+  <td>Sprint · mobile</td>
+  <td><strong>Sprint session on mobile (CRITICAL GAP)</strong><div class="det">Mobile sprint.tsx routes to /practice/session which loads SessionEngine.tsx with mode='sprint'. BUT SessionEngine does NOT call startSession() or createSprintSession(). Instead it reuses generic practice flow: calls usePracticeQuestions() hook, saves answers via saveAttemptAndUpdateMastery() (pattern mastery RPC only). NO sprint_sessions record created. NO sprint_question_attempts saved. Mobile has zero sprint session tracking.</div></td>
+</tr><tr>
+  <td><span class="pill" style="background:#c0392b">broken</span></td>
+  <td><strong>P0</strong></td>
+  <td>Sprint · mobile</td>
+  <td><strong>Sprint results on mobile (CRITICAL GAP)</strong><div class="det">Mobile SessionSummary.tsx shows only local accuracy/correctCount (from client-side results array). It does NOT call getSprintSessionData(), does NOT load attempts from sprint_question_attempts, does NOT show AI analysis, does NOT offer retry of missed questions. Treats sprint exactly like practice.</div></td>
+</tr><tr>
+  <td><span class="pill" style="background:#c0392b">broken</span></td>
+  <td><strong>P0</strong></td>
+  <td>Sprint · mobile</td>
+  <td><strong>Mobile sprint mode feature completeness</strong><div class="det">Mobile sprint.tsx UI is polished (hero card, streak badge, subject cards), but backend is a stub. It's a nav entry point that aliases to generic practice mode. To close beta, mobile must: (1) call createSprintSession() instead of generic session, (2) call saveSprintAttempt() instead of pattern mastery, (3) finalize with finalizeSprintSession(), (4) show SprintResults screen with session data + AI analysis, (5) support retry flow.</div></td>
+</tr><tr>
+  <td><span class="pill" style="background:#c0392b">broken</span></td>
+  <td><strong>P0</strong></td>
+  <td>Analytics · web</td>
+  <td><strong>fetchUserAnalytics() RPC function missing</strong><div class="det">DashboardStatsRow.tsx line 76 calls fetchUserAnalytics() which invokes supabase.rpc('get_user_analytics'). The RPC function does not exist in any migration file. This causes a 400 Bad Request error every time the dashboard loads. Falls back gracefully with { total_attempts: 0, correct_attempts: 0, accuracy_pct: 0, avg_time_ms: 0 } on line 188, but the actual call fails silently.</div><div class="files">packages/shared/src/services/analyticsService.ts · apps/web/components/dashboard/DashboardStatsRow.tsx</div></td>
+</tr><tr>
+  <td><span class="pill" style="background:#c0392b">broken</span></td>
+  <td><strong>P0</strong></td>
+  <td>Paywall · shared</td>
+  <td><strong>Edge function env secrets (RAZORPAY keys)</strong><div class="det">RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET not set in Supabase function secrets. If edge functions were deployed, they would fail with 503 'razorpay-not-configured'.</div></td>
+</tr><tr>
+  <td><span class="pill" style="background:#b4540a">gap</span></td>
+  <td><strong>P0</strong></td>
+  <td>Paywall · both</td>
+  <td><strong>Paywall enforcement (freemium question limits)</strong><div class="det">No question limits in code. `getQuestionsForUser()` (packages/shared/src/services/questionCacheService.ts) has no gating. Users get unlimited questions when available. No paywall modal, no 'limit reached' handler. Free and premium users not distinguished.</div></td>
+</tr><tr>
+  <td><span class="pill" style="background:#b4540a">gap</span></td>
+  <td><strong>P0</strong></td>
+  <td>Paywall · shared</td>
+  <td><strong>Subscription state persistence &amp; verification</strong><div class="det">No `subscriptions` or `payment_events` tables in current migrations (main: 001–042; payment-foundation: 20260617120000+). No paymentService.ts in @drut/shared main branch (exists in payment-foundation). No subscription-state queries in Profile/Settings UI.</div></td>
+</tr><tr>
+  <td><span class="pill" style="background:#b4540a">gap</span></td>
+  <td><strong>P0</strong></td>
+  <td>Paywall · shared</td>
+  <td><strong>Daily question usage tracking (quota enforcement)</strong><div class="det">No `daily_question_usage` table, no `increment_daily_question_usage()` RPC, no `get_today_question_usage()` RPC in main branch. Quota check does not exist in NewPractice.tsx. FREE_DAILY_QUESTION_LIMIT constant exists only in payment-foundation worktree.</div></td>
+</tr><tr>
+  <td><span class="pill" style="background:#b4540a">gap</span></td>
+  <td><strong>P0</strong></td>
+  <td>Paywall · web</td>
+  <td><strong>Razorpay client SDK (web checkout modal)</strong><div class="det">No razorpay SDK in apps/web/package.json dependencies. No Razorpay Checkout JS. No paywall modal component. No checkout flow wired to Profile or Practice.</div></td>
+</tr><tr>
+  <td><span class="pill" style="background:#b4540a">gap</span></td>
+  <td><strong>P0</strong></td>
+  <td>Paywall · mobile</td>
+  <td><strong>React Native Razorpay (mobile checkout modal)</strong><div class="det">No react-native-razorpay in apps/mobile/package.json. No payment modal component. No integration in Onboarding, Profile, or Practice.</div></td>
+</tr><tr>
+  <td><span class="pill" style="background:#b4540a">gap</span></td>
+  <td><strong>P0</strong></td>
+  <td>Paywall · both</td>
+  <td><strong>Paywall modal UI (web + mobile component)</strong><div class="det">No paywall modal exists. No UI to show 'limit reached, upgrade now'. No plan selector, no testimonials, no CTA. Payment-foundation has hooks (useRazorpayCheckout.ts) but no modal component.</div></td>
+</tr><tr>
+  <td><span class="pill" style="background:#b4540a">gap</span></td>
+  <td><strong>P0</strong></td>
+  <td>Paywall · web</td>
+  <td><strong>Web paywall integration (NewPractice quota check)</strong><div class="det">NewPractice.tsx has no call to getTodayQuestionUsage() or incrementDailyQuestionUsage(). No check before rendering question N+1. No paywall modal trigger.</div></td>
+</tr><tr>
+  <td><span class="pill" style="background:#b4540a">gap</span></td>
+  <td><strong>P0</strong></td>
+  <td>Paywall · mobile</td>
+  <td><strong>Mobile paywall integration (practice quota check)</strong><div class="det">apps/mobile/hooks/usePracticeQuestions.ts has no quota enforcement code. No paywall modal trigger in mobile practice flow.</div></td>
+</tr><tr>
+  <td><span class="pill" style="background:#b4540a">gap</span></td>
+  <td><strong>P0</strong></td>
+  <td>Admin · web</td>
+  <td><strong>Admin access control (email allowlist)</strong><div class="det">Allowlist hardcoded in three places: ADMIN_EMAILS set in _shared/admin-allowlist.ts, Sidebar.tsx client-side gate, migration 029 RLS policy (textbook storage). All three have the same 2 emails: pranav.n@ideaye.in, pranav.n@drut.club. drift documented in the .ts file comment — MobileNav.tsx is listed as a fourth location that's missing one email. No centralized source of truth (no DB table like admin_users). Rotation requires code + migration edits + redeploy. Admin API is NOT gated by DB-level role check — relies on client-side visibility + RLS policies matching the hardcoded list. Forlater.md (#48) tracks post-beta migration to admin_users table with DB role enforcement.</div></td>
+</tr><tr>
+  <td><span class="pill" style="background:#8a6d1a">mock</span></td>
+  <td><strong>P0</strong></td>
+  <td>Paywall · both</td>
+  <td><strong>Razorpay checkout (order creation + payment collection)</strong><div class="det">Payment-foundation worktree has complete Razorpay edge functions (create-razorpay-order + verify-razorpay-payment) but NOT in main branch. Main has NO Razorpay SDK, NO edge functions, NO checkout UI. RAZORPAY_KEY_ID/RAZORPAY_KEY_SECRET not configured in .env.local. Scaffolding exists in separate worktree, not merged.</div></td>
+</tr></table>
+ <h2>P1 — needed for a solid beta <span class="count">15</span></h2>
+  <table class="gaps"><tr><th>Status</th><th>Sev</th><th>Area</th><th>Item</th></tr><tr>
+  <td><span class="pill" style="background:#c0392b">broken</span></td>
+  <td><strong>P1</strong></td>
+  <td>Auth · web</td>
+  <td><strong>Email/password signup (WEB)</strong><div class="det">SignupForm.tsx calls signup() but ignores the sessionEstablished return value. When Supabase requires email confirmation, signup() returns sessionEstablished=false, but the component routes user into onLoginSuccess callback anyway instead of showing a 'check your email' message. This will log in unconfirmed users or create a broken state. Mobile handles this correctly at apps/mobile/app/(public)/signup.tsx lines 35-48.</div><div class="files">apps/web/components/SignupForm.tsx · packages/shared/src/services/authService.ts</div></td>
+</tr><tr>
+  <td><span class="pill" style="background:#c0392b">broken</span></td>
+  <td><strong>P1</strong></td>
+  <td>Analytics · web</td>
+  <td><strong>Dashboard Stats Row (DashboardStatsRow.tsx) - Trend percentage badges</strong><div class="det">Lines 143, 191, 314 hardcode +12.5%, +10.4%, +2 trend values. No API call computes these. Line 221 hardcodes '+45 questions this week' without calculating from actual data.</div><div class="files">apps/web/components/dashboard/DashboardStatsRow.tsx</div></td>
+</tr><tr>
+  <td><span class="pill" style="background:#b4540a">gap</span></td>
+  <td><strong>P1</strong></td>
+  <td>Auth · web</td>
+  <td><strong>Session persistence on page reload (WEB)</strong><div class="det">Web Supabase client initialized with persistSession=false (no storage adapter provided). detectSessionInUrl=true checks for tokens in URL fragment after OAuth redirect, but localStorage is not used for session persistence. This means: (1) On page refresh without OAuth in progress, user loses session unless tokens are still in URL; (2) Users cannot refresh the page or close/reopen browser without being logged out. This is likely intentional per comment 'Web keeps the conservative defaults to avoid localStorage access errors' (supabase.ts line 41) but severely impacts beta credibility. Session should be persisted at least in localStorage for same-session persistence.</div><div class="files">packages/shared/src/lib/supabase.ts</div></td>
+</tr><tr>
+  <td><span class="pill" style="background:#b4540a">gap</span></td>
+  <td><strong>P1</strong></td>
+  <td>Onboarding · mobile</td>
+  <td><strong>Schema mismatch: class vs year_in_school</strong><div class="det">Mobile wizard collects year_in_school='11'/'12'/'Reappear' in step 2 (academic), maps to class on submit. Web onboarding collects class='11'/'12'/'Both' directly. Both fields stored in auth metadata (class + year_in_school). Redundancy but works because submit() on mobile maps year_in_school→class. Confusing in codebase but functional.</div></td>
+</tr><tr>
+  <td><span class="pill" style="background:#b4540a">gap</span></td>
+  <td><strong>P1</strong></td>
+  <td>Sprint · both</td>
+  <td><strong>Cross-platform attempt persistence</strong><div class="det">Web uses dedicated sprint_question_attempts table with full attempt metadata. Mobile only updates pattern_mastery table via RPC. Web results screen queries sprint_question_attempts for detailed breakdown; mobile has no such query. User cannot see sprint attempt history or compare sprints on mobile at all.</div></td>
+</tr><tr>
+  <td><span class="pill" style="background:#b4540a">gap</span></td>
+  <td><strong>P1</strong></td>
+  <td>Paywall · shared</td>
+  <td><strong>User subscription state in auth metadata</strong><div class="det">User type (packages/shared/src/types.ts) has no subscription_id, plan, or isPro field. UserMetadata has no is_premium field. No way to read user's current plan from session.</div></td>
+</tr><tr>
+  <td><span class="pill" style="background:#b4540a">gap</span></td>
+  <td><strong>P1</strong></td>
+  <td>Paywall · both</td>
+  <td><strong>Subscription status display in Profile</strong><div class="det">Profile.tsx shows name, email, phone, class, exams but no 'Current Plan', 'Expires At', or 'Upgrade' button. No billing section or subscription management UI.</div></td>
+</tr><tr>
+  <td><span class="pill" style="background:#b4540a">gap</span></td>
+  <td><strong>P1</strong></td>
+  <td>Paywall · shared</td>
+  <td><strong>Razorpay webhook handling (async payment events)</strong><div class="det">No webhook endpoint for Razorpay async events (refund.created, payment.failed, subscription.pause). No subscription expiry enforcement via cron. Only synchronous verify at checkout partially sketched in payment-foundation.</div></td>
+</tr><tr>
+  <td><span class="pill" style="background:#b4540a">gap</span></td>
+  <td><strong>P1</strong></td>
+  <td>Admin · web</td>
+  <td><strong>Scanned PDF detection and flagging</strong><div class="det">ingest-textbook sets status='partial-extraction' if total extracted chars &lt; 5000 (indicates image-only/scanned PDF needing OCR). Flag is set in DB (textbooks.status or error_message) but NOT exposed to KnowledgeBase UI — admin cannot see which uploads failed text extraction. Admin must manually query DB or check Supabase console. Should add a 'status indicator' to the files list in KnowledgeBase (e.g., red warning badge 'OCR Needed').</div></td>
+</tr><tr>
+  <td><span class="pill" style="background:#b4540a">gap</span></td>
+  <td><strong>P1</strong></td>
+  <td>Navigation, · web</td>
+  <td><strong>Web Sidebar NavItems without routes (analytics, previous_papers, faqs, contact)</strong><div class="det">Sidebar in /Users/pranavaditya/projects/Drut/apps/web/components/Sidebar.tsx defines 4 nav items (analytics, previous_papers, faqs, contact) that do not have corresponding Route definitions in /Users/pranavaditya/projects/Drut/apps/web/App.tsx. Clicking these will trigger 404 redirect to home, breaking UX.</div><div class="files">apps/web/components/Sidebar.tsx (lines 44-59) · apps/web/App.tsx (no matching routes)</div></td>
+</tr><tr>
+  <td><span class="pill" style="background:#b4540a">gap</span></td>
+  <td><strong>P1</strong></td>
+  <td>Navigation, · web</td>
+  <td><strong>Dashboard handlers unimplemented (handleClearDebt, handleTopicClick, handlePracticeWeakSpot)</strong><div class="det">Three Dashboard handlers in /Users/pranavaditya/projects/Drut/apps/web/components/Dashboard.tsx (lines 64-80) have only console.log + TODO comments. DebtCollector, MasteryGrid, and WeakSpotsWidget are wired to call these but no navigation occurs, blocking core workflows (focused practice for debt clearing and weak spots).</div><div class="files">apps/web/components/Dashboard.tsx (lines 64-80)</div></td>
+</tr><tr>
+  <td><span class="pill" style="background:#b4540a">gap</span></td>
+  <td><strong>P1</strong></td>
+  <td>Navigation, · web</td>
+  <td><strong>Web-only navigation items (admin dashboard)</strong><div class="det">Web sidebar shows Admin nav item for allowlisted emails (pranav.n@ideaye.in, pranav.n@drut.club), with route /admin and ErrorBoundary-wrapped AdminDashboard component. Mobile has no admin panel at all—feature parity gap for admin users.</div><div class="files">apps/web/components/Sidebar.tsx (lines 36-50, 62-64) · apps/web/App.tsx (lines 158-160)</div></td>
+</tr><tr>
+  <td><span class="pill" style="background:#b4540a">gap</span></td>
+  <td><strong>P1</strong></td>
+  <td>Navigation, · mobile</td>
+  <td><strong>Mobile tab navigation exactly 4 tabs (dashboard, practice, sprint, profile) vs web sidebar 9+ items</strong><div class="det">Mobile FloatingTabBar (line 9 in FloatingTabBar.tsx) defines exactly 4 tabs. Web sidebar offers 9+ including help-support, previous_papers, faqs, etc. Mobile is feature-limited and missing help/support navigation that web has (though help-support is under profile submenu).</div><div class="files">apps/mobile/components/FloatingTabBar.tsx (line 9-12) · apps/web/components/Sidebar.tsx</div></td>
+</tr><tr>
+  <td><span class="pill" style="background:#8a6d1a">mock</span></td>
+  <td><strong>P1</strong></td>
+  <td>Paywall · shared</td>
+  <td><strong>Pricing configuration (plans, amounts)</strong><div class="det">pricing.ts with ₹299/month and ₹1499/year plans exists only in payment-foundation worktree. Main branch has no pricing config. No pricing UI on Profile or checkout.</div></td>
+</tr><tr>
+  <td><span class="pill" style="background:#8a6d1a">mock</span></td>
+  <td><strong>P1</strong></td>
+  <td>Navigation, · web</td>
+  <td><strong>Mock leaderboard data in ArenaWidget</strong><div class="det">ArenaWidget in /Users/pranavaditya/projects/Drut/apps/web/components/dashboard/ArenaWidget.tsx uses hardcoded MOCK_LEADERBOARD with placeholder names (Arjun S., Priya M., etc.). Component has TODO comment stating real leaderboard logic needs implementation with user_leaderboard table and weekly/monthly aggregation.</div><div class="files">apps/web/components/dashboard/ArenaWidget.tsx (lines 7-51)</div></td>
+</tr></table>
+ <h2>P2 — polish / post-beta <span class="count">10</span></h2>
+  <table class="gaps"><tr><th>Status</th><th>Sev</th><th>Area</th><th>Item</th></tr><tr>
+  <td><span class="pill" style="background:#b4540a">gap</span></td>
+  <td><strong>P2</strong></td>
+  <td>Auth · mobile</td>
+  <td><strong>Password reset (MOBILE)</strong><div class="det">No 'Forgot Password' screen in login flow. Password reset is only available in profile/account-settings.tsx (apps/mobile/app/(tabs)/profile/account-settings.tsx) which calls resetPasswordForEmail(). Uses window.location.origin which won't work in React Native (no browser context). Mobile users can only reset from authenticated account-settings, not from login screen. Should add password reset to login flow.</div><div class="files">apps/mobile/app/(public)/login.tsx</div></td>
+</tr><tr>
+  <td><span class="pill" style="background:#b4540a">gap</span></td>
+  <td><strong>P2</strong></td>
+  <td>Onboarding · both</td>
+  <td><strong>Data persistence (Supabase public.user_profiles table)</strong><div class="det">updateOnboardingProfile attempts upsert to public.user_profiles table (user_id, full_name, class, exam_profile). updateOnboardingProfile logs warning if upsert fails but doesn't block. NO MIGRATION visible in supabase/migrations/ that creates public.user_profiles—likely not synced or table doesn't exist. Profile reads only from auth.users metadata (primary), not from user_profiles. Table sync is non-blocking so no functional break, but defeats purpose of dual-write. RECOMMENDATION: either delete the user_profiles upsert or ensure table + RLS policies are created &amp; tested.</div></td>
+</tr><tr>
+  <td><span class="pill" style="background:#b4540a">gap</span></td>
+  <td><strong>P2</strong></td>
+  <td>Onboarding · mobile</td>
+  <td><strong>Post-onboarding profile re-editing (target_exams)</strong><div class="det">Mobile edit-profile.tsx does NOT include target_exams multi-select. Only name/phone/class editable. Web Profile.tsx DOES allow target_exams re-edit via toggleExam(). ASYMMETRY: users cannot change exam prefs on mobile after onboarding, only on web. Intentional trade-off (keep onboarding quick) but reduces flexibility on mobile.</div></td>
+</tr><tr>
+  <td><span class="pill" style="background:#b4540a">gap</span></td>
+  <td><strong>P2</strong></td>
+  <td>Sprint · both</td>
+  <td><strong>Session state persistence across navigation</strong><div class="det">Web Sprint.tsx uses React state for screen transitions (setup → session → results). If user closes browser mid-sprint, sessionId + attempts are lost on client; server has partial data. Mobile has no session ID at all on client side. Neither platform implements auto-save + resume.</div></td>
+</tr><tr>
+  <td><span class="pill" style="background:#b4540a">gap</span></td>
+  <td><strong>P2</strong></td>
+  <td>Navigation, · both</td>
+  <td><strong>Mastery FSM state not exposed in UI (web &amp; mobile)</strong><div class="det">Both platforms save attempts with saveAttemptAndUpdateMastery and handle FSM state internally (intervention, reflection, reinforce). Web shows FsmPanel UI (line 853 in NewPractice.tsx). Mobile SessionEngine mentions FSM but doesn't surface state UI. Gap: mobile lacks visible FSM progression display.</div><div class="files">apps/web/components/practice/NewPractice.tsx (line 853) · apps/mobile/components/SessionEngine.tsx</div></td>
+</tr><tr>
+  <td><span class="pill" style="background:#b4540a">gap</span></td>
+  <td><strong>P2</strong></td>
+  <td>Navigation, · mobile</td>
+  <td><strong>Time-based intervention thresholds (web implements, mobile basic)</strong><div class="det">Web InterventionModal checks isFast (timeTaken vs targetTime) and branches logic. Mobile SessionEngine calculates targetTime but doesn't expose isFast to intervention modal; treats all wrong answers the same way. Web has richer intervention logic.</div><div class="files">apps/web/components/practice/InterventionModal.tsx · apps/mobile/components/SessionEngine.tsx (lines 130-145)</div></td>
+</tr><tr>
+  <td><span class="pill" style="background:#8a6d1a">mock</span></td>
+  <td><strong>P2</strong></td>
+  <td>Auth · web</td>
+  <td><strong>Apple OAuth (WEB)</strong><div class="det">AppleIcon visible in LoginForm.tsx line 164-166 and SignupForm.tsx line 144-146 but button has no onClick handler — is an inert UI stub. No loginWithApple service function. Not implemented.</div><div class="files">apps/web/components/LoginForm.tsx · apps/web/components/SignupForm.tsx</div></td>
+</tr><tr>
+  <td><span class="pill" style="background:#8a6d1a">mock</span></td>
+  <td><strong>P2</strong></td>
+  <td>Auth · web</td>
+  <td><strong>Facebook OAuth (WEB)</strong><div class="det">FacebookIcon visible in LoginForm.tsx line 168-170 and SignupForm.tsx line 147-149 but button has no onClick handler — is an inert UI stub. No loginWithFacebook service function. Not implemented.</div><div class="files">apps/web/components/LoginForm.tsx · apps/web/components/SignupForm.tsx</div></td>
+</tr><tr>
+  <td><span class="pill" style="background:#8a6d1a">mock</span></td>
+  <td><strong>P2</strong></td>
+  <td>Core · web</td>
+  <td><strong>Mini Practice drill (Prove It reinforcement)</strong><div class="det">Web (NewPractice.tsx:739-828) uses hardcoded mockMiniQuestions with 3 dummy math problems (5+3, 12-4, 3×4). Comment says "in production, these would come from backend". Mobile does not render mini-practice UI at all. No backend integration: questions are not fetched by concept or by similarity to the failed question. This is a placeholder for the feature, not the real implementation.</div></td>
+</tr><tr>
+  <td><span class="pill" style="background:#8a6d1a">mock</span></td>
+  <td><strong>P2</strong></td>
+  <td>Analytics · web</td>
+  <td><strong>ArenaWidget - Leaderboard</strong><div class="det">Lines 32-39 hardcode MOCK_LEADERBOARD with fake names (Arjun S., Priya M., Rahul K., Sneha R.) and fake scores (520, 485, 472, 450, 445). Comment on line 32 admits this is a TODO. No backend leaderboard table or RPC implemented. Strictly mock.</div><div class="files">apps/web/components/dashboard/ArenaWidget.tsx</div></td>
+</tr></table>
+
+ <div class="plan"><h2 style="border:0;margin:0 0 8px">Recommended fix order (closed beta)</h2>
+ <ol>
+  <li><strong>Decide payments scope:</strong> closed beta is invite-only — run it <em>free</em> and defer the whole Paywall/Razorpay area to pre-public-launch? (That removes ~16 P0/P1 gaps from the beta path in one decision.)</li>
+  <li><strong>Kill fake data shown to users</strong> (credibility): hardcoded dashboard trend badges (+12.5%), ArenaWidget mock leaderboard, mini-practice mock questions → hide or wire to real data.</li>
+  <li><strong>Analytics RPC:</strong> add/restore <code>get_user_analytics</code> (or remove the <code>fetchUserAnalytics()</code> call) so the dashboard stats row stops erroring.</li>
+  <li><strong>Web session persistence:</strong> enable <code>persistSession</code> (localStorage) so a page refresh doesn't log users out.</li>
+  <li><strong>Google OAuth (web):</strong> add the callback route + Supabase redirect config, or hide the Google button until it's wired (email login already works).</li>
+  <li><strong>Mobile Sprint:</strong> wire it to <code>startSession</code>/persist results like web — or hide the Sprint tab on mobile for beta if web-only is acceptable.</li>
+  <li><strong>Dead nav + stub handlers:</strong> hide web sidebar items with no routes (analytics/previous_papers/faqs/contact) and wire the Dashboard handlers, so nothing clicks into nothing.</li>
+ </ol></div>
+</div></body></html>
