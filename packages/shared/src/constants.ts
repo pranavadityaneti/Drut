@@ -1,8 +1,17 @@
 
+// Difficulty is UNCALIBRATED pre-launch: every question is stored with a neutral
+// 'Medium' placeholder (no real Easy/Hard exist yet), and research shows pre-data
+// difficulty labels are unreliable (see docs/difficulty-rating-research.html). So we
+// HIDE the Easy/Medium/Hard selector + in-session badge until the Elo/empirical engine
+// calibrates difficulty from real student attempts. Flip to true to re-enable once
+// calibrated difficulties exist in the bank.
+export const DIFFICULTY_SELECTION_ENABLED = false;
+
+// Beta scope: ONLY EAPCET (AP + TG; the grouped 'eamcet' value maps to
+// ap_eapcet + ts_eapcet downstream) and JEE Main. CAT / NEET / others removed.
 export const EXAM_PROFILES = [
-  { value: 'cat', label: 'CAT / MBA' },
+  { value: 'eamcet', label: 'AP/TG EAPCET' },
   { value: 'jee_main', label: 'JEE Main' },
-  { value: 'eamcet', label: 'AP/TS EAMCET' },
 ];
 
 export const EXAM_SPECIFIC_TOPICS: { [key: string]: { value: string; label: string; subTopics: string[] }[] } = {

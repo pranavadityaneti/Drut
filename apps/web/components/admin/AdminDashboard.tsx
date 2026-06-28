@@ -5,7 +5,9 @@ import { StagingManager } from './StagingManager';
 import { QuestionSeeding } from './QuestionSeeding';
 import { BulkImport } from './BulkImport';
 import { AiBatchReview } from './AiBatchReview';
-import { BookOpen, Database, FileSpreadsheet, Upload, Sparkles } from 'lucide-react';
+import { AdminPayments } from './AdminPayments';
+import { AdminUsers } from './AdminUsers';
+import { BookOpen, Database, FileSpreadsheet, Upload, Sparkles, CreditCard, Users } from 'lucide-react';
 
 /**
  * AdminDashboard — editorial refresh.
@@ -22,10 +24,10 @@ export const AdminDashboard: React.FC = () => {
             <div className="flex flex-col gap-1.5">
                 <p className="label-uppercase">Admin</p>
                 <h1 className="text-[36px] leading-[1.05] font-bold tracking-[-0.02em] text-[var(--color-ink-1)]">
-                    Content system
+                    Admin console
                 </h1>
                 <p className="text-[14px] text-[var(--color-ink-3)] mt-1">
-                    Manage syllabus material and the question bank.
+                    Content, users, and payments.
                 </p>
             </div>
 
@@ -52,6 +54,14 @@ export const AdminDashboard: React.FC = () => {
                         <Sparkles className="h-4 w-4" />
                         AI Review
                     </TabsTrigger>
+                    <TabsTrigger value="payments">
+                        <CreditCard className="h-4 w-4" />
+                        Payments
+                    </TabsTrigger>
+                    <TabsTrigger value="users">
+                        <Users className="h-4 w-4" />
+                        Users
+                    </TabsTrigger>
                 </TabsList>
 
                 <TabsContent value="textbooks" className="min-h-[500px]">
@@ -68,6 +78,12 @@ export const AdminDashboard: React.FC = () => {
                 </TabsContent>
                 <TabsContent value="ai-review" className="min-h-[500px]">
                     <AiBatchReview />
+                </TabsContent>
+                <TabsContent value="payments" className="min-h-[500px]">
+                    <AdminPayments />
+                </TabsContent>
+                <TabsContent value="users" className="min-h-[500px]">
+                    <AdminUsers />
                 </TabsContent>
             </Tabs>
         </div>

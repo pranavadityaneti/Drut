@@ -27,7 +27,7 @@ import {
     Building2,
 } from 'lucide-react-native';
 import { Colors } from '../../../constants/Colors';
-import { profileService, authService, UserProfile } from '@drut/shared';
+import { profileService, authService, UserProfile, normalizeTargetExams } from '@drut/shared';
 
 const MENU_ITEMS = [
     { id: 'account-settings', label: 'Account Settings', icon: Settings },
@@ -38,7 +38,8 @@ const MENU_ITEMS = [
 // Friendly labels for stored values
 const EXAM_LABEL: Record<string, string> = {
     ap_eapcet: 'AP EAPCET',
-    ts_eapcet: 'TS EAPCET',
+    ts_eapcet: 'TG EAPCET',
+    jee_main: 'JEE Main',
 };
 
 const YEAR_IN_SCHOOL_LABEL: Record<string, string> = {
@@ -130,15 +131,15 @@ export default function ProfileScreen() {
     const school = userMeta?.school_name;
     const coaching = userMeta?.coaching_center;
     const yearInSchool = userMeta?.year_in_school;
-    const targetExams: string[] = Array.isArray(userMeta?.target_exams) ? userMeta!.target_exams : [];
+    const targetExams: string[] = normalizeTargetExams(
+        (Array.isArray(userMeta?.target_exams) && userMeta!.target_exams.length) ? userMeta!.target_exams : userMeta?.exam_profile
+    );
     const examYear = userMeta?.target_exam_year;
     const referralSource = userMeta?.referral_source;
 
-    const targetExamLabel = targetExams.length === 2
-        ? 'AP + TS EAPCET'
-        : targetExams.length === 1
-            ? EXAM_LABEL[targetExams[0]] || targetExams[0]
-            : null;
+    const targetExamLabel = targetExams.length
+        ? targetExams.map(v => EXAM_LABEL[v] || v).join(' + ')
+        : null;
 
     const yearInSchoolLabel = yearInSchool ? YEAR_IN_SCHOOL_LABEL[yearInSchool] : null;
     const examYearLabel = examYear === 'unknown' ? 'Not sure yet' : examYear;

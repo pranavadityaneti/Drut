@@ -61,6 +61,11 @@ export * from './services/sprintService';
 import * as sprintService from './services/sprintService';
 export { sprintService };
 
+// Payments + free-tier entitlement gate (Razorpay)
+export * from './services/paymentService';
+import * as paymentService from './services/paymentService';
+export { paymentService };
+
 // Chapter source resolution (for the 3-step Board → Class → Chapter picker)
 export * from './services/chapterService';
 import * as chapterService from './services/chapterService';
@@ -79,6 +84,8 @@ export { vertexBackendService };
 
 // Lib
 export * from './lib/taxonomy';
+export * from './lib/pricing';
+export * from './lib/adminAccess';
 export * from './lib/utils';
 export * from './lib/log';
 export * from './lib/health';
@@ -86,8 +93,12 @@ export * from './lib/explCache';
 export * from './lib/supabase';
 export * from './lib/svgSanitizer';
 
+// Subscription + payment types
+export * from './types/subscription';
+
 // Hooks (Careful with React usage)
 export * from './hooks/useDashboardData';
+export * from './hooks/useRazorpayCheckout';
 
 // Validation
 export * from './lib/clientValidator';

@@ -139,12 +139,9 @@ export const DashboardStatsRow = () => {
                             <h3 className="text-[44px] leading-none font-bold tracking-tight num-tabular text-[var(--color-ink-1)]">
                                 {sprintCount}
                             </h3>
-                            <span className="mb-1.5 inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md text-[10px] font-semibold tracking-tight num-tabular bg-[var(--color-muted)] text-[#3d7a0f]">
-                                +12.5%
-                            </span>
                         </div>
                         <p className="text-[11px] text-[var(--color-ink-3)] mt-3 leading-relaxed">
-                            Sprints completed this week vs last.
+                            Sprints completed so far.
                         </p>
                     </div>
                 </CardContent>
@@ -187,9 +184,6 @@ export const DashboardStatsRow = () => {
                             <h3 className="text-[44px] leading-none font-bold tracking-tight num-tabular text-[var(--color-ink-1)]">
                                 {userStats?.total_attempts || 0}
                             </h3>
-                            <span className="mb-1.5 inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md text-[10px] font-semibold tracking-tight num-tabular bg-[var(--color-muted)] text-[#3d7a0f]">
-                                +10.4%
-                            </span>
                         </div>
 
                         {/* Staggered hatched bars; featured last bar coral and pulses */}
@@ -218,7 +212,7 @@ export const DashboardStatsRow = () => {
                         </div>
 
                         <p className="text-[11px] text-[var(--color-ink-3)] mt-3">
-                            +45 questions this week.
+                            Questions answered across all practice.
                         </p>
                     </div>
                 </CardContent>
@@ -310,9 +304,6 @@ export const DashboardStatsRow = () => {
                             <h3 className="text-[44px] leading-none font-bold tracking-tight num-tabular text-[var(--color-accent-warm)] transition-transform duration-300 group-hover:-translate-y-0.5">
                                 {verifiedPatterns}
                             </h3>
-                            <span className="mb-1.5 inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md text-[10px] font-semibold tracking-tight num-tabular bg-[var(--color-muted)] text-[#3d7a0f]">
-                                +2
-                            </span>
                         </div>
 
                         <div className="mt-3 space-y-2">

@@ -3,6 +3,9 @@ import { QuestionData } from '@drut/shared';
 import { authService } from '@drut/shared';
 const { getCurrentUser } = authService;
 import { startSession, saveSprintAttempt, finalizeSprintSession, calculateSprintScore, createRetrySession, calculateTargetTime } from '@drut/shared';
+import { isPaywallError, useRazorpayCheckout, isFirstTimerSubscriber } from '@drut/shared';
+import type { PlanId } from '@drut/shared';
+import { PaywallModal } from '../PaywallModal';
 import { Button } from '../ui/Button';
 import { Card, CardContent } from '../ui/Card';
 import { DiagramRenderer } from '../ui/DiagramRenderer';
@@ -26,6 +29,13 @@ export const SprintSession: React.FC<SprintSessionProps> = ({ config, onExit }) 
  const [currentIndex, setCurrentIndex] = useState(0);
  const [timeLeft, setTimeLeft] = useState(45); // Display time
  const [sessionReady, setSessionReady] = useState(false);
+
+ // Paywall (free-tier 20/day gate). reloadKey re-runs init after a successful upgrade.
+ const [showPaywall, setShowPaywall] = useState(false);
+ const [paywallReason, setPaywallReason] = useState<string | undefined>(undefined);
+ const [isFirstTimer, setIsFirstTimer] = useState(true);
+ const [reloadKey, setReloadKey] = useState(0);
+ const { pay: payWithRazorpay, busy: checkoutBusy } = useRazorpayCheckout({ name: 'Drut' });
 
  // Use refs for mutable state to avoid closure staleness in timer
  const stateRef = useRef({
@@ -126,6 +136,13 @@ export const SprintSession: React.FC<SprintSessionProps> = ({ config, onExit }) 
  // Timer will be started by the 'currentIndex' effect
  }
  } catch (error: any) {
+ // Free-tier daily quota reached → show the upgrade modal instead of failing out.
+ if (isPaywallError(error)) {
+ setPaywallReason(error.reason);
+ setShowPaywall(true);
+ isFirstTimerSubscriber().then(setIsFirstTimer).catch(() => { });
+ return;
+ }
  log.error('[sprint] Init failed:', error);
  alert('Failed to start Sprint session. Please check your connection.');
  onExit('error');
@@ -135,7 +152,7 @@ export const SprintSession: React.FC<SprintSessionProps> = ({ config, onExit }) 
  init();
 
  return () => stopTimer();
- }, []); // Only run once
+ }, [reloadKey]); // Run on mount; re-run after a successful upgrade (reloadKey bump)
 
  // Effect to start timer when question changes (or session becomes ready)
  useEffect(() => {
@@ -254,6 +271,29 @@ export const SprintSession: React.FC<SprintSessionProps> = ({ config, onExit }) 
  };
 
 
+ // Paywall → Razorpay checkout. On success, re-run init (now Pro → gate passes).
+ const handleUpgrade = async (plan: PlanId) => {
+ try {
+ await payWithRazorpay(plan);
+ setShowPaywall(false);
+ setReloadKey((k) => k + 1);
+ } catch (e: any) {
+ if (e?.message === 'checkout-dismissed' || e?.message === 'checkout-already-open') return;
+ alert(e?.message || 'Payment could not be completed. Please try again.');
+ }
+ };
+
+ const paywallEl = (
+ <PaywallModal
+ isOpen={showPaywall}
+ onClose={() => { setShowPaywall(false); onExit('error'); }}
+ onUpgrade={handleUpgrade}
+ isFirstTimer={isFirstTimer}
+ loading={checkoutBusy}
+ reason={paywallReason}
+ />
+);
+
  if (!sessionReady) {
  return (
  <div className="flex items-center justify-center min-h-[60vh]">
@@ -261,6 +301,7 @@ export const SprintSession: React.FC<SprintSessionProps> = ({ config, onExit }) 
  <div className="animate-spin h-10 w-10 border-4 border-[var(--color-primary)] border-t-transparent rounded-full mx-auto" />
  <p className="text-lg font-medium text-[var(--color-ink-2)]">Preparing your Sprint...</p>
  </div>
+ {paywallEl}
  </div>
 );
  }
@@ -337,6 +378,7 @@ export const SprintSession: React.FC<SprintSessionProps> = ({ config, onExit }) 
 ))}
  </div>
  </div>
+ {paywallEl}
  </div>
 );
 };

@@ -5,9 +5,12 @@ import { SessionHeader } from './SessionHeader';
 import { QuestionCard } from './QuestionCard';
 import { SessionSummary } from './SessionSummary';
 import { useRouter } from 'expo-router';
-import { authService, saveAttemptAndUpdateMastery, calculateTargetTime } from '@drut/shared';
+import { authService, saveAttemptAndUpdateMastery, calculateTargetTime, isFirstTimerSubscriber } from '@drut/shared';
+import type { PlanId } from '@drut/shared';
 import { usePracticeQuestions } from '../hooks/usePracticeQuestions';
 import { InterventionModal } from './practice/InterventionModal';
+import { PaywallModal } from './PaywallModal';
+import { RazorpayCheckoutModal } from './RazorpayCheckoutModal';
 import { ChevronRight } from 'lucide-react-native';
 
 const formatTime = (seconds: number) => {
@@ -33,10 +36,15 @@ export const SessionEngine: React.FC<SessionEngineProps> = ({ config, onSessionC
     const questionCount = config.questionCount || 10;
 
     // Questions
-    const { questions, loading, loadingMore, error, loadMore, totalTarget } = usePracticeQuestions({
+    const { questions, loading, loadingMore, error, paywall, loadMore, retryAfterUpgrade, totalTarget } = usePracticeQuestions({
         config,
         batchSize: Math.min(5, questionCount),
     });
+
+    // Paywall (free-tier 20/day gate) → Razorpay WebView checkout
+    const [showCheckout, setShowCheckout] = useState(false);
+    const [checkoutPlan, setCheckoutPlan] = useState<PlanId | null>(null);
+    const [isFirstTimer, setIsFirstTimer] = useState(true);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
     const [isSubmitted, setIsSubmitted] = useState(false);
@@ -74,6 +82,13 @@ export const SessionEngine: React.FC<SessionEngineProps> = ({ config, onSessionC
             router.back();
         }
     }, [error]);
+
+    // When the paywall fires, resolve first-timer status for the intro-price display.
+    useEffect(() => {
+        if (paywall.active) {
+            isFirstTimerSubscriber().then(setIsFirstTimer).catch(() => { });
+        }
+    }, [paywall.active]);
 
     const startTimer = (resetQuestion = false) => {
         if (timerRef.current) clearInterval(timerRef.current);
@@ -230,7 +245,31 @@ export const SessionEngine: React.FC<SessionEngineProps> = ({ config, onSessionC
         );
     };
 
+    // Paywall + checkout elements — shared by the no-questions branch and the main return.
+    const paywallEls = (
+        <>
+            <PaywallModal
+                visible={paywall.active && !showCheckout}
+                onClose={() => router.back()}
+                onUpgrade={(plan) => { setCheckoutPlan(plan); setShowCheckout(true); }}
+                isFirstTimer={isFirstTimer}
+                reason={paywall.reason}
+            />
+            <RazorpayCheckoutModal
+                visible={showCheckout}
+                plan={checkoutPlan}
+                onClose={() => setShowCheckout(false)}
+                onSuccess={() => { setShowCheckout(false); retryAfterUpgrade(); }}
+            />
+        </>
+    );
+
     // --- View States ---
+
+    // Free-tier gate hit with nothing to show yet (typically on initial load).
+    if (paywall.active && questions.length === 0) {
+        return <View style={styles.container}>{paywallEls}</View>;
+    }
 
     if (loading) {
         return (
@@ -326,6 +365,9 @@ export const SessionEngine: React.FC<SessionEngineProps> = ({ config, onSessionC
                 onTrySimilar={handleTrySimilar}
                 onContinue={handleContinue}
             />
+
+            {/* Free-tier paywall (20 questions/day) + Razorpay checkout */}
+            {paywallEls}
         </View>
     );
 };

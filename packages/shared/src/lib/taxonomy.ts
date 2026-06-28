@@ -27,11 +27,14 @@ export interface ExamDef {
 }
 
 // ── Canonical AP EAPCET chapter taxonomy (BIEAP) ──────────────────────────────
-// Reconciled from the official AP EAPCET 2025 syllabus + BIEAP textbook TOCs
-// (verified 2026-06-23; see docs/ap-eapcet-taxonomy-analysis.html). The `label`
-// is the canonical topic string stored in cached_questions.topic and matched by
-// serving. Shared by ap_eapcet + ts_eapcet (~identical syllabi).
-const JEE_MAIN_TOPICS: TopicDef[] = [
+// EAPCET (AP + TG) chapter list — reconciled from the official AP EAPCET 2025
+// syllabus + BIEAP/TSBIE state-board textbook TOCs (verified 2026-06-23; see
+// docs/ap-eapcet-taxonomy-analysis.html). NOTE: this is the STATE-BOARD list and
+// is NOT the same as the JEE Main (NCERT) syllabus — e.g. it includes Mathematical
+// Induction, which JEE Main dropped in 2024. JEE Main uses JEE_MAIN_TOPICS below.
+// The `label` is the canonical topic string stored in cached_questions.topic and
+// matched by serving. Shared by ap_eapcet + ts_eapcet (~identical state syllabi).
+const EAPCET_TOPICS: TopicDef[] = [
     // ==================== MATHEMATICS (38) ====================
     { value: "functions", subject: "Mathematics", label: "Functions", class_level: "11", subtopics: [{ value: "functions-gen", label: "General" }] },
     { value: "mathematical-induction", subject: "Mathematics", label: "Mathematical Induction", class_level: "11", subtopics: [{ value: "mathematical-induction-gen", label: "General" }] },
@@ -137,15 +140,87 @@ const JEE_MAIN_TOPICS: TopicDef[] = [
     { value: "cyanides-and-isocyanides", subject: "Chemistry", label: "Cyanides and Isocyanides", class_level: "12", subtopics: [{ value: "cyanides-and-isocyanides-gen", label: "General" }] },
 ];
 
+// JEE Main chapter list — official NTA 2025 syllabus (NCERT-based, rationalized in
+// 2024). 54 units: Maths 14, Physics 20 (19 theory + Experimental Skills), Chemistry
+// 20 (Physical 8, Inorganic 4, Organic 8). DISTINCT from EAPCET_TOPICS: JEE Main
+// dropped Mathematical Induction, Mathematical Reasoning, and several Chemistry units
+// (States of Matter, Surface Chemistry, Metallurgy, Hydrogen, s-Block, Environmental
+// Chemistry, Polymers, Chemistry in Everyday Life) in 2024. Verified 2026-06-25
+// (NTA/Aakash/CollegeDekho); see docs/jee-main-vs-eapcet-briefing.html.
+const JEE_MAIN_TOPICS: TopicDef[] = [
+    // ==================== MATHEMATICS (14) ====================
+    { value: "sets-relations-and-functions", subject: "Mathematics", label: "Sets, Relations and Functions", class_level: "11", subtopics: [{ value: "sets-relations-and-functions-gen", label: "General" }] },
+    { value: "complex-numbers-and-quadratic-equations", subject: "Mathematics", label: "Complex Numbers and Quadratic Equations", class_level: "11", subtopics: [{ value: "complex-numbers-and-quadratic-equations-gen", label: "General" }] },
+    { value: "matrices-and-determinants", subject: "Mathematics", label: "Matrices and Determinants", class_level: "12", subtopics: [{ value: "matrices-and-determinants-gen", label: "General" }] },
+    { value: "permutations-and-combinations", subject: "Mathematics", label: "Permutations and Combinations", class_level: "11", subtopics: [{ value: "permutations-and-combinations-gen", label: "General" }] },
+    { value: "binomial-theorem", subject: "Mathematics", label: "Binomial Theorem and Its Simple Applications", class_level: "11", subtopics: [{ value: "binomial-theorem-gen", label: "General" }] },
+    { value: "sequence-and-series", subject: "Mathematics", label: "Sequence and Series", class_level: "11", subtopics: [{ value: "sequence-and-series-gen", label: "General" }] },
+    { value: "limit-continuity-and-differentiability", subject: "Mathematics", label: "Limit, Continuity and Differentiability", class_level: "12", subtopics: [{ value: "limit-continuity-and-differentiability-gen", label: "General" }] },
+    { value: "integral-calculus", subject: "Mathematics", label: "Integral Calculus", class_level: "12", subtopics: [{ value: "integral-calculus-gen", label: "General" }] },
+    { value: "differential-equations", subject: "Mathematics", label: "Differential Equations", class_level: "12", subtopics: [{ value: "differential-equations-gen", label: "General" }] },
+    { value: "coordinate-geometry", subject: "Mathematics", label: "Coordinate Geometry", class_level: "11", subtopics: [{ value: "coordinate-geometry-gen", label: "General" }] },
+    { value: "three-dimensional-geometry", subject: "Mathematics", label: "Three Dimensional Geometry", class_level: "12", subtopics: [{ value: "three-dimensional-geometry-gen", label: "General" }] },
+    { value: "vector-algebra", subject: "Mathematics", label: "Vector Algebra", class_level: "12", subtopics: [{ value: "vector-algebra-gen", label: "General" }] },
+    { value: "statistics-and-probability", subject: "Mathematics", label: "Statistics and Probability", class_level: "12", subtopics: [{ value: "statistics-and-probability-gen", label: "General" }] },
+    { value: "trigonometry", subject: "Mathematics", label: "Trigonometry", class_level: "11", subtopics: [{ value: "trigonometry-gen", label: "General" }] },
+    // ==================== PHYSICS (20) ====================
+    { value: "physics-and-measurement", subject: "Physics", label: "Physics and Measurement", class_level: "11", subtopics: [{ value: "physics-and-measurement-gen", label: "General" }] },
+    { value: "kinematics", subject: "Physics", label: "Kinematics", class_level: "11", subtopics: [{ value: "kinematics-gen", label: "General" }] },
+    { value: "laws-of-motion", subject: "Physics", label: "Laws of Motion", class_level: "11", subtopics: [{ value: "laws-of-motion-gen", label: "General" }] },
+    { value: "work-energy-and-power", subject: "Physics", label: "Work, Energy and Power", class_level: "11", subtopics: [{ value: "work-energy-and-power-gen", label: "General" }] },
+    { value: "rotational-motion", subject: "Physics", label: "Rotational Motion", class_level: "11", subtopics: [{ value: "rotational-motion-gen", label: "General" }] },
+    { value: "gravitation", subject: "Physics", label: "Gravitation", class_level: "11", subtopics: [{ value: "gravitation-gen", label: "General" }] },
+    { value: "properties-of-solids-and-liquids", subject: "Physics", label: "Properties of Solids and Liquids", class_level: "11", subtopics: [{ value: "properties-of-solids-and-liquids-gen", label: "General" }] },
+    { value: "thermodynamics", subject: "Physics", label: "Thermodynamics", class_level: "11", subtopics: [{ value: "thermodynamics-gen", label: "General" }] },
+    { value: "kinetic-theory-of-gases", subject: "Physics", label: "Kinetic Theory of Gases", class_level: "11", subtopics: [{ value: "kinetic-theory-of-gases-gen", label: "General" }] },
+    { value: "oscillations-and-waves", subject: "Physics", label: "Oscillations and Waves", class_level: "11", subtopics: [{ value: "oscillations-and-waves-gen", label: "General" }] },
+    { value: "electrostatics", subject: "Physics", label: "Electrostatics", class_level: "12", subtopics: [{ value: "electrostatics-gen", label: "General" }] },
+    { value: "current-electricity", subject: "Physics", label: "Current Electricity", class_level: "12", subtopics: [{ value: "current-electricity-gen", label: "General" }] },
+    { value: "magnetic-effects-of-current-and-magnetism", subject: "Physics", label: "Magnetic Effects of Current and Magnetism", class_level: "12", subtopics: [{ value: "magnetic-effects-of-current-and-magnetism-gen", label: "General" }] },
+    { value: "electromagnetic-induction-and-alternating-currents", subject: "Physics", label: "Electromagnetic Induction and Alternating Currents", class_level: "12", subtopics: [{ value: "electromagnetic-induction-and-alternating-currents-gen", label: "General" }] },
+    { value: "electromagnetic-waves", subject: "Physics", label: "Electromagnetic Waves", class_level: "12", subtopics: [{ value: "electromagnetic-waves-gen", label: "General" }] },
+    { value: "optics", subject: "Physics", label: "Optics", class_level: "12", subtopics: [{ value: "optics-gen", label: "General" }] },
+    { value: "dual-nature-of-matter-and-radiation", subject: "Physics", label: "Dual Nature of Matter and Radiation", class_level: "12", subtopics: [{ value: "dual-nature-of-matter-and-radiation-gen", label: "General" }] },
+    { value: "atoms-and-nuclei", subject: "Physics", label: "Atoms and Nuclei", class_level: "12", subtopics: [{ value: "atoms-and-nuclei-gen", label: "General" }] },
+    { value: "electronic-devices", subject: "Physics", label: "Electronic Devices", class_level: "12", subtopics: [{ value: "electronic-devices-gen", label: "General" }] },
+    { value: "experimental-skills", subject: "Physics", label: "Experimental Skills", class_level: "11", subtopics: [{ value: "experimental-skills-gen", label: "General" }] },
+    // ==================== CHEMISTRY (20) ====================
+    { value: "some-basic-concepts-in-chemistry", subject: "Chemistry", label: "Some Basic Concepts in Chemistry", class_level: "11", subtopics: [{ value: "some-basic-concepts-in-chemistry-gen", label: "General" }] },
+    { value: "atomic-structure", subject: "Chemistry", label: "Atomic Structure", class_level: "11", subtopics: [{ value: "atomic-structure-gen", label: "General" }] },
+    { value: "chemical-bonding-and-molecular-structure", subject: "Chemistry", label: "Chemical Bonding and Molecular Structure", class_level: "11", subtopics: [{ value: "chemical-bonding-and-molecular-structure-gen", label: "General" }] },
+    { value: "chemical-thermodynamics", subject: "Chemistry", label: "Chemical Thermodynamics", class_level: "11", subtopics: [{ value: "chemical-thermodynamics-gen", label: "General" }] },
+    { value: "solutions", subject: "Chemistry", label: "Solutions", class_level: "12", subtopics: [{ value: "solutions-gen", label: "General" }] },
+    { value: "equilibrium", subject: "Chemistry", label: "Equilibrium", class_level: "11", subtopics: [{ value: "equilibrium-gen", label: "General" }] },
+    { value: "redox-reactions-and-electrochemistry", subject: "Chemistry", label: "Redox Reactions and Electrochemistry", class_level: "12", subtopics: [{ value: "redox-reactions-and-electrochemistry-gen", label: "General" }] },
+    { value: "chemical-kinetics", subject: "Chemistry", label: "Chemical Kinetics", class_level: "12", subtopics: [{ value: "chemical-kinetics-gen", label: "General" }] },
+    { value: "classification-of-elements-and-periodicity", subject: "Chemistry", label: "Classification of Elements and Periodicity in Properties", class_level: "11", subtopics: [{ value: "classification-of-elements-and-periodicity-gen", label: "General" }] },
+    { value: "p-block-elements-jee", subject: "Chemistry", label: "P-Block Elements", class_level: "12", subtopics: [{ value: "p-block-elements-jee-gen", label: "General" }] },
+    { value: "d-and-f-block-elements", subject: "Chemistry", label: "D- and F-Block Elements", class_level: "12", subtopics: [{ value: "d-and-f-block-elements-gen", label: "General" }] },
+    { value: "coordination-compounds", subject: "Chemistry", label: "Coordination Compounds", class_level: "12", subtopics: [{ value: "coordination-compounds-gen", label: "General" }] },
+    { value: "purification-and-characterisation-of-organic-compounds", subject: "Chemistry", label: "Purification and Characterisation of Organic Compounds", class_level: "11", subtopics: [{ value: "purification-and-characterisation-of-organic-compounds-gen", label: "General" }] },
+    { value: "some-basic-principles-of-organic-chemistry", subject: "Chemistry", label: "Some Basic Principles of Organic Chemistry", class_level: "11", subtopics: [{ value: "some-basic-principles-of-organic-chemistry-gen", label: "General" }] },
+    { value: "hydrocarbons", subject: "Chemistry", label: "Hydrocarbons", class_level: "11", subtopics: [{ value: "hydrocarbons-gen", label: "General" }] },
+    { value: "organic-compounds-containing-halogens", subject: "Chemistry", label: "Organic Compounds Containing Halogens", class_level: "12", subtopics: [{ value: "organic-compounds-containing-halogens-gen", label: "General" }] },
+    { value: "organic-compounds-containing-oxygen", subject: "Chemistry", label: "Organic Compounds Containing Oxygen", class_level: "12", subtopics: [{ value: "organic-compounds-containing-oxygen-gen", label: "General" }] },
+    { value: "organic-compounds-containing-nitrogen", subject: "Chemistry", label: "Organic Compounds Containing Nitrogen", class_level: "12", subtopics: [{ value: "organic-compounds-containing-nitrogen-gen", label: "General" }] },
+    { value: "biomolecules", subject: "Chemistry", label: "Biomolecules", class_level: "12", subtopics: [{ value: "biomolecules-gen", label: "General" }] },
+    { value: "principles-related-to-practical-chemistry", subject: "Chemistry", label: "Principles Related to Practical Chemistry", class_level: "12", subtopics: [{ value: "principles-related-to-practical-chemistry-gen", label: "General" }] },
+];
+
 export const EXAM_TAXONOMY: ExamDef[] = [
     {
         value: 'ap_eapcet',
         label: 'AP EAPCET',
-        topics: JEE_MAIN_TOPICS,
+        topics: EAPCET_TOPICS,
     },
     {
         value: 'ts_eapcet',
         label: 'TG EAPCET',
+        topics: EAPCET_TOPICS,
+    },
+    {
+        value: 'jee_main',
+        label: 'JEE Main',
         topics: JEE_MAIN_TOPICS,
     },
 ];
@@ -182,6 +257,36 @@ export function getSubtopic(examValue: string, topicValue: string, subtopicValue
  */
 export function getExamOptions(): Array<{ value: string; label: string }> {
     return EXAM_TAXONOMY.map(e => ({ value: e.value, label: e.label }));
+}
+
+/**
+ * Normalize a user's stored target-exam value(s) into a deduped list of canonical
+ * snake_case exam values ({ap_eapcet, ts_eapcet, jee_main}). The SINGLE normalizer
+ * web AND mobile use on read, so both platforms interpret stored enrollment
+ * identically. Handles every legacy shape:
+ *  - canonical values (ap_eapcet, ts_eapcet, jee_main)
+ *  - display labels ("AP EAPCET", "TG EAPCET", "JEE Main")  [web onboarding stored these]
+ *  - legacy groupings: 'eamcet' / 'both' -> ap_eapcet + ts_eapcet
+ *  - legacy mismatches: apeapcet / tgeapcet / tseapcet / jee / jeemains
+ */
+export function normalizeTargetExams(raw: string[] | string | null | undefined): string[] {
+    const valid = new Set(EXAM_TAXONOMY.map(e => e.value));
+    const byLabel = new Map(EXAM_TAXONOMY.map(e => [e.label.toLowerCase(), e.value] as const));
+    const list = Array.isArray(raw) ? raw : (raw ? [raw] : []);
+    const out: string[] = [];
+    const add = (v: string) => { if (valid.has(v) && !out.includes(v)) out.push(v); };
+    for (const item of list) {
+        if (!item) continue;
+        const s = String(item).trim();
+        if (valid.has(s)) { add(s); continue; }                              // already canonical
+        const lbl = byLabel.get(s.toLowerCase()); if (lbl) { add(lbl); continue; } // display label
+        const clean = s.toLowerCase().replace(/[^a-z0-9]/g, '');             // strip punctuation/space
+        if (['eamcet', 'both', 'aptseapcet', 'aptgeapcet', 'eapcet'].includes(clean)) { add('ap_eapcet'); add('ts_eapcet'); continue; }
+        if (['apeapcet', 'apeamcet'].includes(clean)) { add('ap_eapcet'); continue; }
+        if (['tgeapcet', 'tseapcet', 'tgeamcet', 'tseamcet'].includes(clean)) { add('ts_eapcet'); continue; }
+        if (['jeemain', 'jeemains', 'jee'].includes(clean)) { add('jee_main'); continue; }
+    }
+    return out;
 }
 
 /**

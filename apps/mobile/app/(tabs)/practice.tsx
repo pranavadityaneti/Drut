@@ -3,7 +3,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Colors, Layout } from '../../constants/Colors';
-import { authService, EXAM_TAXONOMY, fetchChapterSources, getPrimaryBoardForExam, classMatchesSelection } from '@drut/shared';
+import { authService, EXAM_TAXONOMY, fetchChapterSources, getPrimaryBoardForExam, classMatchesSelection, DIFFICULTY_SELECTION_ENABLED, normalizeTargetExams } from '@drut/shared';
 import type { ChapterSource } from '@drut/shared';
 // @ts-ignore
 import { supabase } from '@drut/shared';
@@ -64,7 +64,8 @@ export default function PracticeScreen() {
                 setChapterSources([]);
                 return;
             }
-            const sources = await fetchChapterSources(selectedSubject);
+            // Pass the exam's board so JEE Main loads JEE chapters (not EAPCET).
+            const sources = await fetchChapterSources(selectedSubject, undefined, getPrimaryBoardForExam(selectedExamValue));
             setChapterSources(sources);
 
             // Also populate the legacy dynamicTopics shape so the multi-select
@@ -78,7 +79,7 @@ export default function PracticeScreen() {
             setDynamicTopics(flat);
         };
         loadSources();
-    }, [selectedSubject]);
+    }, [selectedSubject, selectedExamValue]);
 
     // Get user class + restrict exam picker to user's enrolled exams
     useEffect(() => {
@@ -90,13 +91,12 @@ export default function PracticeScreen() {
 
                 // Narrow the exam picker to user's enrolled exams.
                 // If user has none set (legacy/test accounts), show all.
-                const userTargets: string[] = Array.isArray(user.user_metadata?.target_exams)
+                // Normalize handles labels / legacy 'eamcet'/'both' / snake_case so web- and
+                // mobile-onboarded users resolve to the same canonical exam values.
+                const rawTargets = (Array.isArray(user.user_metadata?.target_exams) && user.user_metadata.target_exams.length)
                     ? user.user_metadata.target_exams
-                    : [];
-                const fallbackPrimary = user.user_metadata?.exam_profile;
-                const targets = userTargets.length > 0
-                    ? userTargets
-                    : (fallbackPrimary ? [fallbackPrimary] : []);
+                    : user.user_metadata?.exam_profile;
+                const targets = normalizeTargetExams(rawTargets);
 
                 if (targets.length > 0) {
                     const allowed = EXAM_TAXONOMY
@@ -378,7 +378,8 @@ export default function PracticeScreen() {
                     )}
                 </View>
 
-                {/* Difficulty Selector */}
+                {/* Difficulty Selector — hidden until difficulty is empirically calibrated (Elo); defaults to 'Medium'. */}
+                {DIFFICULTY_SELECTION_ENABLED && (
                 <View style={styles.section}>
                     <Text style={styles.label}>Difficulty</Text>
                     <View style={styles.difficultyRow}>
@@ -412,6 +413,7 @@ export default function PracticeScreen() {
                         })}
                     </View>
                 </View>
+                )}
 
                 {/* Question Count */}
                 <View style={styles.section}>

@@ -12,6 +12,7 @@ import {
     X
 } from 'lucide-react';
 import { supabase } from '@drut/shared';
+import { isAdminEmail } from '@drut/shared';
 
 interface MobileNavProps {
     currentPage: string;
@@ -49,11 +50,10 @@ export const MobileNav: React.FC<MobileNavProps> = ({
         { id: 'sprint', label: 'Sprint', icon: Zap },
     ];
 
-    // Admin users get extra nav items.
-    // NOTE: Sidebar.tsx and migration 029 also check 'pranav.n@drut.club';
-    // this file is missing that second admin — left as-is to keep this commit
-    // strictly scoped to comment additions. Flag to fix as a follow-up.
-    const isAdmin = user?.email === 'pranav.n@ideaye.in';
+    // Admin users get extra nav items — single client source of truth
+    // (@drut/shared isAdminEmail). Previously this only checked one of the two
+    // admin emails (drift bug); now both are covered via the shared allowlist.
+    const isAdmin = isAdminEmail(user?.email);
     const adminItems: NavItem[] = isAdmin ? [
         { id: 'admin/ingest', label: 'Admin Ingest', icon: Upload },
         { id: 'admin/bulk', label: 'Bulk Ingest', icon: Upload },

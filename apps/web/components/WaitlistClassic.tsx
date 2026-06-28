@@ -9,15 +9,9 @@ import { DrutIcon } from './icons/Icons';
 const FlippingText: React.FC = () => {
     const texts = [
         "Competitive Exams", // Start with generic
-        "JEE Main",
-        "JEE Advanced",
         "AP EAPCET",
         "TG EAPCET",
-        "WBJEE",
-        "MHT CET",
-        "KCET",
-        "KEAM",
-        "GUJCET"
+        "JEE Main",
     ];
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isFlipping, setIsFlipping] = useState(false);
@@ -691,7 +685,7 @@ const WhySpeedMattersSection = () => {
         {
             number: '02',
             title: 'The "10-Question" Gap.',
-            description: 'In any exam (CAT, JEE, PO), solving just 10 more questions than the average candidate moves you from the top 20% to the top 1%.',
+            description: 'In any competitive exam, solving just 10 more questions than the average candidate moves you from the top 20% to the top 1%.',
         },
         {
             number: '03',
@@ -1083,21 +1077,9 @@ const ResearchForm = ({ onSuccess }: { onSuccess?: () => void }) => {
                     onChange={handleChange}
                 >
                     <option value="">Select your target exam</option>
-                    <option value="JEE Mains">JEE Mains</option>
-                    <option value="JEE Advanced">JEE Advanced</option>
-                    <option value="NEET">NEET</option>
-                    <option value="MHT CET">MHT CET</option>
-                    <option value="KCET">KCET</option>
-                    <option value="WBJEE">WBJEE</option>
-                    <option value="GUJCET">GUJCET</option>
-                    <option value="TS EAMCET">TS EAMCET</option>
                     <option value="AP EAPCET">AP EAPCET</option>
-                    <option value="BITSAT">BITSAT</option>
-                    <option value="VITEEE">VITEEE</option>
-                    <option value="SRMJEEE">SRMJEEE</option>
-                    <option value="CAT">CAT</option>
-                    <option value="SSC/CGL">SSC/CGL</option>
-                    <option value="Banking Exams">Banking Exams</option>
+                    <option value="TG EAPCET">TG EAPCET</option>
+                    <option value="JEE Main">JEE Main</option>
                     <option value="Other">Other</option>
                 </select>
 
@@ -1131,7 +1113,7 @@ const ResearchPanel = () => {
                         <div className="research-header">
                             <h2>Help Us Build the Future of Fast Thinking</h2>
                             <p className="research-subtitle">
-                                We're interviewing students preparing for CAT, JEE, SSC, and Banking exams to understand how they think under time pressure. Your insights, patterns, and feedback help us directly shape Drut.
+                                We're interviewing students preparing for AP/TG EAPCET and JEE Main to understand how they think under time pressure. Your insights, patterns, and feedback help us directly shape Drut.
                             </p>
                         </div>
                         <ResearchForm />

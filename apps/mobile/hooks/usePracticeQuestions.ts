@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Alert } from 'react-native';
-import { getQuestionsForUser, getReviewQuestionsForUser, isServableQuestion, authService, getSupabase, ALLOW_LIVE_AI_FALLBACK } from '@drut/shared';
+import { getQuestionsForUser, getReviewQuestionsForUser, isServableQuestion, authService, getSupabase, ALLOW_LIVE_AI_FALLBACK, isPaywallError } from '@drut/shared';
 
 // Serving trust is centralized in @drut/shared `isServableQuestion` (new-format +
 // approved source) so web and mobile serve the IDENTICAL pool. The old per-client
@@ -34,6 +34,9 @@ export function usePracticeQuestions({ config, batchSize = 5 }: UsePracticeQuest
     const [loading, setLoading] = useState(true);
     const [loadingMore, setLoadingMore] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    // Free-tier 20/day gate signal — kept separate from `error` so the UI shows
+    // the upgrade modal (not an error alert) and so router-back-on-error doesn't fire.
+    const [paywall, setPaywall] = useState<{ active: boolean; reason?: string }>({ active: false });
     const totalTarget = config.questionCount || 10;
     const fetchedCountRef = useRef(0);
 
@@ -192,6 +195,11 @@ export function usePracticeQuestions({ config, batchSize = 5 }: UsePracticeQuest
                 setError('No questions available for this selection. Try a different chapter or difficulty.');
             }
         } catch (err: any) {
+            // Free-tier daily quota reached → surface the paywall, not an error alert.
+            if (isPaywallError(err)) {
+                setPaywall({ active: true, reason: err.reason });
+                return;
+            }
             console.error('[usePracticeQuestions] Fetch error:', err);
             setError(err.message || 'Failed to fetch questions');
             if (isInitial) {
@@ -207,13 +215,23 @@ export function usePracticeQuestions({ config, batchSize = 5 }: UsePracticeQuest
     useEffect(() => {
         setQuestions([]);
         fetchedCountRef.current = 0;
+        setPaywall({ active: false });
         loadQuestions(true);
     }, [config.difficulty, config.subject, JSON.stringify(config.chapters), config.exam]);
 
     const loadMore = () => {
-        if (!loading && !loadingMore && fetchedCountRef.current < totalTarget) {
+        if (!loading && !loadingMore && !paywall.active && fetchedCountRef.current < totalTarget) {
             loadQuestions(false);
         }
+    };
+
+    /** Call after a successful upgrade — clears the gate and refetches from scratch. */
+    const retryAfterUpgrade = () => {
+        setPaywall({ active: false });
+        setError(null);
+        setQuestions([]);
+        fetchedCountRef.current = 0;
+        loadQuestions(true);
     };
 
     return {
@@ -221,7 +239,9 @@ export function usePracticeQuestions({ config, batchSize = 5 }: UsePracticeQuest
         loading,
         loadingMore,
         error,
+        paywall,
         loadMore,
+        retryAfterUpgrade,
         totalTarget,
     };
 }

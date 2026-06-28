@@ -1,5 +1,6 @@
 import { supabase } from '../lib/supabase';
 import { QuestionData } from '../types';
+import { incrementDailyQuestionUsage, assertWithinFreeQuota } from './paymentService';
 
 export async function savePerformance(
   isCorrect: boolean,
@@ -60,6 +61,18 @@ export async function saveAttemptAndUpdateMastery(params: {
 
   if (error) throw error;
 
+  // Count this answered question toward the free-tier daily quota — EXACTLY ONCE
+  // per question. This fn is called twice for a wrong-then-skipped question
+  // (handleAnswerSubmit with skipDrill=false, then handleSkipIntervention with
+  // skipDrill=true on the SAME question), so we count only the primary attempt
+  // (skipDrill=false) to avoid double-counting. Fire-and-forget so it adds no
+  // latency; the gate re-reads the authoritative server count at the next fetch.
+  if (!params.skipDrill) {
+    void incrementDailyQuestionUsage().catch((e) =>
+      console.warn('[paywall] daily-usage increment failed (practice):', e?.message || e),
+    );
+  }
+
   // RPC returns array, take first result
   const result = Array.isArray(data) ? data[0] : data;
   return result as MasteryResult;
@@ -74,6 +87,11 @@ export async function getQuestionByFsmTag(
 ): Promise<QuestionData | null> {
   const { data: { session } } = await supabase.auth.getSession();
   if (!session?.user) throw new Error('Not authenticated');
+
+  // FREE-TIER GATE — "Prove It" serves a fresh same-pattern question, so it must
+  // honor the daily quota too (otherwise a free user at the limit could pull
+  // unlimited drills). Throws PaywallError when the free quota is exhausted.
+  await assertWithinFreeQuota();
 
   const { data, error } = await supabase.rpc('get_question_by_fsm_tag', {
     p_user_id: session.user.id,

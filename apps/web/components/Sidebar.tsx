@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { cn } from '@drut/shared';
 import { User } from '@drut/shared';
+import { isAdminEmail } from '@drut/shared';
 import {
   LayoutGrid,
   Target,
@@ -37,12 +38,8 @@ interface NavGroup {
 export const Sidebar: React.FC<SidebarProps> = ({ currentPage, setCurrentPage, user, onLogout }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
 
-  // Admin Detection.
-  // Must stay in sync with the admin allowlist in
-  //   apps/web/supabase/migrations/029_admin_only_storage_textbooks.sql
-  // and the parallel check in apps/web/components/MobileNav.tsx.
-  // When adding/changing admins, update all three.
-  const isAdmin = user?.email === 'pranav.n@ideaye.in' || user?.email === 'pranav.n@drut.club';
+  // Admin Detection — single client source of truth (@drut/shared isAdminEmail).
+  const isAdmin = isAdminEmail(user?.email);
 
   const navGroups: NavGroup[] = [
     {

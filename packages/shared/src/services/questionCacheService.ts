@@ -3,6 +3,7 @@ import { QuestionItem } from '../lib/ai/schema';
 import { QuestionData } from '../types';
 import { generateQuestionsBatch } from './vertexBackendService';
 import { log } from '../lib/log';
+import { assertWithinFreeQuota, isPaywallError } from './paymentService';
 
 /**
  * Feature flag — gates live AI question generation.
@@ -121,6 +122,12 @@ export async function getQuestionsForUser(
   console.log('[DEBUG] getQuestionsForUser called:', { userId, examProfile, topic, subtopic, count, classLevel, board, subject, language });
   const metadata = { cached: 0, generated: 0 };
   const questions: QuestionData[] = [];
+
+  // FREE-TIER GATE — single chokepoint for web + mobile, practice + sprint.
+  // Pro users pass through; free users over FREE_DAILY_QUESTION_LIMIT/day get a
+  // PaywallError. Placed BEFORE the try so it propagates untouched; the catch
+  // below also re-throws it defensively in case this ever moves inside the try.
+  await assertWithinFreeQuota();
 
   try {
     console.log('[DEBUG] Step 1: Checking cache...');
@@ -262,6 +269,9 @@ export async function getQuestionsForUser(
     return { questions, metadata };
 
   } catch (error: any) {
+    // Never swallow the paywall signal into a generic load error — the UI needs
+    // the PaywallError type to show the upgrade modal instead of an error toast.
+    if (isPaywallError(error)) throw error;
     console.error('[DEBUG] Fatal error in getQuestionsForUser:', error);
     log.error('[cache] Failed to get questions:', error);
     throw new Error(`Failed to load questions: ${error.message}`);

@@ -6,9 +6,9 @@ import { Colors } from '../../../constants/Colors';
 import { ArrowLeft, GraduationCap, Building2, Calendar, Check } from 'lucide-react-native';
 import { useState, useEffect } from 'react';
 import { useProfileSetup } from '../../../contexts/ProfileSetupContext';
+import { getExamOptions, normalizeTargetExams } from '@drut/shared';
 
 type YearOption = '11' | '12' | 'Reappear';
-type ExamOption = 'ap_eapcet' | 'ts_eapcet' | 'both';
 
 const YEAR_OPTIONS: { value: YearOption; label: string }[] = [
     { value: '11', label: 'Class 11' },
@@ -16,11 +16,9 @@ const YEAR_OPTIONS: { value: YearOption; label: string }[] = [
     { value: 'Reappear', label: 'Reappear' },
 ];
 
-const EXAM_OPTIONS: { value: ExamOption; label: string }[] = [
-    { value: 'ap_eapcet', label: 'AP EAPCET' },
-    { value: 'ts_eapcet', label: 'TS EAPCET' },
-    { value: 'both', label: 'Both' },
-];
+// All supported exams (AP EAPCET, TG EAPCET, JEE Main) — MULTI-select. Same source
+// (EXAM_TAXONOMY) as web, so both platforms offer the identical set.
+const EXAM_OPTIONS = getExamOptions();
 
 const YEAR_DROPDOWN: { value: string; label: string }[] = [
     { value: '2026', label: '2026' },
@@ -39,11 +37,9 @@ export default function AcademicScreen() {
     const [practiceBoth, setPracticeBoth] = useState<boolean>(
         data.practice_scope === 'class_11_and_12'
     );
-    const [targetExam, setTargetExam] = useState<ExamOption | null>(() => {
-        if (!data.target_exams || data.target_exams.length === 0) return null;
-        if (data.target_exams.length === 2) return 'both';
-        return data.target_exams[0] as ExamOption;
-    });
+    const [targetExams, setTargetExams] = useState<string[]>(() => normalizeTargetExams(data.target_exams));
+    const toggleExam = (v: string) =>
+        setTargetExams(prev => (prev.includes(v) ? prev.filter(x => x !== v) : [...prev, v]));
     const [examYear, setExamYear] = useState<string>(data.target_exam_year || '');
     const [school, setSchool] = useState<string>(data.school_name || '');
     const [coaching, setCoaching] = useState<string>(data.coaching_center || '');
@@ -57,8 +53,8 @@ export default function AcademicScreen() {
             Alert.alert('Required', 'Please select your year in school.');
             return;
         }
-        if (!targetExam) {
-            Alert.alert('Required', 'Please select your target exam.');
+        if (targetExams.length === 0) {
+            Alert.alert('Required', 'Please select at least one target exam.');
             return;
         }
         if (!examYear) {
@@ -77,14 +73,6 @@ export default function AcademicScreen() {
         } else {
             // Class 12 and Reappear always get both
             practiceScope = 'class_11_and_12';
-        }
-
-        // Derive target_exams array
-        let targetExams: string[];
-        if (targetExam === 'both') {
-            targetExams = ['ap_eapcet', 'ts_eapcet'];
-        } else {
-            targetExams = [targetExam];
         }
 
         updateFields({
@@ -176,29 +164,25 @@ export default function AcademicScreen() {
                         )}
                     </View>
 
-                    {/* Target Exam */}
+                    {/* Target Exam(s) — multi-select */}
                     <View style={styles.section}>
-                        <Text style={styles.label}>Target Exam *</Text>
+                        <Text style={styles.label}>Target Exam(s) *</Text>
+                        <Text style={styles.hint}>Select all that apply — EAPCET students often also take JEE Main.</Text>
                         <View style={styles.segmentedRow}>
-                            {EXAM_OPTIONS.map(opt => (
-                                <TouchableOpacity
-                                    key={opt.value}
-                                    style={[
-                                        styles.segmentButton,
-                                        targetExam === opt.value && styles.segmentButtonActive,
-                                    ]}
-                                    onPress={() => setTargetExam(opt.value)}
-                                >
-                                    <Text
-                                        style={[
-                                            styles.segmentButtonText,
-                                            targetExam === opt.value && styles.segmentButtonTextActive,
-                                        ]}
+                            {EXAM_OPTIONS.map(opt => {
+                                const selected = targetExams.includes(opt.value);
+                                return (
+                                    <TouchableOpacity
+                                        key={opt.value}
+                                        style={[styles.segmentButton, selected && styles.segmentButtonActive]}
+                                        onPress={() => toggleExam(opt.value)}
                                     >
-                                        {opt.label}
-                                    </Text>
-                                </TouchableOpacity>
-                            ))}
+                                        <Text style={[styles.segmentButtonText, selected && styles.segmentButtonTextActive]}>
+                                            {opt.label}
+                                        </Text>
+                                    </TouchableOpacity>
+                                );
+                            })}
                         </View>
                     </View>
 
@@ -326,6 +310,12 @@ const styles = StyleSheet.create({
         fontSize: 14,
         fontWeight: '600',
         color: Colors.text,
+        marginBottom: 10,
+    },
+    hint: {
+        fontSize: 12,
+        color: Colors.textDim,
+        marginTop: -4,
         marginBottom: 10,
     },
     segmentedRow: {

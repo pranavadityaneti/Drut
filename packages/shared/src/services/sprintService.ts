@@ -3,6 +3,7 @@ import { QuestionData } from '../types';
 import { log } from '../lib/log';
 import { getQuestionsForUser } from './questionCacheService';
 import { EXAM_SYLLABUS_CONFIG } from '../lib/examSyllabusConfig';
+import { incrementDailyQuestionUsage } from './paymentService';
 
 // Supabase Edge Function URL for diagram generation
 const SUPABASE_URL = 'https://ukrtaerwaxekonislnpw.supabase.co';
@@ -416,6 +417,12 @@ export async function saveSprintAttempt(
 
         console.log('[DEBUG] saveSprintAttempt SUCCESS for session:', sessionId);
         log.info(`[sprint] Saved attempt for session ${sessionId}`);
+
+        // Count this answered question toward the free-tier daily quota (unified
+        // pool with practice). Fire-and-forget so sprint timing isn't affected.
+        void incrementDailyQuestionUsage().catch((e) =>
+            console.warn('[paywall] daily-usage increment failed (sprint):', e?.message || e),
+        );
 
         // 2. Also update pattern mastery if question has fsm_tag
         // This ensures Sprint answers contribute to dashboard stats
