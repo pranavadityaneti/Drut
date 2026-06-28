@@ -151,8 +151,13 @@ export async function getQuestionsForUser(
     let unseenQuestions: any[] | null = [];
 
     if (!skipCache) {
+      // COUNT-ON-SERVE: serve via the metered serving RPC. It returns at most the
+      // free user's remaining quota of unseen questions AND marks them seen AND
+      // increments the daily count, atomically server-side. This is the only
+      // client-callable serving path (get_unseen_questions execute is revoked), so a
+      // free user can't exceed the daily cap by any means — app flow or raw API.
       const { data, error: cacheError } = await supabase
-        .rpc('get_unseen_questions', {
+        .rpc('serve_unseen_questions', {
           p_user_id: userId,
           p_exam_profile: examProfile,
           p_topic: topic,
@@ -182,9 +187,9 @@ export async function getQuestionsForUser(
       const cachedQs = unseenQuestions.map((cq: any) => mapCachedToQuestionData(cq, subtopic, difficulty));
       questions.push(...cachedQs);
 
-      // Mark these questions as seen by this user
-      const questionIds = unseenQuestions.map((cq: CachedQuestion) => cq.id);
-      await markQuestionsSeen(userId, questionIds);
+      // NOTE: serve_unseen_questions already marked these seen + bumped serve stats
+      // server-side (count-on-serve), so we deliberately do NOT call markQuestionsSeen
+      // here — doing so would double-increment times_served.
     }
 
     // Step 3: Generate additional questions if needed

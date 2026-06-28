@@ -1,6 +1,6 @@
 import { supabase } from '../lib/supabase';
 import { QuestionData } from '../types';
-import { incrementDailyQuestionUsage, assertWithinFreeQuota } from './paymentService';
+import { assertWithinFreeQuota } from './paymentService';
 
 export async function savePerformance(
   isCorrect: boolean,
@@ -61,20 +61,11 @@ export async function saveAttemptAndUpdateMastery(params: {
 
   if (error) throw error;
 
-  // Count this answered question toward the free-tier daily quota — EXACTLY ONCE
-  // per question. This fn is called twice for a wrong-then-skipped question
-  // (handleAnswerSubmit with skipDrill=false, then handleSkipIntervention with
-  // skipDrill=true on the SAME question), so we count only the primary attempt
-  // (skipDrill=false) to avoid double-counting. AWAITED (not fire-and-forget): the
-  // gate re-reads the authoritative server count at the next fetch, so the increment
-  // must land first — otherwise a fast answer→next flow reads a stale count and serves
-  // an extra free question. Caught (not thrown) so a transient increment failure
-  // doesn't fail the answer-save; the server-side cap is the backstop.
-  if (!params.skipDrill) {
-    await incrementDailyQuestionUsage().catch((e) =>
-      console.warn('[paywall] daily-usage increment failed (practice):', e?.message || e),
-    );
-  }
+  // NOTE: free-tier metering moved to COUNT-ON-SERVE — the question is counted when
+  // it's SERVED (serve_unseen_questions), not when answered. We deliberately do NOT
+  // increment the daily quota here anymore; doing so would double-count. (skipDrill
+  // still distinguishes the primary attempt from a skipped-intervention debt for
+  // mastery tracking.)
 
   // RPC returns array, take first result
   const result = Array.isArray(data) ? data[0] : data;

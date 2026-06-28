@@ -3,7 +3,7 @@ import { QuestionData } from '../types';
 import { log } from '../lib/log';
 import { getQuestionsForUser } from './questionCacheService';
 import { EXAM_SYLLABUS_CONFIG } from '../lib/examSyllabusConfig';
-import { incrementDailyQuestionUsage, getRemainingFreeQuota, PaywallError } from './paymentService';
+import { getRemainingFreeQuota, PaywallError } from './paymentService';
 import { FREE_DAILY_QUESTION_LIMIT } from '../lib/pricing';
 
 // Supabase Edge Function URL for diagram generation
@@ -435,14 +435,10 @@ export async function saveSprintAttempt(
         console.log('[DEBUG] saveSprintAttempt SUCCESS for session:', sessionId);
         log.info(`[sprint] Saved attempt for session ${sessionId}`);
 
-        // Count this answered question toward the free-tier daily quota (unified pool
-        // with practice). AWAITED so the count reliably lands (the engine already calls
-        // saveSprintAttempt in the background, so this adds no user-visible latency).
-        // Caught (not thrown) so a transient failure doesn't fail the attempt-save; the
-        // server-side cap + the start-of-sprint batch cap are the backstops.
-        await incrementDailyQuestionUsage().catch((e) =>
-            console.warn('[paywall] daily-usage increment failed (sprint):', e?.message || e),
-        );
+        // NOTE: free-tier metering moved to COUNT-ON-SERVE — sprint questions are
+        // counted when the batch is SERVED at startSession (serve_unseen_questions),
+        // not per answer. We deliberately do NOT increment here anymore; doing so would
+        // double-count every sprint question.
 
         // 2. Also update pattern mastery if question has fsm_tag
         // This ensures Sprint answers contribute to dashboard stats
