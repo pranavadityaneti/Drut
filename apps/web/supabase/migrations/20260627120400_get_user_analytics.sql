@@ -7,6 +7,12 @@
 --
 -- Self-only: uses auth.uid() with NO p_user_id parameter, so it cannot leak
 -- another user's data (unlike the older get_*(p_user_id) analytics RPCs).
+--
+-- NOTE: an older get_user_analytics() already existed in the live DB with a
+-- different return shape; `create or replace` can't change a function's return
+-- type, so we drop it first.
+
+drop function if exists public.get_user_analytics();
 
 create or replace function public.get_user_analytics()
 returns table (
