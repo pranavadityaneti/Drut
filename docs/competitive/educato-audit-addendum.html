@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Educato AI · Live-UX Addendum — Drut Competitive Audit</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root {
+    --ink-1: #1c1d1a;
+    --ink-2: #3a3b37;
+    --ink-3: #6a6c63;
+    --paper: #faf9f5;
+    --card: #ffffff;
+    --hair: #e6e3d6;
+    --lime: #5cbb21;
+    --lime-deep: #3d7a0f;
+    --coral: #ff7a3a;
+    --amber: #fef3c7;
+    --red:   #b00020;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: ui-sans-serif, -apple-system, "Segoe UI", "Helvetica Neue", sans-serif;
+    line-height: 1.55;
+    color: var(--ink-1);
+    background: var(--paper);
+    margin: 0;
+    padding: 40px 20px 80px;
+  }
+  .wrap { max-width: 920px; margin: 0 auto; }
+  header.title-card {
+    background: linear-gradient(135deg, #fff 0%, #faf9f5 100%);
+    border: 1px solid var(--hair);
+    border-radius: 16px;
+    padding: 32px;
+    margin-bottom: 28px;
+  }
+  .eyebrow {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--coral);
+    font-weight: 700;
+    margin: 0 0 10px;
+  }
+  h1 { font-size: 30px; line-height: 1.15; margin: 0 0 6px; letter-spacing: -0.01em; }
+  .subtitle { color: var(--ink-3); font-size: 14px; margin: 0; }
+  .meta { color: var(--ink-3); font-size: 12px; margin: 14px 0 0; }
+
+  nav.toc {
+    background: #fff;
+    border: 1px solid var(--hair);
+    border-radius: 12px;
+    padding: 18px 22px;
+    margin-bottom: 28px;
+  }
+  nav.toc strong { font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--ink-3); }
+  nav.toc ol { margin: 8px 0 0; padding-left: 20px; columns: 2; column-gap: 30px; font-size: 13px; }
+  nav.toc li { margin: 3px 0; break-inside: avoid; }
+  nav.toc a { color: var(--ink-1); text-decoration: none; }
+  nav.toc a:hover { color: var(--lime-deep); text-decoration: underline; }
+
+  h2 {
+    font-size: 22px;
+    margin: 44px 0 10px;
+    padding-top: 14px;
+    border-top: 1px solid var(--hair);
+    letter-spacing: -0.005em;
+  }
+  h3 { font-size: 16px; margin: 22px 0 8px; color: var(--ink-1); }
+  p { margin: 8px 0 14px; }
+  .lede { font-size: 15.5px; color: var(--ink-2); }
+
+  ul, ol { margin: 6px 0 14px; padding-left: 22px; }
+  li { margin: 4px 0; }
+  li > p { margin: 4px 0; }
+
+  blockquote.plumi {
+    margin: 14px 0;
+    padding: 16px 20px;
+    background: #fff5f0;
+    border-left: 3px solid var(--coral);
+    border-radius: 0 10px 10px 0;
+    font-size: 14px;
+    color: var(--ink-2);
+  }
+  blockquote.plumi strong { color: var(--ink-1); }
+  blockquote.plumi cite { display: block; margin-top: 8px; font-style: normal; font-size: 12px; color: var(--ink-3); }
+  blockquote.plumi p { margin: 6px 0; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0 18px;
+    font-size: 13px;
+  }
+  th, td {
+    text-align: left;
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--hair);
+    vertical-align: top;
+  }
+  th { background: #f5f3eb; font-weight: 600; font-size: 12px; }
+  td.center { text-align: center; }
+  td.right  { text-align: right; }
+  .yes   { color: var(--lime-deep); font-weight: 600; }
+  .no    { color: var(--red); font-weight: 600; }
+  .partial { color: #c47b00; font-weight: 600; }
+
+  code { background: #f3f1e8; padding: 2px 5px; border-radius: 3px; font-size: 12.5px; font-family: ui-monospace, "SF Mono", Menlo, monospace; }
+  pre { background: var(--ink-1); color: #f5f3eb; padding: 14px 18px; border-radius: 8px; overflow-x: auto; font-size: 12.5px; line-height: 1.5; font-family: ui-monospace, "SF Mono", Menlo, monospace; }
+
+  .callout {
+    background: var(--amber);
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin: 14px 0;
+    font-size: 13.5px;
+    color: var(--ink-1);
+    border-left: 3px solid #f59e0b;
+  }
+  .callout-lime { background: #f0f6e8; border-left-color: var(--lime); }
+  .callout-coral { background: #fff5f0; border-left-color: var(--coral); }
+
+  .pill {
+    display: inline-block;
+    background: #efece1;
+    color: var(--ink-2);
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    margin-right: 4px;
+  }
+  .pill-red { background: #ffe1e0; color: var(--red); }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 14px 0; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 14px 0; }
+  .grid-2 > div, .grid-3 > div { background: #fff; border: 1px solid var(--hair); border-radius: 10px; padding: 16px; }
+  .grid-2 h4, .grid-3 h4 { margin: 0 0 6px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-3); }
+  .grid-2 p, .grid-3 p { margin: 0; font-size: 13.5px; }
+
+  hr.section { border: 0; border-top: 1px solid var(--hair); margin: 32px 0; }
+
+  footer { margin-top: 60px; padding-top: 24px; border-top: 1px solid var(--hair); font-size: 12px; color: var(--ink-3); }
+  footer a { color: var(--lime-deep); }
+
+  @media print {
+    body { background: white; padding: 0; }
+    .wrap { max-width: none; }
+    header.title-card { background: white; border: 0; padding: 0 0 20px; }
+    nav.toc { border: 0; padding: 0; columns: 1; }
+    h2 { page-break-after: avoid; }
+    table, pre, blockquote, .callout, .grid-2, .grid-3 { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="title-card">
+  <p class="eyebrow">Educato audit · live-UX addendum</p>
+  <h1>What I actually saw inside Educato's app</h1>
+  <p class="subtitle">A live walkthrough of the authenticated practice UX, the AI tutor "Plumi", and the wrong-answer feedback screen — replacing the inferences in the original audit with primary evidence.</p>
+  <p class="meta">Captured 2026-06-17 from Pranav's logged-in Educato session via the Claude-in-Chrome MCP. Path: <code>/app/iat/iat-exam/journey</code> → opened a Study Session → answered a question deliberately wrong → fired the AI chat. <strong>Companion to <a href="educato-audit.html">educato-audit.html</a>.</strong> Read the original first; this addendum is the delta.</p>
+</header>
+
+<nav class="toc">
+  <strong>What's in this addendum</strong>
+  <ol>
+    <li><a href="#revision">Major revision to the original report</a></li>
+    <li><a href="#lesson-arch">1. Lesson architecture (the big one)</a></li>
+    <li><a href="#concept">2. Inside a Concept card</a></li>
+    <li><a href="#question">3. Inside a Question card</a></li>
+    <li><a href="#wrong-answer">4. The wrong-answer screen + crowd stats</a></li>
+    <li><a href="#plumi">5. "Plumi" the AI tutor — full transcript</a></li>
+    <li><a href="#gamification">6. Gamification: energy economy</a></li>
+    <li><a href="#new-replicate">7. New things to copy into Drut</a></li>
+    <li><a href="#revised-priority">8. Revised priority order</a></li>
+  </ol>
+</nav>
+
+<h2 id="revision">Major revision to the original report</h2>
+<div class="callout callout-coral">
+  <strong>The original report said:</strong> "Geography is our moat — Educato doesn't touch EAPCET / JEE / NEET / India."<br><br>
+  <strong>The reality:</strong> Educato's app is at <code>educato.com/app/iat/iat-exam/journey</code>. "IAT" is an Indian-syllabus aptitude/admission test. The Math I topic list — <em>Sets, Relations, Functions, Angle Measures (degrees/radians), Real Functions, Algebra of Real Functions</em> — is <strong>verbatim Indian 11th-grade curriculum</strong>. The current question I attempted is tagged <code>#2017-eng-iat</code> — a real past paper. <strong>Educato is already serving Indian-syllabus content.</strong><br><br>
+  Our moat is therefore <em>narrower</em> than I claimed: not "India vs not-India," but "EAPCET + JEE + NEET + KCET + CUET — deeply localised — at ₹299/mo." That's still defensible; price + depth-of-EAPCET coverage remain ours. But the "they're not even in India" framing was wrong, and the urgency to ship is higher than my original report implied.
+</div>
+
+<h2 id="lesson-arch">1. Lesson architecture — the pedagogical secret in one screen</h2>
+<p class="lede">A 4-9 minute "lesson" in Educato is not a static essay. It's a 6-step <strong>Study Session</strong> that <strong>interleaves Concept blocks with Question blocks</strong>. The active-recall + retrieval-practice pedagogy is baked into the very structure of the lesson.</p>
+
+<p>Concrete example — the "Introduction to Sets and Their Representations" lesson I opened has these 6 steps in order:</p>
+
+<table>
+  <tr><th>Step</th><th>Type</th><th>Title</th><th>Notes</th></tr>
+  <tr><td>1</td><td><span class="pill">Concept</span></td><td>Introduction to Sets</td><td>Itself a <strong>5-page mini-tutorial</strong> (right-rail pagination dots) with: hook quote → definition → history → illustration → ...</td></tr>
+  <tr><td>2</td><td><span class="pill pill-red">Question</span></td><td>A function f satisfying f∘f∘f(x) = x for all x ∈ ℝ is</td><td>Real past-paper MCQ, tagged with exam-source</td></tr>
+  <tr><td>3</td><td><span class="pill">Concept</span></td><td>Defining Sets and Basic Notation</td><td>—</td></tr>
+  <tr><td>4</td><td><span class="pill">Concept</span></td><td>Representing Sets</td><td>—</td></tr>
+  <tr><td>5</td><td><span class="pill">Concept</span></td><td>Examples of Set Representations</td><td>—</td></tr>
+  <tr><td>6</td><td>—</td><td>(next session boundary)</td><td>—</td></tr>
+</table>
+
+<div class="callout callout-lime">
+  <strong>This is the most replicable insight in the entire audit.</strong> Drut currently has "Practice" (questions only) and "Sprint" (timed questions only). We have no "Lesson" surface. Adding a Lesson surface that interleaves 3-5 Concept blocks with 1-2 retrieval-practice Questions would be a major upgrade — and the questions for it already exist in our bank. The Concept text is what we'd need to generate.
+</div>
+
+<h2 id="concept">2. Inside a Concept card — what makes their content feel good</h2>
+
+<p>A single Concept block has a specific structure that I want to copy:</p>
+
+<table>
+  <tr><th>Slot</th><th>What's in it (verbatim from "Introduction to Sets" concept)</th></tr>
+  <tr><td><strong>Top hook</strong></td><td><em>"In these days of conflict between ancient and modern studies; there must surely be something to be said for a study which did not begin with Pythagoras and will not end with Einstein; but is the oldest and the youngest." — G.H. Hardy</em></td></tr>
+  <tr><td><strong>Definition</strong></td><td>"The concept of a set is a fundamental building block in modern mathematics, utilized across nearly every branch of the discipline. Sets are crucial for defining concepts like relations and functions…"</td></tr>
+  <tr><td><strong>History / grounding</strong></td><td>"The theory of sets was pioneered by the German mathematician Georg Cantor (<a href="#">1845–1918</a>). He first developed these ideas while working on 'problems on trigonometric series'." — the dates are a <em>hyperlink to Wikipedia</em>.</td></tr>
+  <tr><td><strong>Illustration</strong></td><td>Portrait of Cantor (visible blurred in screenshot — clearly a real historical photo, not stock art)</td></tr>
+  <tr><td><strong>Per-block feedback</strong></td><td>👍 / 👎 chips at the bottom of every block — they harvest student feedback on AI-generated content quality</td></tr>
+  <tr><td><strong>Top-right utility row</strong></td><td>"Text" (typography toggle), "Feedback" button, breadcrumb</td></tr>
+</table>
+
+<p>The Hardy quote at the top is a UX choice worth highlighting. It signals to the student "this matters; smart people care about this" before any definition lands. Drut's lessons (when we build them) should always open with a hook — quote, real-world relevance, an anecdote — not a definition.</p>
+
+<h2 id="question">3. Inside a Question card</h2>
+
+<p>The question I attempted (real past paper from 2017 IAT English exam):</p>
+
+<blockquote class="plumi" style="border-left-color: var(--ink-1); background: #f5f3eb;">
+  <p><strong>A function $f$ satisfying $f∘f∘f(x) = x$ for all $x ∈ ℝ$ is</strong></p>
+  <p><span class="pill">A</span> onto but not one–one. &nbsp; <span class="pill">B</span> neither one–one nor onto. &nbsp; <span class="pill">C</span> one–one and onto. &nbsp; <span class="pill">D</span> one–one but not onto.</p>
+  <cite>Tagged: #Anciens examens · #2017-eng-iat</cite>
+</blockquote>
+
+<h3>Things to note about the question UX</h3>
+<ul>
+  <li><strong>Provenance tags are public.</strong> Students see <code>#2017-eng-iat</code> and know they're practicing a real exam question. Strong trust signal. <strong>Drut should tag our PYQ-sourced questions visibly</strong> ("AP EAPCET 2024" etc.) — and tag AI-generated ones with "AI-generated, expert reviewed" or similar so it's transparent.</li>
+  <li><strong>The tag language is French</strong> — "Anciens examens" = "Old exams". Confirms the founders' internal taxonomy comes from their French/Italian background, even on English content.</li>
+  <li><strong>"Add to note"</strong> button top-right — they have a personal-notes feature where students can save questions for later review. <strong>Drut should add this.</strong></li>
+  <li><strong>Energy cost on the Submit button</strong> — <code>⚡2</code>. Same as sending an AI chat message. Every action has an energy price.</li>
+  <li><strong>No timer, no hint button</strong> in this Learn mode. Clean single-CTA UX.</li>
+  <li><strong>👍/👎 chips below the options</strong> — same "rate this question" pattern as concept blocks. They train their pipeline on every interaction.</li>
+</ul>
+
+<h2 id="wrong-answer">4. The wrong-answer screen — and the killer differentiator nobody talks about</h2>
+
+<p>I deliberately picked B (the wrong answer). What loaded was the most informative single screen in the entire app.</p>
+
+<h3>Structure of the wrong-answer feedback</h3>
+<ol>
+  <li><strong>Top status:</strong> "❌ Not quite" (red) with this-session score "0/4"</li>
+  <li><strong>"You missed:" block</strong> — shows the correct letter + the canonical explanation in 1 sentence:
+    <blockquote class="plumi"><strong>C</strong> — Correct. If f∘f∘f(x) = x for all x, then f is bijective because every element has a unique preimage and image under repeated application of f.</blockquote>
+  </li>
+  <li><strong>"You selected incorrectly:" block</strong> — names your wrong letter + a 1-sentence specific refutation:
+    <blockquote class="plumi"><strong>B</strong> — Incorrect. The function is both one–one and onto as shown by the property f∘f∘f(x) = x for all x.</blockquote>
+  </li>
+  <li><strong>Full per-option breakdown</strong> — every option re-listed with its own short explanation. Crucially:</li>
+</ol>
+
+<h3>The killer differentiator: per-option crowd statistics</h3>
+
+<table>
+  <tr><th>Option</th><th>Text</th><th class="right">% of students who picked</th><th>State</th></tr>
+  <tr><td>A</td><td>onto but not one–one</td><td class="right"><strong>24%</strong></td><td>wrong (no inline note)</td></tr>
+  <tr><td><strong>B</strong> (my pick)</td><td>neither one–one nor onto</td><td class="right"><strong>14%</strong></td><td>❌ red ring + inline "Incorrect" note</td></tr>
+  <tr><td><strong>C</strong> ✓</td><td>one–one and onto</td><td class="right"><strong>57%</strong></td><td>✅ green check + full explanation</td></tr>
+  <tr><td>D</td><td>one–one but not onto</td><td class="right"><strong>5%</strong></td><td>wrong (no inline note)</td></tr>
+</table>
+
+<div class="callout callout-coral">
+  <strong>This is the feature I most underestimated.</strong> Showing "<em>14% of students made this exact mistake</em>" alongside the explanation creates a social-proof + diagnostic moment in one. You don't feel alone in your error; you feel like you fell into a predicted trap — which is far more memorable than a generic "wrong answer" screen.<br><br>
+  <strong>Cost to build in Drut:</strong> small. A new aggregate column <code>option_a_picks / option_b_picks / option_c_picks / option_d_picks</code> on <code>cached_questions</code> (or a separate <code>question_option_stats</code> table) updated on every answer. Compute % at render time. ~2–3 days of work. <strong>I'm upgrading this to Priority 1.5</strong> in the replication plan.
+</div>
+
+<h2 id="plumi">5. "Plumi" — the AI tutor in detail</h2>
+
+<p>The mascot bottom-right opens a side-panel chat. Branded as <strong>Plumi</strong>. Highlights:</p>
+
+<div class="grid-3">
+  <div><h4>Named persona</h4><p>"Hi! I'm Plumi, your AI tutor." Named + mascot. Drut should name ours.</p></div>
+  <div><h4>Context pill</h4><p>"📋 Viewing question — [question text]" — explicitly shown above the chat so it's obvious what context the AI has.</p></div>
+  <div><h4>Prompt-starter pills</h4><p>5 canned starters: "What's the best way to study?", "Quiz me on…", "Help me connect…", "Create a comparison…", "Explain…"</p></div>
+  <div><h4>Voice input</h4><p>Mic icon. Speak your question — saves typing math notation.</p></div>
+  <div><h4>"Internet" toggle</h4><p>Opt-in live web search. Power-user feature, off by default.</p></div>
+  <div><h4>Energy cost</h4><p>Every message costs <code>⚡2</code>, same as submitting an answer. Premium = unlimited.</p></div>
+</div>
+
+<h3>What Plumi actually said when I asked "Why is C correct and not B? Walk me through it step by step."</h3>
+
+<blockquote class="plumi">
+<p><strong>Plumi:</strong> Let me break this down carefully. <strong>The key insight:</strong> If f∘f∘f(x) = x for all x ∈ ℝ, then applying f three times gets you back to where you started.</p>
+
+<p><strong>Why the function must be one-to-one (injective):</strong> Suppose f(a) = f(b). Apply f twice more to both sides:</p>
+<ul style="margin:6px 0;">
+  <li>f(f(f(a))) = f(f(f(b)))</li>
+  <li>But we know f(f(f(a))) = a and f(f(f(b))) = b</li>
+  <li>So a = b</li>
+</ul>
+<p>This proves f is one-to-one. ✓</p>
+
+<p><strong>Why the function must be onto (surjective):</strong> For any y ∈ ℝ, we need to find some x such that f(x) = y. Here's the trick: let x = f(f(y)). Then:</p>
+<ul style="margin:6px 0;">
+  <li>f(x) = f(f(f(y))) = y</li>
+</ul>
+<p>So we found an x (namely, f(f(y))) that maps to y. This proves f is onto. ✓</p>
+
+<p><strong>Conclusion:</strong> Since f is both one-to-one AND onto, it's bijective — so the answer is <strong>C</strong>. Does this make sense? The property f³ = identity forces both directions to work.</p>
+
+<cite>Generated in ~10 seconds. ~150 words. LaTeX rendered correctly.</cite>
+</blockquote>
+
+<h3>Quality assessment of Plumi's response</h3>
+<ol>
+  <li><strong>Names the key insight first</strong> — pedagogically perfect framing before the proof.</li>
+  <li><strong>Splits into two named proof halves</strong> with bold headers and ✓ checkmarks per sub-goal.</li>
+  <li><strong>Uses real proof technique</strong> — "assume f(a)=f(b), derive a=b" is exactly how a mathematician proves injectivity. Not hand-wavy.</li>
+  <li><strong>"Here's the trick"</strong> framing for the surjectivity proof — explicitly flags where the cleverness lives. Most students wouldn't think to set x = f(f(y)).</li>
+  <li><strong>Conceptual takeaway at the end</strong> — "f³ = identity forces both directions to work" — gives the moral, not just the steps.</li>
+  <li><strong>Conversational sign-off</strong> ("Does this make sense?") invites follow-up. Treats this as a dialogue.</li>
+  <li><strong>Properly typeset LaTeX</strong> rendering throughout. They have KaTeX or MathJax wired.</li>
+</ol>
+
+<p><strong>Model inference:</strong> The response quality (structure + tone + "Here's the trick" framing) + clean LaTeX is consistent with <strong>GPT-4o or Claude 3.5 Sonnet+</strong> with a thoughtful system prompt that biases toward structured proofs with checkmarks. Not a small/cheap model. The prompt almost certainly includes the question, the canonical explanation, the user's chosen answer, and instructions like "name the key insight first, structure proofs clearly, end with a conceptual takeaway, invite follow-up."</p>
+
+<h2 id="gamification">6. Gamification — the energy economy</h2>
+
+<p>Every action shows an energy badge <code>⚡N</code>:</p>
+<ul>
+  <li>Submitting an answer: <code>⚡2</code></li>
+  <li>Sending a chat message to Plumi: <code>⚡2</code></li>
+  <li>(Other actions probably costed too — I didn't poke further)</li>
+</ul>
+<p>This is the Duolingo "hearts" mechanic. It creates a daily-quota ceiling for free users, which is the entire upsell for Premium (presumably: unlimited energy). The badge is small and elegant — doesn't dominate the UI — but always visible.</p>
+
+<p>Drut's <strong>15/day quota</strong> already does this conceptually but invisibly. We should consider surfacing a small energy meter on the user's avatar (e.g. "⚡11/15") so the constraint is felt, not just discovered when the paywall fires. Makes the upgrade choice clearer.</p>
+
+<h2 id="new-replicate">7. New things to copy into Drut (beyond what was in the original report)</h2>
+
+<table>
+  <tr><th>#</th><th>Feature</th><th>Why now</th><th>Build estimate</th></tr>
+  <tr><td>L1</td><td><strong>Interleaved Lesson surface</strong> (Concept → Question → Concept → Concept → Concept → Question)</td><td>The single biggest pedagogical mechanism Educato has. Active-recall structurally baked in.</td><td>~7 days for the surface + 1 lesson per chapter as a pilot</td></tr>
+  <tr><td>L2</td><td><strong>Per-option crowd statistics</strong> ("14% chose B")</td><td>Highest perceived-intelligence return per dev-day. Cheap to build, huge UX win.</td><td>~3 days</td></tr>
+  <tr><td>L3</td><td><strong>"Plumi-style" AI tutor</strong> with: named persona + mascot, context pill, prompt-starter pills, voice input</td><td>This is Priority 1 from the original report, now with concrete UX patterns to copy from the live observation.</td><td>~7 days (was 5; voice + pills add 2)</td></tr>
+  <tr><td>L4</td><td><strong>Source-provenance tags on questions</strong> (e.g. <code>#AP-EAPCET-2024</code>, <code>#Generated-2026</code>)</td><td>Trust signal. Tells the student where the question came from.</td><td>~1 day (DB field already exists; just surface it)</td></tr>
+  <tr><td>L5</td><td><strong>"Add to note" personal notebook</strong></td><td>Lets students bookmark questions for later review.</td><td>~3 days</td></tr>
+  <tr><td>L6</td><td><strong>👍/👎 per-content feedback chips</strong> on every Concept + Question</td><td>Free training data + reveals which AI content is weak. Already collected by Educato on every block.</td><td>~2 days (DB + UI)</td></tr>
+  <tr><td>L7</td><td><strong>Hook-first lesson copy style</strong> (literary quote / real-world cue → definition → history → illustration)</td><td>Content-style choice, not engineering. Implement when we write our first Lesson content.</td><td>0 (content guidance)</td></tr>
+  <tr><td>L8</td><td><strong>Visible energy meter</strong> on user avatar (e.g. <code>⚡11/15</code>)</td><td>Makes the 15/day quota a felt constraint, not a surprise paywall trigger.</td><td>~1 day</td></tr>
+</table>
+
+<h2 id="revised-priority">8. Revised priority order (replaces section 8 of the original report)</h2>
+
+<table>
+  <tr><th>Priority</th><th>Feature</th><th>Build</th><th>Why this rank</th></tr>
+  <tr><td>1</td><td>"Ask the AI" tutor chat (Plumi-style) — named, context-aware, prompt-pills, voice input</td><td>~7 days</td><td>Single biggest perceived-intelligence jump. Now with concrete UX patterns from the live observation.</td></tr>
+  <tr><td>2</td><td><strong>Per-option crowd statistics</strong> on wrong-answer screen</td><td>~3 days</td><td>NEW — promoted from nowhere. Cheap to build, huge UX win, hard for competitors to claim originality of (it's basic stats, but the framing matters).</td></tr>
+  <tr><td>3</td><td>Misconception-targeted PROOF rewriting (lead with student's wrong-attribution explanation)</td><td>~3 days</td><td>UI-only change; our D.E.E.P. already has the attributions, just needs surface logic.</td></tr>
+  <tr><td>4</td><td><strong>Interleaved Lesson surface</strong> (Concept → Question → Concept → …)</td><td>~7 days for surface + ~3 weeks/chapter to write Concept content</td><td>NEW — promoted from "out of scope." The single most replicable pedagogical mechanism.</td></tr>
+  <tr><td>5</td><td>Spaced-repetition (FSRS) over questions + flashcards</td><td>~10 days</td><td>Unchanged from original. Cognitive-science gold standard.</td></tr>
+  <tr><td>6</td><td>Full-length timed mock exam mode</td><td>~5 days</td><td>Unchanged from original.</td></tr>
+  <tr><td>7</td><td>Source-provenance tags on questions</td><td>~1 day</td><td>NEW — trivial cost.</td></tr>
+  <tr><td>8</td><td>"Add to note" personal notebook</td><td>~3 days</td><td>NEW.</td></tr>
+  <tr><td>9</td><td>👍/👎 feedback chips on every concept + question</td><td>~2 days</td><td>NEW — free training data forever.</td></tr>
+  <tr><td>10</td><td>AI-narrated weekly study plan</td><td>~5 days</td><td>Unchanged from original.</td></tr>
+  <tr><td>11</td><td>PWA + offline-first</td><td>~3 days</td><td>Unchanged from original.</td></tr>
+  <tr><td>12</td><td>Visible energy meter on avatar</td><td>~1 day</td><td>NEW.</td></tr>
+</table>
+
+<div class="callout">
+  <strong>New total estimate to match Educato's perceived intelligence + add the things they don't have (T.A.R., D.E.E.P., adversarial audit):</strong> ~7–8 working weeks after the in-flight Sprint 1–4 closes. Up from the 6-week figure in the original report, because of (a) the Lesson surface scope, and (b) the new add-ons L4–L8. Order matters — Priorities 1–4 deliver the biggest "this feels smart" jump for the smallest spend.
+</div>
+
+<h2 id="post-question">9. The post-question concepts (steps 3, 4, 5) — what I missed the first time</h2>
+
+<div class="callout callout-coral">
+  <strong>Pranav called this out:</strong> in the first pass I jumped from Concept 1 to the Question and called it done. The post-question concepts and the session-completion screen contain the most important findings of the whole audit. Captured in full on a second pass.
+</div>
+
+<h3>Step 3 — Concept: "Defining Sets and Basic Notation"</h3>
+<p><strong>Style:</strong> opens with everyday-life examples ("a pack of cards, a crowd of people, or a <em>cricket team</em>") that are deliberately <strong>localised to India</strong> — explicitly references "the rivers of India" (Ganga vs Nile). Then enumerates six well-defined collections (including a quadratic equation's solution), defines a set, and presents a sharp counter-example ("the five most renowned mathematicians of the world" — not well-defined, therefore not a set). Closes with notation conventions (∈ vs ∉, capital vs lowercase) and a reference table of standard symbols (N, Z, Q, R, Z⁺, Q⁺, R⁺).</p>
+
+<table>
+  <tr><th>Pedagogical move</th><th>Implementation</th></tr>
+  <tr><td>Hook → Definition → Counter-example → Notation → Reference table</td><td>Same 5-beat structure as Concept 1 (Hardy quote → definition → history → image). Their <em>concept card schema is consistent</em>.</td></tr>
+  <tr><td>Inline highlighted callout</td><td>"<strong>Concept:</strong> A set is a well-defined collection of objects." — visually emphasised as the takeaway sentence.</td></tr>
+  <tr><td>Counter-example pedagogy</td><td>Shows what's NOT a set and explains why ("most renowned" is subjective). More memorable than just stating the rule.</td></tr>
+  <tr><td>Immediate notation worked example</td><td>V (vowels) and P (prime factors of 30) used to demo ∈/∉ within sentences of being introduced.</td></tr>
+</table>
+
+<h3>Step 4 — Concept: "Representing Sets"</h3>
+<p><strong>Style:</strong> introduces the two representation systems (Roster form, Set-builder form), each with definition → worked examples → "Note" callouts for common pitfalls. Demonstrates the same three sets (vowels, divisors of 42, odd naturals) in <em>both</em> notations — pedagogically excellent: same content, two representations, reinforcing the concept.</p>
+
+<p><strong>Key didactic detail:</strong> Concept 4 <em>explicitly references the (a), (b), (c) numbering from Concept 3</em>. The two concepts are tightly chained. The "SCHOOL → {S, C, H, O, L}" example for the no-repetition rule is a memorable mnemonic.</p>
+
+<h3>Step 5 — Concept: "Examples of Set Representations"</h3>
+<p><strong>Style:</strong> five worked examples (quadratic solution set; set defined by an inequality; squares of naturals; n/(n+1) fractions; a 4-pair matching exercise). Pure application — no new theory.</p>
+
+<div class="callout callout-lime">
+  <strong>The most important micro-discovery in Concept 5:</strong> <em>Example 5 is itself a mini-quiz embedded inside a "Concept" card</em> — a 4-pair matching exercise (Roster ↔ Set-builder). Active recall isn't just at the lesson level; <strong>it's slipped into the concept content itself</strong>. The interleaving runs two levels deep.
+</div>
+
+<h3>The definitive answer to "is the lesson adaptive?"</h3>
+
+<table>
+  <tr><th>Was I right to assume…?</th><th>Reality</th></tr>
+  <tr><td>Post-question concepts reference the question?</td><td><span class="no">No.</span> Concepts 3, 4, 5 are entirely self-contained intro-to-sets content. The Q2 (function composition / bijection) is orphaned in the middle of a Sets lesson.</td></tr>
+  <tr><td>Concept content adapts to whether you got Q2 right or wrong?</td><td><span class="no">No.</span> Same content delivered regardless of answer.</td></tr>
+  <tr><td>Style shifts post-question (terser, worked-examples-heavy)?</td><td><span class="no">No.</span> Concepts 3–5 read like a textbook chapter — definition → examples → notation. Same voice as Concept 1.</td></tr>
+  <tr><td>The interleaving is thematically tied?</td><td><span class="no">No.</span> Q2 was about FUNCTIONS (advanced — bijection logic) while Concepts 3–5 are about SETS (foundational). The two are at very different ability levels. <strong>The interleaving is structural (break up the lecture with a question for retrieval-practice's sake), not topical.</strong></td></tr>
+  <tr><td>Anything is adaptive then?</td><td><span class="yes">Yes — the outcome is.</span> See Section 10 below.</td></tr>
+</table>
+
+<h2 id="session-complete">10. Step 6 — "Session Complete!" — the master narrative reveals itself</h2>
+
+<p>The completion screen rewrites the audit's biggest takeaway. The whole product's emotional payoff loop runs through one specific UI element: <strong>your predicted grade moves in real time</strong>, attributed to a specific topic.</p>
+
+<table>
+  <tr><th>Element</th><th>What I saw</th></tr>
+  <tr><td><strong>Headline message</strong></td><td>"<em>Your grade ↘ <span class="no">went down by 9 points</span>, driven by your answers in Sets and Logic.</em>" — with a literal red down-arrow.</td></tr>
+  <tr><td><strong>Three stat cards</strong></td><td><strong>GRADE: 111</strong> (red ↓ triangle — was 120 before this session) · <strong>QUESTIONS: 5</strong> ✓ · <strong>TIME: 1 min</strong></td></tr>
+  <tr><td><strong>Mascot</strong></td><td>Plumi centred, eyes closed in a peaceful pose — <em>not</em> disappointed, even though I failed. Brand voice stays encouraging regardless of outcome.</td></tr>
+  <tr><td><strong>Primary CTA</strong></td><td>"Continue to Next Step" — the loop hook. No "Take a break" / "Review what you learned" / "Reflect" CTA. The product wants you to immediately start the next lesson.</td></tr>
+</table>
+
+<div class="callout callout-coral">
+  <strong>The pedagogical model in one sentence:</strong><br><br>
+  <em>Educato runs a static curriculum on top of a hyper-responsive predictive grade engine — and the grade is what makes every action feel consequential.</em><br><br>
+  You don't "level up" or "earn XP" — your predicted EAPCET-equivalent score moves. Every question is a tiny bet on your exam result. Get one wrong: <code>–9 points, attributed to Sets and Logic</code>. Get one right: <code>+X points</code>. Every session ends with this verdict.<br><br>
+  This is a stronger retention loop than streaks or hearts. <strong>Drut should build this.</strong>
+</div>
+
+<h3>What it implies about their backend</h3>
+<ul>
+  <li><strong>Topic-weighted predictive model</strong> — they have a model that maps individual question correctness/timing to a predicted exam score, with per-topic weights ("driven by your answers in Sets and Logic").</li>
+  <li><strong>Real-time update</strong> — the grade number changes within seconds of submitting an answer.</li>
+  <li><strong>Visible target</strong> — earlier dashboard showed "Grade estimate 120 / Target 227" so the user always knows the delta to goal.</li>
+</ul>
+
+<h3>How buildable is this for Drut?</h3>
+<p>Surprisingly buildable for a credible MVP. A first-pass implementation:</p>
+<ol>
+  <li>Compute a baseline expected score = (chapter weight in EAPCET × current mastery per chapter) summed across all chapters. Mastery per chapter = correct_attempts / total_attempts × difficulty_weighting.</li>
+  <li>Recompute on every answer submission.</li>
+  <li>Show the delta on the session-complete screen with topic attribution.</li>
+</ol>
+<p>Build estimate: <strong>~5 days</strong> for v1 (without ML). A more sophisticated version with IRT (Item Response Theory) takes ~3 weeks. The v1 is good enough for beta because students aren't comparing the prediction's accuracy to past EAPCET data — they're reacting to the <em>movement</em>.</p>
+
+<h2 id="revised-priority-v2">11. Replication plan — revised again with steps 3–6 findings</h2>
+
+<p>Reordering for the second time, now that I have the full picture:</p>
+
+<table>
+  <tr><th>Priority</th><th>Feature</th><th>Build</th><th>Why</th></tr>
+  <tr><td>1</td><td><strong>Predictive grade engine</strong> + visible "Grade estimate / Target" on the dashboard + session-complete "+X / –Y, driven by [topic]" verdict</td><td>~5 days (v1) / ~3 weeks (IRT-based)</td><td><span class="pill" style="background: #FAEEDA; color: #854F0B;">NEW PRIORITY 1</span> The single feature that powers Educato's entire retention loop. Bigger than the AI tutor in their UX.</td></tr>
+  <tr><td>2</td><td>"Ask the AI" tutor chat (Plumi-style)</td><td>~7 days</td><td>Unchanged from previous plan.</td></tr>
+  <tr><td>3</td><td>Per-option crowd statistics on wrong-answer screen</td><td>~3 days</td><td>Unchanged from previous plan.</td></tr>
+  <tr><td>4</td><td><strong>Interleaved Lesson surface</strong> (Concept → Question → Concept → Concept → Concept → Question → Session-complete verdict)</td><td>~7 days surface + ~3 weeks/chapter content</td><td>Unchanged from previous plan, but now the architecture is precisely understood: 5 concept blocks + 1 question + 1 verdict screen. Each Concept card itself is multi-part with a hook + definition + worked examples.</td></tr>
+  <tr><td>5</td><td>Misconception-targeted PROOF rewriting</td><td>~3 days</td><td>Unchanged.</td></tr>
+  <tr><td>6</td><td>"Mini-quiz inside concept" pattern (matching exercises, fill-in-the-blank inside otherwise-static concept text)</td><td>~3 days</td><td><span class="pill" style="background: #FAEEDA; color: #854F0B;">NEW</span> Educato slips mini-quizzes inside Concept cards (Example 5 in Concept 5). Free retrieval-practice, no extra UI surface needed.</td></tr>
+  <tr><td>7</td><td>Spaced-repetition (FSRS) over questions + flashcards</td><td>~10 days</td><td>Unchanged.</td></tr>
+  <tr><td>8</td><td>Source-provenance tags on questions</td><td>~1 day</td><td>Unchanged.</td></tr>
+  <tr><td>9</td><td>"Add to note" personal notebook</td><td>~3 days</td><td>Unchanged.</td></tr>
+  <tr><td>10</td><td>👍/👎 feedback chips on every concept + question</td><td>~2 days</td><td>Unchanged.</td></tr>
+  <tr><td>11</td><td>Full-length timed mock exam mode</td><td>~5 days</td><td>Unchanged.</td></tr>
+  <tr><td>12</td><td>Visible energy meter on avatar</td><td>~1 day</td><td>Unchanged. Lower priority now that predictive grade is the headline retention mechanism.</td></tr>
+  <tr><td>13</td><td>PWA + offline-first</td><td>~3 days</td><td>Unchanged.</td></tr>
+  <tr><td>14</td><td>AI-narrated weekly study plan</td><td>~5 days</td><td>Unchanged.</td></tr>
+</table>
+
+<h2>Closing observation</h2>
+<p>The deepest takeaway from the full walkthrough is: <strong>Educato's content is mostly static; their drama is fully dynamic.</strong> The Concept cards are a well-written textbook chunked into 4–9 minute servings. The Question cards are normal MCQ. The AI tutor is a good system prompt over a strong LLM. None of these would be groundbreaking on their own. But everything resolves to a single number — your predicted exam grade — that moves in real time after every answer, with topic attribution. That's the master narrative. <em>That's</em> the engineering investment we most need to match. The micro-pedagogy is replicable in weeks. The predictive grade with its real-time topic attribution is the moat we should out-build them on, because the EAPCET data (past cut-offs, topic-wise mark distributions, question difficulty by year) is far better understood in our market than the global "10,000 exams" they're spread across.</p>
+
+<footer>
+  <p>Live observation conducted via Claude-in-Chrome MCP on Pranav's session, 2026-06-17. <strong>Two passes:</strong> first pass = Concept 1 + Q2 + wrong-answer screen + Plumi chat. Second pass (after Pranav called out the gap) = full walkthrough of Concepts 3, 4, 5 + Session Complete screen. No account changes, no settings touched, no billing accessed. <strong>Side effect:</strong> Pranav's predicted Educato grade went from 120 → 111 because I deliberately picked B on Q2; re-attempting the question should restore those 9 points.</p>
+  <p>Companion document: <a href="educato-audit.html">educato-audit.html</a> (the original synthesis based on public sources). Read together for full picture.</p>
+  <p style="margin-top: 20px; padding-top: 14px; border-top: 1px solid var(--hair);">Addendum by Claude Opus for Pranav · <code>docs/competitive/educato-audit-addendum.html</code></p>
+</footer>
+
+</div>
+</body>
+</html>

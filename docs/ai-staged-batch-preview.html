@@ -1,0 +1,84 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Drut — AI batch (Laws of Motion) · approved + staged</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});"></script>
+<style>
+ :root{--green:#b4fa8d;--ink:#0f1a14;--muted:#5b6b62;--line:#e3e8e4;--bg:#fafcfa;--accent:#1f7a4d}
+ *{box-sizing:border-box} body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;color:var(--ink);background:var(--bg);margin:0;line-height:1.62}
+ .wrap{max-width:840px;margin:0 auto;padding:30px 20px 80px}
+ header.doc{border-bottom:3px solid var(--green);padding-bottom:16px;margin-bottom:22px}
+ header.doc h1{margin:0 0 6px;font-size:24px} header.doc .sub{color:var(--muted);font-size:13px}
+ .toc{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 18px;margin-bottom:26px}
+ .toc h2{margin:0 0 8px;font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+ .toc ol{margin:0;padding-left:18px;font-size:13px} .toc a{color:var(--accent);text-decoration:none}
+ .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin-bottom:20px}
+ .qhead{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+ .qnum{background:var(--ink);color:var(--green);font-weight:700;border-radius:8px;padding:2px 10px;font-size:14px}
+ .meta{color:var(--muted);font-size:13px;font-weight:600}
+ .diff{margin-left:auto;font-size:12px;font-weight:700;border-radius:999px;padding:2px 10px;border:1px solid var(--line)}
+ .diff-Hard{background:#fdeaea;color:#b3261e;border-color:#f3c0bc} .diff-Medium{background:#fff5e0;color:#9a6b00;border-color:#f0dca5} .diff-Easy{background:#e9f9e2;color:#2f7d20;border-color:#c4ebb4}
+ .qtext{font-size:16.5px;margin-bottom:14px}
+ ol.opts{list-style:none;margin:0 0 16px;padding:0;display:grid;gap:7px}
+ .opt{display:flex;gap:10px;align-items:center;border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:15px}
+ .opt.correct{border-color:var(--accent);background:rgba(180,250,141,.18)}
+ .lett{font-weight:700;color:var(--muted)} .opt.correct .lett{color:var(--accent)} .tick{margin-left:auto;color:var(--accent);font-weight:700;font-size:12px}
+ .block{margin-top:16px}
+ .blab{font-size:14px;font-weight:700;margin:0 0 10px;padding-bottom:6px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px}
+ .cnt{margin-left:auto;font-size:11px;font-weight:600;color:var(--muted)}
+ ol.quick{margin:0;padding-left:20px;display:grid;gap:7px;font-size:15px}
+ .approach{background:#f4f8f5;border-left:3px solid var(--green);border-radius:6px;padding:10px 14px;font-size:14.5px;margin-bottom:12px}
+ .chunks{display:grid;gap:13px;font-size:14.5px} .chunk .det{color:#27332c} .chunk .disp{margin:7px 0 0;text-align:center}
+ .answer{margin-top:15px;background:var(--ink);color:#fff;border-radius:10px;padding:10px 14px;font-weight:600;font-size:15px} .answer .g{color:var(--green)}
+ .err{border-color:#f3c0bc;background:#fdf3f2} .bad{color:#b3261e;font-weight:600}
+ @media print{body{background:#fff}.card,.toc{break-inside:avoid}}
+</style></head><body><div class="wrap">
+<header class="doc"><h1>Drut — AI batch (Laws of Motion) · approved + staged</h1><div class="sub">4 questions · gpt-5.4-mini @ high · B+C mix, no worked examples</div></header>
+<nav class="toc"><h2>Contents</h2><ol><li><a href="#q1">Q1 — Physics (Hard): APPROVED ✓ (live) · static friction with connected bodies</a></li><li><a href="#q2">Q2 — Physics (Hard): staged · glancing elastic collisions</a></li><li><a href="#q3">Q3 — Physics (Medium): staged · friction on horizontal surface with an inclined pulling force</a></li><li><a href="#q4">Q4 — Physics (Medium): staged · mixed</a></li></ol></nav>
+<section class="card" id="q1">
+    <div class="qhead"><span class="qnum">Q1</span><span class="meta">Physics · Chapter 5: Laws of Motion · APPROVED ✓ (live) · static friction with connected bodies</span><span class="diff diff-Hard">Hard</span></div>
+    <div class="qtext">A $4\,\mathrm{kg}$ block $A$ on a rough horizontal table is tied by a light inextensible string over a smooth pulley to a hanging block $B$ of mass $3\,\mathrm{kg}$. The coefficient of static friction between $A$ and the table is $0.3$. A horizontal force $F$ is applied to $A$ away from the pulley. If $g=10\,\mathrm{m\,s^{-2}}$, the system can stay at rest only for which interval of $F$?</div>
+    <ol class="opts"><li class="opt correct"><span class="lett">A</span><span>$18\,\mathrm{N} \le F \le 42\,\mathrm{N}$</span><span class="tick">✓</span></li><li class="opt"><span class="lett">B</span><span>$0 \le F \le 42\,\mathrm{N}$</span></li><li class="opt"><span class="lett">C</span><span>$18\,\mathrm{N} \le F \le 30\,\mathrm{N}$</span></li><li class="opt"><span class="lett">D</span><span>$12\,\mathrm{N} \le F \le 30\,\mathrm{N}$</span></li></ol>
+    <div class="block"><div class="blab">⚡ Quick Method</div><ol class="quick"><li>Find the string tension from block $B$ and the maximum static friction on block $A$.</li><li>Write the equilibrium condition for $A$ for both possible impending motions.</li><li>Combine the lower and upper bounds to get the allowed interval of $F$.</li></ol></div>
+    <div class="block"><div class="blab">🔬 Full Solution <span class="cnt">5 steps</span></div>
+      <div class="approach">Since the question asks when the system can remain at rest, use static equilibrium for both blocks. The key is that static friction can act in either direction, so the rest condition becomes a force window.</div>
+      <div class="chunks"><div class="chunk"><span class="det">Because the system is at rest, block $B$ has zero acceleration, so the string tension must balance its weight. Thus $T = m_B g = 3 \times 10\,\mathrm{N} = 30\,\mathrm{N}$.</span><div class="disp">$$T = m_B g = 3 \times 10 = 30\,\mathrm{N}$$</div></div><div class="chunk"><span class="det">For block $A$, the normal reaction is $N = 4g = 40\,\mathrm{N}$. Hence the largest possible static friction is $f_{s,\max} = \mu_s N = 0.3 \times 40 = 12\,\mathrm{N}$.</span><div class="disp">$$f_{s,\max} = \mu_s N = 0.3 \times (4 \times 10) = 12\,\mathrm{N}$$</div></div><div class="chunk"><span class="det">If $F$ is too small, block $B$ tends to move downward and block $A$ tends to move toward the pulley. Then friction on $A$ acts away from the pulley, so equilibrium requires $T = F + f_s$ with $f_s \le 12\,\mathrm{N}$.</span><div class="disp">$$T = F + f_s \Rightarrow F \ge 30 - 12 = 18\,\mathrm{N}$$</div></div><div class="chunk"><span class="det">If $F$ is too large, block $A$ tends to move away from the pulley. Then friction reverses direction and acts toward the pulley, so equilibrium requires $F = T + f_s$ with $f_s \le 12\,\mathrm{N}$.</span><div class="disp">$$F = T + f_s \Rightarrow F \le 30 + 12 = 42\,\mathrm{N}$$</div></div><div class="chunk"><span class="det">Both limits must hold together, so the system can remain at rest only when $18\,\mathrm{N} \le F \le 42\,\mathrm{N}$. This corresponds to option A.</span><div class="disp">$$18\,\mathrm{N} \le F \le 42\,\mathrm{N}$$</div></div></div>
+      <div class="answer">Answer: <span class="g">The permissible range is $18\,\mathrm{N} \le F \le 42\,\mathrm{N}$, so the correct option is A.</span></div>
+    </div>
+  </section>
+<section class="card" id="q2">
+    <div class="qhead"><span class="qnum">Q2</span><span class="meta">Physics · Chapter 5: Laws of Motion · staged · glancing elastic collisions</span><span class="diff diff-Hard">Hard</span></div>
+    <div class="qtext">On a smooth horizontal table, a particle of mass $m$ moving with speed $u$ collides elastically with a stationary particle of mass $2m$. Immediately after the impact, the lighter particle moves at $90^\circ$ to its original direction of motion. What is its speed?</div>
+    <ol class="opts"><li class="opt correct"><span class="lett">A</span><span>$\frac{u}{\sqrt{3}}$</span><span class="tick">✓</span></li><li class="opt"><span class="lett">B</span><span>$\frac{u}{2}$</span></li><li class="opt"><span class="lett">C</span><span>$\frac{u}{\sqrt{2}}$</span></li><li class="opt"><span class="lett">D</span><span>$\frac{2u}{\sqrt{3}}$</span></li></ol>
+    <div class="block"><div class="blab">⚡ Quick Method</div><ol class="quick"><li>Take the initial motion as the $x$-axis and the new direction of the lighter particle as the $y$-axis.</li><li>Use momentum conservation in $x$ and $y$ to get the heavier particle's components.</li><li>Apply kinetic-energy conservation, simplify, and solve for the lighter particle's speed.</li></ol></div>
+    <div class="block"><div class="blab">🔬 Full Solution <span class="cnt">5 steps</span></div>
+      <div class="approach">Because the table is smooth, there is no external horizontal impulse, so momentum is conserved in both perpendicular directions. Since the collision is elastic, kinetic energy is also conserved, which closes the system.</div>
+      <div class="chunks"><div class="chunk"><span class="det">Take the initial motion along the $x$-direction. Let the lighter particle's speed after collision be $v$ along $y$, and let the heavier particle have components $V_x$ and $V_y$.</span></div><div class="chunk"><span class="det">Conservation of momentum along $x$ gives the horizontal component of the heavier particle.</span><div class="disp">$$mu = 2mV_x \Rightarrow V_x = \frac{u}{2}$$</div></div><div class="chunk"><span class="det">Conservation of momentum along $y$ uses the fact that the initial $y$-momentum is zero, so the final $y$-components must cancel.</span><div class="disp">$$0 = mv + 2mV_y \Rightarrow V_y = -\frac{v}{2}$$</div></div><div class="chunk"><span class="det">Because the collision is elastic, kinetic energy is conserved. Write the final energy using the components of the heavier particle and substitute the two component relations.</span><div class="disp">$$\frac{1}{2}mu^2 = \frac{1}{2}mv^2 + \frac{1}{2}(2m)\left(V_x^2 + V_y^2\right)$$</div></div><div class="chunk"><span class="det">Now substitute $V_x = \frac{u}{2}$ and $V_y = -\frac{v}{2}$, then simplify to get the speed of the lighter particle.</span><div class="disp">$$\frac{1}{2}u^2 = \frac{1}{2}v^2 + \frac{u^2}{4} + \frac{v^2}{4} \Rightarrow u^2 = 3v^2 \Rightarrow v = \frac{u}{\sqrt{3}}$$</div></div></div>
+      <div class="answer">Answer: <span class="g">The lighter particle's speed is $\frac{u}{\sqrt{3}}$, so the correct option is A.</span></div>
+    </div>
+  </section>
+<section class="card" id="q3">
+    <div class="qhead"><span class="qnum">Q3</span><span class="meta">Physics · Chapter 5: Laws of Motion · staged · friction on horizontal surface with an inclined pulling force</span><span class="diff diff-Medium">Medium</span></div>
+    <div class="qtext">A $5\,\text{kg}$ block slides on a horizontal rough floor when a $25\,\text{N}$ force acts on it at an angle of $37^\circ$ above the floor. If the coefficient of kinetic friction is $0.3$ and $g=10\,\text{m s}^{-2}$, with $\cos 37^\circ = 0.8$ and $\sin 37^\circ = 0.6$, what is its acceleration?</div>
+    <ol class="opts"><li class="opt correct"><span class="lett">A</span><span>$1.9\,\text{m s}^{-2}$</span><span class="tick">✓</span></li><li class="opt"><span class="lett">B</span><span>$2.5\,\text{m s}^{-2}$</span></li><li class="opt"><span class="lett">C</span><span>$4.0\,\text{m s}^{-2}$</span></li><li class="opt"><span class="lett">D</span><span>$1.0\,\text{m s}^{-2}$</span></li></ol>
+    <div class="block"><div class="blab">⚡ Quick Method</div><ol class="quick"><li>Resolve the pull into horizontal and vertical parts.</li><li>Find $N$, then compute friction as $\mu N$.</li><li>Use net horizontal force $= ma$ to get the acceleration.</li></ol></div>
+    <div class="block"><div class="blab">🔬 Full Solution <span class="cnt">5 steps</span></div>
+      <div class="approach">Apply Newton's second law separately along vertical and horizontal directions. The upward component of the pull reduces the normal reaction, so friction must be calculated from the reduced normal before finding the net horizontal force.</div>
+      <div class="chunks"><div class="chunk"><span class="det">Split the applied force into components. The horizontal part drives the block, while the vertical part lifts it slightly and changes the normal reaction.</span><div class="disp">$$F_x = 25 \cos 37^\circ = 20\,\text{N}, \quad F_y = 25 \sin 37^\circ = 15\,\text{N}$$</div></div><div class="chunk"><span class="det">There is no vertical acceleration, so the normal reaction equals the weight minus the upward component of the pull.</span><div class="disp">$$N = mg - F_y = 5 \times 10 - 15 = 35\,\text{N}$$</div></div><div class="chunk"><span class="det">Kinetic friction acts opposite the motion and has magnitude $\mu N$.</span><div class="disp">$$f = \mu N = 0.3 \times 35 = 10.5\,\text{N}$$</div></div><div class="chunk"><span class="det">The net horizontal force is the driving component minus friction. Dividing by mass gives the acceleration.</span><div class="disp">$$ma = F_x - f = 20 - 10.5 = 9.5\,\text{N}$$</div></div><div class="chunk"><span class="det">Now solve for $a$.</span><div class="disp">$$a = \frac{9.5}{5} = 1.9\,\text{m s}^{-2}$$</div></div></div>
+      <div class="answer">Answer: <span class="g">The acceleration is $1.9\,\text{m s}^{-2}$, so option A is correct.</span></div>
+    </div>
+  </section>
+<section class="card" id="q4">
+    <div class="qhead"><span class="qnum">Q4</span><span class="meta">Physics · Chapter 5: Laws of Motion · staged · mixed</span><span class="diff diff-Medium">Medium</span></div>
+    <div class="qtext">A $5\,\text{kg}$ block is pulled on a rough horizontal floor by a $25\,\text{N}$ force acting at $37^\circ$ above the horizontal. If $\mu_k=0.2$ and $g=10\,\text{m s}^{-2}$, the block's acceleration while it slides is</div>
+    <ol class="opts"><li class="opt correct"><span class="lett">A</span><span>$2.6\,\text{m s}^{-2}$</span><span class="tick">✓</span></li><li class="opt"><span class="lett">B</span><span>$2.0\,\text{m s}^{-2}$</span></li><li class="opt"><span class="lett">C</span><span>$1.6\,\text{m s}^{-2}$</span></li><li class="opt"><span class="lett">D</span><span>$1.4\,\text{m s}^{-2}$</span></li></ol>
+    <div class="block"><div class="blab">⚡ Quick Method</div><ol class="quick"><li>Split the pull into $25\cos37^\circ$ and $25\sin37^\circ$.</li><li>Find $N=mg-25\sin37^\circ$ and friction $f=\mu_kN$.</li><li>Use $ma=25\cos37^\circ-f$ to get $a$.</li></ol></div>
+    <div class="block"><div class="blab">🔬 Full Solution <span class="cnt">5 steps</span></div>
+      <div class="approach">Resolve the pull into components and apply Newton's second law along each axis. Friction depends on the reduced normal reaction, so the vertical balance must be done first.</div>
+      <div class="chunks"><div class="chunk"><span class="det">Split the applied force into horizontal and vertical parts. The vertical part lifts the block slightly, so it lowers the normal reaction and therefore the friction.</span><div class="disp">$$F_x=25\cos37^\circ=20\,\text{N},\qquad F_y=25\sin37^\circ=15\,\text{N}$$</div></div><div class="chunk"><span class="det">Since the block has no vertical acceleration, the upward forces balance the weight. So the normal reaction is the weight minus the upward component of the pull.</span><div class="disp">$$N=mg-F_y=5\times10-15=35\,\text{N}$$</div></div><div class="chunk"><span class="det">Now compute the kinetic friction. It opposes the motion along the floor.</span><div class="disp">$$f_k=\mu_kN=0.2\times35=7\,\text{N}$$</div></div><div class="chunk"><span class="det">Apply Newton's second law along the horizontal direction. The net force is the horizontal pull minus friction.</span><div class="disp">$$ma=F_x-f_k\Rightarrow 5a=20-7=13$$</div></div><div class="chunk"><span class="det">Hence the acceleration is $13/5=2.6\,\text{m s}^{-2}$. So option A is correct.</span><div class="disp">$$a=\frac{13}{5}=2.6\,\text{m s}^{-2}$$</div></div></div>
+      <div class="answer">Answer: <span class="g">The acceleration is $2.6\,\text{m s}^{-2}$, which is option A.</span></div>
+    </div>
+  </section>
+</div></body></html>

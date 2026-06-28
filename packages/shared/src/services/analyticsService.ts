@@ -44,15 +44,20 @@ export type StaminaPoint = {
   is_correct: boolean;
 };
 
+const EMPTY_ANALYTICS: AnalyticsRow = { total_attempts: 0, correct_attempts: 0, accuracy_pct: 0, avg_time_ms: 0 };
+
 export async function fetchUserAnalytics(): Promise<AnalyticsRow> {
   const { data: { session } } = await supabase.auth.getSession();
-  if (!session?.user) throw new Error('Not authenticated');
+  if (!session?.user) return EMPTY_ANALYTICS;
 
+  // Resilient like the other fetchers: NEVER throw. This runs inside the
+  // dashboard's Promise.all — if it threw (e.g. the RPC is missing), it would
+  // blank EVERY stat card, not just this one. Return zeros on any error instead.
   const { data, error } = await supabase.rpc('get_user_analytics');
-  if (error) throw error;
+  if (error) { console.error('fetchUserAnalytics error', error); return EMPTY_ANALYTICS; }
 
   const row = Array.isArray(data) ? data[0] : data;
-  if (!row) return { total_attempts: 0, correct_attempts: 0, accuracy_pct: 0, avg_time_ms: 0 };
+  if (!row) return EMPTY_ANALYTICS;
 
   return {
     total_attempts: Number(row.total_attempts ?? 0),

@@ -29,6 +29,39 @@
 
 ---
 
+## Session: 2026-06-26 → 2026-06-28 (MAIN repo, branch feat/landing-redesign — MERGED to main via PR #51)
+
+### Paywall + Razorpay checkout (web + mobile) — LIVE
+- Free-tier 20/day gate: single chokepoint `assertWithinFreeQuota()` in `getQuestionsForUser` (covers web+mobile, practice+sprint) + `getQuestionByFsmTag` (Prove It). Per-question counter in `performanceService.saveAttemptAndUpdateMastery` (counts once — only `!skipDrill`) + `sprintService.saveSprintAttempt`. Unified 20/day pool. Fail-open on RPC error (deliberate).
+- Shared: `paymentService.ts` (order/verify/getCurrentSubscription/isProActive/PaywallError/assertWithinFreeQuota/isFirstTimerSubscriber), `types/subscription.ts`, `hooks/useRazorpayCheckout.ts` (web), `lib/pricing.ts`.
+- Mobile checkout = WebView (react-native-webview — Pranav chose over native module; works in Expo Go): `RazorpayCheckoutModal.tsx`. Web = Razorpay Checkout JS.
+- UI: `PaywallModal` web+mobile; gating wired in web NewPractice + SprintSession, mobile SessionEngine + usePracticeQuestions.
+
+### Admin console — Payments + Users (LIVE)
+- Foundation: shared `isAdminEmail`/`adminAccess.ts` (single client source; fixed MobileNav drift), `/admin` route guard in App.tsx, edge `_shared/require-admin.ts` (deny-by-default; service-role only after admin check).
+- Tabs: `AdminPayments.tsx` (admin-list-payments) + `AdminUsers.tsx` (admin-list-users + grant/revoke Pro). Comp = ₹0 active sub.
+- Coupons + Communications DEFERRED past beta (Pranav's call).
+
+### DB + edge deploys (project ukrtaerwaxekonislnpw, "Drut Ai")
+- Migrations APPLIED by Pranav: 20260627120100 (subscriptions+payment_events), _120200 (daily_question_usage+RPCs), _120300 (comp amount_paise>=0).
+- Edge fns DEPLOYED (6): create/verify-razorpay-payment, admin-list-payments/-users, admin-grant-pro/-revoke-pro. Razorpay TEST secret set. All smoke-tested (401/403 for non-admins).
+
+### Decisions
+- Mobile Razorpay via WebView (not react-native-razorpay native module). Coupons/comms deferred. Comp model = ₹0 subscription (not a separate table). Razorpay in TEST mode until public launch.
+
+### Self-audit fixes (found by me/audit)
+- RLS: removed daily_question_usage insert/update self-write policies (users could reset their own count). Prove It bypass closed. Double-count fixed (count once per question). Renewal-conflict fixed (verify expires prior active row before flip).
+
+### Open threads (follow-ups, NOT built)
+- Analytics RPC IDOR (get_*_analytics SECURITY DEFINER, no auth.uid() check) — spawned as a background task chip; verify+fix pending.
+- Profile self-serve "manage subscription" UI; Razorpay webhook (refunds/disputes); pg_cron auto-expire of lapsed subs; switch Razorpay TEST→live keys before launch.
+- 348MB copyrighted textbook PDFs sit untracked in docs/question-generation/textbooks/ — now gitignored (legal: never commit).
+
+### Files (high-level)
+- Committed eb616d7 (app code + migrations + 6 edge fns) → PR #51 → merged to main (4 commits shipped to drut.club). Operator scripts + HTML docs committed separately.
+
+---
+
 ## Session: 2026-06-19 → 2026-06-22 (worktree: unruffled-vaughan-c3f74d; edits land in MAIN repo, branch feat/landing-redesign — UNCOMMITTED)
 
 ### Practice serving fix (2026-06-22) — force-gen leak + review-seen fallback
@@ -442,3 +475,64 @@ mini only ~44% production-ready at 3.8× cost → manual feed now, GPT-5.5 later
 **Scripts:** generate-chapter, reembed-chunks, verify-serving, list-chapters, enrich-pyq, render-format-html, render-diagram-gallery, calibrate-format/diagrams. **Docs (HTML):** revised-format-10-questions, diagram-calibration-gallery, ai-staged-batch-preview, enriched-pyq-preview, format-final-with-examples. Memory: project_openai_generation_wired.
 
 **PYQ write-back DONE (autonomous):** enriched 151/158 v3-verified-pyq questions IN PLACE (added quickMethod+fullSolution+distractorRationale to question_data; verification_status unchanged → still served; marker enrichedBy='openai-mini-high'). Only audit-pass + answer-AGREES rows written; disagreements/audit-fails HELD. Took 3 passes (network `fetch failed` blips ~40% on the first pass; bumped enrichOne retries to 5× exp-backoff + added ONLY_UNENRICHED mode that targets rows missing quickMethod). **7 still held for Pranav:** 2 ANSWER-KEY DISPUTES (verification caught likely-wrong stored keys) — (a) Physics/Mechanical Properties of Fluids: stored A=$44D^2S$ is wrong, correct is D=$56\pi D^2S$ [independently verified]; (b) Chemistry/Chemical Bonding boiling-points: stored C, model B (H2O>HF>NH3>H2S). Plus 5 minor format audit-fails (3 literal-unicode-math, 2 incomplete-solution) — those PYQs keep their old-format solution, retryable/hand-fixable. **NEXT (per Pranav): discuss moving edge-fn embeddings Gemini→OpenAI (forlater #51) BEFORE any new textbook ingestion. Then Pranav logs in → Admin→AI Review approves the 3 staged Laws-of-Motion Qs.**
+
+---
+
+## 2026-06-25 — Commit + canonical taxonomy + PYQ Step-3 pipeline + difficulty research
+
+**Committed** (0e5cf6a, branch feat/landing-redesign, NOT pushed): verify-gated OpenAI pipeline, canonical AP taxonomy (EXAM_TAXONOMY single source, 100 chapters, bare labels), chapterService sources from taxonomy (NCERT hidden), shared `isServableQuestion` (web+mobile serve identical 164-pool), review-seen fallback (replaced web force-gen leak), re-tag scripts, migrations 041/042, admin AI Review tab, CLAUDE.md positioning (LOCKED: multi-exam prep-tech). Selective staging; no secrets.
+
+**Step 3 — PYQ pipeline built** (`scripts/process-pyq.mjs`): extract → tag (canonical AP, gpt-5.4 double-pass, quarantine-on-uncertainty) → verify official key (disagree→HOLD) → generate B+C Quick/Full → audit → stage `ai-openai-staged` (NOT served; admin AI Review). Telugu PARKED (questionTextTe/optionsTe). Reuses earlier extraction (28 Shift-1 Maths Qs, bilingual, keys).
+- Hardening this session: (a) Unicode audit scoped to stored fields only + model REPAIR pass + broadened UNICODE_MATH regex (false-positive holds fixed; 0 leaks); (b) in-run dedup (overlapping-window dupes, e.g. Q4/Q23); (c) **options stored as `[{text}]`** — matched served-question schema (was strings → would've rendered blank in app); (d) **deterministic `checkIncomplete()` + model `answerable` flag** — catches broken extractions (Q4 = "which statements are true" with statements (i)(ii)(iii) MISSING from stem). Q15 = answer dispute → Pranav said DROP.
+- Sibling bug flagged (chip task_bdd399c1): enrich-pyq.mjs has the same Unicode-scope bug; some of the 158 enriched PYQs may be missing solutions (false-held).
+
+**Difficulty — researched + decided (deep-research, 102 agents, ~20 sources, verified):** LLM/expert difficulty labels are unreliable (experts ~33% of variance & WORSE with expertise; best LLM ≈ mean baseline; models find everything easy — confirmed: our run gave 48% Hard + incoherent fac0%/5s). DECISION: **do NOT label E/M/H pre-data.** Cold-start = `difficultySource:'uncalibrated'`, no label shown; keep `timeTargets` (time IS text-predictable) + `concepts`. **Phase 2 = Elo/1PL-Rasch engine** (`scripts/recompute-difficulty.mjs`, rewritten) — fits item difficulty vs learner ability from `user_question_history`, converges in ~tens of attempts, graduates a question to a SHOWN band only when calibrated (≥MIN_GAMES, default 20). Verified dormant (145 attempts/144 Qs, 0 at threshold). Doc: docs/difficulty-rating-research.html. App-side label-hiding flagged (chip task_6af8bad1).
+
+**MODE: Pranav said "full throttle for next 24h" (from 2026-06-25).** Driving PYQ pipeline to scale autonomously; staging to review queue (reversible, unserved); NOT auto-serving.
+
+**NEXT:** (1) finish canonical pilot DRY re-run → verify Q4 held + 0 unicode + uncalibrated difficulty → STAGE ~24 to ai-openai-staged (backup). (2) Extract FULL Shift 1 + Shift 2 papers → process → stage at scale. (3) Pranav reviews staged batch in AI Review.
+
+---
+
+## 2026-06-25 (cont.) — JEE Main beta scope + system build (MCQ-only)
+
+**Decision:** beta = EAPCET + JEE Main (MCQ-only); JEE Advanced + NEET deferred. Two deep-research passes (saved docs/jee-main-vs-eapcet-briefing.html). Key facts: JEE Main = 75 Q (20 MCQ + 5 NAT per subject), +4/−1 (now incl NAT), NCERT syllabus reduced 2024 (Maths dropped Mathematical Induction + Reasoning; Chemistry 8 units cut). EAPCET = 160 pure MCQ, +1 no-negative, STATE-BOARD (BIEAP/TSBIE) not NCERT. JEE harder. Honest correction: pipeline+concepts reuse, but EAPCET QUESTIONS don't (diff difficulty/format/syllabus) → JEE needs JEE PYQs. NAT (⅓ of paper) + negative marking are JEE-specific BUILD; deferred post-beta.
+
+**Built (data layer, all verified tsc/parse):**
+- taxonomy.ts: renamed the mislabeled `JEE_MAIN_TOPICS` → `EAPCET_TOPICS` (state-board list, 100 ch, keeps Mathematical Induction); added a REAL `JEE_MAIN_TOPICS` (NCERT-2024, 54 ch: Maths 14/Physics 20/Chem 20, NO Math Induction); added `jee_main` ExamDef (label 'JEE Main').
+- process-pyq.mjs loadCanon: now exam-aware (ap/ts_eapcet→EAPCET_TOPICS, jee_main→JEE_MAIN_TOPICS). Verified: ap_eapcet→100ch w/ Math Induction; jee_main→54ch without. (EXAM_PROFILE=jee_main runs tag against JEE list.)
+- chapterService.ts: board-driven (TOPICS_BY_BOARD: EAPCET + 'JEE Main'); getPrimaryBoardForExam jee_main→'JEE Main'. Picker works for JEE once selector offers it.
+- retag-servable.mjs: scoped canon parse to EAPCET_TOPICS block (was whole-file → would merge JEE).
+- Note: JEE PYQ vintage — use 2024+ papers (pre-2024 have removed-syllabus Qs).
+
+**REMAINING for JEE Main user-facing:** (1) exam-selector UI hardcodes EAPCET in web PracticeSetup/SprintSetup + mobile practice.tsx — needs jee_main added + Pranav UX input (how it appears, default exam). (2) difficulty-label-hiding (chip task_6af8bad1). (3) JEE PYQ PDFs (Pranav sourcing). The PIPELINE itself is ready: drop 2024+ JEE PDFs → extract (OUT=...) → EXAM_PROFILE=jee_main process → stage.
+
+**EAPCET marathon:** resumed; 114 PYQs staged (Shift-1, into Physics/Chem). Idempotent + resumable.
+
+---
+
+## 2026-06-25 (cont.) — Parallel app work + cost ledger + papers 1-2 staged
+
+**OpenAI cost ledger built:** scripts/usage-log.mjs (recordUsage → .openai-usage.jsonl, rates mirror calibrate-format PRICES), scripts/render-usage-report.mjs → docs/openai-usage-ledger.html. Instrumented process-pyq (tag/verify/repair) + extract-pyq (vision). Live: 448 calls / $3.20. Authoritative total = OpenAI dashboard (ledger is estimate, tracks from 2026-06-25). NOTE: also wire generate-chapter/enrich-pyq/recompute later for full coverage.
+
+**Task A — Difficulty labels HIDDEN (web+mobile), tsc clean.** Shared flag `DIFFICULTY_SELECTION_ENABLED=false` (constants.ts). Gated: web PracticeSetup difficulty selector + NewPractice in-session dropdown; mobile practice.tsx difficulty section + SessionHeader badge (+toggle disabled). Serving untouched — difficulty defaults 'Medium' (= what all questions are), so practice serves normally. Re-enable by flipping the flag post-Elo-calibration.
+
+**Task B — JEE Main wired into picker (web+mobile), tsc clean.** chapterService board fix (earlier) + now: web PracticeSetup loadSources + mobile practice.tsx loadSources pass getPrimaryBoardForExam(selectedExam) → JEE Main loads its 54 JEE chapters (not EAPCET). EXAM_PROFILES already has jee_main (onboarding offers it); mobile allowedExams defaults to all EXAM_TAXONOMY (incl jee_main). So a JEE-enrolled user selects JEE Main → sees JEE chapters → practice shows "no questions" until JEE PYQ PDFs processed (content awaits Pranav's 2024+ JEE PDFs). Couldn't browser-verify (auth-gated) — verified via tsc + deterministic logic.
+
+**Marathon:** papers 1-2 (21 May S1+S2) DONE → 288 staged (Maths 169/Physics 78/Chem 41). Paper 3 (22 May S1) extracting. 8 papers remain.
+
+**Open:** JEE PYQ PDFs (Pranav); CAT still in EXAM_PROFILES (hide for beta?); verify no difficulty labels on analytics/results screens; difficulty SELECTOR re-enable post-calibration.
+
+---
+
+## 2026-06-26 — Pivot to app/dashboard beta-readiness
+
+**Decision:** 576 servable questions is enough to START the beta. Bulk-approved 412 PYQs (ai-openai-staged→ai-openai-audited, backed up scripts/.backup-approve-pyq-*.json) → bank now 576 servable (412 new PYQs + 151 enriched + 13 generated). Seeding more = pure DB job, no build. Marathon paused (papers 4-10 deferred, resumable). Ledger ~$6.68.
+
+**Multi-exam unification SHIPPED (web+mobile, tsc clean):** shared normalizeTargetExams() + getExamOptions(); onboarding/settings multi-select all 3 (ap/ts_eapcet + jee_main), editable both platforms; web onboarding now stores snake_case (was labels); read paths normalized. EXAM_PROFILES: removed cat (beta = EAPCET + JEE only).
+
+**Beta-readiness audit (8-area Workflow):** docs/beta-readiness-report.html + scripts/.readiness-audit.json. Core loop = REAL/works (practice fetch→grade→Quick/Full→mastery/streak, dashboard widgets real). 41 gaps (16 P0/15 P1/10 P2). Big gaps: Paywall (not built in main; payment-foundation worktree has Razorpay fns+pricing+useRazorpay), mobile Sprint (stub — no startSession/persist), get_user_analytics RPC missing, web persistSession=false (refresh logs out), web Google OAuth no callback route, dead web nav items/handlers.
+
+**Decisions:** (1) Payments = BUILD paywall+Razorpay now (not deferred). (2) First fix = kill fake/mock data — DONE: dashboard trend badges removed, ArenaWidget→coming-soon, mini-practice mock→real Prove It fetch (NewPractice handlePracticeSimilar→handleProveIt). tsc web clean.
+
+**NEXT:** Build paywall + Razorpay (leverage payment-foundation worktree: create-razorpay-order + verify-razorpay-payment edge fns, pricing.ts ₹299/mo ₹1499/yr, useRazorpay hook). Needs: subscription + daily_question_usage tables/RPCs, gating in practice (web NewPractice + mobile usePracticeQuestions), paywall modal (web+mobile), Razorpay client SDK both, webhook, RAZORPAY secrets. Then remaining P0s: get_user_analytics RPC, web persistSession, Google OAuth callback, mobile Sprint wiring, dead nav.

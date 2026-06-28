@@ -1,0 +1,106 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Drut — Enriched PYQs (verified + new-format solutions)</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});"></script>
+<style>
+ :root{--green:#b4fa8d;--ink:#0f1a14;--muted:#5b6b62;--line:#e3e8e4;--bg:#fafcfa;--accent:#1f7a4d}
+ *{box-sizing:border-box} body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;color:var(--ink);background:var(--bg);margin:0;line-height:1.62}
+ .wrap{max-width:840px;margin:0 auto;padding:30px 20px 80px}
+ header.doc{border-bottom:3px solid var(--green);padding-bottom:16px;margin-bottom:22px}
+ header.doc h1{margin:0 0 6px;font-size:24px} header.doc .sub{color:var(--muted);font-size:13px}
+ .toc{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 18px;margin-bottom:26px}
+ .toc h2{margin:0 0 8px;font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+ .toc ol{margin:0;padding-left:18px;font-size:13px} .toc a{color:var(--accent);text-decoration:none}
+ .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin-bottom:20px}
+ .qhead{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+ .qnum{background:var(--ink);color:var(--green);font-weight:700;border-radius:8px;padding:2px 10px;font-size:14px}
+ .meta{color:var(--muted);font-size:13px;font-weight:600}
+ .diff{margin-left:auto;font-size:12px;font-weight:700;border-radius:999px;padding:2px 10px;border:1px solid var(--line)}
+ .diff-Hard{background:#fdeaea;color:#b3261e;border-color:#f3c0bc} .diff-Medium{background:#fff5e0;color:#9a6b00;border-color:#f0dca5} .diff-Easy{background:#e9f9e2;color:#2f7d20;border-color:#c4ebb4}
+ .qtext{font-size:16.5px;margin-bottom:14px}
+ ol.opts{list-style:none;margin:0 0 16px;padding:0;display:grid;gap:7px}
+ .opt{display:flex;gap:10px;align-items:center;border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:15px}
+ .opt.correct{border-color:var(--accent);background:rgba(180,250,141,.18)}
+ .lett{font-weight:700;color:var(--muted)} .opt.correct .lett{color:var(--accent)} .tick{margin-left:auto;color:var(--accent);font-weight:700;font-size:12px}
+ .block{margin-top:16px}
+ .blab{font-size:14px;font-weight:700;margin:0 0 10px;padding-bottom:6px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px}
+ .cnt{margin-left:auto;font-size:11px;font-weight:600;color:var(--muted)}
+ ol.quick{margin:0;padding-left:20px;display:grid;gap:7px;font-size:15px}
+ .approach{background:#f4f8f5;border-left:3px solid var(--green);border-radius:6px;padding:10px 14px;font-size:14.5px;margin-bottom:12px}
+ .chunks{display:grid;gap:13px;font-size:14.5px} .chunk .det{color:#27332c} .chunk .disp{margin:7px 0 0;text-align:center}
+ .answer{margin-top:15px;background:var(--ink);color:#fff;border-radius:10px;padding:10px 14px;font-weight:600;font-size:15px} .answer .g{color:var(--green)}
+ .err{border-color:#f3c0bc;background:#fdf3f2} .bad{color:#b3261e;font-weight:600}
+ @media print{body{background:#fff}.card,.toc{break-inside:avoid}}
+</style></head><body><div class="wrap">
+<header class="doc"><h1>Drut — Enriched PYQs (verified + new-format solutions)</h1><div class="sub">6 questions · gpt-5.4-mini @ high · B+C mix, no worked examples</div></header>
+<nav class="toc"><h2>Contents</h2><ol><li><a href="#q1">Q1 — Mathematics (Hard): answer verified ✓</a></li><li><a href="#q2">Q2 — Chemistry (Easy): answer verified ✓</a></li><li><a href="#q3">Q3 — Chemistry (Easy): answer verified ✓</a></li><li><a href="#q4">Q4 — Chemistry (Easy): answer verified ✓</a></li><li><a href="#q5">Q5 — Mathematics (Medium): answer verified ✓</a></li><li><a href="#q6">Q6 — Mathematics (Medium): answer verified ✓</a></li></ol></nav>
+<section class="card" id="q1">
+    <div class="qhead"><span class="qnum">Q1</span><span class="meta">Mathematics · Vectors · answer verified ✓</span><span class="diff diff-Hard">Hard</span></div>
+    <div class="qtext">Let the position vectors of the vertices of a triangle ABC be $\vec{a}, \vec{b}, \vec{c}$. If on the plane of the triangle, P is a point having position vector $\vec{x}$ such that $\vec{x}\cdot(\vec{c}-\vec{b}) = \vec{a}\cdot\vec{c} - \vec{a}\cdot\vec{b}$ and $\vec{x}\cdot(\vec{a}-\vec{c}) = \vec{a}\cdot\vec{b} - \vec{b}\cdot\vec{c}$, then for the triangle ABC, P is the</div>
+    <ol class="opts"><li class="opt"><span class="lett">A</span><span>Centroid</span></li><li class="opt"><span class="lett">B</span><span>Circumcentre</span></li><li class="opt"><span class="lett">C</span><span>Incentre</span></li><li class="opt correct"><span class="lett">D</span><span>Orthocentre</span><span class="tick">✓</span></li></ol>
+    <div class="block"><div class="blab">⚡ Quick Method</div><ol class="quick"><li>Rewrite each condition by moving the right-hand side to the left.</li><li>Then $(\vec{x}-\vec{a})\cdot(\vec{c}-\vec{b})=0$ and $(\vec{x}-\vec{b})\cdot(\vec{a}-\vec{c})=0$.</li><li>So $AP\perp BC$ and $BP\perp AC$; their intersection is the orthocentre.</li></ol></div>
+    <div class="block"><div class="blab">🔬 Full Solution <span class="cnt">3 steps</span></div>
+      <div class="approach">Use the dot-product conditions to identify perpendicularity with the opposite sides of the triangle.</div>
+      <div class="chunks"><div class="chunk"><span class="det">From $\vec{x}\cdot(\vec{c}-\vec{b})=\vec{a}\cdot\vec{c}-\vec{a}\cdot\vec{b}=\vec{a}\cdot(\vec{c}-\vec{b})$, we get $(\vec{x}-\vec{a})\cdot(\vec{c}-\vec{b})=0$. This means the vector $\overrightarrow{AP}$ is perpendicular to $\overrightarrow{BC}$, so $P$ lies on the altitude from $A$.</span><div class="disp">$$(\vec{x}-\vec{a})\cdot(\vec{c}-\vec{b})=0$$</div></div><div class="chunk"><span class="det">Similarly, $\vec{x}\cdot(\vec{a}-\vec{c})=\vec{a}\cdot\vec{b}-\vec{b}\cdot\vec{c}=\vec{b}\cdot(\vec{a}-\vec{c})$, hence $(\vec{x}-\vec{b})\cdot(\vec{a}-\vec{c})=0$. Therefore $\overrightarrow{BP}\perp\overrightarrow{AC}$, so $P$ also lies on the altitude from $B$.</span><div class="disp">$$(\vec{x}-\vec{b})\cdot(\vec{a}-\vec{c})=0$$</div></div><div class="chunk"><span class="det">The point where two altitudes of a triangle meet is the orthocentre. Hence $P$ is the orthocentre of triangle $ABC$.</span></div></div>
+      <div class="answer">Answer: <span class="g">D. Orthocentre</span></div>
+    </div>
+  </section>
+<section class="card" id="q2">
+    <div class="qhead"><span class="qnum">Q2</span><span class="meta">Chemistry · Polymers · answer verified ✓</span><span class="diff diff-Easy">Easy</span></div>
+    <div class="qtext">The monomer of Teflon is</div>
+    <ol class="opts"><li class="opt correct"><span class="lett">A</span><span>Tetrafluoroethylene</span><span class="tick">✓</span></li><li class="opt"><span class="lett">B</span><span>Vinyl chloride</span></li><li class="opt"><span class="lett">C</span><span>Ethylene</span></li><li class="opt"><span class="lett">D</span><span>Styrene</span></li></ol>
+    <div class="block"><div class="blab">⚡ Quick Method</div><ol class="quick"><li>Teflon is PTFE, i.e. polytetrafluoroethylene.</li><li>Its repeating unit comes from the monomer $CF_2=CF_2$.</li><li>So the monomer is tetrafluoroethylene.</li></ol></div>
+    <div class="block"><div class="blab">🔬 Full Solution <span class="cnt">2 steps</span></div>
+      <div class="approach">Teflon is the trade name for polytetrafluoroethylene, so we identify the alkene that polymerizes to give the PTFE chain.</div>
+      <div class="chunks"><div class="chunk"><span class="det">Polytetrafluoroethylene is obtained by addition polymerization of tetrafluoroethylene, whose molecule is $CF_2=CF_2$.</span><div class="disp">$$nCF_2=CF_2 \rightarrow (-CF_2-CF_2-)_n$$</div></div><div class="chunk"><span class="det">Therefore, the monomer of Teflon is tetrafluoroethylene, not vinyl chloride, ethylene, or styrene.</span></div></div>
+      <div class="answer">Answer: <span class="g">A. Tetrafluoroethylene</span></div>
+    </div>
+  </section>
+<section class="card" id="q3">
+    <div class="qhead"><span class="qnum">Q3</span><span class="meta">Chemistry · Equilibrium · answer verified ✓</span><span class="diff diff-Easy">Easy</span></div>
+    <div class="qtext">What is the pH of $0.001$ M NaOH solution?</div>
+    <ol class="opts"><li class="opt"><span class="lett">A</span><span>$3$</span></li><li class="opt correct"><span class="lett">B</span><span>$11$</span><span class="tick">✓</span></li><li class="opt"><span class="lett">C</span><span>$14$</span></li><li class="opt"><span class="lett">D</span><span>$7$</span></li></ol>
+    <div class="block"><div class="blab">⚡ Quick Method</div><ol class="quick"><li>NaOH fully dissociates, so $[\mathrm{OH}^-]=0.001\,\mathrm{M}=10^{-3}\,\mathrm{M}$.</li><li>Compute $\mathrm{pOH}=-\log(10^{-3})=3$.</li><li>Use $\mathrm{pH}+\mathrm{pOH}=14$, so $\mathrm{pH}=11$.</li></ol></div>
+    <div class="block"><div class="blab">🔬 Full Solution <span class="cnt">3 steps</span></div>
+      <div class="approach">Use complete dissociation of strong base and the relation between pH and pOH at $25^\circ\mathrm{C}$.</div>
+      <div class="chunks"><div class="chunk"><span class="det">NaOH is a strong base, so it dissociates completely in water: $\mathrm{NaOH} \rightarrow \mathrm{Na}^+ + \mathrm{OH}^-$. Therefore, the hydroxide ion concentration is $[\mathrm{OH}^-]=0.001\,\mathrm{M}=10^{-3}\,\mathrm{M}$.</span><div class="disp">$$[\mathrm{OH}^-]=10^{-3}\,\mathrm{M}$$</div></div><div class="chunk"><span class="det">Now find pOH using $\mathrm{pOH}=-\log[\mathrm{OH}^-]$. Substituting gives $\mathrm{pOH}=-\log(10^{-3})=3$.</span><div class="disp">$$\mathrm{pOH}=-\log(10^{-3})=3$$</div></div><div class="chunk"><span class="det">At $25^\circ\mathrm{C}$, $\mathrm{pH}+\mathrm{pOH}=14$. So $\mathrm{pH}=14-3=11$.</span><div class="disp">$$\mathrm{pH}=14-3=11$$</div></div></div>
+      <div class="answer">Answer: <span class="g">The pH of the $0.001\,\mathrm{M}$ NaOH solution is $11$, so option B is correct.</span></div>
+    </div>
+  </section>
+<section class="card" id="q4">
+    <div class="qhead"><span class="qnum">Q4</span><span class="meta">Chemistry · Hydrogen and its Compounds · answer verified ✓</span><span class="diff diff-Easy">Easy</span></div>
+    <div class="qtext">Heavy water is used as</div>
+    <ol class="opts"><li class="opt correct"><span class="lett">A</span><span>moderator in nuclear reactors</span><span class="tick">✓</span></li><li class="opt"><span class="lett">B</span><span>coolant in nuclear reactors</span></li><li class="opt"><span class="lett">C</span><span>both moderator and coolant</span></li><li class="opt"><span class="lett">D</span><span>fuel in nuclear reactors</span></li></ol>
+    <div class="block"><div class="blab">⚡ Quick Method</div><ol class="quick"><li>Heavy water is $D_2O$.</li><li>It slows down fast neutrons in a reactor.</li><li>So it acts as a moderator.</li></ol></div>
+    <div class="block"><div class="blab">🔬 Full Solution <span class="cnt">2 steps</span></div>
+      <div class="approach">Heavy water is preferred in reactors for moderating neutrons, i.e. reducing their speed so fission can continue efficiently.</div>
+      <div class="chunks"><div class="chunk"><span class="det">Heavy water, $D_2O$, has the property of slowing down fast neutrons without capturing many of them. That makes it useful for sustaining a nuclear chain reaction.</span></div><div class="chunk"><span class="det">A substance that slows neutrons is called a moderator. Hence the correct use of heavy water here is as a moderator in nuclear reactors.</span></div></div>
+      <div class="answer">Answer: <span class="g">A. moderator in nuclear reactors</span></div>
+    </div>
+  </section>
+<section class="card" id="q5">
+    <div class="qhead"><span class="qnum">Q5</span><span class="meta">Mathematics · Applications of Derivatives · answer verified ✓</span><span class="diff diff-Medium">Medium</span></div>
+    <div class="qtext">If the normal drawn at the point P on the curve $y = x\log x$ is parallel to the line $2x - 2y = 3$, then $P =$</div>
+    <ol class="opts"><li class="opt"><span class="lett">A</span><span>$(e, e)$</span></li><li class="opt"><span class="lett">B</span><span>$\left(\frac{1}{e}, \frac{-1}{e}\right)$</span></li><li class="opt correct"><span class="lett">C</span><span>$\left(\frac{1}{e^2}, \frac{-2}{e^2}\right)$</span><span class="tick">✓</span></li><li class="opt"><span class="lett">D</span><span>$(e^3, 3e^3)$</span></li></ol>
+    <div class="block"><div class="blab">⚡ Quick Method</div><ol class="quick"><li>Line $2x-2y=3$ has slope $1$. So the normal slope is $1$, hence tangent slope is $-1$.</li><li>For $y=x\log x$, $\frac{dy}{dx}=\log x+1$. Set $\log x+1=-1$.</li><li>Then $\log x=-2\Rightarrow x=e^{-2}$ and $y=x\log x=e^{-2}(-2)=-\frac{2}{e^2}$.</li></ol></div>
+    <div class="block"><div class="blab">🔬 Full Solution <span class="cnt">3 steps</span></div>
+      <div class="approach">Use the fact that a normal is perpendicular to the tangent, so its slope determines the derivative at the point on the curve.</div>
+      <div class="chunks"><div class="chunk"><span class="det">The given line $2x-2y=3$ can be written as $y=x-\frac{3}{2}$, so its slope is $1$. Since the normal is parallel to this line, the normal slope at $P$ is also $1$, which makes the tangent slope $-1$.</span><div class="disp">$$m_{\text{normal}}=1,\quad m_{\text{tangent}}=-1$$</div></div><div class="chunk"><span class="det">For the curve $y=x\log x$, the derivative is $\frac{dy}{dx}=\log x+1$. At the point of tangency, this must equal the tangent slope $-1$.</span><div class="disp">$$\frac{dy}{dx}=\log x+1=-1$$</div></div><div class="chunk"><span class="det">So $\log x=-2$, giving $x=e^{-2}=\frac{1}{e^2}$. Substituting in $y=x\log x$, we get $y=e^{-2}(-2)=-\frac{2}{e^2}$. Therefore, $P=\left(\frac{1}{e^2},-\frac{2}{e^2}\right)$.</span><div class="disp">$$y=e^{-2}( -2 )=-\frac{2}{e^2}$$</div></div></div>
+      <div class="answer">Answer: <span class="g"><br>\left(\frac{1}{e^2},-\frac{2}{e^2}\right)</span></div>
+    </div>
+  </section>
+<section class="card" id="q6">
+    <div class="qhead"><span class="qnum">Q6</span><span class="meta">Mathematics · Definite Integration · answer verified ✓</span><span class="diff diff-Medium">Medium</span></div>
+    <div class="qtext">$\int_0^{\pi/2} \log|\tan x + \cot x|\,dx =$</div>
+    <ol class="opts"><li class="opt correct"><span class="lett">A</span><span>$\pi\log 2$</span><span class="tick">✓</span></li><li class="opt"><span class="lett">B</span><span>$-\pi\log 2$</span></li><li class="opt"><span class="lett">C</span><span>$\frac{\pi}{2}\log 2$</span></li><li class="opt"><span class="lett">D</span><span>$2\pi\log 2$</span></li></ol>
+    <div class="block"><div class="blab">⚡ Quick Method</div><ol class="quick"><li>Use $\tan x+\cot x=\frac{1}{\sin x\cos x}$ for $0&lt;x&lt;\frac{\pi}{2}$.</li><li>So the integrand is $-\log(\sin x)-\log(\cos x)$.</li><li>Apply $\int_0^{\pi/2}\log(\sin x)\,dx=\int_0^{\pi/2}\log(\cos x)\,dx=-\frac{\pi}{2}\log 2$.</li></ol></div>
+    <div class="block"><div class="blab">🔬 Full Solution <span class="cnt">3 steps</span></div>
+      <div class="approach">Rewrite the expression in terms of $\sin x$ and $\cos x$, then use the standard definite integrals of $\log(\sin x)$ and $\log(\cos x)$ on $\left[0,\frac{\pi}{2}\right]$.</div>
+      <div class="chunks"><div class="chunk"><span class="det">For $0&lt;x&lt;\frac{\pi}{2}$, both $\tan x$ and $\cot x$ are positive, so the absolute value is unnecessary. Also, \[\tan x+\cot x=\frac{\sin^2 x+\cos^2 x}{\sin x\cos x}=\frac{1}{\sin x\cos x}.\]</span><div class="disp">$$\tan x+\cot x=\frac{1}{\sin x\cos x}$$</div></div><div class="chunk"><span class="det">Hence, \[\log(\tan x+\cot x)=-\log(\sin x)-\log(\cos x).\] Therefore, \[I=\int_0^{\pi/2}\log(\tan x+\cot x)\,dx=-\int_0^{\pi/2}\log(\sin x)\,dx-\int_0^{\pi/2}\log(\cos x)\,dx.\]</span><div class="disp">$$I=-\int_0^{\pi/2}\log(\sin x)\,dx-\int_0^{\pi/2}\log(\cos x)\,dx$$</div></div><div class="chunk"><span class="det">Using the standard result \[\int_0^{\pi/2}\log(\sin x)\,dx=\int_0^{\pi/2}\log(\cos x)\,dx=-\frac{\pi}{2}\log 2,\] we get \[I=-\left(-\frac{\pi}{2}\log 2\right)-\left(-\frac{\pi}{2}\log 2\right)=\pi\log 2.\]</span><div class="disp">$$I=\pi\log 2$$</div></div></div>
+      <div class="answer">Answer: <span class="g">$\boxed{\pi\log 2}$</span></div>
+    </div>
+  </section>
+</div></body></html>

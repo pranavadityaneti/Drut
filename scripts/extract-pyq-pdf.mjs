@@ -22,6 +22,7 @@ import { execFileSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
+import { recordUsage } from './usage-log.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const calEnv = (() => { const o = {}; const p = join(ROOT, 'scripts/.env.calibration'); if (!existsSync(p)) return o; for (const l of readFileSync(p, 'utf8').split('\n')) { const m = l.match(/^([A-Z0-9_]+)=(.*)$/); if (m) o[m[1]] = m[2].trim().replace(/^["']|["']$/g, ''); } return o; })();
@@ -118,13 +119,30 @@ function valid(q) {
   const imgs = pngs.map(f => readFileSync(join(pagesDir, f)).toString('base64'));
   console.log(`Rendered ${pngs.length} pages -> ${Math.max(0, pngs.length - 1)} overlapping windows\n`);
 
+  const outPath = join(ROOT, 'scripts', process.env.OUT || 'extract-pyq-output.json');
   const byHash = new Map();
-  let totIn = 0, totOut = 0;
-  for (let i = 0; i < imgs.length - 1; i++) {
+  let startWindow = 0, totIn = 0, totOut = 0;
+  // Resume from a prior partial run (checkpoint written per-window) — survives kills.
+  if (process.env.RESUME !== 'false' && existsSync(outPath)) {
+    try {
+      const prev = JSON.parse(readFileSync(outPath, 'utf8'));
+      if (prev?.config?.pdf === CONFIG.pdf && prev.config.firstPage === CONFIG.firstPage && prev.config.lastPage === CONFIG.lastPage && Number.isInteger(prev.lastWindow)) {
+        for (const q of (prev.questions || [])) byHash.set(contentHash(q), q);
+        startWindow = prev.lastWindow + 1;
+        console.log(`Resuming: ${byHash.size} questions kept, continuing from window ${startWindow}.\n`);
+      }
+    } catch { /* corrupt checkpoint -> start fresh */ }
+  }
+  const flush = (lastWindow) => {
+    const qs = [...byHash.values()].sort((a, b) => (a.questionNumber || 0) - (b.questionNumber || 0));
+    writeFileSync(outPath, JSON.stringify({ config: CONFIG, count: qs.length, lastWindow, questions: qs }, null, 2));
+  };
+  for (let i = startWindow; i < imgs.length - 1; i++) {
     process.stdout.write(`  window ${pngs[i]}+${pngs[i + 1]} ... `);
     const r = await extractWindow(imgs[i], imgs[i + 1]);
-    if (r.error) { console.log(`ERROR: ${r.error}`); continue; }
+    if (r.error) { console.log(`ERROR: ${r.error}`); flush(i); continue; }
     totIn += r.usage.in; totOut += r.usage.out;
+    recordUsage({ script: 'extract-pyq', model: CONFIG.model, op: 'extract-window', input: r.usage.in, output: r.usage.out, meta: { paper: CONFIG.paperLabel, pdf: CONFIG.pdf.split('/').pop() } });
     let added = 0, dupes = 0;
     for (const q of r.questions) {
       if (!valid(q)) continue;
@@ -134,12 +152,12 @@ function valid(q) {
       else { dupes++; if ((CONF_RANK[q.confidence] || 0) > (CONF_RANK[prev.confidence] || 0)) byHash.set(h, q); }
     }
     console.log(`${r.questions.length} found (${added} new, ${dupes} dup) [out ${r.usage.out}]`);
+    flush(i);  // checkpoint after every window
     await new Promise(rr => setTimeout(rr, 350));
   }
 
   const questions = [...byHash.values()].sort((a, b) => (a.questionNumber || 0) - (b.questionNumber || 0));
   const out = { config: CONFIG, count: questions.length, questions };
-  const outPath = join(ROOT, 'scripts', 'extract-pyq-output.json');
   writeFileSync(outPath, JSON.stringify(out, null, 2));
 
   const bySubj = {}; let withDiagram = 0, lowConf = 0;

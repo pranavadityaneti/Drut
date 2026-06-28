@@ -46,3 +46,9 @@ packages/shared/src/lib/.taxonomy.ts.bak
 .stale-from-main-checkout/
 *.code-workspace
 apps/web/supabase/.temp/
+
+# Copyrighted textbook PDFs — NEVER commit (legal). Source material is local-only.
+docs/question-generation/textbooks/
+
+# OpenAI usage ledger raw data (runtime artifact; the HTML report is the deliverable).
+scripts/.openai-usage.jsonl

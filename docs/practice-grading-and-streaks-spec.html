@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Drut — Practice & Sprint: Grading, Streaks & Prove-It Spec</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{
+    --ink-1:#1b1c19;--ink-2:#3a3b36;--ink-3:#6a6c62;--paper:#faf9f5;--card:#fff;
+    --hair:#e7e4d7;--green:#b4fa8d;--green-deep:#3d7a0f;--green-ink:#2c5908;
+    --amber:#fef3c7;--red:#b00020;--blue:#185fa5;--blue-bg:#e6f1fb;
+  }
+  *{box-sizing:border-box}
+  body{font-family:ui-sans-serif,-apple-system,"Segoe UI","Helvetica Neue",sans-serif;line-height:1.55;color:var(--ink-1);background:var(--paper);margin:0;padding:40px 20px 90px}
+  .wrap{max-width:940px;margin:0 auto}
+  header.title{background:linear-gradient(135deg,#fff,#f3fbed);border:1px solid var(--hair);border-radius:16px;padding:34px}
+  .eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.13em;color:var(--green-deep);font-weight:700;margin:0 0 10px}
+  h1{font-size:30px;line-height:1.12;margin:0 0 8px;letter-spacing:-.01em}
+  .subtitle{color:var(--ink-3);font-size:14.5px;margin:0;max-width:72ch}
+  .meta{color:var(--ink-3);font-size:12px;margin:16px 0 0}
+  nav.toc{background:#fff;border:1px solid var(--hair);border-radius:12px;padding:18px 22px;margin:26px 0}
+  nav.toc strong{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--ink-3)}
+  nav.toc ol{margin:10px 0 0;padding-left:20px;columns:2;column-gap:34px;font-size:13px}
+  nav.toc li{margin:4px 0;break-inside:avoid}
+  nav.toc a{color:var(--ink-1);text-decoration:none}
+  nav.toc a:hover{color:var(--green-deep);text-decoration:underline}
+  h2{font-size:22px;margin:44px 0 6px;padding-top:16px;border-top:2px solid var(--hair);letter-spacing:-.005em}
+  h3{font-size:16px;margin:22px 0 6px}
+  h4{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-3);margin:16px 0 6px}
+  p{margin:9px 0 13px}
+  .lede{font-size:15.5px;color:var(--ink-2)}
+  ul,ol{margin:6px 0 13px;padding-left:22px}li{margin:5px 0}
+  table{width:100%;border-collapse:collapse;margin:13px 0 18px;font-size:13px}
+  th,td{text-align:left;padding:9px 11px;border-bottom:1px solid var(--hair);vertical-align:top}
+  th{background:#eef7e6;font-weight:600;font-size:12px}
+  td.c{text-align:center}
+  code{background:#f1efe6;padding:2px 5px;border-radius:3px;font-size:12px;font-family:ui-monospace,Menlo,monospace}
+  pre{background:var(--ink-1);color:#eaf6df;padding:14px 18px;border-radius:8px;overflow-x:auto;font-size:12px;line-height:1.5;font-family:ui-monospace,Menlo,monospace}
+  .callout{background:var(--amber);border-radius:8px;padding:13px 17px;margin:15px 0;font-size:13.5px;border-left:3px solid #f59e0b}
+  .callout-green{background:#eef7e6;border-left-color:var(--green-deep)}
+  .callout-red{background:#fdecec;border-left-color:var(--red)}
+  .callout-blue{background:var(--blue-bg);border-left-color:var(--blue)}
+  .english{background:#eef7e6;border-radius:8px;padding:12px 16px;margin:14px 0;font-size:13.5px;border-left:3px solid var(--green-deep)}
+  .english strong{color:var(--green-deep)}
+  .pill{display:inline-block;padding:2px 9px;border-radius:999px;font-size:11px;font-weight:600;margin-right:4px}
+  .p-now{background:#dff3cf;color:var(--green-ink)}
+  .p-later{background:#efece1;color:var(--ink-2)}
+  .p-fix{background:#ffe1e0;color:var(--red)}
+  .flow{background:#fff;border:1px solid var(--hair);border-radius:10px;padding:14px 18px;margin:14px 0;font-size:13px}
+  .flow b{color:var(--green-deep)}
+  hr.s{border:0;border-top:1px solid var(--hair);margin:28px 0}
+  footer{margin-top:60px;padding-top:22px;border-top:2px solid var(--hair);font-size:12px;color:var(--ink-3)}
+  @media print{
+    body{background:#fff;padding:0}.wrap{max-width:none}
+    header.title{background:#fff;border:0;padding:0 0 16px}
+    nav.toc{border:0;padding:0;columns:1}
+    h2{page-break-after:avoid}table,pre,.callout,.english,.flow{page-break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="title">
+  <p class="eyebrow">Product spec · practice engine</p>
+  <h1>Practice &amp; Sprint — Grading, Streaks &amp; Prove It</h1>
+  <p class="subtitle">The agreed model for how Drut scores, tracks momentum, runs the Prove-It mastery drill, surfaces weak spots, and anchors concepts — without becoming a learning-content platform. This is the build blueprint; decisions below are locked unless marked open.</p>
+  <p class="meta">Decided with Pranav, 2026-06-19. Status: locked → ready to spec into code. Companion docs: <a href="competitive/drut-vs-educato.html">drut-vs-educato.html</a>, <code>forlater.md</code>.</p>
+</header>
+
+<nav class="toc">
+  <strong>Contents</strong>
+  <ol>
+    <li><a href="#positioning">1. Positioning — Practice vs Sprint</a></li>
+    <li><a href="#scoring">2. Scoring model (3 layers)</a></li>
+    <li><a href="#streaks">3. Streaks — consistent across surfaces</a></li>
+    <li><a href="#proveit">4. Prove It — the mastery drill</a></li>
+    <li><a href="#focus">5. Focus Areas (renamed)</a></li>
+    <li><a href="#concept">6. Concept anchoring + repeated-fail card</a></li>
+    <li><a href="#legal">7. Legal / content guardrail</a></li>
+    <li><a href="#sprint">8. Sprint repositioning</a></li>
+    <li><a href="#notopiclock">9. No hard topic-lock</a></li>
+    <li><a href="#impl">10. Implementation map</a></li>
+    <li><a href="#phase2">11. Phase 2 / open</a></li>
+  </ol>
+</nav>
+
+<h2 id="positioning">1. Positioning — Practice vs Sprint</h2>
+<p class="lede">Two distinct surfaces with two distinct jobs. Keep them mentally and in-copy separate.</p>
+<table>
+  <tr><th>Surface</th><th>Job</th><th>Feel</th><th>Scoring</th></tr>
+  <tr><td><strong>Practice</strong></td><td>Learn &amp; master question <em>patterns</em>. Safe space to attempt, fail, and prove you've got it.</td><td>The gym — no penalty for trying hard things.</td><td>+2 / −1, mastery via Prove It</td></tr>
+  <tr><td><strong>Sprint</strong></td><td><strong>Speed training</strong> — answer good questions <em>fast</em> against a timer. Volume + accuracy under time pressure.</td><td>A timed rapid-fire round.</td><td>flat +1 / −1</td></tr>
+</table>
+<div class="callout callout-green">
+  <strong>Identity (non-negotiable):</strong> Drut is a <strong>practice / preparation platform with just-in-time concept anchoring</strong> — NOT a learning-content / lessons platform. We never ship a browsable "Lessons" tab, never gate practice behind "complete this lesson," never write chapter-length explanations. Concept help appears only <em>reactively, scoped to one pattern, inside the practice flow.</em> "We explain the concept for this stuck moment — we don't teach the syllabus."
+</div>
+<div class="callout callout-red">
+  <strong>Correction logged:</strong> Sprint is <strong>not</strong> an exam simulation and its scoring must <strong>not</strong> mirror a real exam's marking scheme. It is a speed-training drill. The current code (<code>sprintService</code>) wrongly applies per-exam negative marking (JEE −1, EAPCET none, CAT 3:1) — that is exam-sim logic and must be replaced with flat +1/−1 (see §8).
+</div>
+
+<h2 id="scoring">2. Scoring model — three separate layers</h2>
+<p>Keep these three concepts <strong>cleanly separate</strong> in code and in the UI. They were getting conflated under the word "streak"; they are different things.</p>
+<table>
+  <tr><th>Layer</th><th>What it is</th><th>Resets</th></tr>
+  <tr><td><strong>Points</strong> (score)</td><td>The running tally for a session, from correct/wrong answers + bonuses.</td><td>Per session (also rolls into lifetime XP — see below)</td></tr>
+  <tr><td><strong>Streak</strong> (combo)</td><td>Consecutive correct answers <em>within a session</em>. Every 5-in-a-row awards a bonus.</td><td>On any wrong answer</td></tr>
+  <tr><td><strong>Daily streak</strong> (the flame)</td><td>Consecutive days the student practiced at all. The habit loop.</td><td>On a missed day</td></tr>
+</table>
+
+<h3>Point values</h3>
+<table>
+  <tr><th>Action</th><th class="c">Points</th><th>Surface</th></tr>
+  <tr><td>Correct answer</td><td class="c">+2</td><td>Practice</td></tr>
+  <tr><td>Wrong answer</td><td class="c">−1</td><td>Practice</td></tr>
+  <tr><td>Correct answer</td><td class="c">+1</td><td>Sprint</td></tr>
+  <tr><td>Wrong answer</td><td class="c">−1</td><td>Sprint</td></tr>
+  <tr><td>5 correct in a row (combo)</td><td class="c">+2 bonus</td><td>Both (repeats every 5)</td></tr>
+  <tr><td>Prove It — wrong answer</td><td class="c">−1</td><td>Practice (drill)</td></tr>
+  <tr><td>Prove It — pass (2 of 3)</td><td class="c">clears the pattern</td><td>Practice (drill)</td></tr>
+</table>
+<p><strong>Accuracy is rewarded 2:1 in Practice</strong> (a wrong answer costs half a correct), which keeps attempting worthwhile while gently discouraging blind guessing. Sprint is flat +1/−1 — the timer + volume ("the more you answer, the more you get") is the real pressure.</p>
+
+<h3>What points add up to (the "tail")</h3>
+<ul>
+  <li><strong>(a) Session score</strong> — starts at 0 each session, shown on the session-summary screen.</li>
+  <li><strong>(b) Lifetime XP → levels</strong> — every session's net points roll into a cumulative XP total on the profile, which drives a level. Pairs naturally with the daily streak as the long-term return loop.</li>
+  <li><em>(c) Leaderboard — deferred to post-beta.</em></li>
+</ul>
+<div class="callout"><strong>Points ≠ mastery.</strong> Points are the engagement score. <em>Passing Prove It (2/3)</em> is the learning signal that actually clears a pattern off Focus Areas. Two different jobs; show them differently. Don't let a high score imply mastery, or vice-versa.</div>
+<p><em>Small decision to confirm during build:</em> does the session score floor at 0 (never shows negative) or can it go negative? Recommendation: floor the <em>displayed</em> session score at 0 to avoid demoralising early learners; XP accrues from net positive sessions only.</p>
+
+<h2 id="streaks">3. Streaks — consistent across Practice + Sprint</h2>
+<p>Two streaks, defined once in <code>@drut/shared</code>, used identically on web, Android, and iOS (per CLAUDE.md — one definition, no drift).</p>
+
+<h3>Answer streak (combo, in-session)</h3>
+<ul>
+  <li>+1 to the combo on each correct answer; <strong>resets to 0 on a wrong answer</strong>.</li>
+  <li>Hitting a multiple of 5 (5, 10, 15…) awards <strong>+2 bonus points</strong>.</li>
+  <li>Identical logic + an identical small "🔥 ×N" indicator in <strong>both Practice and Sprint</strong>.</li>
+  <li>Track <code>best_answer_streak</code> as a personal record.</li>
+  <li>Prove-It correct answers extend the combo; a Prove-It wrong answer resets it (natural).</li>
+</ul>
+
+<h3>Daily streak (the flame)</h3>
+<ul>
+  <li>+1 the first time each day the student does <strong>any</strong> qualifying activity — answers ≥1 Practice question <em>or</em> completes a Sprint. One unified counter and flame.</li>
+  <li>Stored at user level: <code>last_active_date</code>, <code>current_streak</code>, <code>longest_streak</code>.</li>
+  <li>Both Practice-submit and Sprint-complete call <strong>one shared <code>recordDailyActivity()</code></strong> in <code>@drut/shared</code>.</li>
+  <li>Missed day → resets. <em>(Post-beta: optional streak-freeze / grace day.)</em></li>
+</ul>
+<div class="callout-green callout"><strong>Negative marking never touches either streak.</strong> Streaks are purely correct/incorrect + daily activity. Point deductions live only in the Points layer. No double-penalty system.</div>
+
+<h2 id="proveit">4. Prove It — the mastery drill</h2>
+<p>The mechanism that answers "has the student actually learned this pattern?"</p>
+<div class="flow">
+<b>Head (trigger)</b> → student answers a question wrong (or correct-but-slow) → reads the solution: <b>Quick Method (T.A.R.)</b> + <b>Full Solution (D.E.E.P.)</b> → taps <b>"Prove It"</b><br><br>
+<b>Body</b> → 3 fresh questions of the <b>same pattern</b> (<code>fsm_tag</code>), one at a time, each timed. Scored +2 / −1 like normal practice.<br><br>
+<b>Tail (grade)</b> → <b>2 of 3 correct = PASS</b> → pattern clears off Focus Areas, mastery bumps, "Pattern cleared ✓". On the next question the student flows on normally.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<b>&lt; 2 of 3 = not yet</b> → show the <b>Concept Card</b> (§6), pattern stays in Focus Areas, offer "Try once more". <b>No hard lock</b> (§9).
+</div>
+<table>
+  <tr><th>Parameter</th><th>Value</th></tr>
+  <tr><td>Drill size (N)</td><td>3 questions</td></tr>
+  <tr><td>Pass threshold</td><td>2 of 3 correct</td></tr>
+  <tr><td>What decides pass</td><td><strong>Correctness.</strong> Speed is a bonus badge only ("nailed it fast"), never a pass gate.</td></tr>
+  <tr><td>Wrong-answer penalty</td><td>−1 (same as practice — not −2; the 2/3 gate is the real stake, no double-punishment in remediation)</td></tr>
+  <tr><td>Counts against daily quota (15/day free)</td><td><strong>No.</strong> Remediation must not be rationed.</td></tr>
+  <tr><td>Bank-depth requirement</td><td><strong>≥ 4 questions per <code>fsm_tag</code></strong> (1 seen + 3 fresh). If a pattern is too thin, Prove It is disabled for it until the bank fills.</td></tr>
+</table>
+<div class="callout"><strong>Hard dependency on question volume:</strong> Prove It needs at least 4 questions per pattern. Thin patterns (e.g. Chemistry today, ~5 Qs total) can't run it. This ties directly to the 150-per-chapter generation work — Prove It rolls out pattern-by-pattern as depth allows.</div>
+
+<h2 id="focus">5. Focus Areas (renamed from "debt collector")</h2>
+<p>Drop all financial metaphors (debt / credit) and all sporty language (rematch). The dashboard reminder of patterns a student hasn't passed is called <strong>"Focus Areas"</strong> — professional, positive, exam-oriented.</p>
+<ul>
+  <li>A dashboard card listing patterns/topics where Prove It hasn't been passed.</li>
+  <li>Framed around <strong>readiness</strong>, not guilt — e.g. "4 patterns to firm up in Chemistry."</li>
+  <li>One tap on a Focus Area starts its Prove-It drill.</li>
+  <li>Replaces the existing <code>DebtCollector</code> widget; the underlying "in debt" flag is renamed to a neutral "needs-review" state (no user-facing jargon).</li>
+</ul>
+
+<h2 id="concept">6. Concept anchoring + the repeated-fail Concept Card</h2>
+
+<h3>Every solution carries a concept (enforced)</h3>
+<p>The <strong>Diagnose</strong> phase of D.E.E.P. must <strong>always</strong> state the governing principle + key formula in 1–2 lines (e.g. "Newton's 2nd law: F = ma"). This becomes a <strong>required field in the generation schema</strong> — no question can ship without a concept anchor in its full solution.</p>
+
+<h3>Repeated fail → the Concept Card (Option A)</h3>
+<p><strong>Trigger:</strong> the student <em>fails Prove It</em> (&lt; 2/3 on the pattern). The inline anchor clearly wasn't enough, so we escalate — once, in-flow:</p>
+<div class="flow">
+A single <b>Concept Card</b> for that one pattern containing:<br>
+&nbsp;&nbsp;1. the <b>governing principle + formula</b> (the facts),<br>
+&nbsp;&nbsp;2. <b>one fully-worked original example</b> (the worked-examples feature, forlater #49),<br>
+&nbsp;&nbsp;3. a <b>"why this trips people up"</b> note tied to the exact wrong option they kept choosing,<br>
+then → <b>"Try once more"</b> (re-drill the pattern).
+</div>
+<ul>
+  <li>It is a <strong>card inside the practice flow</strong> — one pattern, not a navigable lesson, not a section you must complete.</li>
+  <li>If they fail again: it stays in Focus Areas, suggest coming back later. <strong>Never trap them</strong> (no hard lock).</li>
+</ul>
+<div class="callout callout-green"><strong>The line that keeps us a practice platform:</strong> concept content appears only reactively, scoped to one pattern, in-flow. No "Lessons" tab, no "finish to continue," no chapter write-ups. A Concept Card is remediation; a lessons section would be curriculum. We stay on the remediation side.</div>
+<p><strong>Option B (AI "Ask why" tutor): deferred to post-beta.</strong> The natural upgrade — open a chat pre-loaded with the question + the student's wrong answers + the concept. Highest-value, biggest build; revisit after launch.</p>
+
+<h2 id="legal">7. Legal / content guardrail (applies to all of the above)</h2>
+<div class="callout callout-red">
+  <strong>Textbook PDFs are not ours to show, link, send, or excerpt.</strong> This is a hard constraint, not a preference.
+</div>
+<ul>
+  <li><strong>No Option C.</strong> We never surface, link, or send textbook pages to students.</li>
+  <li><strong><code>sourcePages</code> is strictly internal</strong> — grounding/QA metadata used during generation only, never rendered in any client.</li>
+  <li><strong>Concept Cards &amp; worked examples must be 100% original expression.</strong> Facts are free to use — a principle, a formula (F = ma isn't copyrightable) — and we write <em>our own</em> explanation and <em>our own</em> example problems. We must never reproduce a textbook's wording or its specific solved examples.</li>
+  <li>This is enforced in <strong>two places</strong>: the generation prompt (original-expression rule, no copied passages/solved problems) and the human review pass.</li>
+</ul>
+<p><em>Caveat: not legal advice. This is the safe-by-design approach; recommend a quick legal review of the content pipeline ("generated-from but not reproducing") before public launch.</em></p>
+
+<h2 id="sprint">8. Sprint repositioning — code + copy changes</h2>
+<ul>
+  <li><strong>Scoring:</strong> replace the per-exam negative-marking config in <code>sprintService</code> (JEE −1, EAPCET none, CAT 3:1) with <strong>flat +1 correct / −1 wrong for every exam</strong>.</li>
+  <li><strong>Combo bonus:</strong> apply the same +2-every-5 answer-streak bonus as Practice (consistency).</li>
+  <li><strong>Copy/positioning:</strong> reword Sprint UI (and any marketing line) from "exam simulation" → <strong>"train your speed / answer faster."</strong></li>
+  <li><strong>Timer stays</strong> — it's the core of the speed-training mechanic.</li>
+</ul>
+
+<h2 id="notopiclock">9. No hard topic-lock (decided)</h2>
+<p>We do <strong>not</strong> lock students into a failing topic until they pass. Reasons: it would trap students on thin-bank patterns (no questions to prove with), risks beta churn at the worst moment, and can jail a student on a faulty question. Instead: soft nudge (the prominent CTA after a miss is "Prove It"), Focus Areas resurfacing, and positive streak incentives. An opt-in "Focus Mode" (student chooses to lock themselves in) can be considered later.</p>
+
+<h2 id="impl">10. Implementation map</h2>
+<table>
+  <tr><th>Area</th><th>Change</th><th>Where</th></tr>
+  <tr><td>Points engine</td><td>+2/−1 practice, +1/−1 sprint, +2 combo every 5; session score + lifetime XP/level</td><td><span class="pill p-now">build</span> shared + web + mobile</td></tr>
+  <tr><td>Answer streak (combo)</td><td>shared helper; identical UI indicator both surfaces</td><td><span class="pill p-now">build</span> shared + web + mobile</td></tr>
+  <tr><td>Daily streak</td><td>one <code>recordDailyActivity()</code>; unified flame</td><td><span class="pill p-now">build</span> shared + web + mobile</td></tr>
+  <tr><td>Prove It drill</td><td>3-Q same-<code>fsm_tag</code>, 2/3 pass, −1 wrong, no quota, bank-depth gate</td><td><span class="pill p-now">build</span> web + mobile</td></tr>
+  <tr><td>Focus Areas</td><td>rename DebtCollector + neutral flag name</td><td><span class="pill p-now">build</span> web + mobile</td></tr>
+  <tr><td>Concept in D.E.E.P.</td><td>required concept field in Diagnose; generation + schema rule</td><td><span class="pill p-now">build</span> shared schema + generation prompts</td></tr>
+  <tr><td>Concept Card (repeated fail)</td><td>in-flow card; original worked example + misconception</td><td><span class="pill p-now">build</span> web + mobile</td></tr>
+  <tr><td>Sprint scoring + copy</td><td>flat +1/−1, combo bonus, "speed training" wording</td><td><span class="pill p-now">build</span> shared + web + mobile</td></tr>
+  <tr><td>Show D.E.E.P. in practice intervention</td><td>web practice panel shows Full Solution too, not just Optimal Path</td><td><span class="pill p-fix">fix</span> web</td></tr>
+  <tr><td>clientValidator static import</td><td>remove fragile dynamic import</td><td><span class="pill p-fix">fix</span> web</td></tr>
+  <tr><td>Exam-selector guard</td><td>only render taxonomy-backed exams</td><td><span class="pill p-fix">fix</span> web</td></tr>
+  <tr><td>AI tutor ("Ask why")</td><td>concept help via chat</td><td><span class="pill p-later">post-beta</span></td></tr>
+  <tr><td>Leaderboard</td><td>competitive layer over XP</td><td><span class="pill p-later">post-beta</span></td></tr>
+</table>
+<p>Build order suggestion: ship the three <span class="pill p-fix">fix</span> items first (they're small and unblock testing), then the points + streak engine (shared foundation), then Prove It + Focus Areas + Concept Card on top.</p>
+
+<h2 id="phase2">11. Phase 2 / open</h2>
+<ul>
+  <li>AI "Ask why" tutor (Option B) — concept help + the predictive-readiness narration from the competitive analysis.</li>
+  <li>Leaderboard over lifetime XP.</li>
+  <li>Streak-freeze / grace day for the daily streak.</li>
+  <li>Opt-in "Focus Mode" (voluntary topic-lock) if data later shows shallow skipping.</li>
+  <li>Confirm: session-score floor at 0 vs allow negative (recommendation: floor displayed score).</li>
+</ul>
+
+<footer>
+  <p>Spec compiled 2026-06-19 from the Pranav ↔ Claude design discussion. Locked decisions: scoring (+2/−1 practice, +1/−1 sprint, +2 combo/5), points → session + XP/level, Prove It (3-Q, 2/3, −1), Focus Areas naming, every-D.E.E.P.-has-a-concept, Concept Card on repeated fail (Option A), no Option C (legal), Sprint = speed training, no hard topic-lock, AI tutor post-beta.</p>
+  <p>Prepared by Claude Opus for Pranav · <code>docs/practice-grading-and-streaks-spec.html</code></p>
+</footer>
+
+</div>
+</body>
+</html>

@@ -86,90 +86,16 @@
     ]
   }
   </script>
-  <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
     href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap"
     rel="stylesheet">
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          colors: {
-            border: '#E4E4E4', // Light border
-            input: '#F4F5F7', // Very light gray input
-            ring: '#6C5DD3', // Primary Purple
-            background: '#F7F8FA', // Very light cool gray background
-            foreground: '#11142D', // Dark text
-            primary: {
-              DEFAULT: '#6C5DD3', // Vibrant Purple
-              foreground: '#FFFFFF',
-            },
-            secondary: {
-              DEFAULT: '#808191', // Gray text
-              foreground: '#FFFFFF',
-            },
-            // Pastel Colors for Cards
-            'purple-soft': '#F3F0FF',
-            'blue-soft': '#F0F9FF',
-            'green-soft': '#F0FDF4',
-            'orange-soft': '#FFF4E5',
-
-            destructive: {
-              DEFAULT: '#FF754C',
-              foreground: '#FFFFFF',
-            },
-            muted: {
-              DEFAULT: '#F4F5F7',
-              foreground: '#808191',
-            },
-            card: {
-              DEFAULT: '#FFFFFF',
-              foreground: '#11142D',
-            },
-          },
-          borderRadius: {
-            '3xl': '24px',
-            '2xl': '20px',
-            xl: '16px',
-            lg: '12px',
-            md: '8px',
-            sm: '4px',
-            full: '9999px',
-          },
-          boxShadow: {
-            'soft': '0px 4px 20px rgba(0, 0, 0, 0.08)', // Subtle grey shadow
-            'card': '0px 4px 10px rgba(0, 0, 0, 0.06)',
-          },
-          fontFamily: {
-            sans: ['"DM Sans"', 'sans-serif'],
-          },
-          animation: {
-            'bounce-slow': 'bounce 3s infinite',
-            'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-          }
-        }
-      }
-    }
-  </script>
-  <script type="importmap">
-{
-  "imports": {
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
-    "react/": "https://aistudiocdn.com/react@^19.2.0/",
-    "react": "https://aistudiocdn.com/react@^19.2.0",
-    "@playwright/test": "https://aistudiocdn.com/@playwright/test@^1.56.1",
-    "@monaco-editor/react": "https://aistudiocdn.com/@monaco-editor/react@^4.6.0",
-    "@vercel/node": "https://aistudiocdn.com/@vercel/node@^5.5.6",
-    "@supabase/supabase-js": "https://aistudiocdn.com/@supabase/supabase-js@^2.81.1",
-    "zod": "https://aistudiocdn.com/zod@^3.22.4",
-    "p-limit": "https://aistudiocdn.com/p-limit@^5.0.0",
-    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0"
-  }
-}
-</script>
+  <!-- Tailwind is bundled via Vite (@import "tailwindcss" in global.css). The old
+       cdn.tailwindcss.com play-build + its inline config were removed (double-load +
+       "should not be used in production" console warning + style drift). The custom
+       shadow-soft/shadow-card + animate-bounce-slow/pulse-slow utilities now live in
+       global.css @theme. The aistudiocdn importmap was dead — Vite bundles all deps. -->
 </head>
 
 <body class="bg-background text-foreground">

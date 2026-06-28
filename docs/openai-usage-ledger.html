@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Drut — OpenAI API Usage & Cost Ledger</title>
+<style>
+  :root{--ink:#16211c;--muted:#5c6b63;--line:#e0e7e2;--green:#2f8a4e;--accent:#b4fa8d;--soft:#f5f9f6}
+  *{box-sizing:border-box} body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);margin:0;line-height:1.55;background:#fff}
+  .wrap{max-width:920px;margin:0 auto;padding:36px 24px 80px}
+  h1{font-size:27px;margin:0 0 2px;letter-spacing:-0.02em} .sub{color:var(--muted);font-size:13.5px;margin:0 0 22px}
+  h2{font-size:18px;margin:30px 0 10px;padding-bottom:6px;border-bottom:2px solid var(--line)}
+  .cards{display:flex;gap:14px;flex-wrap:wrap;margin:18px 0}
+  .card{flex:1;min-width:150px;background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:14px 18px}
+  .card .v{font-size:26px;font-weight:800;letter-spacing:-0.02em} .card .l{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-top:2px}
+  .card.big{background:var(--accent);border-color:#9fe87a} .card.big .v{color:#13241a}
+  table{border-collapse:collapse;width:100%;margin:8px 0 4px;font-size:13.5px}
+  th,td{border:1px solid var(--line);padding:7px 10px;text-align:left} th{background:var(--soft);font-weight:700}
+  td:nth-child(n+2),th:nth-child(n+2){text-align:right}
+  .note{background:#fff8ec;border:1px solid #f1d9a8;border-left:4px solid #c98a1a;border-radius:8px;padding:12px 16px;margin:14px 0;font-size:13.5px}
+  .mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px}
+  @media print{.wrap{max-width:none}}
+</style></head><body><div class="wrap">
+  <h1>OpenAI API — Usage &amp; Cost Ledger</h1>
+  <p class="sub">Drut · auto-generated from scripts/.openai-usage.jsonl · 691 calls logged, 2026-06-26 → 2026-06-26 06:05</p>
+
+  <div class="cards">
+    <div class="card big"><div class="v">$5.04</div><div class="l">Estimated total spend</div></div>
+    <div class="card"><div class="v">691</div><div class="l">API calls</div></div>
+    <div class="card"><div class="v">934,860</div><div class="l">Input tokens</div></div>
+    <div class="card"><div class="v">784,173</div><div class="l">Output tokens</div></div>
+  </div>
+
+  <div class="note"><strong>Estimate, not the bill.</strong> Token counts are exact (from the API). Dollars = tokens × published rates (gpt-5.4-mini $0.75/$4.50, gpt-5.4 $2.50/$15.0, gpt-5.5 $5/$30, embeddings $0.02 per 1M in/out). The <strong>authoritative billed total is the OpenAI dashboard</strong> → <span class="mono">platform.openai.com/usage</span>. This ledger covers calls made <em>after</em> cost-logging was wired in (2026-06-25); spend before that is in the dashboard only.</div>
+
+  
+  
+  <h2>By model</h2>
+  <table><tr><th>Model</th><th>Calls</th><th>Input tok</th><th>Output tok</th><th>Cost</th><th>% of total</th></tr>
+  <tr><td>gpt-5.4-mini</td><td>289</td><td>772,748</td><td>734,181</td><td>$3.88</td><td>77.1%</td></tr><tr><td>gpt-5.4</td><td>402</td><td>162,112</td><td>49,992</td><td>$1.16</td><td>22.9%</td></tr>
+  </table>
+  
+  <h2>By script</h2>
+  <table><tr><th>Script</th><th>Calls</th><th>Input tok</th><th>Output tok</th><th>Cost</th><th>% of total</th></tr>
+  <tr><td>process-pyq</td><td>586</td><td>342,765</td><td>693,777</td><td>$4.19</td><td>83.1%</td></tr><tr><td>extract-pyq</td><td>105</td><td>592,095</td><td>90,396</td><td>$0.85</td><td>16.9%</td></tr>
+  </table>
+  
+  <h2>By operation</h2>
+  <table><tr><th>Operation</th><th>Calls</th><th>Input tok</th><th>Output tok</th><th>Cost</th><th>% of total</th></tr>
+  <tr><td>verify+solve</td><td>184</td><td>180,653</td><td>643,785</td><td>$3.03</td><td>60.2%</td></tr><tr><td>tag</td><td>402</td><td>162,112</td><td>49,992</td><td>$1.16</td><td>22.9%</td></tr><tr><td>extract-window</td><td>105</td><td>592,095</td><td>90,396</td><td>$0.85</td><td>16.9%</td></tr>
+  </table>
+  
+  <h2>By exam</h2>
+  <table><tr><th>Exam</th><th>Calls</th><th>Input tok</th><th>Output tok</th><th>Cost</th><th>% of total</th></tr>
+  <tr><td>ap_eapcet</td><td>586</td><td>342,765</td><td>693,777</td><td>$4.19</td><td>83.1%</td></tr><tr><td>—</td><td>105</td><td>592,095</td><td>90,396</td><td>$0.85</td><td>16.9%</td></tr>
+  </table>
+  
+  <h2>By paper</h2>
+  <table><tr><th>Paper / source</th><th>Calls</th><th>Input tok</th><th>Output tok</th><th>Cost</th><th>% of total</th></tr>
+  <tr><td>AP EAPCET — 21 May, Shift 2</td><td>448</td><td>262,307</td><td>523,913</td><td>$3.20</td><td>63.6%</td></tr><tr><td>AP EAPCET — 22 May, Shift 1</td><td>243</td><td>672,553</td><td>260,260</td><td>$1.83</td><td>36.4%</td></tr>
+  </table>
+  
+  <h2>By day</h2>
+  <table><tr><th>Date (UTC)</th><th>Calls</th><th>Input tok</th><th>Output tok</th><th>Cost</th><th>% of total</th></tr>
+  <tr><td>2026-06-26</td><td>691</td><td>934,860</td><td>784,173</td><td>$5.04</td><td>100.0%</td></tr>
+  </table>
+
+  <h2>Recent calls (last 40)</h2>
+  <table><tr><th>Time (UTC)</th><th>Script</th><th>Op</th><th>Model</th><th>In</th><th>Out</th><th>Cost</th></tr>
+  <tr><td class="mono">2026-06-26 06:05:21</td><td>process-pyq</td><td>tag</td><td>gpt-5.4</td><td>412</td><td>91</td><td>$0.0024</td></tr><tr><td class="mono">2026-06-26 06:05:21</td><td>process-pyq</td><td>tag</td><td>gpt-5.4</td><td>412</td><td>86</td><td>$0.0023</td></tr><tr><td class="mono">2026-06-26 06:05:19</td><td>process-pyq</td><td>verify+solve</td><td>gpt-5.4-mini</td><td>958</td><td>946</td><td>$0.0050</td></tr><tr><td class="mono">2026-06-26 06:05:13</td><td>process-pyq</td><td>tag</td><td>gpt-5.4</td><td>385</td><td>66</td><td>$0.0020</td></tr><tr><td class="mono">2026-06-26 06:05:13</td><td>process-pyq</td><td>tag</td><td>gpt-5.4</td><td>385</td><td>71</td><td>$0.0020</td></tr><tr><td class="mono">2026-06-26 06:05:10</td><td>process-pyq</td><td>verify+solve</td><td>gpt-5.4-mini</td><td>958</td><td>1,669</td><td>$0.0082</td></tr><tr><td class="mono">2026-06-26 06:04:59</td><td>process-pyq</td><td>tag</td><td>gpt-5.4</td><td>385</td><td>71</td><td>$0.0020</td></tr><tr><td class="mono">2026-06-26 06:04:59</td><td>process-pyq</td><td>tag</td><td>gpt-5.4</td><td>385</td><td>54</td><td>$0.0018</td></tr><tr><td class="mono">2026-06-26 06:04:57</td><td>process-pyq</td><td>verify+solve</td><td>gpt-5.4-mini</td><td>945</td><td>5,639</td><td>$0.0261</td></tr><tr><td class="mono">2026-06-26 06:04:12</td><td>process-pyq</td><td>tag</td><td>gpt-5.4</td><td>372</td><td>73</td><td>$0.0020</td></tr><tr><td class="mono">2026-06-26 06:04:12</td><td>process-pyq</td><td>tag</td><td>gpt-5.4</td><td>372</td><td>84</td><td>$0.0022</td></tr><tr><td class="mono">2026-06-26 06:04:11</td><td>process-pyq</td><td>verify+solve</td><td>gpt-5.4-mini</td><td>1,019</td><td>888</td><td>$0.0048</td></tr><tr><td class="mono">2026-06-26 06:04:04</td><td>process-pyq</td><td>tag</td><td>gpt-5.4</td><td>446</td><td>46</td><td>$0.0018</td></tr><tr><td class="mono">2026-06-26 06:04:04</td><td>process-pyq</td><td>tag</td><td>gpt-5.4</td><td>446</td><td>40</td><td>$0.0017</td></tr><tr><td class="mono">2026-06-26 06:04:02</td><td>process-pyq</td><td>verify+solve</td><td>gpt-5.4-mini</td><td>981</td><td>2,417</td><td>$0.0116</td></tr><tr><td class="mono">2026-06-26 06:03:46</td><td>process-pyq</td><td>tag</td><td>gpt-5.4</td><td>408</td><td>63</td><td>$0.0020</td></tr><tr><td class="mono">2026-06-26 06:03:46</td><td>process-pyq</td><td>tag</td><td>gpt-5.4</td><td>408</td><td>54</td><td>$0.0018</td></tr><tr><td class="mono">2026-06-26 06:03:44</td><td>process-pyq</td><td>verify+solve</td><td>gpt-5.4-mini</td><td>992</td><td>3,423</td><td>$0.0161</td></tr><tr><td class="mono">2026-06-26 06:03:21</td><td>process-pyq</td><td>tag</td><td>gpt-5.4</td><td>419</td><td>117</td><td>$0.0028</td></tr><tr><td class="mono">2026-06-26 06:03:20</td><td>process-pyq</td><td>tag</td><td>gpt-5.4</td><td>419</td><td>82</td><td>$0.0023</td></tr><tr><td class="mono">2026-06-26 06:03:18</td><td>process-pyq</td><td>verify+solve</td><td>gpt-5.4-mini</td><td>1,006</td><td>1,191</td><td>$0.0061</td></tr><tr><td class="mono">2026-06-26 06:03:09</td><td>process-pyq</td><td>tag</td><td>gpt-5.4</td><td>433</td><td>153</td><td>$0.0034</td></tr><tr><td class="mono">2026-06-26 06:03:09</td><td>process-pyq</td><td>tag</td><td>gpt-5.4</td><td>433</td><td>88</td><td>$0.0024</td></tr><tr><td class="mono">2026-06-26 06:03:06</td><td>process-pyq</td><td>verify+solve</td><td>gpt-5.4-mini</td><td>992</td><td>5,326</td><td>$0.0247</td></tr><tr><td class="mono">2026-06-26 06:02:29</td><td>process-pyq</td><td>tag</td><td>gpt-5.4</td><td>419</td><td>67</td><td>$0.0021</td></tr><tr><td class="mono">2026-06-26 06:02:29</td><td>process-pyq</td><td>tag</td><td>gpt-5.4</td><td>419</td><td>60</td><td>$0.0019</td></tr><tr><td class="mono">2026-06-26 06:02:27</td><td>process-pyq</td><td>verify+solve</td><td>gpt-5.4-mini</td><td>926</td><td>2,823</td><td>$0.0134</td></tr><tr><td class="mono">2026-06-26 06:02:08</td><td>process-pyq</td><td>tag</td><td>gpt-5.4</td><td>353</td><td>55</td><td>$0.0017</td></tr><tr><td class="mono">2026-06-26 06:02:08</td><td>process-pyq</td><td>tag</td><td>gpt-5.4</td><td>353</td><td>55</td><td>$0.0017</td></tr><tr><td class="mono">2026-06-26 06:02:05</td><td>process-pyq</td><td>verify+solve</td><td>gpt-5.4-mini</td><td>998</td><td>3,142</td><td>$0.0149</td></tr><tr><td class="mono">2026-06-26 06:01:44</td><td>process-pyq</td><td>tag</td><td>gpt-5.4</td><td>426</td><td>75</td><td>$0.0022</td></tr><tr><td class="mono">2026-06-26 06:01:44</td><td>process-pyq</td><td>tag</td><td>gpt-5.4</td><td>426</td><td>69</td><td>$0.0021</td></tr><tr><td class="mono">2026-06-26 06:01:42</td><td>process-pyq</td><td>verify+solve</td><td>gpt-5.4-mini</td><td>998</td><td>1,152</td><td>$0.0059</td></tr><tr><td class="mono">2026-06-26 06:01:34</td><td>process-pyq</td><td>tag</td><td>gpt-5.4</td><td>426</td><td>59</td><td>$0.0020</td></tr><tr><td class="mono">2026-06-26 06:01:33</td><td>process-pyq</td><td>tag</td><td>gpt-5.4</td><td>426</td><td>83</td><td>$0.0023</td></tr><tr><td class="mono">2026-06-26 06:01:30</td><td>process-pyq</td><td>verify+solve</td><td>gpt-5.4-mini</td><td>1,024</td><td>3,020</td><td>$0.0144</td></tr><tr><td class="mono">2026-06-26 06:01:10</td><td>process-pyq</td><td>tag</td><td>gpt-5.4</td><td>452</td><td>108</td><td>$0.0028</td></tr><tr><td class="mono">2026-06-26 06:01:09</td><td>process-pyq</td><td>tag</td><td>gpt-5.4</td><td>452</td><td>84</td><td>$0.0024</td></tr><tr><td class="mono">2026-06-26 06:01:08</td><td>process-pyq</td><td>tag</td><td>gpt-5.4</td><td>398</td><td>257</td><td>$0.0049</td></tr><tr><td class="mono">2026-06-26 06:01:07</td><td>process-pyq</td><td>tag</td><td>gpt-5.4</td><td>398</td><td>206</td><td>$0.0041</td></tr>
+  </table>
+</div></body></html>

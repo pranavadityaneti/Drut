@@ -1,0 +1,94 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Drut — Final Format with Worked Examples</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});"></script>
+<style>
+ :root{--green:#b4fa8d;--ink:#0f1a14;--muted:#5b6b62;--line:#e3e8e4;--bg:#fafcfa;--accent:#1f7a4d}
+ *{box-sizing:border-box} body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;color:var(--ink);background:var(--bg);margin:0;line-height:1.62}
+ .wrap{max-width:760px;margin:0 auto;padding:26px 20px 70px}
+ .note{background:#fff;border:1px dashed var(--accent);border-radius:10px;padding:10px 14px;font-size:13px;color:#33433a;margin-bottom:20px}
+ .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px 24px}
+ .qhead{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+ .qnum{background:var(--ink);color:var(--green);font-weight:700;border-radius:8px;padding:2px 10px;font-size:14px}
+ .meta{color:var(--muted);font-size:13px;font-weight:600}
+ .diff{margin-left:auto;font-size:12px;font-weight:700;border-radius:999px;padding:2px 10px;background:#fff5e0;color:#9a6b00;border:1px solid #f0dca5}
+ .qtext{font-size:16.5px;margin-bottom:14px}
+ ol.opts{list-style:none;margin:0 0 16px;padding:0;display:grid;gap:7px}
+ .opt{display:flex;gap:10px;align-items:center;border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:15px}
+ .opt.correct{border-color:var(--accent);background:rgba(180,250,141,.18)}
+ .lett{font-weight:700;color:var(--muted)} .opt.correct .lett{color:var(--accent)} .tick{margin-left:auto;color:var(--accent);font-weight:700;font-size:12px}
+ .block{margin-top:16px}
+ .blab{font-size:14px;font-weight:700;margin:0 0 10px;padding-bottom:6px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:7px}
+ ol.quick{margin:0;padding-left:20px;display:grid;gap:7px;font-size:15px}
+ .approach{background:#f4f8f5;border-left:3px solid var(--green);border-radius:6px;padding:10px 14px;font-size:14.5px;margin-bottom:12px}
+ .chunks{display:grid;gap:13px;font-size:14.5px}
+ .chunk .det{color:#27332c}
+ .chunk .disp{margin:7px 0 0;text-align:center}
+ .answer{margin-top:15px;background:var(--ink);color:#fff;border-radius:10px;padding:10px 14px;font-weight:600;font-size:15px}
+ .answer .g{color:var(--green)}
+ /* worked examples = part of full solution */
+ .wex{margin-top:18px;border-top:2px dashed var(--line);padding-top:14px}
+ .wexlab{font-size:13px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.04em;margin-bottom:10px}
+ .ex{background:#fbfdfb;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin-bottom:10px}
+ .exq{font-size:14px;margin-bottom:7px} .exq b{color:var(--ink)}
+ .exsol{font-size:13.5px;color:#27332c;display:grid;gap:7px}
+ .exsol .disp{text-align:center;margin:3px 0}
+ .exans{margin-top:7px;font-weight:600;font-size:13.5px;color:var(--accent)}
+</style></head><body><div class="wrap">
+
+<div class="note"><b>FINAL FORMAT — "with worked examples" variant (for approval).</b> Identical to the B+C mix you approved, plus a <b>Worked examples</b> section that is part of the Full Solution: 2–3 mini-problems applying the SAME method to fresh numbers. The "without examples" variant is simply this card minus the dashed Worked-examples section. Hand-authored to show the format.</div>
+
+<section class="card">
+  <div class="qhead"><span class="qnum">Ex</span><span class="meta">Physics · Motion in a Plane · Projectile range</span><span class="diff">Medium</span></div>
+  <div class="qtext">A ball is projected at $u=20\,\text{m/s}$ at $30^\circ$ above the horizontal. Taking $g=10\,\text{m/s}^2$ and $\sqrt3\approx1.73$, find its horizontal range (launch and landing at the same height).</div>
+  <ol class="opts">
+    <li class="opt"><span class="lett">A</span><span>$20\,\text{m}$</span></li>
+    <li class="opt correct"><span class="lett">B</span><span>$20\sqrt3\,\text{m}\approx34.6\,\text{m}$</span><span class="tick">✓</span></li>
+    <li class="opt"><span class="lett">C</span><span>$40\,\text{m}$</span></li>
+    <li class="opt"><span class="lett">D</span><span>$17.3\,\text{m}$</span></li>
+  </ol>
+
+  <div class="block"><div class="blab">⚡ Quick Method</div>
+    <ol class="quick">
+      <li>Same-height range is $R=\dfrac{u^2\sin2\theta}{g}$.</li>
+      <li>Here $2\theta=60^\circ$, $\sin60^\circ=\frac{\sqrt3}{2}$: $\;R=\dfrac{400\cdot0.866}{10}$.</li>
+      <li>$R\approx34.6\,\text{m}=20\sqrt3\,\text{m}$ → option B.</li>
+    </ol>
+  </div>
+
+  <div class="block"><div class="blab">🔬 Full Solution</div>
+    <div class="approach">For a projectile launched and landing at the same height, the horizontal range is set entirely by the launch speed and angle through $R=\dfrac{u^2\sin2\theta}{g}$.</div>
+    <div class="chunks">
+      <div class="chunk"><span class="det">The range for equal launch/landing height is</span>
+        <div class="disp">$$R=\frac{u^2\sin 2\theta}{g}.$$</div></div>
+      <div class="chunk"><span class="det">With $u=20\,\text{m/s}$ and $\theta=30^\circ$, the doubled angle is $2\theta=60^\circ$, and $\sin60^\circ=\tfrac{\sqrt3}{2}\approx0.866$.</span></div>
+      <div class="chunk"><span class="det">Substituting these values,</span>
+        <div class="disp">$$R=\frac{(20)^2\,(0.866)}{10}=\frac{400\times0.866}{10}=34.6\,\text{m}.$$</div></div>
+      <div class="chunk"><span class="det">So the range is $20\sqrt3\,\text{m}$, about $34.6\,\text{m}$.</span></div>
+    </div>
+    <div class="answer">Answer: <span class="g">$20\sqrt3\,\text{m}\approx34.6\,\text{m}$</span> — option B.</div>
+
+    <div class="wex">
+      <div class="wexlab">Worked examples — same method, new numbers</div>
+      <div class="ex">
+        <div class="exq"><b>1.</b> A stone is thrown at $30\,\text{m/s}$ at $45^\circ$ ($g=10\,\text{m/s}^2$). Find its range.</div>
+        <div class="exsol">
+          <div>At $45^\circ$ the doubled angle is $90^\circ$ and $\sin90^\circ=1$, so the range is maximal for the speed:</div>
+          <div class="disp">$$R=\frac{(30)^2\times1}{10}=\frac{900}{10}=90\,\text{m}.$$</div>
+        </div>
+        <div class="exans">Range $=90\,\text{m}$.</div>
+      </div>
+      <div class="ex">
+        <div class="exq"><b>2.</b> Two balls are thrown with equal speed at $20^\circ$ and $70^\circ$. Why are their ranges equal?</div>
+        <div class="exsol">
+          <div>Range depends on $\sin2\theta$. For $20^\circ$, $2\theta=40^\circ$; for $70^\circ$, $2\theta=140^\circ$. Since $\sin140^\circ=\sin(180^\circ-140^\circ)=\sin40^\circ$, both share the same $\sin2\theta$.</div>
+        </div>
+        <div class="exans">Equal ranges — complementary launch angles ($20^\circ+70^\circ=90^\circ$) always match.</div>
+      </div>
+    </div>
+  </div>
+</section>
+</div></body></html>

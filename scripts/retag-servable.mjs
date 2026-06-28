@@ -30,12 +30,18 @@ const H = { apikey: SK, Authorization: `Bearer ${SK}`, 'Content-Type': 'applicat
 const DRY_RUN = process.env.DRY_RUN !== 'false';
 const MODEL = process.env.MODEL || 'gpt-5.4';
 
-// ---- canonical AP chapter list per subject (from EXAM_TAXONOMY) ----
+// ---- canonical AP/EAPCET chapter list per subject (from EXAM_TAXONOMY) ----
+// Scope to the EAPCET_TOPICS block ONLY — this tool reconciles EAPCET servable rows,
+// and the file now also contains JEE_MAIN_TOPICS (a different syllabus) which must
+// NOT be merged in.
 function canonBySubject() {
   const txt = readFileSync(join(ROOT, 'packages/shared/src/lib/taxonomy.ts'), 'utf8');
+  const start = txt.indexOf('EAPCET_TOPICS: TopicDef[] = [');
+  if (start < 0) throw new Error('EAPCET_TOPICS not found in taxonomy.ts');
+  const block = txt.slice(start, txt.indexOf('\n];', start));
   const re = /subject:\s*["']([^"']+)["'],\s+label:\s*["']([^"']+)["']/g;
   const out = {}; let m;
-  while ((m = re.exec(txt))) { (out[m[1]] = out[m[1]] || new Set()).add(m[2]); }
+  while ((m = re.exec(block))) { (out[m[1]] = out[m[1]] || new Set()).add(m[2]); }
   return out;
 }
 const CANON = canonBySubject();

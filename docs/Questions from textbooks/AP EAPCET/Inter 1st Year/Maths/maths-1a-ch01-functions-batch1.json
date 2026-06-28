@@ -1,0 +1,2759 @@
+[
+  {
+    "questionText": "Let $A = \\{a, b, c\\}$ and $B = \\{1, 2\\}$. Find the total number of relations that can be defined from $A$ to $B$.",
+    "options": [
+      {
+        "text": "32"
+      },
+      {
+        "text": "64"
+      },
+      {
+        "text": "128"
+      },
+      {
+        "text": "8"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Easy",
+    "subtopic": "Cartesian Product and Relations",
+    "fsmTag": "relations-count-from-sets",
+    "concepts": [
+      "cartesian-product",
+      "relations",
+      "cardinality"
+    ],
+    "sourcePages": [
+      2,
+      3
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When you need to find the number of relations between two finite sets $A$ and $B$.",
+      "steps": [
+        "**Trigger:** Identify set sizes: $|A| = 3$ and $|B| = 2$.",
+        "**Action:** Calculate the size of the Cartesian product: $|A \\times B| = 3 \\times 2 = 6$. The number of relations is the size of the power set of $A \\times B$, which is $2^{|A \\times B|}$.",
+        "**Result:** $2^6 = 64$ — option B."
+      ],
+      "sanityCheck": "Check that $2^6 = 64$. A relation is any subset of the Cartesian product."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** We need to find the total number of relations from set $A$ to set $B$. A relation from $A$ to $B$ is defined as any subset of the Cartesian product $A \\times B$.",
+        "**EXTRACT:** The given sets are $A = \\{a, b, c\\}$ and $B = \\{1, 2\\}$. The number of elements in $A$ is $n(A) = 3$. The number of elements in $B$ is $n(B) = 2$.",
+        "**EXECUTE:** \n1. First, find the number of elements in the Cartesian product $A \\times B$:\n$$n(A \\times B) = n(A) \\times n(B) = 3 \\times 2 = 6$$\n2. The total number of subsets of a set with $k$ elements is given by $2^k$.\n3. Therefore, the total number of subsets of $A \\times B$ (which is the number of relations) is:\n$$2^{n(A \\times B)} = 2^6 = 64$$",
+        "**PROOF:** \n- Option B ($64$) is correct as derived above.\n- Option A ($32$) arises if a student mistakenly computes $2^{n(A) + n(B)} = 2^{3+2} = 2^5 = 32$.\n- Option C ($128$) arises if a student incorrectly counts $n(A \\times B) = 7$ and computes $2^7 = 128$.\n- Option D ($8$) arises if a student thinks the number of relations is just $2^{n(A)} = 2^3 = 8$."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Let $A$ and $B$ be two sets. If the Cartesian product $A \\times B = \\{(1, a), (1, b), (2, a), (2, b), (3, a), (3, b)\\}$, then find the sets $A$ and $B$.",
+    "options": [
+      {
+        "text": "$A = \\{1, 2, 3\\}$ and $B = \\{a, b\\}$"
+      },
+      {
+        "text": "$A = \\{a, b\\}$ and $B = \\{1, 2, 3\\}$"
+      },
+      {
+        "text": "$A = \\{1, 2\\}$ and $B = \\{a, b\\}$"
+      },
+      {
+        "text": "$A = \\{1, 2, 3\\}$ and $B = \\{a\\}$"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Easy",
+    "subtopic": "Cartesian Product and Relations",
+    "fsmTag": "cartesian-product-decoding",
+    "concepts": [
+      "cartesian-product",
+      "ordered-pairs",
+      "sets"
+    ],
+    "sourcePages": [
+      2
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When the Cartesian product $A \\times B$ is given explicitly.",
+      "steps": [
+        "**Trigger:** The set $A$ is the set of all first components, and the set $B$ is the set of all second components.",
+        "**Action:** Collect the first components: $\\{1, 2, 3\\}$. Collect the second components: $\\{a, b\\}$.",
+        "**Result:** $A = \\{1, 2, 3\\}$ and $B = \\{a, b\\}$ — option A."
+      ],
+      "sanityCheck": "Check that $\\{1, 2, 3\\} \\times \\{a, b\\}$ yields exactly the 6 given pairs."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** We need to find the sets $A$ and $B$ from the given Cartesian product $A \\times B$. By definition, $A \\times B = \\{(x, y) : x \\in A \\text{ and } y \\in B\\}$.",
+        "**EXTRACT:** The given Cartesian product is $A \\times B = \\{(1, a), (1, b), (2, a), (2, b), (3, a), (3, b)\\}$.",
+        "**EXECUTE:** \n1. Identify the set of first components of the ordered pairs in $A \\times B$:\n$$A = \\{1, 2, 3\\}$$\n2. Identify the set of second components of the ordered pairs in $A \\times B$:\n$$B = \\{a, b\\}$$\n3. Thus, $A = \\{1, 2, 3\\}$ and $B = \\{a, b\\}$.",
+        "**PROOF:** \n- Option A is correct as it accurately separates first and second coordinates.\n- Option B swaps the sets $A$ and $B$, which would correspond to $B \\times A$ instead.\n- Option C is missing $3 \\in A$, which would exclude $(3, a)$ and $(3, b)$ from the product.\n- Option D is missing $b \\in B$, which would exclude all pairs ending with $b$."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Let $A = \\{1, 2, 3, 4\\}$ and $B = \\{x, y\\}$. What is the number of relations from $A$ to $B$ that contain the ordered pair $(1, x)$ but do not contain the ordered pair $(4, y)$?",
+    "options": [
+      {
+        "text": "128"
+      },
+      {
+        "text": "32"
+      },
+      {
+        "text": "64"
+      },
+      {
+        "text": "256"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Medium",
+    "subtopic": "Cartesian Product and Relations",
+    "fsmTag": "constrained-relations-count",
+    "concepts": [
+      "relations",
+      "cartesian-product",
+      "combinatorics"
+    ],
+    "sourcePages": [
+      2,
+      3
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When finding the number of subsets of a set with fixed elements included and excluded.",
+      "steps": [
+        "**Trigger:** Total elements in $A \\times B$ is $4 \\times 2 = 8$.",
+        "**Action:** With 1 element forced to be included and 1 element forced to be excluded, the choice remains for the other $8 - 2 = 6$ elements.",
+        "**Result:** Number of relations is $2^6 = 64$ — option C."
+      ],
+      "sanityCheck": "Each of the 6 unconstrained elements has 2 choices (present or absent). $2^6 = 64$."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** We need to find the number of subsets of $A \\times B$ satisfying two constraints: $(1, x)$ must be in the subset, and $(4, y)$ must not be in the subset.",
+        "**EXTRACT:** Sets are $A = \\{1, 2, 3, 4\\}$ and $B = \\{x, y\\}$. Thus, the Cartesian product $A \\times B$ contains $4 \\times 2 = 8$ elements.",
+        "**EXECUTE:** \n1. The size of the Cartesian product is:\n$$|A \\times B| = |A| \\times |B| = 4 \\times 2 = 8$$\n2. A relation $R$ is a subset of $A \\times B$.\n3. We are given the constraints:\n   - $(1, x) \\in R$ (forced inclusion: 1 choice)\n   - $(4, y) \\notin R$ (forced exclusion: 1 choice)\n4. For each of the remaining $8 - 2 = 6$ elements in $A \\times B$, we can either include it in $R$ or exclude it (2 choices each).\n5. Thus, the number of such relations is:\n$$2^6 = 64$$",
+        "**PROOF:** \n- Option C ($64$) is correct as calculated.\n- Option A ($128$) arises if the student only applies one constraint (e.g., $(1,x) \\in R$), giving $2^7 = 128$.\n- Option B ($32$) arises if the student mistakenly subtracts an extra element, computing $2^5 = 32$.\n- Option D ($256$) is the total number of relations $2^8 = 256$, ignoring both constraints."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Let $A = \\{1, 3\\}$, $B = \\{3, 5\\}$, and $C = \\{5, 7\\}$. Find the number of elements in the set $(A \\times B) \\cap (B \\times C)$.",
+    "options": [
+      {
+        "text": "0"
+      },
+      {
+        "text": "4"
+      },
+      {
+        "text": "2"
+      },
+      {
+        "text": "1"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Medium",
+    "subtopic": "Cartesian Product and Relations",
+    "fsmTag": "cartesian-product-intersection",
+    "concepts": [
+      "cartesian-product",
+      "set-intersection",
+      "cardinality"
+    ],
+    "sourcePages": [
+      2
+    ],
+    "timeTargets": {
+      "ap_eapcet": 50,
+      "ts_eapcet": 50,
+      "jee_main": 75
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When finding the intersection of two Cartesian products $(A \\times B) \\cap (B \\times C)$.",
+      "steps": [
+        "**Trigger:** Use the set identity: $(A \\times B) \\cap (B \\times C) = (A \\cap B) \\times (B \\cap C)$.",
+        "**Action:** Calculate the intersections: $A \\cap B = \\{3\\}$ (size 1) and $B \\cap C = \\{5\\}$ (size 1). Thus, the intersection is $\\{3\\} \\times \\{5\\} = \\{(3, 5)\\}$.",
+        "**Result:** The size is $1 \\times 1 = 1$ — option D."
+      ],
+      "sanityCheck": "Check manually: $A \\times B = \\{(1,3), (1,5), (3,3), (3,5)\\}$. $B \\times C = \\{(3,5), (3,7), (5,5), (5,7)\\}$. The only common pair is $(3,5)$."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** We need to find the cardinality of the intersection of two Cartesian products: $(A \\times B) \\cap (B \\times C)$. We can use the set theory identity: $(X \\times Y) \\cap (Z \\times W) = (X \\cap Z) \\times (Y \\cap W)$.",
+        "**EXTRACT:** The given sets are $A = \\{1, 3\\}$, $B = \\{3, 5\\}$, and $C = \\{5, 7\\}$.",
+        "**EXECUTE:** \n1. Apply the set identity:\n$$(A \\times B) \\cap (B \\times C) = (A \\cap B) \\times (B \\cap C)$$\n2. Compute the intersections of the component sets:\n   - $A \\cap B = \\{1, 3\\} \\cap \\{3, 5\\} = \\{3\\}$\n   - $B \\cap C = \\{3, 5\\} \\cap \\{5, 7\\} = \\{5\\}$\n3. Compute the Cartesian product of these intersections:\n   - $(A \\cap B) \\times (B \\cap C) = \\{3\\} \\times \\{5\\} = \\{(3, 5)\\}$\n4. The number of elements in the resulting set is exactly 1.",
+        "**PROOF:** \n- Option D ($1$) is correct as shown.\n- Option A ($0$) arises if the student falsely assumes the intersection is empty because $A$ and $C$ are disjoint.\n- Option B ($4$) arises if the student computes $|A| \\times |C| = 2 \\times 2 = 4$ by mistake.\n- Option C ($2$) arises if the student adds the sizes of the intersections $|A \\cap B| + |B \\cap C| = 1 + 1 = 2$ instead of multiplying."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Let $A = \\{x, y, z\\}$ and $B = \\{1, 2\\}$. Which of the following relations represents a function from $A$ to $B$?",
+    "options": [
+      {
+        "text": "$\\{(x, 1), (y, 2)\\}$"
+      },
+      {
+        "text": "$\\{(x, 1), (y, 2), (z, 1), (z, 2)\\}$"
+      },
+      {
+        "text": "$\\{(x, 1), (y, 2), (z, 1)\\}$"
+      },
+      {
+        "text": "$\\{(x, 1), (x, 2), (y, 1), (z, 2)\\}$"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Easy",
+    "subtopic": "Types of Functions",
+    "fsmTag": "function-definition-check",
+    "concepts": [
+      "functions",
+      "relations",
+      "ordered-pairs"
+    ],
+    "sourcePages": [
+      4
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When identifying which relation is a function.",
+      "steps": [
+        "**Trigger:** A relation $f$ from $A$ to $B$ is a function if every element $a \\in A$ appears as the first component in exactly one ordered pair in $f$.",
+        "**Action:** Check each option. Option C has first components $x, y, z$ each appearing exactly once.",
+        "**Result:** $\\{(x, 1), (y, 2), (z, 1)\\}$ is a function — option C."
+      ],
+      "sanityCheck": "Verify that all elements of the domain $\\{x, y, z\\}$ are mapped, and each maps to only one element."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** We need to identify which of the given relations is a function. A relation $f \\subseteq A \\times B$ is a function from $A$ to $B$ if for every $a \\in A$, there exists a unique $b \\in B$ such that $(a, b) \\in f$.",
+        "**EXTRACT:** The domain is $A = \\{x, y, z\\}$ and the codomain is $B = \\{1, 2\\}$. Each element in $A$ must appear as the first coordinate exactly once.",
+        "**EXECUTE:** \n1. Inspect option A: $\\{(x, 1), (y, 2)\\}$. The element $z \\in A$ has no image. Thus, it is not a function.\n2. Inspect option B: $\\{(x, 1), (y, 2), (z, 1), (z, 2)\\}$. The element $z \\in A$ is mapped to two distinct elements $1$ and $2$. Thus, it is not a function.\n3. Inspect option C: $\\{(x, 1), (y, 2), (z, 1)\\}$. The elements $x$, $y$, and $z$ each appear as the first component of an ordered pair exactly once. Thus, it is a function.\n4. Inspect option D: $\\{(x, 1), (x, 2), (y, 1), (z, 2)\\}$. The element $x \\in A$ is mapped to two distinct elements $1$ and $2$. Thus, it is not a function.",
+        "**PROOF:** \n- Option C is a function because it maps all elements of the domain uniquely.\n- Option A fails because $z$ is not mapped.\n- Option B fails because $(z,1)$ and $(z,2)$ exist (non-unique mapping).\n- Option D fails because $(x,1)$ and $(x,2)$ exist (non-unique mapping)."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Let $f: R \\to R$ be a function defined by $f(x) = 3x - 5$ for all $x \\in R$. Which of the following statements is true about $f$?",
+    "options": [
+      {
+        "text": "$f$ is injective but not surjective"
+      },
+      {
+        "text": "$f$ is surjective but not injective"
+      },
+      {
+        "text": "$f$ is neither injective nor surjective"
+      },
+      {
+        "text": "$f$ is both injective and surjective (bijection)"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Easy",
+    "subtopic": "Types of Functions",
+    "fsmTag": "linear-function-classification",
+    "concepts": [
+      "injective-function",
+      "surjective-function",
+      "bijective-function"
+    ],
+    "sourcePages": [
+      5,
+      7
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When analyzing a linear function $f(x) = ax + b$ (with $a \\neq 0$) defined on $R$.",
+      "steps": [
+        "**Trigger:** A linear function with non-zero slope defined on $R$ is always a straight line stretching from $-\\infty$ to $\\infty$.",
+        "**Action:** Since the slope is 3 (non-zero), it is strictly increasing (hence injective) and covers all real numbers (hence surjective).",
+        "**Result:** It is a bijection — option D."
+      ],
+      "sanityCheck": "Check $f(x_1) = f(x_2) \\implies 3x_1-5 = 3x_2-5 \\implies x_1 = x_2$. For surjectivity, $y = 3x-5 \\implies x = (y+5)/3 \\in R$."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** We need to classify the function $f(x) = 3x - 5$ from $R$ to $R$ in terms of injectivity (one-to-one) and surjectivity (onto).",
+        "**EXTRACT:** The function is $f: R \\to R$ with $f(x) = 3x - 5$. The domain is $R$ and the codomain is $R$.",
+        "**EXECUTE:** \n1. **Injectivity:** Let $x_1, x_2 \\in R$ such that $f(x_1) = f(x_2)$.\n$$3x_1 - 5 = 3x_2 - 5 \\implies 3x_1 = 3x_2 \\implies x_1 = x_2$$\nSince $f(x_1) = f(x_2) \\implies x_1 = x_2$, the function $f$ is injective.\n2. **Surjectivity:** Let $y \\in R$ (codomain). We must find $x \\in R$ (domain) such that $f(x) = y$.\n$$3x - 5 = y \\implies 3x = y + 5 \\implies x = \\frac{y+5}{3}$$\nSince $y \\in R$, $x = \\frac{y+5}{3}$ is also a real number. Thus, for every $y$, there exists a pre-image $x \\in R$. Hence, the function $f$ is surjective.\n3. Since $f$ is both injective and surjective, it is a bijection.",
+        "**PROOF:** \n- Option D is correct because $f$ is verified to be both one-to-one and onto.\n- Option A is incorrect because $f$ is surjective (e.g., $f(x) = 0$ is solved by $x = 5/3 \\in R$).\n- Option B is incorrect because $f$ is injective ($3x_1-5 = 3x_2-5 \\implies x_1=x_2$).\n- Option C is incorrect as both properties hold."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Let $f: Z \\to Z$ be a function defined by $f(x) = x^2$ for all $x \\in Z$ (the set of all integers). Which of the following correctly describes $f$?",
+    "options": [
+      {
+        "text": "$f$ is injective but not surjective"
+      },
+      {
+        "text": "$f$ is surjective but not injective"
+      },
+      {
+        "text": "$f$ is neither injective nor surjective"
+      },
+      {
+        "text": "$f$ is bijective"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Medium",
+    "subtopic": "Types of Functions",
+    "fsmTag": "quadratic-integer-classification",
+    "concepts": [
+      "injective-function",
+      "surjective-function",
+      "integers"
+    ],
+    "sourcePages": [
+      5,
+      7
+    ],
+    "timeTargets": {
+      "ap_eapcet": 45,
+      "ts_eapcet": 45,
+      "jee_main": 60
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When the function is $x^2$ defined on $Z$.",
+      "steps": [
+        "**Trigger:** Observe that $f(1) = f(-1) = 1$, which disproves injectivity. Note that $f(x) = x^2 \\ge 0$ for all integers, which means negative integers like $-1$ have no pre-image.",
+        "**Action:** Identify that both injectivity and surjectivity fail.",
+        "**Result:** Neither injective nor surjective — option C."
+      ],
+      "sanityCheck": "Test negative values: $f(-2) = f(2) = 4$ (not injective). $f(x) = -2$ has no integer solution (not surjective)."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** We need to classify the function $f(x) = x^2$ on the domain and codomain of integers $Z$.",
+        "**EXTRACT:** The function is $f: Z \\to Z$ with $f(x) = x^2$. The domain is $Z = \\{\\dots, -2, -1, 0, 1, 2, \\dots\\}$ and the codomain is $Z$.",
+        "**EXECUTE:** \n1. **Injectivity:** Let $x_1 = 1, x_2 = -1$. Both are integers. Compute their images:\n$$f(1) = 1^2 = 1$$\n$$f(-1) = (-1)^2 = 1$$\nSince $f(1) = f(-1)$ but $1 \\neq -1$, $f$ is not injective.\n2. **Surjectivity:** Let $y = -2 \\in Z$ (codomain). For $f$ to be surjective, there must exist $x \\in Z$ such that $f(x) = y \\implies x^2 = -2$. The square of any real number (and thus any integer) is non-negative, so $x^2 = -2$ has no solution in $Z$. Therefore, $-2$ has no pre-image. Hence, $f$ is not surjective.\n3. Since both injectivity and surjectivity fail, $f$ is neither injective nor surjective.",
+        "**PROOF:** \n- Option C is correct as both properties fail.\n- Option A is incorrect because $f$ is not injective ($f(1) = f(-1)$).\n- Option B is incorrect because $f$ is not surjective (negative numbers are missed).\n- Option D is incorrect because the function is not bijective."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Let $f: [0, \\infty) \\to [0, \\infty)$ be a function defined by $f(x) = x^2$ for all $x \\ge 0$. Which of the following correctly describes $f$?",
+    "options": [
+      {
+        "text": "$f$ is injective but not surjective"
+      },
+      {
+        "text": "$f$ is surjective but not injective"
+      },
+      {
+        "text": "$f$ is neither injective nor surjective"
+      },
+      {
+        "text": "$f$ is both injective and surjective (bijection)"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Medium",
+    "subtopic": "Types of Functions",
+    "fsmTag": "quadratic-nonnegative-real-classification",
+    "concepts": [
+      "injective-function",
+      "surjective-function",
+      "bijective-function"
+    ],
+    "sourcePages": [
+      5,
+      7,
+      8
+    ],
+    "timeTargets": {
+      "ap_eapcet": 45,
+      "ts_eapcet": 45,
+      "jee_main": 60
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When the quadratic function is defined on non-negative real numbers.",
+      "steps": [
+        "**Trigger:** On $[0, \\infty)$, $x^2$ is strictly increasing, which guarantees injectivity.",
+        "**Action:** Every non-negative real number $y$ has a unique non-negative square root $\\sqrt{y}$, which guarantees surjectivity.",
+        "**Result:** It is both injective and surjective — option D."
+      ],
+      "sanityCheck": "Compare with $f: R \\to R$ which is neither. Restricting domain and codomain to non-negative reals makes it bijective."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** We need to classify the function $f(x) = x^2$ defined on the non-negative real numbers $[0, \\infty)$.",
+        "**EXTRACT:** $f: [0, \\infty) \\to [0, \\infty)$ with $f(x) = x^2$.",
+        "**EXECUTE:** \n1. **Injectivity:** Let $x_1, x_2 \\in [0, \\infty)$ such that $f(x_1) = f(x_2)$:\n$$x_1^2 = x_2^2 \\implies x_1^2 - x_2^2 = 0 \\implies (x_1-x_2)(x_1+x_2) = 0$$\nSince $x_1, x_2 \\ge 0$, the sum $x_1+x_2$ can only be 0 if both $x_1 = 0$ and $x_2 = 0$. If $x_1+x_2 \\neq 0$, we must have $x_1-x_2 = 0 \\implies x_1 = x_2$. In either case, $x_1 = x_2$. Thus, $f$ is injective.\n2. **Surjectivity:** Let $y \\in [0, \\infty)$ (codomain). We must find $x \\in [0, \\infty)$ (domain) such that $f(x) = y$:\n$$x^2 = y \\implies x = \\sqrt{y}$$\nSince $y \\ge 0$, $\\sqrt{y}$ is a well-defined real number and $\\sqrt{y} \\ge 0$. Thus, $x = \\sqrt{y} \\in [0, \\infty)$. This means every element in the codomain has a pre-image in the domain. Hence, $f$ is surjective.\n3. Since $f$ is both injective and surjective, it is bijective.",
+        "**PROOF:** \n- Option D is correct as shown.\n- Option A is incorrect because surjectivity holds.\n- Option B is incorrect because injectivity holds.\n- Option C is incorrect because both properties hold."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Let $f: R \\to R$ be a bijective function defined by $f(x) = \\log_a(x + \\sqrt{x^2 + 1})$ for all $x \\in R$, where $a > 1$. Find the inverse function $f^{-1}(x)$.",
+    "options": [
+      {
+        "text": "$\\frac{a^x + a^{-x}}{2}$"
+      },
+      {
+        "text": "$\\frac{a^x - a^{-x}}{2}$"
+      },
+      {
+        "text": "$a^x - a^{-x}$"
+      },
+      {
+        "text": "$\\frac{a^{-x} - a^x}{2}$"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Hard",
+    "subtopic": "Inverse Functions",
+    "fsmTag": "inverse-log-hyperbolic-algebra",
+    "concepts": [
+      "inverse-function",
+      "logarithmic-functions"
+    ],
+    "sourcePages": [
+      27,
+      34
+    ],
+    "timeTargets": {
+      "ap_eapcet": 90,
+      "ts_eapcet": 90,
+      "jee_main": 135
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When finding the inverse of the logarithmic function $f(x) = \\log_a(x + \\sqrt{x^2+1})$.",
+      "steps": [
+        "**Trigger:** Notice that $y = \\log_a(x + \\sqrt{x^2+1}) \\implies a^y = x + \\sqrt{x^2+1}$.",
+        "**Action:** Use the algebraic identity $(\\sqrt{x^2+1} + x)(\\sqrt{x^2+1} - x) = 1$ to get $a^{-y} = \\sqrt{x^2+1} - x$. Subtract this from the first equation: $a^y - a^{-y} = 2x \\implies x = \\frac{a^y - a^{-y}}{2}$.",
+        "**Result:** $f^{-1}(x) = \\frac{a^x - a^{-x}}{2}$ — option B."
+      ],
+      "sanityCheck": "Let $a=e$. Then $f(x) = \\sinh^{-1}(x)$ and $f^{-1}(x) = \\sinh(x) = \\frac{e^x - e^{-x}}{2}$."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** We need to find the inverse function $f^{-1}(x)$ for the bijective function $f(x) = \\log_a(x + \\sqrt{x^2 + 1})$. We do this by setting $y = f(x)$ and solving for $x$ in terms of $y$.",
+        "**EXTRACT:** The function is $y = \\log_a(x + \\sqrt{x^2 + 1})$ with $a > 1$. The domain is $R$ and the codomain is $R$.",
+        "**EXECUTE:** \n1. Write the equation in exponential form:\n$$a^y = x + \\sqrt{x^2 + 1}$$\n2. Find the reciprocal of both sides:\n$$\\frac{1}{a^y} = \\frac{1}{x + \\sqrt{x^2 + 1}}$$\nRationalize the denominator on the right-hand side by multiplying the numerator and denominator by $\\sqrt{x^2+1} - x$:\n$$a^{-y} = \\frac{\\sqrt{x^2 + 1} - x}{(\\sqrt{x^2 + 1} + x)(\\sqrt{x^2 + 1} - x)} = \\frac{\\sqrt{x^2 + 1} - x}{(x^2 + 1) - x^2} = \\sqrt{x^2 + 1} - x$$\n3. Now we have two equations:\n- (Eq. 1) $\\sqrt{x^2 + 1} + x = a^y$\n- (Eq. 2) $\\sqrt{x^2 + 1} - x = a^{-y}$\n4. Subtract (Eq. 2) from (Eq. 1) to eliminate the radical term:\n$$(\\sqrt{x^2 + 1} + x) - (\\sqrt{x^2 + 1} - x) = a^y - a^{-y}$$\n$$2x = a^y - a^{-y} \\implies x = \\frac{a^y - a^{-y}}{2}$$\n5. Swap variables to express the inverse function in terms of $x$:\n$$f^{-1}(x) = \\frac{a^x - a^{-x}}{2}$$",
+        "**PROOF:** \n- Option B ($\\frac{a^x - a^{-x}}{2}$) is correct as derived above.\n- Option A ($\\frac{a^x + a^{-x}}{2}$) is incorrect because it is obtained if the two equations are added instead of subtracted, which would give $\\sqrt{x^2+1} = \\frac{a^y + a^{-y}}{2}$, not $x$.\n- Option C ($a^x - a^{-x}$) is incorrect because it misses the division by 2.\n- Option D ($\\frac{a^{-x} - a^x}{2}$) is incorrect due to a sign reversal."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Let $f: R \\to R$ be a function defined by $f(x) = \\begin{cases} x + 2 & \\text{if } x > 2 \\\\ 5x - 2 & \\text{if } x \\le 2 \\end{cases}$. Determine which of the following is correct.",
+    "options": [
+      {
+        "text": "$f$ is injective but not surjective"
+      },
+      {
+        "text": "$f$ is surjective but not injective"
+      },
+      {
+        "text": "$f$ is bijective"
+      },
+      {
+        "text": "$f$ is neither injective nor surjective"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Medium",
+    "subtopic": "Types of Functions",
+    "fsmTag": "piecewise-function-classification",
+    "concepts": [
+      "injective-function",
+      "surjective-function",
+      "piecewise-functions"
+    ],
+    "sourcePages": [
+      11
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When analyzing piecewise functions for common output values.",
+      "steps": [
+        "**Trigger:** Check if the ranges of the two branches overlap.",
+        "**Action:** The first branch $x+2$ for $x > 2$ covers $(4, \\infty)$. The second branch $5x-2$ for $x \\le 2$ covers $(-\\infty, 8]$. Since their ranges overlap (e.g., value $5$ is in both), it cannot be injective. But their union is $(-\\infty, \\infty) = R$, so it is surjective.",
+        "**Result:** Surjective but not injective — option B."
+      ],
+      "sanityCheck": "Find two inputs mapping to 5: $x = 3 > 2 \\implies f(3) = 3+2=5$. $x = 1.4 \\le 2 \\implies f(1.4) = 5(1.4)-2 = 5$. Thus, not injective."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** We need to classify the piecewise function $f(x)$ in terms of injectivity and surjectivity on $R$.",
+        "**EXTRACT:** The function is $f(x) = x + 2$ for $x > 2$, and $5x - 2$ for $x \\le 2$.",
+        "**EXECUTE:** \n1. **Injectivity Check:** Let's see if we can find two different values of $x$ that yield the same output $y$. Let's set $y = 5$.\n   - If $x > 2$, $x + 2 = 5 \\implies x = 3 > 2$. Indeed, $f(3) = 5$.\n   - If $x \\le 2$, $5x - 2 = 5 \\implies 5x = 7 \\implies x = 1.4 \\le 2$. Indeed, $f(1.4) = 5$.\n   Since $f(3) = f(1.4) = 5$ but $3 \\neq 1.4$, the function is not injective.\n2. **Surjectivity Check:** Let $y \\in R$ (codomain).\n   - If $y > 2$, we can choose $x = y \\in R$. Since $y > 2$, this falls under the first branch $x > 2$, yielding $f(x) = x = y$. (Wait, if $x > 2$, the output is $x+2$. Let's set $x+2 = y \\implies x = y-2$. For $x > 2$, we need $y-2 > 2 \\implies y > 4$. So for $y > 4$, we can use $x = y-2$).\n   - If $y \\le 4$, we can set $5x - 2 = y \\implies 5x = y+2 \\implies x = \\frac{y+2}{5}$. For this to be in the second branch ($x \\le 2$), we need $\\frac{y+2}{5} \\le 2 \\implies y+2 \\le 10 \\implies y \\le 8$. Since $y \\le 4$ is entirely contained within $y \\le 8$, we can find a pre-image $x = \\frac{y+2}{5}$ for any $y \\le 4$.\n   - In fact, the union of the ranges of the two branches is:\n     - Branch 1 range: $x > 2 \\implies x+2 > 4 \\implies (4, \\infty)$\n     - Branch 2 range: $x \\le 2 \\implies 5x-2 \\le 8 \\implies (-\\infty, 8]$\n     - The union is $(4, \\infty) \\cup (-\\infty, 8] = R$.\n   Since every real number $y$ is in the range, the function is surjective.",
+        "**PROOF:** \n- Option B is correct as $f$ is surjective but not injective.\n- Option A is incorrect because injectivity fails ($f(3) = f(1.4) = 5$).\n- Option C is incorrect because it is not injective, so it cannot be a bijection.\n- Option D is incorrect because $f$ is surjective."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Let $f: R \\to R$ be a function defined by $f(x) = \\frac{e^{|x|} - e^{-x}}{e^{|x|} + e^{-x}}$ for all $x \\in R$. Which of the following correctly describes $f$?",
+    "options": [
+      {
+        "text": "$f$ is injective but not surjective"
+      },
+      {
+        "text": "$f$ is surjective but not injective"
+      },
+      {
+        "text": "$f$ is bijective"
+      },
+      {
+        "text": "$f$ is neither injective nor surjective"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Hard",
+    "subtopic": "Types of Functions",
+    "fsmTag": "exponential-modulus-rational-classification",
+    "concepts": [
+      "injective-function",
+      "surjective-function",
+      "modulus-function"
+    ],
+    "sourcePages": [
+      10,
+      11
+    ],
+    "timeTargets": {
+      "ap_eapcet": 80,
+      "ts_eapcet": 80,
+      "jee_main": 120
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When the function is defined by $f(x) = \\frac{e^{|x|} - e^{-x}}{e^{|x|} + e^{-x}}$.",
+      "steps": [
+        "**Trigger:** Evaluate the function for $x < 0$.",
+        "**Action:** For $x < 0$, $|x| = -x \\implies f(x) = \\frac{e^{-x} - e^{-x}}{e^{-x} + e^{-x}} = 0$. Since $f(x) = 0$ for all negative inputs (e.g., $f(-1) = f(-2) = 0$), the function is not injective. Since the output is never negative, it is not surjective.",
+        "**Result:** Neither injective nor surjective — option D."
+      ],
+      "sanityCheck": "Check values: $f(-1) = 0$ and $f(-2) = 0$. Since range is $[0, 1)$, negative numbers have no pre-images."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** We need to classify the function $f(x) = \\frac{e^{|x|} - e^{-x}}{e^{|x|} + e^{-x}}$ defined from $R$ to $R$. We will check branch properties by removing the absolute value.",
+        "**EXTRACT:** The function is $f: R \\to R$ with $f(x) = \\frac{e^{|x|} - e^{-x}}{e^{|x|} + e^{-x}}$.",
+        "**EXECUTE:** \n1. **Analyze by cases based on $|x|$:**\n   - **Case 1: $x \\ge 0$**\n     Here, $|x| = x$, so:\n$$f(x) = \\frac{e^x - e^{-x}}{e^x + e^{-x}} = \\tanh x$$\n     Since $x \\ge 0$, $e^x \\ge e^{-x} \\implies e^x - e^{-x} \\ge 0$. Thus, $f(x) \\in [0, 1)$.\n   - **Case 2: $x < 0$**\n     Here, $|x| = -x$, so:\n$$f(x) = \\frac{e^{-x} - e^{-x}}{e^{-x} + e^{-x}} = \\frac{0}{2e^{-x}} = 0$$\n2. **Injectivity Check:** For all $x < 0$, $f(x) = 0$. Thus, $f(-1) = 0$ and $f(-2) = 0$. Since multiple distinct inputs map to the same output $0$, the function is not injective.\n3. **Surjectivity Check:** The range of the function is $[0, 1)$ (since for $x < 0$, $f(x) = 0$, and for $x \\ge 0$, $f(x) \\in [0, 1)$). The codomain is $R$. Since the range $[0, 1)$ is a proper subset of $R$, the function is not surjective. For example, there is no $x \\in R$ such that $f(x) = -1$ or $f(x) = 1$.",
+        "**PROOF:** \n- Option D is correct as $f$ is neither injective nor surjective.\n- Option A is incorrect because injectivity fails ($f(-1) = f(-2) = 0$).\n- Option B is incorrect because surjectivity fails (no negative output values exist).\n- Option C is incorrect because both properties fail."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Let $A$ and $B$ be finite sets with $|A| = 3$ and $|B| = 5$. What is the number of injective functions that can be defined from $A$ to $B$?",
+    "options": [
+      {
+        "text": "15"
+      },
+      {
+        "text": "60"
+      },
+      {
+        "text": "125"
+      },
+      {
+        "text": "243"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Easy",
+    "subtopic": "Counting and Equality of Functions",
+    "fsmTag": "counting-injections",
+    "concepts": [
+      "injective-function",
+      "permutations",
+      "cardinality"
+    ],
+    "sourcePages": [
+      9,
+      10
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When finding the number of injections from a set of size $m$ to a set of size $n$ (where $n \\ge m$).",
+      "steps": [
+        "**Trigger:** Identify set sizes: $m = 3$ and $n = 5$.",
+        "**Action:** Use the formula for the number of injections: $P(n, m) = \\frac{n!}{(n-m)!}$.",
+        "**Result:** $P(5, 3) = 5 \\times 4 \\times 3 = 60$ — option B."
+      ],
+      "sanityCheck": "Check that the number of injections is less than the total number of functions ($5^3 = 125$)."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** We need to find the number of injective (one-to-one) functions from a set $A$ of size $m = 3$ to a set $B$ of size $n = 5$.",
+        "**EXTRACT:** $|A| = 3$ and $|B| = 5$. We require the number of injections.",
+        "**EXECUTE:** \n1. An injection requires each of the 3 elements in $A$ to map to a distinct element in $B$.\n2. The number of such injections is given by the permutation formula:\n$${}^n P_m = \\frac{n!}{(n-m)!}$$\nwhere $n = 5$ (codomain size) and $m = 3$ (domain size).\n3. Substitute the values:\n$${}^5 P_3 = \\frac{5!}{(5-3)!} = \\frac{5!}{2!} = 5 \\times 4 \\times 3 = 60$$",
+        "**PROOF:** \n- Option B ($60$) is correct as calculated.\n- Option A ($15$) arises if a student mistakenly computes $n \\times m = 5 \\times 3 = 15$.\n- Option C ($125$) is the total number of functions from $A$ to $B$, which is $n^m = 5^3 = 125$.\n- Option D ($243$) is the total number of functions from $B$ to $A$, which is $m^n = 3^5 = 243$."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Let $A$ and $B$ be finite sets with $|A| = 5$ and $|B| = 2$. What is the number of injective functions that can be defined from $A$ to $B$?",
+    "options": [
+      {
+        "text": "0"
+      },
+      {
+        "text": "10"
+      },
+      {
+        "text": "32"
+      },
+      {
+        "text": "25"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Easy",
+    "subtopic": "Counting and Equality of Functions",
+    "fsmTag": "counting-injections-pigeonhole",
+    "concepts": [
+      "injective-function",
+      "pigeonhole-principle",
+      "cardinality"
+    ],
+    "sourcePages": [
+      9,
+      10
+    ],
+    "timeTargets": {
+      "ap_eapcet": 15,
+      "ts_eapcet": 15,
+      "jee_main": 20
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When the size of the domain is strictly greater than the size of the codomain.",
+      "steps": [
+        "**Trigger:** Observe that $|A| = 5 > |B| = 2$.",
+        "**Action:** By the Pigeonhole Principle, since we have more domain elements than codomain elements, at least two domain elements must map to the same codomain element.",
+        "**Result:** 0 injections are possible — option A."
+      ],
+      "sanityCheck": "You cannot map 5 different items to 2 spots without repeating at least one spot."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** We need to find the number of injective functions from $A$ to $B$ when $|A| = 5$ and $|B| = 2$.",
+        "**EXTRACT:** $m = |A| = 5$ and $n = |B| = 2$. We want the number of injections.",
+        "**EXECUTE:** \n1. An injection (one-to-one function) requires that distinct elements in the domain map to distinct elements in the codomain.\n2. By the Pigeonhole Principle, if we attempt to map 5 elements of $A$ to 2 elements of $B$, at least one element in $B$ must be the image of more than one element in $A$.\n3. Therefore, no injective function can be constructed. The number of such functions is 0.\n4. Mathematically, the formula $P(n, m) = {}^n P_m$ is only defined when $n \\ge m$. For $n < m$, the number of injections is $0$.",
+        "**PROOF:** \n- Option A ($0$) is correct as shown.\n- Option B ($10$) is a distractor from $m \\times n = 5 \\times 2 = 10$.\n- Option C ($32$) is $2^5$, the total number of functions from $A$ to $B$.\n- Option D ($25$) is $5^2 = 25$."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "On what domain are the functions $f(x) = x^2 - 4x$ and $g(x) = -x - 2$ equal?",
+    "options": [
+      {
+        "text": "$\\{1, 2\\}$"
+      },
+      {
+        "text": "$\\{-1, -2\\}$"
+      },
+      {
+        "text": "$\\{1, -2\\}$"
+      },
+      {
+        "text": "$\\{-1, 2\\}$"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Medium",
+    "subtopic": "Counting and Equality of Functions",
+    "fsmTag": "equality-of-functions-domain",
+    "concepts": [
+      "equality-of-functions",
+      "quadratic-equations",
+      "domain-of-function"
+    ],
+    "sourcePages": [
+      9
+    ],
+    "timeTargets": {
+      "ap_eapcet": 45,
+      "ts_eapcet": 45,
+      "jee_main": 60
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When finding the domain where $f(x) = g(x)$.",
+      "steps": [
+        "**Trigger:** Set $f(x) = g(x) \\implies x^2 - 4x = -x - 2$.",
+        "**Action:** Simplify to $x^2 - 3x + 2 = 0$. Solve to get $x = 1, 2$.",
+        "**Result:** Domain is $\\{1, 2\\}$ — option A."
+      ],
+      "sanityCheck": "Check $x = 1$: $f(1) = -3, g(1) = -3$. Check $x = 2$: $f(2) = -4, g(2) = -4$. Both match."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** We need to find the domain on which the functions $f(x) = x^2 - 4x$ and $g(x) = -x - 2$ are equal. Two functions are equal on a domain $D$ if $f(x) = g(x)$ for all $x \\in D$.",
+        "**EXTRACT:** $f(x) = x^2 - 4x$ and $g(x) = -x - 2$.",
+        "**EXECUTE:** \n1. Set $f(x) = g(x)$:\n$$x^2 - 4x = -x - 2$$\n2. Move all terms to one side to form a quadratic equation:\n$$x^2 - 3x + 2 = 0$$\n3. Factor the quadratic equation:\n$$(x - 1)(x - 2) = 0$$\n4. The roots are $x = 1$ and $x = 2$.\n5. Therefore, the functions are equal on the domain $\\{1, 2\\}$.",
+        "**PROOF:** \n- Option A ($\\{1, 2\\}$) is correct as shown.\n- Option B ($\\{-1, -2\\}$) arises from a factorization sign error: $(x+1)(x+2) = 0 \\implies x = -1, -2$.\n- Option C ($\\{1, -2\\}$) arises from mixing up signs: $(x-1)(x+2) = 0$.\n- Option D ($\\{-1, 2\\}$) arises from mixing up signs: $(x+1)(x-2) = 0$."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Let $A$ and $B$ be finite sets with $|A| = 3$ and $|B| = 2$. Find the number of surjective functions that can be defined from $A$ to $B$.",
+    "options": [
+      {
+        "text": "8"
+      },
+      {
+        "text": "6"
+      },
+      {
+        "text": "4"
+      },
+      {
+        "text": "2"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Medium",
+    "subtopic": "Counting and Equality of Functions",
+    "fsmTag": "counting-surjections",
+    "concepts": [
+      "surjective-function",
+      "inclusion-exclusion",
+      "cardinality"
+    ],
+    "sourcePages": [
+      9,
+      10
+    ],
+    "timeTargets": {
+      "ap_eapcet": 45,
+      "ts_eapcet": 45,
+      "jee_main": 60
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When the codomain has size 2.",
+      "steps": [
+        "**Trigger:** Total functions is $2^3 = 8$.",
+        "**Action:** The only non-surjective functions are the constant functions mapping all elements of $A$ to a single element of $B$. There are exactly 2 such functions.",
+        "**Result:** Number of surjections is $8 - 2 = 6$ — option B."
+      ],
+      "sanityCheck": "Total functions = 8. Constants = 2. Surjections = 8 - 2 = 6."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** We need to find the number of surjective functions from a set $A$ of size $m = 3$ to a set $B$ of size $n = 2$.",
+        "**EXTRACT:** $m = 3$ and $n = 2$. We want the number of surjections.",
+        "**EXECUTE:** \n1. Calculate the total number of functions from $A$ to $B$:\n$$n^m = 2^3 = 8$$\n2. The only non-surjective functions are constant functions where the entire domain maps to a single element of $B$. Since $|B| = 2$, there are exactly 2 constant functions.\n3. Subtract the constant functions from the total:\n$$\\text{Surjections} = 8 - 2 = 6$$",
+        "**PROOF:** \n- Option B ($6$) is correct as calculated.\n- Option A ($8$) is the total number of functions, ignoring the surjectivity constraint.\n- Option C ($4$) is a distractor.\n- Option D ($2$) is the number of constant functions."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Let $A$ and $B$ be finite sets with $|A| = 6$ and $|B| = 3$. Find the number of surjective functions that can be defined from $A$ to $B$.",
+    "options": [
+      {
+        "text": "537"
+      },
+      {
+        "text": "729"
+      },
+      {
+        "text": "540"
+      },
+      {
+        "text": "90"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Hard",
+    "subtopic": "Counting and Equality of Functions",
+    "fsmTag": "counting-surjections-formula",
+    "concepts": [
+      "surjective-function",
+      "inclusion-exclusion",
+      "cardinality"
+    ],
+    "sourcePages": [
+      9,
+      10
+    ],
+    "timeTargets": {
+      "ap_eapcet": 90,
+      "ts_eapcet": 90,
+      "jee_main": 135
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When calculating surjections from a set of size 6 to a set of size 3.",
+      "steps": [
+        "**Trigger:** Apply the inclusion-exclusion formula: $n^m - \\binom{n}{1}(n-1)^m + \\binom{n}{2}(n-2)^m$.",
+        "**Action:** With $m=6$ and $n=3$, calculate: $3^6 - 3 \\times 2^6 + 3 \\times 1^6 = 729 - 3 \\times 64 + 3$.",
+        "**Result:** $729 - 192 + 3 = 540$ — option C."
+      ],
+      "sanityCheck": "Check: $729 - 192 = 537$, then $537 + 3 = 540$."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** We need to find the number of surjective functions from a set $A$ of size $m=6$ to a set $B$ of size $n=3$. We will use the Principle of Inclusion-Exclusion.",
+        "**EXTRACT:** $m = 6, n = 3$.",
+        "**EXECUTE:** \n1. The formula for the number of surjective functions from a set of size $m$ to a set of size $n$ is:\n$$N = \\sum_{r=0}^{n} (-1)^r \\binom{n}{r} (n-r)^m$$\n2. Substitute $m=6, n=3$:\n$$N = \\binom{3}{0} 3^6 - \\binom{3}{1} 2^6 + \\binom{3}{2} 1^6 - \\binom{3}{3} 0^6$$\n3. Evaluate the terms:\n   - Term 1: $1 \\times 729 = 729$\n   - Term 2: $3 \\times 64 = 192$\n   - Term 3: $3 \\times 1 = 3$\n   - Term 4: $1 \\times 0 = 0$\n4. Combine them:\n$$N = 729 - 192 + 3 = 540$$",
+        "**PROOF:** \n- Option C ($540$) is correct: $3^6 - \\binom{3}{1}2^6 + \\binom{3}{2}1^6 = 729 - 192 + 3 = 540$ (note $2^6 = 64$, so $3\\times 64 = 192$).\n- Option A ($537$) drops the final $+\\binom{3}{2}1^6 = +3$ inclusion-exclusion term: $729 - 192 = 537$.\n- Option B ($729$) is the total number of functions $3^6$, forgetting to subtract the non-surjective ones.\n- Option D ($90$) is the Stirling number $S(6,3) = 90$ (partitions of the domain into 3 non-empty blocks), forgetting to multiply by $3!$ to assign the blocks to the 3 codomain elements ($90 \\times 6 = 540$)."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Let $f: R \\to R$ and $g: R \\to R$ be functions defined by $f(x) = 3x + 2$ and $g(x) = 2x - 1$ for all $x \\in R$. Find the composite function $(f \\circ g)(x)$.",
+    "options": [
+      {
+        "text": "$6x - 1$"
+      },
+      {
+        "text": "$6x + 3$"
+      },
+      {
+        "text": "$6x + 5$"
+      },
+      {
+        "text": "$6x - 3$"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Easy",
+    "subtopic": "Composition of Functions",
+    "fsmTag": "composite-function-evaluation",
+    "concepts": [
+      "composition-of-functions",
+      "algebraic-substitution"
+    ],
+    "sourcePages": [
+      15,
+      21
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When finding the composition $(f \\circ g)(x)$ for two linear functions.",
+      "steps": [
+        "**Trigger:** Write $(f \\circ g)(x)$ as $f(g(x))$.",
+        "**Action:** Substitute $g(x) = 2x - 1$ into $f(x) = 3x + 2$: $3(2x - 1) + 2 = 6x - 3 + 2$.",
+        "**Result:** $6x - 1$ — option A."
+      ],
+      "sanityCheck": "Substitute $x = 1$: $g(1) = 1$, $f(g(1)) = f(1) = 5$. Using formula: $6(1) - 1 = 5$. Matches."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** We need to find the composition $(f \\circ g)(x)$ of two linear functions $f(x) = 3x + 2$ and $g(x) = 2x - 1$.",
+        "**EXTRACT:** $f(x) = 3x + 2$ and $g(x) = 2x - 1$.",
+        "**EXECUTE:** \n1. Start with the definition of composition:\n$$(f \\circ g)(x) = f(g(x))$$\n2. Replace $g(x)$ with its algebraic expression $2x - 1$:\n$$f(g(x)) = f(2x - 1)$$\n3. Substitute $2x - 1$ in place of $x$ in $f(x)$:\n$$f(2x - 1) = 3(2x - 1) + 2$$\n4. Expand and simplify:\n$$3(2x - 1) + 2 = 6x - 3 + 2 = 6x - 1$$",
+        "**PROOF:** \n- Option A ($6x - 1$) is correct as derived.\n- Option B ($6x + 3$) is the result of $(g \\circ f)(x) = g(f(x)) = 2(3x+2) - 1 = 6x + 3$. This is the swapped composition order.\n- Option C ($6x + 5$) arises if a student makes a sign error in expansion: $3(2x-1)+2 = 6x+3+2 = 6x+5$.\n- Option D ($6x - 3$) arises if a student forgets to add 2 after expanding: $3(2x-1) = 6x-3$."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Let $f: R \\to R$ and $g: R \\to R$ be functions defined by $f(x) = 3x + 2$ and $g(x) = 2x - 1$ for all $x \\in R$. Find the composite function $(g \\circ f)(x)$.",
+    "options": [
+      {
+        "text": "$6x - 1$"
+      },
+      {
+        "text": "$6x + 3$"
+      },
+      {
+        "text": "$6x + 4$"
+      },
+      {
+        "text": "$6x + 1$"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Easy",
+    "subtopic": "Composition of Functions",
+    "fsmTag": "composite-function-evaluation",
+    "concepts": [
+      "composition-of-functions",
+      "algebraic-substitution"
+    ],
+    "sourcePages": [
+      15,
+      21
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When finding the composition $(g \\circ f)(x)$ for two linear functions.",
+      "steps": [
+        "**Trigger:** Write $(g \\circ f)(x)$ as $g(f(x))$.",
+        "**Action:** Substitute $f(x) = 3x + 2$ into $g(x) = 2x - 1$: $2(3x + 2) - 1 = 6x + 4 - 1$.",
+        "**Result:** $6x + 3$ — option B."
+      ],
+      "sanityCheck": "Substitute $x = 1$: $f(1) = 5$, $g(f(1)) = g(5) = 9$. Using formula: $6(1) + 3 = 9$. Matches."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** We need to find the composition $(g \\circ f)(x)$ of two linear functions $f(x) = 3x + 2$ and $g(x) = 2x - 1$.",
+        "**EXTRACT:** $f(x) = 3x + 2$ and $g(x) = 2x - 1$.",
+        "**EXECUTE:** \n1. Start with the definition of composition:\n$$(g \\circ f)(x) = g(f(x))$$\n2. Replace $f(x)$ with its algebraic expression $3x + 2$:\n$$g(f(x)) = g(3x + 2)$$\n3. Substitute $3x + 2$ in place of $x$ in $g(x)$:\n$$g(3x + 2) = 2(3x + 2) - 1$$\n4. Expand and simplify:\n$$2(3x + 2) - 1 = 6x + 4 - 1 = 6x + 3$$",
+        "**PROOF:** \n- Option B ($6x + 3$) is correct as derived.\n- Option A ($6x - 1$) is the result of $(f \\circ g)(x) = f(g(x)) = 3(2x-1) + 2 = 6x - 1$. This is the swapped composition order.\n- Option C ($6x + 4$) arises if a student forgets to subtract 1 after expanding: $2(3x+2) = 6x+4$.\n- Option D ($6x + 1$) arises if a student makes a sign error in expansion: $2(3x+2)-1 = 6x+2-1 = 6x+1$ or similar."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Let $f: R \\to R$ and $g: R \\to R$ be functions defined by $f(x) = 4x - 3$ and $g(x) = \\frac{x+3}{4}$ for all $x \\in R$. Find the value of $(g \\circ f)(x^2 + 2)$.",
+    "options": [
+      {
+        "text": "$x^2 + 2$"
+      },
+      {
+        "text": "$x^2 + 3$"
+      },
+      {
+        "text": "$4x^2 + 5$"
+      },
+      {
+        "text": "$\\frac{x^2+5}{4}$"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Medium",
+    "subtopic": "Composition of Functions",
+    "fsmTag": "composite-function-substitution",
+    "concepts": [
+      "composition-of-functions",
+      "algebraic-substitution",
+      "identity-relation"
+    ],
+    "sourcePages": [
+      15,
+      21
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When the two functions are inverses of each other.",
+      "steps": [
+        "**Trigger:** Observe that $g(x)$ is the inverse of $f(x)$ because $g(f(x)) = \\frac{(4x-3)+3}{4} = x$.",
+        "**Action:** Since $g \\circ f$ is the identity function, $(g \\circ f)(U) = U$ for any expression $U$.",
+        "**Result:** $(g \\circ f)(x^2 + 2) = x^2 + 2$ — option A."
+      ],
+      "sanityCheck": "Check: $g(f(x)) = x$. Thus $g(f(x^2+2)) = x^2+2$."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** We need to find the value of the composite function $(g \\circ f)(x^2 + 2)$ for $f(x) = 4x - 3$ and $g(x) = \\frac{x+3}{4}$. We can solve this either by first finding the general formula for $(g \\circ f)(x)$ and then substituting $x^2 + 2$, or by noticing the inverse relationship.",
+        "**EXTRACT:** $f(x) = 4x - 3$, $g(x) = \\frac{x+3}{4}$, and the input is $x^2 + 2$.",
+        "**EXECUTE:** \n**Method 1 (General Composition):**\n1. Find the general form of $(g \\circ f)(x)$:\n$$(g \\circ f)(x) = g(f(x)) = g(4x - 3)$$\n2. Substitute $4x - 3$ into $g(x)$:\n$$g(4x - 3) = \\frac{(4x - 3) + 3}{4} = \\frac{4x}{4} = x$$\nThus, $(g \\circ f)(x) = x$ (the identity function).\n3. Substitute $x^2 + 2$ in place of $x$:\n$$(g \\circ f)(x^2 + 2) = x^2 + 2$$\n\n**Method 2 (Step-by-step evaluation):**\n1. Evaluate $f(x^2+2)$:\n$$f(x^2+2) = 4(x^2+2) - 3 = 4x^2 + 8 - 3 = 4x^2 + 5$$\n2. Substitute this result into $g(x)$:\n$$g(4x^2+5) = \\frac{(4x^2+5) + 3}{4} = \\frac{4x^2+8}{4} = x^2 + 2$$\nBoth methods yield $x^2 + 2$.",
+        "**PROOF:** \n- Option A ($x^2 + 2$) is correct as derived.\n- Option B ($x^2 + 3$) arises if a student makes a mistake in dividing by 4, e.g. $\\frac{4x^2+8}{4} = x^2+3$ or similar.\n- Option C ($4x^2 + 5$) is the value of $f(x^2+2)$, forgetting to apply $g$.\n- Option D ($\\frac{x^2+5}{4}$) arises if a student incorrectly applies the outer function $g$ directly to $x^2+2$ without composing $f$ first."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Let $f: R \\to R$ and $g: R \\to R$ be defined by $f(x) = x^2$ and $g(x) = 3^x$ for all $x \\in R$. Solve the equation $(f \\circ g)(x) = (g \\circ f)(x)$.",
+    "options": [
+      {
+        "text": "$\\{0, 2\\}$"
+      },
+      {
+        "text": "$\\{0, 1\\}$"
+      },
+      {
+        "text": "$\\{1, 2\\}$"
+      },
+      {
+        "text": "$\\{0, -2\\}$"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Medium",
+    "subtopic": "Composition of Functions",
+    "fsmTag": "solve-composition-equation",
+    "concepts": [
+      "composition-of-functions",
+      "exponential-equations",
+      "quadratic-equations"
+    ],
+    "sourcePages": [
+      22
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When solving $(f \\circ g)(x) = (g \\circ f)(x)$ for $x^2$ and $3^x$.",
+      "steps": [
+        "**Trigger:** Write the composition equations: $(f \\circ g)(x) = (3^x)^2 = 3^{2x}$ and $(g \\circ f)(x) = 3^{x^2}$.",
+        "**Action:** Set them equal: $3^{2x} = 3^{x^2} \\implies x^2 = 2x \\implies x(x-2) = 0$.",
+        "**Result:** $x = 0, 2$ — option A."
+      ],
+      "sanityCheck": "For $x=0$: $f(g(0)) = 1$; $g(f(0)) = 1$. For $x=2$: $f(g(2)) = f(9) = 81$; $g(f(2)) = g(4) = 81$. Both hold."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** We need to solve the equation $(f \\circ g)(x) = (g \\circ f)(x)$ for $f(x) = x^2$ and $g(x) = 3^x$.",
+        "**EXTRACT:** $(f \\circ g)(x) = f(g(x))$ and $(g \\circ f)(x) = g(f(x))$ with $f(x) = x^2$ and $g(x) = 3^x$.",
+        "**EXECUTE:** \n1. Find the LHS $(f \\circ g)(x)$:\n$$(f \\circ g)(x) = f(g(x)) = f(3^x) = (3^x)^2 = 3^{2x}$$\n2. Find the RHS $(g \\circ f)(x)$:\n$$(g \\circ f)(x) = g(f(x)) = g(x^2) = 3^{x^2}$$\n3. Set LHS = RHS:\n$$3^{2x} = 3^{x^2}$$\n4. Since the bases are equal ($3 > 0$ and $3 \\neq 1$), we equate the exponents:\n$$2x = x^2 \\implies x^2 - 2x = 0 \\implies x(x - 2) = 0$$\n5. The solutions are $x = 0$ and $x = 2$.",
+        "**PROOF:** \n- Option A ($\\{0, 2\\}$) is correct as shown.\n- Option B ($\\{0, 1\\}$) arises if a student mistakenly thinks $x^2 = 2x$ is solved by $x=1$.\n- Option C ($\\{1, 2\\}$) arises if a student forgets the root $x=0$ and incorrectly adds $x=1$.\n- Option D ($\\{0, -2\\}$) arises from a sign error in solving the quadratic equation: $x^2 + 2x = 0 \\implies x = 0, -2$."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Let $f: R \\setminus \\{\\pm 1\\} \\to R$ be defined by $f(x) = \\frac{x+1}{x-1}$. Find the composite function $(f \\circ f \\circ f)(x)$ for all permissible values of $x$.",
+    "options": [
+      {
+        "text": "$x$"
+      },
+      {
+        "text": "$\\frac{x-1}{x+1}$"
+      },
+      {
+        "text": "$\\frac{x+1}{x-1}$"
+      },
+      {
+        "text": "$-\\frac{x+1}{x-1}$"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Medium",
+    "subtopic": "Composition of Functions",
+    "fsmTag": "repeated-composition-rational",
+    "concepts": [
+      "composition-of-functions",
+      "rational-functions",
+      "algebraic-simplification"
+    ],
+    "sourcePages": [
+      22
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When the function is $f(x) = \\frac{x+1}{x-1}$.",
+      "steps": [
+        "**Trigger:** Compute $f(f(x))$ first.",
+        "**Action:** $f(f(x)) = \\frac{\\frac{x+1}{x-1} + 1}{\\frac{x+1}{x-1} - 1} = \\frac{(x+1) + (x-1)}{(x+1) - (x-1)} = \\frac{2x}{2} = x$. Since $f \\circ f$ is the identity, $(f \\circ f \\circ f)(x) = f(x)$.",
+        "**Result:** $\\frac{x+1}{x-1}$ — option C."
+      ],
+      "sanityCheck": "Check for $x = 3$: $f(3) = 2$. $f(f(3)) = f(2) = 3$. $f(f(f(3))) = f(3) = 2$. Using option C: $(3+1)/(3-1) = 2$. Matches."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** We need to find the repeated composition of the rational function $f(x) = \\frac{x+1}{x-1}$ three times, i.e., $(f \\circ f \\circ f)(x)$.",
+        "**EXTRACT:** $f(x) = \\frac{x+1}{x-1}$ with $x \\neq \\pm 1$.",
+        "**EXECUTE:** \n1. First, find $(f \\circ f)(x) = f(f(x))$:\n$$f(f(x)) = f\\left(\\frac{x+1}{x-1}\\right) = \\frac{\\frac{x+1}{x-1} + 1}{\\frac{x+1}{x-1} - 1}$$\n2. Simplify numerator and denominator:\n$$\\text{Numerator} = \\frac{(x+1) + (x-1)}{x-1} = \\frac{2x}{x-1}$$\n$$\\text{Denominator} = \\frac{(x+1) - (x-1)}{x-1} = \\frac{2}{x-1}$$\n3. Combine them:\n$$f(f(x)) = \\frac{2x/(x-1)}{2/(x-1)} = \\frac{2x}{2} = x$$\nThus, $f(f(x)) = x$.\n4. Now find $(f \\circ f \\circ f)(x) = f(f(f(x)))$:\n$$f(f(f(x))) = f(x) = \\frac{x+1}{x-1}$$",
+        "**PROOF:** \n- Option C ($\\frac{x+1}{x-1}$) is correct as derived.\n- Option A ($x$) is the two-fold composition $(f \\circ f)(x)$, not three-fold.\n- Option B ($\\frac{x-1}{x+1}$) is the reciprocal of $f(x)$, which is $f^{-1}(x)$ if $f(x)$ was different, but here $f^{-1}(x) = f(x)$.\n- Option D ($-\\frac{x+1}{x-1}$) is the negative of $f(x)$."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Let $f: R \\setminus \\{\\pm 1\\} \\to R$ be defined by $f(x) = \\frac{x+1}{x-1}$. Find the composite function $(f \\circ f \\circ f \\circ f)(x)$ for all permissible values of $x$.",
+    "options": [
+      {
+        "text": "$x$"
+      },
+      {
+        "text": "$\\frac{x+1}{x-1}$"
+      },
+      {
+        "text": "$\\frac{x-1}{x+1}$"
+      },
+      {
+        "text": "$1$"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Medium",
+    "subtopic": "Composition of Functions",
+    "fsmTag": "repeated-composition-rational",
+    "concepts": [
+      "composition-of-functions",
+      "rational-functions",
+      "identity-relation"
+    ],
+    "sourcePages": [
+      22
+    ],
+    "timeTargets": {
+      "ap_eapcet": 45,
+      "ts_eapcet": 45,
+      "jee_main": 60
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When the rational function satisfies $f(f(x)) = x$.",
+      "steps": [
+        "**Trigger:** Observe that $f(f(x)) = x$.",
+        "**Action:** Applying the double composition twice yields $(f \\circ f \\circ f \\circ f)(x) = f(f(x)) = x$.",
+        "**Result:** $x$ — option A."
+      ],
+      "sanityCheck": "Check for $x = 3$: $f(3) = 2$. $f(f(3)) = 3$. $f(f(f(3))) = 2$. $f(f(f(f(3)))) = 3$. Matches input."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** We need to find the repeated composition of the rational function $f(x) = \\frac{x+1}{x-1}$ four times, i.e., $(f \\circ f \\circ f \\circ f)(x)$.",
+        "**EXTRACT:** $f(x) = \\frac{x+1}{x-1}$ with $x \\neq \\pm 1$.",
+        "**EXECUTE:** \n1. We have already established that $(f \\circ f)(x) = x$ for all $x \\neq \\pm 1$:\n$$f(f(x)) = \\frac{\\frac{x+1}{x-1} + 1}{\\frac{x+1}{x-1} - 1} = \\frac{(x+1)+(x-1)}{(x+1)-(x-1)} = \\frac{2x}{2} = x$$\n2. The four-fold composition is:\n$$(f \\circ f \\circ f \\circ f)(x) = (f \\circ f)((f \\circ f)(x)) = (f \\circ f)(x) = x$$",
+        "**PROOF:** \n- Option A ($x$) is correct as derived.\n- Option B ($\\frac{x+1}{x-1}$) is the three-fold composition $(f \\circ f \\circ f)(x)$.\n- Option C ($\\frac{x-1}{x+1}$) is a distractor representing the reciprocal of $f(x)$.\n- Option D ($1$) is an incorrect value."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Let $f: R \\to R$, $g: R \\to R$, and $h: R \\to R$ be defined by $f(x) = 5$, $g(x) = x^3$, and $h(x) = 3x$ for all $x \\in R$. Find the composite function $(f \\circ (g \\circ h))(x)$.",
+    "options": [
+      {
+        "text": "$27x^3$"
+      },
+      {
+        "text": "$5$"
+      },
+      {
+        "text": "$135x^3$"
+      },
+      {
+        "text": "$125$"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Medium",
+    "subtopic": "Composition of Functions",
+    "fsmTag": "constant-function-composition",
+    "concepts": [
+      "composition-of-functions",
+      "constant-function"
+    ],
+    "sourcePages": [
+      21
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When the outer function is a constant function.",
+      "steps": [
+        "**Trigger:** Note that the outer function is $f(U) = 5$ for any input $U$.",
+        "**Action:** The composition is $(f \\circ (g \\circ h))(x) = f(g(h(x)))$. Since $f(y) = 5$ for all $y \\in R$, the output must be 5.",
+        "**Result:** 5 — option B."
+      ],
+      "sanityCheck": "Regardless of what $g(h(x))$ computes to (which is $(3x)^3 = 27x^3$), $f(27x^3)$ is always 5."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** We need to find the value of $(f \\circ (g \\circ h))(x)$ where $f(x) = 5$ is a constant function, $g(x) = x^3$, and $h(x) = 3x$.",
+        "**EXTRACT:** $f(x) = 5$, $g(x) = x^3$, and $h(x) = 3x$.",
+        "**EXECUTE:** \n1. First evaluate the inner composition $(g \\circ h)(x)$:\n$$(g \\circ h)(x) = g(h(x)) = g(3x) = (3x)^3 = 27x^3$$\n2. Now apply the outer function $f$ to this result:\n$$(f \\circ (g \\circ h))(x) = f((g \\circ h)(x)) = f(27x^3)$$\n3. Since $f(x) = 5$ is a constant function for all real numbers, we have:\n$$f(27x^3) = 5$$",
+        "**PROOF:** \n- Option B ($5$) is correct as derived.\n- Option A ($27x^3$) is the value of $(g \\circ h)(x)$, forgetting to apply $f$.\n- Option C ($135x^3$) is $27x^3$ multiplied by 5 by mistake.\n- Option D ($125$) is $5^3$ by mistake."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Let $f: R \\to R$ and $g: R \\to R$ be defined by $f(x) = x^2 + 4x + 2$ and $g(x) = 3x - 1$ for all $x \\in R$. Find all real values of $x$ for which $(f \\circ g)(x) = 14$.",
+    "options": [
+      {
+        "text": "$\\{1, -\\frac{5}{3}\\}$"
+      },
+      {
+        "text": "$\\{-1, \\frac{5}{3}\\}$"
+      },
+      {
+        "text": "$\\{1, \\frac{5}{3}\\}$"
+      },
+      {
+        "text": "$\\{-1, -\\frac{5}{3}\\}$"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Hard",
+    "subtopic": "Composition of Functions",
+    "fsmTag": "solve-composition-equation-real",
+    "concepts": [
+      "composition-of-functions",
+      "quadratic-equations",
+      "algebraic-simplification"
+    ],
+    "sourcePages": [
+      15,
+      21
+    ],
+    "timeTargets": {
+      "ap_eapcet": 80,
+      "ts_eapcet": 80,
+      "jee_main": 120
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When solving f(g(x)) = k and the outer function f is quadratic.",
+      "steps": [
+        "**Trigger:** A composite f(g(x)) is set equal to a constant, with f quadratic and g linear.",
+        "**Action:** Substitute $y = g(x)$ and solve $f(y) = 14$ first: $y^2 + 4y - 12 = 0 \\Rightarrow (y+6)(y-2)=0 \\Rightarrow y = -6, 2$. Then back-solve $g(x) = y$, i.e. $3x - 1 = y$.",
+        "**Result:** $3x - 1 = -6 \\Rightarrow x = -\\tfrac{5}{3}$; $3x - 1 = 2 \\Rightarrow x = 1$. Solution set $\\left\\{1, -\\tfrac{5}{3}\\right\\}$ — option A."
+      ],
+      "sanityCheck": "Check $x=1$: $g(1)=2$, $f(2)=4+8+2=14$. Check $x=-5/3$: $g(-5/3)=-6$, $f(-6)=36-24+2=14$. Both give 14."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** Solve $(f \\circ g)(x) = 14$ where $f(x)=x^2+4x+2$ (quadratic) and $g(x)=3x-1$ (linear). Substituting $y=g(x)$ reduces it to a quadratic in $y$, then a linear back-substitution.",
+        "**EXTRACT:** $f(x)=x^2+4x+2$, $g(x)=3x-1$, and $(f\\circ g)(x)=14$.",
+        "**EXECUTE:** \n1. Let $y = g(x)$. Then $f(y) = 14$:\n$$y^2 + 4y + 2 = 14 \\implies y^2 + 4y - 12 = 0$$\n2. Factor: $(y+6)(y-2)=0 \\implies y=-6$ or $y=2$.\n3. Back-substitute $g(x)=y$, i.e. $3x-1=y$:\n   - $3x-1=-6 \\implies 3x=-5 \\implies x=-\\tfrac{5}{3}$\n   - $3x-1=2 \\implies 3x=3 \\implies x=1$\n4. Solution set: $\\left\\{1, -\\tfrac{5}{3}\\right\\}$.",
+        "**PROOF:** \n- Option A $\\left\\{1, -\\tfrac{5}{3}\\right\\}$ is correct, as verified by direct substitution (both give $f(g(x))=14$).\n- Option B $\\left\\{-1, \\tfrac{5}{3}\\right\\}$ flips the sign of BOTH roots.\n- Option C $\\left\\{1, \\tfrac{5}{3}\\right\\}$ flips the sign of the second root only.\n- Option D $\\left\\{-1, -\\tfrac{5}{3}\\right\\}$ flips the sign of the first root only."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Let $f: R \\to R$ be defined by $f(x) = 2x - 3$ for all $x \\in R$. Find the formula for the inverse function $f^{-1}(x)$.",
+    "options": [
+      {
+        "text": "$\\frac{x-3}{2}$"
+      },
+      {
+        "text": "$\\frac{x+3}{2}$"
+      },
+      {
+        "text": "$2x + 3$"
+      },
+      {
+        "text": "$\\frac{2}{x-3}$"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Easy",
+    "subtopic": "Inverse Functions",
+    "fsmTag": "linear-inverse",
+    "concepts": [
+      "inverse-function",
+      "linear-function"
+    ],
+    "sourcePages": [
+      14,
+      21
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When finding the inverse of a linear function $f(x) = ax + b$.",
+      "steps": [
+        "**Trigger:** Set $y = 2x - 3$.",
+        "**Action:** Solve for $x$ in terms of $y$: $y + 3 = 2x \\implies x = \\frac{y+3}{2}$.",
+        "**Result:** $f^{-1}(x) = \\frac{x+3}{2}$ — option B."
+      ],
+      "sanityCheck": "Check $f(f^{-1}(x)) = 2(\\frac{x+3}{2}) - 3 = x + 3 - 3 = x$."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** We need to find the inverse function of the linear function $f(x) = 2x - 3$.",
+        "**EXTRACT:** $f(x) = 2x - 3$ defined on $R$.",
+        "**EXECUTE:** \n1. Let $y = f(x) = 2x - 3$.\n2. Solve for $x$ in terms of $y$:\n$$y = 2x - 3 \\implies y + 3 = 2x \\implies x = \\frac{y+3}{2}$$\n3. Since $x = f^{-1}(y)$, we have:\n$$f^{-1}(y) = \\frac{y+3}{2}$$\n4. Replace $y$ with $x$:\n$$f^{-1}(x) = \\frac{x+3}{2}$$",
+        "**PROOF:** \n- Option B ($\\frac{x+3}{2}$) is correct as derived.\n- Option A ($\\frac{x-3}{2}$) is a sign error in moving $-3$ to the other side.\n- Option C ($2x + 3$) is an incorrect manipulation, failing to divide by $2$.\n- Option D ($\\frac{2}{x-3}$) is the reciprocal of the incorrect inverse."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Let $f: R \\to (0, \\\\infty)$ be defined by $f(x) = 4^x$. Find the formula for the inverse function $f^{-1}(x)$.",
+    "options": [
+      {
+        "text": "$4^{-x}$"
+      },
+      {
+        "text": "$\\log_e x$"
+      },
+      {
+        "text": "$\\log_4 x$"
+      },
+      {
+        "text": "$x^4$"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Easy",
+    "subtopic": "Inverse Functions",
+    "fsmTag": "exponential-inverse",
+    "concepts": [
+      "inverse-function",
+      "exponential-functions",
+      "logarithmic-functions"
+    ],
+    "sourcePages": [
+      14,
+      21
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When finding the inverse of $f(x) = a^x$.",
+      "steps": [
+        "**Trigger:** The inverse of an exponential function $4^x$ is the logarithmic function to the base 4.",
+        "**Action:** Set $y = 4^x \\implies x = \\log_4 y$.",
+        "**Result:** $f^{-1}(x) = \\log_4 x$ — option C."
+      ],
+      "sanityCheck": "Check that $f(f^{-1}(x)) = 4^{\\log_4 x} = x$ for $x > 0$."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** We need to find the inverse of the exponential function $f(x) = 4^x$ from $R$ to $(0, \\infty)$.",
+        "**EXTRACT:** $f(x) = 4^x$. The domain is $R$ and the codomain is $(0, \\infty)$.",
+        "**EXECUTE:** \n1. Let $y = f(x) = 4^x$.\n2. By definition of logarithms, $y = a^x \\iff x = \\log_a y$. Here the base is $a = 4$:\n$$x = \\log_4 y$$\n3. Since $x = f^{-1}(y)$, we have:\n$$f^{-1}(y) = \\log_4 y$$\n4. Replace $y$ with $x$:\n$$f^{-1}(x) = \\log_4 x$$",
+        "**PROOF:** \n- Option C ($\\log_4 x$) is correct as derived.\n- Option A ($4^{-x}$) is the reciprocal function $1/4^x$, not the inverse function.\n- Option B ($\\log_e x$) uses the wrong base $e$ instead of $4$.\n- Option D ($x^4$) is a power function, which is the algebraic inverse of the root function, not the exponential function."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Let $f: (0, \\\\infty) \\to R$ be defined by $f(x) = \\\\log_3 x$. Find the formula for the inverse function $f^{-1}(x)$.",
+    "options": [
+      {
+        "text": "$3^{-x}$"
+      },
+      {
+        "text": "$\\log_x 3$"
+      },
+      {
+        "text": "$x^3$"
+      },
+      {
+        "text": "$3^x$"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Easy",
+    "subtopic": "Inverse Functions",
+    "fsmTag": "logarithmic-inverse",
+    "concepts": [
+      "inverse-function",
+      "logarithmic-functions",
+      "exponential-functions"
+    ],
+    "sourcePages": [
+      14,
+      22
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When finding the inverse of $f(x) = \\log_a x$.",
+      "steps": [
+        "**Trigger:** The inverse of a logarithmic function $\\log_a x$ is the exponential function $a^x$.",
+        "**Action:** For base 3, $y = \\log_3 x \\implies x = 3^y$.",
+        "**Result:** $f^{-1}(x) = 3^x$ — option D."
+      ],
+      "sanityCheck": "Check that $f(f^{-1}(x)) = \\log_3(3^x) = x$."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** We need to find the inverse of the logarithmic function $f(x) = \\log_3 x$ from $(0, \\infty)$ to $R$.",
+        "**EXTRACT:** $f(x) = \\log_3 x$. The domain is $(0, \\infty)$ and codomain is $R$.",
+        "**EXECUTE:** \n1. Let $y = f(x) = \\log_3 x$.\n2. By the definition of logarithms, $y = \\log_3 x \\iff x = 3^y$.\n3. Since $x = f^{-1}(y)$, we have:\n$$f^{-1}(y) = 3^y$$\n4. Replace $y$ with $x$:\n$$f^{-1}(x) = 3^x$$",
+        "**PROOF:** \n- Option D ($3^x$) is correct as derived.\n- Option A ($3^{-x}$) is $1/3^x$, not the inverse function.\n- Option B ($\\log_x 3$) is the reciprocal logarithm $1/\\log_3 x$, not the inverse function.\n- Option C ($x^3$) is a power function, not the exponential function."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Let $f: R \\to R$ be defined by $f(x) = 2x - 5$. Find the value of $(g \\circ f^{-1})(3)$, where $g: R \\to R$ is defined by $g(x) = x^2 + 2$.",
+    "options": [
+      {
+        "text": "$\\frac{27}{4}$"
+      },
+      {
+        "text": "$6$"
+      },
+      {
+        "text": "$18$"
+      },
+      {
+        "text": "$3$"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Medium",
+    "subtopic": "Inverse Functions",
+    "fsmTag": "composite-inverse-value",
+    "concepts": [
+      "inverse-function",
+      "composition-of-functions",
+      "algebraic-substitution"
+    ],
+    "sourcePages": [
+      14,
+      22
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When finding $(g \\circ f^{-1})(k)$ without finding the full inverse formula.",
+      "steps": [
+        "**Trigger:** Let $f^{-1}(3) = a \\implies f(a) = 3$.",
+        "**Action:** Solve $2a - 5 = 3 \\implies 2a = 8 \\implies a = 4$. Then compute $g(a) = g(4) = 4^2 + 2$.",
+        "**Result:** $16 + 2 = 18$ — option C."
+      ],
+      "sanityCheck": "Check that $f(4) = 8-5=3$, so $f^{-1}(3)=4$. Then $g(4)=16+2=18$."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** We need to find the value of $(g \\circ f^{-1})(3)$ for $f(x) = 2x - 5$ and $g(x) = x^2 + 2$. By definition, $(g \\circ f^{-1})(3) = g(f^{-1}(3))$. We can find $f^{-1}(3)$ first and then substitute it into $g(x)$.",
+        "**EXTRACT:** $f(x) = 2x - 5$, $g(x) = x^2 + 2$, and we need $(g \\circ f^{-1})(3)$.",
+        "**EXECUTE:** \n1. First find $a = f^{-1}(3)$. This is equivalent to solving $f(a) = 3$:\n$$2a - 5 = 3 \\implies 2a = 8 \\implies a = 4$$\nThus, $f^{-1}(3) = 4$.\n2. Now calculate $g(f^{-1}(3)) = g(4)$:\n$$g(4) = 4^2 + 2 = 16 + 2 = 18$$",
+        "**PROOF:** \n- Option C ($18$) is correct as shown.\n- Option A ($\\frac{27}{4}$) arises if a student mistakenly solves $f^{-1}(3)$ using a wrong formula, e.g. $(3-5)/2 = -1$ or similar, or makes an arithmetic error.\n- Option B ($6$) arises if a student mistakenly calculates $f^{-1}(3) = 2$ and then computes $g(2) = 2^2+2 = 6$.\n- Option D ($3$) is a distractor."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Let $f: [-1, 1] \\to [-1, 1]$ be a function defined by $f(x) = x|x|$ for all $x \\in [-1, 1]$. Find the inverse function $f^{-1}(x)$ defined on $[-1, 1]$.",
+    "options": [
+      {
+        "text": "$f^{-1}(x) = \\operatorname{sgn}(x)\\sqrt{|x|}$"
+      },
+      {
+        "text": "$f^{-1}(x) = \\sqrt{|x|}$"
+      },
+      {
+        "text": "$f^{-1}(x) = -\\operatorname{sgn}(x)\\sqrt{|x|}$"
+      },
+      {
+        "text": "$f^{-1}(x) = x\\sqrt{|x|}$"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Hard",
+    "subtopic": "Inverse Functions",
+    "fsmTag": "sgn-sqrt-inverse",
+    "concepts": [
+      "inverse-function",
+      "modulus-function",
+      "signum-function"
+    ],
+    "sourcePages": [
+      5,
+      7,
+      8,
+      14
+    ],
+    "timeTargets": {
+      "ap_eapcet": 90,
+      "ts_eapcet": 90,
+      "jee_main": 135
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When finding the inverse of $x|x|$ which retains the sign of $x$.",
+      "steps": [
+        "**Trigger:** Observe that $f(x) = x|x|$ preserves the sign of $x$ (positive for positive, negative for negative).",
+        "**Action:** The inverse must also preserve the sign of $x$ and involve a square root to invert the square. This is represented by $\\operatorname{sgn}(x)\\sqrt{|x|}$.",
+        "**Result:** $f^{-1}(x) = \\operatorname{sgn}(x)\\sqrt{|x|}$ — option A."
+      ],
+      "sanityCheck": "For $x = -0.25$, $f(x) = -0.0625$. $f^{-1}(-0.0625) = \\operatorname{sgn}(-0.0625)\\sqrt{0.0625} = -0.25$."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** We need to find the inverse of the piecewise/modulus function $f(x) = x|x|$ on the domain $[-1, 1]$. We must split the function into positive and negative cases to find the inverse branch-by-branch, then combine them using the signum function.",
+        "**EXTRACT:** The function is $f: [-1, 1] \\to [-1, 1]$ with $f(x) = x|x|$.",
+        "**EXECUTE:** \n1. Split the function based on the definition of $|x|$:\n   - For $x \\ge 0$, $|x| = x$, so $f(x) = x^2$. Thus, $y = x^2 \\implies x = \\sqrt{y}$ (since $x \\ge 0$).\n   - For $x < 0$, $|x| = -x$, so $f(x) = -x^2$. Thus, $y = -x^2 \\implies x^2 = -y \\implies x = -\\sqrt{-y}$ (since $x < 0$, and $y < 0 \\implies -y > 0$).\n2. We can combine these two branches into a single formula for the inverse function $f^{-1}(y)$:\n   - If $y \\ge 0$, $f^{-1}(y) = \\sqrt{y} = 1 \\cdot \\sqrt{|y|} = \\operatorname{sgn}(y)\\sqrt{|y|}$.\n   - If $y < 0$, $f^{-1}(y) = -\\sqrt{-y} = -1 \\cdot \\sqrt{|y|} = \\operatorname{sgn}(y)\\sqrt{|y|}$.\n3. Therefore, replacing $y$ with $x$, we have:\n$$f^{-1}(x) = \\operatorname{sgn}(x)\\sqrt{|x|}$$",
+        "**PROOF:** \n- Option A is correct as shown.\n- Option B ($f^{-1}(x) = \\sqrt{|x|}$) is incorrect because it is always non-negative, failing to map negative inputs to negative outputs.\n- Option C is incorrect because it flips the sign of the output.\n- Option D ($f^{-1}(x) = x\\sqrt{|x|}$) is incorrect because it is $f(x)$ itself scaled by $\\sqrt{|x|}$, which is not the inverse."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Let $f: R \\setminus \\{-2\\} \\to R$ be defined by $f(x) = \\\\frac{x-2}{x+2}$. Find the formula for the inverse function $f^{-1}(x)$.",
+    "options": [
+      {
+        "text": "$\\frac{2x+2}{x-1}$"
+      },
+      {
+        "text": "$\\frac{2x+2}{1-x}$"
+      },
+      {
+        "text": "$\\frac{x+2}{2-x}$"
+      },
+      {
+        "text": "$\\frac{2x-2}{1-x}$"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Medium",
+    "subtopic": "Inverse Functions",
+    "fsmTag": "rational-inverse",
+    "concepts": [
+      "inverse-function",
+      "rational-functions",
+      "algebraic-manipulation"
+    ],
+    "sourcePages": [
+      14,
+      21
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When finding the inverse of a rational function $f(x) = \\frac{ax+b}{cx+d}$.",
+      "steps": [
+        "**Trigger:** Set $y = \\frac{x-2}{x+2}$.",
+        "**Action:** Solve for $x$: $y(x+2) = x - 2 \\implies yx + 2y = x - 2 \\implies 2y + 2 = x(1-y) \\implies x = \\frac{2y+2}{1-y}$.",
+        "**Result:** $f^{-1}(x) = \\frac{2x+2}{1-x}$ — option B."
+      ],
+      "sanityCheck": "Let $x=0$: $f(0) = -1$. Using the inverse formula with $x=-1$: $\\frac{2(-1)+2}{1-(-1)} = \\frac{0}{2} = 0$. Matches."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** We need to find the inverse of the rational function $f(x) = \\frac{x-2}{x+2}$ defined on $R \\setminus \\{-2\\}$.",
+        "**EXTRACT:** $f(x) = \\frac{x-2}{x+2}$.",
+        "**EXECUTE:** \n1. Let $y = f(x) = \\frac{x-2}{x+2}$.\n2. Multiply both sides by $(x+2)$:\n$$y(x+2) = x-2 \\implies yx + 2y = x - 2$$\n3. Rearrange terms to group $x$ on one side:\n$$2y + 2 = x - yx \\implies 2y + 2 = x(1-y)$$\n4. Divide by $(1-y)$:\n$$x = \\frac{2y+2}{1-y}$$\n5. Replace $y$ with $x$ to write $f^{-1}(x)$:\n$$f^{-1}(x) = \\frac{2x+2}{1-x}$$",
+        "**PROOF:** \n- Option B ($\\frac{2x+2}{1-x}$) is correct as derived.\n- Option A ($\\frac{2x+2}{x-1}$) is a sign error in the denominator.\n- Option C ($\\frac{x+2}{2-x}$) is a distractor.\n- Option D ($\\frac{2x-2}{1-x}$) is a sign error in the numerator."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Let $f: R \\to R$ and $g: R \\to R$ be defined by $f(x) = 3x - 4$ and $g(x) = x^3 + 2$ for all $x \\in R$. Find the formula for $(f \\circ g)^{-1}(x)$.",
+    "options": [
+      {
+        "text": "$\\left(\\frac{x+2}{3}\\right)^{1/3}$"
+      },
+      {
+        "text": "$\\left(\\frac{x-2}{3}\\right)^{3}$"
+      },
+      {
+        "text": "$\\left(\\frac{x-2}{3}\\right)^{1/3}$"
+      },
+      {
+        "text": "$\\left(\\frac{x-4}{3}\\right)^{1/3}$"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Medium",
+    "subtopic": "Inverse Functions",
+    "fsmTag": "composite-inverse-formula",
+    "concepts": [
+      "inverse-function",
+      "composition-of-functions",
+      "algebraic-manipulation"
+    ],
+    "sourcePages": [
+      14,
+      22
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When finding $(f \\circ g)^{-1}(x)$ by first finding $(f \\circ g)(x)$.",
+      "steps": [
+        "**Trigger:** Compute $(f \\circ g)(x) = 3(x^3+2) - 4 = 3x^3 + 2$.",
+        "**Action:** Set $y = 3x^3 + 2$. Solve for $x$: $y-2 = 3x^3 \\implies x^3 = \\frac{y-2}{3} \\implies x = \\left(\\frac{y-2}{3}\\right)^{1/3}$.",
+        "**Result:** $(f \\circ g)^{-1}(x) = \\left(\\frac{x-2}{3}\\right)^{1/3}$ — option C."
+      ],
+      "sanityCheck": "Let $x=1$: $(f\\circ g)(1) = 3(3)-4=5$. Inverting 5: $((5-2)/3)^{1/3} = (1)^{1/3} = 1$. Matches."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** We need to find the inverse of the composite function $f \\circ g$. We can find the algebraic expression for $(f \\circ g)(x)$ first, and then invert it.",
+        "**EXTRACT:** $f(x) = 3x - 4$ and $g(x) = x^3 + 2$.",
+        "**EXECUTE:** \n1. First, find $(f \\circ g)(x) = f(g(x))$:\n$$(f \\circ g)(x) = f(x^3 + 2) = 3(x^3 + 2) - 4 = 3x^3 + 6 - 4 = 3x^3 + 2$$\n2. Now find the inverse of $h(x) = 3x^3 + 2$ by setting $y = 3x^3 + 2$:\n$$y = 3x^3 + 2 \\implies y - 2 = 3x^3 \\implies x^3 = \\frac{y - 2}{3}$$\n3. Take the cube root of both sides:\n$$x = \\left(\\frac{y-2}{3}\\right)^{1/3}$$\n4. Replacing $y$ with $x$, we get:\n$$(f \\circ g)^{-1}(x) = \\left(\\frac{x-2}{3}\\right)^{1/3}$$",
+        "**PROOF:** \n- Option C ($\\left(\\frac{x-2}{3}\\right)^{1/3}$) is correct as derived.\n- Option A ($\\left(\\frac{x+2}{3}\\right)^{1/3}$) is a sign error in moving 2 to the other side.\n- Option B ($\\left(\\frac{x-2}{3}\\right)^{3}$) raises the term to the power of 3 instead of taking the cube root.\n- Option D ($\\left(\\frac{x-4}{3}\\right)^{1/3}$) arises if the student forgets to expand the composition correctly, keeping the $-4$ from $f(x)$ unchanged."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Let $f: [1, \\\\infty) \\to [1, \\\\infty)$ be defined by $f(x) = 2^{x(x-1)}$. Find the formula for the inverse function $f^{-1}(x)$.",
+    "options": [
+      {
+        "text": "$\\frac{1 - \\sqrt{1 + 4\\log_2 x}}{2}$"
+      },
+      {
+        "text": "$\\frac{1 + \\sqrt{1 - 4\\log_2 x}}{2}$"
+      },
+      {
+        "text": "$1 + \\sqrt{1 + 4\\log_2 x}$"
+      },
+      {
+        "text": "$\\frac{1 + \\sqrt{1 + 4\\log_2 x}}{2}$"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Hard",
+    "subtopic": "Inverse Functions",
+    "fsmTag": "exponential-inverse-quadratic-exponent",
+    "concepts": [
+      "inverse-function",
+      "exponential-functions",
+      "quadratic-formula"
+    ],
+    "sourcePages": [
+      21
+    ],
+    "timeTargets": {
+      "ap_eapcet": 90,
+      "ts_eapcet": 90,
+      "jee_main": 135
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When finding the inverse of $2^{x(x-1)}$ on $[1,\\infty)$.",
+      "steps": [
+        "**Trigger:** Take $\\log_2$ of both sides: $\\log_2 y = x^2 - x$.",
+        "**Action:** Solve the quadratic equation $x^2 - x - \\log_2 y = 0$ using the quadratic formula. Since $x \\ge 1$, select the positive root.",
+        "**Result:** $f^{-1}(x) = \\frac{1 + \\sqrt{1 + 4\\log_2 x}}{2}$ — option D."
+      ],
+      "sanityCheck": "Check for $x=2$: $f(2) = 2^{2(1)} = 4$. $f^{-1}(4) = \\frac{1 + \\sqrt{1 + 4(2)}}{2} = \\frac{1+3}{2} = 2$. Matches."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** We need to find the inverse of $f(x) = 2^{x(x-1)}$ defined on $[1, \\infty)$. This requires taking the base-2 logarithm and solving a quadratic equation for $x$.",
+        "**EXTRACT:** $f: [1, \\infty) \\to [1, \\infty)$ with $f(x) = 2^{x(x-1)}$.",
+        "**EXECUTE:** \n1. Let $y = 2^{x^2 - x}$. Take the base-2 logarithm of both sides:\n$$\\log_2 y = x^2 - x$$\n2. Rearrange this into a standard quadratic equation in terms of $x$:\n$$x^2 - x - \\log_2 y = 0$$\n3. Use the quadratic formula to solve for $x$:\n$$x = \\frac{-(-1) \\pm \\sqrt{(-1)^2 - 4(1)(-\\log_2 y)}}{2} = \\frac{1 \\pm \\sqrt{1 + 4\\log_2 y}}{2}$$\n4. Since the domain of $f(x)$ is restricted to $x \\ge 1$, we must choose the positive sign so that $x \\ge 1$ (since $\\sqrt{1+4\\log_2 y} \\ge 1$ for $y \\ge 1$):\n$$x = \\frac{1 + \\sqrt{1 + 4\\log_2 y}}{2}$$\n5. Thus, the inverse function is:\n$$f^{-1}(x) = \\frac{1 + \\sqrt{1 + 4\\log_2 x}}{2}$$",
+        "**PROOF:** \n- Option D is correct as derived.\n- Option A is incorrect because it chooses the negative sign, which yields values less than or equal to 0.5, violating the range $[1, \\infty)$.\n- Option B is incorrect because it has a sign error inside the square root.\n- Option C is missing the division by 2 from the quadratic formula."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Find the domain of the real-valued function $f(x) = \\\\frac{1}{\\\\sqrt{x^2 - 16}}$.",
+    "options": [
+      {
+        "text": "$R \\setminus (-4, 4)$"
+      },
+      {
+        "text": "$R \\setminus [-4, 4]$"
+      },
+      {
+        "text": "$(4, \\infty)$"
+      },
+      {
+        "text": "$[-4, 4]$"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Easy",
+    "subtopic": "Domain and Range of Real Functions",
+    "fsmTag": "domain-radical-denominator",
+    "concepts": [
+      "domain-of-function",
+      "quadratic-inequalities",
+      "radical-functions"
+    ],
+    "sourcePages": [
+      34
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When finding the domain of $\\frac{1}{\\sqrt{x^2-a^2}}$.",
+      "steps": [
+        "**Trigger:** The term inside the square root in the denominator must be strictly positive: $x^2 - 16 > 0$.",
+        "**Action:** Solve the inequality: $(x-4)(x+4) > 0 \\implies x > 4$ or $x < -4$.",
+        "**Result:** $R \\setminus [-4, 4]$ — option B."
+      ],
+      "sanityCheck": "Check boundary points: $x = 4$ makes the denominator 0, so it must be excluded. $x = 0$ makes it negative, also excluded. Thus $[-4,4]$ is excluded."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** We need to find the domain of $f(x) = \\frac{1}{\\sqrt{x^2 - 16}}$. Since the square root is in the denominator, the quantity inside the square root must be strictly positive.",
+        "**EXTRACT:** The condition for $f(x)$ to be real is $x^2 - 16 > 0$.",
+        "**EXECUTE:** \n1. Factor the quadratic expression:\n$$(x - 4)(x + 4) > 0$$\n2. The roots of the equation $x^2 - 16 = 0$ are $x = \\pm 4$. The inequality is satisfied when $x$ lies outside the interval between the roots.\n3. Therefore, $x < -4$ or $x > 4$.\n4. In interval notation, this is:\n$$x \\in (-\\infty, -4) \\cup (4, \\infty) = R \\setminus [-4, 4]$$",
+        "**PROOF:** \n- Option B ($R \\setminus [-4, 4]$) is correct as derived.\n- Option A ($R \\setminus (-4, 4)$) includes the boundary points $-4$ and $4$, which would make the denominator zero.\n- Option C ($(4, \\infty)$) misses the entire negative half of the valid domain $(-\\infty, -4)$.\n- Option D ($[-4, 4]$) is the complement, representing the region where the function is undefined."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Find the domain of the real-valued function $f(x) = \\\\sqrt{3x - 4} + \\\\sqrt{7 - 3x}$.",
+    "options": [
+      {
+        "text": "$(4/3, 7/3)$"
+      },
+      {
+        "text": "$[4/3, \\infty)$"
+      },
+      {
+        "text": "$[4/3, 7/3]$"
+      },
+      {
+        "text": "$(-\\infty, 7/3]$"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Medium",
+    "subtopic": "Domain and Range of Real Functions",
+    "fsmTag": "domain-radical-sum",
+    "concepts": [
+      "domain-of-function",
+      "radical-functions",
+      "inequalities"
+    ],
+    "sourcePages": [
+      34
+    ],
+    "timeTargets": {
+      "ap_eapcet": 45,
+      "ts_eapcet": 45,
+      "jee_main": 60
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When finding the domain of $\\sqrt{ax-b} + \\sqrt{c-ax}$.",
+      "steps": [
+        "**Trigger:** Set both terms inside the square roots to be non-negative: $3x - 4 \\ge 0$ and $7 - 3x \\ge 0$.",
+        "**Action:** Solve the inequalities: $x \\ge 4/3$ and $x \\le 7/3$. Take their intersection.",
+        "**Result:** $x \\in [4/3, 7/3]$ — option C."
+      ],
+      "sanityCheck": "For $x = 2$, both terms are positive. For $x = 1$, first term is negative. For $x = 3$, second term is negative. Thus, range must be bounded by 4/3 and 7/3."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** We need to find the domain of the sum of two radical functions $f(x) = \\sqrt{3x - 4} + \\sqrt{7 - 3x}$. The domain is the intersection of the domains of each individual square root term.",
+        "**EXTRACT:** The conditions are:\n- (1) $3x - 4 \\ge 0$\n- (2) $7 - 3x \\ge 0$",
+        "**EXECUTE:** \n1. Solve the first inequality:\n$$3x \\ge 4 \\implies x \\ge \\frac{4}{3}$$\n2. Solve the second inequality:\n$$7 \\ge 3x \\implies x \\le \\frac{7}{3}$$\n3. Find the intersection of both intervals:\n$$x \\in \\left[\\frac{4}{3}, \\frac{7}{3}\\right]$$",
+        "**PROOF:** \n- Option C ($[4/3, 7/3]$) is correct as derived.\n- Option A ($(4/3, 7/3)$) incorrectly excludes the endpoints, where the function is still defined.\n- Option B ($[4/3, \\infty)$) ignores the constraint from the second radical.\n- Option D ($(-\\infty, 7/3]$) ignores the constraint from the first radical."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Find the domain of the real-valued function $f(x) = \\\\frac{2^x}{x+3}$.",
+    "options": [
+      {
+        "text": "$R \\setminus \\{-3\\}$"
+      },
+      {
+        "text": "$R$"
+      },
+      {
+        "text": "$(-3, \\infty)$"
+      },
+      {
+        "text": "$(-\\infty, -3)$"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Easy",
+    "subtopic": "Domain and Range of Real Functions",
+    "fsmTag": "domain-rational-denominator",
+    "concepts": [
+      "domain-of-function",
+      "rational-functions",
+      "exponential-functions"
+    ],
+    "sourcePages": [
+      34
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When the numerator is defined everywhere and the denominator is linear.",
+      "steps": [
+        "**Trigger:** The numerator $2^x$ is defined for all real numbers. The only constraint comes from the denominator.",
+        "**Action:** Set the denominator not equal to zero: $x + 3 \\neq 0 \\implies x \\neq -3$.",
+        "**Result:** $R \\setminus \\{-3\\}$ — option A."
+      ],
+      "sanityCheck": "Only $x = -3$ leads to division by zero, which is undefined."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** We need to find the domain of the function $f(x) = \\frac{2^x}{x+3}$. This is a rational-like function where the numerator is an exponential function and the denominator is a linear polynomial.",
+        "**EXTRACT:** The exponential function $2^x$ is defined for all $x \\in R$. The denominator $x+3$ must not be zero.",
+        "**EXECUTE:** \n1. Identify any points where the numerator is undefined: None.\n2. Set the denominator to zero to find the excluded points:\n$$x + 3 = 0 \\implies x = -3$$\n3. Therefore, the function is defined for all real numbers except $x = -3$. The domain is:\n$$R \\setminus \\{-3\\}$$",
+        "**PROOF:** \n- Option A ($R \\setminus \\{-3\\}$) is correct as derived.\n- Option B ($R$) fails to exclude the division-by-zero point $x = -3$.\n- Option C ($(-3, \\infty)$) incorrectly restricts the domain to values strictly greater than $-3$.\n- Option D ($(-\\infty, -3)$) incorrectly restricts the domain to values strictly less than $-3$."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Find the domain of the real-valued function $f(x) = \\\\frac{x^2 + 2x + 1}{(x-2)(x-3)(x-4)}$.",
+    "options": [
+      {
+        "text": "$R \\setminus \\{2, 3\\}$"
+      },
+      {
+        "text": "$R \\setminus \\{2, 3, 4\\}$"
+      },
+      {
+        "text": "$R$"
+      },
+      {
+        "text": "$(2, 4)$"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Medium",
+    "subtopic": "Domain and Range of Real Functions",
+    "fsmTag": "domain-rational-multiple-denominator",
+    "concepts": [
+      "domain-of-function",
+      "rational-functions"
+    ],
+    "sourcePages": [
+      34
+    ],
+    "timeTargets": {
+      "ap_eapcet": 45,
+      "ts_eapcet": 45,
+      "jee_main": 60
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When the denominator is factored into distinct linear terms.",
+      "steps": [
+        "**Trigger:** The denominator becomes zero when any of the factors $(x-2), (x-3), (x-4)$ is zero.",
+        "**Action:** Set the denominator to zero: $x = 2, 3, 4$. These points must be excluded from $R$.",
+        "**Result:** $R \\setminus \\{2, 3, 4\\}$ — option B."
+      ],
+      "sanityCheck": "Check that $x=2, 3, 4$ all cause division by zero. All other real numbers are valid."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** We need to find the domain of the rational function $f(x) = \\frac{x^2 + 2x + 1}{(x-2)(x-3)(x-4)}$. A rational function is defined everywhere except where the denominator is zero.",
+        "**EXTRACT:** The numerator is $x^2 + 2x + 1$, which is defined for all $x \\in R$. The denominator is $(x-2)(x-3)(x-4)$, which must be non-zero.",
+        "**EXECUTE:** \n1. Find the roots of the denominator:\n$$(x-2)(x-3)(x-4) = 0 \\implies x = 2, 3, 4$$\n2. The function is undefined at these three points.\n3. Therefore, the domain of $f(x)$ is all real numbers except $2, 3$, and $4$:\n$$D = R \\setminus \\{2, 3, 4\\}$$",
+        "**PROOF:** \n- Option B ($R \\setminus \\{2, 3, 4\\}$) is correct as shown.\n- Option A ($R \\setminus \\{2, 3\\}$) fails to exclude $4$ from the domain.\n- Option C ($R$) is incorrect because it includes the points of division-by-zero.\n- Option D ($(2, 4)$) is a distractor."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Find the domain of the real-valued function $f(x) = \\\\sqrt{x^2 - 5x + 6}$.",
+    "options": [
+      {
+        "text": "$R \\setminus [2, 3]$"
+      },
+      {
+        "text": "$R \\setminus [2, 3)$"
+      },
+      {
+        "text": "$R \\setminus (2, 3)$"
+      },
+      {
+        "text": "$[2, 3]$"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Medium",
+    "subtopic": "Domain and Range of Real Functions",
+    "fsmTag": "domain-radical-quadratic",
+    "concepts": [
+      "domain-of-function",
+      "quadratic-inequalities",
+      "radical-functions"
+    ],
+    "sourcePages": [
+      34
+    ],
+    "timeTargets": {
+      "ap_eapcet": 50,
+      "ts_eapcet": 50,
+      "jee_main": 75
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When finding the domain of $\\sqrt{x^2-5x+6}$.",
+      "steps": [
+        "**Trigger:** The term inside the square root must be non-negative: $x^2 - 5x + 6 \\ge 0$.",
+        "**Action:** Factor: $(x-2)(x-3) \\ge 0 \\implies x \\le 2$ or $x \\ge 3$.",
+        "**Result:** $R \\setminus (2, 3)$ — option C."
+      ],
+      "sanityCheck": "Check $x = 2.5$: $6.25 - 12.5 + 6 = -0.25 < 0$, which is undefined. So $(2,3)$ is excluded. Boundary points 2 and 3 are included since $\\sqrt{0} = 0$ is real."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** We need to find the domain of the real-valued function $f(x) = \\sqrt{x^2 - 5x + 6}$. The quantity inside the square root must be non-negative.",
+        "**EXTRACT:** The condition is $x^2 - 5x + 6 \\ge 0$.",
+        "**EXECUTE:** \n1. Factor the quadratic polynomial:\n$$x^2 - 5x + 6 = (x - 2)(x - 3) \\ge 0$$\n2. The roots of the quadratic are $x = 2$ and $x = 3$.\n3. For the product of two factors to be non-negative, the variable $x$ must lie outside the open interval between the roots.\n4. Therefore, we have:\n$$x \\le 2 \\text{ or } x \\ge 3$$\n5. In interval notation, this is:\n$$x \\in (-\\infty, 2] \\cup [3, \\infty) = R \\setminus (2, 3)$$ (the set of all reals excluding the open interval $(2, 3)$).",
+        "**PROOF:** \n- Option C ($R \\setminus (2, 3)$) is correct as derived.\n- Option A ($R \\setminus [2, 3]$) is incorrect because it excludes the boundary points $2$ and $3$, where the function is defined.\n- Option B is a distractor with mismatched brackets.\n- Option D ($[2, 3]$) is the region where the quadratic is negative, so the function is undefined here (except at the boundary points)."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Find the domain of the real-valued function $f(x) = \\\\sqrt{\\\\log_{0.5}(x - x^2)}$.",
+    "options": [
+      {
+        "text": "$(0, 0.5]$"
+      },
+      {
+        "text": "$[0, 1]$"
+      },
+      {
+        "text": "$R \\setminus [0, 1]$"
+      },
+      {
+        "text": "$(0, 1)$"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Hard",
+    "subtopic": "Domain and Range of Real Functions",
+    "fsmTag": "domain-log-radical",
+    "concepts": [
+      "domain-of-function",
+      "logarithmic-functions",
+      "radical-functions"
+    ],
+    "sourcePages": [
+      34
+    ],
+    "timeTargets": {
+      "ap_eapcet": 90,
+      "ts_eapcet": 90,
+      "jee_main": 135
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When the base of the logarithm is less than 1.",
+      "steps": [
+        "**Trigger:** For the square root, we need $\\log_{0.5}(x-x^2) \\ge 0$. Since base is $0.5 < 1$, the inequality flips: $x-x^2 \\le 0.5^0 = 1$.",
+        "**Action:** For the logarithm, we also need $x-x^2 > 0 \\implies x(1-x) > 0 \\implies x \\in (0, 1)$. The other condition $x^2-x+1 \\ge 0$ is always true.",
+        "**Result:** $(0, 1)$ — option D."
+      ],
+      "sanityCheck": "Check $x = 0.5$: $x-x^2 = 0.25$. Since $0.25 < 1$, $\\log_{0.5}(0.25) > 0$, so it is defined. For $x = 2$, $x-x^2 = -2 \\le 0$, undefined."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** We need to find the domain of the real-valued function $f(x) = \\sqrt{\\log_{0.5}(x - x^2)}$. There are two main conditions:\n- (1) For the logarithm to be defined: $x - x^2 > 0$.\n- (2) For the square root to be real: $\\log_{0.5}(x - x^2) \\ge 0$.",
+        "**EXTRACT:** Argument: $x - x^2$. Base: $0.5 < 1$.",
+        "**EXECUTE:** \n1. **First Condition (Logarithm):**\n$$x - x^2 > 0 \\implies x(1 - x) > 0 \\implies x \\in (0, 1)$$\n2. **Second Condition (Square Root):**\n$$\\log_{0.5}(x - x^2) \\ge 0$$\nSince the base of the logarithm is $0.5$ (which is less than $1$), when we rewrite this as an exponential inequality, the inequality sign reverses:\n$$x - x^2 \\le (0.5)^0 \\implies x - x^2 \\le 1 \\implies x^2 - x + 1 \\ge 0$$\n3. Let's analyze $x^2 - x + 1 \\ge 0$. The discriminant of this quadratic expression is:\n$$D = (-1)^2 - 4(1)(1) = 1 - 4 = -3 < 0$$\nSince the discriminant is negative and the leading coefficient is positive ($1 > 0$), the quadratic expression $x^2 - x + 1$ is strictly positive for all real numbers $x$.\n4. Therefore, the second condition is satisfied for all $x \\in R$.\n5. Intersecting the two conditions: $x \\in (0, 1) \\cap R = (0, 1)$.",
+        "**PROOF:** \n- Option D ($(0, 1)$) is correct as derived.\n- Option A is a distractor based on the base $0.5$.\n- Option B ($[0, 1]$) incorrectly includes $0$ and $1$, where the argument of the logarithm becomes $0$, which is undefined.\n- Option C ($R \\setminus [0, 1]$) is the complement of the valid domain."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Find the domain of the real-valued function $f(x) = \\\\frac{1}{\\\\log_{10}(3-x)}$.",
+    "options": [
+      {
+        "text": "$(-\\infty, 3)$"
+      },
+      {
+        "text": "$(2, 3)$"
+      },
+      {
+        "text": "$(-\\infty, 3) \\setminus \\{2\\}$"
+      },
+      {
+        "text": "$(-\\infty, 2)$"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Medium",
+    "subtopic": "Domain and Range of Real Functions",
+    "fsmTag": "domain-rational-log",
+    "concepts": [
+      "domain-of-function",
+      "logarithmic-functions",
+      "rational-functions"
+    ],
+    "sourcePages": [
+      34
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When the function is $\\frac{1}{\\log_a(b-x)}$.",
+      "steps": [
+        "**Trigger:** Logarithm requires $3-x > 0 \\implies x < 3$. Denominator requires $\\log_{10}(3-x) \\neq 0 \\implies 3-x \\neq 1 \\implies x \\neq 2$.",
+        "**Action:** Intersect both conditions: $x < 3$ and $x \\neq 2$.",
+        "**Result:** $(-\\infty, 3) \\setminus \\{2\\}$ — option C."
+      ],
+      "sanityCheck": "For $x = 2$, the denominator is $\\log_{10}(1) = 0$, which is undefined. For $x > 3$, the term inside the log is negative, which is undefined."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** We need to find the domain of the function $f(x) = \\frac{1}{\\log_{10}(3-x)}$. We have two conditions:\n- (1) For the logarithm to be defined: $3 - x > 0$.\n- (2) For the denominator to be non-zero: $\\log_{10}(3-x) \\neq 0$.",
+        "**EXTRACT:** Base of log is 10. Argument is $3-x$.",
+        "**EXECUTE:** \n1. Solve the first condition:\n$$3 - x > 0 \\implies x < 3 \\implies x \\in (-\\infty, 3)$$\n2. Solve the second condition:\n$$\\log_{10}(3-x) \\neq 0 \\implies 3 - x \\neq 10^0 \\implies 3 - x \\neq 1 \\implies x \\neq 2$$\n3. Combine both conditions:\n$$x \\in (-\\infty, 3) \\text{ and } x \\neq 2 \\implies x \\in (-\\infty, 3) \\setminus \\{2\\}$$",
+        "**PROOF:** \n- Option C ($(-\\infty, 3) \\setminus \\{2\\}$) is correct as derived.\n- Option A ($(-\\infty, 3)$) fails to exclude $x=2$ which causes division by zero.\n- Option B ($(2, 3)$) misses all values less than 2 where the function is still defined.\n- Option D ($(-\\infty, 2)$) misses the valid interval $(2, 3)$."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Find the range of the real-valued function $f(x) = \\\\frac{x^2-9}{x-3}$ defined on the domain $R \\\\setminus \\\\{3\\\\}$.",
+    "options": [
+      {
+        "text": "$R \\setminus \\{3\\}$"
+      },
+      {
+        "text": "$R$"
+      },
+      {
+        "text": "$(3, \\infty)$"
+      },
+      {
+        "text": "$R \\setminus \\{6\\}$"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Medium",
+    "subtopic": "Domain and Range of Real Functions",
+    "fsmTag": "range-rational-simplification",
+    "concepts": [
+      "range-of-function",
+      "rational-functions",
+      "domain-of-function"
+    ],
+    "sourcePages": [
+      34
+    ],
+    "timeTargets": {
+      "ap_eapcet": 45,
+      "ts_eapcet": 45,
+      "jee_main": 60
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When the rational function simplifies to a linear function by removing a common factor.",
+      "steps": [
+        "**Trigger:** Simplify the function: $f(x) = \\frac{(x-3)(x+3)}{x-3} = x + 3$ for $x \\neq 3$.",
+        "**Action:** Since $x$ cannot be 3, $f(x)$ cannot be $3 + 3 = 6$.",
+        "**Result:** Range is $R \\setminus \\{6\\}$ — option D."
+      ],
+      "sanityCheck": "The simplified line is $y = x+3$. The hole in the domain at $x=3$ corresponds to a hole in the range at $y=6$."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** We need to find the range of the rational function $f(x) = \\frac{x^2-9}{x-3}$ where the domain is given as $R \\setminus \\{3\\}$.",
+        "**EXTRACT:** $f(x) = \\frac{x^2-9}{x-3}$ for $x \\neq 3$.",
+        "**EXECUTE:** \n1. Factor the numerator:\n$$x^2 - 9 = (x-3)(x+3)$$\n2. Rewrite the function for $x \\neq 3$:\n$$f(x) = \\frac{(x-3)(x+3)}{x-3} = x + 3$$\n3. Since the domain is $R \\setminus \\{3\\}$, $x$ can take any real value except $3$.\n4. Compute the values that $f(x) = x + 3$ can take. Since $x \\neq 3$, we have:\n$$f(x) \\neq 3 + 3 \\implies f(x) \\neq 6$$\n5. Thus, the range of the function is all real numbers except $6$, which is:\n$$R \\setminus \\{6\\}$$",
+        "**PROOF:** \n- Option D ($R \\setminus \\{6\\}$) is correct as shown.\n- Option A ($R \\setminus \\{3\\}$) is a distractor that swaps the excluded domain value with the excluded range value.\n- Option B ($R$) fails to recognize that $6$ cannot be reached because $x=3$ is excluded from the domain.\n- Option C ($(3, \\infty)$) is a distractor."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Find the domain of the real-valued function $f(x) = \\\\sqrt{\\\\frac{4-x}{x}}$.",
+    "options": [
+      {
+        "text": "$(0, 4]$"
+      },
+      {
+        "text": "$[0, 4]$"
+      },
+      {
+        "text": "$(0, 4)$"
+      },
+      {
+        "text": "$[0, 4)$"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Hard",
+    "subtopic": "Domain and Range of Real Functions",
+    "fsmTag": "domain-fractional-radical",
+    "concepts": [
+      "domain-of-function",
+      "rational-inequalities",
+      "radical-functions"
+    ],
+    "sourcePages": [
+      32
+    ],
+    "timeTargets": {
+      "ap_eapcet": 75,
+      "ts_eapcet": 75,
+      "jee_main": 110
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When finding the domain of $\\sqrt{\\frac{a-x}{x}}$ where $a > 0$.",
+      "steps": [
+        "**Trigger:** We need $\\frac{4-x}{x} \\ge 0$ and the denominator $x \\neq 0$.",
+        "**Action:** The sign of the fraction is positive when the numerator and denominator have the same sign. This occurs when $x \\in (0, 4]$.",
+        "**Result:** $(0, 4]$ — option A."
+      ],
+      "sanityCheck": "If $x = 4$, the fraction is 0, which is allowed. If $x = 0$, denominator is 0, which is excluded. So $x=4$ is closed, $x=0$ is open."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** We need to find the domain of the function $f(x) = \\sqrt{\\frac{4-x}{x}}$. The expression inside the square root must be non-negative, and the denominator must be non-zero.",
+        "**EXTRACT:** The conditions are:\n- (1) $\\frac{4-x}{x} \\ge 0$\n- (2) $x \\neq 0$",
+        "**EXECUTE:** \n1. To solve the rational inequality $\\frac{4-x}{x} \\ge 0$, we find the critical points where the numerator or denominator is zero. These are $x = 4$ and $x = 0$.\n2. Create a sign table or use the interval method:\n   - For $x < 0$: $4-x > 0$ and $x < 0 \\implies$ fraction is negative.\n   - For $0 < x < 4$: $4-x > 0$ and $x > 0 \\implies$ fraction is positive.\n   - For $x > 4$: $4-x < 0$ and $x > 0 \\implies$ fraction is negative.\n3. The fraction is non-negative when $0 < x \\le 4$.\n4. Note that $x = 0$ must be excluded because it makes the denominator zero. $x = 4$ is included because it makes the numerator zero (value of function is $\\sqrt{0} = 0$, which is a real number).\n5. Thus, the domain is the interval:\n$$(0, 4]$$",
+        "**PROOF:** \n- Option A ($(0, 4]$) is correct as derived.\n- Option B ($[0, 4]$) incorrectly includes $x=0$, which causes division by zero.\n- Option C ($(0, 4)$) incorrectly excludes $x=4$, where the function is defined.\n- Option D ($[0, 4)$) has the boundary inclusion reversed."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Find the range of the real-valued function $f(x) = \\\\sqrt{16 - x^2}$.",
+    "options": [
+      {
+        "text": "$[-4, 4]$"
+      },
+      {
+        "text": "$[0, 4]$"
+      },
+      {
+        "text": "$(0, 4]$"
+      },
+      {
+        "text": "$[0, 16]$"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Hard",
+    "subtopic": "Domain and Range of Real Functions",
+    "fsmTag": "range-radical-quadratic",
+    "concepts": [
+      "range-of-function",
+      "radical-functions",
+      "domain-of-function"
+    ],
+    "sourcePages": [
+      34
+    ],
+    "timeTargets": {
+      "ap_eapcet": 75,
+      "ts_eapcet": 75,
+      "jee_main": 110
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When finding the range of $f(x) = \\sqrt{a^2 - x^2}$.",
+      "steps": [
+        "**Trigger:** The domain is $[-4, 4]$. The minimum value inside the square root occurs at $x = \\pm 4$ (giving $\\sqrt{0} = 0$).",
+        "**Action:** The maximum value inside the square root occurs at $x = 0$ (giving $\\sqrt{16} = 4$). Since the function is continuous, it takes all values in between.",
+        "**Result:** Range is $[0, 4]$ — option B."
+      ],
+      "sanityCheck": "Check boundary outputs: $f(4) = 0$, $f(0) = 4$. Since the square root function is always non-negative, the range must start at 0."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** We need to find the range of the function $f(x) = \\sqrt{16 - x^2}$. We first find the domain of the function, and then analyze the possible output values.",
+        "**EXTRACT:** $f(x) = \\sqrt{16 - x^2}$. For the function to be defined, $16 - x^2 \\ge 0 \\implies x^2 \\le 16 \\implies x \\in [-4, 4]$.",
+        "**EXECUTE:** \n1. Let $y = \\sqrt{16 - x^2}$. Since $y$ is the principal square root of a real number, we must have $y \\ge 0$.\n2. Square both sides to express $x$ in terms of $y$:\n$$y^2 = 16 - x^2 \\implies x^2 = 16 - y^2$$\n3. Since $x$ is a real number, $x^2 \\ge 0$. This gives an inequality for $y$:\n$$16 - y^2 \\ge 0 \\implies y^2 \\le 16 \\implies y \\in [-4, 4]$$\n4. Combine this with the condition $y \\ge 0$:\n$$y \\in [0, 4]$$\n5. Thus, the range of the function is $[0, 4]$.",
+        "**PROOF:** \n- Option B ($[0, 4]$) is correct as derived.\n- Option A ($[-4, 4]$) is the domain of the function, not the range.\n- Option C ($(0, 4]$) incorrectly excludes 0, which is reached at $x = \\pm 4$.\n- Option D ($[0, 16]$) arises if a student forgets to take the square root of the maximum value."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Which of the following functions $f: R \\to R$ is an even function?",
+    "options": [
+      {
+        "text": "$f(x) = \\cos x$"
+      },
+      {
+        "text": "$f(x) = x^3$"
+      },
+      {
+        "text": "$f(x) = \\sin x$"
+      },
+      {
+        "text": "$f(x) = x$"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Easy",
+    "subtopic": "Special Functions and Even-Odd Nature",
+    "fsmTag": "even-function-identification",
+    "concepts": [
+      "even-function",
+      "polynomial-functions",
+      "trigonometric-functions"
+    ],
+    "sourcePages": [
+      27
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When identifying even functions using $f(-x) = f(x)$.",
+      "steps": [
+        "**Trigger:** Test $f(-x)$ for each option.",
+        "**Action:** $\\cos(-x) = \\cos x$, $(-x)^3 = -x^3$, $\\sin(-x) = -\\sin x$, $(-x) = -x$. Only the first option preserves the sign.",
+        "**Result:** $f(x) = \\cos x$ — option A."
+      ],
+      "sanityCheck": "By definition, an even function satisfies $f(-x) = f(x)$ for all $x$ in the domain."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** We need to identify which of the given functions is an even function. An even function satisfies the property $f(-x) = f(x)$ for all $x$ in its domain.",
+        "**EXTRACT:** The options are: A) $\\cos x$, B) $x^3$, C) $\\sin x$, D) $x$.",
+        "**EXECUTE:** \n1. Test option A: Let $f(x) = \\cos x$. Then $f(-x) = \\cos(-x) = \\cos x = f(x)$. Thus, it is even.\n2. Test option B: Let $f(x) = x^3$. Then $f(-x) = (-x)^3 = -x^3 = -f(x)$. Thus, it is odd.\n3. Test option C: Let $f(x) = \\sin x$. Then $f(-x) = \\sin(-x) = -\\sin x = -f(x)$. Thus, it is odd.\n4. Test option D: Let $f(x) = x$. Then $f(-x) = -x = -f(x)$. Thus, it is odd.",
+        "**PROOF:** \n- Option A is correct because $\\cos(-x) = \\cos x$ for all real $x$.\n- Option B is incorrect as it is an odd function.\n- Option C is incorrect as it is an odd function.\n- Option D is incorrect as it is an odd function."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Which of the following functions $f: R \\to R$ is an odd function?",
+    "options": [
+      {
+        "text": "$f(x) = x^5$"
+      },
+      {
+        "text": "$f(x) = x^2$"
+      },
+      {
+        "text": "$f(x) = \\cos x$"
+      },
+      {
+        "text": "$f(x) = |x|$"
+      }
+    ],
+    "correctOptionIndex": 0,
+    "difficulty": "Easy",
+    "subtopic": "Special Functions and Even-Odd Nature",
+    "fsmTag": "odd-function-identification",
+    "concepts": [
+      "odd-function",
+      "polynomial-functions",
+      "trigonometric-functions"
+    ],
+    "sourcePages": [
+      27
+    ],
+    "timeTargets": {
+      "ap_eapcet": 30,
+      "ts_eapcet": 30,
+      "jee_main": 45
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When identifying odd functions using $f(-x) = -f(x)$.",
+      "steps": [
+        "**Trigger:** Test $f(-x)$ for each option.",
+        "**Action:** $(-x)^5 = -x^5$, $(-x)^2 = x^2$, $\\cos(-x) = \\cos x$, $|-x| = |x|$. Only the first option changes sign.",
+        "**Result:** $f(x) = x^5$ — option A."
+      ],
+      "sanityCheck": "By definition, an odd function satisfies $f(-x) = -f(x)$ for all $x$ in the domain."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** We need to identify which of the given functions is an odd function. An odd function satisfies the property $f(-x) = -f(x)$ for all $x$ in its domain.",
+        "**EXTRACT:** The options are: A) $x^5$, B) $x^2$, C) $\\cos x$, D) $|x|$.",
+        "**EXECUTE:** \n1. Test option A: Let $f(x) = x^5$. Then $f(-x) = (-x)^5 = -x^5 = -f(x)$. Thus, it is odd.\n2. Test option B: Let $f(x) = x^2$. Then $f(-x) = (-x)^2 = x^2 = f(x)$. Thus, it is even.\n3. Test option C: Let $f(x) = \\cos x$. Then $f(-x) = \\cos(-x) = \\cos x = f(x)$. Thus, it is even.\n4. Test option D: Let $f(x) = |x|$. Then $f(-x) = |-x| = |x| = f(x)$. Thus, it is even.",
+        "**PROOF:** \n- Option A is correct because $(-x)^5 = -x^5 = -f(x)$ for all real $x$.\n- Option B is incorrect as it is an even function.\n- Option C is incorrect as it is an even function.\n- Option D is incorrect as it is an even function."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Let $f: R \\setminus \\{0\\} \\to R$ be defined by $f(x) = \\\\frac{x}{e^x - 1} + \\\\frac{x}{2} + 1$. Which of the following is true about the nature of $f(x)$?",
+    "options": [
+      {
+        "text": "$f(x)$ is an odd function"
+      },
+      {
+        "text": "$f(x)$ is an even function"
+      },
+      {
+        "text": "$f(x)$ is neither even nor odd"
+      },
+      {
+        "text": "$f(x)$ is a constant function"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Medium",
+    "subtopic": "Special Functions and Even-Odd Nature",
+    "fsmTag": "even-function-algebraic-proof",
+    "concepts": [
+      "even-function",
+      "exponential-functions",
+      "algebraic-proof"
+    ],
+    "sourcePages": [
+      35
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "steps": []
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** We need to determine the nature of the function $f(x) = \\frac{x}{e^x - 1} + \\frac{x}{2} + 1$. We will compute $f(-x)$ and compare it with $f(x)$.",
+        "**EXTRACT:** $f(x) = \\frac{x}{e^x - 1} + \\frac{x}{2} + 1$ defined for $x \\neq 0$.",
+        "**EXECUTE:** \n1. Substitute $-x$ for $x$:\n$$f(-x) = \\frac{-x}{e^{-x} - 1} + \\frac{-x}{2} + 1$$\n2. Simplify the first term by rewriting $e^{-x}$ as $\\frac{1}{e^x}$:\n$$\\frac{-x}{\\frac{1}{e^x} - 1} = \\frac{-x}{\\frac{1 - e^x}{e^x}} = \\frac{-x e^x}{1 - e^x} = \\frac{x e^x}{e^x - 1}$$\n3. Now rewrite $\\frac{x e^x}{e^x - 1}$ by adding and subtracting $x$ in the numerator:\n$$\\frac{x(e^x - 1 + 1)}{e^x - 1} = \\frac{x(e^x - 1)}{e^x - 1} + \\frac{x}{e^x - 1} = x + \\frac{x}{e^x - 1}$$\n4. Substitute this back into the expression for $f(-x)$:\n$$f(-x) = \\left(x + \\frac{x}{e^x - 1}\\right) - \\frac{x}{2} + 1 = \\frac{x}{e^x - 1} + \\left(x - \\frac{x}{2}\\right) + 1 = \\frac{x}{e^x - 1} + \\frac{x}{2} + 1$$\n5. Compare with $f(x)$:\n$$f(-x) = f(x)$$\nTherefore, $f(x)$ is an even function.",
+        "**PROOF:** \n- Option B ($f(x)$ is an even function) is correct as derived.\n- Option A ($f(x)$ is an odd function) is incorrect because $f(-x) \\neq -f(x)$. For example, $f(1) \\approx 2.08$, while $-f(1) \\approx -2.08$, which is not $f(-1) \\approx 2.08$.\n- Option C is incorrect as the function satisfies the even condition.\n- Option D is incorrect because the function value varies with $x$ (e.g., $f(1) \\approx 2.08$, while $f(2) \\approx 2.31$)."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Determine the nature of the function $f: R \\to R$ defined by $f(x) = 2^x - 2^{-x} + \\\\sin x$.",
+    "options": [
+      {
+        "text": "It is an even function"
+      },
+      {
+        "text": "It is neither even nor odd"
+      },
+      {
+        "text": "It is an odd function"
+      },
+      {
+        "text": "It is a constant function"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Medium",
+    "subtopic": "Special Functions and Even-Odd Nature",
+    "fsmTag": "odd-function-algebraic-proof",
+    "concepts": [
+      "odd-function",
+      "exponential-functions",
+      "trigonometric-functions"
+    ],
+    "sourcePages": [
+      31
+    ],
+    "timeTargets": {
+      "ap_eapcet": 45,
+      "ts_eapcet": 45,
+      "jee_main": 60
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When the function is a sum of known odd functions.",
+      "steps": [
+        "**Trigger:** Identify the nature of the individual terms: $g(x) = 2^x - 2^{-x}$ and $h(x) = \\sin x$.",
+        "**Action:** Both $g(x)$ and $h(x)$ are odd functions because $g(-x) = 2^{-x} - 2^x = -g(x)$ and $h(-x) = \\sin(-x) = -\\sin x$. The sum of two odd functions is always odd.",
+        "**Result:** It is an odd function — option C."
+      ],
+      "sanityCheck": "Compute: $f(-x) = 2^{-x} - 2^x + \\sin(-x) = -(2^x - 2^{-x} + \\sin x) = -f(x)$."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** We need to determine the nature of the function $f(x) = 2^x - 2^{-x} + \\sin x$. We will compute $f(-x)$ and compare it with $f(x)$ and $-f(x)$.",
+        "**EXTRACT:** The function is $f(x) = 2^x - 2^{-x} + \\sin x$ defined on $R$.",
+        "**EXECUTE:** \n1. Compute $f(-x)$:\n$$f(-x) = 2^{-x} - 2^{-(-x)} + \\sin(-x) = 2^{-x} - 2^x - \\sin x$$\n2. Factor out a negative sign:\n$$f(-x) = -(2^x - 2^{-x} + \\sin x)$$\n3. Since the term inside the parentheses is exactly $f(x)$, we have:\n$$f(-x) = -f(x)$$\n4. Therefore, the function $f(x)$ is an odd function.",
+        "**PROOF:** \n- Option C (It is an odd function) is correct as derived.\n- Option A is incorrect because $f(-x) \\neq f(x)$.\n- Option B is incorrect because it satisfies the definition of an odd function.\n- Option D is incorrect because the function values vary with $x$."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Find the domain of the real-valued function $f(x) = \\\\log(x - [x])$, where $[x]$ denotes the greatest integer less than or equal to $x$.",
+    "options": [
+      {
+        "text": "$R$"
+      },
+      {
+        "text": "$Z$"
+      },
+      {
+        "text": "$(0, \\infty)$"
+      },
+      {
+        "text": "$R \\setminus Z$"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Medium",
+    "subtopic": "Special Functions and Even-Odd Nature",
+    "fsmTag": "domain-log-fractional-part",
+    "concepts": [
+      "domain-of-function",
+      "greatest-integer-function",
+      "logarithmic-functions"
+    ],
+    "sourcePages": [
+      32
+    ],
+    "timeTargets": {
+      "ap_eapcet": 45,
+      "ts_eapcet": 45,
+      "jee_main": 60
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When the function contains $\\log(x - [x])$.",
+      "steps": [
+        "**Trigger:** For the logarithm to be defined, the argument $x - [x]$ must be strictly positive: $x - [x] > 0 \\implies x > [x]$.",
+        "**Action:** The quantity $x - [x]$ is the fractional part of $x$, which is always non-negative, and it is zero if and only if $x$ is an integer.",
+        "**Result:** The domain is all real numbers except integers: $R \\setminus Z$ — option D."
+      ],
+      "sanityCheck": "If $x = 2$ (integer), $[2] = 2 \\implies 2-2=0$, and $\\log(0)$ is undefined. If $x = 2.5$, $[2.5]=2 \\implies 2.5-2=0.5 > 0$, defined."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** We need to find the domain of $f(x) = \\log(x - [x])$. The argument of the logarithm must be strictly positive.",
+        "**EXTRACT:** The condition is $x - [x] > 0$, where $[x]$ is the greatest integer function.",
+        "**EXECUTE:** \n1. By definition, the greatest integer function $[x]$ satisfies the inequality:\n$$[x] \\le x < [x] + 1$$\nThis implies:\n$$x - [x] \\ge 0$$\n2. The term $x - [x]$ represents the fractional part of $x$, which is always in the interval $[0, 1)$.\n3. For the logarithm to be defined, we require:\n$$x - [x] > 0$$\n4. Since $x - [x] \\ge 0$, the only times this condition is violated is when $x - [x] = 0$.\n5. $x - [x] = 0 \\iff x = [x]$, which is true if and only if $x$ is an integer ($x \\in Z$).\n6. Therefore, the function is defined for all real numbers except integers. The domain is:\n$$R \\setminus Z$$",
+        "**PROOF:** \n- Option D ($R \\setminus Z$) is correct as derived.\n- Option A ($R$) is incorrect because it includes integers where the argument is zero.\n- Option B ($Z$) is the set of points where the function is *undefined*, which is the complement of the domain.\n- Option C ($(0, \\infty)$) is incorrect because negative non-integers are also valid."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Find the domain of the real-valued function $f(x) = \\\\frac{1}{\\\\sqrt{x + |x|}}$.",
+    "options": [
+      {
+        "text": "$R$"
+      },
+      {
+        "text": "$R \\setminus \\{0\\}$"
+      },
+      {
+        "text": "$(0, \\infty)$"
+      },
+      {
+        "text": "$(-\\infty, 0)$"
+      }
+    ],
+    "correctOptionIndex": 2,
+    "difficulty": "Medium",
+    "subtopic": "Special Functions and Even-Odd Nature",
+    "fsmTag": "domain-modulus-radical-denominator",
+    "concepts": [
+      "domain-of-function",
+      "modulus-function",
+      "radical-functions"
+    ],
+    "sourcePages": [
+      34
+    ],
+    "timeTargets": {
+      "ap_eapcet": 45,
+      "ts_eapcet": 45,
+      "jee_main": 60
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When finding the domain of $\\frac{1}{\\sqrt{x+|x|}}$.",
+      "steps": [
+        "**Trigger:** The term inside the square root in the denominator must be strictly positive: $x + |x| > 0$.",
+        "**Action:** If $x > 0$, $|x| = x \\implies x + x = 2x > 0$ (satisfied). If $x \\le 0$, $|x| = -x \\implies x - x = 0 > 0$ (impossible).",
+        "**Result:** Domain is $(0, \\infty)$ — option C."
+      ],
+      "sanityCheck": "Check $x = -5$: $-5 + |-5| = 0$, which is in the denominator (division by zero, undefined). Only positive reals are valid."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** We need to find the domain of the function $f(x) = \\frac{1}{\\sqrt{x + |x|}}$. The expression inside the square root in the denominator must be strictly positive.",
+        "**EXTRACT:** The condition is $x + |x| > 0$.",
+        "**EXECUTE:** \n1. Analyze $|x|$ by cases:\n   - **Case 1: $x \\ge 0$**\n     Here, $|x| = x$. The condition becomes:\n$$x + x > 0 \\implies 2x > 0 \\implies x > 0$$\n     So, all $x > 0$ are in the domain.\n   - **Case 2: $x < 0$**\n     Here, $|x| = -x$. The condition becomes:\n$$x + (-x) > 0 \\implies 0 > 0$$\n     This inequality has no solution. Thus, no negative values of $x$ are in the domain.\n2. Combine both cases. The domain is the set of all positive real numbers:\n$$(0, \\infty)$$ ",
+        "**PROOF:** \n- Option C ($(0, \\infty)$) is correct as derived.\n- Option A ($R$) is incorrect because it includes negative numbers and 0 where the function is undefined.\n- Option B ($R \\setminus \\{0\\}$) is incorrect because negative numbers are still included.\n- Option D ($(-\\infty, 0)$) represents the region where the denominator is always zero, so the function is completely undefined there."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Find the domain of the real-valued function $f(x) = \\\\frac{\\\\sqrt{9-x^2}}{[x] + 2}$, where $[x]$ represents the greatest integer less than or equal to $x$.",
+    "options": [
+      {
+        "text": "$[-3, 3]$"
+      },
+      {
+        "text": "$[-3, -2) \\cup [-1, 3]$"
+      },
+      {
+        "text": "$[-3, 3) \\setminus \\{-2\\}$"
+      },
+      {
+        "text": "$(-3, 3]$"
+      }
+    ],
+    "correctOptionIndex": 1,
+    "difficulty": "Medium",
+    "subtopic": "Special Functions and Even-Odd Nature",
+    "fsmTag": "domain-radical-gif-denominator",
+    "concepts": [
+      "domain-of-function",
+      "greatest-integer-function",
+      "radical-functions"
+    ],
+    "sourcePages": [
+      34
+    ],
+    "timeTargets": {
+      "ap_eapcet": 60,
+      "ts_eapcet": 60,
+      "jee_main": 90
+    },
+    "theOptimalPath": {
+      "exists": false,
+      "steps": []
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** We need to find the domain of the function $f(x) = \\frac{\\sqrt{9-x^2}}{[x] + 2}$. This requires satisfying two conditions:\n- (1) The numerator's square root argument must be non-negative: $9 - x^2 \\ge 0$.\n- (2) The denominator must not be zero: $[x] + 2 \\neq 0$.",
+        "**EXTRACT:** $9 - x^2 \\ge 0$ and $[x] \\neq -2$.",
+        "**EXECUTE:** \n1. **First Condition (Numerator):**\n$$9 - x^2 \\ge 0 \\implies x^2 \\le 9 \\implies x \\in [-3, 3]$$\n2. **Second Condition (Denominator):**\n$$[x] + 2 \\neq 0 \\implies [x] \\neq -2$$\nRecall that $[x] = -2 \\iff -2 \\le x < -1$.\nSo, we must exclude the interval $[-2, -1)$ from the domain.\n3. Intersect both conditions:\n$$\\text{Domain} = [-3, 3] \\setminus [-2, -1) = [-3, -2) \\cup [-1, 3]$$",
+        "**PROOF:** \n- Option B ($[-3, -2) \\cup [-1, 3]$) is correct as derived.\n- Option A ($[-3, 3]$) fails to exclude the interval $[-2, -1)$ where $[x] = -2$, causing division by zero.\n- Option C ($[-3, 3) \\setminus \\{-2\\}$) fails to exclude the other points in the interval $[-2, -1)$ (like $x = -1.5$ where $[x] = -2$, causing division by zero).\n- Option D ($(-3, 3]$) is a distractor."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  },
+  {
+    "questionText": "Find the domain of the real-valued function $f(x) = \\\\frac{1}{\\\\sqrt{[x]^2 - [x] - 2}}$, where $[x]$ represents the greatest integer less than or equal to $x$.",
+    "options": [
+      {
+        "text": "$R \\setminus [-1, 3]$"
+      },
+      {
+        "text": "$(-\\infty, -1] \\cup (3, \\infty)$"
+      },
+      {
+        "text": "$(-\\infty, -2) \\cup [3, \\infty)$"
+      },
+      {
+        "text": "$R \\setminus [-1, 3)$"
+      }
+    ],
+    "correctOptionIndex": 3,
+    "difficulty": "Hard",
+    "subtopic": "Special Functions and Even-Odd Nature",
+    "fsmTag": "domain-gif-quadratic-radical",
+    "concepts": [
+      "domain-of-function",
+      "greatest-integer-function",
+      "quadratic-inequalities"
+    ],
+    "sourcePages": [
+      32
+    ],
+    "timeTargets": {
+      "ap_eapcet": 90,
+      "ts_eapcet": 90,
+      "jee_main": 135
+    },
+    "theOptimalPath": {
+      "exists": true,
+      "preconditions": "When the function is $\\frac{1}{\\sqrt{[x]^2 - [x] - 2}}$.",
+      "steps": [
+        "**Trigger:** We need the quadratic in $[x]$ to be strictly positive: $[x]^2 - [x] - 2 > 0$.",
+        "**Action:** Factor: $([x]+1)([x]-2) > 0 \\implies [x] < -1$ or $[x] > 2$. Since $[x]$ is an integer, this means $[x] \\le -2$ or $[x] \\ge 3$. Using the definition of $[x]$, $[x] \\le -2 \\implies x < -1$ and $[x] \\ge 3 \\implies x \\ge 3$.",
+        "**Result:** Domain is $(-\\infty, -1) \\cup [3, \\infty) = R \\setminus [-1, 3)$ — option D."
+      ],
+      "sanityCheck": "Check $x = -0.5$: $[-0.5] = -1 \\implies [-1]^2 - [-1] - 2 = 0$, undefined. Check $x = 3$: $[3] = 3 \\implies 9 - 3 - 2 = 4 > 0$, defined."
+    },
+    "fullStepByStep": {
+      "steps": [
+        "**DIAGNOSE:** We need to find the domain of the function $f(x) = \\frac{1}{\\sqrt{[x]^2 - [x] - 2}}$. The term inside the square root in the denominator must be strictly positive.",
+        "**EXTRACT:** The condition is $[x]^2 - [x] - 2 > 0$.",
+        "**EXECUTE:** \n1. Let $u = [x]$. The inequality is:\n$$u^2 - u - 2 > 0 \\implies (u - 2)(u + 1) > 0$$\n2. The solution is:\n$$u < -1 \\text{ or } u > 2$$\n3. Since $u = [x]$ is an integer, this means:\n$$[x] \\le -2 \\text{ or } [x] \\ge 3$$\n4. Convert these to intervals for $x$:\n   - $[x] \\le -2 \\implies x < -1$\n   - $[x] \\ge 3 \\implies x \\ge 3$\n5. Combining these two regions, we get:\n$$x \\in (-\\infty, -1) \\cup [3, \\infty) = R \\setminus [-1, 3)$$\nwhich is the set of all real numbers excluding the interval $[-1, 3)$.",
+        "**PROOF:** \n- Option D ($R \\setminus [-1, 3)$) is correct as derived.\n- Option A ($R \\setminus [-1, 3]$) incorrectly excludes $3$, where the function is defined.\n- Option B ($(-\\infty, -1] \\cup (3, \\infty)$) has the boundary inclusion reversed.\n- Option C ($(-\\infty, -2) \\cup [3, \\infty)$) misses the interval $[-2, -1)$ where $[x] = -2$ (which is a valid region)."
+      ]
+    },
+    "visual": {
+      "type": "none"
+    }
+  }
+]
