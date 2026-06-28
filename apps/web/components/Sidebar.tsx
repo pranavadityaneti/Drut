@@ -46,7 +46,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentPage, setCurrentPage, u
       title: 'Overview',
       items: [
         { id: 'dashboard', label: 'Dashboard', icon: LayoutGrid },
-        { id: 'analytics', label: 'Analytics', icon: BarChart2 },
+        // 'analytics' hidden — no route yet (clicking bounced users to /dashboard). Re-add when the page ships.
       ]
     },
     {
@@ -54,7 +54,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentPage, setCurrentPage, u
       items: [
         { id: 'practice', label: 'Practice', icon: Target },
         { id: 'sprint', label: 'Sprints', icon: Timer },
-        { id: 'previous_papers', label: 'Previous Papers', icon: FileText },
+        // 'previous_papers' hidden — no route/page yet. Re-add when PYQ browsing ships.
       ]
     },
     {
@@ -65,8 +65,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ currentPage, setCurrentPage, u
           { id: 'admin', label: 'Admin', icon: Shield }
         ] : []),
         { id: 'help-support', label: 'Help & Support', icon: HelpCircle },
-        { id: 'faqs', label: 'FAQs', icon: HelpCircle },
-        { id: 'contact', label: 'Contact', icon: MessageSquare },
+        // 'faqs' + 'contact' hidden — no routes yet (covered for now by Help & Support). Re-add when built.
       ]
     }
   ];

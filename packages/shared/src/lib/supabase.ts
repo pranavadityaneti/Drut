@@ -11,11 +11,29 @@ const SUPABASE_ANON_KEY: string = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3Mi
 
 
 /**
+ * Return window.localStorage ONLY if it is actually usable. Accessing it can
+ * throw in privacy modes / sandboxed iframes / disabled-storage settings, so we
+ * probe with a write+remove and fall back to undefined (in-memory) on any error.
+ */
+function safeBrowserStorage(): Storage | undefined {
+  try {
+    const ls = window.localStorage;
+    const probe = '__drut_ls_probe__';
+    ls.setItem(probe, '1');
+    ls.removeItem(probe);
+    return ls;
+  } catch {
+    return undefined;
+  }
+}
+
+/**
  * Initialize the Supabase client. Idempotent — subsequent calls return the
  * already-initialized client (the first call wins).
  *
- * Web: not required to call. The lazy `supabase` proxy below initializes
- *   with web defaults (no session persistence, no URL session detection).
+ * Web: not required to call — the lazy `supabase` proxy below initializes on
+ *   first use. The web client persists the session in localStorage (so users
+ *   stay logged in across reloads) and parses the OAuth redirect hash.
  *
  * Mobile (React Native): MUST be called from the app entry point BEFORE any
  *   consumer touches the supabase client. Pass `{ storage: AsyncStorage }`
@@ -30,18 +48,29 @@ const SUPABASE_ANON_KEY: string = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3Mi
 export function initSupabase(config?: { storage?: any }): SupabaseClient {
   if (client) return client;
 
-  const useStorage = !!config?.storage;
+  // Mobile passes a React Native storage adapter (AsyncStorage). Web passes
+  // nothing — but a browser SPA must STILL persist the session in localStorage
+  // so users aren't logged out on every reload (previously persistSession was
+  // false on web, which logged users out after one page). localStorage is probed
+  // safely so locked-down browsers degrade to in-memory instead of throwing.
+  const rnStorage = config?.storage;
+  const isBrowser = typeof window !== 'undefined' && typeof window.document !== 'undefined';
+  const browserStorage = (!rnStorage && isBrowser) ? safeBrowserStorage() : undefined;
+  const storage = rnStorage ?? browserStorage;
+  const canPersist = !!storage;
+
   try {
     client = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
       realtime: { params: { eventsPerSecond: 2 } },
       auth: {
-        storage: config?.storage,
-        // When a storage adapter is provided (mobile), persist sessions and
-        // auto-refresh tokens so users stay logged in across app restarts.
-        // Web keeps the conservative defaults to avoid localStorage access errors.
-        persistSession: useStorage,
-        detectSessionInUrl: !useStorage,
-        autoRefreshToken: useStorage,
+        storage,
+        // Persist + auto-refresh whenever we have a working storage adapter
+        // (AsyncStorage on mobile, localStorage on web). Without one (SSR / Node /
+        // storage-blocked browser) we stay in-memory so nothing crashes.
+        persistSession: canPersist,
+        autoRefreshToken: canPersist,
+        // Parse the OAuth redirect hash on web; harmless/false on React Native.
+        detectSessionInUrl: isBrowser,
       },
     });
   } catch (error) {
