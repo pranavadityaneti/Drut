@@ -4,7 +4,29 @@ import { StatusBar } from 'expo-status-bar';
 import { Colors } from '../../constants/Colors';
 import { ArrowLeft, Mail, Lock, Eye, EyeOff, MessageCircle } from 'lucide-react-native';
 import { useState } from 'react';
-import { authService } from '@drut/shared';
+import { authService, getSupabase } from '@drut/shared';
+import * as WebBrowser from 'expo-web-browser';
+import * as Linking from 'expo-linking';
+
+// Lets the in-app auth browser dismiss cleanly when it redirects back.
+WebBrowser.maybeCompleteAuthSession();
+
+// Parse a Supabase OAuth redirect URL — handles both PKCE (?code=) and implicit
+// (#access_token=&refresh_token=) shapes.
+function parseAuthRedirect(url: string): { access_token?: string; refresh_token?: string; code?: string } {
+    const out: Record<string, string> = {};
+    const grab = (s: string) => {
+        for (const pair of s.split('&')) {
+            const eq = pair.indexOf('=');
+            if (eq > 0) out[decodeURIComponent(pair.slice(0, eq))] = decodeURIComponent(pair.slice(eq + 1));
+        }
+    };
+    const q = url.indexOf('?');
+    const h = url.indexOf('#');
+    if (q >= 0) grab(url.slice(q + 1, h >= 0 ? h : undefined));
+    if (h >= 0) grab(url.slice(h + 1));
+    return out as { access_token?: string; refresh_token?: string; code?: string };
+}
 
 export default function LoginScreen() {
     const router = useRouter();
@@ -12,6 +34,40 @@ export default function LoginScreen() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
+    const [googleLoading, setGoogleLoading] = useState(false);
+
+    const handleGoogle = async () => {
+        setGoogleLoading(true);
+        try {
+            const supabase = getSupabase();
+            const redirectTo = Linking.createURL('auth-callback');
+            const { data, error } = await supabase.auth.signInWithOAuth({
+                provider: 'google',
+                options: { redirectTo, skipBrowserRedirect: true },
+            });
+            if (error) throw error;
+            if (!data?.url) throw new Error('Could not start Google sign-in.');
+
+            const result = await WebBrowser.openAuthSessionAsync(data.url, redirectTo);
+            if (result.type !== 'success' || !result.url) return; // user cancelled
+
+            const { access_token, refresh_token, code } = parseAuthRedirect(result.url);
+            if (code) {
+                const { error: exErr } = await supabase.auth.exchangeCodeForSession(code);
+                if (exErr) throw exErr;
+            } else if (access_token && refresh_token) {
+                const { error: setErr } = await supabase.auth.setSession({ access_token, refresh_token });
+                if (setErr) throw setErr;
+            } else {
+                throw new Error('No session returned from Google.');
+            }
+            router.replace('/(tabs)/dashboard');
+        } catch (err: any) {
+            Alert.alert('Google sign-in failed', err?.message || 'Please try again.');
+        } finally {
+            setGoogleLoading(false);
+        }
+    };
 
     const handleLogin = async () => {
         if (!email || !password) {
@@ -59,6 +115,22 @@ export default function LoginScreen() {
                 >
                     <MessageCircle size={22} color="#25D366" />
                     <Text style={styles.phoneButtonText}>Login with WhatsApp OTP</Text>
+                </TouchableOpacity>
+
+                {/* Google */}
+                <TouchableOpacity
+                    style={[styles.googleButton, googleLoading && styles.loginButtonDisabled]}
+                    onPress={handleGoogle}
+                    disabled={googleLoading}
+                >
+                    {googleLoading ? (
+                        <ActivityIndicator color={Colors.text} />
+                    ) : (
+                        <>
+                            <Text style={styles.googleG}>G</Text>
+                            <Text style={styles.googleButtonText}>Continue with Google</Text>
+                        </>
+                    )}
                 </TouchableOpacity>
 
                 {/* Divider */}
@@ -197,6 +269,28 @@ const styles = StyleSheet.create({
         fontSize: 17,
         fontWeight: '700',
         color: '#FFFFFF',
+    },
+    googleButton: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: 12,
+        height: 56,
+        borderRadius: 28,
+        backgroundColor: Colors.white,
+        borderWidth: 1.5,
+        borderColor: Colors.border,
+        marginTop: 12,
+    },
+    googleG: {
+        fontSize: 19,
+        fontWeight: '800',
+        color: '#4285F4',
+    },
+    googleButtonText: {
+        fontSize: 17,
+        fontWeight: '700',
+        color: Colors.text,
     },
     dividerContainer: {
         flexDirection: 'row',

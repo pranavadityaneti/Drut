@@ -14,13 +14,16 @@
     },
     "ios": {
       "supportsTablet": true,
+      "bundleIdentifier": "club.drut.app",
       "infoPlist": {
+        "NSPhotoLibraryUsageDescription": "Drut needs access to your photos so you can set a profile picture.",
         "NSAppTransportSecurity": {
           "NSAllowsArbitraryLoads": true
         }
       }
     },
     "android": {
+      "package": "club.drut.app",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -32,7 +35,8 @@
     },
     "plugins": [
       "expo-router",
-      "expo-status-bar"
+      "expo-status-bar",
+      "expo-web-browser"
     ]
   }
 }

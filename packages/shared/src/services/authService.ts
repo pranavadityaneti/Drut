@@ -37,11 +37,19 @@ export const signup = async (email: string, password: string): Promise<{ user: U
     return { user: data.user, sessionEstablished: !!data.session };
 };
 
+/**
+ * WEB Google sign-in. Redirects the browser to Google, then back to the current
+ * origin; the session is parsed from the URL (detectSessionInUrl) and persisted
+ * (localStorage). MOBILE uses its own native flow (expo-web-browser) — do NOT
+ * call this on React Native (there's no window).
+ */
 export const loginWithGoogle = async () => {
     const supabase = getSupabase();
     if (!supabase) throw new Error("Supabase client is not available.");
+    const redirectTo = typeof window !== 'undefined' ? window.location.origin : undefined;
     const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
+        options: redirectTo ? { redirectTo } : undefined,
     });
     if (error) throw new Error(error.message);
 };
