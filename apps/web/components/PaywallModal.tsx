@@ -3,16 +3,17 @@
  *
  * Plans + prices come from @drut/shared pricing.ts (single source of truth). The
  * annual plan shows the first-timer intro price for users who haven't subscribed
- * before. onUpgrade(plan) hands off to the Razorpay checkout.
+ * before. A coupon can be applied (validated server-side); a 100%-off coupon
+ * makes the upgrade free. onUpgrade(plan, couponCode?) hands off to checkout.
  */
 import React, { useState } from 'react';
-import { X, BadgeCheck, Infinity as InfinityIcon, ListChecks, Timer } from 'lucide-react';
-import { cn, PRICING, priceForPlan, type PlanId } from '@drut/shared';
+import { X, BadgeCheck, Infinity as InfinityIcon, ListChecks, Timer, Tag } from 'lucide-react';
+import { cn, PRICING, priceForPlan, formatINR, validateCoupon, type PlanId, type CouponPreview } from '@drut/shared';
 
 interface PaywallModalProps {
     isOpen: boolean;
     onClose: () => void;
-    onUpgrade: (plan: PlanId) => void;
+    onUpgrade: (plan: PlanId, couponCode?: string) => void;
     isFirstTimer?: boolean;
     loading?: boolean;
     reason?: string;
@@ -25,12 +26,45 @@ const FEATURES = [
 ];
 
 export const PaywallModal: React.FC<PaywallModalProps> = ({ isOpen, onClose, onUpgrade, isFirstTimer = true, loading = false, reason }) => {
-    const [plan, setPlan] = useState<PlanId>('annual');
+    const [plan, setPlanState] = useState<PlanId>('annual');
+    const [couponInput, setCouponInput] = useState('');
+    const [applied, setApplied] = useState<CouponPreview | null>(null);
+    const [applyMsg, setApplyMsg] = useState<string | null>(null);
+    const [applying, setApplying] = useState(false);
+
     if (!isOpen) return null;
 
     const monthly = priceForPlan('monthly', isFirstTimer);
     const annual = priceForPlan('annual', isFirstTimer);
     const annualHasIntro = isFirstTimer && PRICING.annual.firstTimerAmountPaise != null;
+
+    // Changing plan invalidates any applied coupon (price + plan-scoping differ).
+    const setPlan = (id: PlanId) => {
+        setPlanState(id);
+        setApplied(null);
+        setApplyMsg(null);
+    };
+
+    const handleApply = async () => {
+        const code = couponInput.trim();
+        if (!code || applying) return;
+        setApplying(true);
+        setApplyMsg(null);
+        try {
+            const res = await validateCoupon(plan, code);
+            setApplied(res);
+            if (!res.valid) setApplyMsg(res.reason || 'Invalid coupon code');
+        } catch (e: any) {
+            setApplied(null);
+            setApplyMsg(e?.message || 'Could not apply coupon');
+        } finally {
+            setApplying(false);
+        }
+    };
+
+    const couponOk = applied?.valid === true;
+    const couponCode = couponOk ? applied!.code : undefined;
+    const ctaLabel = loading ? 'Starting checkout…' : (couponOk && applied!.isFree ? 'Unlock free' : 'Upgrade');
 
     const PlanCard = ({ id, title, price, unit, note, strike }: { id: PlanId; title: string; price: number; unit: string; note?: string; strike?: number }) => {
         const selected = plan === id;
@@ -45,7 +79,7 @@ export const PaywallModal: React.FC<PaywallModalProps> = ({ isOpen, onClose, onU
             >
                 <div className="flex items-center justify-between">
                     <span className="text-[13px] font-semibold text-[var(--color-ink-3)]">{title}</span>
-                    <span className={cn('w-[18px] h-[18px] rounded-full border-2 flex items-center justify-center', selected ? 'border-[var(--color-primary)]' : 'border-[var(--color-line)]')}>
+                    <span className={cn('w-[18px] h-[18px] rounded-full border-2 flex items-center justify-center', selected ? 'border-[var(--color-primary)]' : 'border-[var(--color-border)]')}>
                         {selected && <span className="w-[9px] h-[9px] rounded-full bg-[var(--color-primary)]" />}
                     </span>
                 </div>
@@ -61,7 +95,7 @@ export const PaywallModal: React.FC<PaywallModalProps> = ({ isOpen, onClose, onU
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/45" onClick={onClose}>
-            <div className="w-full max-w-md rounded-[24px] bg-[var(--color-card)] p-6 shadow-xl" onClick={(e) => e.stopPropagation()}>
+            <div className="w-full max-w-md rounded-[24px] bg-[var(--color-card)] p-6 shadow-xl max-h-[92vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
                 {/* Header */}
                 <div className="flex items-center justify-between">
                     <span className="w-6" />
@@ -108,14 +142,48 @@ export const PaywallModal: React.FC<PaywallModalProps> = ({ isOpen, onClose, onU
                     />
                 </div>
 
+                {/* Coupon */}
+                <div className="mt-4">
+                    <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2 flex-1 rounded-full border border-[var(--color-border)] bg-[var(--color-card)] px-3 h-[42px]">
+                            <Tag className="w-4 h-4 text-[var(--color-ink-3)] shrink-0" />
+                            <input
+                                type="text"
+                                value={couponInput}
+                                onChange={(e) => { setCouponInput(e.target.value); setApplied(null); setApplyMsg(null); }}
+                                onKeyDown={(e) => { if (e.key === 'Enter') handleApply(); }}
+                                placeholder="Coupon code"
+                                autoCapitalize="characters"
+                                className="flex-1 bg-transparent text-[14px] text-[var(--color-ink-1)] placeholder:text-[var(--color-ink-3)] focus:outline-none uppercase"
+                            />
+                        </div>
+                        <button
+                            type="button"
+                            onClick={handleApply}
+                            disabled={applying || !couponInput.trim()}
+                            className="h-[42px] px-4 rounded-full text-[13px] font-bold text-[var(--color-ink-1)] bg-[var(--color-muted)] hover:opacity-90 disabled:opacity-50"
+                        >
+                            {applying ? '…' : 'Apply'}
+                        </button>
+                    </div>
+                    {couponOk && (
+                        <p className="text-[12px] text-[#3d7a0f] mt-2">
+                            {applied!.isFree
+                                ? `Coupon ${applied!.code} applied — it's free 🎉`
+                                : `Coupon ${applied!.code} applied — you pay ${formatINR(applied!.finalPaise ?? 0)}`}
+                        </p>
+                    )}
+                    {applyMsg && !couponOk && <p className="text-[12px] text-[#b3261e] mt-2">{applyMsg}</p>}
+                </div>
+
                 {/* CTA */}
                 <button
                     type="button"
-                    onClick={() => onUpgrade(plan)}
+                    onClick={() => onUpgrade(plan, couponCode)}
                     disabled={loading}
                     className="w-full h-[52px] mt-5 rounded-full bg-[var(--color-primary)] text-white text-[16px] font-extrabold hover:opacity-95 disabled:opacity-70 transition-opacity"
                 >
-                    {loading ? 'Starting checkout…' : 'Upgrade'}
+                    {ctaLabel}
                 </button>
                 <p className="text-[11.5px] text-[var(--color-ink-3)] text-center mt-3">Cancel anytime. Plans renew automatically.</p>
             </div>

@@ -44,6 +44,7 @@ export const SessionEngine: React.FC<SessionEngineProps> = ({ config, onSessionC
     // Paywall (free-tier 20/day gate) → Razorpay WebView checkout
     const [showCheckout, setShowCheckout] = useState(false);
     const [checkoutPlan, setCheckoutPlan] = useState<PlanId | null>(null);
+    const [checkoutCoupon, setCheckoutCoupon] = useState<string | null>(null);
     const [isFirstTimer, setIsFirstTimer] = useState(true);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
@@ -251,13 +252,14 @@ export const SessionEngine: React.FC<SessionEngineProps> = ({ config, onSessionC
             <PaywallModal
                 visible={paywall.active && !showCheckout}
                 onClose={() => router.back()}
-                onUpgrade={(plan) => { setCheckoutPlan(plan); setShowCheckout(true); }}
+                onUpgrade={(plan, coupon) => { setCheckoutPlan(plan); setCheckoutCoupon(coupon ?? null); setShowCheckout(true); }}
                 isFirstTimer={isFirstTimer}
                 reason={paywall.reason}
             />
             <RazorpayCheckoutModal
                 visible={showCheckout}
                 plan={checkoutPlan}
+                couponCode={checkoutCoupon}
                 onClose={() => setShowCheckout(false)}
                 onSuccess={() => { setShowCheckout(false); retryAfterUpgrade(); }}
             />

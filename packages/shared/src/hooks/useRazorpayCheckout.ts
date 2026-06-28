@@ -19,6 +19,7 @@ import { createRazorpayOrder, verifyRazorpayPayment } from '../services/paymentS
 import type { PlanId } from '../lib/pricing';
 import { PRICING } from '../lib/pricing';
 import type { RazorpaySuccessPayload, VerifyPaymentResponse } from '../types/subscription';
+import { isFreeGrant } from '../types/subscription';
 
 interface RazorpayInstance {
     open: () => void;
@@ -91,8 +92,8 @@ export interface UseRazorpayCheckoutOptions {
 }
 
 export interface UseRazorpayCheckoutReturn {
-    /** Open the Razorpay modal for the given plan. Resolves on verified payment. */
-    pay: (plan: PlanId) => Promise<VerifyPaymentResponse>;
+    /** Open the Razorpay modal for the given plan (optionally with a coupon). Resolves on verified payment, or immediately if a coupon makes it free. */
+    pay: (plan: PlanId, couponCode?: string) => Promise<VerifyPaymentResponse>;
     /** True while loading the script, creating the order, or modal is open. */
     busy: boolean;
     /** Last error from the flow (script load, order creation, signature mismatch). */
@@ -104,19 +105,24 @@ export function useRazorpayCheckout(opts: UseRazorpayCheckoutOptions = {}): UseR
     const [error, setError] = useState<Error | null>(null);
     const busyRef = useRef(false);
 
-    const pay = useCallback(async (plan: PlanId): Promise<VerifyPaymentResponse> => {
+    const pay = useCallback(async (plan: PlanId, couponCode?: string): Promise<VerifyPaymentResponse> => {
         if (busyRef.current) throw new Error('checkout-already-open');
         busyRef.current = true;
         setBusy(true);
         setError(null);
 
         try {
-            // 1. Load the script (lazy, cached).
+            // 1. Create the order via our edge fn (server derives amount + applies coupon).
+            const order = await createRazorpayOrder(plan, couponCode);
+
+            // 1a. Coupon made it free → granted directly, no Razorpay sheet.
+            if (isFreeGrant(order)) {
+                return { verified: true, plan: order.plan, status: order.status, expires_at: order.expires_at };
+            }
+
+            // 2. Paid path — load the Razorpay script (lazy, cached).
             await loadRazorpayScript();
             if (!window.Razorpay) throw new Error('razorpay-script-missing');
-
-            // 2. Create the order via our edge fn (server derives the amount).
-            const order = await createRazorpayOrder(plan);
             const planSpec = PRICING[plan];
 
             // 3. Open the modal and await success/dismiss via a promise.
