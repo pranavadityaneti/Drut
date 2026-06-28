@@ -107,6 +107,9 @@ export interface SprintAttempt {
     inputMethod: 'tap' | 'click' | 'swipe' | 'keyboard_s' | 'timeout';
     questionData: QuestionData;
     selectedOptionIndex?: number;
+    /** Per-question target (ms) the engine used for the countdown + score; threaded so
+     *  the mastery RPC grades against the real target, not a hardcoded default. */
+    targetTimeMs?: number;
 }
 
 export interface SprintSessionData {
@@ -136,6 +139,8 @@ const EXAM_SCORING_CONFIG: Record<string, { base: number; penalty: number }> = {
     wbjee: { base: 100, penalty: -25 },        // Similar to JEE
     cat: { base: 100, penalty: -33 },          // 3:1 ratio
     eamcet: { base: 100, penalty: 0 },         // No negative marking
+    ap_eapcet: { base: 100, penalty: 0 },      // EAPCET (MVP exam) — same as EAMCET
+    ts_eapcet: { base: 100, penalty: 0 },      // EAPCET (MVP exam) — same as EAMCET
     mht_cet: { base: 100, penalty: 0 },        // No negative marking
     kcet: { base: 100, penalty: 0 },           // No negative marking
     gujcet: { base: 100, penalty: 0 },         // No negative marking
@@ -180,6 +185,34 @@ export function calculateTargetTime(
 }
 
 /**
+ * THE single source of truth for a question's target time (in SECONDS). Prefers the
+ * question's AI-authored per-exam `timeTargets` (alias-mapped so ap_eapcet/ts_eapcet
+ * also match the EAMCET value), then falls back to the exam/difficulty baseline.
+ *
+ * Used by web + mobile, practice + sprint, so the visible countdown, the speed-bonus,
+ * and the stored mastery target all agree. Replaces the old per-surface logic (web
+ * practice returned 0 for EAPCET → flat 45s; sprints ignored timeTargets entirely).
+ */
+export function resolveTargetSeconds(
+    question: { timeTargets?: any; difficulty?: string | null } | null | undefined,
+    examProfile: string = 'default',
+    difficulty: 'Easy' | 'Medium' | 'Hard' = 'Medium'
+): number {
+    const tt = question?.timeTargets as Record<string, number | undefined> | undefined;
+    if (tt) {
+        const keys: string[] = [examProfile];
+        if (examProfile.includes('eapcet') || examProfile === 'eamcet') {
+            keys.push('ap_eapcet', 'ts_eapcet', 'eamcet');
+        }
+        for (const k of keys) {
+            const v = tt[k];
+            if (typeof v === 'number' && v > 0) return v;
+        }
+    }
+    return calculateTargetTime(examProfile, difficulty);
+}
+
+/**
  * Calculate Sprint score based on correctness, time, and exam profile
  * Uses exam-specific base points and penalties
  */
@@ -187,7 +220,8 @@ export function calculateSprintScore(
     isCorrect: boolean,
     timeMs: number,
     examProfile: string = 'default',
-    difficulty: 'Easy' | 'Medium' | 'Hard' = 'Medium'
+    difficulty: 'Easy' | 'Medium' | 'Hard' = 'Medium',
+    targetSec?: number
 ): number {
     const config = EXAM_SCORING_CONFIG[examProfile] || EXAM_SCORING_CONFIG.default;
 
@@ -196,10 +230,13 @@ export function calculateSprintScore(
         return config.penalty;
     }
 
-    // Calculate speed bonus based on target time for this exam/difficulty
-    const targetTimeMs = calculateTargetTime(examProfile, difficulty) * 1000;
+    // Speed bonus is graded against the SAME target the user saw counting down. Callers
+    // pass the resolved per-question target (resolveTargetSeconds); fall back to the
+    // exam/difficulty baseline only if it wasn't supplied.
+    const targetTimeSec = (typeof targetSec === 'number' && targetSec > 0)
+        ? targetSec
+        : calculateTargetTime(examProfile, difficulty);
     const timeSec = timeMs / 1000;
-    const targetTimeSec = targetTimeMs / 1000;
 
     // Speed bonus: Up to 50% of base score for fast answers
     // Full bonus at 0s, 0 bonus at target time, no bonus beyond target
@@ -445,7 +482,10 @@ export async function saveSprintAttempt(
         const fsmTag = attempt.questionData?.fsmTag || 'general';
         if (fsmTag && fsmTag !== 'general') {
             const isCorrect = attempt.result === 'correct';
-            const targetTimeMs = 45000; // Sprint default: 45 seconds
+            // Use the real per-question target the engine computed (resolveTargetSeconds),
+            // threaded via the attempt — not a hardcoded 45s, which mis-graded mastery for
+            // every exam/question whose real target differs.
+            const targetTimeMs = attempt.targetTimeMs ?? 45000;
 
             try {
                 await supabase.rpc('save_attempt_and_update_mastery', {

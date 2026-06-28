@@ -2,7 +2,7 @@ import React, { useState, useCallback, useEffect, useRef, useMemo } from 'react'
 import { cn } from '@drut/shared';
 import { PracticeSetup } from './PracticeSetup';
 import { QuestionData } from '@drut/shared';
-import { getQuestionsForUser, getReviewQuestionsForUser, isServableQuestion, triggerDiagramGeneration, DIFFICULTY_SELECTION_ENABLED } from '@drut/shared';
+import { getQuestionsForUser, getReviewQuestionsForUser, isServableQuestion, triggerDiagramGeneration, DIFFICULTY_SELECTION_ENABLED, resolveTargetSeconds } from '@drut/shared';
 import { authService } from '@drut/shared';
 const { getCurrentUser } = authService;
 import { getPreloadedQuestion } from '@drut/shared'; // from ../../services/preloaderService';
@@ -527,16 +527,15 @@ export const NewPractice: React.FC = () => {
 
     const targetTime = useMemo(() => {
         if (!questionData || !examProfile) return 0;
-        switch (examProfile) {
-            case 'jee_main':
-                return questionData.timeTargets.jee_main;
-            case 'cat':
-                return questionData.timeTargets.cat;
-            case 'eamcet':
-                return questionData.timeTargets.eamcet;
-            default:
-                return 0;
-        }
+        // Single shared resolver: question's per-exam timeTargets (alias-mapped for
+        // EAPCET) → exam/difficulty baseline. Replaces the old 3-exam switch that
+        // returned 0 for EAPCET (the MVP exam) and fell back to a flat 45s, diverging
+        // from mobile. Now web + mobile compute identical target times.
+        return resolveTargetSeconds(
+            questionData,
+            examProfile,
+            (questionData.difficulty as 'Easy' | 'Medium' | 'Hard') || 'Medium',
+        );
     }, [questionData, examProfile]);
 
     const handleAnswerSubmit = async () => {

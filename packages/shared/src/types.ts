@@ -11,6 +11,11 @@ export interface TimeTargets {
   gujcet?: number;
   keam?: number;
   jee_advanced?: number;
+  // EAPCET is the MVP exam — the generation pipeline emits these keys (see the Zod
+  // schema in lib/questionSchema.ts), so the type must carry them or no typed consumer
+  // can read the EAPCET target. They share the EAMCET pattern.
+  ap_eapcet?: number;
+  ts_eapcet?: number;
 }
 
 export interface TheOptimalPath {

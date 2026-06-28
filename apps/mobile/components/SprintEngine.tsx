@@ -16,7 +16,7 @@ import {
     saveSprintAttempt,
     finalizeSprintSession,
     calculateSprintScore,
-    calculateTargetTime,
+    resolveTargetSeconds,
     getPrimaryBoardForExam,
     isPaywallError,
     isFirstTimerSubscriber,
@@ -131,7 +131,7 @@ export const SprintEngine: React.FC<{ config: SprintConfig }> = ({ config }) => 
         const q = questions[currentIndex];
         if (!q) return;
 
-        const targetSec = calculateTargetTime(config.exam, (q.difficulty as any) || 'Medium');
+        const targetSec = resolveTargetSeconds(q, config.exam, (q.difficulty as any) || 'Medium');
         ref.current.targetMs = targetSec * 1000;
         ref.current.startTime = Date.now();
         setSelectedId(null);
@@ -168,7 +168,8 @@ export const SprintEngine: React.FC<{ config: SprintConfig }> = ({ config }) => 
         else if (optionIndex !== null) { isCorrect = optionIndex === q.correctOptionIndex; result = isCorrect ? 'correct' : 'wrong'; }
 
         const difficulty = (q.difficulty as any) || 'Medium';
-        const earned = calculateSprintScore(isCorrect, timeMs, config.exam, difficulty);
+        // Grade the speed bonus against the SAME target the user saw counting down.
+        const earned = calculateSprintScore(isCorrect, timeMs, config.exam, difficulty, ref.current.targetMs / 1000);
         ref.current.score += earned;
         if (isCorrect) ref.current.correct++; else if (result === 'wrong') ref.current.wrong++; else ref.current.skipped++;
         setScore(ref.current.score);
@@ -181,6 +182,7 @@ export const SprintEngine: React.FC<{ config: SprintConfig }> = ({ config }) => 
             inputMethod: isTimeout ? 'timeout' : 'tap',
             questionData: q,
             selectedOptionIndex: optionIndex,
+            targetTimeMs: ref.current.targetMs,
         };
         ref.current.answers.push(attempt);
         if (ref.current.sessionId) {

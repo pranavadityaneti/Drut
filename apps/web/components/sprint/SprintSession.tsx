@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { QuestionData } from '@drut/shared';
 import { authService } from '@drut/shared';
 const { getCurrentUser } = authService;
-import { startSession, saveSprintAttempt, finalizeSprintSession, calculateSprintScore, createRetrySession, calculateTargetTime } from '@drut/shared';
+import { startSession, saveSprintAttempt, finalizeSprintSession, calculateSprintScore, createRetrySession, resolveTargetSeconds } from '@drut/shared';
 import { isPaywallError, useRazorpayCheckout, isFirstTimerSubscriber, getRemainingFreeQuota, PaywallError } from '@drut/shared';
 import type { PlanId } from '@drut/shared';
 import { PaywallModal } from '../PaywallModal';
@@ -51,16 +51,10 @@ export const SprintSession: React.FC<SprintSessionProps> = ({ config, onExit }) 
  skipped: 0
  });
 
- // Helper to get target time using calculateTargetTime
+ // Helper to get target time — shared resolver (question timeTargets, alias-mapped
+ // for EAPCET → exam/difficulty baseline). Same value feeds the countdown AND the score.
  const getTargetTime = (question: QuestionData) => {
- // 1. Try specific time target from question data
- const targets = question.timeTargets as any;
- if (targets && targets[config.examProfile]) {
- return targets[config.examProfile];
- }
- // 2. Use calculateTargetTime with exam profile and difficulty
- const difficulty = question.difficulty || 'Medium';
- return calculateTargetTime(config.examProfile, difficulty);
+ return resolveTargetSeconds(question, config.examProfile, (question.difficulty as any) || 'Medium');
  };
 
  const stopTimer = () => {
@@ -240,7 +234,8 @@ export const SprintSession: React.FC<SprintSessionProps> = ({ config, onExit }) 
  }
 
  const difficulty = question.difficulty || 'Medium';
- const score = calculateSprintScore(isCorrect, timeTakenMs, config.examProfile, difficulty);
+ // Grade the speed bonus against the SAME target the user saw counting down.
+ const score = calculateSprintScore(isCorrect, timeTakenMs, config.examProfile, difficulty, stateRef.current.targetTime);
 
  // Update local state refs
  stateRef.current.score += score;
@@ -257,6 +252,7 @@ export const SprintSession: React.FC<SprintSessionProps> = ({ config, onExit }) 
  inputMethod: isTimeout ? 'timeout' : 'click',
  questionData: question,
  selectedOptionIndex: optionIndex,
+ targetTimeMs: stateRef.current.targetTime * 1000,
  };
  stateRef.current.answers.push(attempt);
 
