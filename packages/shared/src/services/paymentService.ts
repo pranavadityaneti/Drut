@@ -176,7 +176,12 @@ export async function isFirstTimerSubscriber(): Promise<boolean> {
 export async function getTodayQuestionUsage(): Promise<number> {
     const supabase = getSupabase();
     const { data, error } = await supabase.rpc('get_today_question_usage');
-    if (error) return 0;
+    if (error) {
+        // Fail CLOSED: never collapse an unreadable count into 0. Returning 0 on error
+        // would let an exhausted free user slip past the daily cap every time the usage
+        // RPC hiccups. Surface the error so the gate denies rather than serves.
+        throw new Error(error.message || 'get_today_question_usage failed');
+    }
     return typeof data === 'number' ? data : 0;
 }
 
@@ -233,7 +238,16 @@ export async function assertWithinFreeQuota(): Promise<void> {
     const sub = await getCurrentSubscription();
     if (isProActive(sub)) return; // Pro → unlimited.
 
-    const used = await getTodayQuestionUsage();
+    let used: number;
+    try {
+        used = await getTodayQuestionUsage();
+    } catch {
+        // Fail CLOSED: if today's usage can't be confirmed, deny rather than serve a free
+        // question. A transient read failure must never hand out unlimited free questions.
+        throw new PaywallError(
+            "We couldn't verify your free-question usage for today. Please check your connection and try again — or upgrade to Drut Pro for unlimited practice.",
+        );
+    }
     if (used >= FREE_DAILY_QUESTION_LIMIT) {
         throw new PaywallError(
             `You've used your ${FREE_DAILY_QUESTION_LIMIT} free questions for today. Upgrade to Drut Pro for unlimited practice.`,
