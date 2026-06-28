@@ -234,24 +234,35 @@ export function isPaywallError(e: unknown): e is PaywallError {
  * This is the single chokepoint shared by web + mobile, practice + sprint — the
  * daily quota is a single unified pool across all question-serving paths.
  */
-export async function assertWithinFreeQuota(): Promise<void> {
+/**
+ * How many free questions the calling user has LEFT today.
+ *  - Pro (active, unexpired)  → Number.POSITIVE_INFINITY (unlimited).
+ *  - Free                     → max(0, FREE_DAILY_QUESTION_LIMIT − usedToday).
+ *
+ * Fail-CLOSED: returns 0 if today's usage can't be read, so callers deny rather
+ * than serve. Serving paths use this to CAP a batch fetch — without a cap, a single
+ * gate check could be used to over-fetch (e.g. a 30-question sprint started at 19/20
+ * used would hand out 11 extra free questions). This is the per-question enforcement
+ * that the old per-batch gate lacked.
+ */
+export async function getRemainingFreeQuota(): Promise<number> {
     const sub = await getCurrentSubscription();
-    if (isProActive(sub)) return; // Pro → unlimited.
+    if (isProActive(sub)) return Number.POSITIVE_INFINITY; // Pro → unlimited.
 
     let used: number;
     try {
         used = await getTodayQuestionUsage();
     } catch {
-        // Fail CLOSED: if today's usage can't be confirmed, deny rather than serve a free
-        // question. A transient read failure must never hand out unlimited free questions.
-        throw new PaywallError(
-            "We couldn't verify your free-question usage for today. Please check your connection and try again — or upgrade to Drut Pro for unlimited practice.",
-        );
+        // Fail CLOSED: can't confirm usage → treat as exhausted (deny, don't serve).
+        return 0;
     }
-    if (used >= FREE_DAILY_QUESTION_LIMIT) {
+    return Math.max(0, FREE_DAILY_QUESTION_LIMIT - used);
+}
+
+export async function assertWithinFreeQuota(): Promise<void> {
+    if ((await getRemainingFreeQuota()) <= 0) {
         throw new PaywallError(
-            `You've used your ${FREE_DAILY_QUESTION_LIMIT} free questions for today. Upgrade to Drut Pro for unlimited practice.`,
-            used,
+            `You've reached your ${FREE_DAILY_QUESTION_LIMIT} free questions for today (or we couldn't verify your usage). Upgrade to Drut Pro for unlimited practice.`,
         );
     }
 }

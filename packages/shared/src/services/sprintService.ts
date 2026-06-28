@@ -3,7 +3,8 @@ import { QuestionData } from '../types';
 import { log } from '../lib/log';
 import { getQuestionsForUser } from './questionCacheService';
 import { EXAM_SYLLABUS_CONFIG } from '../lib/examSyllabusConfig';
-import { incrementDailyQuestionUsage } from './paymentService';
+import { incrementDailyQuestionUsage, getRemainingFreeQuota, PaywallError } from './paymentService';
+import { FREE_DAILY_QUESTION_LIMIT } from '../lib/pricing';
 
 // Supabase Edge Function URL for diagram generation
 const SUPABASE_URL = 'https://ukrtaerwaxekonislnpw.supabase.co';
@@ -226,6 +227,22 @@ export async function startSession(
     subject?: string
 ): Promise<{ sessionId: string; questions: QuestionData[] }> {
     try {
+        // FREE-TIER BATCH CAP — a sprint asks for many questions on a single gate
+        // check, so cap the count to what the free user has left today. Without this a
+        // free user one question under the limit could start a 30-question sprint and
+        // answer all 30, blowing past the 20/day pool. Pro → Infinity (no cap). Checked
+        // BEFORE creating the session row so an over-quota user gets the paywall, not an
+        // empty orphan session. getQuestionsForUser also caps per-fetch (defense in depth).
+        const remaining = await getRemainingFreeQuota();
+        if (remaining <= 0) {
+            throw new PaywallError(
+                `You've reached your ${FREE_DAILY_QUESTION_LIMIT} free questions for today. Upgrade to Drut Pro for unlimited practice.`,
+            );
+        }
+        if (Number.isFinite(remaining)) {
+            questionCount = Math.min(questionCount, Math.floor(remaining));
+        }
+
         // 1. Create Session in DB
         const sessionId = await createSprintSession(
             userId,
@@ -418,9 +435,12 @@ export async function saveSprintAttempt(
         console.log('[DEBUG] saveSprintAttempt SUCCESS for session:', sessionId);
         log.info(`[sprint] Saved attempt for session ${sessionId}`);
 
-        // Count this answered question toward the free-tier daily quota (unified
-        // pool with practice). Fire-and-forget so sprint timing isn't affected.
-        void incrementDailyQuestionUsage().catch((e) =>
+        // Count this answered question toward the free-tier daily quota (unified pool
+        // with practice). AWAITED so the count reliably lands (the engine already calls
+        // saveSprintAttempt in the background, so this adds no user-visible latency).
+        // Caught (not thrown) so a transient failure doesn't fail the attempt-save; the
+        // server-side cap + the start-of-sprint batch cap are the backstops.
+        await incrementDailyQuestionUsage().catch((e) =>
             console.warn('[paywall] daily-usage increment failed (sprint):', e?.message || e),
         );
 

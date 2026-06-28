@@ -65,10 +65,13 @@ export async function saveAttemptAndUpdateMastery(params: {
   // per question. This fn is called twice for a wrong-then-skipped question
   // (handleAnswerSubmit with skipDrill=false, then handleSkipIntervention with
   // skipDrill=true on the SAME question), so we count only the primary attempt
-  // (skipDrill=false) to avoid double-counting. Fire-and-forget so it adds no
-  // latency; the gate re-reads the authoritative server count at the next fetch.
+  // (skipDrill=false) to avoid double-counting. AWAITED (not fire-and-forget): the
+  // gate re-reads the authoritative server count at the next fetch, so the increment
+  // must land first — otherwise a fast answer→next flow reads a stale count and serves
+  // an extra free question. Caught (not thrown) so a transient increment failure
+  // doesn't fail the answer-save; the server-side cap is the backstop.
   if (!params.skipDrill) {
-    void incrementDailyQuestionUsage().catch((e) =>
+    await incrementDailyQuestionUsage().catch((e) =>
       console.warn('[paywall] daily-usage increment failed (practice):', e?.message || e),
     );
   }

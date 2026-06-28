@@ -3,7 +3,8 @@ import { QuestionItem } from '../lib/ai/schema';
 import { QuestionData } from '../types';
 import { generateQuestionsBatch } from './vertexBackendService';
 import { log } from '../lib/log';
-import { assertWithinFreeQuota, isPaywallError } from './paymentService';
+import { getRemainingFreeQuota, isPaywallError, PaywallError } from './paymentService';
+import { FREE_DAILY_QUESTION_LIMIT } from '../lib/pricing';
 
 /**
  * Feature flag — gates live AI question generation.
@@ -123,11 +124,21 @@ export async function getQuestionsForUser(
   const metadata = { cached: 0, generated: 0 };
   const questions: QuestionData[] = [];
 
-  // FREE-TIER GATE — single chokepoint for web + mobile, practice + sprint.
-  // Pro users pass through; free users over FREE_DAILY_QUESTION_LIMIT/day get a
-  // PaywallError. Placed BEFORE the try so it propagates untouched; the catch
-  // below also re-throws it defensively in case this ever moves inside the try.
-  await assertWithinFreeQuota();
+  // FREE-TIER GATE + BATCH CAP — single chokepoint for web + mobile, practice + sprint.
+  // Pro users pass through (Infinity remaining). Free users are capped to whatever
+  // they have left today, so a single gate check can NEVER be used to over-fetch a
+  // batch (e.g. a 30-question sprint started at 19/20 used). Throws PaywallError when
+  // nothing remains. Placed BEFORE the try so it propagates untouched; the catch below
+  // also re-throws PaywallError defensively in case this ever moves inside the try.
+  const remainingQuota = await getRemainingFreeQuota();
+  if (remainingQuota <= 0) {
+    throw new PaywallError(
+      `You've reached your ${FREE_DAILY_QUESTION_LIMIT} free questions for today. Upgrade to Drut Pro for unlimited practice.`,
+    );
+  }
+  if (Number.isFinite(remainingQuota)) {
+    count = Math.min(count, Math.floor(remainingQuota));
+  }
 
   try {
     console.log('[DEBUG] Step 1: Checking cache...');

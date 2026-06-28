@@ -3,7 +3,7 @@ import { QuestionData } from '@drut/shared';
 import { authService } from '@drut/shared';
 const { getCurrentUser } = authService;
 import { startSession, saveSprintAttempt, finalizeSprintSession, calculateSprintScore, createRetrySession, calculateTargetTime } from '@drut/shared';
-import { isPaywallError, useRazorpayCheckout, isFirstTimerSubscriber } from '@drut/shared';
+import { isPaywallError, useRazorpayCheckout, isFirstTimerSubscriber, getRemainingFreeQuota, PaywallError } from '@drut/shared';
 import type { PlanId } from '@drut/shared';
 import { PaywallModal } from '../PaywallModal';
 import { Button } from '../ui/Button';
@@ -95,7 +95,17 @@ export const SprintSession: React.FC<SprintSessionProps> = ({ config, onExit }) 
 
  if (config.retryQuestions) {
  // === INSTANT RETRY MODE ===
- setQuestions(config.retryQuestions);
+ // FREE-TIER GATE — retry reuses cached questions and bypasses startSession's
+ // fetch+gate, so gate here too: cap the retry set to remaining quota and throw
+ // PaywallError (caught below → paywall) when nothing remains.
+ const remaining = await getRemainingFreeQuota();
+ if (remaining <= 0) {
+ throw new PaywallError("You've reached your free questions for today. Upgrade to Drut Pro for unlimited practice.");
+ }
+ const retryQs = Number.isFinite(remaining)
+ ? config.retryQuestions.slice(0, Math.floor(remaining))
+ : config.retryQuestions;
+ setQuestions(retryQs);
  setSessionReady(true);
  // Timer will be started by the 'currentIndex' effect
 

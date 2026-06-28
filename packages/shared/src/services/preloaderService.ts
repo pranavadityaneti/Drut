@@ -2,6 +2,7 @@ import { QuestionData } from '../types';
 import { EXAM_SPECIFIC_TOPICS } from '../constants';
 import { log } from '../lib/log';
 import { generateQuestionAndSolutions } from './vertexBackendService';
+import { assertWithinFreeQuota } from './paymentService';
 
 interface PreloadedData {
   key: string;
@@ -14,6 +15,13 @@ const getKey = (profile: string, topic: string, subTopic: string): string => `${
 
 export const preloadFirstQuestion = async (): Promise<void> => {
   try {
+    // FREE-TIER GATE — this background preloader generates+serves a question OUTSIDE
+    // getQuestionsForUser, so it must honor the daily quota too. For a free user who is
+    // out of quota this throws PaywallError, caught below → preload skipped (no free
+    // question burned on a head-start). (NOTE: this path also bypasses the trust gate /
+    // live-AI kill switch — tracked separately under the trust-gate fix.)
+    await assertWithinFreeQuota();
+
     const savedProfile = localStorage.getItem('examProfile');
     const savedTopic = localStorage.getItem('topic');
 
