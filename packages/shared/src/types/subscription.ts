@@ -60,8 +60,8 @@ export function isFreeGrant(r: OrderResult): r is FreeGrantResponse {
 export interface Coupon {
     id: string;
     code: string;
-    type: 'percent' | 'flat';
-    value: number;                 // percent: 0..100 ; flat: paise off
+    type: 'percent' | 'flat' | 'fixed';
+    value: number;                 // percent: 0..100 ; flat: paise off ; fixed: final price in paise
     applies_to_plan: 'any' | 'monthly' | 'annual';
     max_redemptions: number | null;
     times_redeemed: number;

@@ -20,7 +20,7 @@ interface Body {
     action: 'list' | 'create' | 'set_active';
     // create
     code?: string;
-    type?: 'percent' | 'flat';
+    type?: 'percent' | 'flat' | 'fixed';
     value?: number;
     applies_to_plan?: 'any' | 'monthly' | 'annual';
     max_redemptions?: number | null;
@@ -70,12 +70,12 @@ Deno.serve(async (req) => {
         const code = (body.code || '').trim().toUpperCase();
         const type = body.type;
         if (!code) return json(400, { error: 'missing-code' });
-        if (type !== 'percent' && type !== 'flat') return json(400, { error: 'invalid-type' });
+        if (type !== 'percent' && type !== 'flat' && type !== 'fixed') return json(400, { error: 'invalid-type' });
         if (typeof body.value !== 'number' || body.value < 0) return json(400, { error: 'invalid-value' });
         if (type === 'percent' && body.value > 100) return json(400, { error: 'percent-over-100' });
 
-        // flat value arrives in rupees → store paise.
-        const value = type === 'flat' ? Math.round(body.value * 100) : Math.round(body.value);
+        // flat (amount off) + fixed (final price) arrive in rupees → store paise.
+        const value = (type === 'flat' || type === 'fixed') ? Math.round(body.value * 100) : Math.round(body.value);
 
         const { data, error } = await supabaseService
             .from('coupons')
