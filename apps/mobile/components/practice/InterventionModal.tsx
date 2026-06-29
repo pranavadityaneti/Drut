@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Modal, Dimensions
 import { Colors } from '../../constants/Colors'; // Adjust path if needed
 import { X, CheckCircle, AlertTriangle, Play, ArrowRight, Zap, BookOpen, ChevronDown, ChevronRight } from 'lucide-react-native';
 import { LatexText } from '../ui/LatexText';
+import { MathHtml } from '../ui/MathHtml';
 
 interface InterventionModalProps {
     visible: boolean;
@@ -272,16 +273,15 @@ export const InterventionModal: React.FC<InterventionModalProps> = ({ visible, q
                 </View>
             );
         }
+        // Whole Quick Method (all numbered steps) as ONE HTML body -> ONE WebView.
+        let body = '';
+        steps.forEach((step: any, i: number) => {
+            const text = typeof step === 'string' ? step : (step?.text || step?.action || '');
+            body += `<div class="drut-step"><span class="drut-num">${i + 1}</span><span class="drut-step-text">${text}</span></div>`;
+        });
         return (
             <View style={styles.tabContent}>
-                {steps.map((step: string, i: number) => (
-                    <View key={i} style={styles.stepRow}>
-                        <View style={styles.stepNumber}><Text style={styles.stepNumberText}>{i + 1}</Text></View>
-                        <View style={{ flex: 1 }}>
-                            <LatexText text={step} fontSize={15} color={Colors.text} />
-                        </View>
-                    </View>
-                ))}
+                <MathHtml body={body} fontSize={15} color={Colors.text} />
             </View>
         );
     };
@@ -291,27 +291,21 @@ export const InterventionModal: React.FC<InterventionModalProps> = ({ visible, q
     const renderNewFull = () => {
         const fs = newFullSolution;
         if (!fs) return <Text style={{ color: Colors.textDim }}>No full solution available.</Text>;
+        // Build the WHOLE Full Solution as ONE HTML body -> ONE WebView, instead of one
+        // WebView per approach/chunk/equation/answer. Renders all at once (no line-by-line
+        // pop-in) and measures one height for the whole block (no clipping). The approach
+        // box / answer styling moves into MathHtml's CSS (.drut-approach / .drut-answer).
+        let body = '';
+        if (fs.approach) body += `<div class="drut-approach">${fs.approach}</div>`;
+        for (const chunk of (fs.steps || [])) {
+            const text = (chunk && typeof chunk === 'object') ? (chunk.text || '') : String(chunk || '');
+            const display = (chunk && chunk.display) ? ` $$${chunk.display}$$` : '';
+            body += `<div class="drut-chunk">${text}${display}</div>`;
+        }
+        if (fs.answer) body += `<div class="drut-answer"><div class="drut-answer-label">Answer</div>${fs.answer}</div>`;
         return (
             <View style={styles.tabContent}>
-                {fs.approach ? (
-                    <View style={{ padding: 12, backgroundColor: '#f0fdf4', borderRadius: 8, borderLeftWidth: 3, borderLeftColor: '#22c55e', marginBottom: 12 }}>
-                        <LatexText text={fs.approach} fontSize={14} color={Colors.text} />
-                    </View>
-                ) : null}
-                {(fs.steps || []).map((chunk: any, i: number) => (
-                    <View key={i} style={{ marginBottom: 10 }}>
-                        <LatexText text={chunk.text} fontSize={15} color={Colors.text} />
-                        {chunk.display ? (
-                            <LatexText text={`$$${chunk.display}$$`} fontSize={15} color={Colors.text} />
-                        ) : null}
-                    </View>
-                ))}
-                {fs.answer ? (
-                    <View style={{ marginTop: 8, paddingTop: 10, borderTopWidth: 1, borderTopColor: '#e2e8f0' }}>
-                        <Text style={{ fontSize: 13, fontWeight: '700', color: '#15803d', marginBottom: 4 }}>ANSWER</Text>
-                        <LatexText text={fs.answer} fontSize={15} color={Colors.text} />
-                    </View>
-                ) : null}
+                <MathHtml body={body} fontSize={15} color={Colors.text} />
             </View>
         );
     };
