@@ -48,6 +48,53 @@ function json(status: number, payload: unknown) {
     });
 }
 
+// Get-or-create the Razorpay Customer for this user so RETURNING checkouts can show
+// saved cards/UPI (one-tap repeat). Best-effort: if anything fails we return null and
+// checkout still proceeds WITHOUT saved methods — we never block a purchase over this
+// nicety. Razorpay stores the actual (tokenized) payment methods; we persist ONLY the
+// opaque customer id in public.razorpay_customers. No card/UPI data touches our system.
+async function getOrCreateRazorpayCustomer(
+    supabaseService: any,
+    user: { id: string; email?: string | null; phone?: string | null; user_metadata?: Record<string, unknown> },
+    basicAuth: string,
+): Promise<string | null> {
+    try {
+        const { data: existing } = await supabaseService
+            .from('razorpay_customers')
+            .select('razorpay_customer_id')
+            .eq('user_id', user.id)
+            .maybeSingle();
+        if (existing?.razorpay_customer_id) return existing.razorpay_customer_id as string;
+
+        const meta = user.user_metadata || {};
+        const name = (meta.full_name as string) || (meta.name as string)
+            || (user.email ? user.email.split('@')[0] : '') || 'Drut user';
+        const contact = (user.phone as string) || (meta.phone as string) || undefined;
+        // fail_existing:0 → if a customer with this email/contact already exists on
+        // Razorpay, return that one instead of erroring.
+        const resp = await fetch(`${RAZORPAY_API_BASE}/customers`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', Authorization: `Basic ${basicAuth}` },
+            body: JSON.stringify({ name, email: user.email || undefined, contact, fail_existing: 0 }),
+        });
+        if (!resp.ok) {
+            console.error('[create-razorpay-order] customer create failed', resp.status, (await resp.text()).slice(0, 300));
+            return null;
+        }
+        const cust = await resp.json();
+        const customerId = cust?.id as string | undefined;
+        if (!customerId) return null;
+
+        await supabaseService
+            .from('razorpay_customers')
+            .upsert({ user_id: user.id, razorpay_customer_id: customerId, updated_at: new Date().toISOString() }, { onConflict: 'user_id' });
+        return customerId;
+    } catch (e) {
+        console.error('[create-razorpay-order] customer get-or-create exception', e);
+        return null;
+    }
+}
+
 Deno.serve(async (req) => {
     if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
     if (req.method !== 'POST')    return json(405, { error: 'method-not-allowed' });
@@ -208,6 +255,10 @@ Deno.serve(async (req) => {
         return json(502, { error: 'no-order-id', razorpay: rpBody });
     }
 
+    // Get-or-create the Razorpay customer so the checkout can surface saved cards/UPI.
+    // Best-effort — a null just means no saved-methods this time, never a failed order.
+    const customerId = await getOrCreateRazorpayCustomer(supabaseService, user, basicAuth);
+
     // --- 7. Insert pending subscription row (service role bypasses RLS) ---
     // verify-razorpay-payment flips status='active', sets expires_at, and (if a
     // coupon was used) records the redemption — only AFTER successful payment.
@@ -235,5 +286,6 @@ Deno.serve(async (req) => {
         key_id: RAZORPAY_KEY_ID,   // public id — client SDK needs this to open the modal
         receipt,
         coupon_code: couponCode || undefined,
+        customer_id: customerId || undefined,  // enables saved cards/UPI in checkout
     });
 });

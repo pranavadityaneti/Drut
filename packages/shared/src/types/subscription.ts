@@ -35,6 +35,7 @@ export interface CreateOrderResponse {
     key_id: string;          // PUBLIC Razorpay key — client uses this to open the checkout
     receipt: string;
     coupon_code?: string;    // echoed back if a coupon discounted this order
+    customer_id?: string;    // Razorpay customer id → checkout shows saved cards/UPI
 }
 
 /**
