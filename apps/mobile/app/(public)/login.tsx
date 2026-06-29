@@ -2,7 +2,8 @@ import { View, Text, StyleSheet, TouchableOpacity, TextInput, ActivityIndicator,
 import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { Colors } from '../../constants/Colors';
-import { ArrowLeft, Mail, Lock, Eye, EyeOff, MessageCircle } from 'lucide-react-native';
+import { ArrowLeft, Mail, Lock, Eye, EyeOff } from 'lucide-react-native';
+import { GoogleLogo } from '../../components/ui/GoogleLogo';
 import { useState } from 'react';
 import { authService, getSupabase } from '@drut/shared';
 import * as WebBrowser from 'expo-web-browser';
@@ -108,16 +109,7 @@ export default function LoginScreen() {
                     <Text style={styles.subtitle}>Log in to continue your progress.</Text>
                 </View>
 
-                {/* Phone Login — Primary */}
-                <TouchableOpacity
-                    style={styles.phoneButton}
-                    onPress={() => router.push('/(public)/phone-login')}
-                >
-                    <MessageCircle size={22} color="#25D366" />
-                    <Text style={styles.phoneButtonText}>Login with WhatsApp OTP</Text>
-                </TouchableOpacity>
-
-                {/* Google */}
+                {/* Google — primary sign-in */}
                 <TouchableOpacity
                     style={[styles.googleButton, googleLoading && styles.loginButtonDisabled]}
                     onPress={handleGoogle}
@@ -127,7 +119,7 @@ export default function LoginScreen() {
                         <ActivityIndicator color={Colors.text} />
                     ) : (
                         <>
-                            <Text style={styles.googleG}>G</Text>
+                            <GoogleLogo size={20} />
                             <Text style={styles.googleButtonText}>Continue with Google</Text>
                         </>
                     )}
