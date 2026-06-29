@@ -9,6 +9,7 @@ import {
     ActivityIndicator,
 } from 'react-native';
 import { useRouter } from 'expo-router';
+import * as Linking from 'expo-linking';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {
     ArrowLeft,
@@ -62,7 +63,7 @@ export default function AccountSettingsScreen() {
         }
         setResetSending(true);
         try {
-            await authService.resetPasswordForEmail(email);
+            await authService.resetPasswordForEmail(email, Linking.createURL('update-password'));
             Alert.alert('Email Sent', 'Check your inbox for a password reset link.');
         } catch (err: any) {
             Alert.alert('Error', err.message);
