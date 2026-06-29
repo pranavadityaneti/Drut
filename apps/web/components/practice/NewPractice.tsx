@@ -145,10 +145,14 @@ export const NewPractice: React.FC = () => {
                 }
 
                 const batchSize = Math.max(needed, 1);
+                // "All Chapters" → 'ALL' (serving RPC's any-topic sentinel); the subject
+                // filter scopes results. Passing the subject AS the topic matched nothing
+                // (stored topics are chapter names, never the subject).
+                const apiTopic = (currentTopic === 'All Chapters' || topic === 'all') ? 'ALL' : currentTopic;
                 const { questions } = await getQuestionsForUser(
                     user.id,
                     examProfile,
-                    currentTopic,
+                    apiTopic,
                     currentSubTopic,
                     batchSize,
                     difficulty,
@@ -328,9 +332,11 @@ export const NewPractice: React.FC = () => {
 
                 log.info(`[loadQuestion] Fetching from API for ${currentTopic}/${currentSubTopic}`);
 
-                // Map "All Chapters" (Select All) to the Subject Name for RAG Scope
+                // "All Chapters" → 'ALL' (serving RPC's any-topic sentinel); the subject
+                // filter scopes results to the chosen subject. (Passing the subject AS the
+                // topic matched nothing — stored topics are chapter names.)
                 const apiTopic = (currentTopic === 'All Chapters' || topic === 'all')
-                    ? (subject || 'Physics') // Fallback if subject missing, but usually set
+                    ? 'ALL'
                     : currentTopic;
 
                 const { questions } = await getQuestionsForUser(

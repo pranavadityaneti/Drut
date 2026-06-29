@@ -29,6 +29,7 @@ const SUPABASE_ANON_KEY     = Deno.env.get('SUPABASE_ANON_KEY')!;
 const SUPABASE_SERVICE_ROLE = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
 
 const RAZORPAY_KEY_SECRET   = Deno.env.get('RAZORPAY_KEY_SECRET') || '';
+const RAZORPAY_KEY_ID       = Deno.env.get('RAZORPAY_KEY_ID') || '';
 
 interface Body {
     razorpay_payment_id:   string;
@@ -140,6 +141,50 @@ Deno.serve(async (req) => {
     if (subErr || !sub) {
         console.error('[verify-razorpay-payment] subscription not found', subErr);
         return json(404, { error: 'subscription-not-found' });
+    }
+
+    // --- 5b. Server-to-server confirmation that the payment actually CAPTURED for the
+    // expected amount. A valid signature proves the checkout handshake, not that money
+    // moved — so fetch the payment object from Razorpay and assert it's captured, for
+    // THIS order, at the EXACT server-computed amount/currency. Fail closed on mismatch.
+    if (!RAZORPAY_KEY_ID) {
+        return json(503, { error: 'razorpay-not-configured', detail: 'RAZORPAY_KEY_ID not set' });
+    }
+    try {
+        const authB64 = btoa(`${RAZORPAY_KEY_ID}:${RAZORPAY_KEY_SECRET}`);
+        const payResp = await fetch(`https://api.razorpay.com/v1/payments/${razorpay_payment_id}`, {
+            headers: { Authorization: `Basic ${authB64}` },
+        });
+        if (!payResp.ok) {
+            console.error('[verify-razorpay-payment] razorpay payment fetch failed', payResp.status);
+            return json(502, { error: 'payment-fetch-failed' });
+        }
+        const pay = await payResp.json();
+        // Accept captured (money moved) or authorized (auto-capture pending); reject
+        // anything else. The amount/order/currency MUST match the server-created order.
+        const statusOk = pay.status === 'captured' || pay.status === 'authorized';
+        const matchOk =
+            pay.order_id === razorpay_order_id &&
+            pay.amount === sub.amount_paise &&
+            pay.currency === 'INR';
+        if (!statusOk || !matchOk) {
+            console.error('[verify-razorpay-payment] payment not confirmed', {
+                status: pay.status, order: pay.order_id, amount: pay.amount, expected: sub.amount_paise,
+            });
+            await supabaseService.from('payment_events').insert({
+                user_id:             user.id,
+                razorpay_event_type: 'payment.not_confirmed',
+                razorpay_order_id,
+                razorpay_payment_id,
+                signature_verified:  true,
+                processed:           false,
+                raw_payload:         { source: 'verify-razorpay-payment', payStatus: pay.status, payAmount: pay.amount, expected: sub.amount_paise },
+            });
+            return json(400, { error: 'payment-not-confirmed' });
+        }
+    } catch (e) {
+        console.error('[verify-razorpay-payment] payment confirmation error', e);
+        return json(502, { error: 'payment-confirm-error' });
     }
 
     // --- 6. Expire any OTHER active subscription for this user FIRST ---

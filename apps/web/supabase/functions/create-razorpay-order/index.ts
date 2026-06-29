@@ -134,7 +134,16 @@ Deno.serve(async (req) => {
             .single();
         if (grantErr) return json(500, { error: 'grant-failed', detail: grantErr.message });
 
-        if (couponId) await recordRedemption(supabaseService, couponId, user.id, granted?.id ?? null);
+        // Best-effort: never fail an already-granted Pro subscription over redemption
+        // bookkeeping (mirrors the paid path in verify-razorpay-payment). A failure here
+        // previously 500'd AFTER the grant, leaving the user Pro but the response an error.
+        if (couponId) {
+            try {
+                await recordRedemption(supabaseService, couponId, user.id, granted?.id ?? null);
+            } catch (e) {
+                console.error('[create-razorpay-order] free-grant redemption logging failed', e);
+            }
+        }
 
         await supabaseService.from('payment_events').insert({
             user_id: user.id,

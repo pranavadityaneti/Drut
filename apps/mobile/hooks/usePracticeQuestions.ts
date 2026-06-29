@@ -102,14 +102,14 @@ export function usePracticeQuestions({ config, batchSize = 5 }: UsePracticeQuest
             const fetchCount = Math.min(batchSize, remaining);
 
             // Multi-chapter rotation.
-            // For "All chapters" mode, we pass the SUBJECT as the topic so the
-            // backend can do a broader RAG/cache search (matching web behavior).
-            // Sending the literal string 'mixed' returns nothing because the
-            // cached_questions.topic column has no rows with topic='mixed'.
+            // For "All chapters" mode we pass topic='ALL' — the serving RPC's "any
+            // topic" sentinel — and let the subject filter scope results to the chosen
+            // subject. (Passing the subject AS the topic matched nothing: stored topics
+            // are chapter names like "Chapter 5: Laws of Motion", never the subject.)
             const chapters = config.chapters || ['all'];
             const isAllChapters = chapters.length === 1 && chapters[0] === 'all';
             const chapter = isAllChapters
-                ? config.subject
+                ? 'ALL'
                 : chapters[fetchedCountRef.current % chapters.length];
 
             // Resolve difficulty (Mixed → random concrete)
