@@ -136,6 +136,15 @@ export async function getQuestionsForUser(
   const metadata = { cached: 0, generated: 0 };
   const questions: QuestionData[] = [];
 
+  // EAPCET SERVING CONSOLIDATION — the new-format APPROVED question pool lives entirely
+  // under exam_profile='ap_eapcet'. ts_eapcet + legacy 'eamcet'/'both'/'eapcet' have ~0
+  // servable rows but share an ~identical EAPCET syllabus, so map them onto the
+  // ap_eapcet pool — otherwise every Telangana and legacy-profile user gets ZERO
+  // questions even though thousands exist. (Non-EAPCET exams are untouched.)
+  if (examProfile === 'ts_eapcet' || examProfile === 'eamcet' || examProfile === 'both' || examProfile === 'eapcet') {
+    examProfile = 'ap_eapcet';
+  }
+
   // FREE-TIER GATE + BATCH CAP — single chokepoint for web + mobile, practice + sprint.
   // Pro users pass through (Infinity remaining). Free users are capped to whatever
   // they have left today, so a single gate check can NEVER be used to over-fetch a
