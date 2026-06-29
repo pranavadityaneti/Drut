@@ -9,6 +9,8 @@ import { User } from '@drut/shared';
 import { EXAM_TAXONOMY, getExamOptions, normalizeTargetExams } from '@drut/shared';
 import { log } from '@drut/shared';
 import { supabase } from '@drut/shared';
+import { useRazorpayCheckout, getCurrentSubscription, isProActive, PRICING, type Subscription, type PlanId } from '@drut/shared';
+import { PaywallModal } from './PaywallModal';
 
 export const Profile: React.FC<{}> = () => {
  const [user, setUser] = useState<User | null>(null);
@@ -27,6 +29,30 @@ export const Profile: React.FC<{}> = () => {
  const [avatarUrl, setAvatarUrl] = useState<string | undefined>(undefined);
  const [newAvatarFile, setNewAvatarFile] = useState<File | null>(null);
  const [avatarPreview, setAvatarPreview] = useState<string | undefined>(undefined);
+
+ // Subscription
+ const [sub, setSub] = useState<Subscription | null>(null);
+ const [showPaywall, setShowPaywall] = useState(false);
+ const { pay: payWithRazorpay } = useRazorpayCheckout({ name: 'Drut' });
+ const isPro = isProActive(sub);
+ const refreshSub = () => { getCurrentSubscription().then(setSub).catch(() => setSub(null)); };
+ useEffect(() => { refreshSub(); }, []);
+ const handleUpgrade = async (plan: PlanId, couponCode?: string) => {
+   try {
+     await payWithRazorpay(plan, couponCode);
+     setShowPaywall(false);
+     setSuccessMessage("You're now Drut Pro!");
+     setTimeout(() => setSuccessMessage(null), 3000);
+     refreshSub();
+   } catch (e: any) {
+     if (e?.message === 'checkout-dismissed' || e?.message === 'checkout-already-open') return;
+     setError(e?.message || 'Payment could not be completed. Please try again.');
+   }
+ };
+ const formatSubDate = (iso: string) => {
+   try { return new Date(iso).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }); }
+   catch { return iso; }
+ };
 
  const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -161,6 +187,32 @@ export const Profile: React.FC<{}> = () => {
  <span className="text-[13px] font-medium text-[var(--color-destructive)] pl-2">{error}</span>
  </div>
  )}
+
+ {/* Subscription */}
+ <div className={sectionCard}>
+ <div className="flex flex-col gap-1 mb-5">
+ <p className="label-uppercase">Billing</p>
+ <h3 className="text-[16px] font-semibold tracking-tight text-[var(--color-ink-1)]">Subscription</h3>
+ <p className="text-[12px] text-[var(--color-ink-3)] mt-0.5">Your Drut plan and status.</p>
+ </div>
+ {isPro && sub ? (
+ <div className="flex items-center justify-between gap-4 flex-wrap">
+ <div>
+ <p className="text-[15px] font-semibold text-[var(--color-ink-1)]">Drut Pro · {PRICING[sub.plan]?.label || sub.plan}</p>
+ <p className="text-[13px] text-[var(--color-ink-3)] mt-1">Valid until {formatSubDate(sub.expires_at)}</p>
+ </div>
+ <span className="inline-flex items-center rounded-full bg-[#dcfce7] text-[#15803d] text-[12px] font-bold px-3 py-1">Active</span>
+ </div>
+ ) : (
+ <div className="flex items-center justify-between gap-4 flex-wrap">
+ <div>
+ <p className="text-[15px] font-semibold text-[var(--color-ink-1)]">Free plan</p>
+ <p className="text-[13px] text-[var(--color-ink-3)] mt-1">20 questions a day. Go Pro for unlimited practice &amp; every feature.</p>
+ </div>
+ <button type="button" onClick={() => setShowPaywall(true)} className="inline-flex items-center rounded-full bg-[var(--color-primary)] text-white text-[14px] font-bold px-5 py-2.5 hover:opacity-90 transition-opacity">Upgrade</button>
+ </div>
+ )}
+ </div>
 
  <form onSubmit={handleSave}>
  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -335,6 +387,12 @@ export const Profile: React.FC<{}> = () => {
  </Button>
  </div>
  </form>
+
+ <PaywallModal
+ isOpen={showPaywall}
+ onClose={() => setShowPaywall(false)}
+ onUpgrade={handleUpgrade}
+ />
  </div>
  );
 };
