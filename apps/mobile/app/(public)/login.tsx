@@ -6,27 +6,19 @@ import { ArrowLeft, Mail, Lock, Eye, EyeOff } from 'lucide-react-native';
 import { GoogleLogo } from '../../components/ui/GoogleLogo';
 import { useState } from 'react';
 import { authService, getSupabase } from '@drut/shared';
-import * as WebBrowser from 'expo-web-browser';
-import * as Linking from 'expo-linking';
+import { GoogleSignin, isSuccessResponse } from '@react-native-google-signin/google-signin';
 
-// Lets the in-app auth browser dismiss cleanly when it redirects back.
-WebBrowser.maybeCompleteAuthSession();
-
-// Parse a Supabase OAuth redirect URL — handles both PKCE (?code=) and implicit
-// (#access_token=&refresh_token=) shapes.
-function parseAuthRedirect(url: string): { access_token?: string; refresh_token?: string; code?: string } {
-    const out: Record<string, string> = {};
-    const grab = (s: string) => {
-        for (const pair of s.split('&')) {
-            const eq = pair.indexOf('=');
-            if (eq > 0) out[decodeURIComponent(pair.slice(0, eq))] = decodeURIComponent(pair.slice(eq + 1));
-        }
-    };
-    const q = url.indexOf('?');
-    const h = url.indexOf('#');
-    if (q >= 0) grab(url.slice(q + 1, h >= 0 ? h : undefined));
-    if (h >= 0) grab(url.slice(h + 1));
-    return out as { access_token?: string; refresh_token?: string; code?: string };
+// Configure native Google Sign-In lazily, on first tap rather than at module load,
+// so that if Metro hot-reloads this JS onto a build that does NOT yet contain the
+// native module, merely opening the login screen won't crash — only a tap would.
+let googleConfigured = false;
+function ensureGoogleConfigured() {
+    if (googleConfigured) return;
+    GoogleSignin.configure({
+        iosClientId: '355443227173-j573baeitjqh23eslo6el1fn0u31224d.apps.googleusercontent.com',
+        webClientId: '355443227173-2k8rqu8pba7ab5q21keb2685sppr1va1.apps.googleusercontent.com',
+    });
+    googleConfigured = true;
 }
 
 export default function LoginScreen() {
@@ -40,28 +32,14 @@ export default function LoginScreen() {
     const handleGoogle = async () => {
         setGoogleLoading(true);
         try {
-            const supabase = getSupabase();
-            const redirectTo = Linking.createURL('auth-callback');
-            const { data, error } = await supabase.auth.signInWithOAuth({
-                provider: 'google',
-                options: { redirectTo, skipBrowserRedirect: true },
-            });
+            ensureGoogleConfigured();
+            await GoogleSignin.hasPlayServices();
+            const response = await GoogleSignin.signIn();
+            if (!isSuccessResponse(response)) return; // user cancelled the native sheet
+            const idToken = response.data.idToken;
+            if (!idToken) throw new Error('Google did not return an ID token.');
+            const { error } = await getSupabase().auth.signInWithIdToken({ provider: 'google', token: idToken });
             if (error) throw error;
-            if (!data?.url) throw new Error('Could not start Google sign-in.');
-
-            const result = await WebBrowser.openAuthSessionAsync(data.url, redirectTo);
-            if (result.type !== 'success' || !result.url) return; // user cancelled
-
-            const { access_token, refresh_token, code } = parseAuthRedirect(result.url);
-            if (code) {
-                const { error: exErr } = await supabase.auth.exchangeCodeForSession(code);
-                if (exErr) throw exErr;
-            } else if (access_token && refresh_token) {
-                const { error: setErr } = await supabase.auth.setSession({ access_token, refresh_token });
-                if (setErr) throw setErr;
-            } else {
-                throw new Error('No session returned from Google.');
-            }
             router.replace('/(tabs)/dashboard');
         } catch (err: any) {
             Alert.alert('Google sign-in failed', err?.message || 'Please try again.');
