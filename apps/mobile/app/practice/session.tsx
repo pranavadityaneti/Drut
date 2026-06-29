@@ -2,6 +2,7 @@ import { useLocalSearchParams } from 'expo-router';
 import React from 'react';
 import { View, StyleSheet, StatusBar } from 'react-native';
 import { SessionEngine } from '../../components/SessionEngine';
+import { SprintEngine } from '../../components/SprintEngine';
 import { Colors } from '../../constants/Colors';
 
 export default function SessionScreen() {
@@ -29,19 +30,22 @@ export default function SessionScreen() {
         chapters = ['all'];
     }
 
+    const mode = (params.mode as 'practice' | 'sprint') || 'practice';
+    const config = {
+        exam: params.exam,
+        subject: params.subject,
+        chapters,
+        difficulty: (params.difficulty as any) || 'Medium',
+        questionCount: params.questionCount ? parseInt(params.questionCount, 10) : 10,
+        mode,
+    };
+
     return (
         <View style={styles.container}>
             <StatusBar barStyle="dark-content" backgroundColor={Colors.white} />
-            <SessionEngine
-                config={{
-                    exam: params.exam,
-                    subject: params.subject,
-                    chapters,
-                    difficulty: (params.difficulty as any) || 'Medium',
-                    questionCount: params.questionCount ? parseInt(params.questionCount, 10) : 10,
-                    mode: (params.mode as 'practice' | 'sprint') || 'practice',
-                }}
-            />
+            {mode === 'sprint'
+                ? <SprintEngine config={config} />
+                : <SessionEngine config={config} />}
         </View>
     );
 }

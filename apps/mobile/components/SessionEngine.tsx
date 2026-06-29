@@ -5,7 +5,7 @@ import { SessionHeader } from './SessionHeader';
 import { QuestionCard } from './QuestionCard';
 import { SessionSummary } from './SessionSummary';
 import { useRouter } from 'expo-router';
-import { authService, saveAttemptAndUpdateMastery, calculateTargetTime, isFirstTimerSubscriber } from '@drut/shared';
+import { authService, saveAttemptAndUpdateMastery, resolveTargetSeconds, isFirstTimerSubscriber } from '@drut/shared';
 import type { PlanId } from '@drut/shared';
 import { usePracticeQuestions } from '../hooks/usePracticeQuestions';
 import { InterventionModal } from './practice/InterventionModal';
@@ -147,11 +147,9 @@ export const SessionEngine: React.FC<SessionEngineProps> = ({ config, onSessionC
                 (currentQ.difficulty === 'Easy' || currentQ.difficulty === 'Hard')
                     ? currentQ.difficulty
                     : 'Medium';
-            const examKey = config.exam || 'default';
-            const perQuestionTargetSec = currentQ.timeTargets?.[examKey];
-            const targetTimeMs = typeof perQuestionTargetSec === 'number' && perQuestionTargetSec > 0
-                ? perQuestionTargetSec * 1000
-                : calculateTargetTime(examKey, effectiveDifficulty) * 1000;
+            // Single shared resolver (question timeTargets, alias-mapped for EAPCET →
+            // exam/difficulty baseline) — identical to web so mastery grades consistently.
+            const targetTimeMs = resolveTargetSeconds(currentQ, config.exam || 'default', effectiveDifficulty) * 1000;
 
             await saveAttemptAndUpdateMastery({
                 questionUuid: currentQ.uuid || currentQ.id,

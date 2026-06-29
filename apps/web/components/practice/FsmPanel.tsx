@@ -25,17 +25,17 @@ export const FsmPanel: React.FC<FsmPanelProps> = ({
  <CardContent className="p-6 space-y-4">
  <div>
  <h3 className="text-lg font-semibold text-[#3d7a0f] mb-1">
- Fastest Safe Method
+ Quick Method
  </h3>
  <p className="text-sm text-muted-foreground">
  The optimal approach for this question type
  </p>
  </div>
 
- {/* Pattern Trigger */}
+ {/* How to recognise it */}
  <div className="bg-[var(--color-accent)] p-4 rounded-lg border border-[var(--color-accent)]">
  <p className="text-sm font-medium text-[#3d7a0f] mb-1">
- Pattern Trigger
+ How to recognise it
  </p>
  <p className="text-sm text-[#3d7a0f]">
  <LatexText text={patternTrigger} />

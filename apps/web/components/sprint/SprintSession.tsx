@@ -2,13 +2,14 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { QuestionData } from '@drut/shared';
 import { authService } from '@drut/shared';
 const { getCurrentUser } = authService;
-import { startSession, saveSprintAttempt, finalizeSprintSession, calculateSprintScore, createRetrySession, calculateTargetTime } from '@drut/shared';
-import { isPaywallError, useRazorpayCheckout, isFirstTimerSubscriber } from '@drut/shared';
+import { startSession, saveSprintAttempt, finalizeSprintSession, calculateSprintScore, createRetrySession, resolveTargetSeconds } from '@drut/shared';
+import { isPaywallError, useRazorpayCheckout, isFirstTimerSubscriber, getRemainingFreeQuota, PaywallError } from '@drut/shared';
 import type { PlanId } from '@drut/shared';
 import { PaywallModal } from '../PaywallModal';
 import { Button } from '../ui/Button';
 import { Card, CardContent } from '../ui/Card';
 import { DiagramRenderer } from '../ui/DiagramRenderer';
+import { LatexText } from '../ui/LatexText';
 import { log } from '@drut/shared';
 
 interface SprintSessionProps {
@@ -45,22 +46,18 @@ export const SprintSession: React.FC<SprintSessionProps> = ({ config, onExit }) 
  timerId: null as number | null, // requestAnimationFrame ID
  answers: [] as any[], // Local buffer of answers
  pendingAttempts: [] as any[], // Queue for attempts made before session ID is ready
+ savePromises: [] as Promise<any>[], // attempt-save promises, awaited before finalize
+ locked: false, // per-question idempotency lock (tap vs timeout)
  score: 0,
  correct: 0,
  wrong: 0,
  skipped: 0
  });
 
- // Helper to get target time using calculateTargetTime
+ // Helper to get target time — shared resolver (question timeTargets, alias-mapped
+ // for EAPCET → exam/difficulty baseline). Same value feeds the countdown AND the score.
  const getTargetTime = (question: QuestionData) => {
- // 1. Try specific time target from question data
- const targets = question.timeTargets as any;
- if (targets && targets[config.examProfile]) {
- return targets[config.examProfile];
- }
- // 2. Use calculateTargetTime with exam profile and difficulty
- const difficulty = question.difficulty || 'Medium';
- return calculateTargetTime(config.examProfile, difficulty);
+ return resolveTargetSeconds(question, config.examProfile, (question.difficulty as any) || 'Medium');
  };
 
  const stopTimer = () => {
@@ -95,7 +92,17 @@ export const SprintSession: React.FC<SprintSessionProps> = ({ config, onExit }) 
 
  if (config.retryQuestions) {
  // === INSTANT RETRY MODE ===
- setQuestions(config.retryQuestions);
+ // FREE-TIER GATE — retry reuses cached questions and bypasses startSession's
+ // fetch+gate, so gate here too: cap the retry set to remaining quota and throw
+ // PaywallError (caught below → paywall) when nothing remains.
+ const remaining = await getRemainingFreeQuota();
+ if (remaining <= 0) {
+ throw new PaywallError("You've reached your free questions for today. Upgrade to Drut Pro for unlimited practice.");
+ }
+ const retryQs = Number.isFinite(remaining)
+ ? config.retryQuestions.slice(0, Math.floor(remaining))
+ : config.retryQuestions;
+ setQuestions(retryQs);
  setSessionReady(true);
  // Timer will be started by the 'currentIndex' effect
 
@@ -130,6 +137,14 @@ export const SprintSession: React.FC<SprintSessionProps> = ({ config, onExit }) 
  config.board,
  config.subject
 );
+ // Empty-state guard: never render a sprint with zero questions (would crash on
+ // questions[currentIndex]). Exit cleanly instead.
+ if (!fetchedQuestions || fetchedQuestions.length === 0) {
+ log.error('[sprint] No questions available for this selection');
+ alert('No questions are available for this topic yet. Try another chapter.');
+ onExit('error');
+ return;
+ }
  stateRef.current.sessionId = sessionId;
  setQuestions(fetchedQuestions);
  setSessionReady(true);
@@ -167,6 +182,7 @@ export const SprintSession: React.FC<SprintSessionProps> = ({ config, onExit }) 
  const target = getTargetTime(question);
  stateRef.current.targetTime = target;
  stateRef.current.startTime = Date.now();
+ stateRef.current.locked = false; // unlock for the new question
  setTimeLeft(target);
 
  const loop = () => {
@@ -192,6 +208,10 @@ export const SprintSession: React.FC<SprintSessionProps> = ({ config, onExit }) 
  const finishSession = async () => {
  if (!stateRef.current.sessionId) return;
 
+ // Ensure every attempt insert has committed before finalize + the results screen
+ // re-reads them from the DB — otherwise the last question's attempt can be lost.
+ await Promise.allSettled(stateRef.current.savePromises);
+
  // Calculate final stats
  const totalQuestions = stateRef.current.answers.length;
  const totalTime = stateRef.current.answers.reduce((acc, a) => acc + a.timeTaken, 0);
@@ -210,6 +230,9 @@ export const SprintSession: React.FC<SprintSessionProps> = ({ config, onExit }) 
  };
 
  const handleAnswer = async (optionIndex: number | null, isTimeout = false) => {
+ // Idempotency lock — a tap landing in the same instant as the timeout can't double-record.
+ if (stateRef.current.locked) return;
+ stateRef.current.locked = true;
  stopTimer();
 
  const question = questions[currentIndex];
@@ -223,14 +246,18 @@ export const SprintSession: React.FC<SprintSessionProps> = ({ config, onExit }) 
  let result: 'correct' | 'wrong' | 'skipped' = 'skipped';
 
  if (isTimeout) {
- result = 'wrong';
+ result = 'skipped'; // timed-out = unattempted, NOT wrong
  } else if (optionIndex !== null) {
  isCorrect = optionIndex === question.correctOptionIndex;
  result = isCorrect ? 'correct' : 'wrong';
  }
 
  const difficulty = question.difficulty || 'Medium';
- const score = calculateSprintScore(isCorrect, timeTakenMs, config.examProfile, difficulty);
+ // Unattempted (timeout/skip) scores 0 — real exams don't negatively-mark a blank.
+ // Attempted answers grade against the SAME target the user saw counting down.
+ const score = result === 'skipped'
+ ? 0
+ : calculateSprintScore(isCorrect, timeTakenMs, config.examProfile, difficulty, stateRef.current.targetTime);
 
  // Update local state refs
  stateRef.current.score += score;
@@ -247,19 +274,20 @@ export const SprintSession: React.FC<SprintSessionProps> = ({ config, onExit }) 
  inputMethod: isTimeout ? 'timeout' : 'click',
  questionData: question,
  selectedOptionIndex: optionIndex,
+ targetTimeMs: stateRef.current.targetTime * 1000,
  };
  stateRef.current.answers.push(attempt);
 
- // Async save
- getCurrentUser().then(user => {
- if (user) {
+ // Async save — track the promise so finishSession can await all inserts before
+ // finalize/results re-read them (otherwise the last attempt can be lost).
+ const savePromise = getCurrentUser().then(user => {
+ if (!user) return;
  if (stateRef.current.sessionId) {
- saveSprintAttempt(stateRef.current.sessionId, user.id, attempt as any);
- } else {
+ return saveSprintAttempt(stateRef.current.sessionId, user.id, attempt as any);
+ }
  stateRef.current.pendingAttempts.push(attempt);
- }
- }
  });
+ stateRef.current.savePromises.push(savePromise);
 
  // Transition
  const nextIndex = currentIndex + 1;
@@ -348,7 +376,7 @@ export const SprintSession: React.FC<SprintSessionProps> = ({ config, onExit }) 
  {/* Question Area */}
  <div className="space-y-6 animate-in slide-in-from-right-4 duration-300" key={currentIndex}>
  <h2 className="text-2xl font-medium text-[var(--color-ink-1)] leading-relaxed p-2">
- {currentQuestion.questionText}
+ <LatexText text={currentQuestion.questionText} />
  </h2>
 
  {/* Render diagram if available */}
@@ -371,7 +399,7 @@ export const SprintSession: React.FC<SprintSessionProps> = ({ config, onExit }) 
  {String.fromCharCode(65 + idx)}
  </span>
  <span className="text-lg text-[var(--color-ink-2)] font-medium group-hover:text-[var(--color-ink-1)]">
- {option.text}
+ <LatexText text={option.text} />
  </span>
  </div>
  </button>

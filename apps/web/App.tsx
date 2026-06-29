@@ -26,6 +26,7 @@ import { ErrorBoundary } from './components/ui/ErrorBoundary';
 import { PrivacyPolicy } from './components/legal/PrivacyPolicy';
 import { TermsAndConditions } from './components/legal/TermsAndConditions';
 import { Onboarding } from './components/Onboarding';
+import { UpdatePasswordForm } from './components/UpdatePasswordForm';
 
 
 // In a real Next.js app, this would be process.env.NEXT_PUBLIC_DEBUG
@@ -159,6 +160,10 @@ function App() {
           <Route path="/admin" element={
             user ? <AuthenticatedLayout user={user} onLogout={handleLogout} page="admin" /> : <Navigate to="/login" replace />
           } />
+
+          {/* Password recovery — renders even with the recovery session active (the
+              reset link sets a session, which would otherwise bounce to /dashboard). */}
+          <Route path="/update-password" element={<UpdatePasswordForm />} />
 
           {/* Legal routes */}
           <Route path="/privacypolicy" element={<PrivacyPolicy />} />

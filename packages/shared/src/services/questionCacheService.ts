@@ -3,7 +3,8 @@ import { QuestionItem } from '../lib/ai/schema';
 import { QuestionData } from '../types';
 import { generateQuestionsBatch } from './vertexBackendService';
 import { log } from '../lib/log';
-import { assertWithinFreeQuota, isPaywallError } from './paymentService';
+import { getRemainingFreeQuota, isPaywallError, PaywallError } from './paymentService';
+import { FREE_DAILY_QUESTION_LIMIT } from '../lib/pricing';
 
 /**
  * Feature flag — gates live AI question generation.
@@ -50,10 +51,22 @@ export interface CacheStats {
  *   2. its verification_status is an approved / curated source (allowlist) — this
  *      excludes new-format-but-unapproved rows (ai-openai-staged / -rejected).
  *
- * Net result served: `ai-openai-audited` (generated + admin-approved) and the
- * enriched `v3-verified-pyq` past-paper questions. Nothing old-format reaches users.
+ * NOTE: gate (1) is the hard label-leak guard — only NEW-format rows (quickMethod +
+ * fullSolution) ever serve, so legacy-format admin-imported rows stay excluded even
+ * though their status is on the allowlist below; they must be re-generated in the new
+ * format to serve. Gate (2) decides WHICH trusted sources may serve once they ARE
+ * new-format. (Previously this list omitted admin-verified/manual-curated, so a
+ * new-format admin-imported question was silently unservable; and the old doc-comment
+ * claimed a 2-entry set while the array had 4 — both reconciled here.)
  */
-const SERVABLE_STATUS_SUBSTRINGS = ['ai-openai-audited', 'v3-verified-pyq', '2.6', 'SubjectFallback'];
+const SERVABLE_STATUS_SUBSTRINGS = [
+  'ai-openai-audited',   // generated + admin-approved
+  'v3-verified-pyq',     // enriched past-paper questions
+  'admin-verified',      // admin Bulk Import (serves only if ALSO new-format — gate 1)
+  'manual-curated',      // manually curated (serves only if ALSO new-format — gate 1)
+  '2.6',                 // legacy version tag, back-compat (fragile substring — revisit)
+  'SubjectFallback',     // legacy fallback tag, back-compat
+];
 
 export function isServableQuestion(q: any): boolean {
   if (!q) return false;
@@ -74,7 +87,7 @@ export function isServableQuestion(q: any): boolean {
  * Trust signals come from the top-level columns, with the JSONB as a fallback for
  * older rows. Shared by the unseen path and the review-seen fallback.
  */
-function mapCachedToQuestionData(
+export function mapCachedToQuestionData(
   cq: any,
   subtopic: string,
   fallbackDifficulty: 'Easy' | 'Medium' | 'Hard'
@@ -123,11 +136,21 @@ export async function getQuestionsForUser(
   const metadata = { cached: 0, generated: 0 };
   const questions: QuestionData[] = [];
 
-  // FREE-TIER GATE — single chokepoint for web + mobile, practice + sprint.
-  // Pro users pass through; free users over FREE_DAILY_QUESTION_LIMIT/day get a
-  // PaywallError. Placed BEFORE the try so it propagates untouched; the catch
-  // below also re-throws it defensively in case this ever moves inside the try.
-  await assertWithinFreeQuota();
+  // FREE-TIER GATE + BATCH CAP — single chokepoint for web + mobile, practice + sprint.
+  // Pro users pass through (Infinity remaining). Free users are capped to whatever
+  // they have left today, so a single gate check can NEVER be used to over-fetch a
+  // batch (e.g. a 30-question sprint started at 19/20 used). Throws PaywallError when
+  // nothing remains. Placed BEFORE the try so it propagates untouched; the catch below
+  // also re-throws PaywallError defensively in case this ever moves inside the try.
+  const remainingQuota = await getRemainingFreeQuota();
+  if (remainingQuota <= 0) {
+    throw new PaywallError(
+      `You've reached your ${FREE_DAILY_QUESTION_LIMIT} free questions for today. Upgrade to Drut Pro for unlimited practice.`,
+    );
+  }
+  if (Number.isFinite(remainingQuota)) {
+    count = Math.min(count, Math.floor(remainingQuota));
+  }
 
   try {
     console.log('[DEBUG] Step 1: Checking cache...');
@@ -140,8 +163,13 @@ export async function getQuestionsForUser(
     let unseenQuestions: any[] | null = [];
 
     if (!skipCache) {
+      // COUNT-ON-SERVE: serve via the metered serving RPC. It returns at most the
+      // free user's remaining quota of unseen questions AND marks them seen AND
+      // increments the daily count, atomically server-side. This is the only
+      // client-callable serving path (get_unseen_questions execute is revoked), so a
+      // free user can't exceed the daily cap by any means — app flow or raw API.
       const { data, error: cacheError } = await supabase
-        .rpc('get_unseen_questions', {
+        .rpc('serve_unseen_questions', {
           p_user_id: userId,
           p_exam_profile: examProfile,
           p_topic: topic,
@@ -171,9 +199,9 @@ export async function getQuestionsForUser(
       const cachedQs = unseenQuestions.map((cq: any) => mapCachedToQuestionData(cq, subtopic, difficulty));
       questions.push(...cachedQs);
 
-      // Mark these questions as seen by this user
-      const questionIds = unseenQuestions.map((cq: CachedQuestion) => cq.id);
-      await markQuestionsSeen(userId, questionIds);
+      // NOTE: serve_unseen_questions already marked these seen + bumped serve stats
+      // server-side (count-on-serve), so we deliberately do NOT call markQuestionsSeen
+      // here — doing so would double-increment times_served.
     }
 
     // Step 3: Generate additional questions if needed

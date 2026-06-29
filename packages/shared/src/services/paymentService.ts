@@ -176,7 +176,12 @@ export async function isFirstTimerSubscriber(): Promise<boolean> {
 export async function getTodayQuestionUsage(): Promise<number> {
     const supabase = getSupabase();
     const { data, error } = await supabase.rpc('get_today_question_usage');
-    if (error) return 0;
+    if (error) {
+        // Fail CLOSED: never collapse an unreadable count into 0. Returning 0 on error
+        // would let an exhausted free user slip past the daily cap every time the usage
+        // RPC hiccups. Surface the error so the gate denies rather than serves.
+        throw new Error(error.message || 'get_today_question_usage failed');
+    }
     return typeof data === 'number' ? data : 0;
 }
 
@@ -229,15 +234,35 @@ export function isPaywallError(e: unknown): e is PaywallError {
  * This is the single chokepoint shared by web + mobile, practice + sprint — the
  * daily quota is a single unified pool across all question-serving paths.
  */
-export async function assertWithinFreeQuota(): Promise<void> {
+/**
+ * How many free questions the calling user has LEFT today.
+ *  - Pro (active, unexpired)  → Number.POSITIVE_INFINITY (unlimited).
+ *  - Free                     → max(0, FREE_DAILY_QUESTION_LIMIT − usedToday).
+ *
+ * Fail-CLOSED: returns 0 if today's usage can't be read, so callers deny rather
+ * than serve. Serving paths use this to CAP a batch fetch — without a cap, a single
+ * gate check could be used to over-fetch (e.g. a 30-question sprint started at 19/20
+ * used would hand out 11 extra free questions). This is the per-question enforcement
+ * that the old per-batch gate lacked.
+ */
+export async function getRemainingFreeQuota(): Promise<number> {
     const sub = await getCurrentSubscription();
-    if (isProActive(sub)) return; // Pro → unlimited.
+    if (isProActive(sub)) return Number.POSITIVE_INFINITY; // Pro → unlimited.
 
-    const used = await getTodayQuestionUsage();
-    if (used >= FREE_DAILY_QUESTION_LIMIT) {
+    let used: number;
+    try {
+        used = await getTodayQuestionUsage();
+    } catch {
+        // Fail CLOSED: can't confirm usage → treat as exhausted (deny, don't serve).
+        return 0;
+    }
+    return Math.max(0, FREE_DAILY_QUESTION_LIMIT - used);
+}
+
+export async function assertWithinFreeQuota(): Promise<void> {
+    if ((await getRemainingFreeQuota()) <= 0) {
         throw new PaywallError(
-            `You've used your ${FREE_DAILY_QUESTION_LIMIT} free questions for today. Upgrade to Drut Pro for unlimited practice.`,
-            used,
+            `You've reached your ${FREE_DAILY_QUESTION_LIMIT} free questions for today (or we couldn't verify your usage). Upgrade to Drut Pro for unlimited practice.`,
         );
     }
 }

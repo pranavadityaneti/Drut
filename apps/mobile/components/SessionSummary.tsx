@@ -17,11 +17,13 @@ interface SessionSummaryProps {
 
 export const SessionSummary: React.FC<SessionSummaryProps> = ({
     results,
-    totalQuestions,
     onExit
 }) => {
     const correctCount = results.filter(r => r.isCorrect).length;
-    const accuracy = totalQuestions > 0 ? Math.round((correctCount / totalQuestions) * 100) : 0;
+    // Accuracy over questions actually ANSWERED, not the target count — an early finish
+    // (e.g. 5/5 correct) must not be shown as 5/10 = 50%.
+    const answered = results.length;
+    const accuracy = answered > 0 ? Math.round((correctCount / answered) * 100) : 0;
 
     // Determine greeting based on accuracy
     let greeting = 'Good Effort';
@@ -60,7 +62,7 @@ export const SessionSummary: React.FC<SessionSummaryProps> = ({
                     </View>
                     <View style={styles.divider} />
                     <View style={styles.statItem}>
-                        <Text style={styles.statValue}>{correctCount}/{totalQuestions}</Text>
+                        <Text style={styles.statValue}>{correctCount}/{answered}</Text>
                         <Text style={styles.statLabel}>Correct</Text>
                     </View>
                 </View>

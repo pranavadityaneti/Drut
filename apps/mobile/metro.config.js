@@ -21,8 +21,8 @@ config.resolver.nodeModulesPaths = [
 // This prevents "Duplicate React" errors when libraries in the workspace resolve to the root React
 config.resolver.extraNodeModules = {
     ...config.resolver.extraNodeModules,
-    'react': path.resolve(workspaceRoot, 'node_modules/react'),
-    'react-native': path.resolve(workspaceRoot, 'node_modules/react-native'),
+    'react': path.resolve(projectRoot, 'node_modules/react'),
+    'react-native': path.resolve(projectRoot, 'node_modules/react-native'),
     '@drut/shared': path.resolve(workspaceRoot, 'packages/shared'),
 };
 
