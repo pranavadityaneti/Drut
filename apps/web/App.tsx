@@ -27,6 +27,7 @@ import { PrivacyPolicy } from './components/legal/PrivacyPolicy';
 import { TermsAndConditions } from './components/legal/TermsAndConditions';
 import { Onboarding } from './components/Onboarding';
 import { UpdatePasswordForm } from './components/UpdatePasswordForm';
+import { PracticeErrorBoundary } from './components/PracticeErrorBoundary';
 
 
 // In a real Next.js app, this would be process.env.NEXT_PUBLIC_DEBUG
@@ -219,8 +220,8 @@ const AuthenticatedLayout: React.FC<{
           <main className="flex-1 p-6 md:p-8 overflow-y-auto w-full min-w-0">
             <div className="container mx-auto px-0 max-w-full">
               {page === 'dashboard' && <Dashboard />}
-              {page === 'practice' && <Practice />}
-              {page === 'sprint' && <Sprint />}
+              {page === 'practice' && <PracticeErrorBoundary><Practice /></PracticeErrorBoundary>}
+              {page === 'sprint' && <PracticeErrorBoundary><Sprint /></PracticeErrorBoundary>}
               {page === 'profile' && <Profile />}
               {page === 'help-support' && <HelpSupport />}
               {page === 'admin' && (
