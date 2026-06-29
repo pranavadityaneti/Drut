@@ -79,11 +79,20 @@ export const updateUser = async (attributes: UserAttributes): Promise<{ user: Us
     return { user: data.user };
 };
 
-export const resetPasswordForEmail = async (email: string): Promise<void> => {
+export const resetPasswordForEmail = async (email: string, redirectTo?: string): Promise<void> => {
     const supabase = getSupabase();
     if (!supabase) throw new Error("Supabase client is not available.");
-    const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: window.location.origin, // Redirect user back to the app after reset
-    });
+    // Web defaults to the dedicated /update-password recovery route; mobile passes its
+    // own deep link. window is GUARDED so this never throws on React Native (where it's
+    // undefined) — referencing window.location.origin unconditionally previously crashed
+    // the mobile reset before the email was even sent.
+    const target = redirectTo
+        ?? (typeof window !== 'undefined' && window.location
+            ? `${window.location.origin}/update-password`
+            : undefined);
+    const { error } = await supabase.auth.resetPasswordForEmail(
+        email,
+        target ? { redirectTo: target } : undefined,
+    );
     if (error) throw new Error(error.message);
 };
