@@ -18,11 +18,19 @@ export const LatexText: React.FC<LatexTextProps> = ({ text, fontSize = 16, color
     const [height, setHeight] = useState(fontSize * 2);
     const [isReady, setIsReady] = useState(false);
 
-    // Reset state when text changes to prevent stale height/visibility
+    // Reset on text change, and FALLBACK: if KaTeX never reports back (e.g. offline — the
+    // CDN script can't load, so onload/postMessage never fire), reveal the content anyway
+    // after a short delay so math is never permanently invisible (it then shows as raw
+    // text rather than a blank gap).
     useEffect(() => {
         setIsReady(false);
         setHeight(fontSize * 2);
+        const t = setTimeout(() => setIsReady(true), 2500);
+        return () => clearTimeout(t);
     }, [text]);
+
+    // Coerce away undefined/non-string so the WebView never renders the literal "undefined".
+    const safeText = typeof text === 'string' ? text : '';
 
     const htmlContent = `
     <!DOCTYPE html>
@@ -56,7 +64,7 @@ export const LatexText: React.FC<LatexTextProps> = ({ text, fontSize = 16, color
         </style>
     </head>
     <body>
-        ${text}
+        ${safeText}
     </body>
     </html>
     `;
@@ -75,6 +83,7 @@ export const LatexText: React.FC<LatexTextProps> = ({ text, fontSize = 16, color
                         setIsReady(true);
                     }
                 }}
+                onError={() => setIsReady(true)} // reveal raw text rather than a blank gap
                 showsVerticalScrollIndicator={false}
             />
         </View>
