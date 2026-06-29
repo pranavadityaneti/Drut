@@ -185,6 +185,7 @@ export async function getQuestionsForUser(
           p_subtopic: subtopic,
           p_difficulty: difficulty,
           p_limit: count,
+          p_subject: subject ?? null,
         });
 
       if (cacheError) {
@@ -346,10 +347,11 @@ export async function getReviewQuestionsForUser(
       .from('cached_questions')
       .select('id, fsm_tag, question_data, verification_status, difficulty')
       .eq('exam_profile', examProfile)
-      .eq('topic', topic)
-      .eq('subtopic', subtopic)
       .eq('difficulty', difficulty)
       .limit(Math.max(count * 6, 30));
+    // 'ALL' is the "any" sentinel (mirrors get_unseen_questions) — skip that filter.
+    if (topic !== 'ALL') query = query.eq('topic', topic);
+    if (subtopic !== 'ALL') query = query.eq('subtopic', subtopic);
     if (subject) query = query.eq('subject', subject);
 
     const { data, error } = await query;
