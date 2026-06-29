@@ -164,12 +164,15 @@ export const SprintEngine: React.FC<{ config: SprintConfig }> = ({ config }) => 
         const timeMs = isTimeout ? ref.current.targetMs : Math.min(ref.current.targetMs, Date.now() - ref.current.startTime);
         let isCorrect = false;
         let result: 'correct' | 'wrong' | 'skipped' = 'skipped';
-        if (isTimeout) result = 'wrong';
+        if (isTimeout) result = 'skipped';   // timed-out = unattempted, NOT wrong
         else if (optionIndex !== null) { isCorrect = optionIndex === q.correctOptionIndex; result = isCorrect ? 'correct' : 'wrong'; }
 
         const difficulty = (q.difficulty as any) || 'Medium';
-        // Grade the speed bonus against the SAME target the user saw counting down.
-        const earned = calculateSprintScore(isCorrect, timeMs, config.exam, difficulty, ref.current.targetMs / 1000);
+        // Unattempted (timeout/skip) scores 0 — no negative marking on a blank. Attempted
+        // answers grade against the SAME target the user saw counting down.
+        const earned = result === 'skipped'
+            ? 0
+            : calculateSprintScore(isCorrect, timeMs, config.exam, difficulty, ref.current.targetMs / 1000);
         ref.current.score += earned;
         if (isCorrect) ref.current.correct++; else if (result === 'wrong') ref.current.wrong++; else ref.current.skipped++;
         setScore(ref.current.score);

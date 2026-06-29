@@ -46,6 +46,8 @@ export const SprintSession: React.FC<SprintSessionProps> = ({ config, onExit }) 
  timerId: null as number | null, // requestAnimationFrame ID
  answers: [] as any[], // Local buffer of answers
  pendingAttempts: [] as any[], // Queue for attempts made before session ID is ready
+ savePromises: [] as Promise<any>[], // attempt-save promises, awaited before finalize
+ locked: false, // per-question idempotency lock (tap vs timeout)
  score: 0,
  correct: 0,
  wrong: 0,
@@ -135,6 +137,14 @@ export const SprintSession: React.FC<SprintSessionProps> = ({ config, onExit }) 
  config.board,
  config.subject
 );
+ // Empty-state guard: never render a sprint with zero questions (would crash on
+ // questions[currentIndex]). Exit cleanly instead.
+ if (!fetchedQuestions || fetchedQuestions.length === 0) {
+ log.error('[sprint] No questions available for this selection');
+ alert('No questions are available for this topic yet. Try another chapter.');
+ onExit('error');
+ return;
+ }
  stateRef.current.sessionId = sessionId;
  setQuestions(fetchedQuestions);
  setSessionReady(true);
@@ -172,6 +182,7 @@ export const SprintSession: React.FC<SprintSessionProps> = ({ config, onExit }) 
  const target = getTargetTime(question);
  stateRef.current.targetTime = target;
  stateRef.current.startTime = Date.now();
+ stateRef.current.locked = false; // unlock for the new question
  setTimeLeft(target);
 
  const loop = () => {
@@ -197,6 +208,10 @@ export const SprintSession: React.FC<SprintSessionProps> = ({ config, onExit }) 
  const finishSession = async () => {
  if (!stateRef.current.sessionId) return;
 
+ // Ensure every attempt insert has committed before finalize + the results screen
+ // re-reads them from the DB — otherwise the last question's attempt can be lost.
+ await Promise.allSettled(stateRef.current.savePromises);
+
  // Calculate final stats
  const totalQuestions = stateRef.current.answers.length;
  const totalTime = stateRef.current.answers.reduce((acc, a) => acc + a.timeTaken, 0);
@@ -215,6 +230,9 @@ export const SprintSession: React.FC<SprintSessionProps> = ({ config, onExit }) 
  };
 
  const handleAnswer = async (optionIndex: number | null, isTimeout = false) => {
+ // Idempotency lock — a tap landing in the same instant as the timeout can't double-record.
+ if (stateRef.current.locked) return;
+ stateRef.current.locked = true;
  stopTimer();
 
  const question = questions[currentIndex];
@@ -228,15 +246,18 @@ export const SprintSession: React.FC<SprintSessionProps> = ({ config, onExit }) 
  let result: 'correct' | 'wrong' | 'skipped' = 'skipped';
 
  if (isTimeout) {
- result = 'wrong';
+ result = 'skipped'; // timed-out = unattempted, NOT wrong
  } else if (optionIndex !== null) {
  isCorrect = optionIndex === question.correctOptionIndex;
  result = isCorrect ? 'correct' : 'wrong';
  }
 
  const difficulty = question.difficulty || 'Medium';
- // Grade the speed bonus against the SAME target the user saw counting down.
- const score = calculateSprintScore(isCorrect, timeTakenMs, config.examProfile, difficulty, stateRef.current.targetTime);
+ // Unattempted (timeout/skip) scores 0 — real exams don't negatively-mark a blank.
+ // Attempted answers grade against the SAME target the user saw counting down.
+ const score = result === 'skipped'
+ ? 0
+ : calculateSprintScore(isCorrect, timeTakenMs, config.examProfile, difficulty, stateRef.current.targetTime);
 
  // Update local state refs
  stateRef.current.score += score;
@@ -257,16 +278,16 @@ export const SprintSession: React.FC<SprintSessionProps> = ({ config, onExit }) 
  };
  stateRef.current.answers.push(attempt);
 
- // Async save
- getCurrentUser().then(user => {
- if (user) {
+ // Async save — track the promise so finishSession can await all inserts before
+ // finalize/results re-read them (otherwise the last attempt can be lost).
+ const savePromise = getCurrentUser().then(user => {
+ if (!user) return;
  if (stateRef.current.sessionId) {
- saveSprintAttempt(stateRef.current.sessionId, user.id, attempt as any);
- } else {
+ return saveSprintAttempt(stateRef.current.sessionId, user.id, attempt as any);
+ }
  stateRef.current.pendingAttempts.push(attempt);
- }
- }
  });
+ stateRef.current.savePromises.push(savePromise);
 
  // Transition
  const nextIndex = currentIndex + 1;
