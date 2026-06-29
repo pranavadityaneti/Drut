@@ -25,9 +25,12 @@ import {
     Target,
     Calendar,
     Building2,
+    Crown,
 } from 'lucide-react-native';
 import { Colors } from '../../../constants/Colors';
-import { profileService, authService, UserProfile, normalizeTargetExams } from '@drut/shared';
+import { profileService, authService, UserProfile, normalizeTargetExams, getCurrentSubscription, isProActive, PRICING, type Subscription, type PlanId } from '@drut/shared';
+import { PaywallModal } from '../../../components/PaywallModal';
+import { RazorpayCheckoutModal } from '../../../components/RazorpayCheckoutModal';
 
 const MENU_ITEMS = [
     { id: 'account-settings', label: 'Account Settings', icon: Settings },
@@ -58,16 +61,35 @@ const REFERRAL_LABEL: Record<string, string> = {
     prefer_not_to_say: 'Prefer not to say',
 };
 
+const formatSubDate = (iso: string): string => {
+    try {
+        return new Date(iso).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' });
+    } catch {
+        return iso;
+    }
+};
+
 export default function ProfileScreen() {
     const router = useRouter();
     const [profile, setProfile] = useState<UserProfile | null>(null);
     const [userMeta, setUserMeta] = useState<Record<string, any> | null>(null);
     const [userEmail, setUserEmail] = useState<string>('');
     const [loading, setLoading] = useState(true);
+    const [sub, setSub] = useState<Subscription | null>(null);
+    const [showPaywall, setShowPaywall] = useState(false);
+    const [showCheckout, setShowCheckout] = useState(false);
+    const [checkoutPlan, setCheckoutPlan] = useState<PlanId | null>(null);
+    const [checkoutCoupon, setCheckoutCoupon] = useState<string | null>(null);
+    const isPro = isProActive(sub);
+
+    const refreshSub = React.useCallback(() => {
+        getCurrentSubscription().then(setSub).catch(() => setSub(null));
+    }, []);
 
     useEffect(() => {
         loadProfile();
-    }, []);
+        refreshSub();
+    }, [refreshSub]);
 
     const loadProfile = async () => {
         setLoading(true);
@@ -185,6 +207,40 @@ export default function ProfileScreen() {
                     <ChevronRight size={24} color={Colors.textDim} />
                 </TouchableOpacity>
 
+                {/* Subscription */}
+                <Text style={styles.sectionTitle}>Subscription</Text>
+                {isPro && sub ? (
+                    <View style={styles.infoContainer}>
+                        <View style={[styles.infoRow, styles.infoRowBorder]}>
+                            <Crown size={20} color={Colors.primary} />
+                            <View style={styles.infoTextContainer}>
+                                <Text style={styles.infoLabel}>Plan</Text>
+                                <Text style={styles.infoValue}>Drut Pro · {PRICING[sub.plan]?.label || sub.plan}</Text>
+                            </View>
+                            <View style={styles.proBadge}>
+                                <Text style={styles.proBadgeText}>Active</Text>
+                            </View>
+                        </View>
+                        <View style={styles.infoRow}>
+                            <Calendar size={20} color={Colors.primary} />
+                            <View style={styles.infoTextContainer}>
+                                <Text style={styles.infoLabel}>Valid until</Text>
+                                <Text style={styles.infoValue}>{formatSubDate(sub.expires_at)}</Text>
+                            </View>
+                        </View>
+                    </View>
+                ) : (
+                    <View style={styles.freeCard}>
+                        <View style={{ flex: 1 }}>
+                            <Text style={styles.freeTitle}>Free plan</Text>
+                            <Text style={styles.freeSub}>20 questions a day. Go Pro for unlimited practice & every feature.</Text>
+                        </View>
+                        <TouchableOpacity style={styles.upgradeBtn} onPress={() => setShowPaywall(true)} activeOpacity={0.85}>
+                            <Text style={styles.upgradeBtnText}>Upgrade</Text>
+                        </TouchableOpacity>
+                    </View>
+                )}
+
                 {/* Contact Info */}
                 {contactRows.length > 0 && (
                     <>
@@ -265,6 +321,20 @@ export default function ProfileScreen() {
                     <Text style={styles.logoutText}>Logout</Text>
                 </TouchableOpacity>
             </ScrollView>
+
+            <PaywallModal
+                visible={showPaywall}
+                onClose={() => setShowPaywall(false)}
+                onUpgrade={(plan, coupon) => { setCheckoutPlan(plan); setCheckoutCoupon(coupon ?? null); setShowPaywall(false); setShowCheckout(true); }}
+            />
+            <RazorpayCheckoutModal
+                visible={showCheckout}
+                plan={checkoutPlan}
+                couponCode={checkoutCoupon}
+                prefill={{ name: fullName, email: userEmail }}
+                onClose={() => setShowCheckout(false)}
+                onSuccess={() => { setShowCheckout(false); refreshSub(); }}
+            />
         </SafeAreaView>
     );
 }
@@ -273,6 +343,49 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: Colors.background,
+    },
+    proBadge: {
+        backgroundColor: '#dcfce7',
+        borderRadius: 12,
+        paddingHorizontal: 10,
+        paddingVertical: 4,
+    },
+    proBadgeText: {
+        color: '#15803d',
+        fontSize: 12,
+        fontWeight: '700',
+    },
+    freeCard: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 12,
+        backgroundColor: Colors.surface,
+        borderRadius: 16,
+        padding: 16,
+        borderWidth: 1,
+        borderColor: Colors.border,
+    },
+    freeTitle: {
+        fontSize: 16,
+        fontWeight: '700',
+        color: Colors.text,
+    },
+    freeSub: {
+        fontSize: 13,
+        color: Colors.textDim,
+        marginTop: 2,
+        lineHeight: 18,
+    },
+    upgradeBtn: {
+        backgroundColor: Colors.primary,
+        borderRadius: 22,
+        paddingHorizontal: 20,
+        paddingVertical: 10,
+    },
+    upgradeBtnText: {
+        color: '#FFFFFF',
+        fontSize: 14,
+        fontWeight: '800',
     },
     loadingContainer: {
         flex: 1,
