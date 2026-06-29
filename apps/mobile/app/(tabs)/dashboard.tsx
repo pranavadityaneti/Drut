@@ -3,9 +3,12 @@ import { View, Text, StyleSheet, ScrollView, RefreshControl, Image, TouchableOpa
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import { Colors, Layout } from '../../constants/Colors';
-import { useDashboardData, analyticsService } from '@drut/shared';
+import { useDashboardData, analyticsService, getCurrentSubscription, isProActive, type PlanId } from '@drut/shared';
 import { Zap, TrendingUp, Target, ChevronRight } from 'lucide-react-native';
 import { useAuth } from '../../contexts/AuthContext';
+import { UpgradeCard } from '../../components/UpgradeCard';
+import { PaywallModal } from '../../components/PaywallModal';
+import { RazorpayCheckoutModal } from '../../components/RazorpayCheckoutModal';
 
 export default function DashboardScreen() {
     const router = useRouter();
@@ -13,6 +16,16 @@ export default function DashboardScreen() {
     const { user } = useAuth(); // Fresh user from AuthContext (reflects latest metadata)
     const [greeting, setGreeting] = useState('Good Morning');
     const [streak, setStreak] = useState(0);
+    const [isPro, setIsPro] = useState(false);
+    const [showPaywall, setShowPaywall] = useState(false);
+    const [showCheckout, setShowCheckout] = useState(false);
+    const [checkoutPlan, setCheckoutPlan] = useState<PlanId | null>(null);
+    const [checkoutCoupon, setCheckoutCoupon] = useState<string | null>(null);
+
+    const refreshPro = React.useCallback(() => {
+        getCurrentSubscription().then(sub => setIsPro(isProActive(sub))).catch(() => { });
+    }, []);
+    useEffect(() => { refreshPro(); }, [refreshPro]);
 
     useEffect(() => {
         const hours = new Date().getHours();
@@ -77,6 +90,9 @@ export default function DashboardScreen() {
                     </View>
                 </View>
 
+                {/* Upgrade / Pro status */}
+                <UpgradeCard isPro={isPro} onUpgrade={() => setShowPaywall(true)} />
+
                 {/* Main CTA: Quick Sprint */}
                 <TouchableOpacity style={styles.sprintCard} onPress={() => router.push('/(tabs)/sprint')}>
                     <View style={styles.sprintTextContainer}>
@@ -134,6 +150,20 @@ export default function DashboardScreen() {
                     )}
                 </ScrollView>
             </ScrollView>
+
+            <PaywallModal
+                visible={showPaywall}
+                onClose={() => setShowPaywall(false)}
+                onUpgrade={(plan, coupon) => { setCheckoutPlan(plan); setCheckoutCoupon(coupon ?? null); setShowPaywall(false); setShowCheckout(true); }}
+            />
+            <RazorpayCheckoutModal
+                visible={showCheckout}
+                plan={checkoutPlan}
+                couponCode={checkoutCoupon}
+                prefill={{ name: (user?.user_metadata?.full_name as string) || undefined, email: user?.email || undefined }}
+                onClose={() => setShowCheckout(false)}
+                onSuccess={() => { setShowCheckout(false); refreshPro(); refetch(); }}
+            />
         </SafeAreaView>
     );
 }
