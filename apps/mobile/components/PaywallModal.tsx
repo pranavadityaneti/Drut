@@ -1,21 +1,26 @@
 /**
- * PaywallModal (mobile) — "Upgrade to Pro" sheet.
+ * PaywallModal (mobile) — Pro benefits sheet (NO in-app purchase).
  *
- * Shown when a free user hits the daily question limit (or taps Upgrade). Plans +
- * prices come from @drut/shared pricing.ts (single source of truth). The annual
- * plan shows the first-timer intro price for users who haven't subscribed before.
- * onUpgrade(plan) hands off to the Razorpay checkout.
+ * STORE POLICY: we deliberately do NOT sell the Pro subscription inside the mobile app.
+ * Apple (App Store Review Guideline 3.1.1) and Google Play require their native In-App
+ * Purchase for digital subscriptions consumed in-app (a ~15–30% cut), and selling via a
+ * Razorpay WebView in-app is a near-certain rejection. So Pro is sold ONLY on the web
+ * (drut.club, via Razorpay), and this sheet just showcases the benefits and points users
+ * to the web to subscribe/manage. There is no in-app purchase and no external buy button.
+ *
+ * The onUpgrade/isFirstTimer/loading props are retained for caller compatibility but are
+ * intentionally unused — callers' Razorpay checkout is never triggered from here.
  */
-import React, { useState } from 'react';
-import { Modal, View, Text, StyleSheet, TouchableOpacity, ActivityIndicator, TextInput } from 'react-native';
-import { X, BadgeCheck, Infinity as InfinityIcon, ListChecks, Timer, Tag } from 'lucide-react-native';
+import React from 'react';
+import { Modal, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { X, BadgeCheck, Infinity as InfinityIcon, ListChecks, Timer, Globe } from 'lucide-react-native';
 import { Colors } from '../constants/Colors';
-import { PRICING, priceForPlan, validateCoupon, formatINR, type PlanId, type CouponPreview } from '@drut/shared';
+import type { PlanId } from '@drut/shared';
 
 interface PaywallModalProps {
     visible: boolean;
     onClose: () => void;
-    onUpgrade: (plan: PlanId, couponCode?: string) => void;
+    onUpgrade?: (plan: PlanId, couponCode?: string) => void; // retained for caller compat; not used
     isFirstTimer?: boolean;
     loading?: boolean;
     reason?: string; // optional context line, e.g. "You've used your 20 free questions today"
@@ -27,62 +32,7 @@ const FEATURES = [
     { Icon: Timer, title: 'Sprints & insights', sub: 'Timed speed sprints, focus areas, and progress analytics.' },
 ];
 
-export const PaywallModal: React.FC<PaywallModalProps> = ({ visible, onClose, onUpgrade, isFirstTimer = true, loading = false, reason }) => {
-    const [plan, setPlanState] = useState<PlanId>('annual');
-    const [couponInput, setCouponInput] = useState('');
-    const [applied, setApplied] = useState<CouponPreview | null>(null);
-    const [applyMsg, setApplyMsg] = useState<string | null>(null);
-    const [applying, setApplying] = useState(false);
-
-    // Changing plan invalidates any applied coupon (price + plan-scoping differ).
-    const setPlan = (id: PlanId) => { setPlanState(id); setApplied(null); setApplyMsg(null); };
-
-    const handleApply = async () => {
-        const code = couponInput.trim();
-        if (!code || applying) return;
-        setApplying(true);
-        setApplyMsg(null);
-        try {
-            const res = await validateCoupon(plan, code);
-            setApplied(res);
-            if (!res.valid) setApplyMsg(res.reason || 'Invalid coupon code');
-        } catch (e: any) {
-            setApplied(null);
-            setApplyMsg(e?.message || 'Could not apply coupon');
-        } finally {
-            setApplying(false);
-        }
-    };
-
-    const couponOk = applied?.valid === true;
-    const couponCode = couponOk ? applied!.code : undefined;
-
-    const monthly = priceForPlan('monthly', isFirstTimer);
-    const annual = priceForPlan('annual', isFirstTimer);
-    const annualHasIntro = isFirstTimer && PRICING.annual.firstTimerAmountPaise != null;
-
-    const PlanCard = ({ id, title, price, unit, note, strike }: { id: PlanId; title: string; price: number; unit: string; note?: string; strike?: number }) => {
-        const selected = plan === id;
-        return (
-            <TouchableOpacity
-                style={[styles.planCard, selected && styles.planCardActive]}
-                onPress={() => setPlan(id)}
-                activeOpacity={0.85}
-            >
-                <View style={styles.planTop}>
-                    <Text style={styles.planTitle}>{title}</Text>
-                    <View style={[styles.radio, selected && styles.radioActive]}>{selected && <View style={styles.radioDot} />}</View>
-                </View>
-                <View style={styles.priceRow}>
-                    <Text style={styles.planPrice}>₹{price.toLocaleString('en-IN')}</Text>
-                    <Text style={styles.planUnit}>{unit}</Text>
-                </View>
-                {strike != null && <Text style={styles.strike}>₹{strike.toLocaleString('en-IN')}</Text>}
-                {note && <Text style={styles.planNote}>{note}</Text>}
-            </TouchableOpacity>
-        );
-    };
-
+export const PaywallModal: React.FC<PaywallModalProps> = ({ visible, onClose, reason }) => {
     return (
         <Modal visible={visible} transparent animationType="slide" onRequestClose={onClose}>
             <View style={styles.overlay}>
@@ -90,7 +40,7 @@ export const PaywallModal: React.FC<PaywallModalProps> = ({ visible, onClose, on
                     {/* Header */}
                     <View style={styles.header}>
                         <View style={{ width: 28 }} />
-                        <Text style={styles.headerTitle}>Upgrade to Pro</Text>
+                        <Text style={styles.headerTitle}>Drut Pro</Text>
                         <TouchableOpacity onPress={onClose} hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
                             <X size={22} color={Colors.text} />
                         </TouchableOpacity>
@@ -116,48 +66,17 @@ export const PaywallModal: React.FC<PaywallModalProps> = ({ visible, onClose, on
                         ))}
                     </View>
 
-                    {/* Plans */}
-                    <View style={styles.plans}>
-                        <PlanCard id="monthly" title="Monthly" price={monthly.rupees} unit="/month" note="Billed monthly" />
-                        <PlanCard
-                            id="annual"
-                            title="Yearly"
-                            price={annual.rupees}
-                            unit="/year"
-                            note={annualHasIntro ? 'First year — then ₹1,999/yr' : 'Billed yearly · best value'}
-                            strike={annualHasIntro ? PRICING.annual.amountRupees : undefined}
-                        />
-                    </View>
-
-                    {/* Coupon */}
-                    <View style={styles.couponRow}>
-                        <View style={styles.couponInputWrap}>
-                            <Tag size={16} color={Colors.textDim} />
-                            <TextInput
-                                style={styles.couponInput}
-                                value={couponInput}
-                                onChangeText={(t) => { setCouponInput(t); setApplied(null); setApplyMsg(null); }}
-                                placeholder="Coupon code"
-                                placeholderTextColor={Colors.textDim}
-                                autoCapitalize="characters"
-                                autoCorrect={false}
-                            />
-                        </View>
-                        <TouchableOpacity style={styles.couponApply} onPress={handleApply} disabled={applying || !couponInput.trim()} activeOpacity={0.85}>
-                            {applying ? <ActivityIndicator color={Colors.text} /> : <Text style={styles.couponApplyText}>Apply</Text>}
-                        </TouchableOpacity>
-                    </View>
-                    {couponOk ? (
-                        <Text style={styles.couponOk}>
-                            {applied!.isFree ? `Coupon ${applied!.code} applied — it's free 🎉` : `Coupon ${applied!.code} applied — you pay ${formatINR(applied!.finalPaise ?? 0)}`}
+                    {/* Web-only subscription note (no in-app purchase — store policy) */}
+                    <View style={styles.webNote}>
+                        <Globe size={18} color={Colors.primary} strokeWidth={2.2} />
+                        <Text style={styles.webNoteText}>
+                            Drut Pro is managed on the web. Visit <Text style={styles.webNoteStrong}>drut.club</Text> in any browser to subscribe or manage your plan.
                         </Text>
-                    ) : applyMsg ? <Text style={styles.couponErr}>{applyMsg}</Text> : null}
+                    </View>
 
-                    {/* CTA */}
-                    <TouchableOpacity style={[styles.cta, loading && { opacity: 0.7 }]} onPress={() => onUpgrade(plan, couponCode)} disabled={loading} activeOpacity={0.9}>
-                        {loading ? <ActivityIndicator color={Colors.white} /> : <Text style={styles.ctaText}>{couponOk && applied!.isFree ? 'Unlock free' : 'Upgrade'}</Text>}
+                    <TouchableOpacity style={styles.cta} onPress={onClose} activeOpacity={0.9}>
+                        <Text style={styles.ctaText}>Got it</Text>
                     </TouchableOpacity>
-                    <Text style={styles.footer}>Cancel anytime. Plans renew automatically.</Text>
                 </View>
             </View>
         </Modal>
@@ -178,29 +97,11 @@ const styles = StyleSheet.create({
     featureIcon: { width: 38, height: 38, borderRadius: 19, backgroundColor: Colors.secondary, alignItems: 'center', justifyContent: 'center' },
     featureTitle: { fontSize: 14.5, fontWeight: '700', color: Colors.text },
     featureSub: { fontSize: 12.5, color: Colors.textDim, marginTop: 1 },
-    plans: { flexDirection: 'row', gap: 12, marginTop: 16 },
-    planCard: { flex: 1, borderWidth: 1.5, borderColor: Colors.border, borderRadius: 16, padding: 14, backgroundColor: Colors.white },
-    planCardActive: { borderColor: Colors.primary, backgroundColor: '#f3fbe9' },
-    planTop: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-    planTitle: { fontSize: 13.5, fontWeight: '600', color: Colors.textDim },
-    radio: { width: 18, height: 18, borderRadius: 9, borderWidth: 2, borderColor: Colors.border, alignItems: 'center', justifyContent: 'center' },
-    radioActive: { borderColor: Colors.primary },
-    radioDot: { width: 9, height: 9, borderRadius: 5, backgroundColor: Colors.primary },
-    priceRow: { flexDirection: 'row', alignItems: 'flex-end', gap: 3, marginTop: 8 },
-    planPrice: { fontSize: 22, fontWeight: '800', color: Colors.text },
-    planUnit: { fontSize: 12, color: Colors.textDim, marginBottom: 3 },
-    strike: { fontSize: 12, color: Colors.textDim, textDecorationLine: 'line-through', marginTop: 2 },
-    planNote: { fontSize: 11, color: Colors.textDim, marginTop: 4 },
-    couponRow: { flexDirection: 'row', gap: 8, marginTop: 16, alignItems: 'center' },
-    couponInputWrap: { flex: 1, flexDirection: 'row', alignItems: 'center', gap: 8, borderWidth: 1.5, borderColor: Colors.border, borderRadius: 22, paddingHorizontal: 14, height: 44 },
-    couponInput: { flex: 1, fontSize: 14, color: Colors.text, paddingVertical: 0 },
-    couponApply: { height: 44, paddingHorizontal: 18, borderRadius: 22, backgroundColor: Colors.surface, alignItems: 'center', justifyContent: 'center' },
-    couponApplyText: { fontSize: 13, fontWeight: '700', color: Colors.text },
-    couponOk: { fontSize: 12.5, color: '#3d7a0f', marginTop: 8 },
-    couponErr: { fontSize: 12.5, color: Colors.error, marginTop: 8 },
+    webNote: { flexDirection: 'row', alignItems: 'center', gap: 10, backgroundColor: '#f3fbe9', borderRadius: 16, padding: 14, marginTop: 16 },
+    webNoteText: { flex: 1, fontSize: 13, color: Colors.text, lineHeight: 19 },
+    webNoteStrong: { fontWeight: '800', color: Colors.primary },
     cta: { backgroundColor: Colors.primary, height: 52, borderRadius: 26, alignItems: 'center', justifyContent: 'center', marginTop: 18 },
     ctaText: { fontSize: 16, fontWeight: '800', color: Colors.white },
-    footer: { fontSize: 11.5, color: Colors.textDim, textAlign: 'center', marginTop: 12 },
 });
 
 export default PaywallModal;
