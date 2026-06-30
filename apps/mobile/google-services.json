@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "983714911133",
+    "project_id": "drut-1b902",
+    "storage_bucket": "drut-1b902.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:983714911133:android:b353de8d13e33b42819574",
+        "android_client_info": {
+          "package_name": "club.drut.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdFgte9JFJqGv7sN0adiIYIreS5E0VLtg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -17,11 +17,12 @@
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#b4fa8d"
     },
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "club.drut.app",
+      "associatedDomains": ["applinks:drut.club"],
       "infoPlist": {
         "NSPhotoLibraryUsageDescription": "Drut needs access to your photos so you can set a profile picture.",
         "NSAppTransportSecurity": {
@@ -31,11 +32,20 @@
     },
     "android": {
       "package": "club.drut.app",
+      "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "foregroundImage": "./assets/icon.png",
+        "backgroundColor": "#b4fa8d"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "autoVerify": true,
+          "data": [{ "scheme": "https", "host": "drut.club" }],
+          "category": ["BROWSABLE", "DEFAULT"]
+        }
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
