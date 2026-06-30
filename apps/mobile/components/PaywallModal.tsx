@@ -1,29 +1,37 @@
 /**
- * PaywallModal (mobile) — Pro benefits sheet (NO in-app purchase).
+ * PaywallModal (mobile) — benefits sheet + "Subscribe on the web" CTA.
  *
- * STORE POLICY: we deliberately do NOT sell the Pro subscription inside the mobile app.
- * Apple (App Store Review Guideline 3.1.1) and Google Play require their native In-App
- * Purchase for digital subscriptions consumed in-app (a ~15–30% cut), and selling via a
- * Razorpay WebView in-app is a near-certain rejection. So Pro is sold ONLY on the web
- * (drut.club, via Razorpay), and this sheet just showcases the benefits and points users
- * to the web to subscribe/manage. There is no in-app purchase and no external buy button.
+ * STORE POLICY: we do NOT sell Drut Pro inside the mobile app. Apple (Guideline
+ * 3.1.1) and Google Play require their native IAP for digital subscriptions
+ * consumed in-app (~15-30% cut), and selling via a Razorpay WebView is a
+ * near-certain rejection. Pro is sold ONLY on the web (drut.club).
  *
- * The onUpgrade/isFirstTimer/loading props are retained for caller compatibility but are
- * intentionally unused — callers' Razorpay checkout is never triggered from here.
+ * UPGRADE FLOW: the CTA does NOT bounce the user to a generic login page. We
+ * mint a one-time, 2-min mobile->web handoff token (create-subscribe-handoff
+ * edge fn), then open drut.club/subscribe?h=<token> in the SYSTEM BROWSER.
+ * The web page redeems the token -> establishes a session for THIS exact user
+ * -> goes straight to checkout. The token is opaque + single-use; the actual
+ * login credential is minted server-side at redeem time and never touches
+ * any URL/history/log. System browser is chosen over the in-app browser so
+ * Razorpay's UPI app deep-links work reliably.
  */
-import React from 'react';
-import { Modal, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { X, BadgeCheck, Infinity as InfinityIcon, ListChecks, Timer, Globe } from 'lucide-react-native';
+import React, { useState } from 'react';
+import { Modal, View, Text, StyleSheet, TouchableOpacity, ActivityIndicator, Alert, Linking } from 'react-native';
+import { X, BadgeCheck, Infinity as InfinityIcon, ListChecks, Timer, ExternalLink } from 'lucide-react-native';
 import { Colors } from '../constants/Colors';
-import type { PlanId } from '@drut/shared';
+import { createSubscribeHandoff } from '@drut/shared';
 
 interface PaywallModalProps {
     visible: boolean;
     onClose: () => void;
-    onUpgrade?: (plan: PlanId, couponCode?: string) => void; // retained for caller compat; not used
+    reason?: string; // optional context line, e.g. "You've used your 20 free questions today"
+    // Legacy props retained for caller compatibility; the in-app purchase path was
+    // removed (see file header) and these are intentionally ignored. The dead caller
+    // wiring (RazorpayCheckoutModal + checkoutPlan state in dashboard/SprintEngine/
+    // SessionEngine) is tracked for cleanup in forlater #3b.
+    onUpgrade?: (...args: any[]) => void;
     isFirstTimer?: boolean;
     loading?: boolean;
-    reason?: string; // optional context line, e.g. "You've used your 20 free questions today"
 }
 
 const FEATURES = [
@@ -33,6 +41,24 @@ const FEATURES = [
 ];
 
 export const PaywallModal: React.FC<PaywallModalProps> = ({ visible, onClose, reason }) => {
+    const [loading, setLoading] = useState(false);
+
+    const handleSubscribe = async () => {
+        if (loading) return;
+        setLoading(true);
+        try {
+            const { url } = await createSubscribeHandoff();
+            const can = await Linking.canOpenURL(url);
+            if (!can) throw new Error("Couldn't open your browser. Please visit drut.club/subscribe.");
+            await Linking.openURL(url);
+            onClose();
+        } catch (e: any) {
+            Alert.alert('Could not open checkout', e?.message || 'Please try again, or visit drut.club/subscribe directly.');
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <Modal visible={visible} transparent animationType="slide" onRequestClose={onClose}>
             <View style={styles.overlay}>
@@ -66,16 +92,29 @@ export const PaywallModal: React.FC<PaywallModalProps> = ({ visible, onClose, re
                         ))}
                     </View>
 
-                    {/* Web-only subscription note (no in-app purchase — store policy) */}
-                    <View style={styles.webNote}>
-                        <Globe size={18} color={Colors.primary} strokeWidth={2.2} />
-                        <Text style={styles.webNoteText}>
-                            Drut Pro is managed on the web. Visit <Text style={styles.webNoteStrong}>drut.club</Text> in any browser to subscribe or manage your plan.
-                        </Text>
-                    </View>
+                    {/* Primary CTA: subscribe on the web (via handoff) */}
+                    <TouchableOpacity
+                        style={[styles.cta, loading && styles.ctaDisabled]}
+                        onPress={handleSubscribe}
+                        activeOpacity={0.9}
+                        disabled={loading}
+                    >
+                        {loading ? (
+                            <ActivityIndicator color={Colors.white} />
+                        ) : (
+                            <>
+                                <Text style={styles.ctaText}>Subscribe on the web</Text>
+                                <ExternalLink size={17} color={Colors.white} strokeWidth={2.4} />
+                            </>
+                        )}
+                    </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.cta} onPress={onClose} activeOpacity={0.9}>
-                        <Text style={styles.ctaText}>Got it</Text>
+                    <Text style={styles.note}>
+                        We'll open <Text style={styles.noteStrong}>drut.club</Text> in your browser, already signed in to your Drut account.
+                    </Text>
+
+                    <TouchableOpacity onPress={onClose} hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}>
+                        <Text style={styles.maybeLater}>Maybe later</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -97,11 +136,12 @@ const styles = StyleSheet.create({
     featureIcon: { width: 38, height: 38, borderRadius: 19, backgroundColor: Colors.secondary, alignItems: 'center', justifyContent: 'center' },
     featureTitle: { fontSize: 14.5, fontWeight: '700', color: Colors.text },
     featureSub: { fontSize: 12.5, color: Colors.textDim, marginTop: 1 },
-    webNote: { flexDirection: 'row', alignItems: 'center', gap: 10, backgroundColor: '#f3fbe9', borderRadius: 16, padding: 14, marginTop: 16 },
-    webNoteText: { flex: 1, fontSize: 13, color: Colors.text, lineHeight: 19 },
-    webNoteStrong: { fontWeight: '800', color: Colors.primary },
-    cta: { backgroundColor: Colors.primary, height: 52, borderRadius: 26, alignItems: 'center', justifyContent: 'center', marginTop: 18 },
+    cta: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 8, backgroundColor: Colors.primary, height: 52, borderRadius: 26, marginTop: 20 },
+    ctaDisabled: { opacity: 0.7 },
     ctaText: { fontSize: 16, fontWeight: '800', color: Colors.white },
+    note: { fontSize: 12.5, color: Colors.textDim, textAlign: 'center', marginTop: 12, lineHeight: 18, paddingHorizontal: 12 },
+    noteStrong: { fontWeight: '800', color: Colors.primary },
+    maybeLater: { fontSize: 14, fontWeight: '700', color: Colors.textDim, textAlign: 'center', marginTop: 16, paddingVertical: 8 },
 });
 
 export default PaywallModal;

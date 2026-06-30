@@ -44,6 +44,22 @@ export async function createRazorpayOrder(plan: PlanId, couponCode?: string): Pr
 }
 
 /**
+ * Mint a one-time mobile -> web subscribe handoff URL. The opaque token is the
+ * only thing in the returned URL; redemption (server-side, on /subscribe) is
+ * what mints the actual login credential. Token is single-use and expires in
+ * ~2 minutes. Returns a drut.club/subscribe?h=<token> URL for the CALLER user.
+ */
+export async function createSubscribeHandoff(): Promise<{ url: string; expires_at: string }> {
+    const supabase = getSupabase();
+    const { data, error } = await supabase.functions.invoke<{ url: string; expires_at: string }>('create-subscribe-handoff', {
+        body: {},
+    });
+    if (error) throw new Error(error.message || 'create-subscribe-handoff failed');
+    if (!data?.url) throw new Error('No url returned from create-subscribe-handoff');
+    return data;
+}
+
+/**
  * Validate a coupon for a plan WITHOUT committing — drives the paywall price
  * preview. Returns { valid, finalPaise, isFree, reason? }. The actual discount is
  * always re-computed server-side at order creation; this is display-only.
