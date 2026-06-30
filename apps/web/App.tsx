@@ -28,6 +28,7 @@ import { TermsAndConditions } from './components/legal/TermsAndConditions';
 import { Onboarding } from './components/Onboarding';
 import { UpdatePasswordForm } from './components/UpdatePasswordForm';
 import { PracticeErrorBoundary } from './components/PracticeErrorBoundary';
+import { Subscribe } from './components/Subscribe';
 
 
 // In a real Next.js app, this would be process.env.NEXT_PUBLIC_DEBUG
@@ -165,6 +166,9 @@ function App() {
           {/* Password recovery — renders even with the recovery session active (the
               reset link sets a session, which would otherwise bounce to /dashboard). */}
           <Route path="/update-password" element={<UpdatePasswordForm />} />
+
+          {/* Subscribe — public; handles handoff token + plan selection + Razorpay checkout. */}
+          <Route path="/subscribe" element={<Subscribe />} />
 
           {/* Legal routes */}
           <Route path="/privacypolicy" element={<PrivacyPolicy />} />
