@@ -1,8 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import Svg, { Defs, LinearGradient, Stop, Rect } from 'react-native-svg';
+import { View, Text, StyleSheet, TouchableOpacity, ImageBackground } from 'react-native';
 import { Crown, Check } from 'lucide-react-native';
-import { Colors } from '../constants/Colors';
 
 interface Props {
     isPro: boolean;
@@ -10,54 +8,44 @@ interface Props {
 }
 
 /**
- * Home-screen upgrade card. Drut-green gradient (SVG, no native gradient dep), with a
- * Crown "Pro" mark. Two states:
- *   - Free user  → "Go Pro" + Upgrade button (opens the real paywall → Razorpay checkout)
- *   - Pro user   → "Pro member · All features unlocked!" + Active badge (no CTA)
+ * "Go Pro" card. Background = a soft green gradient image (assets/go-pro-bg.png).
+ * Because that image is bright, the copy is DARK ink and the CTA is a dark-green
+ * "glass" pill — a translucent fill + frosted light rim (NO native blur module,
+ * so the card ships over-the-air with no rebuild).
+ *   - Free user → "Go Pro" + glass Upgrade button (opens the paywall → Razorpay)
+ *   - Pro user  → "Pro member · All features unlocked" + glass Active chip
  */
+const INK = '#0d3517';
+
 export const UpgradeCard: React.FC<Props> = ({ isPro, onUpgrade }) => {
     return (
-        <View style={styles.card}>
-            {/* Gradient background (clipped by the card's rounded corners + overflow:hidden) */}
-            <Svg style={StyleSheet.absoluteFill}>
-                <Defs>
-                    <LinearGradient id="upgradeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <Stop offset="0%" stopColor="#10481b" />
-                        <Stop offset="100%" stopColor="#4e9e2c" />
-                    </LinearGradient>
-                </Defs>
-                <Rect x="0" y="0" width="100%" height="100%" fill="url(#upgradeGrad)" />
-            </Svg>
-
-            {/* Faint oversized crown watermark, bottom-right */}
-            <View style={styles.watermark} pointerEvents="none">
-                <Crown size={170} color="#ffffff" opacity={0.07} />
-            </View>
-
+        <ImageBackground
+            source={require('../assets/go-pro-bg.png')}
+            resizeMode="cover"
+            style={styles.card}
+            imageStyle={styles.image}
+        >
             <View style={styles.content}>
                 <View style={styles.textCol}>
                     <Text style={styles.title}>{isPro ? 'Pro member' : 'Go Pro'}</Text>
                     <Text style={styles.subtitle}>
-                        {isPro ? 'All features unlocked!' : 'Unlock unlimited practice & every feature.'}
+                        {isPro ? 'All features unlocked' : 'Unlimited practice, every solution, and Sprints'}
                     </Text>
-
-                    {isPro ? (
-                        <View style={styles.activeBadge}>
-                            <Check size={14} color={Colors.primary} strokeWidth={3} />
-                            <Text style={styles.activeText}>Active</Text>
-                        </View>
-                    ) : (
-                        <TouchableOpacity style={styles.upgradeBtn} onPress={onUpgrade} activeOpacity={0.85}>
-                            <Text style={styles.upgradeText}>Upgrade</Text>
-                        </TouchableOpacity>
-                    )}
                 </View>
 
-                <View style={styles.mark}>
-                    <Crown size={30} color={Colors.primary} fill={Colors.secondary} />
-                </View>
+                {isPro ? (
+                    <View style={styles.glassChip}>
+                        <Check size={14} color="#eafff0" strokeWidth={3} />
+                        <Text style={styles.glassText}>Active</Text>
+                    </View>
+                ) : (
+                    <TouchableOpacity style={styles.glassBtn} onPress={onUpgrade} activeOpacity={0.85}>
+                        <Crown size={15} color="#eafff0" />
+                        <Text style={styles.glassText}>Upgrade</Text>
+                    </TouchableOpacity>
+                )}
             </View>
-        </View>
+        </ImageBackground>
     );
 };
 
@@ -66,78 +54,67 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         overflow: 'hidden',
         marginBottom: 24,
-        minHeight: 132,
+        minHeight: 140,
         justifyContent: 'center',
         shadowColor: '#10481b',
         shadowOffset: { width: 0, height: 6 },
-        shadowOpacity: 0.25,
+        shadowOpacity: 0.2,
         shadowRadius: 12,
         elevation: 5,
     },
-    watermark: {
-        position: 'absolute',
-        right: -28,
-        bottom: -40,
-    },
+    image: { borderRadius: 20 },
     content: {
         flexDirection: 'row',
         alignItems: 'center',
-        paddingHorizontal: 20,
-        paddingVertical: 20,
         gap: 14,
+        paddingHorizontal: 22,
+        paddingVertical: 22,
     },
-    textCol: { flex: 1 },
+    textCol: {
+        flex: 1,
+    },
     title: {
-        fontSize: 24,
+        fontSize: 25,
         fontWeight: '800',
-        color: '#ffffff',
-        letterSpacing: -0.3,
+        color: INK,
+        letterSpacing: -0.4,
     },
     subtitle: {
-        fontSize: 14,
-        color: 'rgba(255,255,255,0.85)',
+        fontSize: 13.5,
+        color: 'rgba(13,53,23,0.78)',
         marginTop: 4,
         lineHeight: 19,
+        fontWeight: '600',
     },
-    upgradeBtn: {
-        alignSelf: 'flex-start',
-        backgroundColor: '#ffffff',
+    glassBtn: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 7,
+        backgroundColor: 'rgba(8,38,17,0.55)',
+        borderWidth: 1.5,
+        borderColor: 'rgba(255,255,255,0.45)',
         borderRadius: 24,
-        paddingHorizontal: 26,
+        paddingHorizontal: 20,
         paddingVertical: 11,
-        marginTop: 16,
+        shadowColor: '#0a2e12',
+        shadowOffset: { width: 0, height: 3 },
+        shadowOpacity: 0.25,
+        shadowRadius: 6,
     },
-    upgradeText: {
-        fontSize: 15,
-        fontWeight: '800',
-        color: '#10481b',
-    },
-    activeBadge: {
+    glassChip: {
         flexDirection: 'row',
         alignItems: 'center',
         gap: 6,
-        alignSelf: 'flex-start',
-        backgroundColor: '#ffffff',
+        backgroundColor: 'rgba(8,38,17,0.55)',
+        borderWidth: 1.5,
+        borderColor: 'rgba(255,255,255,0.45)',
         borderRadius: 20,
-        paddingHorizontal: 14,
-        paddingVertical: 7,
-        marginTop: 16,
+        paddingHorizontal: 15,
+        paddingVertical: 8,
     },
-    activeText: {
-        fontSize: 13,
+    glassText: {
+        fontSize: 14.5,
         fontWeight: '800',
-        color: Colors.primary,
-    },
-    mark: {
-        width: 60,
-        height: 60,
-        borderRadius: 16,
-        backgroundColor: '#ffffff',
-        alignItems: 'center',
-        justifyContent: 'center',
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.12,
-        shadowRadius: 4,
+        color: '#ffffff',
     },
 });
