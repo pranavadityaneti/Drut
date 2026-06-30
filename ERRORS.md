@@ -23,6 +23,30 @@
 
 ---
 
+## EAS iOS build fails: provisioning profile missing Associated Domains / Push entitlements (2026-06-30)
+
+**Problem**: `eas build -p ios` errors at the Xcode step: *"Provisioning profile doesn't include the Associated Domains / Push Notifications capability / aps-environment + com.apple.developer.associated-domains entitlements."*
+
+**What didn't work**:
+1. Building with the App Store Connect **API key** (`EXPO_ASC_*` env vars). EAS logs *"Skipping capability identifier syncing because the current Apple authentication session is not using Cookies (username/password)"* → it mints a profile WITHOUT Associated Domains. The API key physically cannot sync capability identifiers.
+2. Re-running `--non-interactive`. Won't create/regenerate creds at all ("Distribution Certificate is not validated for non-interactive builds").
+
+**What worked**: Run `eas build -p ios --profile production` **interactively, WITHOUT the `EXPO_ASC_*` env vars** so it authenticates via username/password (Cookies). When prompted **"Would you like to reuse the original profile?" answer NO** → it regenerates the profile WITH the capabilities. (The FIRST distribution cert + the App Store Connect app record also can't be created via API key / `--non-interactive` — interactive CLI or web UI only.) After creds + app record exist once, all future builds and `eas submit` are non-interactive.
+
+**Remember**: API key is fine for builds *once creds exist* and for `eas submit`; but ANY app using Associated Domains/Push needs a one-time Cookies-auth login to build the profile. `eas submit` reads `ascApiKeyPath/Id/IssuerId` from `eas.json` `submit.production.ios` (it ignores the `EXPO_ASC_*` env vars that `eas build` uses).
+
+## Apple ID prompt pre-fills junk "y" → false "account locked -20209" (2026-06-30)
+
+**Problem**: Every interactive `eas` Apple login pre-filled Apple ID `y` (later, pasted command text), then failed with *"Apple Service Error -20209. This Apple Account has been locked for security reasons"* — but the account is fine.
+
+**What didn't work**:
+1. Backspacing at the prompt — `y` is a cached default, not editable buffer text, so backspace does nothing.
+2. Re-running — the same poisoned default reappears.
+
+**What worked**: `mv ~/.app-store/auth/username.json` aside (it had cached `{"username":"y"}` from a fat-fingered first attempt). Then the `Apple ID:` prompt is empty and you type the real email cleanly. The real account's session cookie lives at `~/.app-store/auth/<email>/cookie`.
+
+**Remember**: EAS caches the last Apple username in `~/.app-store/auth/username.json` and pre-fills it at every login; a junk value there breaks every subsequent login with a misleading "locked" error. Don't paste at the `Apple ID:` prompt — type it.
+
 ## LaTeX in generated-question JSON silently corrupts via JSON escape codes (2026-06-15)
 
 **Problem**: Gemini's Maths question batch rendered broken math — `$\frac{x-3}{2}$` displayed as `rac{x-3}{2}`, `\times` vanished. The Zod schema validator passed it (exit 0) — a corrupted string is still a valid string.

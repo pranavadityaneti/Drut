@@ -2,33 +2,59 @@
   "expo": {
     "name": "Drut",
     "slug": "drut",
+    "owner": "pranavadityaneti",
     "scheme": "drut-mobile",
     "version": "1.0.0",
+    "runtimeVersion": {
+      "policy": "fingerprint"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/c78d8372-341b-46df-88c0-9bb2180e1ff0"
+    },
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#b4fa8d"
     },
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "club.drut.app",
+      "associatedDomains": ["applinks:drut.club"],
       "infoPlist": {
         "NSPhotoLibraryUsageDescription": "Drut needs access to your photos so you can set a profile picture.",
         "NSAppTransportSecurity": {
           "NSAllowsArbitraryLoads": true
-        }
+        },
+        "ITSAppUsesNonExemptEncryption": false
       }
     },
     "android": {
       "package": "club.drut.app",
+      "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "foregroundImage": "./assets/icon.png",
+        "backgroundColor": "#b4fa8d"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "autoVerify": true,
+          "data": [
+            {
+              "scheme": "https",
+              "host": "drut.club"
+            }
+          ],
+          "category": [
+            "BROWSABLE",
+            "DEFAULT"
+          ]
+        }
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -37,6 +63,7 @@
       "expo-router",
       "expo-status-bar",
       "expo-web-browser",
+      "expo-notifications",
       [
         "@react-native-google-signin/google-signin",
         {
@@ -44,6 +71,12 @@
         }
       ],
       "./plugins/withModularHeaders"
-    ]
+    ],
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "c78d8372-341b-46df-88c0-9bb2180e1ff0"
+      }
+    }
   }
 }

@@ -26,11 +26,28 @@
    - Scope: `SessionEngine.tsx` intervention-close path
    - Originated: practice audit, 2026-06-04
 
+3b. **Sprint serving + specific-chapter Practice — same serving-bug class** *(added 2026-06-29)*
+   - Context: The 2026-06-29 fix made **Practice all-chapters** work on web+mobile — added a subject filter + server-side trust gate to `get_unseen_questions`, callers now pass `topic='ALL'`+subject (commit cad9a14, migration `20260629120000_practice_subject_scope_serving.sql`, both applied to prod). TWO siblings remain in the SAME class:
+     - **Sprint** (`sprintService.ts` `startSession`): passes `subtopic='general'` (stored is `'mixed'`) and whitelist topic names that won't match stored `"Chapter N: …"` topics → Sprint returns 0. Needs the same `topic='ALL'`/subtopic alignment + subject pass-through to `serve_unseen_questions`.
+     - **Specific-chapter Practice**: relies on the app's chapter labels EXACTLY matching stored `topic` strings (generator stored e.g. `"Chapter 5: Laws of Motion"`). All-chapters works now; specific-chapter is **unverified and likely mismatched**. Verify distinct stored `topic` values vs taxonomy labels; align or map.
+   - Scope: `sprintService.ts`, taxonomy↔stored-topic mapping; reuse the now subject-scoped RPC.
+   - Originated: practice serving fix, 2026-06-29
+
 ### 🟠 P2 — Post-beta improvements
 4. **Mobile analytics tab** — 14 functions in `@drut/shared`, mobile uses 1 (`fetchUserStreak`). Web has full analytics surface; mobile has none.
 5. **Sprint architecture plan** — separate planning session needed. Use RAG vs pure AI? How to wire filters/difficulty/leaderboard? Sprint is currently structurally broken.
 6. **`preloadFirstQuestion` on mobile login** — web calls it on app boot for snappy first-question render. Adds 1-3s of perceived latency on mobile.
 7. **RAG wiring in `generate-batch`** — infrastructure exists but disconnected. Will be useless until textbook chunks are ingested (see #17). Plan: embed query → search `textbook_chunks` → inject top-K into Gemini prompt.
+
+53. **Universal links go-live (native config shipped; server-side pending)** *(added 2026-06-30)*
+    - What: iOS + Android builds ship WITH the native universal-links config (`ios.associatedDomains` + `android.intentFilters autoVerify`). To activate, fill `apps/web/public/.well-known/apple-app-site-association` appID with **`9DBGLY5BVP.club.drut.app`** (Team ID now known) + `apps/web/public/.well-known/assetlinks.json` with the **Android signing SHA-256** (from `eas credentials` → Android → keystore), then deploy web (Vercel auto). **NO app rebuild needed.**
+    - Scope: 2 `.well-known` files + Vercel deploy + verify (tapping a `drut.club` link opens the app).
+    - Originated: EAS build session, 2026-06-30
+
+54. **Push notifications — send-side backend** *(added 2026-06-30)*
+    - What: native build ships expo-notifications (iOS `aps-environment` + Android `POST_NOTIFICATIONS`); APNs key `XWSN433HWL` registered on EAS; FCM `google-services.json` in the build. STILL MISSING: (a) register the Expo push token on login + persist per-user, (b) a backend that sends via the Expo Push API (or direct APNs/FCM). **NO rebuild needed** — all OTA-able JS + server work.
+    - Scope: token registration (mobile), a push-tokens table, a send service/edge function.
+    - Originated: EAS build session, 2026-06-30
 
 50. **Diagram-question batch generation → use GPT-5.5, NOT mini** *(added 2026-06-19)*
     - What: OpenAI calibration (2026-06-19) showed `gpt-5.4-mini @ high` generates *figure-dependent* questions at only ~44% production-ready (4/9 clean, 2/9 minor, 3/9 defective) at **3.8× the cost** of text questions (~$1,473/10k vs $389/10k). Answer keys were 9/9 correct — the model REASONS fine but RENDERS diagrams wrong: physically-incorrect principal rays, a flat hexagon drawn for a "chair conformer", ambiguous unit-cell atom positions, colliding labels. mini is NOT good enough to draw diagrams unattended.

@@ -1,24 +1,37 @@
 /**
- * PaywallModal (mobile) — "Upgrade to Pro" sheet.
+ * PaywallModal (mobile) — benefits sheet + "Subscribe on the web" CTA.
  *
- * Shown when a free user hits the daily question limit (or taps Upgrade). Plans +
- * prices come from @drut/shared pricing.ts (single source of truth). The annual
- * plan shows the first-timer intro price for users who haven't subscribed before.
- * onUpgrade(plan) hands off to the Razorpay checkout.
+ * STORE POLICY: we do NOT sell Drut Pro inside the mobile app. Apple (Guideline
+ * 3.1.1) and Google Play require their native IAP for digital subscriptions
+ * consumed in-app (~15-30% cut), and selling via a Razorpay WebView is a
+ * near-certain rejection. Pro is sold ONLY on the web (drut.club).
+ *
+ * UPGRADE FLOW: the CTA does NOT bounce the user to a generic login page. We
+ * mint a one-time, 2-min mobile->web handoff token (create-subscribe-handoff
+ * edge fn), then open drut.club/subscribe?h=<token> in the SYSTEM BROWSER.
+ * The web page redeems the token -> establishes a session for THIS exact user
+ * -> goes straight to checkout. The token is opaque + single-use; the actual
+ * login credential is minted server-side at redeem time and never touches
+ * any URL/history/log. System browser is chosen over the in-app browser so
+ * Razorpay's UPI app deep-links work reliably.
  */
 import React, { useState } from 'react';
-import { Modal, View, Text, StyleSheet, TouchableOpacity, ActivityIndicator, TextInput } from 'react-native';
-import { X, BadgeCheck, Infinity as InfinityIcon, ListChecks, Timer, Tag } from 'lucide-react-native';
+import { Modal, View, Text, StyleSheet, TouchableOpacity, ActivityIndicator, Alert, Linking } from 'react-native';
+import { X, BadgeCheck, Infinity as InfinityIcon, ListChecks, Timer, ExternalLink } from 'lucide-react-native';
 import { Colors } from '../constants/Colors';
-import { PRICING, priceForPlan, validateCoupon, formatINR, type PlanId, type CouponPreview } from '@drut/shared';
+import { createSubscribeHandoff } from '@drut/shared';
 
 interface PaywallModalProps {
     visible: boolean;
     onClose: () => void;
-    onUpgrade: (plan: PlanId, couponCode?: string) => void;
+    reason?: string; // optional context line, e.g. "You've used your 20 free questions today"
+    // Legacy props retained for caller compatibility; the in-app purchase path was
+    // removed (see file header) and these are intentionally ignored. The dead caller
+    // wiring (RazorpayCheckoutModal + checkoutPlan state in dashboard/SprintEngine/
+    // SessionEngine) is tracked for cleanup in forlater #3b.
+    onUpgrade?: (...args: any[]) => void;
     isFirstTimer?: boolean;
     loading?: boolean;
-    reason?: string; // optional context line, e.g. "You've used your 20 free questions today"
 }
 
 const FEATURES = [
@@ -27,60 +40,23 @@ const FEATURES = [
     { Icon: Timer, title: 'Sprints & insights', sub: 'Timed speed sprints, focus areas, and progress analytics.' },
 ];
 
-export const PaywallModal: React.FC<PaywallModalProps> = ({ visible, onClose, onUpgrade, isFirstTimer = true, loading = false, reason }) => {
-    const [plan, setPlanState] = useState<PlanId>('annual');
-    const [couponInput, setCouponInput] = useState('');
-    const [applied, setApplied] = useState<CouponPreview | null>(null);
-    const [applyMsg, setApplyMsg] = useState<string | null>(null);
-    const [applying, setApplying] = useState(false);
+export const PaywallModal: React.FC<PaywallModalProps> = ({ visible, onClose, reason }) => {
+    const [loading, setLoading] = useState(false);
 
-    // Changing plan invalidates any applied coupon (price + plan-scoping differ).
-    const setPlan = (id: PlanId) => { setPlanState(id); setApplied(null); setApplyMsg(null); };
-
-    const handleApply = async () => {
-        const code = couponInput.trim();
-        if (!code || applying) return;
-        setApplying(true);
-        setApplyMsg(null);
+    const handleSubscribe = async () => {
+        if (loading) return;
+        setLoading(true);
         try {
-            const res = await validateCoupon(plan, code);
-            setApplied(res);
-            if (!res.valid) setApplyMsg(res.reason || 'Invalid coupon code');
+            const { url } = await createSubscribeHandoff();
+            const can = await Linking.canOpenURL(url);
+            if (!can) throw new Error("Couldn't open your browser. Please visit drut.club/subscribe.");
+            await Linking.openURL(url);
+            onClose();
         } catch (e: any) {
-            setApplied(null);
-            setApplyMsg(e?.message || 'Could not apply coupon');
+            Alert.alert('Could not open checkout', e?.message || 'Please try again, or visit drut.club/subscribe directly.');
         } finally {
-            setApplying(false);
+            setLoading(false);
         }
-    };
-
-    const couponOk = applied?.valid === true;
-    const couponCode = couponOk ? applied!.code : undefined;
-
-    const monthly = priceForPlan('monthly', isFirstTimer);
-    const annual = priceForPlan('annual', isFirstTimer);
-    const annualHasIntro = isFirstTimer && PRICING.annual.firstTimerAmountPaise != null;
-
-    const PlanCard = ({ id, title, price, unit, note, strike }: { id: PlanId; title: string; price: number; unit: string; note?: string; strike?: number }) => {
-        const selected = plan === id;
-        return (
-            <TouchableOpacity
-                style={[styles.planCard, selected && styles.planCardActive]}
-                onPress={() => setPlan(id)}
-                activeOpacity={0.85}
-            >
-                <View style={styles.planTop}>
-                    <Text style={styles.planTitle}>{title}</Text>
-                    <View style={[styles.radio, selected && styles.radioActive]}>{selected && <View style={styles.radioDot} />}</View>
-                </View>
-                <View style={styles.priceRow}>
-                    <Text style={styles.planPrice}>₹{price.toLocaleString('en-IN')}</Text>
-                    <Text style={styles.planUnit}>{unit}</Text>
-                </View>
-                {strike != null && <Text style={styles.strike}>₹{strike.toLocaleString('en-IN')}</Text>}
-                {note && <Text style={styles.planNote}>{note}</Text>}
-            </TouchableOpacity>
-        );
     };
 
     return (
@@ -90,7 +66,7 @@ export const PaywallModal: React.FC<PaywallModalProps> = ({ visible, onClose, on
                     {/* Header */}
                     <View style={styles.header}>
                         <View style={{ width: 28 }} />
-                        <Text style={styles.headerTitle}>Upgrade to Pro</Text>
+                        <Text style={styles.headerTitle}>Drut Pro</Text>
                         <TouchableOpacity onPress={onClose} hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
                             <X size={22} color={Colors.text} />
                         </TouchableOpacity>
@@ -116,48 +92,30 @@ export const PaywallModal: React.FC<PaywallModalProps> = ({ visible, onClose, on
                         ))}
                     </View>
 
-                    {/* Plans */}
-                    <View style={styles.plans}>
-                        <PlanCard id="monthly" title="Monthly" price={monthly.rupees} unit="/month" note="Billed monthly" />
-                        <PlanCard
-                            id="annual"
-                            title="Yearly"
-                            price={annual.rupees}
-                            unit="/year"
-                            note={annualHasIntro ? 'First year — then ₹1,999/yr' : 'Billed yearly · best value'}
-                            strike={annualHasIntro ? PRICING.annual.amountRupees : undefined}
-                        />
-                    </View>
-
-                    {/* Coupon */}
-                    <View style={styles.couponRow}>
-                        <View style={styles.couponInputWrap}>
-                            <Tag size={16} color={Colors.textDim} />
-                            <TextInput
-                                style={styles.couponInput}
-                                value={couponInput}
-                                onChangeText={(t) => { setCouponInput(t); setApplied(null); setApplyMsg(null); }}
-                                placeholder="Coupon code"
-                                placeholderTextColor={Colors.textDim}
-                                autoCapitalize="characters"
-                                autoCorrect={false}
-                            />
-                        </View>
-                        <TouchableOpacity style={styles.couponApply} onPress={handleApply} disabled={applying || !couponInput.trim()} activeOpacity={0.85}>
-                            {applying ? <ActivityIndicator color={Colors.text} /> : <Text style={styles.couponApplyText}>Apply</Text>}
-                        </TouchableOpacity>
-                    </View>
-                    {couponOk ? (
-                        <Text style={styles.couponOk}>
-                            {applied!.isFree ? `Coupon ${applied!.code} applied — it's free 🎉` : `Coupon ${applied!.code} applied — you pay ${formatINR(applied!.finalPaise ?? 0)}`}
-                        </Text>
-                    ) : applyMsg ? <Text style={styles.couponErr}>{applyMsg}</Text> : null}
-
-                    {/* CTA */}
-                    <TouchableOpacity style={[styles.cta, loading && { opacity: 0.7 }]} onPress={() => onUpgrade(plan, couponCode)} disabled={loading} activeOpacity={0.9}>
-                        {loading ? <ActivityIndicator color={Colors.white} /> : <Text style={styles.ctaText}>{couponOk && applied!.isFree ? 'Unlock free' : 'Upgrade'}</Text>}
+                    {/* Primary CTA: subscribe on the web (via handoff) */}
+                    <TouchableOpacity
+                        style={[styles.cta, loading && styles.ctaDisabled]}
+                        onPress={handleSubscribe}
+                        activeOpacity={0.9}
+                        disabled={loading}
+                    >
+                        {loading ? (
+                            <ActivityIndicator color={Colors.white} />
+                        ) : (
+                            <>
+                                <Text style={styles.ctaText}>Subscribe on the web</Text>
+                                <ExternalLink size={17} color={Colors.white} strokeWidth={2.4} />
+                            </>
+                        )}
                     </TouchableOpacity>
-                    <Text style={styles.footer}>Cancel anytime. Plans renew automatically.</Text>
+
+                    <Text style={styles.note}>
+                        We'll open <Text style={styles.noteStrong}>drut.club</Text> in your browser, already signed in to your Drut account.
+                    </Text>
+
+                    <TouchableOpacity onPress={onClose} hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}>
+                        <Text style={styles.maybeLater}>Maybe later</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
         </Modal>
@@ -178,29 +136,12 @@ const styles = StyleSheet.create({
     featureIcon: { width: 38, height: 38, borderRadius: 19, backgroundColor: Colors.secondary, alignItems: 'center', justifyContent: 'center' },
     featureTitle: { fontSize: 14.5, fontWeight: '700', color: Colors.text },
     featureSub: { fontSize: 12.5, color: Colors.textDim, marginTop: 1 },
-    plans: { flexDirection: 'row', gap: 12, marginTop: 16 },
-    planCard: { flex: 1, borderWidth: 1.5, borderColor: Colors.border, borderRadius: 16, padding: 14, backgroundColor: Colors.white },
-    planCardActive: { borderColor: Colors.primary, backgroundColor: '#f3fbe9' },
-    planTop: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-    planTitle: { fontSize: 13.5, fontWeight: '600', color: Colors.textDim },
-    radio: { width: 18, height: 18, borderRadius: 9, borderWidth: 2, borderColor: Colors.border, alignItems: 'center', justifyContent: 'center' },
-    radioActive: { borderColor: Colors.primary },
-    radioDot: { width: 9, height: 9, borderRadius: 5, backgroundColor: Colors.primary },
-    priceRow: { flexDirection: 'row', alignItems: 'flex-end', gap: 3, marginTop: 8 },
-    planPrice: { fontSize: 22, fontWeight: '800', color: Colors.text },
-    planUnit: { fontSize: 12, color: Colors.textDim, marginBottom: 3 },
-    strike: { fontSize: 12, color: Colors.textDim, textDecorationLine: 'line-through', marginTop: 2 },
-    planNote: { fontSize: 11, color: Colors.textDim, marginTop: 4 },
-    couponRow: { flexDirection: 'row', gap: 8, marginTop: 16, alignItems: 'center' },
-    couponInputWrap: { flex: 1, flexDirection: 'row', alignItems: 'center', gap: 8, borderWidth: 1.5, borderColor: Colors.border, borderRadius: 22, paddingHorizontal: 14, height: 44 },
-    couponInput: { flex: 1, fontSize: 14, color: Colors.text, paddingVertical: 0 },
-    couponApply: { height: 44, paddingHorizontal: 18, borderRadius: 22, backgroundColor: Colors.surface, alignItems: 'center', justifyContent: 'center' },
-    couponApplyText: { fontSize: 13, fontWeight: '700', color: Colors.text },
-    couponOk: { fontSize: 12.5, color: '#3d7a0f', marginTop: 8 },
-    couponErr: { fontSize: 12.5, color: Colors.error, marginTop: 8 },
-    cta: { backgroundColor: Colors.primary, height: 52, borderRadius: 26, alignItems: 'center', justifyContent: 'center', marginTop: 18 },
+    cta: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 8, backgroundColor: Colors.primary, height: 52, borderRadius: 26, marginTop: 20 },
+    ctaDisabled: { opacity: 0.7 },
     ctaText: { fontSize: 16, fontWeight: '800', color: Colors.white },
-    footer: { fontSize: 11.5, color: Colors.textDim, textAlign: 'center', marginTop: 12 },
+    note: { fontSize: 12.5, color: Colors.textDim, textAlign: 'center', marginTop: 12, lineHeight: 18, paddingHorizontal: 12 },
+    noteStrong: { fontWeight: '800', color: Colors.primary },
+    maybeLater: { fontSize: 14, fontWeight: '700', color: Colors.textDim, textAlign: 'center', marginTop: 16, paddingVertical: 8 },
 });
 
 export default PaywallModal;

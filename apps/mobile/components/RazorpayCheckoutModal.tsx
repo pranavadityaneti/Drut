@@ -44,6 +44,10 @@ function buildCheckoutHtml(
         theme: { color: '#5cbb21' },
         prefill: prefill || {},
         notes: { plan: order.plan, receipt: order.receipt },
+        // Saved cards/UPI (one-tap repeat): when the server returned a Razorpay customer,
+        // pass it so the sheet shows their saved methods, and enable saving new ones.
+        // Razorpay stores the (tokenized) method — we never see card/UPI data.
+        ...(order.customer_id ? { customer_id: order.customer_id, remember_customer: true } : {}),
     };
     // Functions can't be JSON-serialized, so attach handler/modal after injection.
     return `<!doctype html>

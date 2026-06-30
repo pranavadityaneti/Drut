@@ -29,6 +29,35 @@
 
 ---
 
+## Session: 2026-06-30 (worktree: unruffled-vaughan-c3f74d; native-build work in MAIN repo, branch feat/landing-redesign)
+
+### Major work completed
+- **EAS native builds shipped, OTA enabled, iOS on TestFlight.** Android APK (preview profile, build `a8d4a5b4`) directly installable; iOS store build `4410c29d` submitted to TestFlight (submission `1cf849f0`). Pranav installed iOS via TestFlight ✅; Android tablet test pending tomorrow.
+- Full EAS iOS credentials set up: dist cert `GQD69UX43J`, provisioning profile `94S3XXMPV8` (WITH Associated Domains + Push), APNs key `XWSN433HWL`. Apple Team `9DBGLY5BVP` (Individual), login `pranav.n@ideaye.in`.
+- Created App Store Connect app record (Drut, `club.drut.app`, ascAppId `6785986487`) via web UI; wired `eas.json` submit profile (`ascApiKey*` — UNCOMMITTED, machine path).
+- Committed `app.json` compliance fix (commit `2504275`): `ITSAppUsesNonExemptEncryption=false` + deduped `associatedDomains`.
+
+### Decisions
+- **Pro stays web-only (no IAP)** — avoids App Store/Play 15–30% cut; PaywallModal points to drut.club. Builds honor it.
+- **TestFlight over ad-hoc** for iOS — no per-device UDID, scales to closed beta.
+- **Bake universal-links + push into the build now** (vs strip) — matches batch-native intent, no future rebuild for those.
+
+### Errors encountered
+- iOS first build ERRORED: API-key-created provisioning profile missing Associated Domains/Push entitlements. ROOT CAUSE: API key "skips capability identifier syncing" → profile MUST be regenerated via username/password (Cookies) auth (answer "No" to reuse-profile). **Candidate for ERRORS.md (>2 attempts).**
+- "y" login bug: `~/.app-store/auth/username.json` poisoned with junk Apple username → false "Apple Service Error -20209 account locked". Fixed by moving the cache file aside. **Candidate for ERRORS.md.**
+
+### Open threads
+- forlater #53 (universal-links go-live: fill `.well-known` with Team ID `9DBGLY5BVP` + Android SHA-256 → deploy web), #54 (push send-side backend).
+- `eas.json` submit config uncommitted (machine path) — upload key to EAS for CI later.
+- Android tablet test (Pranav, ~2026-07-01).
+
+### Files modified (high-level)
+- `apps/mobile/app.json` — iOS compliance flag + dedupe (committed `2504275`)
+- `apps/mobile/eas.json` — `submit.production.ios` profile (UNCOMMITTED — has local `.p8` path)
+- `~/.app-store/auth/username.json` — moved aside (y-bug fix)
+
+---
+
 ## Session: 2026-06-26 → 2026-06-28 (MAIN repo, branch feat/landing-redesign — MERGED to main via PR #51)
 
 ### Paywall + Razorpay checkout (web + mobile) — LIVE

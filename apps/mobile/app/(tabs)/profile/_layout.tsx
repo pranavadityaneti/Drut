@@ -11,9 +11,8 @@ export default function ProfileLayout() {
             <Stack.Screen name="edit-profile" />
             <Stack.Screen name="account-settings" />
             <Stack.Screen name="exam-preferences" />
-            <Stack.Screen name="notifications" />
             <Stack.Screen name="help-support" />
-            <Stack.Screen name="about" />
+            <Stack.Screen name="reports" />
         </Stack>
     );
 }
