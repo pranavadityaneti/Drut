@@ -31,6 +31,7 @@ import {
     Settings,
     Crown,
     Calendar,
+    BarChart3,
 } from 'lucide-react-native';
 import { Colors } from '../../../constants/Colors';
 import {
@@ -229,6 +230,7 @@ export default function ProfileScreen() {
 
                 {/* Account */}
                 <View style={styles.card}>
+                    <Row icon={BarChart3} label="Reports and analytics" onPress={() => go('reports')} />
                     <Row icon={Settings} label="Manage account" onPress={() => go('account-settings')} last />
                 </View>
 

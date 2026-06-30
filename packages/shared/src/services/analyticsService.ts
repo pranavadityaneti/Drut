@@ -139,6 +139,72 @@ export async function fetchUserStreak(): Promise<number> {
   return Number(data || 0);
 }
 
+/**
+ * 7-day rolling accuracy + week-over-week delta. Queries user_question_history
+ * for the last 14 days and bisects at the 7-day mark — current 7d window vs
+ * the prior 7d window. Returns 0s when there's no data (no division-by-zero).
+ */
+export async function fetchWeeklyAccuracy(): Promise<{
+  thisWeek: { attempted: number; correct: number; accuracy: number };
+  lastWeek: { attempted: number; correct: number; accuracy: number };
+  deltaPct: number; // this - last, in percentage points
+}> {
+  const empty = { attempted: 0, correct: 0, accuracy: 0 };
+  const { data: { session } } = await supabase.auth.getSession();
+  if (!session?.user) return { thisWeek: empty, lastWeek: empty, deltaPct: 0 };
+
+  const since = new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString();
+  const { data, error } = await supabase
+    .from('user_question_history')
+    .select('was_correct, seen_at')
+    .eq('user_id', session.user.id)
+    .gte('seen_at', since);
+  if (error) { console.error('fetchWeeklyAccuracy error', error); return { thisWeek: empty, lastWeek: empty, deltaPct: 0 }; }
+
+  const cutoff = Date.now() - 7 * 24 * 60 * 60 * 1000;
+  const thisWeek = { attempted: 0, correct: 0, accuracy: 0 };
+  const lastWeek = { attempted: 0, correct: 0, accuracy: 0 };
+  for (const row of (data || []) as Array<{ was_correct: boolean; seen_at: string }>) {
+    const t = new Date(row.seen_at).getTime();
+    const bucket = t >= cutoff ? thisWeek : lastWeek;
+    bucket.attempted += 1;
+    if (row.was_correct) bucket.correct += 1;
+  }
+  thisWeek.accuracy = thisWeek.attempted ? Math.round((thisWeek.correct / thisWeek.attempted) * 100) : 0;
+  lastWeek.accuracy = lastWeek.attempted ? Math.round((lastWeek.correct / lastWeek.attempted) * 100) : 0;
+  return { thisWeek, lastWeek, deltaPct: thisWeek.accuracy - lastWeek.accuracy };
+}
+
+/**
+ * Daily question counts for the last 7 days (oldest -> today, length always 7).
+ * Used for the home-screen sparkline.
+ */
+export async function fetchDailyCountsLast7Days(): Promise<number[]> {
+  const out = new Array(7).fill(0);
+  const { data: { session } } = await supabase.auth.getSession();
+  if (!session?.user) return out;
+
+  const since = new Date();
+  since.setHours(0, 0, 0, 0);
+  since.setDate(since.getDate() - 6); // include today => 7 buckets
+  const sinceIso = since.toISOString();
+
+  const { data, error } = await supabase
+    .from('user_question_history')
+    .select('seen_at')
+    .eq('user_id', session.user.id)
+    .gte('seen_at', sinceIso);
+  if (error) { console.error('fetchDailyCountsLast7Days error', error); return out; }
+
+  for (const row of (data || []) as Array<{ seen_at: string }>) {
+    const d = new Date(row.seen_at);
+    d.setHours(0, 0, 0, 0);
+    const dayIndex = Math.round((d.getTime() - since.getTime()) / (24 * 60 * 60 * 1000));
+    if (dayIndex >= 0 && dayIndex < 7) out[dayIndex] += 1;
+  }
+  return out;
+}
+
 export async function fetchPatternMasteryStats(): Promise<{ verified_count: number; learning_count: number }> {
   const { data: { session } } = await supabase.auth.getSession();
   if (!session?.user) return { verified_count: 0, learning_count: 0 };
