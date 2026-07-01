@@ -350,8 +350,10 @@ const Footer: React.FC = () => (
           <ul className="space-y-4 text-sm text-gray-500">
             <li><a href="#" className="hover:text-purple-600">About Us</a></li>
             <li><a href="#" className="hover:text-purple-600">Careers</a></li>
-            <li><a href="#" className="hover:text-purple-600">Contact</a></li>
-            <li><a href="#" className="hover:text-purple-600">Privacy</a></li>
+            <li><a href="/legal/contact-us.html" className="hover:text-purple-600">Contact</a></li>
+            <li><a href="/legal/privacy-policy.html" className="hover:text-purple-600">Privacy</a></li>
+            <li><a href="/legal/terms-of-service.html" className="hover:text-purple-600">Terms</a></li>
+            <li><a href="/legal/refund-cancellation-policy.html" className="hover:text-purple-600">Refunds</a></li>
           </ul>
         </div>
       </div>

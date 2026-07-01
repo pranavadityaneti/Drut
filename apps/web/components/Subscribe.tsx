@@ -306,7 +306,7 @@ export const Subscribe: React.FC = () => {
                         <Faq q="Can I cancel anytime?" a="Yes. Cancel from your Profile — your access stays until the end of the current period." />
                         <Faq q="Will my plan auto-renew?" a="No. Drut Pro does not auto-renew. Your access simply ends at the period close and you can renew when you want to." />
                         <Faq q="Does this work on mobile too?" a="Yes. Subscribe here once and Pro unlocks across the web app and our iOS / Android apps signed in to the same account." />
-                        <Faq q="Refunds?" a={<>Subscription fees are non-refundable once a period begins, except in case of a grave service failure on our side. See our <a className="underline" href="https://drut.club/refund-policy">refund policy</a>.</>} />
+                        <Faq q="Refunds?" a={<>Subscription fees are non-refundable once a period begins, except in case of a grave service failure on our side. See our <a className="underline" href="/legal/refund-cancellation-policy.html" target="_blank" rel="noopener noreferrer">refund policy</a>.</>} />
                     </div>
                 </div>
 

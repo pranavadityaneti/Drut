@@ -12,7 +12,7 @@ export const Footer = () => {
                 <p className="text-zinc-500 font-mono text-xs">
                     SYSTEM_STATUS: ONLINE  |  © 2025 DRUT_CORP  |  SPEED_METRIC_ONLY
                     <br />
-                    <a href="/privacypolicy" className="hover:text-zinc-300">PRIVACY</a>  |  <a href="/termsandconditions" className="hover:text-zinc-300">TERMS</a>
+                    <a href="/legal/privacy-policy.html" className="hover:text-zinc-300">PRIVACY</a>  |  <a href="/legal/terms-of-service.html" className="hover:text-zinc-300">TERMS</a>  |  <a href="/legal/refund-cancellation-policy.html" className="hover:text-zinc-300">REFUNDS</a>  |  <a href="/legal/contact-us.html" className="hover:text-zinc-300">CONTACT</a>
                 </p>
             </div>
         </footer>
