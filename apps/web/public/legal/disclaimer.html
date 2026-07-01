@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Disclaimer — Drut</title>
+<style>
+  :root {
+    --accent: #b4fa8d;
+    --ink: #16261a;
+    --ink-soft: #2f4636;
+    --body: #1f2a23;
+    --muted: #5a6b60;
+    --rule: #16261a;
+    --box-bg: #f4fff0;
+    --warn-bg: #fff8e6;
+    --warn-border: #e6c34d;
+    --table-stripe: #f3faef;
+    --link: #1f6b2e;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    padding: 32px 18px 80px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--body);
+    line-height: 1.6;
+    background: #ffffff;
+  }
+  .wrap { max-width: 820px; margin: 0 auto; }
+  h1 {
+    font-size: 2rem;
+    line-height: 1.2;
+    color: var(--ink);
+    margin: 0 0 6px;
+    letter-spacing: -0.01em;
+  }
+  .updated {
+    color: var(--muted);
+    font-size: 0.92rem;
+    margin: 0 0 22px;
+  }
+  h2 {
+    font-size: 1.28rem;
+    color: var(--ink);
+    margin: 38px 0 10px;
+    padding-bottom: 7px;
+    border-bottom: 2px solid var(--rule);
+    letter-spacing: -0.01em;
+  }
+  h3 {
+    font-size: 1.05rem;
+    color: var(--ink-soft);
+    margin: 22px 0 6px;
+  }
+  p { margin: 10px 0; }
+  ul, ol { margin: 10px 0; padding-left: 22px; }
+  li { margin: 6px 0; }
+  a { color: var(--link); }
+  strong { color: var(--ink); }
+  code, .token {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    background: #eef3ec;
+    border: 1px solid #d6e2d0;
+    border-radius: 4px;
+    padding: 1px 5px;
+    font-size: 0.86em;
+    color: #234a2c;
+    white-space: nowrap;
+  }
+  .draft-box {
+    border: 2px solid var(--ink);
+    background: var(--box-bg);
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin: 0 0 28px;
+  }
+  .draft-box .tag {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--ink);
+    font-weight: 700;
+    font-size: 0.74rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    border-radius: 5px;
+    margin-bottom: 8px;
+  }
+  .draft-box p { margin: 6px 0 0; font-size: 0.95rem; }
+  .flag {
+    border-left: 4px solid var(--warn-border);
+    background: var(--warn-bg);
+    padding: 12px 14px;
+    margin: 14px 0;
+    border-radius: 0 8px 8px 0;
+    font-size: 0.95rem;
+  }
+  .flag .flag-label {
+    font-weight: 700;
+    color: #8a6d00;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 0.74rem;
+    display: block;
+    margin-bottom: 4px;
+  }
+  .toc {
+    border: 1px solid #d6e2d0;
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin: 0 0 30px;
+    background: #fbfefa;
+  }
+  .toc h2 {
+    border: none;
+    margin: 0 0 8px;
+    padding: 0;
+    font-size: 1.05rem;
+  }
+  .toc ol { margin: 0; padding-left: 20px; }
+  .toc li { margin: 4px 0; }
+  .toc a { text-decoration: none; }
+  .toc a:hover { text-decoration: underline; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 0.93rem;
+  }
+  th, td {
+    border: 1px solid #cdddc6;
+    padding: 9px 11px;
+    text-align: left;
+    vertical-align: top;
+  }
+  th { background: var(--ink); color: #fff; font-weight: 600; }
+  tbody tr:nth-child(even) { background: var(--table-stripe); }
+  .footer-note {
+    margin-top: 46px;
+    padding-top: 16px;
+    border-top: 2px solid var(--rule);
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+  .contact-block {
+    background: #fbfefa;
+    border: 1px solid #d6e2d0;
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin: 14px 0;
+  }
+  .back-top {
+    font-size: 0.82rem;
+    margin-top: 6px;
+  }
+  .back-top a { text-decoration: none; color: var(--muted); }
+
+  @media print {
+    body { padding: 0; font-size: 11.5pt; color: #000; }
+    .wrap { max-width: 100%; }
+    a { color: #000; text-decoration: none; }
+    h2 { border-bottom: 1.5pt solid #000; page-break-after: avoid; }
+    h3 { page-break-after: avoid; }
+    .draft-box, .flag, .toc, table, .contact-block { page-break-inside: avoid; }
+    .back-top { display: none; }
+    th { background: #000 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .draft-box .tag { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+<a id="top"></a>
+<div class="wrap">
+
+  <h1>Disclaimer</h1>
+  <p class="updated">Last updated: <span class="token">[EFFECTIVE DATE]</span></p>
+
+  <div class="draft-box">
+    <span class="tag">Draft — review before publishing</span>
+    <p><strong>DRAFT</strong> — a starting template grounded in Indian law (DPDP Act 2023, IT Act / SPDI Rules 2011, Consumer Protection Act 2019 &amp; E-Commerce Rules 2020, RBI / Razorpay norms, CCPA advertising guidelines). This is <strong>NOT legal advice</strong>. Have a qualified Indian lawyer review it before publishing.</p>
+  </div>
+
+  <p>This Disclaimer applies to the <strong>Drut</strong> application and website (<a href="https://drut.club">drut.club</a>) and to the Drut mobile apps for iOS and Android (together, the <strong>"Service"</strong>), operated by <span class="token">Ideaye Works Private Limited</span>, a <span class="token">a private limited company incorporated under the Companies Act, 2013</span> with its registered office at <span class="token">1-73/1, Vadapalli (Via), Ubalanka PO, East Godavari District, Andhra Pradesh</span>, <span class="token">East Godavari</span>, <span class="token">Andhra Pradesh</span>, India ("<strong>Drut</strong>", "we", "us", "our").</p>
+
+  <p>Please read this Disclaimer carefully. It explains the limits of what Drut promises about its content, results, and affiliations. By using the Service you acknowledge and accept the points below. This Disclaimer is part of, and should be read together with, our <strong>Terms of Service</strong> and <strong>Privacy Policy</strong>.</p>
+
+  <div class="flag">
+    <span class="flag-label">In plain English</span>
+    Drut is a self-study practice and solutions tool. We help you practise and learn, but we do not promise you a rank, marks, a seat, or admission, and we are not connected to any exam board or university. Some of our content is created with the help of AI and can occasionally be wrong, so always double-check important facts against official sources.
+  </div>
+
+  <!-- TABLE OF CONTENTS -->
+  <nav class="toc" aria-label="Table of contents">
+    <h2>Contents</h2>
+    <ol>
+      <li><a href="#what-drut-is">What Drut Is (and Is Not)</a></li>
+      <li><a href="#as-is">Educational Content Provided "As Is"</a></li>
+      <li><a href="#ai-content">AI-Assisted and AI-Generated Content — Verify Against Official Sources</a></li>
+      <li><a href="#no-guarantee">No Guarantee of Exam Results, Rank, Marks, Admission, or Selection</a></li>
+      <li><a href="#no-affiliation">No Affiliation With Any Exam Authority, University, or Board</a></li>
+      <li><a href="#trademarks">Exam Names and Trademarks Belong to Their Owners</a></li>
+      <li><a href="#not-official-guidance">Not a Substitute for Official Guidance</a></li>
+      <li><a href="#external-links">External Links and Third-Party Content</a></li>
+      <li><a href="#minors">Students Under 18</a></li>
+      <li><a href="#liability">Limitation of Liability (Cross-Reference to the Terms)</a></li>
+      <li><a href="#changes">Changes to This Disclaimer</a></li>
+      <li><a href="#contact">Contact &amp; Grievance Redressal</a></li>
+    </ol>
+  </nav>
+
+  <!-- 1 -->
+  <h2 id="what-drut-is">1. What Drut Is (and Is Not)</h2>
+  <p>Drut is a <strong>multi-exam, self-study practice and solutions tool</strong>. It provides a question bank of original, multiple-choice questions (offered as Practice and timed Sprints) with step-by-step solutions, to help students prepare for competitive entrance examinations. Its first supported exam is EAPCET (the Andhra Pradesh and Telangana engineering / agriculture / pharmacy entrance examination).</p>
+  <p><strong>Drut is NOT:</strong></p>
+  <ul>
+    <li>a coaching centre or a tuition / teaching institution;</li>
+    <li>an official exam-preparation provider, exam authority, or examination body;</li>
+    <li>a guarantor of any examination outcome; or</li>
+    <li>a source of official notifications, syllabi, results, counselling, or admissions information.</li>
+  </ul>
+  <p>Drut is a <strong>tool you use to practise and self-study</strong>. Your results depend on your own effort, preparation, and circumstances.</p>
+  <p class="back-top"><a href="#top">↑ Back to top</a></p>
+
+  <!-- 2 -->
+  <h2 id="as-is">2. Educational Content Provided "As Is"</h2>
+  <p>All questions, solutions, explanations, hints, performance feedback, and other educational materials on the Service (the <strong>"Content"</strong>) are provided on an <strong>"as is" and "as available" basis</strong>, for general study and practice purposes only.</p>
+  <p>While we work hard to make the Content accurate, useful, and aligned to current exam patterns, we <strong>do not warrant that the Content is complete, accurate, current, error-free, or suitable for any particular exam, syllabus, or purpose.</strong> Exam syllabi, patterns, marking schemes, and authorities' guidance can change at any time, and the Content may not always reflect the most recent changes.</p>
+  <p>You are responsible for using your own judgement, and for cross-checking anything important against official and authoritative sources before relying on it. To the maximum extent permitted by applicable law, Drut <strong>disclaims all warranties</strong> in respect of the Content, whether express, implied, or statutory, including any implied warranties of accuracy, fitness for a particular purpose, and non-infringement, subject always to the consumer rights described in Section 10 and in our Terms of Service.</p>
+  <p class="back-top"><a href="#top">↑ Back to top</a></p>
+
+  <!-- 3 -->
+  <h2 id="ai-content">3. AI-Assisted and AI-Generated Content — Verify Against Official Sources</h2>
+  <p>A significant portion of Drut's questions and solutions is <strong>generated with the assistance of artificial intelligence (AI) and then curated by humans.</strong> AI systems are powerful but imperfect. AI-assisted or AI-generated material <strong>may contain factual errors, incorrect answers, flawed reasoning, outdated information, or content that does not match the current official syllabus or exam pattern</strong>, even after human review.</p>
+  <p>Accordingly:</p>
+  <ul>
+    <li>You should treat all Content as <strong>study aid material, not as a verified or authoritative answer key.</strong></li>
+    <li><strong>Always verify important facts, formulas, definitions, answers, and exam-specific information against official sources</strong> — including the official notification, syllabus, and prescribed textbooks of the relevant examination authority — before relying on them for your exam.</li>
+    <li>Drut is <strong>not liable</strong> for any loss, lower score, missed concept, or other consequence arising from an error in AI-assisted or AI-generated Content, to the maximum extent permitted by applicable law and subject to your consumer rights and our Terms of Service.</li>
+  </ul>
+  <p>If you believe a question or solution is wrong, please report it to us (see Section 12) so we can review and correct it.</p>
+  <div class="flag">
+    <span class="flag-label">In plain English</span>
+    We build many questions with AI and then have people check them — but AI can still get things wrong. Use Drut to practise, and always confirm anything that matters against the official syllabus and prescribed books.
+  </div>
+  <p class="back-top"><a href="#top">↑ Back to top</a></p>
+
+  <!-- 4 -->
+  <h2 id="no-guarantee">4. No Guarantee of Exam Results, Rank, Marks, Admission, or Selection</h2>
+  <p>Drut is a self-study practice tool. <strong>Drut does not guarantee, promise, or assure any examination outcome.</strong> In particular, and without limitation, we make <strong>no guarantee of</strong>:</p>
+  <ul>
+    <li>passing or qualifying any examination;</li>
+    <li>any specific score, marks, percentile, or rank;</li>
+    <li>any improvement in marks, rank, or performance;</li>
+    <li>selection, admission, a seat, or a place at any institution; or</li>
+    <li>any career, course, scholarship, or other outcome that may depend on an examination.</li>
+  </ul>
+  <p>Your results depend on your own effort, study, aptitude, and circumstances, as well as factors entirely outside Drut's control (such as the examination authority's process, competition, cut-offs, and counselling). <strong>Past performance — whether of Drut, of any feature, or of any other student — is no guarantee of future results.</strong></p>
+  <p>We do not make, and you should not infer, any "guaranteed selection", "guaranteed rank", "100% result", or similar claim anywhere in the Service or our marketing. Any reference we make to a past result or success figure is illustrative only and carries no promise of a similar outcome for you. This is consistent with the Central Consumer Protection Authority (CCPA) guidelines on misleading advertisements (including the coaching-sector guidelines) and the ASCI advertising code, which prohibit guaranteed-results claims.</p>
+  <p><strong>Standard results disclaimer.</strong> Wherever any result, rank, or success figure is shown anywhere in the Service or our marketing, the following applies:</p>
+  <div class="contact-block">
+    <p style="margin:0;"><em>"Past performance and the results of any student are no guarantee of future prospects. Drut is a self-study practice tool and does not guarantee any rank, marks, selection, or admission. Individual outcomes depend on each student's own effort and circumstances."</em></p>
+  </div>
+  <p class="back-top"><a href="#top">↑ Back to top</a></p>
+
+  <!-- 5 -->
+  <h2 id="no-affiliation">5. No Affiliation With Any Exam Authority, University, or Board</h2>
+  <p><strong>Drut is an independent, private service. It is NOT affiliated with, authorised by, sponsored by, endorsed by, or otherwise officially connected to any examination authority, conducting body, university, college, education board, or government department</strong> — including, without limitation, the bodies that conduct or administer EAPCET, JNTU (Jawaharlal Nehru Technological University), or any other examination, board, or institution referenced anywhere on the Service.</p>
+  <p>Any reference to an examination, board, university, or authority is made <strong>solely to identify the examination that our practice content is intended to help you prepare for.</strong> Such references do not imply any partnership, approval, certification, accreditation, or relationship of any kind. Nothing on the Service is official material of, or issued by, any such authority.</p>
+  <p class="back-top"><a href="#top">↑ Back to top</a></p>
+
+  <!-- 6 -->
+  <h2 id="trademarks">6. Exam Names and Trademarks Belong to Their Owners</h2>
+  <p>All examination names, board names, university names, logos, marks, and other trademarks or trade names referenced on the Service — including <strong>EAPCET</strong>, <strong>JNTU</strong>, and any other exam, board, institution, or authority name — are the <strong>property of their respective owners.</strong> They are used on the Service for <strong>identification and descriptive purposes only</strong>, to indicate the examination our content relates to.</p>
+  <p>Drut <strong>claims no ownership of, and asserts no rights in,</strong> any such third-party names or marks. Their use does not indicate any endorsement of, sponsorship by, or affiliation with, the trademark owner. All rights in those names and marks remain with the respective owners.</p>
+  <p class="back-top"><a href="#top">↑ Back to top</a></p>
+
+  <!-- 7 -->
+  <h2 id="not-official-guidance">7. Not a Substitute for Official Guidance</h2>
+  <p>The Service is intended to supplement your preparation, not to replace official or professional guidance. <strong>Drut is not a substitute for:</strong></p>
+  <ul>
+    <li>the <strong>official notification, syllabus, information bulletin, marking scheme, eligibility criteria, or counselling guidance</strong> issued by the relevant examination authority;</li>
+    <li>the <strong>prescribed or recommended textbooks</strong> and study material for the examination;</li>
+    <li>guidance from your <strong>school, college, teachers, or a qualified coaching/education professional</strong>; or</li>
+    <li>any <strong>professional, legal, career, financial, medical, or other expert advice.</strong></li>
+  </ul>
+  <p>For anything that affects your eligibility, application, examination, admission, or career decisions, you must <strong>rely on the official sources and the authorities themselves.</strong> Do not make such decisions based solely on Content from the Service.</p>
+  <p class="back-top"><a href="#top">↑ Back to top</a></p>
+
+  <!-- 8 -->
+  <h2 id="external-links">8. External Links and Third-Party Content</h2>
+  <p>The Service may contain links to, or references to, third-party websites, resources, content, or services that are <strong>not owned or controlled by Drut</strong> (for example, an examination authority's website, or a third-party reference).</p>
+  <p>We provide such links and references only for convenience. <strong>Drut does not endorse, and is not responsible for, the content, accuracy, availability, products, services, privacy practices, or policies of any third-party site or resource.</strong> Following an external link is at your own risk, and any dealings you have with a third party are solely between you and that third party. We encourage you to read the terms and privacy policy of any third-party site you visit.</p>
+  <p>The third-party processors and providers that Drut itself uses to operate the Service — for example Supabase (hosting and authentication), Google (Google sign-in), and Razorpay (payments) — are described in our <strong>Privacy Policy</strong>. This Section concerns links and content outside Drut's control.</p>
+  <p class="back-top"><a href="#top">↑ Back to top</a></p>
+
+  <!-- 9 -->
+  <h2 id="minors">9. Students Under 18</h2>
+  <p>Many users of the Service are between 16 and 18 years old. Under Indian law, anyone <strong>under 18 years of age is a child.</strong> <strong>Users under 18 may use Drut only with the verifiable consent of a parent or lawful guardian.</strong> If you are under 18, you confirm that your parent or guardian has reviewed and agreed to this Disclaimer, our Terms of Service, and our Privacy Policy on your behalf.</p>
+  <p>The disclaimers in this document — including that Content is provided "as is", that AI-assisted content may contain errors, and that no exam outcome is guaranteed — apply equally to students under 18 and to their parents/guardians. We encourage parents and guardians to supervise their child's use of the Service and to help verify important Content against official sources.</p>
+  <p>In line with India's Digital Personal Data Protection Act, 2023, <strong>Drut does not track, behaviourally monitor, profile, or serve targeted advertising to children</strong>, and does not process children's data in a way likely to cause a detrimental effect on a child's well-being. How we handle children's data and obtain verifiable parental consent is described in our <strong>Privacy Policy</strong>.</p>
+  <div class="flag">
+    <span class="flag-label">Business decision — confirm with counsel</span>
+    Drut's position is that <strong>under-18 users are permitted with verifiable parental/guardian consent</strong> (not an "18+ only" service). Whether a commercial self-study ed-tech app can rely on any "educational institution" exemption under the DPDP Rules 2025 is genuinely unsettled. We have drafted conservatively (full verifiable parental consent; no behavioural tracking or targeted ads to minors). Confirm the framing and the consent mechanism with a qualified Indian data-protection lawyer before publishing.
+  </div>
+  <p class="back-top"><a href="#top">↑ Back to top</a></p>
+
+  <!-- 10 -->
+  <h2 id="liability">10. Limitation of Liability (Cross-Reference to the Terms)</h2>
+  <p>The disclaimers in this document are <strong>in addition to, and subject to, the "Limitation of Liability" provisions in our Terms of Service.</strong> Those provisions set out the full extent of, and the limits on, Drut's liability to you, and they govern in the event of any inconsistency on liability matters.</p>
+  <p>To the maximum extent permitted by applicable law, Drut, its founders, employees, and partners <strong>shall not be liable for any indirect, incidental, special, consequential, or punitive loss</strong>, or for any loss of marks, rank, opportunity, admission, profits, data, or goodwill, arising out of or in connection with your use of (or inability to use) the Service or the Content. Where Drut is found liable despite the above, our <strong>aggregate liability is capped</strong> as stated in the Terms of Service.</p>
+  <div class="flag">
+    <span class="flag-label">Business decision — confirm with counsel</span>
+    The liability cap amount is <span class="token">[LIABILITY CAP — BUSINESS DECISION, CONFIRM WITH COUNSEL]</span>. Choose this figure deliberately with your lawyer and state the same value here and in the Terms of Service.
+  </div>
+  <p><strong>Nothing in this Disclaimer or the Terms limits or excludes any liability that cannot lawfully be limited or excluded, or any rights you have as a consumer that cannot be waived.</strong> In particular, the Consumer Protection Act, 2019 protects your six consumer rights — the <strong>right to safety, to information, to choose, to be heard, to redressal, and to consumer awareness/education</strong> — and these are not affected by this Disclaimer. Where the law requires, you remain entitled to a remedy for a service that is genuinely deficient, defective, or not as described.</p>
+  <p class="back-top"><a href="#top">↑ Back to top</a></p>
+
+  <!-- 11 -->
+  <h2 id="changes">11. Changes to This Disclaimer</h2>
+  <p>We may update this Disclaimer from time to time — for example, to reflect changes in our Service, in the Content, or in the law. When we do, we will revise the "Last updated" date at the top of this page and, where the change is significant, take reasonable steps to notify you. Your continued use of the Service after an update means you accept the updated Disclaimer. This Disclaimer is governed by the laws of India, and the courts at <span class="token">East Godavari</span>, <span class="token">Andhra Pradesh</span> shall have jurisdiction, as further set out in our Terms of Service.</p>
+  <p class="back-top"><a href="#top">↑ Back to top</a></p>
+
+  <!-- 12 -->
+  <h2 id="contact">12. Contact &amp; Grievance Redressal</h2>
+  <p>If you have a question about this Disclaimer, want to report an error in the Content, or wish to raise a grievance, please contact us:</p>
+  <div class="contact-block">
+    <p style="margin:0 0 8px;"><strong>Customer support</strong><br />
+    Email: <a href="mailto:support@drut.club">support@drut.club</a><br />
+    Phone: +91 91001 17027</p>
+    <p style="margin:0;"><strong>Grievance Officer</strong><br />
+    Name: Pranav Aditya<br />
+    Designation: Grievance Officer<br />
+    Email: <a href="mailto:pranav@drut.club">pranav@drut.club</a><br />
+    Phone: +91 91001 17027<br />
+    Address: <span class="token">1-73/1, Vadapalli (Via), Ubalanka PO, East Godavari District, Andhra Pradesh</span>, <span class="token">East Godavari</span>, <span class="token">Andhra Pradesh</span>, India</p>
+  </div>
+  <p>We will <strong>acknowledge your complaint within 48 hours</strong> of receipt and <strong>resolve consumer grievances within one month (30 days)</strong> of receipt, in line with the Consumer Protection (E-Commerce) Rules, 2020. Data-protection grievances are handled within the timeframes stated in our Privacy Policy. If you are not satisfied, you may escalate as described in our Terms of Service and Privacy Policy, including, for data-protection matters, to the Data Protection Board of India, and, for consumer matters, to the National Consumer Helpline (1915) and the appropriate consumer commission.</p>
+  <p class="back-top"><a href="#top">↑ Back to top</a></p>
+
+  <div class="footer-note">
+    <p><span class="token">Ideaye Works Private Limited</span> · <span class="token">a private limited company incorporated under the Companies Act, 2013</span> · <span class="token">1-73/1, Vadapalli (Via), Ubalanka PO, East Godavari District, Andhra Pradesh</span>, <span class="token">East Godavari</span>, <span class="token">Andhra Pradesh</span>, India · GSTIN: <span class="token">[GSTIN]</span> · drut.club</p>
+    <p>This Disclaimer is a draft template and is not legal advice. It must be reviewed by a qualified Indian lawyer before publication.</p>
+  </div>
+
+</div>
+</body>
+</html>
