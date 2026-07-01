@@ -23,8 +23,7 @@ import { WaitlistClassic } from './components/WaitlistClassic';
 import { AdminDashboard } from './components/admin/AdminDashboard';
 import { ModalProvider } from './components/ui/Modal';
 import { ErrorBoundary } from './components/ui/ErrorBoundary';
-import { PrivacyPolicy } from './components/legal/PrivacyPolicy';
-import { TermsAndConditions } from './components/legal/TermsAndConditions';
+// Legal docs are served as static HTML from /public/legal — see legacy redirects below.
 import { Onboarding } from './components/Onboarding';
 import { UpdatePasswordForm } from './components/UpdatePasswordForm';
 import { PracticeErrorBoundary } from './components/PracticeErrorBoundary';
@@ -33,6 +32,14 @@ import { Subscribe } from './components/Subscribe';
 
 // In a real Next.js app, this would be process.env.NEXT_PUBLIC_DEBUG
 const IS_DEBUG_MODE = false; // Set to true to see the debug chip
+
+// Redirect helper for legacy legal URLs -> static HTML in /public/legal.
+// window.location.replace forces a full-page navigation (bypassing the SPA router)
+// so the static HTML file is actually fetched from the server.
+const LegalStaticRedirect: React.FC<{ to: string }> = ({ to }) => {
+  React.useEffect(() => { window.location.replace(to); }, [to]);
+  return null;
+};
 
 const HealthChip: React.FC<{ status: HealthStatus }> = ({ status }) => (
   <div className="fixed bottom-4 right-4 bg-primary text-primary-foreground text-xs rounded-full px-3 py-1.5 shadow-lg z-50">
@@ -170,9 +177,10 @@ function App() {
           {/* Subscribe — public; handles handoff token + plan selection + Razorpay checkout. */}
           <Route path="/subscribe" element={<Subscribe />} />
 
-          {/* Legal routes */}
-          <Route path="/privacypolicy" element={<PrivacyPolicy />} />
-          <Route path="/termsandconditions" element={<TermsAndConditions />} />
+          {/* Legal docs live as static HTML in /public/legal. These two routes exist only
+              to preserve backward-compatibility with pre-launch links that shipped the old paths. */}
+          <Route path="/privacypolicy" element={<LegalStaticRedirect to="/legal/privacy-policy.html" />} />
+          <Route path="/termsandconditions" element={<LegalStaticRedirect to="/legal/terms-of-service.html" />} />
 
           {/* Catch all - redirect to home */}
           <Route path="*" element={<Navigate to="/" replace />} />
