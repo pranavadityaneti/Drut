@@ -13,6 +13,10 @@ import {
 import { useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as Application from 'expo-application';
+import * as WebBrowser from 'expo-web-browser';
+
+const LEGAL_BASE = 'https://drut.club/legal/';
+const openLegal = (slug: string) => WebBrowser.openBrowserAsync(`${LEGAL_BASE}${slug}.html`);
 import {
     User,
     LogOut,
@@ -222,10 +226,10 @@ export default function ProfileScreen() {
                 {/* About & legal */}
                 <View style={styles.card}>
                     <Row icon={Info} label="About Drut" onPress={showAbout} />
-                    <Row icon={FileText} label="Terms of service" soon />
-                    <Row icon={Shield} label="Privacy policy" soon />
-                    <Row icon={Receipt} label="Refund policy" soon />
-                    <Row icon={AlertTriangle} label="Disclaimer" soon last />
+                    <Row icon={FileText} label="Terms of service" onPress={() => openLegal('terms-of-service')} />
+                    <Row icon={Shield} label="Privacy policy" onPress={() => openLegal('privacy-policy')} />
+                    <Row icon={Receipt} label="Refund policy" onPress={() => openLegal('refund-cancellation-policy')} />
+                    <Row icon={AlertTriangle} label="Disclaimer" onPress={() => openLegal('disclaimer')} last />
                 </View>
 
                 {/* Account */}
