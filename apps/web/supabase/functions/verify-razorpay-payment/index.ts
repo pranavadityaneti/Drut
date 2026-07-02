@@ -236,6 +236,29 @@ Deno.serve(async (req) => {
         }
     }
 
+    // If this activation is a YEARLY subscription AND the user was referred at
+    // signup (referred_by_user_id set in user_referrals), grant the symmetric
+    // 30-day reward to both parties. Best-effort — never fail an activated
+    // subscription over reward bookkeeping. The RPC is idempotent
+    // (UNIQUE(referred_user_id) on referral_rewards) so a retry-in-flight is safe.
+    if (sub.plan === 'annual') {
+        try {
+            const { data: rewardResult, error: rewardErr } = await supabaseService
+                .rpc('apply_referral_reward', {
+                    p_referred_user_id:            user.id,
+                    p_triggering_subscription_id:  sub.id,
+                });
+            if (rewardErr) {
+                console.error('[verify-razorpay-payment] apply_referral_reward RPC error', rewardErr);
+            } else if (rewardResult) {
+                console.info('[verify-razorpay-payment] referral reward granted', { reward_id: rewardResult, referred_user: user.id, subscription: sub.id });
+            }
+            // rewardResult === null (no referrer / self / already rewarded / sub not eligible) is expected and silent
+        } catch (e) {
+            console.error('[verify-razorpay-payment] apply_referral_reward threw', e);
+        }
+    }
+
     return json(200, {
         verified: true,
         plan:     sub.plan,
