@@ -8,18 +8,17 @@ import {
     Image,
     Alert,
     ActivityIndicator,
-    Share,
-    Linking,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as Application from 'expo-application';
+import * as WebBrowser from 'expo-web-browser';
 
 const LEGAL_BASE = 'https://drut.club/legal/';
-// Linking (core RN) opens the system browser — OTA-safe, no native module needed.
-// (expo-web-browser is declared but not installed; using it here broke the whole
-// Profile module and killed every handler on the screen.)
-const openLegal = (slug: string) => Linking.openURL(`${LEGAL_BASE}${slug}.html`);
+// In-app browser (SFSafariViewController on iOS / Custom Tab on Android). This is
+// a NATIVE module (expo-web-browser) — it ships only in a fresh native build, not
+// via OTA. Verified present in the current dev/TestFlight builds.
+const openLegal = (slug: string) => WebBrowser.openBrowserAsync(`${LEGAL_BASE}${slug}.html`);
 import {
     User,
     LogOut,
@@ -49,10 +48,10 @@ import {
     isProActive,
     PRICING,
     getMyReferralCode,
-    referralLink,
     type Subscription,
 } from '@drut/shared';
 import { PaywallModal } from '../../../components/PaywallModal';
+import { ReferralModal } from '../../../components/ReferralModal';
 import { UpgradeCard } from '../../../components/UpgradeCard';
 
 const DANGER = '#c0392b';
@@ -107,6 +106,7 @@ export default function ProfileScreen() {
     const [sub, setSub] = useState<Subscription | null>(null);
     const [showPaywall, setShowPaywall] = useState(false);
     const [referralCode, setReferralCode] = useState<string | null>(null);
+    const [showReferral, setShowReferral] = useState(false);
     const isPro = isProActive(sub);
 
     const refreshSub = React.useCallback(() => {
@@ -155,19 +155,6 @@ export default function ProfileScreen() {
                 },
             },
         ]);
-    };
-
-    const handleShare = async () => {
-        // Personalized invite when we have the user's code; generic fallback so the
-        // button never breaks if the code hasn't loaded (or failed to fetch).
-        const message = referralCode
-            ? `Join me on Drut — practice smarter for your entrance exams. We both get 1 month free when you subscribe to the yearly plan.\n\n${referralLink(referralCode)}`
-            : 'Practice smarter for your entrance exams with Drut — https://drut.club';
-        try {
-            await Share.share({ message });
-        } catch {
-            /* user dismissed the share sheet */
-        }
     };
 
     const showAbout = () => {
@@ -232,7 +219,7 @@ export default function ProfileScreen() {
                 <View style={styles.card}>
                     <Row icon={LifeBuoy} label="Help and support" onPress={() => go('help-support')} />
                     <Row icon={Star} label="Rate us" soon />
-                    <Row icon={Share2} label="Share Drut" onPress={handleShare} last />
+                    <Row icon={Share2} label="Share Drut" onPress={() => setShowReferral(true)} last />
                 </View>
 
                 {/* About & legal */}
@@ -254,6 +241,7 @@ export default function ProfileScreen() {
             </ScrollView>
 
             <PaywallModal visible={showPaywall} onClose={() => setShowPaywall(false)} />
+            <ReferralModal visible={showReferral} onClose={() => setShowReferral(false)} code={referralCode} />
         </SafeAreaView>
     );
 }
