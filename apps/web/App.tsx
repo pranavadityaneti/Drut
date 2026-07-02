@@ -11,6 +11,7 @@ import { preloadFirstQuestion } from '@drut/shared'; // from ./services/preloade
 import { User } from '@drut/shared';
 import { isAdminEmail } from '@drut/shared';
 import { authService } from '@drut/shared';
+import { tryAttributeStoredReferral } from '@drut/shared';
 const { getCurrentUser, onAuthStateChange, logout: authLogout } = authService;
 import { AuthPage } from './components/AuthPage';
 import { HealthStatus, runtimeHealth } from '@drut/shared';
@@ -93,6 +94,10 @@ function App() {
     const { data: authListener } = onAuthStateChange((_event, session) => {
       const sessionUser = session?.user ?? null;
       setUser(sessionUser);
+      // Fire-and-forget: if a code was captured at /r/:code before signup,
+      // try to attribute it now. The RPC is idempotent, so it's safe if this
+      // fires more than once during an OAuth roundtrip. Never blocks signup.
+      if (sessionUser) void tryAttributeStoredReferral();
     });
 
     return () => {

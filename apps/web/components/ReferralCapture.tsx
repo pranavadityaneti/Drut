@@ -26,7 +26,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 // A-Z minus I/L/O + digits 2-9 (no 0/1). Anything else is treated as junk.
 const CODE_PATTERN = /^[A-CDEFGHJKMNPQRSTUVWXYZ2-9]{6}$/;
 const STORAGE_KEY  = 'drut.referral_code';
-const REDIRECT_MS  = 1400;
+const REDIRECT_MS  = 6000;
 
 export const ReferralCapture: React.FC = () => {
   const { code } = useParams<{ code: string }>();
