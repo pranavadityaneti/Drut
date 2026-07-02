@@ -70,3 +70,42 @@ export async function tryAttributeStoredReferral(): Promise<void> {
     log.warn('[referralService] attribute_referral threw:', e);
   }
 }
+
+/** Base for shareable invite links. A code appended → drut.club/r/<code>. */
+export const REFERRAL_LINK_BASE = 'https://drut.club/r/';
+
+/** Build the full shareable invite link for a given referral code. */
+export function referralLink(code: string): string {
+  return `${REFERRAL_LINK_BASE}${code}`;
+}
+
+/**
+ * Fetch the signed-in user's own shareable referral code. RLS on
+ * user_referrals permits selecting your own row (policy
+ * user_referrals_select_own). Returns null on any failure — callers should
+ * fall back to a generic share message so the button never breaks.
+ */
+export async function getMyReferralCode(): Promise<string | null> {
+  try {
+    const supabase = getSupabase();
+    if (!supabase) return null;
+
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return null;
+
+    const { data, error } = await supabase
+      .from('user_referrals')
+      .select('referral_code')
+      .eq('user_id', user.id)
+      .single();
+
+    if (error) {
+      log.warn('[referralService] getMyReferralCode error:', error.message || error);
+      return null;
+    }
+    return data?.referral_code ?? null;
+  } catch (e) {
+    log.warn('[referralService] getMyReferralCode threw:', e);
+    return null;
+  }
+}

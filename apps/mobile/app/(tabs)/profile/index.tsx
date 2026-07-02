@@ -9,14 +9,17 @@ import {
     Alert,
     ActivityIndicator,
     Share,
+    Linking,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as Application from 'expo-application';
-import * as WebBrowser from 'expo-web-browser';
 
 const LEGAL_BASE = 'https://drut.club/legal/';
-const openLegal = (slug: string) => WebBrowser.openBrowserAsync(`${LEGAL_BASE}${slug}.html`);
+// Linking (core RN) opens the system browser — OTA-safe, no native module needed.
+// (expo-web-browser is declared but not installed; using it here broke the whole
+// Profile module and killed every handler on the screen.)
+const openLegal = (slug: string) => Linking.openURL(`${LEGAL_BASE}${slug}.html`);
 import {
     User,
     LogOut,
@@ -45,6 +48,8 @@ import {
     getCurrentSubscription,
     isProActive,
     PRICING,
+    getMyReferralCode,
+    referralLink,
     type Subscription,
 } from '@drut/shared';
 import { PaywallModal } from '../../../components/PaywallModal';
@@ -101,6 +106,7 @@ export default function ProfileScreen() {
     const [loading, setLoading] = useState(true);
     const [sub, setSub] = useState<Subscription | null>(null);
     const [showPaywall, setShowPaywall] = useState(false);
+    const [referralCode, setReferralCode] = useState<string | null>(null);
     const isPro = isProActive(sub);
 
     const refreshSub = React.useCallback(() => {
@@ -110,6 +116,7 @@ export default function ProfileScreen() {
     useEffect(() => {
         loadProfile();
         refreshSub();
+        getMyReferralCode().then(setReferralCode).catch(() => setReferralCode(null));
     }, [refreshSub]);
 
     const loadProfile = async () => {
@@ -151,8 +158,13 @@ export default function ProfileScreen() {
     };
 
     const handleShare = async () => {
+        // Personalized invite when we have the user's code; generic fallback so the
+        // button never breaks if the code hasn't loaded (or failed to fetch).
+        const message = referralCode
+            ? `Join me on Drut — practice smarter for your entrance exams. We both get 1 month free when you subscribe to the yearly plan.\n\n${referralLink(referralCode)}`
+            : 'Practice smarter for your entrance exams with Drut — https://drut.club';
         try {
-            await Share.share({ message: 'Practice smarter for your entrance exams with Drut — https://drut.club' });
+            await Share.share({ message });
         } catch {
             /* user dismissed the share sheet */
         }
