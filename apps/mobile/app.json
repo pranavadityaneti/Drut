@@ -73,7 +73,19 @@
           "iosUrlScheme": "com.googleusercontent.apps.355443227173-j573baeitjqh23eslo6el1fn0u31224d"
         }
       ],
-      "./plugins/withModularHeaders"
+      "./plugins/withModularHeaders",
+      [
+        "expo-tracking-transparency",
+        {
+          "userTrackingPermission": "Drut uses this to measure how well our ads work so we can reach more students like you."
+        }
+      ],
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Drut needs camera access so you can take a profile picture."
+        }
+      ]
     ],
     "extra": {
       "router": {},
