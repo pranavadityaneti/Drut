@@ -136,3 +136,19 @@
 **What worked**: Verified with the user that the deploy was intentional, retried with the same command. Second attempt succeeded — the classifier was over-conservative on the first call.
 
 **Lesson**: The auto-mode classifier can false-positive on commands referencing API keys that exist anywhere in transcript history, even if those keys aren't in the code being deployed. If a blocked command is genuinely safe, explain to the user and retry with their explicit consent in the same turn.
+
+## `expo run:ios` / `pod install` — "Unicode Normalization not appropriate for ASCII-8BIT" (2026-07-02)
+
+**Problem**: `npx expo run:ios` failed at the `pod install` step with `Encoding::CompatibilityError: Unicode Normalization not appropriate for ASCII-8BIT` (raised inside CocoaPods `config.rb#installation_root` → `String#unicode_normalize`). CocoaPods 1.16 + Ruby 4.0.
+
+**Root cause**: the Bash tool's shell had no UTF-8 locale set, so Ruby treated the project path string as ASCII-8BIT and `unicode_normalize` refused it. Not a code/Podfile problem — a shell-environment problem.
+
+**What worked**: prefix the build with a UTF-8 locale:
+```
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+npx expo run:ios
+```
+Got past "Installing CocoaPods..." → "Planning build" on the retry.
+
+**Lesson**: Any CocoaPods/Ruby command run from this Bash tool (`expo run:ios`, `pod install`) must set `LANG`/`LC_ALL` to a UTF-8 locale first. Also always `export PATH=/usr/bin:/usr/local/bin:/opt/homebrew/bin:$PATH` — this shell frequently loses PATH (curl/eas/node vanish) between calls.

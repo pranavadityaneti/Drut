@@ -33,7 +33,7 @@ import {
     Image,
     Alert,
 } from 'react-native';
-import Svg, { Circle } from 'react-native-svg';
+import Svg, { Path, Defs, LinearGradient as SvgLinearGradient, Stop } from 'react-native-svg';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
 import {
@@ -48,6 +48,9 @@ import {
     User as UserIcon,
     Award,
     Percent,
+    Atom,
+    FlaskConical,
+    Sigma,
 } from 'lucide-react-native';
 import {
     useDashboardData,
@@ -58,7 +61,6 @@ import {
     getTodayQuestionUsage,
     type UserProfile,
 } from '@drut/shared';
-import { useAuth } from '../../contexts/AuthContext';
 import { Colors } from '../../constants/Colors';
 import { UpgradeCard } from '../../components/UpgradeCard';
 import { PaywallModal } from '../../components/PaywallModal';
@@ -71,13 +73,6 @@ const SUCCESS = '#3b6d11';
 const WARN = '#854f0b';
 const FREE_DAILY_QUOTA = 20;
 const STREAK_MILESTONES = [7, 14, 30, 60, 100, 200, 365];
-
-function pickGreeting(): string {
-    const h = new Date().getHours();
-    if (h < 12) return 'Good morning';
-    if (h < 18) return 'Good afternoon';
-    return 'Good evening';
-}
 
 function nextMilestone(streak: number): number {
     for (const m of STREAK_MILESTONES) if (m > streak) return m;
@@ -101,9 +96,7 @@ function subjectMasteryFromTopics(topicStats: any[] | undefined): Record<string,
 export default function DashboardScreen() {
     const router = useRouter();
     const { loading, data, refetch } = useDashboardData();
-    const { user } = useAuth();
 
-    const [greeting] = useState<string>(pickGreeting());
     const [profile, setProfile] = useState<UserProfile | null>(null);
     const [streak, setStreak] = useState<number>(0);
     const [isPro, setIsPro] = useState<boolean>(false);
@@ -111,13 +104,6 @@ export default function DashboardScreen() {
     const [weekly, setWeekly] = useState<{ this7: number; deltaPct: number } | null>(null);
     const [sparkline, setSparkline] = useState<number[]>([]);
     const [showPaywall, setShowPaywall] = useState<boolean>(false);
-
-    const fullName =
-        (user?.user_metadata?.full_name as string) ||
-        profile?.fullName ||
-        (data?.user?.user_metadata?.full_name as string) ||
-        '';
-    const firstName = fullName.split(' ')[0] || 'there';
 
     const refreshAll = useCallback(async () => {
         const [sub, sk, qt, wk, sp, pf] = await Promise.allSettled([
@@ -147,6 +133,18 @@ export default function DashboardScreen() {
     const conceptsMastered = data?.verifiedPatterns ?? 0;
 
     const subjectMastery = useMemo(() => subjectMasteryFromTopics(data?.topicStats), [data?.topicStats]);
+    const subjectCards = useMemo(() => {
+        const subjects = ['Physics', 'Chemistry', 'Mathematics'] as const;
+        return subjects.map((sub) => {
+            const stats = (data?.topicStats || []).filter((t: any) => t?.topic?.subject === sub);
+            const weakest = stats.slice().sort((a: any, b: any) => a.progressPercent - b.progressPercent)[0] || null;
+            return {
+                subject: sub,
+                pct: subjectMastery[sub] ?? 0,
+                weakestLabel: weakest?.topic?.label || null,
+            };
+        });
+    }, [data?.topicStats, subjectMastery]);
     const weakest = useMemo(() => {
         const sorted = (data?.topicStats || []).slice().sort((a: any, b: any) => a.progressPercent - b.progressPercent);
         return sorted[0] || null;
@@ -179,24 +177,25 @@ export default function DashboardScreen() {
             >
                 {/* Header */}
                 <View style={styles.headerRow}>
-                    <View style={styles.headerLeft}>
+                    <Image
+                        source={require('../../assets/logo-header.png')}
+                        style={styles.logo}
+                        resizeMode="contain"
+                    />
+                    <View style={styles.headerRight}>
+                        <TouchableOpacity
+                            style={styles.bellBtn}
+                            onPress={handleNotifications}
+                            hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                        >
+                            <Bell size={20} color={INK} />
+                        </TouchableOpacity>
                         {profile?.avatarUrl ? (
                             <Image source={{ uri: profile.avatarUrl }} style={styles.avatar} />
                         ) : (
                             <View style={styles.avatarPlaceholder}><UserIcon size={20} color={MUTED} /></View>
                         )}
-                        <View>
-                            <Text style={styles.greetingSmall}>{greeting},</Text>
-                            <Text style={styles.greetingName}>{firstName}</Text>
-                        </View>
                     </View>
-                    <TouchableOpacity
-                        style={styles.bellBtn}
-                        onPress={handleNotifications}
-                        hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
-                    >
-                        <Bell size={20} color={INK} />
-                    </TouchableOpacity>
                 </View>
 
                 {/* Streak hero card */}
@@ -218,7 +217,7 @@ export default function DashboardScreen() {
                             <Text style={styles.streakHint}>Practice today to start a streak</Text>
                         )}
                     </View>
-                    <MilestoneRing streak={streak} target={milestone} />
+                    <FlameBadge active={streak > 0} />
                 </View>
 
                 {/* Two small cards: Accuracy + Concepts mastered */}
@@ -292,23 +291,67 @@ export default function DashboardScreen() {
 
                 {/* Subject mastery */}
                 <Text style={styles.sectionLabel}>Subject mastery</Text>
-                <View style={styles.card}>
-                    {(['Physics', 'Chemistry', 'Mathematics'] as const).map((sub, i, arr) => {
-                        const pct = subjectMastery[sub] ?? 0;
-                        const code = sub.slice(0, 3).toUpperCase();
-                        return (
-                            <View
-                                key={sub}
-                                style={[styles.masteryRow, i < arr.length - 1 && { marginBottom: 12 }]}
-                            >
-                                <Text style={styles.masteryCode}>{code}</Text>
-                                <View style={styles.masteryTrack}>
-                                    <View style={[styles.masteryFill, { width: `${pct}%` }]} />
-                                </View>
-                                <Text style={styles.masteryPct}>{pct}%</Text>
-                            </View>
-                        );
-                    })}
+                <View style={styles.subjectCarouselWrap}>
+                    <ScrollView
+                        horizontal
+                        showsHorizontalScrollIndicator={false}
+                        contentContainerStyle={styles.subjectCarouselContent}
+                        decelerationRate="fast"
+                        snapToInterval={292}
+                        snapToAlignment="start"
+                    >
+                        {subjectCards.map((c, i) => {
+                            const Icon = c.subject === 'Physics' ? Atom : c.subject === 'Chemistry' ? FlaskConical : Sigma;
+                            const tint = c.subject === 'Physics'
+                                ? { bg: ACCENT_SOFT, icon: SUCCESS }
+                                : c.subject === 'Chemistry'
+                                ? { bg: '#fdf0e3', icon: '#a15b1a' }
+                                : { bg: '#eef0ff', icon: '#4a5ab8' };
+                            return (
+                                <TouchableOpacity
+                                    key={c.subject}
+                                    activeOpacity={0.85}
+                                    style={[styles.subjectCard, i < subjectCards.length - 1 && { marginRight: 12 }]}
+                                    onPress={() => router.push({
+                                        pathname: '/(tabs)/practice',
+                                        params: { presetSubject: c.subject },
+                                    } as any)}
+                                >
+                                    <View style={styles.subjectCardTop}>
+                                        <View style={styles.subjectCardTopLeft}>
+                                            <View style={[styles.subjectIconTile, { backgroundColor: tint.bg }]}>
+                                                <Icon size={18} color={tint.icon} />
+                                            </View>
+                                            <Text style={styles.subjectName}>{c.subject}</Text>
+                                        </View>
+                                        <View style={styles.subjectProgressWrap}>
+                                            <View style={styles.subjectProgressBar}>
+                                                <View style={[styles.subjectProgressFill, { width: `${c.pct}%` }]} />
+                                            </View>
+                                            <Text style={styles.subjectPct}>{c.pct}%</Text>
+                                        </View>
+                                    </View>
+                                    <View style={styles.subjectCardBottom}>
+                                        {c.weakestLabel ? (
+                                            <View style={styles.subjectChip}>
+                                                <Target size={11} color={WARN} />
+                                                <Text style={styles.subjectChipText} numberOfLines={1}>
+                                                    Focus: {c.weakestLabel}
+                                                </Text>
+                                            </View>
+                                        ) : (
+                                            <View style={[styles.subjectChip, { backgroundColor: '#f2f4f0' }]}>
+                                                <Text style={[styles.subjectChipText, { color: MUTED }]} numberOfLines={1}>
+                                                    Start practicing to see focus
+                                                </Text>
+                                            </View>
+                                        )}
+                                        <ChevronRight size={16} color="#c4c9c1" />
+                                    </View>
+                                </TouchableOpacity>
+                            );
+                        })}
+                    </ScrollView>
                 </View>
 
                 {/* Today, do this */}
@@ -384,33 +427,34 @@ export default function DashboardScreen() {
     );
 }
 
-const MilestoneRing: React.FC<{ streak: number; target: number }> = ({ streak, target }) => {
-    const size = 72;
-    const stroke = 6;
-    const radius = (size - stroke) / 2;
-    const circumference = 2 * Math.PI * radius;
-    const pct = Math.min(1, target > 0 ? streak / target : 0);
-    const dash = circumference * pct;
+const FlameBadge: React.FC<{ active: boolean }> = ({ active }) => {
+    // ~1.25 tall vs wide, matches the viewBox aspect
+    const flameW = 52;
+    const flameH = 65;
+    const gradTop = active ? '#fbbf24' : '#e0e2dc';
+    const gradMid = active ? '#f97316' : '#d5d9d3';
+    const gradBottom = active ? '#ea580c' : '#c8ccc6';
+    const innerHighlight = active ? '#fef3c7' : '#eef0ea';
     return (
-        <View style={{ width: size, height: size, alignItems: 'center', justifyContent: 'center' }}>
-            <Svg width={size} height={size}>
-                <Circle cx={size / 2} cy={size / 2} r={radius} stroke="#ebefe8" strokeWidth={stroke} fill="none" />
-                <Circle
-                    cx={size / 2}
-                    cy={size / 2}
-                    r={radius}
-                    stroke={INK}
-                    strokeWidth={stroke}
-                    strokeLinecap="round"
-                    fill="none"
-                    strokeDasharray={`${dash}, ${circumference}`}
-                    transform={`rotate(-90 ${size / 2} ${size / 2})`}
+        <View style={styles.flameBadge}>
+            <Svg width={flameW} height={flameH} viewBox="0 0 32 40">
+                <Defs>
+                    <SvgLinearGradient id="flameGrad" x1="0" y1="1" x2="0" y2="0">
+                        <Stop offset="0" stopColor={gradBottom} />
+                        <Stop offset="0.55" stopColor={gradMid} />
+                        <Stop offset="1" stopColor={gradTop} />
+                    </SvgLinearGradient>
+                </Defs>
+                <Path
+                    d="M16 2 C 10 10, 6 15, 7 24 C 8 33, 12 37, 16 37 C 20 37, 24 33, 25 24 C 26 15, 22 10, 16 2 Z"
+                    fill="url(#flameGrad)"
+                />
+                <Path
+                    d="M16 15 C 13 20, 12 22, 13 27 C 14 32, 15 34, 16 34 C 18 34, 19 31, 19 27 C 19 22, 18 19, 16 15 Z"
+                    fill={innerHighlight}
+                    opacity={0.75}
                 />
             </Svg>
-            <View style={styles.ringCenter}>
-                <Text style={styles.ringNumber}>{target}</Text>
-                <Text style={styles.ringUnit}>days</Text>
-            </View>
         </View>
     );
 };
@@ -442,19 +486,16 @@ const styles = StyleSheet.create({
         paddingTop: 8,
         paddingBottom: 18,
     },
-    headerLeft: { flexDirection: 'row', alignItems: 'center', gap: 11 },
+    logo: { width: 101, height: 55 },
+    headerRight: { flexDirection: 'row', alignItems: 'center', gap: 12 },
     avatar: { width: 38, height: 38, borderRadius: 19 },
     avatarPlaceholder: {
         width: 38, height: 38, borderRadius: 19,
         backgroundColor: Colors.surface,
         alignItems: 'center', justifyContent: 'center',
     },
-    greetingSmall: { fontSize: 12, color: MUTED },
-    greetingName: { fontSize: 17, fontWeight: '700', color: INK, marginTop: 1, letterSpacing: -0.2 },
     bellBtn: {
-        width: 40, height: 40, borderRadius: 20,
-        backgroundColor: '#fff',
-        borderWidth: 1, borderColor: Colors.border,
+        width: 40, height: 40,
         alignItems: 'center', justifyContent: 'center',
     },
 
@@ -463,7 +504,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#fff',
         borderWidth: 1, borderColor: Colors.border,
-        borderRadius: 20,
+        borderRadius: 16,
         padding: 18,
         marginBottom: 12,
     },
@@ -480,18 +521,21 @@ const styles = StyleSheet.create({
     streakUnit: { fontSize: 13, color: MUTED, marginTop: 1 },
     streakHint: { fontSize: 11.5, color: '#9aa09a', marginTop: 8 },
 
-    ringCenter: { position: 'absolute', alignItems: 'center' },
-    ringNumber: { fontSize: 17, fontWeight: '800', color: INK, lineHeight: 18 },
-    ringUnit: { fontSize: 9, color: MUTED, marginTop: 1, letterSpacing: 0.3 },
+    flameBadge: {
+        width: 84, height: 84, borderRadius: 22,
+        backgroundColor: '#f4f6f1',
+        alignItems: 'center', justifyContent: 'center',
+        marginLeft: 12,
+    },
 
     twoColRow: { flexDirection: 'row', marginBottom: 12 },
     smallCard: {
         flex: 1,
+        aspectRatio: 1,
         backgroundColor: '#fff',
         borderWidth: 1, borderColor: Colors.border,
         borderRadius: 16,
         padding: 14,
-        minHeight: 110,
     },
     smallCardIcon: {
         width: 32, height: 32, borderRadius: 9,
@@ -530,11 +574,49 @@ const styles = StyleSheet.create({
     qBarFill: { height: '100%' },
     qHint: { fontSize: 11.5, color: '#9aa09a', marginTop: 7 },
 
-    masteryRow: { flexDirection: 'row', alignItems: 'center', gap: 12 },
-    masteryCode: { width: 32, fontSize: 11, color: MUTED, fontWeight: '700' },
-    masteryTrack: { flex: 1, height: 7, borderRadius: 4, backgroundColor: '#ebefe8', overflow: 'hidden' },
-    masteryFill: { height: '100%', backgroundColor: INK },
-    masteryPct: { fontSize: 11.5, color: INK, fontWeight: '600', width: 36, textAlign: 'right' },
+    subjectCarouselWrap: { marginHorizontal: -20, marginBottom: 12 },
+    subjectCarouselContent: { paddingHorizontal: 20 },
+    subjectCard: {
+        width: 280,
+        backgroundColor: '#fff',
+        borderWidth: 1, borderColor: Colors.border,
+        borderRadius: 16,
+        padding: 14,
+    },
+    subjectCardTop: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+    },
+    subjectCardTopLeft: {
+        flexDirection: 'row', alignItems: 'center', gap: 10,
+        flex: 1, minWidth: 0,
+    },
+    subjectIconTile: {
+        width: 34, height: 34, borderRadius: 10,
+        alignItems: 'center', justifyContent: 'center',
+    },
+    subjectName: { fontSize: 15, fontWeight: '700', color: INK, letterSpacing: -0.1 },
+    subjectProgressWrap: { flexDirection: 'row', alignItems: 'center', gap: 8 },
+    subjectProgressBar: {
+        width: 60, height: 6, borderRadius: 3,
+        backgroundColor: '#ebefe8', overflow: 'hidden',
+    },
+    subjectProgressFill: { height: '100%', backgroundColor: INK },
+    subjectPct: { fontSize: 12, fontWeight: '700', color: INK },
+    subjectCardBottom: {
+        marginTop: 14,
+        flexDirection: 'row', alignItems: 'center',
+        justifyContent: 'space-between', gap: 8,
+    },
+    subjectChip: {
+        flexDirection: 'row', alignItems: 'center', gap: 5,
+        backgroundColor: '#fef0e0',
+        paddingHorizontal: 8, paddingVertical: 4,
+        borderRadius: 8,
+        flexShrink: 1,
+    },
+    subjectChipText: { fontSize: 11.5, color: WARN, fontWeight: '600', flexShrink: 1 },
 
     actionCard: {
         flexDirection: 'row', alignItems: 'center', gap: 12,
