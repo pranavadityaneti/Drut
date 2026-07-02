@@ -85,7 +85,8 @@
         {
           "cameraPermission": "Drut needs camera access so you can take a profile picture."
         }
-      ]
+      ],
+      "expo-sharing"
     ],
     "extra": {
       "router": {},
