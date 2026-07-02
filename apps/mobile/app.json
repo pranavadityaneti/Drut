@@ -22,14 +22,17 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "club.drut.app",
-      "associatedDomains": ["applinks:drut.club"],
+      "associatedDomains": [
+        "applinks:drut.club"
+      ],
       "infoPlist": {
         "NSPhotoLibraryUsageDescription": "Drut needs access to your photos so you can set a profile picture.",
         "NSAppTransportSecurity": {
           "NSAllowsArbitraryLoads": true
         },
         "ITSAppUsesNonExemptEncryption": false
-      }
+      },
+      "buildNumber": "2"
     },
     "android": {
       "package": "club.drut.app",
@@ -62,7 +65,6 @@
     "plugins": [
       "expo-router",
       "expo-status-bar",
-      "expo-web-browser",
       "expo-notifications",
       [
         "@react-native-google-signin/google-signin",
