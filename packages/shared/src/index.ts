@@ -66,6 +66,11 @@ export * from './services/paymentService';
 import * as paymentService from './services/paymentService';
 export { paymentService };
 
+// Referrals — attribution capture + shareable code (symmetric 1-month-free program)
+export * from './services/referralService';
+import * as referralService from './services/referralService';
+export { referralService };
+
 // Chapter source resolution (for the 3-step Board → Class → Chapter picker)
 export * from './services/chapterService';
 import * as chapterService from './services/chapterService';
