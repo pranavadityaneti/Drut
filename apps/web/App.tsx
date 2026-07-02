@@ -28,6 +28,7 @@ import { Onboarding } from './components/Onboarding';
 import { UpdatePasswordForm } from './components/UpdatePasswordForm';
 import { PracticeErrorBoundary } from './components/PracticeErrorBoundary';
 import { Subscribe } from './components/Subscribe';
+import { ReferralCapture } from './components/ReferralCapture';
 
 
 // In a real Next.js app, this would be process.env.NEXT_PUBLIC_DEBUG
@@ -176,6 +177,9 @@ function App() {
 
           {/* Subscribe — public; handles handoff token + plan selection + Razorpay checkout. */}
           <Route path="/subscribe" element={<Subscribe />} />
+
+          {/* Referral attribution capture — public. Writes localStorage then redirects to /. */}
+          <Route path="/r/:code" element={<ReferralCapture />} />
 
           {/* Legal docs live as static HTML in /public/legal. These two routes exist only
               to preserve backward-compatibility with pre-launch links that shipped the old paths. */}
